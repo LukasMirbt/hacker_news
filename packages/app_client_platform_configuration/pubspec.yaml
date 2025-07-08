@@ -1,0 +1,28 @@
+name: app_client_platform_configuration
+description: A generic Dart client for REST APIs that handles token
+  authentication. Adds Sentry integration and debug logging of requests out of
+  the box.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dependencies:
+  cookie_jar: ^4.0.8
+  dio: ^5.7.0
+  dio_cookie_manager: ^3.1.1
+  flutter:
+    sdk: flutter
+  native_dio_adapter: ^1.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true

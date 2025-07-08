@@ -1,0 +1,8 @@
+{
+  "@@locale": "en",
+  "minutes": "{minutes}m",
+  "hours": "{hours}h",
+  "days": "{days}d",
+  "months": "{months}mo",
+  "years": "{years}y"
+}

@@ -1,0 +1,154 @@
+// dart format width=80
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'app_router_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+// dart format off
+T _$identity<T>(T value) => value;
+/// @nodoc
+mixin _$AppRouterState {
+
+ AppRouter get router; List<String> get history; String? get fullPath;
+/// Create a copy of AppRouterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AppRouterStateCopyWith<AppRouterState> get copyWith => _$AppRouterStateCopyWithImpl<AppRouterState>(this as AppRouterState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppRouterState&&(identical(other.router, router) || other.router == router)&&const DeepCollectionEquality().equals(other.history, history)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,router,const DeepCollectionEquality().hash(history),fullPath);
+
+@override
+String toString() {
+  return 'AppRouterState(router: $router, history: $history, fullPath: $fullPath)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AppRouterStateCopyWith<$Res>  {
+  factory $AppRouterStateCopyWith(AppRouterState value, $Res Function(AppRouterState) _then) = _$AppRouterStateCopyWithImpl;
+@useResult
+$Res call({
+ AppRouter router, List<String> history, String? fullPath
+});
+
+
+
+
+}
+/// @nodoc
+class _$AppRouterStateCopyWithImpl<$Res>
+    implements $AppRouterStateCopyWith<$Res> {
+  _$AppRouterStateCopyWithImpl(this._self, this._then);
+
+  final AppRouterState _self;
+  final $Res Function(AppRouterState) _then;
+
+/// Create a copy of AppRouterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? router = null,Object? history = null,Object? fullPath = freezed,}) {
+  return _then(_self.copyWith(
+router: null == router ? _self.router : router // ignore: cast_nullable_to_non_nullable
+as AppRouter,history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
+as List<String>,fullPath: freezed == fullPath ? _self.fullPath : fullPath // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// @nodoc
+
+
+class _AppRouterState extends AppRouterState {
+  const _AppRouterState({required this.router, final  List<String> history = const [], this.fullPath}): _history = history,super._();
+  
+
+@override final  AppRouter router;
+ final  List<String> _history;
+@override@JsonKey() List<String> get history {
+  if (_history is EqualUnmodifiableListView) return _history;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_history);
+}
+
+@override final  String? fullPath;
+
+/// Create a copy of AppRouterState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$AppRouterStateCopyWith<_AppRouterState> get copyWith => __$AppRouterStateCopyWithImpl<_AppRouterState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppRouterState&&(identical(other.router, router) || other.router == router)&&const DeepCollectionEquality().equals(other._history, _history)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,router,const DeepCollectionEquality().hash(_history),fullPath);
+
+@override
+String toString() {
+  return 'AppRouterState(router: $router, history: $history, fullPath: $fullPath)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$AppRouterStateCopyWith<$Res> implements $AppRouterStateCopyWith<$Res> {
+  factory _$AppRouterStateCopyWith(_AppRouterState value, $Res Function(_AppRouterState) _then) = __$AppRouterStateCopyWithImpl;
+@override @useResult
+$Res call({
+ AppRouter router, List<String> history, String? fullPath
+});
+
+
+
+
+}
+/// @nodoc
+class __$AppRouterStateCopyWithImpl<$Res>
+    implements _$AppRouterStateCopyWith<$Res> {
+  __$AppRouterStateCopyWithImpl(this._self, this._then);
+
+  final _AppRouterState _self;
+  final $Res Function(_AppRouterState) _then;
+
+/// Create a copy of AppRouterState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? router = null,Object? history = null,Object? fullPath = freezed,}) {
+  return _then(_AppRouterState(
+router: null == router ? _self.router : router // ignore: cast_nullable_to_non_nullable
+as AppRouter,history: null == history ? _self._history : history // ignore: cast_nullable_to_non_nullable
+as List<String>,fullPath: freezed == fullPath ? _self.fullPath : fullPath // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+// dart format on

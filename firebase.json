@@ -1,0 +1,39 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "hacker-client-6bde7",
+                    "appId": "1:803153356982:android:c5a201984d99ff73b4de17",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "hacker-client-6bde7",
+                    "appId": "1:803153356982:ios:682ed7471c279541b4de17",
+                    "uploadDebugSymbols": true,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "macos": {
+                "default": {
+                    "projectId": "hacker-client-6bde7",
+                    "appId": "1:803153356982:ios:682ed7471c279541b4de17",
+                    "uploadDebugSymbols": true,
+                    "fileOutput": "macos/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "hacker-client-6bde7",
+                    "configurations": {
+                        "android": "1:803153356982:android:c5a201984d99ff73b4de17",
+                        "ios": "1:803153356982:ios:682ed7471c279541b4de17",
+                        "macos": "1:803153356982:ios:682ed7471c279541b4de17"
+                    }
+                }
+            }
+        }
+    }
+}

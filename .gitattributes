@@ -1,0 +1,2 @@
+*.freezed.dart linguist-generated=true
+**/generated/* linguist-generated=true

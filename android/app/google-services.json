@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "803153356982",
+    "project_id": "hacker-client-6bde7",
+    "storage_bucket": "hacker-client-6bde7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803153356982:android:c5a201984d99ff73b4de17",
+        "android_client_info": {
+          "package_name": "com.lukasmirbt.hackerclient"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJNwPKFScQ0QztBjkiPjQhXSy7Rpow4cA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,29 @@
+name: vote_repository
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dependencies:
+  authentication_api:
+    path: ../authentication_api
+  bloc: ^9.0.0
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  vote_api:
+    path: ../vote_api
+
+dev_dependencies:
+  bloc_test: ^10.0.0
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true

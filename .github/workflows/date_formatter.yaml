@@ -1,0 +1,21 @@
+name: app_date_time_formatter
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/app_date_time_formatter/**"
+      - ".github/workflows/app_date_time_formatter.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      working_directory: packages/app_date_time_formatter
+      coverage_excludes: "lib/src/l10n/generated/**"

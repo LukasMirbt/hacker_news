@@ -1,0 +1,165 @@
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: cascade_invocations
+
+import 'dart:io';
+
+import 'package:authentication_api/authentication_api.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class _MockAppClient extends Mock implements AppClient {}
+
+class _MockDio extends Mock implements Dio {}
+
+void main() {
+  final cookies = [
+    Cookie('name', 'value'),
+  ];
+
+  group(AuthenticationApi, () {
+    late AppClient client;
+    late Dio http;
+
+    setUp(() {
+      client = _MockAppClient();
+      http = _MockDio();
+      when(() => client.http).thenReturn(http);
+      registerFallbackValue(RedirectValidationOptions());
+    });
+
+    AuthenticationApi createSubject() {
+      return AuthenticationApi(appClient: client);
+    }
+
+    group('stream', () {
+      test('returns client.stream', () {
+        final stream = Stream<AuthenticationState>.empty();
+        when(() => client.stream).thenAnswer((_) => stream);
+        final api = createSubject();
+        expect(api.stream, stream);
+      });
+    });
+
+    group('state', () {
+      test('returns client.state', () {
+        final state = AuthenticationState();
+        when(() => client.state).thenReturn(state);
+        final api = createSubject();
+        expect(api.state, state);
+      });
+    });
+
+    group('baseUrl', () {
+      test('returns client.baseUrl', () {
+        final baseUrl = Uri.parse('https://example.com');
+        when(() => client.baseUrl).thenReturn(baseUrl);
+        final api = createSubject();
+        expect(api.baseUrl, baseUrl);
+      });
+    });
+
+    group('redirectToLogin', () {
+      test('calls client.redirectToLogin', () {
+        final api = createSubject();
+        api.redirectToLogin();
+        verify(() => client.redirectToLogin()).called(1);
+      });
+    });
+
+    group('cookies', () {
+      final getCookies = () => client.cookies();
+
+      test('retuns cookies', () async {
+        when(getCookies).thenAnswer((_) async => cookies);
+        final api = createSubject();
+        expect(api.cookies(), completion(cookies));
+        verify(getCookies).called(1);
+      });
+    });
+
+    group('saveCookies', () {
+      final saveCookies = () => client.saveCookies(cookies);
+
+      test('calls client.saveCookies', () async {
+        when(saveCookies).thenAnswer((_) async {});
+        final api = createSubject();
+        await api.saveCookies(cookies);
+        verify(saveCookies).called(1);
+      });
+    });
+
+    group('login', () {
+      const username = 'username';
+      const password = 'password';
+
+      final loginRequest = () => http.post<String>(
+        'login',
+        options: any(
+          named: 'options',
+          that: isA<RedirectValidationOptions>().having(
+            (options) => options.contentType,
+            'contentType',
+            Headers.formUrlEncodedContentType,
+          ),
+        ),
+        data: {
+          'goto': 'news',
+          'acct': username,
+          'pw': password,
+        },
+      );
+
+      const redirect = 'redirect';
+
+      final headers = Headers.fromMap({
+        HttpHeaders.locationHeader: [redirect],
+      });
+
+      final redirectRequest = () => http.get<void>(redirect);
+
+      test('makes login request and follows redirect', () async {
+        when(loginRequest).thenAnswer(
+          (_) async => Response<String>(
+            requestOptions: RequestOptions(),
+            headers: headers,
+          ),
+        );
+        when(redirectRequest).thenAnswer(
+          (_) async => Response<void>(
+            requestOptions: RequestOptions(),
+          ),
+        );
+        final api = createSubject();
+        await api.login(
+          username: username,
+          password: password,
+        );
+        verify(loginRequest).called(1);
+        verify(redirectRequest).called(1);
+      });
+    });
+
+    group('logout', () {
+      final user = UserPlaceholder();
+      final logoutRequest = () => http.get<void>(user.logoutUrl);
+      final unauthenticate = () => client.unauthenticate();
+
+      test('makes logout request and calls unauthenticate', () async {
+        when(() => client.state).thenReturn(
+          AuthenticationState(user: user),
+        );
+        when(logoutRequest).thenAnswer(
+          (_) async => Response<void>(
+            requestOptions: RequestOptions(),
+          ),
+        );
+        when(unauthenticate).thenAnswer((_) async {});
+        final api = createSubject();
+        await api.logout();
+        verify(logoutRequest).called(1);
+        verify(unauthenticate).called(1);
+      });
+    });
+  });
+}

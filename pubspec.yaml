@@ -1,0 +1,122 @@
+name: hacker_client
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.0
+
+workspace:
+  - packages/analytics_repository
+  - packages/app_client
+  - packages/app_client_platform_configuration
+  - packages/app_ui
+  - packages/authentication_api
+  - packages/authentication_parser
+  - packages/authentication_repository
+  - packages/date_formatter
+  - packages/feed_api
+  - packages/feed_parser
+  - packages/feed_repository
+  - packages/link_launcher
+  - packages/parser_core
+  - packages/post_api
+  - packages/post_parser
+  - packages/post_repository
+  - packages/reply_form_parser
+  - packages/secure_cookie_storage
+  - packages/share_launcher
+  - packages/version_repository
+  - packages/vote_api
+  - packages/vote_repository
+  - packages/web_links
+
+dependencies:
+  analytics_repository:
+    path: packages/analytics_repository
+  app_client:
+    path: packages/app_client
+  app_client_platform_configuration:
+    path: packages/app_client_platform_configuration
+  app_ui:
+    path: packages/app_ui
+  authentication_api:
+    path: packages/authentication_api
+  authentication_repository:
+    path: packages/authentication_repository
+  clock: ^1.1.2
+  collection: ^1.19.1
+  date_formatter:
+    path: packages/date_formatter
+  equatable: ^2.0.7
+  feed_api:
+    path: packages/feed_api
+  feed_parser:
+    path: packages/feed_parser
+  feed_repository:
+    path: packages/feed_repository
+  firebase_core: ^3.12.1
+  firebase_crashlytics: ^4.3.4
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.0
+  flutter_inappwebview: ^6.2.0-beta.2
+  flutter_launcher_icons: ^0.14.4
+  flutter_localizations:
+    sdk: flutter
+  flutter_native_splash: ^2.4.6
+  # Pinned to avoid duplicate semantics when PR is merged
+  # https://github.com/daohoangson/flutter_widget_from_html/pull/1429
+  flutter_sticky_header: ^0.8.0
+  flutter_widget_from_html_core: 0.16.0
+  freezed_annotation: ^3.0.0
+  go_router: ^16.0.0
+  hydrated_bloc: ^10.0.0
+  intl: ^0.20.2
+  json_annotation: ^4.9.0
+  link_launcher:
+    path: packages/link_launcher
+  logging: ^1.3.0
+  nested: ^1.0.0
+  path_provider: ^2.1.5
+  plugin_platform_interface: ^2.1.8
+  post_api:
+    path: packages/post_api
+  post_parser:
+    path: packages/post_parser
+  post_repository:
+    path: packages/post_repository
+  provider: ^6.1.2
+  secure_cookie_storage:
+    path: packages/secure_cookie_storage
+  share_launcher:
+    path: packages/share_launcher
+  skeletonizer: ^2.0.1
+  super_sliver_list: ^0.4.1
+  url_launcher: ^6.3.1
+  version_repository:
+    path: packages/version_repository
+  vote_api:
+    path: packages/vote_api
+  vote_repository:
+    path: packages/vote_repository
+  web_links:
+    path: packages/web_links
+
+dev_dependencies:
+  bloc_test: ^10.0.0
+  build_runner: ^2.4.15
+  fake_async: ^1.3.3
+  flutter_test:
+    sdk: flutter
+  freezed: ^3.0.3
+  go_router_builder: ^3.0.1
+  json_serializable: ^6.9.5
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - shorebird.yaml
