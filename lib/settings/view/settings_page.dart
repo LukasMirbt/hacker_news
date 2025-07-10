@@ -20,6 +20,8 @@ class SettingsPage extends StatelessWidget {
             children: [
               ThemeSection(),
               Divider(),
+              GeneralSection(),
+              Divider(),
               UserSection(),
             ],
           ),
