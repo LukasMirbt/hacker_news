@@ -6,10 +6,9 @@ class AnalyticsConsentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnalyticsConsentListener(
+    return const AnalyticsConsentListener(
       child: Scaffold(
-        appBar: AppBar(),
-        body: const AnalyticsConsentBody(),
+        body: AnalyticsConsentBody(),
       ),
     );
   }

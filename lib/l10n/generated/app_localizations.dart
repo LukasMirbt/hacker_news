@@ -100,6 +100,18 @@ abstract class AppLocalizations {
   /// **'Something went wrong.'**
   String get generalServerError;
 
+  /// No description provided for @analyticsConsent_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us improve the app?'**
+  String get analyticsConsent_title;
+
+  /// No description provided for @analyticsConsent_explanation.
+  ///
+  /// In en, this message translates to:
+  /// **'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.'**
+  String get analyticsConsent_explanation;
+
   /// No description provided for @analyticsConsent_continue.
   ///
   /// In en, this message translates to:
