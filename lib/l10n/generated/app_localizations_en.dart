@@ -12,6 +12,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalServerError => 'Something went wrong.';
 
   @override
+  String get analyticsConsent_continue => 'Continue';
+
+  @override
+  String get analyticsConsent_skip => 'Skip';
+
+  @override
   String get appShell_home => 'Home';
 
   @override

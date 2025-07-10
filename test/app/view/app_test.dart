@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,15 @@ import 'package:post_api/post_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
+import '../init_mock_hydrated_storage.dart';
+
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
 class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
+
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
@@ -46,10 +51,13 @@ class _MockVoteRepository extends Mock implements VoteRepository {
 }
 
 void main() {
+  initMockHydratedStorage();
+
   group(App, () {
     late AuthenticationApi authenticationApi;
     late FeedApi feedApi;
     late PostApi postApi;
+    late AnalyticsRepository analyticsRepository;
     late AuthenticationRepository authenticationRepository;
     late VersionRepository versionRepository;
     late VoteRepository voteRepository;
@@ -58,6 +66,7 @@ void main() {
       authenticationApi = _MockAuthenticationApi();
       feedApi = _MockFeedApi();
       postApi = _MockPostApi();
+      analyticsRepository = _MockAnalyticsRepository();
       authenticationRepository = _MockAuthenticationRepository();
       voteRepository = _MockVoteRepository();
       versionRepository = _MockVersionRepository();
@@ -67,6 +76,7 @@ void main() {
       return App(
         authenticationApi: authenticationApi,
         feedApi: feedApi,
+        analyticsRepository: analyticsRepository,
         authenticationRepository: authenticationRepository,
         postApi: postApi,
         versionRepository: versionRepository,
@@ -96,6 +106,12 @@ void main() {
       expect(context.read<FeedApi>(), isNotNull);
     });
 
+    testWidgets('provides $AnalyticsRepository', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<AnalyticsRepository>(), isNotNull);
+    });
+
     testWidgets('provides $AuthenticationRepository', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
@@ -112,6 +128,12 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<VoteRepository>(), isNotNull);
+    });
+
+    testWidgets('provides $AppBloc', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<AppBloc>(), isNotNull);
     });
 
     testWidgets('provides $AppRouterBloc', (tester) async {

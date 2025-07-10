@@ -1,6 +1,8 @@
 {
   "@@locale": "en",
   "generalServerError": "Something went wrong.",
+  "analyticsConsent_continue": "Continue",
+  "analyticsConsent_skip": "Skip",
   "appShell_home": "Home",
   "appShell_settings": "Settings",
   "appShell_login": "Login",

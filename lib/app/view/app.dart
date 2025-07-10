@@ -1,3 +1,4 @@
+import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,13 @@ class App extends StatelessWidget {
     required AuthenticationApi authenticationApi,
     required PostApi postApi,
     required FeedApi feedApi,
+    required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
     required VersionRepository versionRepository,
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
+       _analyticsRepository = analyticsRepository,
        _authenticationRepository = authenticationRepository,
        _postApi = postApi,
        _feedApi = feedApi,
@@ -30,6 +33,7 @@ class App extends StatelessWidget {
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
+  final AnalyticsRepository _analyticsRepository;
   final AuthenticationRepository _authenticationRepository;
   final PostApi _postApi;
   final FeedApi _feedApi;
@@ -46,12 +50,16 @@ class App extends StatelessWidget {
       ],
       child: MultiRepositoryProvider(
         providers: [
+          RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
           RepositoryProvider.value(value: _versionRepository),
           RepositoryProvider.value(value: _voteRepository),
         ],
         child: MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (_) => AppBloc(),
+            ),
             BlocProvider(
               create: (_) => AppRouterBloc(),
             ),

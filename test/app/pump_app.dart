@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart'
     as authentication;
@@ -30,6 +32,8 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
+
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
@@ -54,6 +58,11 @@ class _MockVoteRepository extends Mock implements VoteRepository {
 
   @override
   Stream<VoteState> get stream => Stream.empty();
+}
+
+class _MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
+  @override
+  AppState get state => AppState();
 }
 
 class _MockAppRouterBloc extends MockBloc<AppRouterEvent, AppRouterState>
@@ -124,6 +133,9 @@ extension PumpAppExtension on WidgetTester {
         ],
         child: MultiRepositoryProvider(
           providers: [
+            RepositoryProvider<AnalyticsRepository>(
+              create: (_) => _MockAnalyticsRepository(),
+            ),
             RepositoryProvider<AuthenticationRepository>(
               create: (_) => _MockAuthenticationRepository(),
             ),
@@ -136,6 +148,9 @@ extension PumpAppExtension on WidgetTester {
           ],
           child: MultiBlocProvider(
             providers: [
+              BlocProvider<AppBloc>(
+                create: (_) => _MockAppBloc(),
+              ),
               BlocProvider<AppRouterBloc>(
                 create: (_) => _MockAppRouterBloc(),
               ),

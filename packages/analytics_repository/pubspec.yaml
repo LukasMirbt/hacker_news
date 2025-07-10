@@ -16,6 +16,8 @@ dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   recase: ^4.1.0
+  storage:
+    path: ../storage/storage
 
 dev_dependencies:
   flutter_test:

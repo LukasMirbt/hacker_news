@@ -26,6 +26,9 @@ workspace:
   - packages/reply_form_parser
   - packages/secure_cookie_storage
   - packages/share_launcher
+  - packages/storage/persistent_storage
+  - packages/storage/secure_storage
+  - packages/storage/storage
   - packages/version_repository
   - packages/vote_api
   - packages/vote_repository
@@ -79,6 +82,8 @@ dependencies:
   logging: ^1.3.0
   nested: ^1.0.0
   path_provider: ^2.1.5
+  persistent_storage:
+    path: packages/storage/persistent_storage
   plugin_platform_interface: ^2.1.8
   post_api:
     path: packages/post_api
@@ -91,6 +96,7 @@ dependencies:
     path: packages/secure_cookie_storage
   share_launcher:
     path: packages/share_launcher
+  shared_preferences: ^2.5.3
   skeletonizer: ^2.0.1
   super_sliver_list: ^0.4.1
   url_launcher: ^6.3.1

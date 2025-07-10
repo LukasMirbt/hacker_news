@@ -16,9 +16,29 @@ class AnalyticsRepository {
   const AnalyticsRepository(
     FirebaseApp _, {
     required FirebaseAnalytics firebaseAnalytics,
-  }) : _firebaseAnalytics = firebaseAnalytics;
+    required AnalyticsConsentStorage consentStorage,
+  }) : _firebaseAnalytics = firebaseAnalytics,
+       _storage = consentStorage;
 
   final FirebaseAnalytics _firebaseAnalytics;
+  final AnalyticsConsentStorage _storage;
+
+  Future<bool> isAnalyticsCollectionEnabled() async {
+    final enabled = await _storage.readAnalyticsCollectionEnabled();
+    return enabled;
+  }
+
+  Future<void> disableAnalyticsCollection() async {
+    const enabled = false;
+    await _firebaseAnalytics.setAnalyticsCollectionEnabled(enabled);
+    await _storage.writeAnalyticsCollectionEnabled(enabled: enabled);
+  }
+
+  Future<void> enableAnalyticsCollection() async {
+    const enabled = true;
+    await _firebaseAnalytics.setAnalyticsCollectionEnabled(enabled);
+    await _storage.writeAnalyticsCollectionEnabled(enabled: enabled);
+  }
 
   Future<void> send(AnalyticsEvent event) async {
     try {
