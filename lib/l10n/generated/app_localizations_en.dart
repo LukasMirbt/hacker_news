@@ -141,6 +141,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_dataCollection => 'Data collection';
 
   @override
+  String get settings_privacyPolicy => 'Privacy policy';
+
+  @override
   String get theme_system => 'Use device settings';
 
   @override
