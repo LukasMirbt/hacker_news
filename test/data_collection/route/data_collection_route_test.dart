@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: inference_failure_on_collection_literal
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/settings/settings.dart';
+import 'package:hacker_client/data_collection/data_collection.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
@@ -12,42 +14,48 @@ import '../../app/pump_app.dart';
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  group(SettingsRoute, () {
+  group(DataCollectionRoute, () {
     late GoRouterState state;
 
     setUp(() {
       state = _MockGoRouterState();
     });
 
-    SettingsRoute createSubject() => SettingsRoute();
+    DataCollectionRoute createSubject() => DataCollectionRoute();
 
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
     });
 
+    group('parentNavigatorKey', () {
+      test('returns correct navigatorKey', () {
+        expect(
+          DataCollectionRoute.$parentNavigatorKey,
+          AppRouter.navigatorKey,
+        );
+      });
+    });
+
     group('config', () {
       test('has correct type', () {
         expect(
-          SettingsRoute.config,
-          isA<TypedGoRoute<SettingsRoute>>(),
+          DataCollectionRoute.config,
+          isA<TypedGoRoute<DataCollectionRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
-          SettingsRoute.config.path,
-          '/settings',
+          DataCollectionRoute.config.path,
+          'data-collection',
         );
       });
 
       test('has correct routes', () {
         expect(
-          SettingsRoute.config.routes,
-          [
-            DataCollectionRoute.config,
-            LicenseRoute.config,
-          ],
+          DataCollectionRoute.config.routes,
+          [],
         );
       });
     });
@@ -60,9 +68,9 @@ void main() {
         );
       }
 
-      testWidgets('renders $SettingsPage', (tester) async {
+      testWidgets('renders $DataCollectionPage', (tester) async {
         await tester.pumpApp(buildSubject());
-        expect(find.byType(SettingsPage), findsOneWidget);
+        expect(find.byType(DataCollectionPage), findsOneWidget);
       });
     });
   });

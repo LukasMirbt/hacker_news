@@ -76,6 +76,13 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
 
               factory: _$LicenseRoute._fromState,
             ),
+            GoRouteData.$route(
+              path: 'data-collection',
+
+              parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
+
+              factory: _$DataCollectionRoute._fromState,
+            ),
           ],
         ),
       ],
@@ -292,6 +299,27 @@ mixin _$LicenseRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/settings/licenses');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$DataCollectionRoute on GoRouteData {
+  static DataCollectionRoute _fromState(GoRouterState state) =>
+      const DataCollectionRoute();
+
+  @override
+  String get location => GoRouteData.$location('/settings/data-collection');
 
   @override
   void go(BuildContext context) => context.go(location);

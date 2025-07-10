@@ -51,6 +51,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
+  String get dataCollection_title => 'Data collection';
+
+  @override
+  String get dataCollection_analytics => 'Analytics';
+
+  @override
   String feed_shareText({required Object title, required Object url}) {
     return '$title $url';
   }
@@ -130,6 +136,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings_licenses => 'Licenses';
+
+  @override
+  String get settings_dataCollection => 'Data collection';
 
   @override
   String get theme_system => 'Use device settings';

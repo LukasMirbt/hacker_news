@@ -10,9 +10,10 @@ class GeneralSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppSpacing.lg,
       children: [
         _Title(),
+        SizedBox(height: AppSpacing.lg),
+        DataCollectionListItem(),
         LicenseListItem(),
       ],
     );

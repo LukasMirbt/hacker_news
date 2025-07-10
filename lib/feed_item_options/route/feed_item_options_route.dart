@@ -3,11 +3,11 @@ part of '../../app_shell/route/app_stateful_shell_route.dart';
 class FeedItemOptionsRoute extends GoRouteData with _$FeedItemOptionsRoute {
   const FeedItemOptionsRoute(this.$extra);
 
+  static final $parentNavigatorKey = AppRouter.navigatorKey;
+
   static const config = TypedGoRoute<FeedItemOptionsRoute>(
     path: 'item/options',
   );
-
-  static final $parentNavigatorKey = AppRouter.navigatorKey;
 
   final FeedItem $extra;
 

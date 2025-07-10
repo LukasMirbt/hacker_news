@@ -33,7 +33,10 @@ class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
 
-class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {
+  @override
+  Future<bool> isAnalyticsCollectionEnabled() async => false;
+}
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
