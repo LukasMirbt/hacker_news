@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_function_declarations_over_variables, prefer_const_constructors
+// ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: prefer_const_constructors
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
