@@ -340,6 +340,12 @@ abstract class AppLocalizations {
   /// **'Data collection'**
   String get settings_dataCollection;
 
+  /// No description provided for @settings_privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get settings_privacyPolicy;
+
   /// No description provided for @theme_system.
   ///
   /// In en, this message translates to:

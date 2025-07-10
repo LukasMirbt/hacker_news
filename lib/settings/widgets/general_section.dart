@@ -15,6 +15,7 @@ class GeneralSection extends StatelessWidget {
         SizedBox(height: AppSpacing.lg),
         DataCollectionListItem(),
         LicenseListItem(),
+        PrivacyPolicyListItem(),
       ],
     );
   }
