@@ -1,4 +1,3 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
@@ -10,10 +9,9 @@ class Logo extends StatelessWidget {
     final textTheme = TextTheme.of(context);
 
     return Text(
-      'HN',
+      'Yap',
       style: textTheme.titleLarge?.copyWith(
         color: colorScheme.primary,
-        fontFamily: FontFamily.atHauss,
         fontWeight: FontWeight.w600,
       ),
     );

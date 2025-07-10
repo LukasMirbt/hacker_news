@@ -12,6 +12,14 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/app_icon.png
+  AssetGenImage get appIcon =>
+      const AssetGenImage('assets/images/app_icon.png');
+
+  /// File path: assets/images/app_icon_foreground.png
+  AssetGenImage get appIconForeground =>
+      const AssetGenImage('assets/images/app_icon_foreground.png');
+
   /// File path: assets/images/chat_add_on_icon.png
   AssetGenImage get chatAddOnIcon =>
       const AssetGenImage('assets/images/chat_add_on_icon.png');
@@ -20,8 +28,22 @@ class $AssetsImagesGen {
   AssetGenImage get replyIcon =>
       const AssetGenImage('assets/images/reply_icon.png');
 
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/splash_android.png
+  AssetGenImage get splashAndroid =>
+      const AssetGenImage('assets/images/splash_android.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [chatAddOnIcon, replyIcon];
+  List<AssetGenImage> get values => [
+    appIcon,
+    appIconForeground,
+    chatAddOnIcon,
+    replyIcon,
+    splash,
+    splashAndroid,
+  ];
 }
 
 class Assets {

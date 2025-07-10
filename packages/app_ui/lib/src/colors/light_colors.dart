@@ -26,7 +26,7 @@ class LightColors extends AppColors {
   Color get onSecondaryContainer => const Color(0xFF2A3B4D);
 
   @override
-  Color get surface => const Color(0xFFF8F9FA);
+  Color get surface => const Color(0xFFFFFFFF);
 
   @override
   Color get onSurface => const Color(0xFF212529);
