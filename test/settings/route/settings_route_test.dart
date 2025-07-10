@@ -59,7 +59,7 @@ void main() {
         );
       }
 
-      testWidgets('returns $SettingsPage', (tester) async {
+      testWidgets('renders $SettingsPage', (tester) async {
         await tester.pumpApp(buildSubject());
         expect(find.byType(SettingsPage), findsOneWidget);
       });

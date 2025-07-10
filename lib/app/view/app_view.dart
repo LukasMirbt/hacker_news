@@ -3,6 +3,7 @@ import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/l10n/l10n.dart';
@@ -48,6 +49,7 @@ class AppView extends StatelessWidget {
               LogoutListener(),
               VoteFailureListener(),
               const RouterDelegateListener(),
+              AppStatusListener(),
             ],
             child: child,
           ),

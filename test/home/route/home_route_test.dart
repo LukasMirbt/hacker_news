@@ -61,7 +61,7 @@ void main() {
         );
       }
 
-      testWidgets('returns $HomePage', (tester) async {
+      testWidgets('renders $HomePage', (tester) async {
         await tester.pumpAppShell(buildSubject());
         expect(find.byType(HomePage), findsOneWidget);
       });

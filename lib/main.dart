@@ -10,13 +10,21 @@ import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/firebase_options.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_api/post_api.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final sharedPreferences = SharedPreferencesAsync();
+
+  final persistentStorage = PersistentStorage(
+    sharedPreferences: sharedPreferences,
+  );
 
   final directory = await getApplicationDocumentsDirectory();
 
@@ -44,12 +52,19 @@ void main() async {
   final analyticsRepository = AnalyticsRepository(
     firebaseApp,
     firebaseAnalytics: FirebaseAnalytics.instance,
+    consentStorage: AnalyticsConsentStorage(
+      storage: persistentStorage,
+    ),
   );
 
   Bloc.observer = AppBlocObserver(
     analyticsRepository: analyticsRepository,
     logger: logger,
   );
+
+  if (kDebugMode) {
+    await HydratedBloc.storage.clear();
+  }
 
   final cookieJar = PersistCookieJar(
     storage: const SecureCookieStorage(),
@@ -83,6 +98,7 @@ void main() async {
       authenticationApi: authenticationApi,
       feedApi: feedApi,
       postApi: postApi,
+      analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
       versionRepository: versionRepository,
       voteRepository: voteRepository,

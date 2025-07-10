@@ -38,11 +38,10 @@ void main() {
     group('fromJson', () {
       test('returns $ThemeState', () {
         final bloc = buildBloc();
-        final state = ThemeState();
-        final json = state.toJson();
+        final json = initialState.toJson();
         expect(
           bloc.fromJson(json),
-          state,
+          initialState,
         );
       });
     });
@@ -50,10 +49,9 @@ void main() {
     group('toJson', () {
       test('returns json', () {
         final bloc = buildBloc();
-        final state = ThemeState();
         expect(
-          bloc.toJson(state),
-          state.toJson(),
+          bloc.toJson(initialState),
+          initialState.toJson(),
         );
       });
     });

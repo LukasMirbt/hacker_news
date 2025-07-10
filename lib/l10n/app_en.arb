@@ -1,6 +1,10 @@
 {
   "@@locale": "en",
   "generalServerError": "Something went wrong.",
+  "analyticsConsent_title": "Help us improve the app?",
+  "analyticsConsent_explanation": "We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.",
+  "analyticsConsent_continue": "Continue",
+  "analyticsConsent_skip": "Skip",
   "appShell_home": "Home",
   "appShell_settings": "Settings",
   "appShell_login": "Login",

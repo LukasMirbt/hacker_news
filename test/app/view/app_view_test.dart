@@ -135,5 +135,10 @@ void main() {
       await tester.pumpApp(buildSubject());
       expect(find.byType(RouterDelegateListener), findsOneWidget);
     });
+
+    testWidgets('renders $AppStatusListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppStatusListener), findsOneWidget);
+    });
   });
 }

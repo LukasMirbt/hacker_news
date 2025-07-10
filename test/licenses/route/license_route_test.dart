@@ -49,7 +49,7 @@ void main() {
         );
       }
 
-      testWidgets('returns $LicensePage', (tester) async {
+      testWidgets('renders $LicensePage', (tester) async {
         await tester.pumpAppShell(buildSubject());
         expect(find.byType(LicensePage), findsOneWidget);
       });
