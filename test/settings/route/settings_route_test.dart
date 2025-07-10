@@ -40,6 +40,15 @@ void main() {
           '/settings',
         );
       });
+
+      test('has correct routes', () {
+        expect(
+          SettingsRoute.config.routes,
+          [
+            LicenseRoute.config,
+          ],
+        );
+      });
     });
 
     group('build', () {
