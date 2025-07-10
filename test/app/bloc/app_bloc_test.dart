@@ -1,42 +1,41 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/theme/theme.dart';
+import 'package:hacker_client/app/app.dart';
 
-import '../../app/init_mock_hydrated_storage.dart';
+import '../init_mock_hydrated_storage.dart';
 
 void main() {
   initMockHydratedStorage();
-  final initialState = ThemeState();
+  final initialState = AppState();
 
-  group(ThemeBloc, () {
-    ThemeBloc buildBloc() => ThemeBloc();
+  group(AppBloc, () {
+    AppBloc buildBloc() => AppBloc();
 
-    test('initial state is $ThemeState', () {
+    test('initial state is $AppState', () {
       expect(buildBloc().state, initialState);
     });
 
-    group(ThemeOptionPressed, () {
-      const mode = ThemeMode.dark;
-
-      blocTest<ThemeBloc, ThemeState>(
-        'emits mode',
+    group(AppAnalyticsConsentCompleted, () {
+      blocTest<AppBloc, AppState>(
+        'emits ${AppStatus.home}',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ThemeOptionPressed(mode),
+            AppAnalyticsConsentCompleted(),
           );
         },
         expect: () => [
-          initialState.copyWith(mode: mode),
+          initialState.copyWith(
+            status: AppStatus.home,
+          ),
         ],
       );
     });
 
     group('fromJson', () {
-      test('returns $ThemeState', () {
+      test('returns $AppState', () {
         final bloc = buildBloc();
         final json = initialState.toJson();
         expect(
