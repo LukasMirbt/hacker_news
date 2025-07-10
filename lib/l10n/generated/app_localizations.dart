@@ -274,17 +274,29 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get settings_logout;
 
+  /// No description provided for @settings_themeSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settings_themeSectionTitle;
+
+  /// No description provided for @settings_generalSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settings_generalSectionTitle;
+
   /// No description provided for @settings_userSectionTitle.
   ///
   /// In en, this message translates to:
   /// **'User'**
   String get settings_userSectionTitle;
 
-  /// No description provided for @settings_themeSectionTitle.
+  /// No description provided for @settings_licenses.
   ///
   /// In en, this message translates to:
-  /// **'Theme'**
-  String get settings_themeSectionTitle;
+  /// **'Licenses'**
+  String get settings_licenses;
 
   /// No description provided for @theme_system.
   ///

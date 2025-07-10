@@ -5,6 +5,9 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute {
 
   static const config = TypedGoRoute<SettingsRoute>(
     path: '/settings',
+    routes: [
+      LicenseRoute.config,
+    ],
   );
 
   @override

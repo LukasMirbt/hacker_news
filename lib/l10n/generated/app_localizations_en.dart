@@ -107,10 +107,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_logout => 'Logout';
 
   @override
+  String get settings_themeSectionTitle => 'Theme';
+
+  @override
+  String get settings_generalSectionTitle => 'General';
+
+  @override
   String get settings_userSectionTitle => 'User';
 
   @override
-  String get settings_themeSectionTitle => 'Theme';
+  String get settings_licenses => 'Licenses';
 
   @override
   String get theme_system => 'Use device settings';

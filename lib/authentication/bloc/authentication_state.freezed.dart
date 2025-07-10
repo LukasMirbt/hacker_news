@@ -26,12 +26,12 @@ $AuthenticationStateCopyWith<AuthenticationState> get copyWith => _$Authenticati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&const DeepCollectionEquality().equals(other.user, user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(user),redirect,status,logoutStatus);
+int get hashCode => Object.hash(runtimeType,user,redirect,status,logoutStatus);
 
 @override
 String toString() {
@@ -63,9 +63,9 @@ class _$AuthenticationStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = freezed,Object? redirect = null,Object? status = null,Object? logoutStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? redirect = null,Object? status = null,Object? logoutStatus = null,}) {
   return _then(_self.copyWith(
-user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
 as Redirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as AuthenticationStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable
@@ -98,12 +98,12 @@ _$AuthenticationStateCopyWith<_AuthenticationState> get copyWith => __$Authentic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthenticationState&&const DeepCollectionEquality().equals(other.user, user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(user),redirect,status,logoutStatus);
+int get hashCode => Object.hash(runtimeType,user,redirect,status,logoutStatus);
 
 @override
 String toString() {
@@ -135,9 +135,9 @@ class __$AuthenticationStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = freezed,Object? redirect = null,Object? status = null,Object? logoutStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? redirect = null,Object? status = null,Object? logoutStatus = null,}) {
   return _then(_AuthenticationState(
-user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
 as Redirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as AuthenticationStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable

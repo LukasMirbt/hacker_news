@@ -19,6 +19,7 @@ part '../../comment_form/route/comment_form_route.dart';
 part '../../comment_options/route/comment_options_route.dart';
 part '../../feed_item_options/route/feed_item_options_route.dart';
 part '../../home/route/home_route.dart';
+part '../../licenses/route/license_route.dart';
 part '../../post/route/post_route.dart';
 part '../../post_options/route/post_options_route.dart';
 part '../../reply_form/route/reply_form_route.dart';

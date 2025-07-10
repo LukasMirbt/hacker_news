@@ -15,9 +15,9 @@ void main() {
       expect(find.byType(ThemeSection), findsOneWidget);
     });
 
-    testWidgets('renders $Divider', (tester) async {
+    testWidgets('renders $GeneralSection', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(Divider), findsOneWidget);
+      expect(find.byType(GeneralSection), findsOneWidget);
     });
 
     testWidgets('renders $UserSection', (tester) async {

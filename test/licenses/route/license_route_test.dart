@@ -4,22 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/settings/settings.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../app/pump_app.dart';
+import '../../app_shell/pump_app_shell.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  group(SettingsRoute, () {
+  group(LicenseRoute, () {
     late GoRouterState state;
 
     setUp(() {
       state = _MockGoRouterState();
     });
 
-    SettingsRoute createSubject() => SettingsRoute();
+    LicenseRoute createSubject() => LicenseRoute();
 
     test('is a $GoRouteData', () {
       final route = createSubject();
@@ -29,24 +28,15 @@ void main() {
     group('config', () {
       test('has correct type', () {
         expect(
-          SettingsRoute.config,
-          isA<TypedGoRoute<SettingsRoute>>(),
+          LicenseRoute.config,
+          isA<TypedGoRoute<LicenseRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
-          SettingsRoute.config.path,
-          '/settings',
-        );
-      });
-
-      test('has correct routes', () {
-        expect(
-          SettingsRoute.config.routes,
-          [
-            LicenseRoute.config,
-          ],
+          LicenseRoute.config.path,
+          'licenses',
         );
       });
     });
@@ -59,9 +49,9 @@ void main() {
         );
       }
 
-      testWidgets('returns $SettingsPage', (tester) async {
-        await tester.pumpApp(buildSubject());
-        expect(find.byType(SettingsPage), findsOneWidget);
+      testWidgets('returns $LicensePage', (tester) async {
+        await tester.pumpAppShell(buildSubject());
+        expect(find.byType(LicensePage), findsOneWidget);
       });
     });
   });
