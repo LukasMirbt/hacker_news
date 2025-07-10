@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../app_shell/pump_app_shell.dart';
+import '../../app/pump_app.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
@@ -23,6 +24,15 @@ void main() {
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
+    });
+
+    group('parentNavigatorKey', () {
+      test('returns correct navigatorKey', () {
+        expect(
+          LicenseRoute.$parentNavigatorKey,
+          AppRouter.navigatorKey,
+        );
+      });
     });
 
     group('config', () {
@@ -50,7 +60,7 @@ void main() {
       }
 
       testWidgets('renders $LicensePage', (tester) async {
-        await tester.pumpAppShell(buildSubject());
+        await tester.pumpApp(buildSubject());
         expect(find.byType(LicensePage), findsOneWidget);
       });
     });

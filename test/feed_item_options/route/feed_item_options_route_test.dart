@@ -5,6 +5,7 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed_item_options/feed_item_options.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,6 +31,15 @@ void main() {
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
+    });
+
+    group('parentNavigatorKey', () {
+      test('returns correct navigatorKey', () {
+        expect(
+          FeedItemOptionsRoute.$parentNavigatorKey,
+          AppRouter.navigatorKey,
+        );
+      });
     });
 
     group('config', () {

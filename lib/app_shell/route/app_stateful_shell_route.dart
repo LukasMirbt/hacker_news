@@ -7,6 +7,7 @@ import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_form/comment_form.dart';
 import 'package:hacker_client/comment_options/comment_options.dart';
+import 'package:hacker_client/data_collection/data_collection.dart';
 import 'package:hacker_client/feed_item_options/feed_item_options.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/post/post.dart';
@@ -17,6 +18,7 @@ import 'package:provider/provider.dart';
 
 part '../../comment_form/route/comment_form_route.dart';
 part '../../comment_options/route/comment_options_route.dart';
+part '../../data_collection/route/data_collection_route.dart';
 part '../../feed_item_options/route/feed_item_options_route.dart';
 part '../../home/route/home_route.dart';
 part '../../licenses/route/license_route.dart';

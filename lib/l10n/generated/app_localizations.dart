@@ -172,6 +172,18 @@ abstract class AppLocalizations {
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
 
+  /// No description provided for @dataCollection_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Data collection'**
+  String get dataCollection_title;
+
+  /// No description provided for @dataCollection_analytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Analytics'**
+  String get dataCollection_analytics;
+
   /// No description provided for @feed_shareText.
   ///
   /// In en, this message translates to:
@@ -321,6 +333,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get settings_licenses;
+
+  /// No description provided for @settings_dataCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Data collection'**
+  String get settings_dataCollection;
 
   /// No description provided for @theme_system.
   ///
