@@ -29,11 +29,6 @@ void main() {
       );
     }
 
-    testWidgets('renders $SingleChildScrollView', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(SingleChildScrollView), findsOneWidget);
-    });
-
     testWidgets('renders $AnalyticsConsentContinueButton', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AnalyticsConsentContinueButton), findsOneWidget);

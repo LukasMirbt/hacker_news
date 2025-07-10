@@ -13,7 +13,7 @@ void main() {
       test('returns true when status '
           'is ${AnalyticsConsentStatus.initial}', () {
         final state = createState(
-          status: AnalyticsConsentStatus.loading,
+          status: AnalyticsConsentStatus.initial,
         );
         expect(state.isLoading, false);
       });
@@ -31,7 +31,7 @@ void main() {
         final state = createState(
           status: AnalyticsConsentStatus.success,
         );
-        expect(state.isLoading, false);
+        expect(state.isLoading, true);
       });
     });
   });

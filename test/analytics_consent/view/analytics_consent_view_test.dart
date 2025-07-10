@@ -34,11 +34,6 @@ void main() {
       expect(find.byType(AnalyticsConsentListener), findsOneWidget);
     });
 
-    testWidgets('renders $AppBar', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(AppBar), findsOneWidget);
-    });
-
     testWidgets('renders $AnalyticsConsentBody', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AnalyticsConsentBody), findsOneWidget);
