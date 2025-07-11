@@ -43,12 +43,6 @@ flutter:
   assets:
     - assets/images/
   fonts:
-    - family: At Hauss
-      fonts:
-        - asset: assets/fonts/AtHauss-Semibold.otf
-          weight: 600
-        - asset: assets/fonts/AtHauss-Regular.otf
-          weight: 400
     - family: Noto Sans Mono
       fonts:
         - asset: assets/fonts/NotoSansMono-Regular.ttf
