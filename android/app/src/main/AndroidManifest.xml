@@ -2,7 +2,7 @@
   <!-- allowBackup and fullBackupContent = false because of FlutterSecure Storage
      https://github.com/juliansteenbakker/flutter_secure_storage/issues/43#issuecomment-471642126 -->
   <application
-    android:label="hacker_client"
+    android:label="Yap: HN"
     android:name="${applicationName}"
     android:icon="@mipmap/ic_launcher"
     android:allowBackup="false"
