@@ -5,7 +5,7 @@ definitions:
     set-build-version: &set-build-version
         name: Set build version
         script: |
-            BUILD_NUMBER=$((PROJECT_BUILD_NUMBER + 10))
+            BUILD_NUMBER=$((PROJECT_BUILD_NUMBER + 125))
             BUILD_NAME="0.1.${BUILD_NUMBER}"
 
             echo "BUILD_NAME=$BUILD_NAME" >> $CM_ENV
