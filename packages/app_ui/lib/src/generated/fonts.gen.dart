@@ -13,12 +13,6 @@ class FontFamily {
   /// Font family: At Hauss
   static const String atHauss = 'At Hauss';
 
-  /// Font family: At Slam Cnd
-  static const String atSlamCnd = 'At Slam Cnd';
-
-  /// Font family: Inter
-  static const String inter = 'Inter';
-
   /// Font family: Noto Sans
   static const String notoSans = 'Noto Sans';
 

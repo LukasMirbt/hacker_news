@@ -35,10 +35,6 @@ abstract class AppTheme {
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
       centerTitle: false,
-      titleTextStyle: textStyles.titleLarge.copyWith(
-        fontFamily: FontFamily.atHauss,
-        color: colors.onSurface,
-      ),
     );
   }
 

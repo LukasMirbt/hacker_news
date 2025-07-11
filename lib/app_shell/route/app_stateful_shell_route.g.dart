@@ -70,18 +70,18 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           factory: _$SettingsRoute._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'licenses',
-
-              parentNavigatorKey: LicenseRoute.$parentNavigatorKey,
-
-              factory: _$LicenseRoute._fromState,
-            ),
-            GoRouteData.$route(
               path: 'data-collection',
 
               parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
 
               factory: _$DataCollectionRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'licenses',
+
+              parentNavigatorKey: LicenseRoute.$parentNavigatorKey,
+
+              factory: _$LicenseRoute._fromState,
             ),
           ],
         ),
@@ -294,11 +294,12 @@ mixin _$SettingsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$LicenseRoute on GoRouteData {
-  static LicenseRoute _fromState(GoRouterState state) => const LicenseRoute();
+mixin _$DataCollectionRoute on GoRouteData {
+  static DataCollectionRoute _fromState(GoRouterState state) =>
+      const DataCollectionRoute();
 
   @override
-  String get location => GoRouteData.$location('/settings/licenses');
+  String get location => GoRouteData.$location('/settings/data-collection');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -314,12 +315,11 @@ mixin _$LicenseRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$DataCollectionRoute on GoRouteData {
-  static DataCollectionRoute _fromState(GoRouterState state) =>
-      const DataCollectionRoute();
+mixin _$LicenseRoute on GoRouteData {
+  static LicenseRoute _fromState(GoRouterState state) => const LicenseRoute();
 
   @override
-  String get location => GoRouteData.$location('/settings/data-collection');
+  String get location => GoRouteData.$location('/settings/licenses');
 
   @override
   void go(BuildContext context) => context.go(location);
