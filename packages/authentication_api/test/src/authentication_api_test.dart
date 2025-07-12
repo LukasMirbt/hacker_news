@@ -140,6 +140,58 @@ void main() {
       });
     });
 
+    group('createAccount', () {
+      const username = 'username';
+      const password = 'password';
+
+      final loginRequest = () => http.post<String>(
+        'login',
+        options: any(
+          named: 'options',
+          that: isA<RedirectValidationOptions>().having(
+            (options) => options.contentType,
+            'contentType',
+            Headers.formUrlEncodedContentType,
+          ),
+        ),
+        data: {
+          'goto': 'news',
+          'creating': 't',
+          'acct': username,
+          'pw': password,
+        },
+      );
+
+      const redirect = 'redirect';
+
+      final headers = Headers.fromMap({
+        HttpHeaders.locationHeader: [redirect],
+      });
+
+      final redirectRequest = () => http.get<void>(redirect);
+
+      test('makes create account request and follows redirect', () async {
+        when(loginRequest).thenAnswer(
+          (_) async => Response<String>(
+            requestOptions: RequestOptions(),
+            headers: headers,
+          ),
+        );
+        when(redirectRequest).thenAnswer(
+          (_) async => Response<void>(
+            requestOptions: RequestOptions(),
+          ),
+        );
+        final api = createSubject();
+        await api.login(
+          username: username,
+          password: password,
+        );
+        verify(loginRequest).called(1);
+        verify(redirectRequest).called(1);
+      });
+    });
+
     group('logout', () {
       final user = UserPlaceholder();
       final logoutRequest = () => http.get<void>(user.logoutUrl);
