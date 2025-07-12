@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: ./.github/workflows/flutter_package.yaml
     with:
       working_directory: packages/app_date_time_formatter
       coverage_excludes: "lib/src/l10n/generated/**"
