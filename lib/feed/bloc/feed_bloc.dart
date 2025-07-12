@@ -21,7 +21,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
        super(
          FeedState.initial(
            type: type,
-           visitedPosts: visitedPostRepository.state,
+           visitedPosts: visitedPostRepository.state.items,
          ),
        ) {
     on<FeedVoteSubscriptionRequested>(
@@ -71,10 +71,10 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
   ) {
     return emit.onEach(
       _visitedPostRepository.stream,
-      onData: (visitedPosts) {
+      onData: (repositoryState) {
         emit(
           state.copyWith(
-            visitedPosts: visitedPosts,
+            visitedPosts: repositoryState.items,
           ),
         );
       },

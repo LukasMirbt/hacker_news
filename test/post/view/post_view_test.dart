@@ -36,7 +36,10 @@ void main() {
       commentListBloc = _MockCommentListBloc();
       when(() => postBloc.state).thenReturn(initialState);
       when(() => postHeaderBloc.state).thenReturn(
-        PostHeaderState.initial(id: 'id'),
+        PostHeaderState.initial(
+          id: 'id',
+          visitedPosts: {},
+        ),
       );
       when(() => commentListBloc.state).thenReturn(
         CommentListState.initial(id: 'id'),

@@ -56,8 +56,13 @@ class _MockVersionRepository extends Mock implements VersionRepository {
   Future<Version> currentVersion() async => Version(1, 0, 0);
 }
 
-class _MockVisitedPostRepository extends Mock
-    implements VisitedPostRepository {}
+class _MockVisitedPostRepository extends Mock implements VisitedPostRepository {
+  @override
+  VisitedPostState get state => VisitedPostState();
+
+  @override
+  Stream<VisitedPostState> get stream => Stream.empty();
+}
 
 class _MockVoteRepository extends Mock implements VoteRepository {
   @override

@@ -7,11 +7,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:share_launcher/share_launcher.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockFeedRepository extends Mock implements FeedRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
+
+class _MockVisitedPostRepository extends Mock
+    implements VisitedPostRepository {}
 
 class _MockShareLauncher extends Mock implements ShareLauncher {}
 
@@ -21,19 +25,29 @@ class _MockPaginatedFeedModel extends Mock implements PaginatedFeedModel {}
 
 void main() {
   const type = FeedType.top;
-  final initialState = FeedState.initial(type);
+  final visitedPosts = <String>{};
+
+  final initialState = FeedState.initial(
+    type: type,
+    visitedPosts: visitedPosts,
+  );
 
   group(FeedBloc, () {
     late FeedRepository feedRepository;
     late VoteRepository voteRepository;
+    late VisitedPostRepository visitedPostRepository;
     late ShareLauncher shareLauncher;
     late FeedVoteModel voteModel;
 
     setUp(() {
       feedRepository = _MockFeedRepository();
       voteRepository = _MockVoteRepository();
+      visitedPostRepository = _MockVisitedPostRepository();
       shareLauncher = _MockShareLauncher();
       voteModel = _MockFeedVoteModel();
+      when(() => visitedPostRepository.state).thenReturn(
+        VisitedPostState(items: visitedPosts),
+      );
     });
 
     FeedBloc buildBloc() {
@@ -41,6 +55,7 @@ void main() {
         type: type,
         feedRepository: feedRepository,
         voteRepository: voteRepository,
+        visitedPostRepository: visitedPostRepository,
         shareLauncher: shareLauncher,
         voteModel: voteModel,
       );
@@ -89,6 +104,32 @@ void main() {
         verify: (_) {
           verify(updateFeed).called(1);
         },
+      );
+    });
+
+    group(FeedVisitedPostSubscriptionRequested, () {
+      final updatedRepositoryState = VisitedPostState(
+        items: {'id'},
+      );
+
+      blocTest<FeedBloc, FeedState>(
+        'emits updated feed when repository emits $VoteSuccess',
+        setUp: () {
+          when(() => visitedPostRepository.stream).thenAnswer(
+            (_) => Stream.value(updatedRepositoryState),
+          );
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            FeedVisitedPostSubscriptionRequested(),
+          );
+        },
+        expect: () => [
+          initialState.copyWith(
+            visitedPosts: updatedRepositoryState.items,
+          ),
+        ],
       );
     });
 
@@ -231,8 +272,13 @@ void main() {
         FeedItemPlaceholder(),
       );
 
+      final add = () => visitedPostRepository.add(item.id);
+
       blocTest<FeedBloc, FeedState>(
-        'emits $ItemPress',
+        'emits $ItemPress and updates visited posts',
+        setUp: () {
+          when(add).thenAnswer((_) async {});
+        },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -261,6 +307,9 @@ void main() {
                 ),
           ),
         ],
+        verify: (_) {
+          verify(add).called(1);
+        },
       );
     });
 

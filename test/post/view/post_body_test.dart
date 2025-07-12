@@ -34,7 +34,10 @@ void main() {
         PostState(id: 'id'),
       );
       when(() => postHeaderBloc.state).thenReturn(
-        PostHeaderState.initial(id: 'id'),
+        PostHeaderState.initial(
+          id: 'id',
+          visitedPosts: {},
+        ),
       );
       when(() => commentListBloc.state).thenReturn(
         CommentListState.initial(id: 'id'),

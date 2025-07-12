@@ -24,7 +24,7 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
        super(
          PostHeaderState.initial(
            id: id,
-           visitedPosts: visitedPostRepository.state,
+           visitedPosts: visitedPostRepository.state.items,
          ),
        ) {
     on<PostHeaderSubscriptionRequested>(
@@ -88,10 +88,10 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
   ) {
     return emit.onEach(
       _visitedPostRepository.stream,
-      onData: (visitedPosts) {
+      onData: (repositoryState) {
         emit(
           state.copyWith(
-            visitedPosts: visitedPosts,
+            visitedPosts: repositoryState.items,
           ),
         );
       },

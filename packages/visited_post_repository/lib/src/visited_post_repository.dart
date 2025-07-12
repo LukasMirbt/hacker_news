@@ -1,11 +1,24 @@
-import 'package:bloc/bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 
-class VisitedPostRepository extends Cubit<Set<String>> {
-  VisitedPostRepository() : super({});
+class VisitedPostRepository extends HydratedCubit<VisitedPostState> {
+  VisitedPostRepository() : super(const VisitedPostState());
 
   void add(String id) {
     emit(
-      {...state, id},
+      state.copyWith(
+        items: {...state.items, id},
+      ),
     );
+  }
+
+  @override
+  VisitedPostState? fromJson(Map<String, dynamic> json) {
+    return VisitedPostState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(VisitedPostState state) {
+    return state.toJson();
   }
 }

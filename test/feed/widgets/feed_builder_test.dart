@@ -17,7 +17,10 @@ class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
 class _MockPaginatedFeedModel extends Mock implements PaginatedFeedModel {}
 
 void main() {
-  final initialState = FeedState.initial(FeedType.top);
+  final initialState = FeedState.initial(
+    type: FeedType.top,
+    visitedPosts: {},
+  );
 
   group(FeedBuilder, () {
     late FeedBloc bloc;

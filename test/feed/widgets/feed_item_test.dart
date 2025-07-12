@@ -18,6 +18,8 @@ import '../../app/pump_app.dart';
 class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
 
+class _MockFeedState extends Mock implements FeedState {}
+
 class _MockGoRouter extends Mock implements GoRouter {}
 
 class _MockFeedItemModel extends Mock implements FeedItemModel {}
@@ -28,6 +30,8 @@ class _MockDateFormatterLocalizations extends Mock
     implements DateFormatterLocalizations {}
 
 void main() {
+  const visited = true;
+
   const rank = 'rank';
   const urlHost = 'urlHost';
   const user = 'user';
@@ -39,15 +43,19 @@ void main() {
 
   group(FeedItem, () {
     late FeedBloc bloc;
+    late FeedState state;
     late GoRouter router;
     late FeedItemModel item;
 
     setUp(() {
       bloc = _MockFeedBloc();
+      state = _MockFeedState();
       router = _MockGoRouter();
       item = _MockFeedItemModel();
       registerFallbackValue(_MockAppLocalizations());
       registerFallbackValue(_MockDateFormatterLocalizations());
+      when(() => bloc.state).thenReturn(state);
+      when(() => state.visited(item)).thenReturn(visited);
       when(() => item.rank(any())).thenReturn(rank);
       when(() => item.urlHost).thenReturn(urlHost);
       when(() => item.user).thenReturn(user);
@@ -71,6 +79,12 @@ void main() {
           find.byType(AppListItem),
         );
       }
+
+      testWidgets('has correct visited', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.data.visited, visited);
+      });
 
       testWidgets('has correct rank', (tester) async {
         await tester.pumpApp(buildSubject());

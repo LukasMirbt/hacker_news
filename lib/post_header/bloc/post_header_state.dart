@@ -11,8 +11,6 @@ abstract class PostHeaderState with _$PostHeaderState {
     required Set<String> visitedPosts,
   }) = _PostHeaderState;
 
-  const PostHeaderState._();
-
   factory PostHeaderState.initial({
     required String id,
     required Set<String> visitedPosts,
@@ -23,6 +21,8 @@ abstract class PostHeaderState with _$PostHeaderState {
       header: PostHeaderModelPlaceholder(),
     );
   }
+
+  const PostHeaderState._();
 
   bool get visited => visitedPosts.contains(id);
 }

@@ -16,7 +16,10 @@ class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
 
 void main() {
-  final initialState = FeedState.initial(FeedType.top);
+  final initialState = FeedState.initial(
+    type: FeedType.top,
+    visitedPosts: {},
+  );
 
   group(FeedView, () {
     late FeedBloc bloc;

@@ -30,6 +30,7 @@ class _MockAppLocalizations extends Mock implements AppLocalizations {}
 
 void main() {
   const id = 'id';
+  const visited = true;
   const title = 'title';
   const age = 'age';
   const urlHost = 'urlHost';
@@ -56,6 +57,7 @@ void main() {
       when(() => bloc.state).thenReturn(state);
       when(() => state.header).thenReturn(header);
       when(() => state.id).thenReturn(id);
+      when(() => state.visited).thenReturn(visited);
       when(() => header.title).thenReturn(title);
       when(() => header.age(any())).thenReturn(age);
       when(() => header.urlHost).thenReturn(urlHost);
@@ -79,6 +81,12 @@ void main() {
         find.byType(AppPostHeader),
       );
     }
+
+    testWidgets('has correct visited', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.data.visited, visited);
+    });
 
     testWidgets('has correct title', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -144,13 +152,13 @@ void main() {
     );
 
     testWidgets(
-      'adds $PostHeaderTitlePressed onPressed',
+      'adds $PostHeaderPressed onPressed',
       (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.data.onPressed();
         verify(
-          () => bloc.add(PostHeaderTitlePressed()),
+          () => bloc.add(PostHeaderPressed()),
         ).called(1);
       },
     );
