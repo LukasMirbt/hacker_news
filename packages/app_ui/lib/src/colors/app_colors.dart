@@ -19,6 +19,9 @@ abstract class AppColors {
   Color get tertiary;
   Color get onTertiary;
 
+  Color get error;
+  Color get onError;
+
   Color get surface;
   Color get onSurface;
   Color get onSurfaceVariant;
