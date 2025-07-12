@@ -16,6 +16,7 @@ class InvisiblePlaceholder extends StatelessWidget {
       maintainSize: true,
       maintainState: true,
       maintainAnimation: true,
+      visible: visible,
       child: child,
     );
   }
