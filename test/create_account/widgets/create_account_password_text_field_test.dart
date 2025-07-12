@@ -84,7 +84,7 @@ void main() async {
       final widget = findWidget(tester);
       expect(
         widget.autofillHints,
-        [AutofillHints.password],
+        [AutofillHints.newPassword],
       );
     });
 
