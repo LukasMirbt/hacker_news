@@ -34,7 +34,6 @@ abstract class AppTheme {
     return AppBarTheme(
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
-      titleTextStyle: _textTheme.titleLarge?.copyWith(fontFamily: 'Serif'),
       centerTitle: true,
     );
   }
