@@ -32,6 +32,12 @@ class DarkColors extends AppColors {
   Color get onTertiary => Colors.black;
 
   @override
+  Color get error => const Color(0xffcf6679);
+
+  @override
+  Color get onError => Colors.black;
+
+  @override
   Color get surface => const Color(0xFF121212);
 
   @override

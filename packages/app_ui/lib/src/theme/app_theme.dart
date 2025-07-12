@@ -45,7 +45,12 @@ abstract class AppTheme {
   }
 
   ColorScheme get _colorScheme {
-    return ColorScheme.light(
+    final constructor = switch (colors.brightness) {
+      Brightness.light => ColorScheme.light,
+      Brightness.dark => ColorScheme.dark,
+    };
+
+    return constructor(
       brightness: colors.brightness,
       primary: colors.primary,
       onPrimary: colors.onPrimary,
@@ -55,6 +60,8 @@ abstract class AppTheme {
       onSecondaryContainer: colors.onSecondaryContainer,
       tertiary: colors.tertiary,
       onTertiary: colors.onTertiary,
+      error: colors.error,
+      onError: colors.onError,
       surface: colors.surface,
       onSurface: colors.onSurface,
       onSurfaceVariant: colors.onSurfaceVariant,

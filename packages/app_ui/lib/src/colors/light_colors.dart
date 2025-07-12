@@ -32,6 +32,12 @@ class LightColors extends AppColors {
   Color get onTertiary => Colors.white;
 
   @override
+  Color get error => const Color(0xffb00020);
+
+  @override
+  Color get onError => Colors.white;
+
+  @override
   Color get surface => Colors.white;
 
   @override
