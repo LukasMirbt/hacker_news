@@ -1,13 +1,21 @@
+// ignore_for_file: annotate_overrides
+
 import 'package:app_client/app_client.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'authentication_state.freezed.dart';
 
 @freezed
-abstract class AuthenticationState with _$AuthenticationState {
-  const factory AuthenticationState({
-    @Default(User.empty) User user,
-    @Default(LoginRedirect.initial) Redirect redirect,
-    @Default(AuthenticationStatus.unknown) AuthenticationStatus status,
-  }) = _AuthenticationState;
+class AuthenticationState with _$AuthenticationState {
+  const AuthenticationState({
+    required this.baseUrl,
+    this.user = User.empty,
+    this.redirect = LoginRedirect.initial,
+    this.status = AuthenticationStatus.unknown,
+  });
+
+  final Uri baseUrl;
+  final User user;
+  final Redirect redirect;
+  final AuthenticationStatus status;
 }

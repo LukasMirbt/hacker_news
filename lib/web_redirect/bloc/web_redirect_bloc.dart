@@ -79,7 +79,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectLoadStopped event,
     Emitter<WebRedirectState> emit,
   ) async {
-    final baseUrl = _repository.baseUrl;
+    final baseUrl = _repository.state.baseUrl;
     final cookies = await _cookieManager.cookies(baseUrl);
 
     await _repository.saveCookies(cookies);

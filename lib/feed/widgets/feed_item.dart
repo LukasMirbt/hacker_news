@@ -16,11 +16,16 @@ class FeedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final visited = context.select(
+      (FeedBloc bloc) => bloc.state.visited(item),
+    );
+
     final appL10n = AppLocalizations.of(context);
     final formatterL10n = DateFormatterLocalizations.of(context);
 
     return AppListItem(
       data: AppFeedItemData(
+        visited: visited,
         rank: item.rank(appL10n),
         urlHost: item.urlHost,
         user: item.user,

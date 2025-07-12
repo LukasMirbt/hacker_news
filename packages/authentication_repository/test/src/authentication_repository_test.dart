@@ -34,19 +34,10 @@ void main() {
 
     group('state', () {
       test('returns api.state', () {
-        final state = AuthenticationState();
+        final state = AuthenticationStatePlaceholder();
         when(() => api.state).thenReturn(state);
         final repository = createSubject();
         expect(repository.state, state);
-      });
-    });
-
-    group('baseUrl', () {
-      test('returns api.baseUrl', () {
-        final baseUrl = Uri.parse('https://example.com');
-        when(() => api.baseUrl).thenReturn(baseUrl);
-        final repository = createSubject();
-        expect(repository.baseUrl, baseUrl);
       });
     });
 

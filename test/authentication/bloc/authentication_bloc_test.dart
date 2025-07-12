@@ -32,7 +32,7 @@ void main() {
     setUp(() {
       authenticationRepository = _MockAuthenticationRepository();
       when(() => authenticationRepository.state).thenReturn(
-        authentication_repository.AuthenticationState(
+        authentication_repository.AuthenticationStatePlaceholder(
           user: user,
           redirect: redirect,
           status: status,
@@ -52,7 +52,7 @@ void main() {
 
     group(AuthenticationSubscriptionRequested, () {
       final updatedRepositoryState =
-          authentication_repository.AuthenticationState(
+          authentication_repository.AuthenticationStatePlaceholder(
             user: _MockUser(),
             redirect: WebRedirectPlaceholder(),
             status: AuthenticationStatus.authenticated,

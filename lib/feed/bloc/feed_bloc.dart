@@ -2,6 +2,7 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:share_launcher/share_launcher.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
@@ -9,17 +10,25 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     required FeedType type,
     required FeedRepository feedRepository,
     required VoteRepository voteRepository,
+    required VisitedPostRepository visitedPostRepository,
     ShareLauncher? shareLauncher,
     FeedVoteModel? voteModel,
   }) : _feedRepository = feedRepository,
        _voteRepository = voteRepository,
+       _visitedPostRepository = visitedPostRepository,
        _shareLauncher = shareLauncher ?? ShareLauncher(),
        _voteModel = voteModel ?? const FeedVoteModel(),
        super(
-         FeedState.initial(type),
+         FeedState.initial(
+           type: type,
+           visitedPosts: visitedPostRepository.state.items,
+         ),
        ) {
     on<FeedVoteSubscriptionRequested>(
       _onVoteSubscriptionRequested,
+    );
+    on<FeedVisitedPostSubscriptionRequested>(
+      _onVisitedPostSubscriptionRequested,
     );
     on<FeedStarted>(_onStarted);
     on<FeedItemPressed>(_onItemPressed);
@@ -31,6 +40,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
   final FeedRepository _feedRepository;
   final VoteRepository _voteRepository;
+  final VisitedPostRepository _visitedPostRepository;
   final ShareLauncher _shareLauncher;
   final FeedVoteModel _voteModel;
 
@@ -51,6 +61,22 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
             ),
           );
         }
+      },
+    );
+  }
+
+  Future<void> _onVisitedPostSubscriptionRequested(
+    FeedVisitedPostSubscriptionRequested event,
+    Emitter<FeedState> emit,
+  ) {
+    return emit.onEach(
+      _visitedPostRepository.stream,
+      onData: (repositoryState) {
+        emit(
+          state.copyWith(
+            visitedPosts: repositoryState.items,
+          ),
+        );
       },
     );
   }
@@ -115,17 +141,23 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     FeedItemPressed event,
     Emitter<FeedState> emit,
   ) {
-    final item = event.item;
+    final FeedItemModel(
+      :id,
+      :urlHost,
+      :url,
+    ) = event.item;
 
     emit(
       state.copyWith(
         itemPress: ItemPress(
-          id: item.id,
-          urlHost: item.urlHost,
-          url: item.url,
+          id: id,
+          urlHost: urlHost,
+          url: url,
         ),
       ),
     );
+
+    _visitedPostRepository.addVisitedPost(id);
   }
 
   void _onItemVotePressed(

@@ -15,6 +15,7 @@ import 'package:post_api/post_api.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:version_repository/version_repository.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 void main() async {
@@ -87,6 +88,7 @@ void main() async {
   );
 
   final versionRepository = VersionRepository();
+  final visitedPostRepository = VisitedPostRepository();
 
   final voteRepository = VoteRepository(
     authenticationApi: authenticationApi,
@@ -101,6 +103,7 @@ void main() async {
       analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
       versionRepository: versionRepository,
+      visitedPostRepository: visitedPostRepository,
       voteRepository: voteRepository,
     ),
   );

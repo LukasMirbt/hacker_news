@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class AppPostHeaderData extends Equatable {
   const AppPostHeaderData({
+    required this.visited,
     required this.title,
     required this.age,
     required this.urlHost,
@@ -17,6 +18,7 @@ class AppPostHeaderData extends Equatable {
     required this.onSharePressed,
   });
 
+  final bool visited;
   final String title;
   final String age;
   final String urlHost;
@@ -33,6 +35,7 @@ class AppPostHeaderData extends Equatable {
 
   @override
   List<Object?> get props => [
+    visited,
     title,
     age,
     urlHost,

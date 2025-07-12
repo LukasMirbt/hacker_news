@@ -12,7 +12,6 @@ class AuthenticationApi {
 
   Stream<AuthenticationState> get stream => _client.stream;
   AuthenticationState get state => _client.state;
-  Uri get baseUrl => _client.baseUrl;
 
   void redirectToLogin() {
     _client.redirectToLogin();

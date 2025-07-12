@@ -22,7 +22,11 @@ class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
 
 void main() {
   final child = Container();
-  final initialState = FeedState.initial(FeedType.top);
+
+  final initialState = FeedState.initial(
+    type: FeedType.top,
+    visitedPosts: {},
+  );
 
   group(FeedItemPressListener, () {
     late FeedBloc bloc;

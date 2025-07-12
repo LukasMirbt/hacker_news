@@ -21,7 +21,10 @@ class _MockFeedBuilder extends Mock implements FeedBuilder {}
 class _MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
-  final initialState = FeedState.initial(FeedType.top);
+  final initialState = FeedState.initial(
+    type: FeedType.top,
+    visitedPosts: {},
+  );
 
   const index = 0;
   final item = Container();

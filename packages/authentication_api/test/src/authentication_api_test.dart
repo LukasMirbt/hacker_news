@@ -43,19 +43,10 @@ void main() {
 
     group('state', () {
       test('returns client.state', () {
-        final state = AuthenticationState();
+        final state = AuthenticationStatePlaceholder();
         when(() => client.state).thenReturn(state);
         final api = createSubject();
         expect(api.state, state);
-      });
-    });
-
-    group('baseUrl', () {
-      test('returns client.baseUrl', () {
-        final baseUrl = Uri.parse('https://example.com');
-        when(() => client.baseUrl).thenReturn(baseUrl);
-        final api = createSubject();
-        expect(api.baseUrl, baseUrl);
       });
     });
 
@@ -194,13 +185,13 @@ void main() {
 
     group('logout', () {
       final user = UserPlaceholder();
+      final state = AuthenticationStatePlaceholder(user: user);
+
       final logoutRequest = () => http.get<void>(user.logoutUrl);
       final unauthenticate = () => client.unauthenticate();
 
       test('makes logout request and calls unauthenticate', () async {
-        when(() => client.state).thenReturn(
-          AuthenticationState(user: user),
-        );
+        when(() => client.state).thenReturn(state);
         when(logoutRequest).thenAnswer(
           (_) async => Response<void>(
             requestOptions: RequestOptions(),

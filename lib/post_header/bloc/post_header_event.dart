@@ -15,8 +15,12 @@ final class PostHeaderVoteSubscriptionRequested extends PostHeaderEvent {
   const PostHeaderVoteSubscriptionRequested();
 }
 
-final class PostHeaderTitlePressed extends PostHeaderEvent {
-  const PostHeaderTitlePressed();
+final class PostHeaderVisitedPostSubscriptionRequested extends PostHeaderEvent {
+  const PostHeaderVisitedPostSubscriptionRequested();
+}
+
+final class PostHeaderPressed extends PostHeaderEvent {
+  const PostHeaderPressed();
 }
 
 final class PostHeaderVotePressed extends PostHeaderEvent {

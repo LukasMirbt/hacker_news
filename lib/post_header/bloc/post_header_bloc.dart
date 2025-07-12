@@ -3,6 +3,7 @@ import 'package:hacker_client/post_header/post_header.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:share_launcher/share_launcher.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
@@ -10,16 +11,21 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
     required String id,
     required PostRepository postRepository,
     required VoteRepository voteRepository,
+    required VisitedPostRepository visitedPostRepository,
     PostHeaderVoteModel? voteModel,
     LinkLauncher? linkLauncher,
     ShareLauncher? shareLauncher,
   }) : _postRepository = postRepository,
        _voteRepository = voteRepository,
+       _visitedPostRepository = visitedPostRepository,
        _voteModel = voteModel ?? const PostHeaderVoteModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        _shareLauncher = shareLauncher ?? ShareLauncher(),
        super(
-         PostHeaderState.initial(id: id),
+         PostHeaderState.initial(
+           id: id,
+           visitedPosts: visitedPostRepository.state.items,
+         ),
        ) {
     on<PostHeaderSubscriptionRequested>(
       _onSubscriptionRequested,
@@ -27,7 +33,10 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
     on<PostHeaderVoteSubscriptionRequested>(
       _onVoteSubscriptionRequested,
     );
-    on<PostHeaderTitlePressed>(_onTitlePressed);
+    on<PostHeaderVisitedPostSubscriptionRequested>(
+      _onVisitedPostSubscriptionRequested,
+    );
+    on<PostHeaderPressed>(_onPressed);
     on<PostHeaderVotePressed>(_onVotePressed);
     on<PostHeaderSharePressed>(_onSharePressed);
     on<PostHeaderTextLinkPressed>(_onTextLinkPressed);
@@ -35,6 +44,7 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
 
   final PostRepository _postRepository;
   final VoteRepository _voteRepository;
+  final VisitedPostRepository _visitedPostRepository;
   final PostHeaderVoteModel _voteModel;
   final LinkLauncher _linkLauncher;
   final ShareLauncher _shareLauncher;
@@ -42,7 +52,7 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
   Future<void> _onSubscriptionRequested(
     PostHeaderSubscriptionRequested event,
     Emitter<PostHeaderState> emit,
-  ) async {
+  ) {
     return emit.forEach(
       _postRepository.stream,
       onData: (post) => state.copyWith(
@@ -54,7 +64,7 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
   Future<void> _onVoteSubscriptionRequested(
     PostHeaderVoteSubscriptionRequested event,
     Emitter<PostHeaderState> emit,
-  ) async {
+  ) {
     return emit.onEach(
       _voteRepository.stream,
       onData: (repositoryState) {
@@ -72,12 +82,29 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
     );
   }
 
-  void _onTitlePressed(
-    PostHeaderTitlePressed event,
+  Future<void> _onVisitedPostSubscriptionRequested(
+    PostHeaderVisitedPostSubscriptionRequested event,
     Emitter<PostHeaderState> emit,
   ) {
-    final url = state.header.url;
-    _linkLauncher.launch(url);
+    return emit.onEach(
+      _visitedPostRepository.stream,
+      onData: (repositoryState) {
+        emit(
+          state.copyWith(
+            visitedPosts: repositoryState.items,
+          ),
+        );
+      },
+    );
+  }
+
+  void _onPressed(
+    PostHeaderPressed event,
+    Emitter<PostHeaderState> emit,
+  ) {
+    final header = state.header;
+    _linkLauncher.launch(header.url);
+    _visitedPostRepository.addVisitedPost(header.id);
   }
 
   void _onVotePressed(

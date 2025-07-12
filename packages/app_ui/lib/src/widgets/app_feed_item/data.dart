@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class AppFeedItemData extends Equatable {
   const AppFeedItemData({
+    required this.visited,
     required this.rank,
     required this.title,
     required this.age,
@@ -17,6 +18,7 @@ class AppFeedItemData extends Equatable {
     required this.onMorePressed,
   });
 
+  final bool visited;
   final String rank;
   final String title;
   final String age;
@@ -33,6 +35,7 @@ class AppFeedItemData extends Equatable {
 
   @override
   List<Object?> get props => [
+    visited,
     rank,
     title,
     age,

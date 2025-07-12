@@ -19,7 +19,11 @@ class _MockCompleter extends Mock implements Completer<void> {}
 
 void main() {
   final child = Container();
-  final initialState = FeedState.initial(FeedType.top);
+
+  final initialState = FeedState.initial(
+    type: FeedType.top,
+    visitedPosts: {},
+  );
 
   group(FeedRefreshIndicator, () {
     late FeedBloc bloc;

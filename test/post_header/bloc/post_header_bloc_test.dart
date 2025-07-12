@@ -8,11 +8,15 @@ import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:share_launcher/share_launcher.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
+
+class _MockVisitedPostRepository extends Mock
+    implements VisitedPostRepository {}
 
 class _MockPostHeaderVoteModel extends Mock implements PostHeaderVoteModel {}
 
@@ -24,11 +28,17 @@ class _MockPostHeaderModel extends Mock implements PostHeaderModel {}
 
 void main() {
   const id = 'id';
-  final initialState = PostHeaderState.initial(id: id);
+  final visitedPosts = <String>{};
+
+  final initialState = PostHeaderState.initial(
+    id: id,
+    visitedPosts: visitedPosts,
+  );
 
   group(PostHeaderBloc, () {
     late PostRepository postRepository;
     late VoteRepository voteRepository;
+    late VisitedPostRepository visitedPostRepository;
     late PostHeaderVoteModel voteModel;
     late LinkLauncher linkLauncher;
     late ShareLauncher shareLauncher;
@@ -36,9 +46,13 @@ void main() {
     setUp(() {
       postRepository = _MockPostRepository();
       voteRepository = _MockVoteRepository();
+      visitedPostRepository = _MockVisitedPostRepository();
       voteModel = _MockPostHeaderVoteModel();
       linkLauncher = _MockLinkLauncher();
       shareLauncher = _MockShareLauncher();
+      when(() => visitedPostRepository.state).thenReturn(
+        VisitedPostState(items: visitedPosts),
+      );
     });
 
     PostHeaderBloc buildBloc() {
@@ -46,6 +60,7 @@ void main() {
         id: id,
         postRepository: postRepository,
         voteRepository: voteRepository,
+        visitedPostRepository: visitedPostRepository,
         voteModel: voteModel,
         linkLauncher: linkLauncher,
         shareLauncher: shareLauncher,
@@ -124,23 +139,53 @@ void main() {
       );
     });
 
-    group(PostHeaderTitlePressed, () {
-      final url = initialState.header.url;
-      final launch = () => linkLauncher.launch(url);
+    group(PostHeaderVisitedPostSubscriptionRequested, () {
+      final updatedRepositoryState = VisitedPostState(
+        items: {'id'},
+      );
 
       blocTest<PostHeaderBloc, PostHeaderState>(
-        'calls launch',
+        'emits updated header when repository emits $VoteSuccess',
+        setUp: () {
+          when(() => visitedPostRepository.stream).thenAnswer(
+            (_) => Stream.value(updatedRepositoryState),
+          );
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            PostHeaderVisitedPostSubscriptionRequested(),
+          );
+        },
+        expect: () => [
+          initialState.copyWith(
+            visitedPosts: updatedRepositoryState.items,
+          ),
+        ],
+      );
+    });
+
+    group(PostHeaderPressed, () {
+      final url = initialState.header.url;
+      final id = initialState.header.id;
+
+      final launch = () => linkLauncher.launch(url);
+      final addVisitedPost = () => visitedPostRepository.addVisitedPost(id);
+
+      blocTest<PostHeaderBloc, PostHeaderState>(
+        'calls launch and addVisitedPost',
         setUp: () {
           when(launch).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            PostHeaderTitlePressed(),
+            PostHeaderPressed(),
           );
         },
         verify: (_) {
           verify(launch).called(1);
+          verify(addVisitedPost).called(1);
         },
       );
     });

@@ -2,6 +2,7 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class FeedPage extends StatefulWidget {
@@ -31,9 +32,13 @@ class _FeedPageState extends State<FeedPage>
               type: widget.type,
               feedRepository: context.read<FeedRepository>(),
               voteRepository: context.read<VoteRepository>(),
+              visitedPostRepository: context.read<VisitedPostRepository>(),
             )
             ..add(
               const FeedVoteSubscriptionRequested(),
+            )
+            ..add(
+              const FeedVisitedPostSubscriptionRequested(),
             )
             ..add(
               const FeedStarted(),
