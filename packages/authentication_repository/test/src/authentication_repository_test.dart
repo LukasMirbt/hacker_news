@@ -92,6 +92,26 @@ void main() {
       });
     });
 
+    group('createAccount', () {
+      const username = 'username';
+      const password = 'password';
+
+      final createAccount = () => api.createAccount(
+        username: username,
+        password: password,
+      );
+
+      test('calls api.createAccount', () async {
+        when(createAccount).thenAnswer((_) async {});
+        final repository = createSubject();
+        await repository.createAccount(
+          username: username,
+          password: password,
+        );
+        verify(createAccount).called(1);
+      });
+    });
+
     group('logout', () {
       final logout = () => api.logout();
 

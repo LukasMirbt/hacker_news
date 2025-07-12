@@ -47,13 +47,18 @@ void main() {
     });
 
     testWidgets(
-      'does nothing when $TextButton is pressed',
+      'pushes $CreateAccountRoute when $TextButton '
+      'is pressed',
       (tester) async {
+        final route = CreateAccountRoute(from: from);
+        final push = () => router.push<void>(route.location);
+        when(push).thenAnswer((_) async {});
         await tester.pumpApp(
           buildSubject(),
           router: router,
         );
         await tester.tap(find.byType(TextButton));
+        verify(push).called(1);
       },
     );
   });

@@ -17,7 +17,7 @@ class _MockLoginState extends Mock implements LoginState {}
 class _MockLoginFormModel extends Mock implements LoginFormModel {}
 
 void main() {
-  group(LoginPasswordTextField, () {
+  group(LoginPasswordVisibilityButton, () {
     late LoginBloc bloc;
     late LoginState state;
     late LoginFormModel form;

@@ -51,6 +51,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
+  String get createAccount_title => 'Create account';
+
+  @override
+  String get createAccount_explanation =>
+      'Creates a Hacker News account that can also be used on the Hacker News website';
+
+  @override
+  String get createAccount_usernameLabel => 'Username';
+
+  @override
+  String get createAccount_usernameEmptyError => 'Enter a username';
+
+  @override
+  String get createAccount_passwordLabel => 'Password';
+
+  @override
+  String get createAccount_passwordEmptyError => 'Enter a password';
+
+  @override
+  String get createAccount_policyLinksPart1 =>
+      'By creating an account, you agree to the Hacker News ';
+
+  @override
+  String get createAccount_termsOfUse => 'terms of use';
+
+  @override
+  String get createAccount_policyLinksPart3 => ' and ';
+
+  @override
+  String get createAccount_privacyPolicy => 'privacy policy';
+
+  @override
+  String get createAccount_submitAction => 'Create account';
+
+  @override
   String get dataCollection_title => 'Data collection';
 
   @override

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
-// ignore_for_file: inference_failure_on_collection_literal
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -116,7 +115,7 @@ void main() {
             ),
           );
         },
-        expect: () => [],
+        expect: () => <Post>[],
       );
 
       blocTest<PostRepository, Post>(
@@ -222,7 +221,7 @@ void main() {
             ),
           );
         },
-        expect: () => [],
+        expect: () => <Post>[],
       );
 
       blocTest<PostRepository, Post>(

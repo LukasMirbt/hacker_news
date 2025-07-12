@@ -30,6 +30,10 @@ class _Instructions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Text(l10n.login_instructions);
+
+    return Text(
+      l10n.login_instructions,
+      textAlign: TextAlign.center,
+    );
   }
 }

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
-// ignore_for_file: inference_failure_on_collection_literal
 
 import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -76,7 +75,7 @@ void main() {
             hasBeenUpvoted: hasBeenUpvoted,
           );
         },
-        expect: () => [],
+        expect: () => <VoteState>[],
         verify: (_) {
           verify(redirectToLogin).called(1);
         },
@@ -92,7 +91,7 @@ void main() {
             hasBeenUpvoted: hasBeenUpvoted,
           );
         },
-        expect: () => [],
+        expect: () => <VoteState>[],
       );
 
       blocTest<VoteRepository, VoteState>(
