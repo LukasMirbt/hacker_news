@@ -65,8 +65,6 @@ void main() {
 
     group('fetchPostStream', () {
       const id = 'id';
-      final cancelToken = CancelToken();
-
       final bodyStream = Stream<Uint8List>.empty();
       final posts = [PostDataPlaceholder()];
       final parsedStream = Stream<PostData>.fromIterable(posts);
@@ -74,26 +72,28 @@ void main() {
       final generate = () => cancelTokenService.generate();
       final parse = () => postStreamParser.parse(bodyStream);
 
-      final request = () => http.get<ResponseBody>(
-        'item',
-        queryParameters: {'id': id},
-        cancelToken: cancelToken,
-        options: any(
-          named: 'options',
-          that: isA<Options>().having(
-            (options) => options.responseType,
-            'responseType',
-            ResponseType.stream,
-          ),
-        ),
-      );
-
+      late CancelToken cancelToken;
       late Response<ResponseBody> response;
       late ResponseBody responseBody;
+      late Future<Response<ResponseBody>> Function() request;
 
       setUp(() {
+        cancelToken = CancelToken();
         response = _MockResponse();
         responseBody = _MockResponseBody();
+        request = () => http.get<ResponseBody>(
+          'item',
+          queryParameters: {'id': id},
+          cancelToken: cancelToken,
+          options: any(
+            named: 'options',
+            that: isA<Options>().having(
+              (options) => options.responseType,
+              'responseType',
+              ResponseType.stream,
+            ),
+          ),
+        );
         when(generate).thenReturn(cancelToken);
         when(request).thenAnswer((_) async => response);
         when(() => responseBody.statusCode).thenReturn(200);
@@ -150,13 +150,14 @@ void main() {
 
     group('fetchPost', () {
       late Response<String> response;
+      late CancelToken cancelToken;
 
       setUp(() {
+        cancelToken = CancelToken();
         response = _MockResponse<String>();
       });
 
       const id = 'id';
-      final cancelToken = CancelToken();
       const html = 'html';
       final post = PostDataPlaceholder();
 
