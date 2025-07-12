@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-// ignore_for_file: inference_failure_on_collection_literal
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -44,7 +43,7 @@ void main() {
       test('has correct routes', () {
         expect(
           AnalyticsConsentRoute.config.routes,
-          [],
+          <TypedRoute<RouteData>>[],
         );
       });
     });

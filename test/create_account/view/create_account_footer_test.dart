@@ -1,0 +1,44 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hacker_client/create_account/create_account.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../../app/pump_app.dart';
+
+class _MockCreateAccountBloc
+    extends MockBloc<CreateAccountEvent, CreateAccountState>
+    implements CreateAccountBloc {}
+
+void main() {
+  group(CreateAccountFooter, () {
+    late CreateAccountBloc bloc;
+
+    setUp(() {
+      bloc = _MockCreateAccountBloc();
+      when(() => bloc.state).thenReturn(
+        CreateAccountState(from: 'from'),
+      );
+    });
+
+    Widget buildSubject() {
+      return BlocProvider.value(
+        value: bloc,
+        child: CreateAccountFooter(),
+      );
+    }
+
+    testWidgets('renders $CreateAccountPolicyLinks', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(CreateAccountPolicyLinks), findsOneWidget);
+    });
+
+    testWidgets('renders $CreateAccountButton', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(CreateAccountButton), findsOneWidget);
+    });
+  });
+}

@@ -93,7 +93,7 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
     );
 
     try {
-      await _repository.login(
+      await _repository.createAccount(
         username: form.username.value,
         password: form.password.value,
       );

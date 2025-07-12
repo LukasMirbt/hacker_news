@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/data_collection/data_collection.dart';
+import 'package:hacker_client/create_account/create_account.dart';
+import 'package:hacker_client/login/login.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
@@ -13,47 +12,40 @@ import '../../app/pump_app.dart';
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  group(DataCollectionRoute, () {
+  const from = 'from';
+
+  group(CreateAccountRoute, () {
     late GoRouterState state;
 
     setUp(() {
       state = _MockGoRouterState();
     });
 
-    DataCollectionRoute createSubject() => DataCollectionRoute();
+    CreateAccountRoute createSubject() => CreateAccountRoute(from: from);
 
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
     });
 
-    group('parentNavigatorKey', () {
-      test('returns correct navigatorKey', () {
-        expect(
-          DataCollectionRoute.$parentNavigatorKey,
-          AppRouter.navigatorKey,
-        );
-      });
-    });
-
     group('config', () {
       test('has correct type', () {
         expect(
-          DataCollectionRoute.config,
-          isA<TypedGoRoute<DataCollectionRoute>>(),
+          CreateAccountRoute.config,
+          isA<TypedGoRoute<CreateAccountRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
-          DataCollectionRoute.config.path,
-          'data-collection',
+          CreateAccountRoute.config.path,
+          'create-account',
         );
       });
 
       test('has correct routes', () {
         expect(
-          DataCollectionRoute.config.routes,
+          CreateAccountRoute.config.routes,
           <TypedRoute<RouteData>>[],
         );
       });
@@ -67,9 +59,13 @@ void main() {
         );
       }
 
-      testWidgets('renders $DataCollectionPage', (tester) async {
+      testWidgets('renders $CreateAccountPage '
+          'with correct from', (tester) async {
         await tester.pumpApp(buildSubject());
-        expect(find.byType(DataCollectionPage), findsOneWidget);
+        final widget = tester.widget<CreateAccountPage>(
+          find.byType(CreateAccountPage),
+        );
+        expect(widget.from, from);
       });
     });
   });
