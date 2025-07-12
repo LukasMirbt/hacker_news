@@ -10,7 +10,7 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.select(
-      (LoginBloc bloc) => bloc.state.isLoading,
+      (LoginBloc bloc) => bloc.state.form.isLoading,
     );
 
     final l10n = AppLocalizations.of(context);
@@ -22,7 +22,7 @@ class LoginButton extends StatelessWidget {
           const LoginSubmitted(),
         );
       },
-      child: Text(l10n.login_loginAction),
+      child: Text(l10n.login_submitAction),
     );
   }
 }

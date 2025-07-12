@@ -7,15 +7,28 @@ class LoginBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AutofillGroup(
-      child: Column(
-        spacing: AppSpacing.lg,
-        children: [
-          LoginUsernameTextField(),
-          LoginPasswordTextField(),
-          LoginButton(),
-        ],
-      ),
+    return const CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSpacing.lg,
+                horizontal: AppSpacing.xlg,
+              ),
+              child: Column(
+                children: [
+                  LoginForm(),
+                  SizedBox(height: AppSpacing.lg),
+                  Spacer(),
+                  LoginFooter(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

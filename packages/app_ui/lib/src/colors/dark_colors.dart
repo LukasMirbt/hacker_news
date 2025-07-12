@@ -26,6 +26,12 @@ class DarkColors extends AppColors {
   Color get onSecondaryContainer => const Color.fromARGB(255, 255, 126, 40);
 
   @override
+  Color get tertiary => const Color(0xFFFF8C00);
+
+  @override
+  Color get onTertiary => Colors.black;
+
+  @override
   Color get surface => const Color(0xFF121212);
 
   @override

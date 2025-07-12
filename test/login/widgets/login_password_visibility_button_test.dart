@@ -14,16 +14,21 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
 
 class _MockLoginState extends Mock implements LoginState {}
 
+class _MockLoginFormModel extends Mock implements LoginFormModel {}
+
 void main() {
   group(LoginPasswordTextField, () {
     late LoginBloc bloc;
     late LoginState state;
+    late LoginFormModel form;
 
     setUp(() {
       bloc = _MockLoginBloc();
       state = _MockLoginState();
+      form = _MockLoginFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.obscurePassword).thenReturn(true);
+      when(() => state.form).thenReturn(form);
+      when(() => form.obscurePassword).thenReturn(true);
     });
 
     Widget buildSubject() {
@@ -61,7 +66,7 @@ void main() {
     });
 
     testWidgets('renders correct icon when !obscurePassword', (tester) async {
-      when(() => state.obscurePassword).thenReturn(false);
+      when(() => form.obscurePassword).thenReturn(false);
       await tester.pumpApp(buildSubject());
       expect(
         find.byIcon(Icons.visibility_off_outlined),

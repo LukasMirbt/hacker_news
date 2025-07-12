@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @generalServerError.
   ///
   /// In en, this message translates to:
-  /// **'Something went wrong.'**
+  /// **'Something went wrong'**
   String get generalServerError;
 
   /// No description provided for @analyticsConsent_title.
@@ -250,11 +250,23 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get login_title;
 
+  /// No description provided for @login_instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Use your Hacker News credentials to log in'**
+  String get login_instructions;
+
   /// No description provided for @login_usernameLabel.
   ///
   /// In en, this message translates to:
   /// **'Username'**
   String get login_usernameLabel;
+
+  /// No description provided for @login_usernameEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a username'**
+  String get login_usernameEmptyError;
 
   /// No description provided for @login_passwordLabel.
   ///
@@ -262,11 +274,47 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get login_passwordLabel;
 
-  /// No description provided for @login_loginAction.
+  /// No description provided for @login_passwordEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a password'**
+  String get login_passwordEmptyError;
+
+  /// No description provided for @login_createAccountAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a Hacker News account'**
+  String get login_createAccountAction;
+
+  /// No description provided for @login_policyLinksPart1.
+  ///
+  /// In en, this message translates to:
+  /// **'By logging in, you agree to the Hacker News '**
+  String get login_policyLinksPart1;
+
+  /// No description provided for @login_termsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get login_termsOfUse;
+
+  /// No description provided for @login_policyLinksPart3.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get login_policyLinksPart3;
+
+  /// No description provided for @login_privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'privacy policy'**
+  String get login_privacyPolicy;
+
+  /// No description provided for @login_submitAction.
   ///
   /// In en, this message translates to:
   /// **'Login'**
-  String get login_loginAction;
+  String get login_submitAction;
 
   /// No description provided for @loginLoading_text.
   ///

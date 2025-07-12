@@ -23,7 +23,7 @@ void main() {
     }
 
     group(SettingsPrivacyPolicyPressed, () {
-      final launch = () => launcher.launch(privacyPolicyLink);
+      final launch = () => launcher.launch(yapPrivacyPolicyLink);
 
       blocTest<SettingsBloc, void>(
         'launches privacyPolicyLink',

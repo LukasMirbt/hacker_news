@@ -15,16 +15,21 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
 
 class _MockLoginState extends Mock implements LoginState {}
 
+class _MockLoginFormModel extends Mock implements LoginFormModel {}
+
 void main() {
   group(LoginButton, () {
     late LoginBloc bloc;
     late LoginState state;
+    late LoginFormModel form;
 
     setUp(() {
       bloc = _MockLoginBloc();
       state = _MockLoginState();
+      form = _MockLoginFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.isLoading).thenReturn(false);
+      when(() => state.form).thenReturn(form);
+      when(() => form.isLoading).thenReturn(false);
     });
 
     Widget buildSubject() {
@@ -43,7 +48,7 @@ void main() {
 
       group('isLoading', () {
         testWidgets('is true when state.isLoading', (tester) async {
-          when(() => state.isLoading).thenReturn(true);
+          when(() => form.isLoading).thenReturn(true);
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           expect(widget.isLoading, true);

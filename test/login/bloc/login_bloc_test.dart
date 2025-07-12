@@ -4,11 +4,15 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hacker_client/external_links/external_links.dart';
 import 'package:hacker_client/login/login.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
+
+class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 void main() {
   const from = 'from';
@@ -19,15 +23,18 @@ void main() {
 
   group(LoginBloc, () {
     late AuthenticationRepository repository;
+    late LinkLauncher launcher;
 
     setUp(() {
       repository = _MockAuthenticationRepository();
+      launcher = _MockLinkLauncher();
     });
 
     LoginBloc buildBloc() {
       return LoginBloc(
         from: from,
         authenticationRepository: repository,
+        linkLauncher: launcher,
       );
     }
 
@@ -45,8 +52,8 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
-            username: username,
+          initialState.copyWith.form(
+            username: Username(username),
           ),
         ],
       );
@@ -62,8 +69,8 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
-            password: password,
+          initialState.copyWith.form(
+            password: Password(password),
           ),
         ],
       );
@@ -83,13 +90,53 @@ void main() {
             );
         },
         expect: () => [
-          initialState.copyWith(
-            obscurePassword: !initialState.obscurePassword,
+          initialState.copyWith.form(
+            obscurePassword: !initialState.form.obscurePassword,
           ),
-          initialState.copyWith(
-            obscurePassword: initialState.obscurePassword,
+          initialState.copyWith.form(
+            obscurePassword: initialState.form.obscurePassword,
           ),
         ],
+      );
+    });
+
+    group(LoginTermsPressed, () {
+      final launch = () => launcher.launch(hackerNewsTermsLink);
+
+      blocTest<LoginBloc, LoginState>(
+        'calls launch',
+        setUp: () {
+          when(launch).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            LoginTermsPressed(),
+          );
+        },
+        verify: (_) {
+          verify(launch).called(1);
+        },
+      );
+    });
+
+    group(LoginPrivacyPolicyPressed, () {
+      final launch = () => launcher.launch(hackerNewsPrivacyPolicyLink);
+
+      blocTest<LoginBloc, LoginState>(
+        'calls launch',
+        setUp: () {
+          when(launch).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            LoginPrivacyPolicyPressed(),
+          );
+        },
+        verify: (_) {
+          verify(launch).called(1);
+        },
       );
     });
 
@@ -99,9 +146,24 @@ void main() {
         password: password,
       );
 
-      final state = initialState.copyWith(
-        username: username,
-        password: password,
+      final state = initialState.copyWith.form(
+        username: Username(username),
+        password: Password(password),
+      );
+
+      blocTest<LoginBloc, LoginState>(
+        'emits [invalid] when !form.isValid',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            LoginSubmitted(),
+          );
+        },
+        expect: () => [
+          initialState.copyWith.form(
+            status: LoginStatus.invalid,
+          ),
+        ],
       );
 
       blocTest<LoginBloc, LoginState>(
@@ -117,10 +179,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.loading,
           ),
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.success,
           ),
         ],
@@ -142,10 +204,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.loading,
           ),
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.failure,
           ),
         ],

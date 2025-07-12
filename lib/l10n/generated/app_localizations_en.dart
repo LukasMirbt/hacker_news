@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get generalServerError => 'Something went wrong.';
+  String get generalServerError => 'Something went wrong';
 
   @override
   String get analyticsConsent_title => 'Help us improve the app?';
@@ -94,13 +94,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_title => 'Login';
 
   @override
+  String get login_instructions => 'Use your Hacker News credentials to log in';
+
+  @override
   String get login_usernameLabel => 'Username';
+
+  @override
+  String get login_usernameEmptyError => 'Enter a username';
 
   @override
   String get login_passwordLabel => 'Password';
 
   @override
-  String get login_loginAction => 'Login';
+  String get login_passwordEmptyError => 'Enter a password';
+
+  @override
+  String get login_createAccountAction => 'Create a Hacker News account';
+
+  @override
+  String get login_policyLinksPart1 =>
+      'By logging in, you agree to the Hacker News ';
+
+  @override
+  String get login_termsOfUse => 'terms of use';
+
+  @override
+  String get login_policyLinksPart3 => ' and ';
+
+  @override
+  String get login_privacyPolicy => 'privacy policy';
+
+  @override
+  String get login_submitAction => 'Login';
 
   @override
   String get loginLoading_text => 'Logging in...';

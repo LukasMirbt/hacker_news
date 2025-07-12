@@ -9,10 +9,14 @@ class LoginPasswordTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final obscurePassword = context.select(
-      (LoginBloc bloc) => bloc.state.obscurePassword,
+      (LoginBloc bloc) => bloc.state.form.obscurePassword,
     );
 
     final l10n = AppLocalizations.of(context);
+
+    final errorText = context.select(
+      (LoginBloc bloc) => bloc.state.form.passwordErrorText(l10n),
+    );
 
     return TextField(
       obscureText: obscurePassword,
@@ -21,8 +25,10 @@ class LoginPasswordTextField extends StatelessWidget {
       autofillHints: const [AutofillHints.password],
       decoration: InputDecoration(
         labelText: l10n.login_passwordLabel,
-        border: const OutlineInputBorder(),
-        suffixIcon: const LoginPasswordVisibilityButton(),
+        errorText: errorText,
+        suffixIcon: errorText != null
+            ? const Icon(Icons.error)
+            : const LoginPasswordVisibilityButton(),
       ),
       onChanged: (value) {
         context.read<LoginBloc>().add(

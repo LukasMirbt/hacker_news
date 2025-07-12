@@ -13,7 +13,7 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
     implements LoginBloc {}
 
 void main() {
-  group(LoginBody, () {
+  group(LoginForm, () {
     late LoginBloc bloc;
 
     setUp(() {
@@ -26,32 +26,28 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: LoginBody(),
+        child: LoginForm(),
       );
     }
 
-    testWidgets('renders $CustomScrollView '
-        'and $SliverFillRemaining', (tester) async {
+    testWidgets('renders $AutofillGroup', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(
-        find.descendant(
-          of: find.byType(CustomScrollView),
-          matching: find.byWidgetPredicate(
-            (widget) => widget is SliverFillRemaining && !widget.hasScrollBody,
-          ),
-        ),
-        findsOneWidget,
-      );
+      expect(find.byType(AutofillGroup), findsOneWidget);
     });
 
-    testWidgets('renders $LoginForm', (tester) async {
+    testWidgets('renders $LoginUsernameTextField', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginForm), findsOneWidget);
+      expect(find.byType(LoginUsernameTextField), findsOneWidget);
     });
 
-    testWidgets('renders $LoginFooter', (tester) async {
+    testWidgets('renders $LoginPasswordTextField', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginFooter), findsOneWidget);
+      expect(find.byType(LoginPasswordTextField), findsOneWidget);
+    });
+
+    testWidgets('renders $LoginCreateAccountButton', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(LoginCreateAccountButton), findsOneWidget);
     });
   });
 }

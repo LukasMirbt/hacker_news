@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginState {
 
- String get from; LoginStatus get status; String get username; String get password; bool get obscurePassword;
+ String get from; LoginFormModel get form;
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.form, form) || other.form == form));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,form);
 
 @override
 String toString() {
-  return 'LoginState(from: $from, status: $status, username: $username, password: $password, obscurePassword: $obscurePassword)';
+  return 'LoginState(from: $from, form: $form)';
 }
 
 
@@ -46,11 +46,11 @@ abstract mixin class $LoginStateCopyWith<$Res>  {
   factory $LoginStateCopyWith(LoginState value, $Res Function(LoginState) _then) = _$LoginStateCopyWithImpl;
 @useResult
 $Res call({
- String from, LoginStatus status, String username, String password, bool obscurePassword
+ String from, LoginFormModel form
 });
 
 
-
+$LoginFormModelCopyWith<$Res> get form;
 
 }
 /// @nodoc
@@ -63,32 +63,35 @@ class _$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? form = null,}) {
   return _then(_self.copyWith(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as LoginStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as LoginFormModel,
   ));
 }
-
+/// Create a copy of LoginState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LoginFormModelCopyWith<$Res> get form {
+  
+  return $LoginFormModelCopyWith<$Res>(_self.form, (value) {
+    return _then(_self.copyWith(form: value));
+  });
+}
 }
 
 
 /// @nodoc
 
 
-class _LoginState extends LoginState {
-  const _LoginState({required this.from, this.status = LoginStatus.initial, this.username = '', this.password = '', this.obscurePassword = true}): super._();
+class _LoginState implements LoginState {
+  const _LoginState({required this.from, this.form = const LoginFormModel()});
   
 
 @override final  String from;
-@override@JsonKey() final  LoginStatus status;
-@override@JsonKey() final  String username;
-@override@JsonKey() final  String password;
-@override@JsonKey() final  bool obscurePassword;
+@override@JsonKey() final  LoginFormModel form;
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
@@ -100,16 +103,16 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.form, form) || other.form == form));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,form);
 
 @override
 String toString() {
-  return 'LoginState(from: $from, status: $status, username: $username, password: $password, obscurePassword: $obscurePassword)';
+  return 'LoginState(from: $from, form: $form)';
 }
 
 
@@ -120,11 +123,11 @@ abstract mixin class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$
   factory _$LoginStateCopyWith(_LoginState value, $Res Function(_LoginState) _then) = __$LoginStateCopyWithImpl;
 @override @useResult
 $Res call({
- String from, LoginStatus status, String username, String password, bool obscurePassword
+ String from, LoginFormModel form
 });
 
 
-
+@override $LoginFormModelCopyWith<$Res> get form;
 
 }
 /// @nodoc
@@ -137,18 +140,24 @@ class __$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? form = null,}) {
   return _then(_LoginState(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as LoginStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as LoginFormModel,
   ));
 }
 
-
+/// Create a copy of LoginState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LoginFormModelCopyWith<$Res> get form {
+  
+  return $LoginFormModelCopyWith<$Res>(_self.form, (value) {
+    return _then(_self.copyWith(form: value));
+  });
+}
 }
 
 // dart format on

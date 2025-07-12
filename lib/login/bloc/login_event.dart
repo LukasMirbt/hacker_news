@@ -29,6 +29,14 @@ final class LoginPasswordVisibilityToggled extends LoginEvent {
   const LoginPasswordVisibilityToggled();
 }
 
+final class LoginTermsPressed extends LoginEvent {
+  const LoginTermsPressed();
+}
+
+final class LoginPrivacyPolicyPressed extends LoginEvent {
+  const LoginPrivacyPolicyPressed();
+}
+
 final class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }

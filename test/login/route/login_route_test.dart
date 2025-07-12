@@ -41,6 +41,13 @@ void main() {
           '/login',
         );
       });
+
+      test('has correct routes', () {
+        expect(
+          LoginRoute.config.routes,
+          <TypedRoute<RouteData>>[],
+        );
+      });
     });
 
     group('buildPage', () {

@@ -13,7 +13,7 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
     implements LoginBloc {}
 
 void main() {
-  group(LoginBody, () {
+  group(LoginFooter, () {
     late LoginBloc bloc;
 
     setUp(() {
@@ -26,32 +26,18 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: LoginBody(),
+        child: LoginFooter(),
       );
     }
 
-    testWidgets('renders $CustomScrollView '
-        'and $SliverFillRemaining', (tester) async {
+    testWidgets('renders $LoginPolicyLinks', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(
-        find.descendant(
-          of: find.byType(CustomScrollView),
-          matching: find.byWidgetPredicate(
-            (widget) => widget is SliverFillRemaining && !widget.hasScrollBody,
-          ),
-        ),
-        findsOneWidget,
-      );
+      expect(find.byType(LoginPolicyLinks), findsOneWidget);
     });
 
-    testWidgets('renders $LoginForm', (tester) async {
+    testWidgets('renders $LoginButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginForm), findsOneWidget);
-    });
-
-    testWidgets('renders $LoginFooter', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginFooter), findsOneWidget);
+      expect(find.byType(LoginButton), findsOneWidget);
     });
   });
 }

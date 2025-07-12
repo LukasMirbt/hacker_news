@@ -17,6 +17,6 @@ class SettingsBloc extends Bloc<SettingsEvent, void> {
     SettingsPrivacyPolicyPressed event,
     Emitter<void> emit,
   ) {
-    _launcher.launch(privacyPolicyLink);
+    _launcher.launch(yapPrivacyPolicyLink);
   }
 }

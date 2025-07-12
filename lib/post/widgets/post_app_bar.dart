@@ -17,6 +17,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: const PostBackButton(),
       title: Text(l10n.post_title),
+      centerTitle: false,
       shape: Border(
         bottom: BorderSide(
           color: colorScheme.outlineVariant,
