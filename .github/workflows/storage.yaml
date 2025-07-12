@@ -15,6 +15,6 @@ on:
 
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: ./.github/workflows/flutter_package.yaml
     with:
       working_directory: packages/storage/storage
