@@ -276,7 +276,7 @@ void main() {
           visitedPostRepository.addVisitedPost(item.id);
 
       blocTest<FeedBloc, FeedState>(
-        'emits $ItemPress and updates visited posts',
+        'emits $ItemPress and adds visited post',
         setUp: () {
           when(addVisitedPost).thenAnswer((_) async {});
         },
