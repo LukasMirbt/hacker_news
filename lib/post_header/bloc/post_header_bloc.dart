@@ -104,7 +104,7 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
   ) {
     final header = state.header;
     _linkLauncher.launch(header.url);
-    _visitedPostRepository.add(header.id);
+    _visitedPostRepository.addVisitedPost(header.id);
   }
 
   void _onVotePressed(

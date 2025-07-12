@@ -272,12 +272,13 @@ void main() {
         FeedItemPlaceholder(),
       );
 
-      final add = () => visitedPostRepository.add(item.id);
+      final addVisitedPost = () =>
+          visitedPostRepository.addVisitedPost(item.id);
 
       blocTest<FeedBloc, FeedState>(
         'emits $ItemPress and updates visited posts',
         setUp: () {
-          when(add).thenAnswer((_) async {});
+          when(addVisitedPost).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
@@ -308,7 +309,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(add).called(1);
+          verify(addVisitedPost).called(1);
         },
       );
     });

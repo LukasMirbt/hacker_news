@@ -167,10 +167,13 @@ void main() {
 
     group(PostHeaderPressed, () {
       final url = initialState.header.url;
+      final id = initialState.header.id;
+
       final launch = () => linkLauncher.launch(url);
+      final addVisitedPost = () => visitedPostRepository.addVisitedPost(id);
 
       blocTest<PostHeaderBloc, PostHeaderState>(
-        'calls launch',
+        'calls launch and addVisitedPost',
         setUp: () {
           when(launch).thenAnswer((_) async {});
         },
@@ -182,6 +185,7 @@ void main() {
         },
         verify: (_) {
           verify(launch).called(1);
+          verify(addVisitedPost).called(1);
         },
       );
     });

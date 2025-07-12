@@ -4,7 +4,7 @@ import 'package:visited_post_repository/visited_post_repository.dart';
 class VisitedPostRepository extends HydratedCubit<VisitedPostState> {
   VisitedPostRepository() : super(const VisitedPostState());
 
-  void add(String id) {
+  void addVisitedPost(String id) {
     emit(
       state.copyWith(
         items: {...state.items, id},

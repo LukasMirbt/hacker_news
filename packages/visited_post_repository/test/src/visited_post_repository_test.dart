@@ -19,7 +19,7 @@ void main() {
       expect(buildCubit().state, initialState);
     });
 
-    group('add', () {
+    group('addVisitedPost', () {
       final items = {'id1'};
       final state = VisitedPostState(items: items);
       const addedId = 'id2';
@@ -28,7 +28,7 @@ void main() {
         'emits updated items',
         seed: () => state,
         build: buildCubit,
-        act: (cubit) => cubit.add(addedId),
+        act: (cubit) => cubit.addVisitedPost(addedId),
         expect: () => [
           VisitedPostState(
             items: {...items, addedId},

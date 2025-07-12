@@ -157,7 +157,7 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       ),
     );
 
-    _visitedPostRepository.add(id);
+    _visitedPostRepository.addVisitedPost(id);
   }
 
   void _onItemVotePressed(
