@@ -9,6 +9,7 @@ class CreateAccountPolicyLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
     final l10n = AppLocalizations.of(context);
 
@@ -16,6 +17,8 @@ class CreateAccountPolicyLinks extends StatelessWidget {
 
     final underlinedStyle = normalStyle?.copyWith(
       decoration: TextDecoration.underline,
+      color: colorScheme.tertiary,
+      decorationColor: colorScheme.tertiary,
     );
 
     return Text.rich(
@@ -23,11 +26,25 @@ class CreateAccountPolicyLinks extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: 'By creating an account, you agree to the Hacker News ',
+            text: l10n.createAccount_policyLinksPart1,
             style: normalStyle,
           ),
           TextSpan(
-            text: 'privacy policy',
+            text: l10n.createAccount_termsOfUse,
+            style: underlinedStyle,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                context.read<CreateAccountBloc>().add(
+                  const CreateAccountTermsPressed(),
+                );
+              },
+          ),
+          TextSpan(
+            text: l10n.createAccount_policyLinksPart3,
+            style: normalStyle,
+          ),
+          TextSpan(
+            text: l10n.createAccount_privacyPolicy,
             style: underlinedStyle,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
@@ -35,24 +52,6 @@ class CreateAccountPolicyLinks extends StatelessWidget {
                   const CreateAccountPrivacyPolicyPressed(),
                 );
               },
-          ),
-          TextSpan(
-            text: ' and ',
-            style: normalStyle,
-          ),
-          TextSpan(
-            text: 'terms of use',
-            style: underlinedStyle,
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.read<CreateAccountBloc>().add(
-                  const CreateAccountPrivacyPolicyPressed(),
-                );
-              },
-          ),
-          TextSpan(
-            text: '.',
-            style: normalStyle,
           ),
         ],
       ),

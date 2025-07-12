@@ -29,12 +29,12 @@ final class CreateAccountPasswordVisibilityToggled extends CreateAccountEvent {
   const CreateAccountPasswordVisibilityToggled();
 }
 
-final class CreateAccountPrivacyPolicyPressed extends CreateAccountEvent {
-  const CreateAccountPrivacyPolicyPressed();
-}
-
 final class CreateAccountTermsPressed extends CreateAccountEvent {
   const CreateAccountTermsPressed();
+}
+
+final class CreateAccountPrivacyPolicyPressed extends CreateAccountEvent {
+  const CreateAccountPrivacyPolicyPressed();
 }
 
 final class CreateAccountSubmitted extends CreateAccountEvent {

@@ -7,16 +7,27 @@ class CreateAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const CreateAccountSuccessListener(
+      child: Scaffold(
+        appBar: _AppBar(),
+        body: CreateAccountBody(),
+      ),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return CreateAccountSuccessListener(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(l10n.createAccount_title),
-        ),
-        body: const CreateAccountBody(),
-      ),
+    return AppBar(
+      title: Text(l10n.createAccount_title),
     );
   }
 }

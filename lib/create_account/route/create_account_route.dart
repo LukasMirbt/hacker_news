@@ -10,12 +10,10 @@ class CreateAccountRoute extends GoRouteData with _$CreateAccountRoute {
   final String from;
 
   @override
-  Page<void> buildPage(
+  Widget build(
     BuildContext context,
     GoRouterState state,
   ) {
-    return MaterialPage(
-      child: CreateAccountPage(from: from),
-    );
+    return CreateAccountPage(from: from);
   }
 }

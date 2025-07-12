@@ -10,7 +10,7 @@ class CreateAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.select(
-      (CreateAccountBloc bloc) => bloc.state.isLoading,
+      (CreateAccountBloc bloc) => bloc.state.form.isLoading,
     );
 
     final l10n = AppLocalizations.of(context);

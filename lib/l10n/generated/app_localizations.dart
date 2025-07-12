@@ -178,11 +178,11 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get createAccount_title;
 
-  /// No description provided for @createAccount_submitAction.
+  /// No description provided for @createAccount_explanation.
   ///
   /// In en, this message translates to:
-  /// **'Create account'**
-  String get createAccount_submitAction;
+  /// **'Creates a Hacker News account that can also be used on the Hacker News website'**
+  String get createAccount_explanation;
 
   /// No description provided for @createAccount_usernameLabel.
   ///
@@ -190,11 +190,53 @@ abstract class AppLocalizations {
   /// **'Username'**
   String get createAccount_usernameLabel;
 
+  /// No description provided for @createAccount_usernameEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a username'**
+  String get createAccount_usernameEmptyError;
+
   /// No description provided for @createAccount_passwordLabel.
   ///
   /// In en, this message translates to:
   /// **'Password'**
   String get createAccount_passwordLabel;
+
+  /// No description provided for @createAccount_passwordEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a password'**
+  String get createAccount_passwordEmptyError;
+
+  /// No description provided for @createAccount_policyLinksPart1.
+  ///
+  /// In en, this message translates to:
+  /// **'By creating an account, you agree to the Hacker News '**
+  String get createAccount_policyLinksPart1;
+
+  /// No description provided for @createAccount_termsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get createAccount_termsOfUse;
+
+  /// No description provided for @createAccount_policyLinksPart3.
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get createAccount_policyLinksPart3;
+
+  /// No description provided for @createAccount_privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'privacy policy'**
+  String get createAccount_privacyPolicy;
+
+  /// No description provided for @createAccount_submitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccount_submitAction;
 
   /// No description provided for @dataCollection_title.
   ///

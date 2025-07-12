@@ -9,10 +9,14 @@ class CreateAccountPasswordTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final obscurePassword = context.select(
-      (CreateAccountBloc bloc) => bloc.state.obscurePassword,
+      (CreateAccountBloc bloc) => bloc.state.form.obscurePassword,
     );
 
     final l10n = AppLocalizations.of(context);
+
+    final errorText = context.select(
+      (CreateAccountBloc bloc) => bloc.state.form.passwordErrorText(l10n),
+    );
 
     return TextField(
       obscureText: obscurePassword,
@@ -21,7 +25,10 @@ class CreateAccountPasswordTextField extends StatelessWidget {
       autofillHints: const [AutofillHints.password],
       decoration: InputDecoration(
         labelText: l10n.createAccount_passwordLabel,
-        suffixIcon: const CreateAccountPasswordVisibilityButton(),
+        errorText: errorText,
+        suffixIcon: errorText != null
+            ? const Icon(Icons.error)
+            : const CreateAccountPasswordVisibilityButton(),
       ),
       onChanged: (value) {
         context.read<CreateAccountBloc>().add(

@@ -10,12 +10,18 @@ class CreateAccountUsernameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
+    final errorText = context.select(
+      (CreateAccountBloc bloc) => bloc.state.form.usernameErrorText(l10n),
+    );
+
     return TextField(
       textInputAction: TextInputAction.next,
       autocorrect: false,
       autofillHints: const [AutofillHints.username],
       decoration: InputDecoration(
         labelText: l10n.createAccount_usernameLabel,
+        errorText: errorText,
+        suffixIcon: errorText != null ? const Icon(Icons.error) : null,
       ),
       onChanged: (value) {
         context.read<CreateAccountBloc>().add(

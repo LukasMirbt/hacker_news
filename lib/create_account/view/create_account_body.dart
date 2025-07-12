@@ -7,30 +7,28 @@ class CreateAccountBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: AutofillGroup(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: AppSpacing.lg,
-            horizontal: AppSpacing.xlg,
-          ),
-          child: Column(
-            children: [
-              CreateAccountExplanation(),
-              SizedBox(height: AppSpacing.xlg),
-              CreateAccountUsernameTextField(),
-              SizedBox(height: AppSpacing.lg),
-              CreateAccountPasswordTextField(),
-              SizedBox(height: AppSpacing.lg),
-              SizedBox(height: AppSpacing.sm),
-              Spacer(),
-              CreateAccountPolicyLinks(),
-              SizedBox(height: AppSpacing.lg),
-              CreateAccountButton(),
-            ],
+    return const CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSpacing.lg,
+                horizontal: AppSpacing.xlg,
+              ),
+              child: Column(
+                children: [
+                  CreateAccountForm(),
+                  SizedBox(height: AppSpacing.lg),
+                  Spacer(),
+                  CreateAccountFooter(),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

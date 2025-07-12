@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateAccountState {
 
- String get from; CreateAccountStatus get status; String get username; String get password; bool get obscurePassword;
+ String get from; CreateAccountFormModel get form;
 /// Create a copy of CreateAccountState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CreateAccountStateCopyWith<CreateAccountState> get copyWith => _$CreateAccountS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateAccountState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateAccountState&&(identical(other.from, from) || other.from == from)&&(identical(other.form, form) || other.form == form));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,form);
 
 @override
 String toString() {
-  return 'CreateAccountState(from: $from, status: $status, username: $username, password: $password, obscurePassword: $obscurePassword)';
+  return 'CreateAccountState(from: $from, form: $form)';
 }
 
 
@@ -46,11 +46,11 @@ abstract mixin class $CreateAccountStateCopyWith<$Res>  {
   factory $CreateAccountStateCopyWith(CreateAccountState value, $Res Function(CreateAccountState) _then) = _$CreateAccountStateCopyWithImpl;
 @useResult
 $Res call({
- String from, CreateAccountStatus status, String username, String password, bool obscurePassword
+ String from, CreateAccountFormModel form
 });
 
 
-
+$CreateAccountFormModelCopyWith<$Res> get form;
 
 }
 /// @nodoc
@@ -63,32 +63,35 @@ class _$CreateAccountStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateAccountState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? form = null,}) {
   return _then(_self.copyWith(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as CreateAccountStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as CreateAccountFormModel,
   ));
 }
-
+/// Create a copy of CreateAccountState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CreateAccountFormModelCopyWith<$Res> get form {
+  
+  return $CreateAccountFormModelCopyWith<$Res>(_self.form, (value) {
+    return _then(_self.copyWith(form: value));
+  });
+}
 }
 
 
 /// @nodoc
 
 
-class _CreateAccountState extends CreateAccountState {
-  const _CreateAccountState({required this.from, this.status = CreateAccountStatus.initial, this.username = '', this.password = '', this.obscurePassword = true}): super._();
+class _CreateAccountState implements CreateAccountState {
+  const _CreateAccountState({required this.from, this.form = const CreateAccountFormModel()});
   
 
 @override final  String from;
-@override@JsonKey() final  CreateAccountStatus status;
-@override@JsonKey() final  String username;
-@override@JsonKey() final  String password;
-@override@JsonKey() final  bool obscurePassword;
+@override@JsonKey() final  CreateAccountFormModel form;
 
 /// Create a copy of CreateAccountState
 /// with the given fields replaced by the non-null parameter values.
@@ -100,16 +103,16 @@ _$CreateAccountStateCopyWith<_CreateAccountState> get copyWith => __$CreateAccou
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateAccountState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateAccountState&&(identical(other.from, from) || other.from == from)&&(identical(other.form, form) || other.form == form));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,form);
 
 @override
 String toString() {
-  return 'CreateAccountState(from: $from, status: $status, username: $username, password: $password, obscurePassword: $obscurePassword)';
+  return 'CreateAccountState(from: $from, form: $form)';
 }
 
 
@@ -120,11 +123,11 @@ abstract mixin class _$CreateAccountStateCopyWith<$Res> implements $CreateAccoun
   factory _$CreateAccountStateCopyWith(_CreateAccountState value, $Res Function(_CreateAccountState) _then) = __$CreateAccountStateCopyWithImpl;
 @override @useResult
 $Res call({
- String from, CreateAccountStatus status, String username, String password, bool obscurePassword
+ String from, CreateAccountFormModel form
 });
 
 
-
+@override $CreateAccountFormModelCopyWith<$Res> get form;
 
 }
 /// @nodoc
@@ -137,18 +140,24 @@ class __$CreateAccountStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateAccountState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? form = null,}) {
   return _then(_CreateAccountState(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as CreateAccountStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
-as bool,
+as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as CreateAccountFormModel,
   ));
 }
 
-
+/// Create a copy of CreateAccountState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CreateAccountFormModelCopyWith<$Res> get form {
+  
+  return $CreateAccountFormModelCopyWith<$Res>(_self.form, (value) {
+    return _then(_self.copyWith(form: value));
+  });
+}
 }
 
 // dart format on

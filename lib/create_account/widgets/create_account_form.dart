@@ -1,38 +1,36 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:hacker_client/create_account/create_account.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/login/login.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+class CreateAccountForm extends StatelessWidget {
+  const CreateAccountForm({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const AutofillGroup(
       child: Column(
         children: [
-          _Instructions(),
+          _Explanation(),
           SizedBox(height: AppSpacing.lg),
-          LoginUsernameTextField(),
+          CreateAccountUsernameTextField(),
           SizedBox(height: AppSpacing.lg),
-          LoginPasswordTextField(),
-          SizedBox(height: AppSpacing.sm),
-          LoginCreateAccountButton(),
+          CreateAccountPasswordTextField(),
         ],
       ),
     );
   }
 }
 
-class _Instructions extends StatelessWidget {
-  const _Instructions();
+class _Explanation extends StatelessWidget {
+  const _Explanation();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
     return Text(
-      l10n.login_instructions,
+      l10n.createAccount_explanation,
       textAlign: TextAlign.center,
     );
   }

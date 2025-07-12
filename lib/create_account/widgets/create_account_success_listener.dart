@@ -15,7 +15,7 @@ class CreateAccountSuccessListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CreateAccountBloc, CreateAccountState>(
       listenWhen: (previous, current) =>
-          !previous.status.isSuccess && current.status.isSuccess,
+          !previous.form.status.isSuccess && current.form.status.isSuccess,
       listener: (context, state) {
         LoginLoadingRoute(from: state.from).go(context);
       },
