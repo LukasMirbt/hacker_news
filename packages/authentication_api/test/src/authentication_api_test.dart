@@ -183,7 +183,7 @@ void main() {
           ),
         );
         final api = createSubject();
-        await api.login(
+        await api.createAccount(
           username: username,
           password: password,
         );
