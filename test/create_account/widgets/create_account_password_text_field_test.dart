@@ -70,6 +70,15 @@ void main() async {
       expect(widget.textInputAction, TextInputAction.done);
     });
 
+    testWidgets('keyboardType is correct', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(
+        widget.keyboardType,
+        TextInputType.visiblePassword,
+      );
+    });
+
     testWidgets('autofillHints are correct', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);

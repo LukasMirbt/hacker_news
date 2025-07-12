@@ -21,7 +21,7 @@ class CreateAccountPasswordTextField extends StatelessWidget {
     return TextField(
       obscureText: obscurePassword,
       textInputAction: TextInputAction.done,
-      autocorrect: false,
+      keyboardType: TextInputType.visiblePassword,
       autofillHints: const [AutofillHints.password],
       decoration: InputDecoration(
         labelText: l10n.createAccount_passwordLabel,

@@ -50,6 +50,18 @@ void main() async {
       );
     }
 
+    testWidgets('autocorrect is false', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.autocorrect, false);
+    });
+
+    testWidgets('enableSuggestions is false', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.enableSuggestions, false);
+    });
+
     testWidgets('textInputAction is ${TextInputAction.next}', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
