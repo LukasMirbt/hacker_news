@@ -47,27 +47,6 @@ class AuthenticationApi {
     await _client.http.get<void>(redirect);
   }
 
-  Future<void> createAccount({
-    required String username,
-    required String password,
-  }) async {
-    final response = await _client.http.post<String>(
-      'login',
-      options: RedirectValidationOptions(
-        contentType: Headers.formUrlEncodedContentType,
-      ),
-      data: {
-        'goto': 'news',
-        'creating': 't',
-        'acct': username,
-        'pw': password,
-      },
-    );
-
-    final redirect = response.headers.value(HttpHeaders.locationHeader)!;
-    await _client.http.get<void>(redirect);
-  }
-
   Future<void> logout() async {
     await _client.http.get<void>(state.user.logoutUrl);
     await _client.unauthenticate();

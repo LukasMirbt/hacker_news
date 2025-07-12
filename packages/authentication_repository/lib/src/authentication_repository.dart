@@ -30,16 +30,6 @@ class AuthenticationRepository {
     );
   }
 
-  Future<void> createAccount({
-    required String username,
-    required String password,
-  }) async {
-    await _api.createAccount(
-      username: username,
-      password: password,
-    );
-  }
-
   Future<void> logout() async {
     await _api.logout();
   }
