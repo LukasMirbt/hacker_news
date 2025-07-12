@@ -51,18 +51,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
-  String get createAccount_title => 'Create account';
-
-  @override
-  String get createAccount_submitAction => 'Create account';
-
-  @override
-  String get createAccount_usernameLabel => 'Username';
-
-  @override
-  String get createAccount_passwordLabel => 'Password';
-
-  @override
   String get dataCollection_title => 'Data collection';
 
   @override

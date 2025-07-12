@@ -172,30 +172,6 @@ abstract class AppLocalizations {
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
 
-  /// No description provided for @createAccount_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Create account'**
-  String get createAccount_title;
-
-  /// No description provided for @createAccount_submitAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Create account'**
-  String get createAccount_submitAction;
-
-  /// No description provided for @createAccount_usernameLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get createAccount_usernameLabel;
-
-  /// No description provided for @createAccount_passwordLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get createAccount_passwordLabel;
-
   /// No description provided for @dataCollection_title.
   ///
   /// In en, this message translates to:
