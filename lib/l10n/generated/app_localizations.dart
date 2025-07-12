@@ -181,7 +181,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAccount_explanation.
   ///
   /// In en, this message translates to:
-  /// **'Creates a Hacker News account that can also be used on the Hacker News website'**
+  /// **'Creates a Hacker News account that can also be used on the Hacker News website'**
   String get createAccount_explanation;
 
   /// No description provided for @createAccount_usernameLabel.
@@ -211,13 +211,13 @@ abstract class AppLocalizations {
   /// No description provided for @createAccount_policyLinksPart1.
   ///
   /// In en, this message translates to:
-  /// **'By creating an account, you agree to the Hacker News '**
+  /// **'By creating an account, you agree to the Hacker News '**
   String get createAccount_policyLinksPart1;
 
   /// No description provided for @createAccount_termsOfUse.
   ///
   /// In en, this message translates to:
-  /// **'terms of use'**
+  /// **'terms of use'**
   String get createAccount_termsOfUse;
 
   /// No description provided for @createAccount_policyLinksPart3.
@@ -229,7 +229,7 @@ abstract class AppLocalizations {
   /// No description provided for @createAccount_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'privacy policy'**
+  /// **'privacy policy'**
   String get createAccount_privacyPolicy;
 
   /// No description provided for @createAccount_submitAction.
@@ -319,7 +319,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_instructions.
   ///
   /// In en, this message translates to:
-  /// **'Use your Hacker News credentials to log in'**
+  /// **'Use your Hacker News credentials to log in'**
   String get login_instructions;
 
   /// No description provided for @login_usernameLabel.
@@ -349,19 +349,19 @@ abstract class AppLocalizations {
   /// No description provided for @login_createAccountAction.
   ///
   /// In en, this message translates to:
-  /// **'Create a Hacker News account'**
+  /// **'Create a Hacker News account'**
   String get login_createAccountAction;
 
   /// No description provided for @login_policyLinksPart1.
   ///
   /// In en, this message translates to:
-  /// **'By logging in, you agree to the Hacker News '**
+  /// **'By logging in, you agree to the Hacker News '**
   String get login_policyLinksPart1;
 
   /// No description provided for @login_termsOfUse.
   ///
   /// In en, this message translates to:
-  /// **'terms of use'**
+  /// **'terms of use'**
   String get login_termsOfUse;
 
   /// No description provided for @login_policyLinksPart3.
@@ -373,7 +373,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'privacy policy'**
+  /// **'privacy policy'**
   String get login_privacyPolicy;
 
   /// No description provided for @login_submitAction.
@@ -457,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @settings_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'Privacy policy'**
+  /// **'Privacy policy'**
   String get settings_privacyPolicy;
 
   /// No description provided for @theme_system.

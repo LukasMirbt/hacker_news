@@ -55,7 +55,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createAccount_explanation =>
-      'Creates a Hacker News account that can also be used on the Hacker News website';
+      'Creates a Hacker News account that can also be used on the Hacker News website';
 
   @override
   String get createAccount_usernameLabel => 'Username';
@@ -71,16 +71,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createAccount_policyLinksPart1 =>
-      'By creating an account, you agree to the Hacker News ';
+      'By creating an account, you agree to the Hacker News ';
 
   @override
-  String get createAccount_termsOfUse => 'terms of use';
+  String get createAccount_termsOfUse => 'terms of use';
 
   @override
   String get createAccount_policyLinksPart3 => ' and ';
 
   @override
-  String get createAccount_privacyPolicy => 'privacy policy';
+  String get createAccount_privacyPolicy => 'privacy policy';
 
   @override
   String get createAccount_submitAction => 'Create account';
@@ -129,7 +129,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_title => 'Login';
 
   @override
-  String get login_instructions => 'Use your Hacker News credentials to log in';
+  String get login_instructions => 'Use your Hacker News credentials to log in';
 
   @override
   String get login_usernameLabel => 'Username';
@@ -144,20 +144,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_passwordEmptyError => 'Enter a password';
 
   @override
-  String get login_createAccountAction => 'Create a Hacker News account';
+  String get login_createAccountAction => 'Create a Hacker News account';
 
   @override
   String get login_policyLinksPart1 =>
-      'By logging in, you agree to the Hacker News ';
+      'By logging in, you agree to the Hacker News ';
 
   @override
-  String get login_termsOfUse => 'terms of use';
+  String get login_termsOfUse => 'terms of use';
 
   @override
   String get login_policyLinksPart3 => ' and ';
 
   @override
-  String get login_privacyPolicy => 'privacy policy';
+  String get login_privacyPolicy => 'privacy policy';
 
   @override
   String get login_submitAction => 'Login';
@@ -201,7 +201,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_dataCollection => 'Data collection';
 
   @override
-  String get settings_privacyPolicy => 'Privacy policy';
+  String get settings_privacyPolicy => 'Privacy policy';
 
   @override
   String get theme_system => 'Use device settings';
