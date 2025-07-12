@@ -8,7 +8,7 @@ class LoginPasswordVisibilityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final obscurePassword = context.select(
-      (LoginBloc bloc) => bloc.state.obscurePassword,
+      (LoginBloc bloc) => bloc.state.form.obscurePassword,
     );
 
     return IconButton(

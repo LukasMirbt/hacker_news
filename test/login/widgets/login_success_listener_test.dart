@@ -44,7 +44,7 @@ void main() {
         bloc,
         initialState: initialState,
         Stream.value(
-          initialState.copyWith(
+          initialState.copyWith.form(
             status: LoginStatus.success,
           ),
         ),

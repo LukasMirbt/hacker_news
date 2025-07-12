@@ -30,8 +30,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     emit(
-      state.copyWith(
-        username: event.username,
+      state.copyWith.form(
+        username: Username(event.username),
       ),
     );
   }
@@ -41,8 +41,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     emit(
-      state.copyWith(
-        password: event.password,
+      state.copyWith.form(
+        password: Password(event.password),
       ),
     );
   }
@@ -52,8 +52,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     emit(
-      state.copyWith(
-        obscurePassword: !state.obscurePassword,
+      state.copyWith.form(
+        obscurePassword: !state.form.obscurePassword,
       ),
     );
   }
@@ -76,29 +76,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
-    if (!state.isValid) return;
+    final form = state.form;
+
+    if (!form.isValid) {
+      return emit(
+        state.copyWith.form(
+          status: LoginStatus.invalid,
+        ),
+      );
+    }
 
     emit(
-      state.copyWith(
+      state.copyWith.form(
         status: LoginStatus.loading,
       ),
     );
 
     try {
       await _repository.login(
-        username: state.username,
-        password: state.password,
+        username: form.username.value,
+        password: form.password.value,
       );
 
       emit(
-        state.copyWith(
+        state.copyWith.form(
           status: LoginStatus.success,
         ),
       );
     } catch (e, s) {
       addError(e, s);
       emit(
-        state.copyWith(
+        state.copyWith.form(
           status: LoginStatus.failure,
         ),
       );

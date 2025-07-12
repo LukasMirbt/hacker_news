@@ -9,25 +9,19 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isValid = context.select(
-      (LoginBloc bloc) => bloc.state.isValid,
-    );
-
     final isLoading = context.select(
-      (LoginBloc bloc) => bloc.state.isLoading,
+      (LoginBloc bloc) => bloc.state.form.isLoading,
     );
 
     final l10n = AppLocalizations.of(context);
 
     return AppFilledButton.expand(
       isLoading: isLoading,
-      onPressed: !isValid
-          ? null
-          : () {
-              context.read<LoginBloc>().add(
-                const LoginSubmitted(),
-              );
-            },
+      onPressed: () {
+        context.read<LoginBloc>().add(
+          const LoginSubmitted(),
+        );
+      },
       child: Text(l10n.login_submitAction),
     );
   }

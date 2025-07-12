@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
-// ignore_for_file: inference_failure_on_collection_literal
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -53,8 +52,8 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
-            username: username,
+          initialState.copyWith.form(
+            username: Username(username),
           ),
         ],
       );
@@ -70,8 +69,8 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
-            password: password,
+          initialState.copyWith.form(
+            password: Password(password),
           ),
         ],
       );
@@ -91,11 +90,11 @@ void main() {
             );
         },
         expect: () => [
-          initialState.copyWith(
-            obscurePassword: !initialState.obscurePassword,
+          initialState.copyWith.form(
+            obscurePassword: !initialState.form.obscurePassword,
           ),
-          initialState.copyWith(
-            obscurePassword: initialState.obscurePassword,
+          initialState.copyWith.form(
+            obscurePassword: initialState.form.obscurePassword,
           ),
         ],
       );
@@ -147,20 +146,24 @@ void main() {
         password: password,
       );
 
-      final state = initialState.copyWith(
-        username: username,
-        password: password,
+      final state = initialState.copyWith.form(
+        username: Username(username),
+        password: Password(password),
       );
 
       blocTest<LoginBloc, LoginState>(
-        'returns when !isValid',
+        'emits [invalid] when !form.isValid',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
             LoginSubmitted(),
           );
         },
-        expect: () => [],
+        expect: () => [
+          initialState.copyWith.form(
+            status: LoginStatus.invalid,
+          ),
+        ],
       );
 
       blocTest<LoginBloc, LoginState>(
@@ -176,10 +179,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.loading,
           ),
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.success,
           ),
         ],
@@ -201,10 +204,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.loading,
           ),
-          state.copyWith(
+          state.copyWith.form(
             status: LoginStatus.failure,
           ),
         ],

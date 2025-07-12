@@ -97,7 +97,7 @@ abstract class AppLocalizations {
   /// No description provided for @generalServerError.
   ///
   /// In en, this message translates to:
-  /// **'Something went wrong.'**
+  /// **'Something went wrong'**
   String get generalServerError;
 
   /// No description provided for @analyticsConsent_title.
@@ -289,7 +289,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_usernameEmptyError.
   ///
   /// In en, this message translates to:
-  /// **'Enter your username'**
+  /// **'Enter a username'**
   String get login_usernameEmptyError;
 
   /// No description provided for @login_passwordLabel.
@@ -301,7 +301,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_passwordEmptyError.
   ///
   /// In en, this message translates to:
-  /// **'Enter your password'**
+  /// **'Enter a password'**
   String get login_passwordEmptyError;
 
   /// No description provided for @login_createAccountAction.

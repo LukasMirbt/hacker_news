@@ -15,18 +15,25 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
 
 class _MockLoginState extends Mock implements LoginState {}
 
+class _MockLoginFormModel extends Mock implements LoginFormModel {}
+
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
+  const errorText = 'errorText';
 
   group(LoginPasswordTextField, () {
     late LoginBloc bloc;
     late LoginState state;
+    late LoginFormModel form;
 
     setUp(() {
       bloc = _MockLoginBloc();
       state = _MockLoginState();
+      form = _MockLoginFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.obscurePassword).thenReturn(true);
+      when(() => state.form).thenReturn(form);
+      when(() => form.obscurePassword).thenReturn(true);
+      registerFallbackValue(l10n);
     });
 
     Widget buildSubject() {
@@ -49,7 +56,7 @@ void main() async {
     });
 
     testWidgets('obscureText is false when !obscurePassword', (tester) async {
-      when(() => state.obscurePassword).thenReturn(false);
+      when(() => form.obscurePassword).thenReturn(false);
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(widget.obscureText, false);
@@ -79,12 +86,42 @@ void main() async {
       );
     });
 
-    testWidgets('suffixIcon is $LoginPasswordVisibilityButton', (tester) async {
+    testWidgets('errorText is correct', (tester) async {
+      when(
+        () => form.passwordErrorText(any()),
+      ).thenReturn(errorText);
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(
+        widget.decoration?.errorText,
+        errorText,
+      );
+    });
+
+    testWidgets('suffixIcon is $LoginPasswordVisibilityButton '
+        'when errorText is null', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(
         widget.decoration?.suffixIcon,
         isA<LoginPasswordVisibilityButton>(),
+      );
+    });
+
+    testWidgets('suffixIcon is error icon '
+        'when errorText is non-null', (tester) async {
+      when(
+        () => form.passwordErrorText(any()),
+      ).thenReturn(errorText);
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(
+        widget.decoration?.suffixIcon,
+        isA<Icon>().having(
+          (icon) => icon.icon,
+          'icon',
+          Icons.error,
+        ),
       );
     });
 
