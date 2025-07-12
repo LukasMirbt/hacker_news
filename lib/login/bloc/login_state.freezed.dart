@@ -26,12 +26,12 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.from, from) || other.from == from)&&const DeepCollectionEquality().equals(other.status, status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,const DeepCollectionEquality().hash(status),username,password,obscurePassword);
 
 @override
 String toString() {
@@ -63,10 +63,10 @@ class _$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? status = freezed,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
   return _then(_self.copyWith(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as LoginStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable
@@ -100,12 +100,12 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.from, from) || other.from == from)&&const DeepCollectionEquality().equals(other.status, status)&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.obscurePassword, obscurePassword) || other.obscurePassword == obscurePassword));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status,username,password,obscurePassword);
+int get hashCode => Object.hash(runtimeType,from,const DeepCollectionEquality().hash(status),username,password,obscurePassword);
 
 @override
 String toString() {
@@ -137,10 +137,10 @@ class __$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? status = null,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? status = freezed,Object? username = null,Object? password = null,Object? obscurePassword = null,}) {
   return _then(_LoginState(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as LoginStatus,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,obscurePassword: null == obscurePassword ? _self.obscurePassword : obscurePassword // ignore: cast_nullable_to_non_nullable

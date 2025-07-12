@@ -79,12 +79,6 @@ void main() async {
       );
     });
 
-    testWidgets('border is $OutlineInputBorder', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.decoration?.border, isA<OutlineInputBorder>());
-    });
-
     testWidgets('suffixIcon is $LoginPasswordVisibilityButton', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);

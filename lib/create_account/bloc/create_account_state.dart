@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'login_state.freezed.dart';
+part 'create_account_state.freezed.dart';
 
-enum LoginStatus {
+enum CreateAccountStatus {
   initial,
   loading,
   success,
@@ -13,17 +13,16 @@ enum LoginStatus {
 }
 
 @freezed
-abstract class LoginState with _$LoginState {
-  const factory LoginState({
+abstract class CreateAccountState with _$CreateAccountState {
+  const factory CreateAccountState({
     required String from,
-    @Default(LoginStatus.initial) LoginStatus status,
+    @Default(CreateAccountStatus.initial) CreateAccountStatus status,
     @Default('') String username,
     @Default('') String password,
     @Default(true) bool obscurePassword,
-  }) = _LoginState;
+  }) = _CreateAccountState;
 
-  const LoginState._();
+  const CreateAccountState._();
 
-  bool get isValid => username.isNotEmpty && password.isNotEmpty;
   bool get isLoading => status.isLoading || status.isSuccess;
 }

@@ -51,6 +51,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
+  String get createAccount_title => 'Create account';
+
+  @override
+  String get createAccount_submitAction => 'Create account';
+
+  @override
+  String get createAccount_usernameLabel => 'Username';
+
+  @override
+  String get createAccount_passwordLabel => 'Password';
+
+  @override
   String get dataCollection_title => 'Data collection';
 
   @override
@@ -94,13 +106,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_title => 'Login';
 
   @override
+  String get login_instructions => 'Use your Hacker News credentials to log in';
+
+  @override
   String get login_usernameLabel => 'Username';
+
+  @override
+  String get login_usernameEmptyError => 'Enter your username';
 
   @override
   String get login_passwordLabel => 'Password';
 
   @override
-  String get login_loginAction => 'Login';
+  String get login_passwordEmptyError => 'Enter your password';
+
+  @override
+  String get login_createAccountAction => 'Create a Hacker News account';
+
+  @override
+  String get login_policyLinksPart1 =>
+      'By logging in, you agree to the Hacker News ';
+
+  @override
+  String get login_termsOfUse => 'terms of use';
+
+  @override
+  String get login_policyLinksPart3 => ' and ';
+
+  @override
+  String get login_privacyPolicy => 'privacy policy';
+
+  @override
+  String get login_submitAction => 'Login';
 
   @override
   String get loginLoading_text => 'Logging in...';

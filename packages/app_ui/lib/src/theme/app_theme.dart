@@ -34,7 +34,8 @@ abstract class AppTheme {
     return AppBarTheme(
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
-      centerTitle: false,
+      titleTextStyle: _textTheme.titleLarge?.copyWith(fontFamily: 'Serif'),
+      centerTitle: true,
     );
   }
 
@@ -53,6 +54,8 @@ abstract class AppTheme {
       onPrimaryContainer: colors.onPrimaryContainer,
       secondaryContainer: colors.secondaryContainer,
       onSecondaryContainer: colors.onSecondaryContainer,
+      tertiary: colors.tertiary,
+      onTertiary: colors.onTertiary,
       surface: colors.surface,
       onSurface: colors.onSurface,
       onSurfaceVariant: colors.onSurfaceVariant,
@@ -77,7 +80,11 @@ abstract class AppTheme {
 
   InputDecorationTheme get _inputDecorationTheme {
     return const InputDecorationTheme(
-      border: OutlineInputBorder(),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
     );
   }
 
@@ -121,11 +128,7 @@ abstract class AppTheme {
   }
 
   TextButtonThemeData get _textButtonTheme {
-    return TextButtonThemeData(
-      style: ButtonStyle(
-        foregroundColor: WidgetStatePropertyAll(colors.onSurface),
-      ),
-    );
+    return const TextButtonThemeData();
   }
 
   TextTheme get _textTheme {
