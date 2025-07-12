@@ -45,9 +45,7 @@ void main() {
       test('has correct routes', () {
         expect(
           LoginRoute.config.routes,
-          [
-            CreateAccountRoute.config,
-          ],
+          <TypedRoute<RouteData>>[],
         );
       });
     });
