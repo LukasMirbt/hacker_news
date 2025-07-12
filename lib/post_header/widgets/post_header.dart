@@ -11,6 +11,10 @@ class PostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final visited = context.select(
+      (PostHeaderBloc bloc) => bloc.state.visited,
+    );
+
     final title = context.select(
       (PostHeaderBloc bloc) => bloc.state.header.title,
     );
@@ -47,6 +51,7 @@ class PostHeader extends StatelessWidget {
 
     return AppPostHeader(
       data: AppPostHeaderData(
+        visited: visited,
         title: title,
         age: age,
         urlHost: urlHost,
@@ -62,7 +67,7 @@ class PostHeader extends StatelessWidget {
         },
         onPressed: () {
           context.read<PostHeaderBloc>().add(
-            const PostHeaderTitlePressed(),
+            const PostHeaderPressed(),
           );
         },
         onVotePressed: () {

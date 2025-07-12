@@ -25,6 +25,7 @@ import 'package:post_api/post_api.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:version_repository/version_repository.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
@@ -41,7 +42,7 @@ class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
   @override
-  AuthenticationState get state => AuthenticationState();
+  AuthenticationState get state => AuthenticationStatePlaceholder();
 
   @override
   Stream<AuthenticationState> get stream => Stream.empty();
@@ -54,6 +55,9 @@ class _MockVersionRepository extends Mock implements VersionRepository {
   @override
   Future<Version> currentVersion() async => Version(1, 0, 0);
 }
+
+class _MockVisitedPostRepository extends Mock
+    implements VisitedPostRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {
   @override
@@ -144,6 +148,9 @@ extension PumpAppExtension on WidgetTester {
             ),
             RepositoryProvider<VersionRepository>(
               create: (_) => _MockVersionRepository(),
+            ),
+            RepositoryProvider<VisitedPostRepository>(
+              create: (_) => _MockVisitedPostRepository(),
             ),
             RepositoryProvider<VoteRepository>(
               create: (_) => _MockVoteRepository(),

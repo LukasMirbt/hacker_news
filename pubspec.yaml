@@ -30,6 +30,7 @@ workspace:
   - packages/storage/secure_storage
   - packages/storage/storage
   - packages/version_repository
+  - packages/visited_post_repository
   - packages/vote_api
   - packages/vote_repository
   - packages/web_links
@@ -102,6 +103,8 @@ dependencies:
   url_launcher: ^6.3.1
   version_repository:
     path: packages/version_repository
+  visited_post_repository:
+    path: packages/visited_post_repository
   vote_api:
     path: packages/vote_api
   vote_repository:

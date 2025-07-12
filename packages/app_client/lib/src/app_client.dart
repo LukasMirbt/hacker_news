@@ -6,14 +6,14 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class AppClient extends Cubit<AuthenticationState> {
   AppClient({
-    required this.baseUrl,
+    required Uri baseUrl,
     required CookieJar cookieJar,
     required void Function(Dio, CookieJar) addPlatformConfiguration,
     void Function(String?)? debugPrint,
   }) : _cookieJar = cookieJar,
        http = SequentialDio(),
        super(
-         const AuthenticationState(),
+         AuthenticationState(baseUrl: baseUrl),
        ) {
     final baseOptions = BaseOptions(
       connectTimeout: const Duration(milliseconds: 10000),
@@ -52,7 +52,6 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   final CookieJar _cookieJar;
-  final Uri baseUrl;
   final Dio http;
 
   void redirectToLogin() {
@@ -74,12 +73,12 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   Future<List<Cookie>> cookies() async {
-    final cookies = await _cookieJar.loadForRequest(baseUrl);
+    final cookies = await _cookieJar.loadForRequest(state.baseUrl);
     return cookies;
   }
 
   Future<void> saveCookies(List<Cookie> cookies) async {
-    await _cookieJar.saveFromResponse(baseUrl, cookies);
+    await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
   void authenticate(User user) {

@@ -9,7 +9,6 @@ class AuthenticationRepository {
 
   Stream<AuthenticationState> get stream => _api.stream;
   AuthenticationState get state => _api.state;
-  Uri get baseUrl => _api.baseUrl;
 
   Future<List<Cookie>> cookies() async {
     final cookies = await _api.cookies();

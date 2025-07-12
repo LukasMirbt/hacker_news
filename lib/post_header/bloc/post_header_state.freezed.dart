@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostHeaderState {
 
- String get id; PostHeaderModel get header;
+ String get id; PostHeaderModel get header; Set<String> get visitedPosts;
 /// Create a copy of PostHeaderState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $PostHeaderStateCopyWith<PostHeaderState> get copyWith => _$PostHeaderStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostHeaderState&&(identical(other.id, id) || other.id == id)&&(identical(other.header, header) || other.header == header));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostHeaderState&&(identical(other.id, id) || other.id == id)&&(identical(other.header, header) || other.header == header)&&const DeepCollectionEquality().equals(other.visitedPosts, visitedPosts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,header);
+int get hashCode => Object.hash(runtimeType,id,header,const DeepCollectionEquality().hash(visitedPosts));
 
 @override
 String toString() {
-  return 'PostHeaderState(id: $id, header: $header)';
+  return 'PostHeaderState(id: $id, header: $header, visitedPosts: $visitedPosts)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $PostHeaderStateCopyWith<$Res>  {
   factory $PostHeaderStateCopyWith(PostHeaderState value, $Res Function(PostHeaderState) _then) = _$PostHeaderStateCopyWithImpl;
 @useResult
 $Res call({
- String id, PostHeaderModel header
+ String id, PostHeaderModel header, Set<String> visitedPosts
 });
 
 
@@ -63,11 +63,12 @@ class _$PostHeaderStateCopyWithImpl<$Res>
 
 /// Create a copy of PostHeaderState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? header = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? header = null,Object? visitedPosts = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,header: null == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
-as PostHeaderModel,
+as PostHeaderModel,visitedPosts: null == visitedPosts ? _self.visitedPosts : visitedPosts // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 
@@ -77,12 +78,19 @@ as PostHeaderModel,
 /// @nodoc
 
 
-class _PostHeaderState implements PostHeaderState {
-  const _PostHeaderState({required this.id, required this.header});
+class _PostHeaderState extends PostHeaderState {
+  const _PostHeaderState({required this.id, required this.header, required final  Set<String> visitedPosts}): _visitedPosts = visitedPosts,super._();
   
 
 @override final  String id;
 @override final  PostHeaderModel header;
+ final  Set<String> _visitedPosts;
+@override Set<String> get visitedPosts {
+  if (_visitedPosts is EqualUnmodifiableSetView) return _visitedPosts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_visitedPosts);
+}
+
 
 /// Create a copy of PostHeaderState
 /// with the given fields replaced by the non-null parameter values.
@@ -94,16 +102,16 @@ _$PostHeaderStateCopyWith<_PostHeaderState> get copyWith => __$PostHeaderStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostHeaderState&&(identical(other.id, id) || other.id == id)&&(identical(other.header, header) || other.header == header));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostHeaderState&&(identical(other.id, id) || other.id == id)&&(identical(other.header, header) || other.header == header)&&const DeepCollectionEquality().equals(other._visitedPosts, _visitedPosts));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,header);
+int get hashCode => Object.hash(runtimeType,id,header,const DeepCollectionEquality().hash(_visitedPosts));
 
 @override
 String toString() {
-  return 'PostHeaderState(id: $id, header: $header)';
+  return 'PostHeaderState(id: $id, header: $header, visitedPosts: $visitedPosts)';
 }
 
 
@@ -114,7 +122,7 @@ abstract mixin class _$PostHeaderStateCopyWith<$Res> implements $PostHeaderState
   factory _$PostHeaderStateCopyWith(_PostHeaderState value, $Res Function(_PostHeaderState) _then) = __$PostHeaderStateCopyWithImpl;
 @override @useResult
 $Res call({
- String id, PostHeaderModel header
+ String id, PostHeaderModel header, Set<String> visitedPosts
 });
 
 
@@ -131,11 +139,12 @@ class __$PostHeaderStateCopyWithImpl<$Res>
 
 /// Create a copy of PostHeaderState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? header = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? header = null,Object? visitedPosts = null,}) {
   return _then(_PostHeaderState(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,header: null == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
-as PostHeaderModel,
+as PostHeaderModel,visitedPosts: null == visitedPosts ? _self._visitedPosts : visitedPosts // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 

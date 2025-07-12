@@ -57,13 +57,21 @@ class _Title extends StatelessWidget {
       (AppPostHeaderData data) => data.title,
     );
 
+    final visited = context.select(
+      (AppPostHeaderData data) => data.visited,
+    );
+
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
+
+    final color = visited
+        ? colorScheme.onSurfaceVariant
+        : colorScheme.onSurface;
 
     return Text(
       title,
       style: textTheme.titleMedium?.copyWith(
-        color: colorScheme.onSurface,
+        color: color,
       ),
     );
   }

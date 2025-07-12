@@ -16,6 +16,7 @@ import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_api/post_api.dart';
 import 'package:version_repository/version_repository.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 import '../init_mock_hydrated_storage.dart';
@@ -31,7 +32,7 @@ class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
   @override
-  AuthenticationState get state => AuthenticationState();
+  AuthenticationState get state => AuthenticationStatePlaceholder();
 
   @override
   Stream<AuthenticationState> get stream => Stream.empty();
@@ -60,6 +61,7 @@ void main() {
     late AnalyticsRepository analyticsRepository;
     late AuthenticationRepository authenticationRepository;
     late VersionRepository versionRepository;
+    late VisitedPostRepository visitedPostRepository;
     late VoteRepository voteRepository;
 
     setUp(() {
@@ -69,6 +71,7 @@ void main() {
       analyticsRepository = _MockAnalyticsRepository();
       authenticationRepository = _MockAuthenticationRepository();
       voteRepository = _MockVoteRepository();
+      visitedPostRepository = VisitedPostRepository();
       versionRepository = _MockVersionRepository();
     });
 
@@ -80,6 +83,7 @@ void main() {
         authenticationRepository: authenticationRepository,
         postApi: postApi,
         versionRepository: versionRepository,
+        visitedPostRepository: visitedPostRepository,
         voteRepository: voteRepository,
       );
     }
@@ -122,6 +126,12 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<VersionRepository>(), isNotNull);
+    });
+
+    testWidgets('provides $VisitedPostRepository', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<VisitedPostRepository>(), isNotNull);
     });
 
     testWidgets('provides $VoteRepository', (tester) async {

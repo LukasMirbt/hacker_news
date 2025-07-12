@@ -13,7 +13,10 @@ class _MockUser extends Mock implements User {}
 
 void main() {
   final baseUrl = Uri.parse('https://example.com/');
-  final initialState = AuthenticationState();
+
+  final initialState = AuthenticationState(
+    baseUrl: baseUrl,
+  );
 
   group(AppClient, () {
     late CookieJar cookieJar;
@@ -149,13 +152,6 @@ void main() {
             ),
           );
         });
-      });
-    });
-
-    group('baseUrl', () {
-      test('returns correct string', () {
-        final client = createSubject();
-        expect(client.baseUrl, baseUrl);
       });
     });
 

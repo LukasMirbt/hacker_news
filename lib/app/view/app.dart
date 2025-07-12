@@ -12,6 +12,7 @@ import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:post_api/post_api.dart';
 import 'package:provider/provider.dart';
 import 'package:version_repository/version_repository.dart';
+import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class App extends StatelessWidget {
@@ -22,6 +23,7 @@ class App extends StatelessWidget {
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
     required VersionRepository versionRepository,
+    required VisitedPostRepository visitedPostRepository,
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
@@ -30,6 +32,7 @@ class App extends StatelessWidget {
        _postApi = postApi,
        _feedApi = feedApi,
        _versionRepository = versionRepository,
+       _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
@@ -38,6 +41,7 @@ class App extends StatelessWidget {
   final PostApi _postApi;
   final FeedApi _feedApi;
   final VersionRepository _versionRepository;
+  final VisitedPostRepository _visitedPostRepository;
   final VoteRepository _voteRepository;
 
   @override
@@ -53,6 +57,7 @@ class App extends StatelessWidget {
           RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
           RepositoryProvider.value(value: _versionRepository),
+          RepositoryProvider.value(value: _visitedPostRepository),
           RepositoryProvider.value(value: _voteRepository),
         ],
         child: MultiBlocProvider(

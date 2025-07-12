@@ -142,6 +142,7 @@ void main() {
 
     group(WebRedirectLoadStopped, () {
       final baseUrl = Uri.parse('baseUrl');
+      final state = AuthenticationState(baseUrl: baseUrl);
 
       final cookies = [
         Cookie('name', 'value'),
@@ -159,7 +160,7 @@ void main() {
       blocTest<WebRedirectBloc, WebRedirectState>(
         'saves cookies and emits canGoBack and canGoForward',
         setUp: () {
-          when(() => repository.baseUrl).thenReturn(baseUrl);
+          when(() => repository.state).thenReturn(state);
           when(getCookies).thenAnswer((_) async => cookies);
           when(saveCookies).thenAnswer((_) async {});
           when(canGoBackFuture).thenAnswer((_) async => canGoBack);

@@ -12,6 +12,10 @@ final class FeedVoteSubscriptionRequested extends FeedEvent {
   const FeedVoteSubscriptionRequested();
 }
 
+final class FeedVisitedPostSubscriptionRequested extends FeedEvent {
+  const FeedVisitedPostSubscriptionRequested();
+}
+
 final class FeedStarted extends FeedEvent {
   const FeedStarted();
 }

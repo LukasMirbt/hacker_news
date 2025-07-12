@@ -12,50 +12,47 @@ part of 'authentication_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$AuthenticationState {
-  User get user;
-  Redirect get redirect;
-  AuthenticationStatus get status;
 
-  /// Create a copy of AuthenticationState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $AuthenticationStateCopyWith<AuthenticationState> get copyWith =>
-      _$AuthenticationStateCopyWithImpl<AuthenticationState>(
-          this as AuthenticationState, _$identity);
+ Uri get baseUrl; User get user; Redirect get redirect; AuthenticationStatus get status;
+/// Create a copy of AuthenticationState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AuthenticationStateCopyWith<AuthenticationState> get copyWith => _$AuthenticationStateCopyWithImpl<AuthenticationState>(this as AuthenticationState, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is AuthenticationState &&
-            (identical(other.user, user) || other.user == user) &&
-            (identical(other.redirect, redirect) ||
-                other.redirect == redirect) &&
-            (identical(other.status, status) || other.status == status));
-  }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, user, redirect, status);
 
-  @override
-  String toString() {
-    return 'AuthenticationState(user: $user, redirect: $redirect, status: $status)';
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl)&&(identical(other.user, user) || other.user == user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,baseUrl,user,redirect,status);
+
+@override
+String toString() {
+  return 'AuthenticationState(baseUrl: $baseUrl, user: $user, redirect: $redirect, status: $status)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class $AuthenticationStateCopyWith<$Res> {
-  factory $AuthenticationStateCopyWith(
-          AuthenticationState value, $Res Function(AuthenticationState) _then) =
-      _$AuthenticationStateCopyWithImpl;
-  @useResult
-  $Res call({User user, Redirect redirect, AuthenticationStatus status});
-}
+abstract mixin class $AuthenticationStateCopyWith<$Res>  {
+  factory $AuthenticationStateCopyWith(AuthenticationState value, $Res Function(AuthenticationState) _then) = _$AuthenticationStateCopyWithImpl;
+@useResult
+$Res call({
+ Uri baseUrl, User user, Redirect redirect, AuthenticationStatus status
+});
 
+
+
+
+}
 /// @nodoc
 class _$AuthenticationStateCopyWithImpl<$Res>
     implements $AuthenticationStateCopyWith<$Res> {
@@ -64,122 +61,19 @@ class _$AuthenticationStateCopyWithImpl<$Res>
   final AuthenticationState _self;
   final $Res Function(AuthenticationState) _then;
 
-  /// Create a copy of AuthenticationState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = null,
-    Object? redirect = null,
-    Object? status = null,
-  }) {
-    return _then(_self.copyWith(
-      user: null == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-      redirect: null == redirect
-          ? _self.redirect
-          : redirect // ignore: cast_nullable_to_non_nullable
-              as Redirect,
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as AuthenticationStatus,
-    ));
-  }
+/// Create a copy of AuthenticationState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? baseUrl = null,Object? user = null,Object? redirect = null,Object? status = null,}) {
+  return _then(AuthenticationState(
+baseUrl: null == baseUrl ? _self.baseUrl : baseUrl // ignore: cast_nullable_to_non_nullable
+as Uri,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as User,redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
+as Redirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as AuthenticationStatus,
+  ));
 }
 
-/// @nodoc
-
-class _AuthenticationState implements AuthenticationState {
-  const _AuthenticationState(
-      {this.user = User.empty,
-      this.redirect = LoginRedirect.initial,
-      this.status = AuthenticationStatus.unknown});
-
-  @override
-  @JsonKey()
-  final User user;
-  @override
-  @JsonKey()
-  final Redirect redirect;
-  @override
-  @JsonKey()
-  final AuthenticationStatus status;
-
-  /// Create a copy of AuthenticationState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$AuthenticationStateCopyWith<_AuthenticationState> get copyWith =>
-      __$AuthenticationStateCopyWithImpl<_AuthenticationState>(
-          this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _AuthenticationState &&
-            (identical(other.user, user) || other.user == user) &&
-            (identical(other.redirect, redirect) ||
-                other.redirect == redirect) &&
-            (identical(other.status, status) || other.status == status));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, user, redirect, status);
-
-  @override
-  String toString() {
-    return 'AuthenticationState(user: $user, redirect: $redirect, status: $status)';
-  }
 }
 
-/// @nodoc
-abstract mixin class _$AuthenticationStateCopyWith<$Res>
-    implements $AuthenticationStateCopyWith<$Res> {
-  factory _$AuthenticationStateCopyWith(_AuthenticationState value,
-          $Res Function(_AuthenticationState) _then) =
-      __$AuthenticationStateCopyWithImpl;
-  @override
-  @useResult
-  $Res call({User user, Redirect redirect, AuthenticationStatus status});
-}
-
-/// @nodoc
-class __$AuthenticationStateCopyWithImpl<$Res>
-    implements _$AuthenticationStateCopyWith<$Res> {
-  __$AuthenticationStateCopyWithImpl(this._self, this._then);
-
-  final _AuthenticationState _self;
-  final $Res Function(_AuthenticationState) _then;
-
-  /// Create a copy of AuthenticationState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? user = null,
-    Object? redirect = null,
-    Object? status = null,
-  }) {
-    return _then(_AuthenticationState(
-      user: null == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
-      redirect: null == redirect
-          ? _self.redirect
-          : redirect // ignore: cast_nullable_to_non_nullable
-              as Redirect,
-      status: null == status
-          ? _self.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as AuthenticationStatus,
-    ));
-  }
-}
 
 // dart format on

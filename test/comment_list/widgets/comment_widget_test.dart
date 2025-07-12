@@ -62,7 +62,10 @@ void main() {
       when(() => item.htmlText).thenReturn(htmlText);
       when(() => item.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
       when(() => postHeaderBloc.state).thenReturn(
-        PostHeaderState.initial(id: postId),
+        PostHeaderState.initial(
+          id: postId,
+          visitedPosts: {},
+        ),
       );
     });
 

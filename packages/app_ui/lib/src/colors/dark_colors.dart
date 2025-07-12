@@ -32,7 +32,7 @@ class DarkColors extends AppColors {
   Color get onTertiary => Colors.black;
 
   @override
-  Color get error => const Color(0xffcf6679);
+  Color get error => const Color(0xFFcf6679);
 
   @override
   Color get onError => Colors.black;
@@ -44,10 +44,10 @@ class DarkColors extends AppColors {
   Color get onSurface => const Color.fromRGBO(255, 255, 255, 1);
 
   @override
-  Color get onSurfaceVariant => const Color.fromRGBO(179, 179, 179, 1);
+  Color get onSurfaceVariant => const Color(0xFF949494);
 
   @override
-  Color get outline => const Color.fromRGBO(148, 148, 148, 1);
+  Color get outline => const Color(0xFF616161);
 
   @override
   Color get outlineVariant => const Color.fromRGBO(66, 66, 66, 1);

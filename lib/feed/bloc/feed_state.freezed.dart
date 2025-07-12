@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FeedState {
 
- FeedType get type; PaginatedFeedModel get feed; FetchStatus get fetchStatus; RefreshStatus get refreshStatus; ItemPress get itemPress;
+ FeedType get type; PaginatedFeedModel get feed; Set<String> get visitedPosts; FetchStatus get fetchStatus; RefreshStatus get refreshStatus; ItemPress get itemPress;
 /// Create a copy of FeedState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $FeedStateCopyWith<FeedState> get copyWith => _$FeedStateCopyWithImpl<FeedState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedState&&(identical(other.type, type) || other.type == type)&&(identical(other.feed, feed) || other.feed == feed)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.itemPress, itemPress) || other.itemPress == itemPress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FeedState&&(identical(other.type, type) || other.type == type)&&(identical(other.feed, feed) || other.feed == feed)&&const DeepCollectionEquality().equals(other.visitedPosts, visitedPosts)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.itemPress, itemPress) || other.itemPress == itemPress));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,feed,fetchStatus,refreshStatus,itemPress);
+int get hashCode => Object.hash(runtimeType,type,feed,const DeepCollectionEquality().hash(visitedPosts),fetchStatus,refreshStatus,itemPress);
 
 @override
 String toString() {
-  return 'FeedState(type: $type, feed: $feed, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, itemPress: $itemPress)';
+  return 'FeedState(type: $type, feed: $feed, visitedPosts: $visitedPosts, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, itemPress: $itemPress)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $FeedStateCopyWith<$Res>  {
   factory $FeedStateCopyWith(FeedState value, $Res Function(FeedState) _then) = _$FeedStateCopyWithImpl;
 @useResult
 $Res call({
- FeedType type, PaginatedFeedModel feed, FetchStatus fetchStatus, RefreshStatus refreshStatus, ItemPress itemPress
+ FeedType type, PaginatedFeedModel feed, Set<String> visitedPosts, FetchStatus fetchStatus, RefreshStatus refreshStatus, ItemPress itemPress
 });
 
 
@@ -63,11 +63,12 @@ class _$FeedStateCopyWithImpl<$Res>
 
 /// Create a copy of FeedState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? feed = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? itemPress = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? feed = null,Object? visitedPosts = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? itemPress = null,}) {
   return _then(_self.copyWith(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as FeedType,feed: null == feed ? _self.feed : feed // ignore: cast_nullable_to_non_nullable
-as PaginatedFeedModel,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
+as PaginatedFeedModel,visitedPosts: null == visitedPosts ? _self.visitedPosts : visitedPosts // ignore: cast_nullable_to_non_nullable
+as Set<String>,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
 as RefreshStatus,itemPress: null == itemPress ? _self.itemPress : itemPress // ignore: cast_nullable_to_non_nullable
 as ItemPress,
@@ -80,12 +81,19 @@ as ItemPress,
 /// @nodoc
 
 
-class _FeedState implements FeedState {
-  const _FeedState({required this.type, required this.feed, this.fetchStatus = FetchStatus.loading, this.refreshStatus = RefreshStatus.initial, this.itemPress = ItemPress.initial});
+class _FeedState extends FeedState {
+  const _FeedState({required this.type, required this.feed, required final  Set<String> visitedPosts, this.fetchStatus = FetchStatus.loading, this.refreshStatus = RefreshStatus.initial, this.itemPress = ItemPress.initial}): _visitedPosts = visitedPosts,super._();
   
 
 @override final  FeedType type;
 @override final  PaginatedFeedModel feed;
+ final  Set<String> _visitedPosts;
+@override Set<String> get visitedPosts {
+  if (_visitedPosts is EqualUnmodifiableSetView) return _visitedPosts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_visitedPosts);
+}
+
 @override@JsonKey() final  FetchStatus fetchStatus;
 @override@JsonKey() final  RefreshStatus refreshStatus;
 @override@JsonKey() final  ItemPress itemPress;
@@ -100,16 +108,16 @@ _$FeedStateCopyWith<_FeedState> get copyWith => __$FeedStateCopyWithImpl<_FeedSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedState&&(identical(other.type, type) || other.type == type)&&(identical(other.feed, feed) || other.feed == feed)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.itemPress, itemPress) || other.itemPress == itemPress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FeedState&&(identical(other.type, type) || other.type == type)&&(identical(other.feed, feed) || other.feed == feed)&&const DeepCollectionEquality().equals(other._visitedPosts, _visitedPosts)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.itemPress, itemPress) || other.itemPress == itemPress));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,type,feed,fetchStatus,refreshStatus,itemPress);
+int get hashCode => Object.hash(runtimeType,type,feed,const DeepCollectionEquality().hash(_visitedPosts),fetchStatus,refreshStatus,itemPress);
 
 @override
 String toString() {
-  return 'FeedState(type: $type, feed: $feed, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, itemPress: $itemPress)';
+  return 'FeedState(type: $type, feed: $feed, visitedPosts: $visitedPosts, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, itemPress: $itemPress)';
 }
 
 
@@ -120,7 +128,7 @@ abstract mixin class _$FeedStateCopyWith<$Res> implements $FeedStateCopyWith<$Re
   factory _$FeedStateCopyWith(_FeedState value, $Res Function(_FeedState) _then) = __$FeedStateCopyWithImpl;
 @override @useResult
 $Res call({
- FeedType type, PaginatedFeedModel feed, FetchStatus fetchStatus, RefreshStatus refreshStatus, ItemPress itemPress
+ FeedType type, PaginatedFeedModel feed, Set<String> visitedPosts, FetchStatus fetchStatus, RefreshStatus refreshStatus, ItemPress itemPress
 });
 
 
@@ -137,11 +145,12 @@ class __$FeedStateCopyWithImpl<$Res>
 
 /// Create a copy of FeedState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? feed = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? itemPress = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? feed = null,Object? visitedPosts = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? itemPress = null,}) {
   return _then(_FeedState(
 type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as FeedType,feed: null == feed ? _self.feed : feed // ignore: cast_nullable_to_non_nullable
-as PaginatedFeedModel,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
+as PaginatedFeedModel,visitedPosts: null == visitedPosts ? _self._visitedPosts : visitedPosts // ignore: cast_nullable_to_non_nullable
+as Set<String>,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
 as RefreshStatus,itemPress: null == itemPress ? _self.itemPress : itemPress // ignore: cast_nullable_to_non_nullable
 as ItemPress,

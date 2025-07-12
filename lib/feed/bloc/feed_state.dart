@@ -27,15 +27,24 @@ abstract class FeedState with _$FeedState {
   const factory FeedState({
     required FeedType type,
     required PaginatedFeedModel feed,
+    required Set<String> visitedPosts,
     @Default(FetchStatus.loading) FetchStatus fetchStatus,
     @Default(RefreshStatus.initial) RefreshStatus refreshStatus,
     @Default(ItemPress.initial) ItemPress itemPress,
   }) = _FeedState;
 
-  factory FeedState.initial(FeedType type) {
+  factory FeedState.initial({
+    required FeedType type,
+    required Set<String> visitedPosts,
+  }) {
     return FeedState(
       type: type,
+      visitedPosts: visitedPosts,
       feed: PaginatedFeedModelPlaceholder(),
     );
   }
+
+  const FeedState._();
+
+  bool visited(FeedItemModel item) => visitedPosts.contains(item.id);
 }

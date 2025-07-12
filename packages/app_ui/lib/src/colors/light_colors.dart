@@ -44,7 +44,7 @@ class LightColors extends AppColors {
   Color get onSurface => const Color(0xFF212529);
 
   @override
-  Color get onSurfaceVariant => const Color(0xFF495057);
+  Color get onSurfaceVariant => const Color(0xFF5A656E);
 
   @override
   Color get outline => const Color(0xFFADB5BD);
