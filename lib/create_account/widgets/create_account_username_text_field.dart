@@ -15,9 +15,10 @@ class CreateAccountUsernameTextField extends StatelessWidget {
     );
 
     return TextField(
-      textInputAction: TextInputAction.next,
       autocorrect: false,
-      autofillHints: const [AutofillHints.username],
+      enableSuggestions: false,
+      textInputAction: TextInputAction.next,
+      autofillHints: const [AutofillHints.newUsername],
       decoration: InputDecoration(
         labelText: l10n.createAccount_usernameLabel,
         errorText: errorText,

@@ -15,8 +15,9 @@ class LoginUsernameTextField extends StatelessWidget {
     );
 
     return TextField(
-      textInputAction: TextInputAction.next,
       autocorrect: false,
+      enableSuggestions: false,
+      textInputAction: TextInputAction.next,
       autofillHints: const [AutofillHints.username],
       decoration: InputDecoration(
         labelText: l10n.login_usernameLabel,
