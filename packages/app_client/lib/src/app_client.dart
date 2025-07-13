@@ -13,9 +13,7 @@ class AppClient extends Cubit<AuthenticationState> {
   }) : _cookieJar = cookieJar,
        http = SequentialDio(),
        super(
-         AuthenticationState(
-           baseUrl: baseUrl,
-         ),
+         AuthenticationState(baseUrl: baseUrl),
        ) {
     final baseOptions = BaseOptions(
       connectTimeout: const Duration(milliseconds: 10000),
