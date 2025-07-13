@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: avoid_redundant_argument_values
 
 import 'package:authentication_repository/authentication_repository.dart'
     as authentication_repository;
@@ -12,6 +13,9 @@ import 'package:mocktail/mocktail.dart';
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
+
+class _MockAuthenticationState extends Mock
+    implements authentication_repository.AuthenticationState {}
 
 class _MockUser extends Mock implements User {}
 
@@ -28,9 +32,14 @@ void main() {
 
   group(AuthenticationBloc, () {
     late AuthenticationRepository authenticationRepository;
+    late authentication_repository.AuthenticationState repositoryState;
 
     setUp(() {
       authenticationRepository = _MockAuthenticationRepository();
+      repositoryState = _MockAuthenticationState();
+      when(() => repositoryState.user).thenReturn(user);
+      when(() => repositoryState.redirect).thenReturn(redirect);
+      when(() => repositoryState.status).thenReturn(status);
       when(() => authenticationRepository.state).thenReturn(
         authentication_repository.AuthenticationStatePlaceholder(
           user: user,
