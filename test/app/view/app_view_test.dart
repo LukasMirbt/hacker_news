@@ -72,6 +72,12 @@ void main() {
         );
       }
 
+      testWidgets('has correct restorationScopeId', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.restorationScopeId, 'app');
+      });
+
       testWidgets('has correct themeMode', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);

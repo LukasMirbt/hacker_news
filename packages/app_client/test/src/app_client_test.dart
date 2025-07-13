@@ -12,7 +12,7 @@ class _MockCookieJar extends Mock implements CookieJar {}
 class _MockUser extends Mock implements User {}
 
 void main() {
-  final baseUrl = Uri.parse('https://example.com/');
+  final baseUrl = Uri.parse('https://example.com');
 
   final initialState = AuthenticationState(
     baseUrl: baseUrl,
@@ -41,6 +41,46 @@ void main() {
     test('initial state is $AuthenticationState', () {
       final client = createSubject();
       expect(client.state, initialState);
+    });
+
+    group('start', () {
+      final loadForRequest = () => cookieJar.loadForRequest(baseUrl);
+
+      final cookies = [
+        Cookie('user', 'value'),
+      ];
+
+      blocTest<AppClient, AuthenticationState>(
+        'emits [authenticated] when cookieJar '
+        'contains user cookie',
+        setUp: () {
+          when(loadForRequest).thenAnswer((_) async => cookies);
+        },
+        build: createSubject,
+        act: (client) => client.start(),
+        expect: () => [
+          initialState.copyWith(
+            status: AuthenticationStatus.authenticated,
+          ),
+        ],
+        verify: (_) => verify(loadForRequest).called(1),
+      );
+
+      blocTest<AppClient, AuthenticationState>(
+        'emits [unauthenticated] when cookieJar '
+        'does not contain user cookie',
+        setUp: () {
+          when(loadForRequest).thenAnswer((_) async => []);
+        },
+        build: createSubject,
+        act: (client) => client.start(),
+        expect: () => [
+          initialState.copyWith(
+            status: AuthenticationStatus.unauthenticated,
+          ),
+        ],
+        verify: (_) => verify(loadForRequest).called(1),
+      );
     });
 
     group('http', () {

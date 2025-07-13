@@ -78,6 +78,8 @@ void main() async {
     debugPrint: debugPrint,
   );
 
+  await appClient.start();
+
   final authenticationApi = AuthenticationApi(appClient: appClient);
   final feedApi = FeedApi(appClient: appClient);
   final postApi = PostApi(appClient: appClient);

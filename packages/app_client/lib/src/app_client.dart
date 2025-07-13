@@ -51,6 +51,24 @@ class AppClient extends Cubit<AuthenticationState> {
       ..interceptors.add(redirectValidationInterceptor);
   }
 
+  Future<void> start() async {
+    final cookies = await _cookieJar.loadForRequest(state.baseUrl);
+
+    final isAuthenticated = cookies.any(
+      (cookie) => cookie.name == 'user',
+    );
+
+    final status = isAuthenticated
+        ? AuthenticationStatus.authenticated
+        : AuthenticationStatus.unauthenticated;
+
+    emit(
+      state.copyWith(
+        status: status,
+      ),
+    );
+  }
+
   final CookieJar _cookieJar;
   final Dio http;
 
