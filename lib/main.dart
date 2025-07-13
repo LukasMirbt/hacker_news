@@ -63,9 +63,10 @@ void main() async {
     logger: logger,
   );
 
-  if (kDebugMode) {
+  /*   if (kDebugMode) {
     await HydratedBloc.storage.clear();
   }
+ */
 
   final cookieJar = PersistCookieJar(
     storage: const SecureCookieStorage(),
@@ -77,6 +78,8 @@ void main() async {
     addPlatformConfiguration: addPlatformConfiguration,
     debugPrint: debugPrint,
   );
+
+  await appClient.start();
 
   final authenticationApi = AuthenticationApi(appClient: appClient);
   final feedApi = FeedApi(appClient: appClient);

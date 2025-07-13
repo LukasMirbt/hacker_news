@@ -13,7 +13,9 @@ class AppClient extends Cubit<AuthenticationState> {
   }) : _cookieJar = cookieJar,
        http = SequentialDio(),
        super(
-         AuthenticationState(baseUrl: baseUrl),
+         AuthenticationState(
+           baseUrl: baseUrl,
+         ),
        ) {
     final baseOptions = BaseOptions(
       connectTimeout: const Duration(milliseconds: 10000),
@@ -49,6 +51,24 @@ class AppClient extends Cubit<AuthenticationState> {
       ..interceptors.add(redirectInterceptor)
       ..interceptors.add(authenticationInterceptor)
       ..interceptors.add(redirectValidationInterceptor);
+  }
+
+  Future<void> start() async {
+    final cookies = await _cookieJar.loadForRequest(state.baseUrl);
+
+    final isAuthenticated = cookies.any(
+      (cookie) => cookie.name == 'user',
+    );
+
+    final status = isAuthenticated
+        ? AuthenticationStatus.authenticated
+        : AuthenticationStatus.unauthenticated;
+
+    emit(
+      state.copyWith(
+        status: status,
+      ),
+    );
   }
 
   final CookieJar _cookieJar;
