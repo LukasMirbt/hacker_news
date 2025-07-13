@@ -18,6 +18,7 @@ class AppRouter {
   final AppRouteList _appRouteList;
 
   late final goRouter = GoRouter(
+    restorationScopeId: 'router',
     navigatorKey: navigatorKey,
     initialLocation: initialLocation,
     routes: _appRouteList.routes,
