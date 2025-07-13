@@ -23,7 +23,7 @@ class FeedItem extends StatelessWidget {
     final appL10n = AppLocalizations.of(context);
     final formatterL10n = DateFormatterLocalizations.of(context);
 
-    return AppListItem(
+    return AppFeedItem(
       data: AppFeedItemData(
         visited: visited,
         rank: item.rank(appL10n),

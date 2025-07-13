@@ -1,0 +1,74 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:thread_parser/thread_parser.dart';
+
+void main() {
+  group(ThreadCommentData, () {
+    group('fromParsed', () {
+      test('returns $ThreadCommentData with correct values '
+          'when data is non-null', () {
+        const id = 'id';
+        const hnuser = HnuserPlaceholder();
+        final age = DateTime(1);
+        const htmlText = 'htmlText';
+        const indent = 1;
+        const score = 1;
+        const hasBeenUpvoted = true;
+        const parentUrl = 'parentUrl';
+        const contextUrl = 'contextUrl';
+
+        expect(
+          ThreadCommentData.fromParsed(
+            id: id,
+            hnuser: hnuser,
+            age: age,
+            htmlText: htmlText,
+            indent: indent,
+            score: score,
+            hasBeenUpvoted: hasBeenUpvoted,
+            parentUrl: parentUrl,
+            contextUrl: contextUrl,
+          ),
+          ThreadCommentData(
+            id: id,
+            hnuser: hnuser,
+            age: age,
+            htmlText: htmlText,
+            indent: indent,
+            score: score,
+            hasBeenUpvoted: hasBeenUpvoted,
+            parentUrl: parentUrl,
+            contextUrl: contextUrl,
+          ),
+        );
+      });
+
+      test('returns $ThreadCommentData with correct values '
+          'when data is null', () {
+        expect(
+          ThreadCommentData.fromParsed(
+            id: null,
+            hnuser: null,
+            age: null,
+            htmlText: null,
+            indent: null,
+            score: null,
+            hasBeenUpvoted: null,
+            parentUrl: null,
+            contextUrl: null,
+          ),
+          ThreadCommentData(
+            id: '',
+            hnuser: Hnuser.empty,
+            age: DateTime(0),
+            htmlText: '',
+            indent: 0,
+            score: null,
+            hasBeenUpvoted: null,
+            parentUrl: null,
+            contextUrl: null,
+          ),
+        );
+      });
+    });
+  });
+}

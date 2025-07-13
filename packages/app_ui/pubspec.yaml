@@ -17,6 +17,7 @@ dependencies:
   # Pinned to avoid duplicate semantics when PR is merged
   # https://github.com/daohoangson/flutter_widget_from_html/pull/1429
   flutter_widget_from_html_core: 0.16.0
+  freezed_annotation: ^3.1.0
   html: ^0.15.6
   intl: ^0.20.2
   provider: ^6.1.4
@@ -28,6 +29,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.8.0
   flutter_test:
     sdk: flutter
+  freezed: ^3.0.6
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
 

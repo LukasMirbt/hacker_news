@@ -14,6 +14,7 @@ import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_api/post_api.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
@@ -83,6 +84,7 @@ void main() async {
   final authenticationApi = AuthenticationApi(appClient: appClient);
   final feedApi = FeedApi(appClient: appClient);
   final postApi = PostApi(appClient: appClient);
+  final threadApi = ThreadApi(appClient: appClient);
   final voteApi = VoteApi(appClient: appClient);
 
   final authenticationRepository = AuthenticationRepository(
@@ -102,6 +104,7 @@ void main() async {
       authenticationApi: authenticationApi,
       feedApi: feedApi,
       postApi: postApi,
+      threadApi: threadApi,
       analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
       versionRepository: versionRepository,

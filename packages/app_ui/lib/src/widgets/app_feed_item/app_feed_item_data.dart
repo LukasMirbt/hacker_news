@@ -1,6 +1,11 @@
-import 'package:equatable/equatable.dart';
+// ignore_for_file: annotate_overrides
 
-class AppFeedItemData extends Equatable {
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'app_feed_item_data.freezed.dart';
+
+@freezed
+class AppFeedItemData with _$AppFeedItemData {
   const AppFeedItemData({
     required this.visited,
     required this.rank,
@@ -32,22 +37,4 @@ class AppFeedItemData extends Equatable {
   final void Function() onCommentPressed;
   final void Function() onSharePressed;
   final void Function() onMorePressed;
-
-  @override
-  List<Object?> get props => [
-    visited,
-    rank,
-    title,
-    age,
-    urlHost,
-    user,
-    onPressed,
-    score,
-    commentCount,
-    hasBeenUpvoted,
-    onVotePressed,
-    onCommentPressed,
-    onSharePressed,
-    onMorePressed,
-  ];
 }

@@ -130,6 +130,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get appShell_home;
 
+  /// No description provided for @appShell_threads.
+  ///
+  /// In en, this message translates to:
+  /// **'Threads'**
+  String get appShell_threads;
+
   /// No description provided for @appShell_settings.
   ///
   /// In en, this message translates to:

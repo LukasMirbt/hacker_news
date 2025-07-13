@@ -29,6 +29,9 @@ workspace:
   - packages/storage/persistent_storage
   - packages/storage/secure_storage
   - packages/storage/storage
+  - packages/thread_api
+  - packages/thread_parser
+  - packages/thread_repository
   - packages/version_repository
   - packages/visited_post_repository
   - packages/vote_api
@@ -100,6 +103,10 @@ dependencies:
   shared_preferences: ^2.5.3
   skeletonizer: ^2.0.1
   super_sliver_list: ^0.4.1
+  thread_api:
+    path: packages/thread_api
+  thread_repository:
+    path: packages/thread_repository
   url_launcher: ^6.3.1
   version_repository:
     path: packages/version_repository

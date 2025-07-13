@@ -1,0 +1,27 @@
+name: thread_parser
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dependencies:
+  collection: ^1.19.1
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  parser_core:
+    path: ../parser_core
+  html: ^0.15.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true
