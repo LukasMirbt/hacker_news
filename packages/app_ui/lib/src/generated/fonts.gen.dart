@@ -10,9 +10,6 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: At Hauss
-  static const String atHauss = 'At Hauss';
-
   /// Font family: Noto Sans
   static const String notoSans = 'Noto Sans';
 

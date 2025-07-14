@@ -1,13 +1,21 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:app_ui/src/widgets/app_feed_item/action_row.dart';
-import 'package:app_ui/src/widgets/app_feed_item/content_row.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-export 'data.dart';
+export 'app_feed_item_data.dart';
+export 'app_feed_item_data_placeholder.dart';
+export 'feed_item_action_row.dart';
+export 'feed_item_button_placeholder.dart';
+export 'feed_item_comment_count_button.dart';
+export 'feed_item_content_row.dart';
+export 'feed_item_more_button.dart';
+export 'feed_item_share_button.dart';
+export 'feed_item_subtitle.dart';
+export 'feed_item_title.dart';
+export 'feed_item_vote_button.dart';
 
-class AppListItem extends StatelessWidget {
-  const AppListItem({
+class AppFeedItem extends StatelessWidget {
+  const AppFeedItem({
     required this.data,
     super.key,
   });
@@ -16,16 +24,34 @@ class AppListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Provider.value(
       value: data,
-      child: const Padding(
-        padding: EdgeInsets.only(top: AppSpacing.lg),
-        child: Column(
-          children: [
-            ContentRow(),
-            ActionRow(),
-          ],
+      child: Theme(
+        data: theme.copyWith(
+          textTheme: theme.textTheme.apply(
+            bodyColor: theme.colorScheme.onSurfaceVariant,
+          ),
         ),
+        child: const _Body(),
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(top: AppSpacing.lg),
+      child: Column(
+        children: [
+          FeedItemContentRow(),
+          FeedItemActionRow(),
+        ],
       ),
     );
   }
