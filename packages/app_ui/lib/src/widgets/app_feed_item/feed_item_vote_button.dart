@@ -11,7 +11,7 @@ class FeedItemVoteButton extends StatelessWidget {
       (AppFeedItemData data) => data.voteButtonData,
     );
 
-    if (voteButtonData == null) return const FeedItemVoteButtonPlaceholder();
+    if (voteButtonData == null) return const FeedItemButtonPlaceholder();
 
     return AppFeedItemVoteButton(data: voteButtonData);
   }

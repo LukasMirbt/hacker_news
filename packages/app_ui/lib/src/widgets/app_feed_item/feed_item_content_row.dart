@@ -10,11 +10,15 @@ class FeedItemContentRow extends StatelessWidget {
     return const Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 48,
-          child: Padding(
-            padding: EdgeInsets.only(left: 6),
-            child: FeedItemRank(),
+        Padding(
+          padding: EdgeInsets.only(left: 6),
+          child: SizedBox(
+            width: 42,
+            child: Center(
+              child: FittedBox(
+                child: _Rank(),
+              ),
+            ),
           ),
         ),
         Flexible(
@@ -24,6 +28,24 @@ class FeedItemContentRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _Rank extends StatelessWidget {
+  const _Rank();
+
+  @override
+  Widget build(BuildContext context) {
+    final rank = context.select(
+      (AppFeedItemData data) => data.rank,
+    );
+
+    final textTheme = TextTheme.of(context);
+
+    return Text(
+      rank,
+      style: textTheme.titleMedium,
     );
   }
 }

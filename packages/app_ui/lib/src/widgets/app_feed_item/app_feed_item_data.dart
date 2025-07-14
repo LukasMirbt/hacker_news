@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
-class AppFeedItemData extends Equatable {
+class AppFeedItemData {
   const AppFeedItemData({
     required this.hasBeenVisited,
     required this.rank,
@@ -28,18 +28,8 @@ class AppFeedItemData extends Equatable {
   final AppFeedItemVoteButtonData? voteButtonData;
   final AppFeedItemCommentCountButtonData? commentCountButtonData;
 
-  @override
-  List<Object?> get props => [
-    hasBeenVisited,
-    rank,
-    title,
-    age,
-    urlHost,
-    user,
-    onPressed,
-    onSharePressed,
-    onMorePressed,
-    voteButtonData,
-    commentCountButtonData,
-  ];
+  Color titleColor(ColorScheme colorScheme) {
+    if (hasBeenVisited) return colorScheme.onSurfaceVariant;
+    return colorScheme.onSurface;
+  }
 }

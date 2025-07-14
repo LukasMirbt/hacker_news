@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class AppFeedItemCommentCountButtonData extends Equatable {
+class AppFeedItemCommentCountButtonData {
   const AppFeedItemCommentCountButtonData({
     required this.commentCount,
     required this.onPressed,
@@ -8,10 +6,4 @@ class AppFeedItemCommentCountButtonData extends Equatable {
 
   final String commentCount;
   final void Function() onPressed;
-
-  @override
-  List<Object?> get props => [
-    commentCount,
-    onPressed,
-  ];
 }

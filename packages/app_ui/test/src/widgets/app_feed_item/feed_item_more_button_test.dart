@@ -11,36 +11,38 @@ import '../../helpers/pump_app.dart';
 class _MockAppFeedItemData extends Mock implements AppFeedItemData {}
 
 void main() {
-  group(FeedItemCommentCountButton, () {
+  group(FeedItemMoreButton, () {
     late AppFeedItemData data;
 
     setUp(() {
       data = _MockAppFeedItemData();
+      when(() => data.onMorePressed).thenReturn(() {});
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: FeedItemCommentCountButton(),
+        child: FeedItemMoreButton(),
       );
     }
 
-    testWidgets('renders $FeedItemButtonPlaceholder '
-        'when data is null', (tester) async {
+    testWidgets('renders $IconButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(
-        find.byType(FeedItemButtonPlaceholder),
-        findsOneWidget,
-      );
+      expect(find.byType(IconButton), findsOneWidget);
     });
 
-    testWidgets('renders $AppFeedItemCommentCountButton '
-        'when data is not null', (tester) async {
-      when(() => data.commentCountButtonData).thenReturn(
-        AppFeedItemCommentCountButtonDataPlaceholder(),
-      );
+    testWidgets('calls onMorePressed when $IconButton '
+        'is pressed', (tester) async {
+      var count = 0;
+
+      void onMorePressed() {
+        count += 1;
+      }
+
+      when(() => data.onMorePressed).thenReturn(onMorePressed);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppFeedItemCommentCountButton), findsOneWidget);
+      await tester.tap(find.byType(IconButton));
+      expect(count, 1);
     });
   });
 }

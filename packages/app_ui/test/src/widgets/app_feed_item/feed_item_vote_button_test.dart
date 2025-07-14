@@ -11,7 +11,7 @@ import '../../helpers/pump_app.dart';
 class _MockAppFeedItemData extends Mock implements AppFeedItemData {}
 
 void main() {
-  group(FeedItemCommentCountButton, () {
+  group(FeedItemVoteButton, () {
     late AppFeedItemData data;
 
     setUp(() {
@@ -21,7 +21,7 @@ void main() {
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: FeedItemCommentCountButton(),
+        child: FeedItemVoteButton(),
       );
     }
 
@@ -34,13 +34,13 @@ void main() {
       );
     });
 
-    testWidgets('renders $AppFeedItemCommentCountButton '
+    testWidgets('renders $AppFeedItemVoteButton '
         'when data is not null', (tester) async {
-      when(() => data.commentCountButtonData).thenReturn(
-        AppFeedItemCommentCountButtonDataPlaceholder(),
+      when(() => data.voteButtonData).thenReturn(
+        AppFeedItemVoteButtonDataPlaceholder(),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppFeedItemCommentCountButton), findsOneWidget);
+      expect(find.byType(AppFeedItemVoteButton), findsOneWidget);
     });
   });
 }

@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class AppFeedItemVoteButtonData extends Equatable {
+class AppFeedItemVoteButtonData {
   const AppFeedItemVoteButtonData({
     required this.hasBeenUpvoted,
     required this.score,
@@ -21,11 +20,4 @@ class AppFeedItemVoteButtonData extends Equatable {
     if (hasBeenUpvoted) return 700;
     return 500;
   }
-
-  @override
-  List<Object?> get props => [
-    hasBeenUpvoted,
-    score,
-    onPressed,
-  ];
 }

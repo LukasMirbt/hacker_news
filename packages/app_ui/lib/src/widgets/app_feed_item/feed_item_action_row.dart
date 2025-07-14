@@ -30,16 +30,25 @@ class FeedItemActionRow extends StatelessWidget {
           left: AppSpacing.xxlg,
           right: AppSpacing.lg,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            FeedItemVoteButton(),
-            FeedItemCommentCountButton(),
-            FeedItemShareButton(),
-            FeedItemMoreButton(),
-          ],
-        ),
+        child: _Row(),
       ),
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FeedItemVoteButton(),
+        FeedItemCommentCountButton(),
+        FeedItemShareButton(),
+        FeedItemMoreButton(),
+      ],
     );
   }
 }
