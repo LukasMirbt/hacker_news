@@ -3,6 +3,8 @@ export 'app_bottom_sheet.dart';
 export 'app_button_size.dart';
 export 'app_comment/app_comment.dart';
 export 'app_feed_item/app_feed_item.dart';
+export 'app_feed_item_comment_count_button/app_feed_item_comment_count_button.dart';
+export 'app_feed_item_vote_button/app_feed_item_vote_button.dart';
 export 'app_filled_button.dart';
 export 'app_html_widget/app_html_widget.dart';
 export 'app_outlined_button.dart';

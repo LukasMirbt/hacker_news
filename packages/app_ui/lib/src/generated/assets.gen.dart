@@ -12,17 +12,21 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/adaptive_icon_foreground.png
+  AssetGenImage get adaptiveIconForeground =>
+      const AssetGenImage('assets/images/adaptive_icon_foreground.png');
+
   /// File path: assets/images/app_icon.png
   AssetGenImage get appIcon =>
       const AssetGenImage('assets/images/app_icon.png');
 
-  /// File path: assets/images/app_icon_foreground.png
-  AssetGenImage get appIconForeground =>
-      const AssetGenImage('assets/images/app_icon_foreground.png');
-
   /// File path: assets/images/chat_add_on_icon.png
   AssetGenImage get chatAddOnIcon =>
       const AssetGenImage('assets/images/chat_add_on_icon.png');
+
+  /// File path: assets/images/image_ios_dark_transparent.png
+  AssetGenImage get imageIosDarkTransparent =>
+      const AssetGenImage('assets/images/image_ios_dark_transparent.png');
 
   /// File path: assets/images/reply_icon.png
   AssetGenImage get replyIcon =>
@@ -31,18 +35,29 @@ class $AssetsImagesGen {
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
-  /// File path: assets/images/splash_android.png
-  AssetGenImage get splashAndroid =>
-      const AssetGenImage('assets/images/splash_android.png');
+  /// File path: assets/images/splash_android12.png
+  AssetGenImage get splashAndroid12 =>
+      const AssetGenImage('assets/images/splash_android12.png');
+
+  /// File path: assets/images/splash_dark.png
+  AssetGenImage get splashDark =>
+      const AssetGenImage('assets/images/splash_dark.png');
+
+  /// File path: assets/images/splash_dark_android12.png
+  AssetGenImage get splashDarkAndroid12 =>
+      const AssetGenImage('assets/images/splash_dark_android12.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    adaptiveIconForeground,
     appIcon,
-    appIconForeground,
     chatAddOnIcon,
+    imageIosDarkTransparent,
     replyIcon,
     splash,
-    splashAndroid,
+    splashAndroid12,
+    splashDark,
+    splashDarkAndroid12,
   ];
 }
 

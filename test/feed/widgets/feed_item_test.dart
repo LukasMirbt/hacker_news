@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/app_ui.dart'
+    hide FeedItemCommentCountButton, FeedItemVoteButton;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:feed_repository/feed_repository.dart' hide FeedItem;
@@ -30,16 +31,13 @@ class _MockDateFormatterLocalizations extends Mock
     implements DateFormatterLocalizations {}
 
 void main() {
-  const visited = true;
+  const hasBeenVisited = true;
 
   const rank = 'rank';
   const urlHost = 'urlHost';
   const user = 'user';
   const age = 'age';
   const title = 'title';
-  const hasBeenUpvoted = true;
-  const score = 'score';
-  const commentCount = 'commentCount';
 
   group(FeedItem, () {
     late FeedBloc bloc;
@@ -55,15 +53,12 @@ void main() {
       registerFallbackValue(_MockAppLocalizations());
       registerFallbackValue(_MockDateFormatterLocalizations());
       when(() => bloc.state).thenReturn(state);
-      when(() => state.visited(item)).thenReturn(visited);
+      when(() => state.hasBeenVisited(item)).thenReturn(hasBeenVisited);
       when(() => item.rank(any())).thenReturn(rank);
       when(() => item.urlHost).thenReturn(urlHost);
       when(() => item.user).thenReturn(user);
       when(() => item.age(any())).thenReturn(age);
       when(() => item.title).thenReturn(title);
-      when(() => item.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
-      when(() => item.score).thenReturn(score);
-      when(() => item.commentCount).thenReturn(commentCount);
     });
 
     Widget buildSubject() {
@@ -73,17 +68,17 @@ void main() {
       );
     }
 
-    group(AppListItem, () {
-      AppListItem findWidget(WidgetTester tester) {
-        return tester.widget<AppListItem>(
-          find.byType(AppListItem),
+    group(AppFeedItem, () {
+      AppFeedItem findWidget(WidgetTester tester) {
+        return tester.widget<AppFeedItem>(
+          find.byType(AppFeedItem),
         );
       }
 
-      testWidgets('has correct visited', (tester) async {
+      testWidgets('has correct hasBeenVisited', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.data.visited, visited);
+        expect(widget.data.hasBeenVisited, hasBeenVisited);
       });
 
       testWidgets('has correct rank', (tester) async {
@@ -116,24 +111,6 @@ void main() {
         expect(widget.data.title, title);
       });
 
-      testWidgets('has correct hasBeenUpvoted', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.data.hasBeenUpvoted, hasBeenUpvoted);
-      });
-
-      testWidgets('has correct score', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.data.score, score);
-      });
-
-      testWidgets('has correct commentCount', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.data.commentCount, commentCount);
-      });
-
       testWidgets('adds $FeedItemPressed onPressed', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
@@ -143,30 +120,6 @@ void main() {
             FeedItemPressed(item),
           ),
         ).called(1);
-      });
-
-      testWidgets('adds $FeedItemVotePressed onVotePressed', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.data.onVotePressed();
-        verify(
-          () => bloc.add(
-            FeedItemVotePressed(item),
-          ),
-        ).called(1);
-      });
-
-      testWidgets('navigates to $PostRoute onCommentPressed', (tester) async {
-        const id = 'id';
-        when(() => item.id).thenReturn(id);
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
-        final widget = findWidget(tester);
-        widget.data.onCommentPressed();
-        const route = PostRoute(postId: id);
-        verify(() => router.go(route.location)).called(1);
       });
 
       testWidgets('adds $FeedItemSharePressed onSharePressed', (tester) async {
@@ -199,6 +152,53 @@ void main() {
             extra: route.$extra,
           ),
         ).called(1);
+      });
+
+      testWidgets('voteButton is null when score is null', (tester) async {
+        when(() => item.score).thenReturn(null);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.data.voteButton, null);
+      });
+
+      testWidgets('voteButton is $FeedItemVoteButton '
+          'when score is non-null', (tester) async {
+        const score = 'score';
+        when(() => item.score).thenReturn(score);
+        when(() => item.hasBeenUpvoted).thenReturn(false);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.data.voteButton,
+          isA<FeedItemVoteButton>().having(
+            (widget) => widget.score,
+            'score',
+            score,
+          ),
+        );
+      });
+
+      testWidgets('commentCountButton is null '
+          'when commentCount is null', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.data.commentCountButton, null);
+      });
+
+      testWidgets('commentCountButton is $FeedItemCommentCountButton '
+          'when commentCount is non-null', (tester) async {
+        const commentCount = 'commentCount';
+        when(() => item.commentCount).thenReturn(commentCount);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.data.commentCountButton,
+          isA<FeedItemCommentCountButton>().having(
+            (widget) => widget.commentCount,
+            'commentCount',
+            commentCount,
+          ),
+        );
       });
     });
   });

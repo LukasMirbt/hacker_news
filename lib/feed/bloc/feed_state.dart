@@ -46,5 +46,5 @@ abstract class FeedState with _$FeedState {
 
   const FeedState._();
 
-  bool visited(FeedItemModel item) => visitedPosts.contains(item.id);
+  bool hasBeenVisited(FeedItemModel item) => visitedPosts.contains(item.id);
 }

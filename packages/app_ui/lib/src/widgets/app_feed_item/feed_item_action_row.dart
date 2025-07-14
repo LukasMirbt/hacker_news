@@ -1,0 +1,54 @@
+import 'package:app_ui/app_ui.dart';
+import 'package:flutter/material.dart';
+
+class FeedItemActionRow extends StatelessWidget {
+  const FeedItemActionRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Theme(
+      data: theme.copyWith(
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+            foregroundColor: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            minimumSize: const Size(64, 48),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            alignment: Alignment.centerLeft,
+            foregroundColor: theme.colorScheme.onSurfaceVariant,
+            textStyle: theme.textTheme.bodySmall,
+          ),
+        ),
+      ),
+      child: const Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.xxlg,
+          right: AppSpacing.lg,
+        ),
+        child: _Row(),
+      ),
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FeedItemVoteButton(),
+        FeedItemCommentCountButton(),
+        FeedItemShareButton(),
+        FeedItemMoreButton(),
+      ],
+    );
+  }
+}

@@ -1,4 +1,5 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/app_ui.dart'
+    hide FeedItemCommentCountButton, FeedItemVoteButton;
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,36 +17,28 @@ class FeedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visited = context.select(
-      (FeedBloc bloc) => bloc.state.visited(item),
+    final hasBeenVisited = context.select(
+      (FeedBloc bloc) => bloc.state.hasBeenVisited(item),
     );
 
     final appL10n = AppLocalizations.of(context);
     final formatterL10n = DateFormatterLocalizations.of(context);
 
-    return AppListItem(
+    final score = item.score;
+    final commentCount = item.commentCount;
+
+    return AppFeedItem(
       data: AppFeedItemData(
-        visited: visited,
+        hasBeenVisited: hasBeenVisited,
         rank: item.rank(appL10n),
         urlHost: item.urlHost,
         user: item.user,
         age: item.age(formatterL10n),
         title: item.title,
-        hasBeenUpvoted: item.hasBeenUpvoted,
-        score: item.score,
-        commentCount: item.commentCount,
         onPressed: () {
           context.read<FeedBloc>().add(
             FeedItemPressed(item),
           );
-        },
-        onVotePressed: () {
-          context.read<FeedBloc>().add(
-            FeedItemVotePressed(item),
-          );
-        },
-        onCommentPressed: () {
-          PostRoute(postId: item.id).go(context);
         },
         onSharePressed: () {
           final text = item.shareText(appL10n);
@@ -57,6 +50,18 @@ class FeedItem extends StatelessWidget {
           final item = this.item.toRepository();
           FeedItemOptionsRoute(item).go(context);
         },
+        voteButton: score == null
+            ? null
+            : FeedItemVoteButton(
+                score: score,
+                item: item,
+              ),
+        commentCountButton: commentCount == null
+            ? null
+            : FeedItemCommentCountButton(
+                commentCount: commentCount,
+                item: item,
+              ),
       ),
     );
   }

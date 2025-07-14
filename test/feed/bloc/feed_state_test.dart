@@ -35,7 +35,7 @@ void main() {
       });
     });
 
-    group('visited', () {
+    group('hasBeenVisited', () {
       final item = FeedItemModel(
         FeedItemPlaceholder(id: id),
       );
@@ -45,7 +45,7 @@ void main() {
         final state = createSubject(
           visitedPosts: visitedPosts,
         );
-        expect(state.visited(item), true);
+        expect(state.hasBeenVisited(item), true);
       });
 
       test('returns false when visitedPosts '
@@ -53,7 +53,7 @@ void main() {
         final state = createSubject(
           visitedPosts: {},
         );
-        expect(state.visited(item), false);
+        expect(state.hasBeenVisited(item), false);
       });
     });
   });
