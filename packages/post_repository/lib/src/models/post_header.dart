@@ -60,9 +60,9 @@ class PostHeader with _$PostHeader {
   final String id;
   final String title;
   final String url;
-  final String upvoteUrl;
+  final String? upvoteUrl;
   final bool hasBeenUpvoted;
-  final String urlHost;
+  final String? urlHost;
   final int? score;
   final Hnuser hnuser;
   final DateTime age;

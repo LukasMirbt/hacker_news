@@ -12,15 +12,7 @@ class PostHeaderContentRow extends StatelessWidget {
         left: AppSpacing.xlg,
         right: AppSpacing.xlg,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _TitleColumn(),
-          _HtmlText(
-            padding: EdgeInsets.only(top: AppSpacing.lg),
-          ),
-        ],
-      ),
+      child: _TitleColumn(),
     );
   }
 }
@@ -40,107 +32,9 @@ class _TitleColumn extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,
         children: [
-          _Title(),
-          _Subtitle(),
+          PostHeaderTitle(),
+          PostHeaderSubtitle(),
         ],
-      ),
-    );
-  }
-}
-
-class _Title extends StatelessWidget {
-  const _Title();
-
-  @override
-  Widget build(BuildContext context) {
-    final title = context.select(
-      (AppPostHeaderData data) => data.title,
-    );
-
-    final hasBeenVisited = context.select(
-      (AppPostHeaderData data) => data.hasBeenVisited,
-    );
-
-    final colorScheme = ColorScheme.of(context);
-    final textTheme = TextTheme.of(context);
-
-    final color = hasBeenVisited
-        ? colorScheme.onSurfaceVariant
-        : colorScheme.onSurface;
-
-    return Text(
-      title,
-      style: textTheme.titleMedium?.copyWith(
-        color: color,
-      ),
-    );
-  }
-}
-
-class _Subtitle extends StatelessWidget {
-  const _Subtitle();
-
-  @override
-  Widget build(BuildContext context) {
-    final urlHost = context.select(
-      (AppPostHeaderData data) => data.urlHost,
-    );
-
-    final user = context.select(
-      (AppPostHeaderData data) => data.user,
-    );
-
-    final age = context.select(
-      (AppPostHeaderData data) => data.age,
-    );
-
-    final colorScheme = ColorScheme.of(context);
-    final textTheme = TextTheme.of(context);
-    final l10n = AppUiLocalizations.of(context);
-
-    return Text.rich(
-      style: textTheme.labelMedium?.copyWith(
-        color: colorScheme.onSurfaceVariant,
-      ),
-      TextSpan(
-        children: [
-          if (urlHost.isNotEmpty) ...[
-            TextSpan(text: urlHost),
-            TextSpan(text: l10n.separator),
-          ],
-          if (user != null) ...[
-            TextSpan(text: user),
-            TextSpan(text: l10n.separator),
-          ],
-          TextSpan(text: age),
-        ],
-      ),
-    );
-  }
-}
-
-class _HtmlText extends StatelessWidget {
-  const _HtmlText({required this.padding});
-
-  final EdgeInsets padding;
-
-  @override
-  Widget build(BuildContext context) {
-    final htmlText = context.select(
-      (AppPostHeaderData data) => data.htmlText,
-    );
-
-    final onTextLinkPressed = context.select(
-      (AppPostHeaderData data) => data.onTextLinkPressed,
-    );
-
-    if (htmlText == null) return const SizedBox.shrink();
-
-    return Padding(
-      padding: padding,
-      child: AppHtmlWidget(
-        html: htmlText,
-        onLinkPressed: onTextLinkPressed,
       ),
     );
   }

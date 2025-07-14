@@ -23,11 +23,11 @@ class PostHeaderModel extends Equatable {
   String get url => _header.url;
   String get user => _header.hnuser.id;
   String? get score => _header.score?.toString();
-  String get urlHost => _header.urlHost;
+  String? get urlHost => _header.urlHost;
   String? get commentCount => _header.commentCount?.toString();
   String? get htmlText => _header.htmlText;
   bool get hasBeenUpvoted => _header.hasBeenUpvoted;
-  String get upvoteUrl => _header.upvoteUrl;
+  String? get upvoteUrl => _header.upvoteUrl;
 
   String shareText(AppLocalizations l10n) {
     final title = _header.title;

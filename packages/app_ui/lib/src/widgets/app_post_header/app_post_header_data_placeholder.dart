@@ -1,27 +1,26 @@
 import 'package:app_ui/app_ui.dart';
 
-class AppFeedItemDataPlaceholder extends AppFeedItemData {
-  AppFeedItemDataPlaceholder({
+class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
+  AppPostHeaderDataPlaceholder({
     bool? hasBeenVisited,
-    String? rank,
     String? title,
     String? age,
     String? urlHost,
     String? user,
+    void Function(String)? onTextLinkPressed,
     void Function()? onPressed,
     void Function()? onSharePressed,
-    void Function()? onMorePressed,
+    super.htmlText,
     super.voteButton,
-    super.commentCountButton,
+    super.commentButton,
   }) : super(
-         hasBeenVisited: hasBeenVisited ?? true,
-         rank: rank ?? 'rank',
+         hasBeenVisited: hasBeenVisited ?? false,
          title: title ?? 'title',
          age: age ?? 'age',
          urlHost: urlHost ?? 'urlHost',
          user: user ?? 'user',
+         onTextLinkPressed: onTextLinkPressed ?? (_) {},
          onPressed: onPressed ?? () {},
          onSharePressed: onSharePressed ?? () {},
-         onMorePressed: onMorePressed ?? () {},
        );
 }

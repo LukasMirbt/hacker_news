@@ -17,7 +17,6 @@ class PostHeaderActionRow extends StatelessWidget {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            minimumSize: const Size(64, 48),
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             alignment: Alignment.centerLeft,
             foregroundColor: theme.colorScheme.onSurfaceVariant,
@@ -26,7 +25,7 @@ class PostHeaderActionRow extends StatelessWidget {
         ),
       ),
       child: const Padding(
-        padding: EdgeInsets.only(left: 10, right: 16),
+        padding: EdgeInsets.only(left: 14, right: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

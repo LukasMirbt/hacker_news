@@ -2,21 +2,21 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FeedItemSubtitle extends StatelessWidget {
-  const FeedItemSubtitle({super.key});
+class PostHeaderSubtitle extends StatelessWidget {
+  const PostHeaderSubtitle({super.key});
 
   @override
   Widget build(BuildContext context) {
     final urlHost = context.select(
-      (AppFeedItemData data) => data.urlHost,
+      (AppPostHeaderData data) => data.urlHost,
     );
 
     final user = context.select(
-      (AppFeedItemData data) => data.user,
+      (AppPostHeaderData data) => data.user,
     );
 
     final age = context.select(
-      (AppFeedItemData data) => data.age,
+      (AppPostHeaderData data) => data.age,
     );
 
     final textTheme = TextTheme.of(context);
