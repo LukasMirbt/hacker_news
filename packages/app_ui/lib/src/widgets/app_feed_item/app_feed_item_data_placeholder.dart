@@ -1,4 +1,5 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:flutter/material.dart';
 
 class AppFeedItemDataPlaceholder extends AppFeedItemData {
   AppFeedItemDataPlaceholder({
@@ -11,8 +12,8 @@ class AppFeedItemDataPlaceholder extends AppFeedItemData {
     void Function()? onPressed,
     void Function()? onSharePressed,
     void Function()? onMorePressed,
-    AppFeedItemVoteButtonData? voteButtonData,
-    AppFeedItemCommentCountButtonData? commentCountButtonData,
+    Widget? voteButton,
+    Widget? commentCountButton,
   }) : super(
          hasBeenVisited: hasBeenVisited ?? true,
          rank: rank ?? 'rank',
@@ -23,10 +24,7 @@ class AppFeedItemDataPlaceholder extends AppFeedItemData {
          onPressed: onPressed ?? () {},
          onSharePressed: onSharePressed ?? () {},
          onMorePressed: onMorePressed ?? () {},
-         voteButtonData:
-             voteButtonData ?? AppFeedItemVoteButtonDataPlaceholder(),
-         commentCountButtonData:
-             commentCountButtonData ??
-             AppFeedItemCommentCountButtonDataPlaceholder(),
+         voteButton: voteButton ?? const SizedBox.shrink(),
+         commentCountButton: commentCountButton ?? const SizedBox.shrink(),
        );
 }

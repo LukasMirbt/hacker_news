@@ -34,13 +34,11 @@ void main() {
       );
     });
 
-    testWidgets('renders $AppFeedItemCommentCountButton '
-        'when data is not null', (tester) async {
-      when(() => data.commentCountButtonData).thenReturn(
-        AppFeedItemCommentCountButtonDataPlaceholder(),
-      );
+    testWidgets('renders commentCountButton when non-null', (tester) async {
+      final commentCountButton = Container();
+      when(() => data.commentCountButton).thenReturn(commentCountButton);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppFeedItemCommentCountButton), findsOneWidget);
+      expect(find.byWidget(commentCountButton), findsOneWidget);
     });
   });
 }

@@ -7,12 +7,12 @@ class FeedItemVoteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final voteButtonData = context.select(
-      (AppFeedItemData data) => data.voteButtonData,
+    final voteButton = context.select(
+      (AppFeedItemData data) => data.voteButton,
     );
 
-    if (voteButtonData == null) return const FeedItemButtonPlaceholder();
+    if (voteButton != null) return voteButton;
 
-    return AppFeedItemVoteButton(data: voteButtonData);
+    return const FeedItemButtonPlaceholder();
   }
 }

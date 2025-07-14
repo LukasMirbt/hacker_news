@@ -34,13 +34,11 @@ void main() {
       );
     });
 
-    testWidgets('renders $AppFeedItemVoteButton '
-        'when data is not null', (tester) async {
-      when(() => data.voteButtonData).thenReturn(
-        AppFeedItemVoteButtonDataPlaceholder(),
-      );
+    testWidgets('renders voteButton when non-null', (tester) async {
+      final voteButton = Container();
+      when(() => data.voteButton).thenReturn(voteButton);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppFeedItemVoteButton), findsOneWidget);
+      expect(find.byWidget(voteButton), findsOneWidget);
     });
   });
 }

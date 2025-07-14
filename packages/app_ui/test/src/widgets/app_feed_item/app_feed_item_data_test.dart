@@ -27,8 +27,8 @@ void main() {
         onPressed: () {},
         onSharePressed: () {},
         onMorePressed: () {},
-        voteButtonData: null,
-        commentCountButtonData: null,
+        voteButton: null,
+        commentCountButton: null,
       );
     }
 

@@ -1,4 +1,3 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class AppFeedItemData {
@@ -12,8 +11,8 @@ class AppFeedItemData {
     required this.onPressed,
     required this.onSharePressed,
     required this.onMorePressed,
-    required this.voteButtonData,
-    required this.commentCountButtonData,
+    required this.voteButton,
+    required this.commentCountButton,
   });
 
   final bool hasBeenVisited;
@@ -25,8 +24,8 @@ class AppFeedItemData {
   final void Function() onPressed;
   final void Function() onSharePressed;
   final void Function() onMorePressed;
-  final AppFeedItemVoteButtonData? voteButtonData;
-  final AppFeedItemCommentCountButtonData? commentCountButtonData;
+  final Widget? voteButton;
+  final Widget? commentCountButton;
 
   Color titleColor(ColorScheme colorScheme) {
     if (hasBeenVisited) return colorScheme.onSurfaceVariant;

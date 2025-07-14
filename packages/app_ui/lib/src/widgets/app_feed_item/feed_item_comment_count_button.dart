@@ -7,14 +7,12 @@ class FeedItemCommentCountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final commentCountButtonData = context.select(
-      (AppFeedItemData data) => data.commentCountButtonData,
+    final commentCountButton = context.select(
+      (AppFeedItemData data) => data.commentCountButton,
     );
 
-    if (commentCountButtonData == null) {
-      return const FeedItemButtonPlaceholder();
-    }
+    if (commentCountButton != null) return commentCountButton;
 
-    return AppFeedItemCommentCountButton(data: commentCountButtonData);
+    return const FeedItemButtonPlaceholder();
   }
 }

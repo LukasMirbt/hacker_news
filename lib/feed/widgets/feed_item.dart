@@ -1,4 +1,5 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/app_ui.dart'
+    hide FeedItemCommentCountButton, FeedItemVoteButton;
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,24 +50,17 @@ class FeedItem extends StatelessWidget {
           final item = this.item.toRepository();
           FeedItemOptionsRoute(item).go(context);
         },
-        voteButtonData: score == null
+        voteButton: score == null
             ? null
-            : AppFeedItemVoteButtonData(
+            : FeedItemVoteButton(
                 score: score,
-                hasBeenUpvoted: item.hasBeenUpvoted,
-                onPressed: () {
-                  context.read<FeedBloc>().add(
-                    FeedItemVotePressed(item),
-                  );
-                },
+                item: item,
               ),
-        commentCountButtonData: commentCount == null
+        commentCountButton: commentCount == null
             ? null
-            : AppFeedItemCommentCountButtonData(
+            : FeedItemCommentCountButton(
                 commentCount: commentCount,
-                onPressed: () {
-                  PostRoute(postId: item.id).go(context);
-                },
+                item: item,
               ),
       ),
     );
