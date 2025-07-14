@@ -11,14 +11,11 @@ class FeedItemShareButton extends StatelessWidget {
       (AppFeedItemData data) => data.onSharePressed,
     );
 
-    final colorScheme = ColorScheme.of(context);
-
     return IconButton(
       onPressed: onSharePressed,
-      icon: Icon(
+      icon: const Icon(
         Icons.share_outlined,
         size: 16,
-        color: colorScheme.onSurfaceVariant,
       ),
     );
   }

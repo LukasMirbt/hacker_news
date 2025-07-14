@@ -6,19 +6,39 @@ class FeedItemActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(
-        left: AppSpacing.xxlg,
-        right: AppSpacing.lg,
+    final theme = Theme.of(context);
+
+    return Theme(
+      data: theme.copyWith(
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+            foregroundColor: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            minimumSize: const Size(64, 48),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            alignment: Alignment.centerLeft,
+            foregroundColor: theme.colorScheme.onSurfaceVariant,
+            textStyle: theme.textTheme.bodySmall,
+          ),
+        ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FeedItemVoteButton(),
-          FeedItemCommentCountButton(),
-          FeedItemShareButton(),
-          FeedItemMoreButton(),
-        ],
+      child: const Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.xxlg,
+          right: AppSpacing.lg,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FeedItemVoteButton(),
+            FeedItemCommentCountButton(),
+            FeedItemShareButton(),
+            FeedItemMoreButton(),
+          ],
+        ),
       ),
     );
   }

@@ -11,14 +11,14 @@ class FeedItemTitle extends StatelessWidget {
       (AppFeedItemData data) => data.title,
     );
 
-    final visited = context.select(
-      (AppFeedItemData data) => data.visited,
+    final hasBeenVisited = context.select(
+      (AppFeedItemData data) => data.hasBeenVisited,
     );
 
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
 
-    final color = visited
+    final color = hasBeenVisited
         ? colorScheme.onSurfaceVariant
         : colorScheme.onSurface;
 

@@ -7,81 +7,14 @@ class FeedItemCommentCountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visible = context.select(
-      (AppFeedItemData data) => data.commentCount != null,
+    final commentCountButtonData = context.select(
+      (AppFeedItemData data) => data.commentCountButtonData,
     );
 
-    return InvisiblePlaceholder(
-      visible: visible,
-      child: const _Button(),
-    );
-  }
-}
+    if (commentCountButtonData == null) {
+      return const FeedItemCommentCountButtonPlaceholder();
+    }
 
-class _Button extends StatelessWidget {
-  const _Button();
-
-  @override
-  Widget build(BuildContext context) {
-    final onCommentPressed = context.select(
-      (AppFeedItemData data) => data.onCommentPressed,
-    );
-
-    return TextButton(
-      onPressed: onCommentPressed,
-      style: const ButtonStyle(
-        alignment: Alignment.centerLeft,
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-        ),
-        minimumSize: WidgetStatePropertyAll(
-          Size(64, 48),
-        ),
-      ),
-      child: const Row(
-        spacing: 4,
-        children: [
-          _Icon(),
-          _Text(),
-        ],
-      ),
-    );
-  }
-}
-
-class _Icon extends StatelessWidget {
-  const _Icon();
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
-
-    return Icon(
-      Icons.mode_comment_outlined,
-      size: 16,
-      color: colorScheme.onSurfaceVariant,
-    );
-  }
-}
-
-class _Text extends StatelessWidget {
-  const _Text();
-
-  @override
-  Widget build(BuildContext context) {
-    final commentCount = context.select(
-      (AppFeedItemData data) => data.commentCount,
-    );
-
-    final colorScheme = ColorScheme.of(context);
-    final textTheme = TextTheme.of(context);
-
-    return Text(
-      commentCount ?? '0',
-      style: textTheme.bodySmall?.copyWith(
-        height: 1,
-        color: colorScheme.onSurfaceVariant,
-      ),
-    );
+    return AppFeedItemCommentCountButton(data: commentCountButtonData);
   }
 }

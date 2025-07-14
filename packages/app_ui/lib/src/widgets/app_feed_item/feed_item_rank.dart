@@ -11,7 +11,6 @@ class FeedItemRank extends StatelessWidget {
       (AppFeedItemData data) => data.rank,
     );
 
-    final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
 
     return ConstrainedBox(
@@ -23,10 +22,7 @@ class FeedItemRank extends StatelessWidget {
         child: FittedBox(
           child: Text(
             rank,
-            style: textTheme.titleMedium?.copyWith(
-              fontSize: 16,
-              color: colorScheme.onSurfaceVariant,
-            ),
+            style: textTheme.titleMedium,
           ),
         ),
       ),

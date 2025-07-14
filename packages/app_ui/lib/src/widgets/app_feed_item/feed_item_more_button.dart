@@ -11,14 +11,11 @@ class FeedItemMoreButton extends StatelessWidget {
       (AppFeedItemData data) => data.onMorePressed,
     );
 
-    final colorScheme = ColorScheme.of(context);
-
     return IconButton(
       onPressed: onMorePressed,
-      icon: Icon(
+      icon: const Icon(
         Icons.more_vert,
         size: 16,
-        color: colorScheme.onSurfaceVariant,
       ),
     );
   }

@@ -1,40 +1,45 @@
-// ignore_for_file: annotate_overrides
+import 'package:app_ui/app_ui.dart';
+import 'package:equatable/equatable.dart';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'app_feed_item_data.freezed.dart';
-
-@freezed
-class AppFeedItemData with _$AppFeedItemData {
+class AppFeedItemData extends Equatable {
   const AppFeedItemData({
-    required this.visited,
+    required this.hasBeenVisited,
     required this.rank,
     required this.title,
     required this.age,
     required this.urlHost,
     required this.user,
     required this.onPressed,
-    required this.score,
-    required this.commentCount,
-    required this.hasBeenUpvoted,
-    required this.onVotePressed,
-    required this.onCommentPressed,
     required this.onSharePressed,
     required this.onMorePressed,
+    required this.voteButtonData,
+    required this.commentCountButtonData,
   });
 
-  final bool visited;
+  final bool hasBeenVisited;
   final String rank;
   final String title;
   final String age;
   final String? urlHost;
   final String? user;
   final void Function() onPressed;
-  final String? score;
-  final String? commentCount;
-  final bool hasBeenUpvoted;
-  final void Function() onVotePressed;
-  final void Function() onCommentPressed;
   final void Function() onSharePressed;
   final void Function() onMorePressed;
+  final AppFeedItemVoteButtonData? voteButtonData;
+  final AppFeedItemCommentCountButtonData? commentCountButtonData;
+
+  @override
+  List<Object?> get props => [
+    hasBeenVisited,
+    rank,
+    title,
+    age,
+    urlHost,
+    user,
+    onPressed,
+    onSharePressed,
+    onMorePressed,
+    voteButtonData,
+    commentCountButtonData,
+  ];
 }
