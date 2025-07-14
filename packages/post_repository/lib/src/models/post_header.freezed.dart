@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostHeader {
 
- String get id; String get title; String get url; String get upvoteUrl; bool get hasBeenUpvoted; String get urlHost; int get score; Hnuser get hnuser; DateTime get age; int get commentCount; String? get htmlText; String? get hmac;
+ String get id; String get title; String get url; String get upvoteUrl; bool get hasBeenUpvoted; String get urlHost; int? get score; Hnuser get hnuser; DateTime get age; int? get commentCount; String? get htmlText; String? get hmac;
 /// Create a copy of PostHeader
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $PostHeaderCopyWith<$Res>  {
   factory $PostHeaderCopyWith(PostHeader value, $Res Function(PostHeader) _then) = _$PostHeaderCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String url, String upvoteUrl, bool hasBeenUpvoted, String urlHost, int score, Hnuser hnuser, DateTime age, int commentCount, String? htmlText, String? hmac
+ String id, String title, String url, String upvoteUrl, bool hasBeenUpvoted, String urlHost, int? score, Hnuser hnuser, DateTime age, int? commentCount, String? htmlText, String? hmac
 });
 
 
@@ -63,7 +63,7 @@ class _$PostHeaderCopyWithImpl<$Res>
 
 /// Create a copy of PostHeader
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,Object? urlHost = null,Object? score = null,Object? hnuser = null,Object? age = null,Object? commentCount = null,Object? htmlText = freezed,Object? hmac = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,Object? urlHost = null,Object? score = freezed,Object? hnuser = null,Object? age = null,Object? commentCount = freezed,Object? htmlText = freezed,Object? hmac = freezed,}) {
   return _then(PostHeader(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -71,11 +71,11 @@ as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nul
 as String,upvoteUrl: null == upvoteUrl ? _self.upvoteUrl : upvoteUrl // ignore: cast_nullable_to_non_nullable
 as String,hasBeenUpvoted: null == hasBeenUpvoted ? _self.hasBeenUpvoted : hasBeenUpvoted // ignore: cast_nullable_to_non_nullable
 as bool,urlHost: null == urlHost ? _self.urlHost : urlHost // ignore: cast_nullable_to_non_nullable
-as String,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
-as int,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
+as String,score: freezed == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
+as int?,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
 as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
-as DateTime,commentCount: null == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
-as int,htmlText: freezed == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
+as DateTime,commentCount: freezed == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
+as int?,htmlText: freezed == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
 as String?,hmac: freezed == hmac ? _self.hmac : hmac // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

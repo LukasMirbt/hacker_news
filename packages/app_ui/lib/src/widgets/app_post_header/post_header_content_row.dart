@@ -2,8 +2,8 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ContentRow extends StatelessWidget {
-  const ContentRow({super.key});
+class PostHeaderContentRow extends StatelessWidget {
+  const PostHeaderContentRow({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +57,14 @@ class _Title extends StatelessWidget {
       (AppPostHeaderData data) => data.title,
     );
 
-    final visited = context.select(
-      (AppPostHeaderData data) => data.visited,
+    final hasBeenVisited = context.select(
+      (AppPostHeaderData data) => data.hasBeenVisited,
     );
 
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
 
-    final color = visited
+    final color = hasBeenVisited
         ? colorScheme.onSurfaceVariant
         : colorScheme.onSurface;
 

@@ -1,10 +1,14 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:app_ui/src/widgets/app_post_header/action_row.dart';
-import 'package:app_ui/src/widgets/app_post_header/content_row.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-export 'data.dart';
+export 'app_post_header_data.dart';
+export 'post_header_action_row.dart';
+export 'post_header_button_placeholder.dart';
+export 'post_header_comment_button.dart';
+export 'post_header_content_row.dart';
+export 'post_header_share_button.dart';
+export 'post_header_vote_button.dart';
 
 class AppPostHeader extends StatelessWidget {
   const AppPostHeader({
@@ -21,7 +25,7 @@ class AppPostHeader extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: AppSpacing.lg),
-          const ContentRow(),
+          const PostHeaderContentRow(),
           if (data.htmlText != null)
             const Padding(
               padding: EdgeInsets.only(top: AppSpacing.lg),
@@ -29,7 +33,7 @@ class AppPostHeader extends StatelessWidget {
             )
           else
             const SizedBox(height: AppSpacing.xs),
-          const ActionRow(),
+          const PostHeaderActionRow(),
           const Divider(height: 1),
         ],
       ),
