@@ -157,7 +157,7 @@ abstract class AppLocalizations {
   /// No description provided for @commentList_age.
   ///
   /// In en, this message translates to:
-  /// **'· {age} ago'**
+  /// **'{age} ago'**
   String commentList_age({required Object age});
 
   /// No description provided for @commentOptions_reply.

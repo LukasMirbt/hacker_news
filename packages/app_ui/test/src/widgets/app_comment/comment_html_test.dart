@@ -8,25 +8,24 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/pump_app.dart';
 
-class _MockAppPostHeaderData extends Mock implements AppPostHeaderData {}
+class _MockAppCommentData extends Mock implements AppCommentData {}
 
 void main() {
   const htmlText = 'htmlText';
 
-  group(PostHeaderHtml, () {
-    late AppPostHeaderData data;
+  group(CommentHtml, () {
+    late AppCommentData data;
 
     setUp(() {
-      data = _MockAppPostHeaderData();
-      when(() => data.onTextLinkPressed).thenReturn((_) {});
+      data = _MockAppCommentData();
+      when(() => data.htmlText).thenReturn(htmlText);
+      when(() => data.onLinkPressed).thenReturn((_) {});
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: PostHeaderHtml(
-          htmlText: htmlText,
-        ),
+        child: CommentHtml(),
       );
     }
 
@@ -46,17 +45,17 @@ void main() {
       });
 
       group('onLinkPressed', () {
-        testWidgets('calls data.onTextLinkPressed', (tester) async {
+        testWidgets('calls data.onLinkPressed', (tester) async {
           const linkText = 'linkText';
 
           var count = 0;
 
-          void onTextLinkPressed(String value) {
+          void onLinkPressed(String value) {
             expect(value, linkText);
             count += 1;
           }
 
-          when(() => data.onTextLinkPressed).thenReturn(onTextLinkPressed);
+          when(() => data.onLinkPressed).thenReturn(onLinkPressed);
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           widget.onLinkPressed(linkText);

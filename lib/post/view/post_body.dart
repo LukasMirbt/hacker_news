@@ -11,14 +11,14 @@ class PostBody extends StatelessWidget {
     return const CustomScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       slivers: [
-        SliverPadding(
-          padding: EdgeInsets.only(bottom: AppSpacing.xs),
-          sliver: SliverToBoxAdapter(
-            child: PostHeader(),
-          ),
+        SliverToBoxAdapter(
+          child: PostHeader(),
         ),
         SliverToBoxAdapter(
           child: Divider(height: 1),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.only(bottom: AppSpacing.xs),
         ),
         CommentSliverList(),
       ],

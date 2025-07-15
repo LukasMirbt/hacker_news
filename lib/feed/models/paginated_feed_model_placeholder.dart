@@ -12,8 +12,11 @@ class PaginatedFeedModelPlaceholder extends PaginatedFeedModel {
               title: 'Lorem ipsum dolor sit amet',
               url: 'https://example.com',
               age: DateTime(1),
+              urlHost: 'example.com',
               score: 10,
-              hnuser: const HnuserPlaceholder(),
+              hnuser: const HnuserPlaceholder(
+                id: 'Lorem',
+              ),
             ),
           ),
         ),
