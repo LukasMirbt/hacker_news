@@ -1,10 +1,16 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:app_ui/src/widgets/app_comment/header_row.dart';
-import 'package:app_ui/src/widgets/app_comment/html_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-export 'data.dart';
+export 'app_comment_data.dart';
+export 'app_comment_data_placeholder.dart';
+export 'collapsed_comment_body.dart';
+export 'comment_header_row.dart';
+export 'comment_html.dart';
+export 'comment_more_button.dart';
+export 'comment_user_and_age.dart';
+export 'comment_vote_button.dart';
+export 'expanded_comment_body.dart';
 
 class AppComment extends StatelessWidget {
   const AppComment({
@@ -18,20 +24,22 @@ class AppComment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider.value(
       value: data,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const HeaderRow(),
-          if (data.isExpanded)
-            const Padding(
-              padding: EdgeInsets.only(
-                left: AppSpacing.xlg,
-                right: AppSpacing.xlg,
-              ),
-              child: HtmlText(),
-            ),
-        ],
-      ),
+      child: const _Body(),
     );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    final isExpanded = context.select(
+      (AppCommentData data) => data.isExpanded,
+    );
+
+    if (isExpanded) return const ExpandedCommentBody();
+
+    return const CollapsedCommentBody();
   }
 }

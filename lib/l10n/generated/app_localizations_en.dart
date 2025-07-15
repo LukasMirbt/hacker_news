@@ -44,7 +44,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String commentList_age({required Object age}) {
-    return '· $age ago';
+    return '$age ago';
   }
 
   @override

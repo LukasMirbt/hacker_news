@@ -24,16 +24,25 @@ class PostHeaderActionRow extends StatelessWidget {
           ),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(left: 14, right: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            PostHeaderVoteButton(),
-            PostHeaderCommentButton(),
-            PostHeaderShareButton(),
-          ],
-        ),
+      child: const _Row(),
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.only(left: 14, right: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          PostHeaderVoteButton(),
+          PostHeaderCommentButton(),
+          PostHeaderShareButton(),
+        ],
       ),
     );
   }

@@ -19,3 +19,4 @@ export 'invisible_placeholder.dart';
 export 'logo.dart';
 export 'pagination_spinner.dart';
 export 'spinner.dart';
+export 'text_separator.dart';

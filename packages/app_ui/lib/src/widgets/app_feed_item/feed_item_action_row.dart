@@ -25,13 +25,7 @@ class FeedItemActionRow extends StatelessWidget {
           ),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.only(
-          left: AppSpacing.xxlg,
-          right: AppSpacing.lg,
-        ),
-        child: _Row(),
-      ),
+      child: const _Row(),
     );
   }
 }
@@ -41,14 +35,20 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        FeedItemVoteButton(),
-        FeedItemCommentCountButton(),
-        FeedItemShareButton(),
-        FeedItemMoreButton(),
-      ],
+    return const Padding(
+      padding: EdgeInsets.only(
+        left: AppSpacing.xxlg,
+        right: AppSpacing.lg,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          FeedItemVoteButton(),
+          FeedItemCommentCountButton(),
+          FeedItemShareButton(),
+          FeedItemMoreButton(),
+        ],
+      ),
     );
   }
 }

@@ -11,7 +11,7 @@
   "appShell_login": "Login",
   "commentForm_title": "Comment",
   "commentForm_submitAction": "Add comment",
-  "commentList_age": "· {age} ago",
+  "commentList_age": "{age} ago",
   "commentOptions_reply": "Reply",
   "commentOptions_openOnWeb": "Open on web",
   "createAccount_title": "Create account",
