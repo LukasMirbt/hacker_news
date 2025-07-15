@@ -50,9 +50,9 @@ void main() {
             id: '',
             title: '',
             url: '',
-            upvoteUrl: '',
+            upvoteUrl: null,
             hasBeenUpvoted: false,
-            urlHost: '',
+            urlHost: null,
           ),
         );
       });

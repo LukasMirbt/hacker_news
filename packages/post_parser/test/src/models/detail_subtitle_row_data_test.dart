@@ -37,10 +37,10 @@ void main() {
             commentCount: null,
           ),
           DetailSubtitleRowData(
-            score: 0,
+            score: null,
             hnuser: Hnuser.empty,
             age: DateTime(0),
-            commentCount: 0,
+            commentCount: null,
           ),
         );
       });
