@@ -24,5 +24,5 @@ abstract class PostHeaderState with _$PostHeaderState {
 
   const PostHeaderState._();
 
-  bool get visited => visitedPosts.contains(id);
+  bool get hasBeenVisited => visitedPosts.contains(id);
 }

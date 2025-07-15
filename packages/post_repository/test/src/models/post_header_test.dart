@@ -45,33 +45,41 @@ void main() {
       });
     });
 
-    group('upvote', () {
+    group('unvote', () {
       test('returns updated $PostHeader', () {
-        final postHeader = PostHeaderPlaceholder(
-          score: 1,
-          hasBeenUpvoted: false,
+        const score = 1;
+        const hasBeenUpvoted = true;
+
+        final item = PostHeaderPlaceholder(
+          score: score,
+          hasBeenUpvoted: hasBeenUpvoted,
         );
+
         expect(
-          postHeader.upvote(),
-          postHeader.copyWith(
-            hasBeenUpvoted: true,
-            score: postHeader.score + 1,
+          item.unvote(),
+          item.copyWith(
+            hasBeenUpvoted: false,
+            score: score - 1,
           ),
         );
       });
     });
 
-    group('unvote', () {
+    group('upvote', () {
       test('returns updated $PostHeader', () {
-        final postHeader = PostHeaderPlaceholder(
-          score: 1,
-          hasBeenUpvoted: true,
+        const score = 1;
+        const hasBeenUpvoted = false;
+
+        final item = PostHeaderPlaceholder(
+          score: score,
+          hasBeenUpvoted: hasBeenUpvoted,
         );
+
         expect(
-          postHeader.unvote(),
-          postHeader.copyWith(
-            hasBeenUpvoted: false,
-            score: postHeader.score - 1,
+          item.upvote(),
+          item.copyWith(
+            hasBeenUpvoted: true,
+            score: score + 1,
           ),
         );
       });

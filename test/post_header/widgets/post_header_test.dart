@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/app_ui.dart'
+    hide PostHeaderCommentButton, PostHeaderVoteButton;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
@@ -21,8 +20,6 @@ class _MockPostHeaderState extends Mock implements PostHeaderState {}
 
 class _MockPostHeaderModel extends Mock implements PostHeaderModel {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
-
 class _MockDateFormatterLocalizations extends Mock
     implements DateFormatterLocalizations {}
 
@@ -30,14 +27,11 @@ class _MockAppLocalizations extends Mock implements AppLocalizations {}
 
 void main() {
   const id = 'id';
-  const visited = true;
+  const hasBeenVisited = true;
   const title = 'title';
   const age = 'age';
   const urlHost = 'urlHost';
   const user = 'user';
-  const score = 'score';
-  const commentCount = 'commentCount';
-  const hasBeenUpvoted = true;
   const htmlText = 'htmlText';
   const shareText = 'shareText';
 
@@ -45,26 +39,21 @@ void main() {
     late PostHeaderBloc bloc;
     late PostHeaderState state;
     late PostHeaderModel header;
-    late GoRouter router;
 
     setUp(() {
       bloc = _MockPostHeaderBloc();
       state = _MockPostHeaderState();
       header = _MockPostHeaderModel();
-      router = _MockGoRouter();
       registerFallbackValue(_MockDateFormatterLocalizations());
       registerFallbackValue(_MockAppLocalizations());
       when(() => bloc.state).thenReturn(state);
       when(() => state.header).thenReturn(header);
       when(() => state.id).thenReturn(id);
-      when(() => state.visited).thenReturn(visited);
+      when(() => state.hasBeenVisited).thenReturn(hasBeenVisited);
       when(() => header.title).thenReturn(title);
       when(() => header.age(any())).thenReturn(age);
       when(() => header.urlHost).thenReturn(urlHost);
       when(() => header.user).thenReturn(user);
-      when(() => header.score).thenReturn(score);
-      when(() => header.commentCount).thenReturn(commentCount);
-      when(() => header.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
       when(() => header.htmlText).thenReturn(htmlText);
       when(() => header.shareText(any())).thenReturn(shareText);
     });
@@ -82,10 +71,10 @@ void main() {
       );
     }
 
-    testWidgets('has correct visited', (tester) async {
+    testWidgets('has correct hasBeenVisited', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
-      expect(widget.data.visited, visited);
+      expect(widget.data.hasBeenVisited, hasBeenVisited);
     });
 
     testWidgets('has correct title', (tester) async {
@@ -112,29 +101,23 @@ void main() {
       expect(widget.data.user, user);
     });
 
-    testWidgets('has correct score', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.score, score);
-    });
-
-    testWidgets('has correct commentCount', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.commentCount, commentCount);
-    });
-
-    testWidgets('has correct hasBeenUpvoted', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.hasBeenUpvoted, hasBeenUpvoted);
-    });
-
     testWidgets('has correct htmlText', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(widget.data.htmlText, htmlText);
     });
+
+    testWidgets(
+      'adds $PostHeaderPressed onPressed',
+      (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        widget.data.onPressed();
+        verify(
+          () => bloc.add(PostHeaderPressed()),
+        ).called(1);
+      },
+    );
 
     testWidgets(
       'adds $PostHeaderTextLinkPressed onTextLinkPressed',
@@ -152,46 +135,6 @@ void main() {
     );
 
     testWidgets(
-      'adds $PostHeaderPressed onPressed',
-      (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.data.onPressed();
-        verify(
-          () => bloc.add(PostHeaderPressed()),
-        ).called(1);
-      },
-    );
-
-    testWidgets(
-      'adds $PostHeaderVotePressed onVotePressed',
-      (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.data.onVotePressed();
-        verify(
-          () => bloc.add(PostHeaderVotePressed()),
-        ).called(1);
-      },
-    );
-
-    testWidgets(
-      'navigates to $CommentFormRoute onCommentPressed',
-      (tester) async {
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
-        final widget = findWidget(tester);
-        widget.data.onCommentPressed();
-        final route = CommentFormRoute(postId: id);
-        verify(
-          () => router.go(route.location),
-        ).called(1);
-      },
-    );
-
-    testWidgets(
       'adds $PostHeaderSharePressed onSharePressed',
       (tester) async {
         await tester.pumpApp(buildSubject());
@@ -204,5 +147,51 @@ void main() {
         ).called(1);
       },
     );
+
+    testWidgets('voteButton is null when score is null', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.data.voteButton, null);
+    });
+
+    testWidgets('voteButton is $PostHeaderVoteButton '
+        'when score is non-null', (tester) async {
+      const score = 'score';
+      when(() => header.score).thenReturn(score);
+      when(() => header.hasBeenUpvoted).thenReturn(false);
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(
+        widget.data.voteButton,
+        isA<PostHeaderVoteButton>().having(
+          (widget) => widget.score,
+          'score',
+          score,
+        ),
+      );
+    });
+
+    testWidgets('commentButton is null '
+        'when commentCount is null', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.data.commentButton, null);
+    });
+
+    testWidgets('commentButton is $PostHeaderCommentButton '
+        'when commentCount is non-null', (tester) async {
+      const commentCount = 'commentCount';
+      when(() => header.commentCount).thenReturn(commentCount);
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(
+        widget.data.commentButton,
+        isA<PostHeaderCommentButton>().having(
+          (widget) => widget.commentCount,
+          'commentCount',
+          commentCount,
+        ),
+      );
+    });
   });
 }

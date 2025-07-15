@@ -42,7 +42,7 @@ void main() async {
     }
 
     group('id', () {
-      test('returns model.id', () {
+      test('returns item.id', () {
         const id = 'id';
         when(() => item.id).thenReturn(id);
         final model = createSubject();
@@ -51,7 +51,7 @@ void main() async {
     });
 
     group('title', () {
-      test('returns model.title', () {
+      test('returns item.title', () {
         const title = 'title';
         when(() => item.title).thenReturn(title);
         final model = createSubject();
@@ -60,7 +60,7 @@ void main() async {
     });
 
     group('url', () {
-      test('returns model.url', () {
+      test('returns item.url', () {
         const url = 'url';
         when(() => item.url).thenReturn(url);
         final model = createSubject();
@@ -69,7 +69,7 @@ void main() async {
     });
 
     group('user', () {
-      test('returns model.hnuser.id', () {
+      test('returns item.hnuser.id when non-null', () {
         const hnuserId = 'hnuserId';
         when(() => item.hnuser).thenReturn(
           HnuserPlaceholder(id: hnuserId),
@@ -77,41 +77,68 @@ void main() async {
         final model = createSubject();
         expect(model.user, hnuserId);
       });
+
+      test('returns null when item.hnuser is null', () {
+        final model = createSubject();
+        expect(model.user, null);
+      });
     });
 
     group('score', () {
-      test('returns correct string', () {
+      test('returns correct string when item.score '
+          'is non-null', () {
         const score = 1;
         when(() => item.score).thenReturn(score);
         final model = createSubject();
         expect(model.score, score.toString());
       });
+
+      test('returns null when item.score is null', () {
+        final model = createSubject();
+        expect(model.score, null);
+      });
     });
 
     group('urlHost', () {
-      test('returns model.urlHost', () {
+      test('returns item.urlHost when non-null', () {
         const urlHost = 'urlHost';
         when(() => item.urlHost).thenReturn(urlHost);
         final model = createSubject();
         expect(model.urlHost, urlHost);
       });
+
+      test('returns null when item.urlHost is null', () {
+        final model = createSubject();
+        expect(model.urlHost, null);
+      });
     });
 
     group('commentCount', () {
-      test('returns correct string', () {
+      test('returns correct string when item.commentCount '
+          'is non-null', () {
         const commentCount = 1;
         when(() => item.commentCount).thenReturn(commentCount);
         final model = createSubject();
         expect(model.commentCount, commentCount.toString());
       });
+
+      test('returns null when item.commentCount is null', () {
+        final model = createSubject();
+        expect(model.commentCount, null);
+      });
     });
 
     group('upvoteUrl', () {
-      test('returns model.upvoteUrl', () {
+      test('returns item.upvoteUrl when non-null', () {
         const upvoteUrl = 'upvoteUrl';
         when(() => item.upvoteUrl).thenReturn(upvoteUrl);
         final model = createSubject();
         expect(model.upvoteUrl, upvoteUrl);
+      });
+
+      test('returns null when item.upvoteUrl is null', () {
+        final model = createSubject();
+        expect(model.upvoteUrl, null);
       });
     });
 

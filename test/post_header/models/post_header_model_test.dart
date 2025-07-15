@@ -42,7 +42,7 @@ void main() async {
     }
 
     group('id', () {
-      test('returns model.id', () {
+      test('returns header.id', () {
         const id = 'id';
         when(() => header.id).thenReturn(id);
         final model = createSubject();
@@ -51,7 +51,7 @@ void main() async {
     });
 
     group('title', () {
-      test('returns model.title', () {
+      test('returns header.title', () {
         const title = 'title';
         when(() => header.title).thenReturn(title);
         final model = createSubject();
@@ -60,7 +60,7 @@ void main() async {
     });
 
     group('url', () {
-      test('returns model.url', () {
+      test('returns header.url', () {
         const url = 'url';
         when(() => header.url).thenReturn(url);
         final model = createSubject();
@@ -69,7 +69,7 @@ void main() async {
     });
 
     group('user', () {
-      test('returns model.hnuser.id', () {
+      test('returns header.hnuser.id when non-null', () {
         const hnuserId = 'hnuserId';
         when(() => header.hnuser).thenReturn(
           HnuserPlaceholder(id: hnuserId),
@@ -77,46 +77,73 @@ void main() async {
         final model = createSubject();
         expect(model.user, hnuserId);
       });
+
+      test('returns null when header.hnuser is null', () {
+        final model = createSubject();
+        expect(model.user, null);
+      });
     });
 
     group('score', () {
-      test('returns correct string', () {
+      test('returns correct string when header.score '
+          'is non-null', () {
         const score = 1;
         when(() => header.score).thenReturn(score);
         final model = createSubject();
         expect(model.score, score.toString());
       });
+
+      test('returns null when header.score is null', () {
+        final model = createSubject();
+        expect(model.score, null);
+      });
     });
 
     group('urlHost', () {
-      test('returns model.urlHost', () {
+      test('returns header.urlHost when non-null', () {
         const urlHost = 'urlHost';
         when(() => header.urlHost).thenReturn(urlHost);
         final model = createSubject();
         expect(model.urlHost, urlHost);
       });
+
+      test('returns null when header.urlHost is null', () {
+        final model = createSubject();
+        expect(model.urlHost, null);
+      });
     });
 
     group('commentCount', () {
-      test('returns correct string', () {
+      test('returns correct string when header.commentCount '
+          'is non-null', () {
         const commentCount = 1;
         when(() => header.commentCount).thenReturn(commentCount);
         final model = createSubject();
         expect(model.commentCount, commentCount.toString());
       });
+
+      test('returns null when header.commentCount is null', () {
+        final model = createSubject();
+        expect(model.commentCount, null);
+      });
     });
 
     group('htmlText', () {
-      test('returns model.htmlText', () {
+      test('returns header.htmlText when non-null', () {
         const htmlText = 'htmlText';
         when(() => header.htmlText).thenReturn(htmlText);
         final model = createSubject();
         expect(model.htmlText, htmlText);
       });
+
+      test('returns null when header.htmlText is null', () {
+        final model = createSubject();
+        expect(model.htmlText, null);
+      });
     });
 
     group('hasBeenUpvoted', () {
-      test('returns model.hasBeenUpvoted', () {
+      test('returns header.hasBeenUpvoted', () {
         const hasBeenUpvoted = true;
         when(() => header.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
         final model = createSubject();
@@ -125,11 +152,16 @@ void main() async {
     });
 
     group('upvoteUrl', () {
-      test('returns model.upvoteUrl', () {
+      test('returns header.upvoteUrl when non-null', () {
         const upvoteUrl = 'upvoteUrl';
         when(() => header.upvoteUrl).thenReturn(upvoteUrl);
         final model = createSubject();
         expect(model.upvoteUrl, upvoteUrl);
+      });
+
+      test('returns null when header.upvoteUrl is null', () {
+        final model = createSubject();
+        expect(model.upvoteUrl, null);
       });
     });
 
