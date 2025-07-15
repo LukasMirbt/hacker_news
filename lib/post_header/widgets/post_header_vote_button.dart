@@ -17,8 +17,8 @@ class PostHeaderVoteButton extends StatelessWidget {
       (PostHeaderBloc bloc) => bloc.state.header.hasBeenUpvoted,
     );
 
-    return AppFeedItemVoteButton(
-      data: AppFeedItemVoteButtonData(
+    return AppPostHeaderVoteButton(
+      data: AppPostHeaderVoteButtonData(
         score: score,
         hasBeenUpvoted: hasBeenUpvoted,
         onPressed: () {

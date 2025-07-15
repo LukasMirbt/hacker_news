@@ -32,19 +32,19 @@ void main() {
       });
     });
 
-    group('visited', () {
+    group('hasBeenVisited', () {
       test('returns true when visitedPosts contains id', () {
         final state = createSubject(
           visitedPosts: visitedPosts,
         );
-        expect(state.visited, true);
+        expect(state.hasBeenVisited, true);
       });
 
       test('returns false when visitedPosts does not contain id', () {
         final state = createSubject(
           visitedPosts: {},
         );
-        expect(state.visited, false);
+        expect(state.hasBeenVisited, false);
       });
     });
   });

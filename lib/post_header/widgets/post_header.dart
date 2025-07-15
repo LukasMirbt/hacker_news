@@ -53,14 +53,14 @@ class PostHeader extends StatelessWidget {
         urlHost: urlHost,
         user: user,
         htmlText: htmlText,
-        onTextLinkPressed: (url) {
-          context.read<PostHeaderBloc>().add(
-            PostHeaderTextLinkPressed(url),
-          );
-        },
         onPressed: () {
           context.read<PostHeaderBloc>().add(
             const PostHeaderPressed(),
+          );
+        },
+        onTextLinkPressed: (url) {
+          context.read<PostHeaderBloc>().add(
+            PostHeaderTextLinkPressed(url),
           );
         },
         onSharePressed: () {
