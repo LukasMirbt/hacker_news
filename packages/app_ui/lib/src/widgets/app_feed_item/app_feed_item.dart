@@ -24,18 +24,9 @@ class AppFeedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Provider.value(
       value: data,
-      child: Theme(
-        data: theme.copyWith(
-          textTheme: theme.textTheme.apply(
-            bodyColor: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        child: const _Body(),
-      ),
+      child: const _Body(),
     );
   }
 }

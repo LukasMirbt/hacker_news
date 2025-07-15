@@ -19,22 +19,24 @@ class FeedItemSubtitle extends StatelessWidget {
       (AppFeedItemData data) => data.age,
     );
 
+    final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
-    final l10n = AppUiLocalizations.of(context);
 
-    return Text.rich(
-      style: textTheme.labelMedium,
-      TextSpan(
+    return DefaultTextStyle.merge(
+      style: textTheme.labelMedium?.copyWith(
+        color: colorScheme.onSurfaceVariant,
+      ),
+      child: Row(
         children: [
           if (urlHost != null) ...[
-            TextSpan(text: urlHost),
-            TextSpan(text: l10n.separator),
+            Text(urlHost),
+            const TextSeparator(),
           ],
           if (user != null) ...[
-            TextSpan(text: user),
-            TextSpan(text: l10n.separator),
+            Text(user),
+            const TextSeparator(),
           ],
-          TextSpan(text: age),
+          Text(age),
         ],
       ),
     );
