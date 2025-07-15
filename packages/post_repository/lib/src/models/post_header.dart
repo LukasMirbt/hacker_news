@@ -60,27 +60,27 @@ class PostHeader with _$PostHeader {
   final String id;
   final String title;
   final String url;
-  final String upvoteUrl;
+  final String? upvoteUrl;
   final bool hasBeenUpvoted;
-  final String urlHost;
-  final int score;
-  final Hnuser hnuser;
+  final String? urlHost;
+  final int? score;
+  final Hnuser? hnuser;
   final DateTime age;
-  final int commentCount;
+  final int? commentCount;
   final String? htmlText;
   final String? hmac;
 
   PostHeader upvote() {
     return copyWith(
       hasBeenUpvoted: true,
-      score: score + 1,
+      score: (score ?? 0) + 1,
     );
   }
 
   PostHeader unvote() {
     return copyWith(
       hasBeenUpvoted: false,
-      score: score - 1,
+      score: (score ?? 0) - 1,
     );
   }
 }

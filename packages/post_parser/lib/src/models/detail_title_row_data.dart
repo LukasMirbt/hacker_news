@@ -22,9 +22,9 @@ class DetailTitleRowData extends Equatable {
       id: id ?? '',
       title: title ?? '',
       url: url ?? '',
-      upvoteUrl: upvoteUrl ?? '',
+      upvoteUrl: upvoteUrl,
       hasBeenUpvoted: hasBeenUpvoted ?? false,
-      urlHost: urlHost ?? '',
+      urlHost: urlHost,
     );
   }
 
@@ -40,12 +40,12 @@ class DetailTitleRowData extends Equatable {
   final String id;
   final String title;
   final String url;
-  final String upvoteUrl;
+  final String? upvoteUrl;
   final bool hasBeenUpvoted;
-  final String urlHost;
+  final String? urlHost;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     id,
     title,
     url,

@@ -17,6 +17,9 @@ class PostBody extends StatelessWidget {
             child: PostHeader(),
           ),
         ),
+        SliverToBoxAdapter(
+          child: Divider(height: 1),
+        ),
         CommentSliverList(),
       ],
     );

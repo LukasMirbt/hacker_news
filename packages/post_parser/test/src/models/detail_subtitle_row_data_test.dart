@@ -6,41 +6,85 @@ void main() {
     group('fromParsed', () {
       test('returns $DetailSubtitleRowData with correct values '
           'when data is non-null', () {
+        final age = DateTime(1);
         const score = 1;
         const hnuser = HnuserPlaceholder();
-        final age = DateTime(1);
         const commentCount = 1;
 
         expect(
           DetailSubtitleRowData.fromParsed(
+            age: age,
             score: score,
             hnuser: hnuser,
-            age: age,
             commentCount: commentCount,
           ),
           DetailSubtitleRowData(
+            age: age,
             score: score,
             hnuser: hnuser,
-            age: age,
             commentCount: commentCount,
           ),
         );
       });
 
+      test('returns $DetailSubtitleRowData with correct values when isJob', () {
+        final age = DateTime(1);
+        const hnuser = HnuserPlaceholder();
+
+        expect(
+          DetailSubtitleRowData.fromParsed(
+            age: age,
+            score: null,
+            hnuser: hnuser,
+            commentCount: null,
+          ),
+          DetailSubtitleRowData(
+            age: age,
+            score: null,
+            hnuser: hnuser,
+            commentCount: null,
+          ),
+        );
+      });
+
+      test(
+        'returns $DetailSubtitleRowData with correct values when !isJob',
+        () {
+          final age = DateTime(1);
+          const hnuser = HnuserPlaceholder();
+          const score = 1;
+
+          expect(
+            DetailSubtitleRowData.fromParsed(
+              age: age,
+              score: score,
+              hnuser: hnuser,
+              commentCount: null,
+            ),
+            DetailSubtitleRowData(
+              age: age,
+              score: score,
+              hnuser: hnuser,
+              commentCount: 0,
+            ),
+          );
+        },
+      );
+
       test('returns $DetailSubtitleRowData with correct values '
           'when data is null', () {
         expect(
           DetailSubtitleRowData.fromParsed(
+            age: null,
             score: null,
             hnuser: null,
-            age: null,
             commentCount: null,
           ),
           DetailSubtitleRowData(
-            score: 0,
-            hnuser: Hnuser.empty,
             age: DateTime(0),
-            commentCount: 0,
+            score: null,
+            hnuser: null,
+            commentCount: null,
           ),
         );
       });

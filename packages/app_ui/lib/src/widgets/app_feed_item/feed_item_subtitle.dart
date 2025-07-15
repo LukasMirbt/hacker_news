@@ -27,20 +27,14 @@ class FeedItemSubtitle extends StatelessWidget {
       TextSpan(
         children: [
           if (urlHost != null) ...[
-            TextSpan(
-              text: urlHost,
-            ),
+            TextSpan(text: urlHost),
             TextSpan(text: l10n.separator),
           ],
           if (user != null) ...[
-            TextSpan(
-              text: user,
-            ),
+            TextSpan(text: user),
             TextSpan(text: l10n.separator),
           ],
-          TextSpan(
-            text: age,
-          ),
+          TextSpan(text: age),
         ],
       ),
     );

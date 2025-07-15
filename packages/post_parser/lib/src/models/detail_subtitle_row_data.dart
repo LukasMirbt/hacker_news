@@ -15,28 +15,30 @@ class DetailSubtitleRowData extends Equatable {
     required DateTime? age,
     required int? commentCount,
   }) {
+    final isJob = score == null && commentCount == null;
+
     return DetailSubtitleRowData(
-      score: score ?? 0,
-      hnuser: hnuser ?? Hnuser.empty,
+      score: score,
+      hnuser: hnuser,
       age: age ?? DateTime(0),
-      commentCount: commentCount ?? 0,
+      commentCount: isJob ? null : (commentCount ?? 0),
     );
   }
 
   static final empty = DetailSubtitleRowData(
-    score: 0,
-    hnuser: Hnuser.empty,
     age: DateTime(0),
-    commentCount: 0,
+    score: null,
+    hnuser: null,
+    commentCount: null,
   );
 
-  final int score;
-  final Hnuser hnuser;
+  final int? score;
+  final Hnuser? hnuser;
   final DateTime age;
-  final int commentCount;
+  final int? commentCount;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     score,
     hnuser,
     age,
