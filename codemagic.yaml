@@ -95,6 +95,9 @@ workflows:
         publishing:
             app_store_connect:
                 auth: integration
+                submit_to_testflight: true
+                beta_groups:
+                    - External
 
     patch-ios:
         <<:
@@ -135,7 +138,8 @@ workflows:
             google_play:
                 credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
                 track: internal
-                submit_as_draft: true
+                release_promotion:
+                    track: alpha
 
     patch-android:
         <<:
