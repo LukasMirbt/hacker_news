@@ -21,7 +21,7 @@ class PostHeaderModel extends Equatable {
   String get id => _header.id;
   String get title => _header.title;
   String get url => _header.url;
-  String get user => _header.hnuser.id;
+  String? get user => _header.hnuser?.id;
   String? get score => _header.score?.toString();
   String? get urlHost => _header.urlHost;
   String? get commentCount => _header.commentCount?.toString();

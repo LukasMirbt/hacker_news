@@ -877,7 +877,7 @@ packages:
     source: hosted
     version: "0.11.1"
   material_symbols_icons:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: material_symbols_icons
       sha256: "7c50901b39d1ad645ee25d920aed008061e1fd541a897b4ebf2c01d966dbf16b"

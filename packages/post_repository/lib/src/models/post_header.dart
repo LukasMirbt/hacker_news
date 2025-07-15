@@ -64,7 +64,7 @@ class PostHeader with _$PostHeader {
   final bool hasBeenUpvoted;
   final String? urlHost;
   final int? score;
-  final Hnuser hnuser;
+  final Hnuser? hnuser;
   final DateTime age;
   final int? commentCount;
   final String? htmlText;

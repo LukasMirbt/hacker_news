@@ -19,21 +19,21 @@ class DetailSubtitleRowData extends Equatable {
 
     return DetailSubtitleRowData(
       score: score,
-      hnuser: hnuser ?? Hnuser.empty,
+      hnuser: hnuser,
       age: age ?? DateTime(0),
       commentCount: isJob ? null : (commentCount ?? 0),
     );
   }
 
   static final empty = DetailSubtitleRowData(
-    score: 0,
-    hnuser: Hnuser.empty,
     age: DateTime(0),
-    commentCount: 0,
+    score: null,
+    hnuser: null,
+    commentCount: null,
   );
 
   final int? score;
-  final Hnuser hnuser;
+  final Hnuser? hnuser;
   final DateTime age;
   final int? commentCount;
 
