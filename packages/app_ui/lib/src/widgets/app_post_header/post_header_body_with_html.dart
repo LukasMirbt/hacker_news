@@ -20,14 +20,37 @@ class PostHeaderBodyWithHtml extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.lg),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.xlg,
+            ),
+            child: _Content(htmlText: htmlText),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Divider(height: 1),
+          const PostHeaderActionRow(),
+        ],
+      ),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({required this.htmlText});
+
+  final String htmlText;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
+      spacing: AppSpacing.lg,
       children: [
         const PostHeaderContentRow(),
-        const SizedBox(height: AppSpacing.lg),
-        const Divider(height: 1),
         PostHeaderHtml(htmlText: htmlText),
-        const SizedBox(height: AppSpacing.xs),
-        const PostHeaderActionRow(),
       ],
     );
   }

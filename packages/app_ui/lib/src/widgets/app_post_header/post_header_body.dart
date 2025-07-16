@@ -15,12 +15,20 @@ class PostHeaderBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      spacing: AppSpacing.xs,
-      children: [
-        PostHeaderContentRow(),
-        PostHeaderActionRow(),
-      ],
+    return const Padding(
+      padding: EdgeInsets.only(top: AppSpacing.lg),
+      child: Column(
+        spacing: AppSpacing.xs,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppSpacing.xlg,
+            ),
+            child: PostHeaderContentRow(),
+          ),
+          PostHeaderActionRow(),
+        ],
+      ),
     );
   }
 }
