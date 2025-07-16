@@ -7,21 +7,6 @@ class PostHeaderContentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(
-        left: AppSpacing.xlg,
-        right: AppSpacing.xlg,
-      ),
-      child: _TitleColumn(),
-    );
-  }
-}
-
-class _TitleColumn extends StatelessWidget {
-  const _TitleColumn();
-
-  @override
-  Widget build(BuildContext context) {
     final onPressed = context.select(
       (AppPostHeaderData data) => data.onPressed,
     );
