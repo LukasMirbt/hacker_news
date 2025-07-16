@@ -28,10 +28,7 @@ class AppPostHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider.value(
       value: data,
-      child: const Padding(
-        padding: EdgeInsets.only(top: AppSpacing.lg),
-        child: _Body(),
-      ),
+      child: const _Body(),
     );
   }
 }
