@@ -127,9 +127,10 @@ abstract class AppTheme {
   }
 
   TabBarThemeData get _tabBarTheme {
-    return const TabBarThemeData(
+    return TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
       tabAlignment: TabAlignment.start,
+      labelColor: colors.onSurface,
     );
   }
 
