@@ -1,7 +1,7 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:provider/provider.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class FeedBody extends StatelessWidget {
   const FeedBody({
@@ -25,6 +25,23 @@ class FeedBody extends StatelessWidget {
       (FeedBloc bloc) => bloc.state.feed.items,
     );
 
+    return InfiniteList(
+      padding: builder.padding(
+        hasReachedMax: hasReachedMax,
+      ),
+      isLoading: isLoading,
+      hasReachedMax: hasReachedMax,
+      itemCount: items.length,
+      onFetchData: () {
+        context.read<FeedBloc>().add(
+          const FeedBottomReached(),
+        );
+      },
+      itemBuilder: builder.itemBuilder,
+      separatorBuilder: builder.separatorBuilder,
+      loadingBuilder: builder.loadingBuilder,
+    );
+    /* 
     return AppPaginatedList(
       padding: builder.padding(
         hasReachedMax: hasReachedMax,
@@ -40,6 +57,6 @@ class FeedBody extends StatelessWidget {
           const FeedBottomReached(),
         );
       },
-    );
+    ); */
   }
 }

@@ -1,39 +1,47 @@
 import 'package:date_formatter/date_formatter.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 import 'package:thread_repository/thread_repository.dart';
+import 'package:vote_repository/vote_repository.dart';
 
-class ThreadCommentModel extends Equatable {
-  const ThreadCommentModel({
-    required this.repositoryItem,
-    DateFormatter? formatter,
-  }) : _formatter = formatter ?? const DateFormatter();
+part 'thread_comment_model.freezed.dart';
 
-  final ThreadCommentData repositoryItem;
-  final DateFormatter _formatter;
+@freezed
+abstract class ThreadCommentModel with _$ThreadCommentModel {
+  const factory ThreadCommentModel({
+    required ThreadComment comment,
+    @Default(true) bool isExpanded,
+    @Default(true) bool isParentExpanded,
+    @Default(DateFormatter()) DateFormatter formatter,
+  }) = _ThreadCommentModel;
 
-  String get htmlText => repositoryItem.htmlText;
-  String get user => repositoryItem.hnuser.id;
+  const ThreadCommentModel._();
 
-  // TODO: Handle in UI
-  bool get isNewUser => repositoryItem.hnuser.isNew;
+  String get id => comment.id;
+  int get indent => comment.indent;
+  bool get hasBeenUpvoted => comment.hasBeenUpvoted ?? false;
+  String get user => comment.hnuser.id;
+  String get htmlText => comment.htmlText;
 
-  int? get score => repositoryItem.score;
-  bool? get hasBeenUpvoted => repositoryItem.hasBeenUpvoted;
-  String get id => repositoryItem.id;
-  int get indent => repositoryItem.indent;
+  bool get isTopLevel => comment.indent == 0;
 
-  bool get isTopLevel => repositoryItem.indent == 0;
+  ThreadComment toRepository() => comment;
 
-  String get shareText =>
-      'Check out this comment: https://news.ycombinator.com/item?id=${repositoryItem.id}';
-
-  String age(DateFormatterLocalizations l10n) {
-    return _formatter.format(l10n, repositoryItem.age);
+  String age(
+    AppLocalizations appL10n,
+    DateFormatterLocalizations formatterL10n,
+  ) {
+    final formattedAge = formatter.format(formatterL10n, comment.age);
+    final ageString = appL10n.commentList_age(age: formattedAge);
+    return ageString;
   }
 
-  @override
-  List<Object> get props => [
-    repositoryItem,
-    _formatter,
-  ];
+  ThreadCommentModel vote(VoteType type) {
+    return copyWith(
+      comment: switch (type) {
+        VoteType.upvote => comment.upvote(),
+        VoteType.unvote => comment.unvote(),
+      },
+    );
+  }
 }

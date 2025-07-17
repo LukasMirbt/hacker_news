@@ -63,6 +63,7 @@ class AppPaginatedListState<T> extends State<AppPaginatedList<T>> {
   @override
   Widget build(BuildContext context) {
     return SuperListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
       controller: _controller,
       padding: widget.padding,
       itemCount: widget.hasReachedMax

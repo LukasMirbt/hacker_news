@@ -64,10 +64,6 @@ void main() async {
     logger: logger,
   );
 
-  if (kDebugMode) {
-    await HydratedBloc.storage.clear();
-  }
-
   final cookieJar = PersistCookieJar(
     storage: const SecureCookieStorage(),
   );

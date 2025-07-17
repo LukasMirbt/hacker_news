@@ -6,32 +6,46 @@ import 'package:hacker_client/thread_list/thread_list.dart';
 class ThreadListBuilder {
   const ThreadListBuilder();
 
-  Widget separatorBuilder(
-    BuildContext context,
-    int _,
-  ) {
-    return const Divider(height: 0);
+  EdgeInsets padding({required bool hasReachedMax}) {
+    return EdgeInsets.only(
+      bottom: hasReachedMax ? 24 : 0,
+    );
   }
 
   Widget itemBuilder(BuildContext context, int index) {
-    final items = context.read<ThreadListBloc>().state.list.items;
+    final state = context.read<ThreadListBloc>().state;
+    final items = state.list.visibleItems;
     final item = items[index];
+    final isLast = index == items.length - 1;
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (index == 0)
-          const SizedBox(
-            height: 1,
-            child: Divider(height: 0),
+        Padding(
+          padding: EdgeInsets.only(
+            left: item.indent * AppSpacing.md,
           ),
-        ThreadListItem(item: item),
+          child: ThreadListItem(item: item),
+        ),
+        if (isLast) ThreadListFooter(item),
       ],
     );
   }
 
+  Widget separatorBuilder(BuildContext context, int index) {
+    final state = context.read<ThreadListBloc>().state;
+    final items = state.list.visibleItems;
+    final comment = items[index];
+    final nextComment = items[index + 1];
+
+    if (nextComment.isTopLevel) return ThreadTopLevelDivider(comment);
+    if (!comment.isExpanded) return const SizedBox.shrink();
+
+    return const SizedBox(height: AppSpacing.sm);
+  }
+
   Widget loadingBuilder(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(AppSpacing.lg),
       child: PaginationSpinner(),
     );
   }

@@ -31,7 +31,7 @@ class PaginatedThreadList extends Equatable {
 
   final String? _next;
   final Uri initialUri;
-  final List<ThreadCommentData> items;
+  final List<ThreadComment> items;
   final bool isInitial;
 
   bool get isEmpty => !isInitial && items.isEmpty;
@@ -52,12 +52,12 @@ class PaginatedThreadList extends Equatable {
       nextUrl: nextPage.moreLink,
       items: [
         ...items,
-        ...nextPage.comments,
+        for (final item in nextPage.comments) ThreadComment.from(item),
       ],
     );
   }
 
-  PaginatedThreadList updateItem(ThreadCommentData updatedItem) {
+  PaginatedThreadList updateItem(ThreadComment updatedItem) {
     return PaginatedThreadList(
       initialUri: initialUri,
       nextUrl: _next,

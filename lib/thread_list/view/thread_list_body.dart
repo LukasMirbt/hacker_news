@@ -21,25 +21,32 @@ class ThreadListBody extends StatelessWidget {
       (ThreadListBloc bloc) => bloc.state.fetchStatus.isLoading,
     );
 
-    final items = context.select(
-      (ThreadListBloc bloc) => bloc.state.list.items,
+    final visibleItems = context.select(
+      (ThreadListBloc bloc) => bloc.state.list.visibleItems,
     );
 
-    return AppPaginatedList(
-      padding: EdgeInsets.only(
-        bottom: hasReachedMax ? 24 : 0,
-      ),
-      hasReachedMax: hasReachedMax,
-      isLoading: isLoading,
-      items: items,
-      itemBuilder: builder.itemBuilder,
-      separatorBuilder: builder.separatorBuilder,
-      loadingBuilder: builder.loadingBuilder,
-      onBottomReached: () {
-        context.read<ThreadListBloc>().add(
-          const ThreadListBottomReached(),
-        );
-      },
+    return Column(
+      children: [
+        const Divider(height: 1),
+        Expanded(
+          child: AppPaginatedList(
+            padding: builder.padding(
+              hasReachedMax: hasReachedMax,
+            ),
+            hasReachedMax: hasReachedMax,
+            isLoading: isLoading,
+            items: visibleItems,
+            itemBuilder: builder.itemBuilder,
+            separatorBuilder: builder.separatorBuilder,
+            loadingBuilder: builder.loadingBuilder,
+            onBottomReached: () {
+              context.read<ThreadListBloc>().add(
+                const ThreadListBottomReached(),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

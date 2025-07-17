@@ -111,6 +111,7 @@ dependencies:
   url_launcher: ^6.3.1
   version_repository:
     path: packages/version_repository
+  very_good_infinite_list: ^0.9.0
   visited_post_repository:
     path: packages/visited_post_repository
   vote_api:

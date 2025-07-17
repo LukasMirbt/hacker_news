@@ -9,7 +9,7 @@ class ThreadListPlaceholder extends ThreadListModel {
         items: List.filled(
           10,
           ThreadCommentModel(
-            repositoryItem: ThreadCommentDataPlaceholder(
+            comment: ThreadCommentPlaceholder(
               age: DateTime(1),
               score: 10,
               hnuser: const HnuserPlaceholder(),
