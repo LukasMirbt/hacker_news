@@ -20,20 +20,21 @@ class FeedItemSubtitle extends StatelessWidget {
     );
 
     final textTheme = TextTheme.of(context);
+    final l10n = AppUiLocalizations.of(context);
 
-    return DefaultTextStyle.merge(
+    return Text.rich(
       style: textTheme.labelMedium,
-      child: Row(
+      TextSpan(
         children: [
           if (urlHost != null) ...[
-            Text(urlHost),
-            const TextSeparator(),
+            TextSpan(text: urlHost),
+            MiddleDotSpan(l10n: l10n),
           ],
           if (user != null) ...[
-            Text(user),
-            const TextSeparator(),
+            TextSpan(text: user),
+            MiddleDotSpan(l10n: l10n),
           ],
-          Text(age),
+          TextSpan(text: age),
         ],
       ),
     );
