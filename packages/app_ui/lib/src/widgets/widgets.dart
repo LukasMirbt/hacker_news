@@ -8,7 +8,6 @@ export 'app_feed_item_vote_button/app_feed_item_vote_button.dart';
 export 'app_filled_button.dart';
 export 'app_html_widget/app_html_widget.dart';
 export 'app_outlined_button.dart';
-export 'app_paginated_list.dart';
 export 'app_post_header/app_post_header.dart';
 export 'app_post_header_comment_button/app_post_header_comment_button.dart';
 export 'app_post_header_vote_button/app_post_header_vote_button.dart';
