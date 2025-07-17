@@ -41,7 +41,7 @@ class DarkColors extends AppColors {
   Color get surface => const Color(0xFF121212);
 
   @override
-  Color get onSurface => const Color.fromRGBO(255, 255, 255, 1);
+  Color get onSurface => const Color(0xFFE0E0E0);
 
   @override
   Color get onSurfaceVariant => const Color(0xFF949494);
