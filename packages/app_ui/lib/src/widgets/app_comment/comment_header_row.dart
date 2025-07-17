@@ -40,8 +40,9 @@ class _Row extends StatelessWidget {
         child: Row(
           children: [
             CommentVoteButton(),
-            CommentUserAndAge(),
-            Spacer(),
+            Expanded(
+              child: CommentUserAndAge(),
+            ),
             CommentMoreButton(),
           ],
         ),

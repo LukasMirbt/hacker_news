@@ -10,7 +10,9 @@ import '../../helpers/pump_app.dart';
 
 class _MockAppFeedItemData extends Mock implements AppFeedItemData {}
 
-void main() {
+void main() async {
+  final l10n = await AppUiLocalizations.delegate.load(Locale('en'));
+
   const urlHost = 'urlHost';
   const user = 'user';
   const age = 'age';
@@ -35,39 +37,87 @@ void main() {
       when(() => data.urlHost).thenReturn(urlHost);
       when(() => data.user).thenReturn(user);
       await tester.pumpApp(buildSubject());
-      expect(find.text(urlHost), findsOneWidget);
-      expect(find.text(user), findsOneWidget);
-      expect(find.text(age), findsOneWidget);
-      expect(find.byType(TextSeparator), findsNWidgets(2));
+      expect(
+        find.textRange.ofSubstring(urlHost),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(user),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(l10n.separator),
+        findsNWidgets(2),
+      );
     });
 
     testWidgets('renders urlHost, age and one separator '
         'when user is null', (tester) async {
       when(() => data.urlHost).thenReturn(urlHost);
       await tester.pumpApp(buildSubject());
-      expect(find.text(urlHost), findsOneWidget);
-      expect(find.text(user), findsNothing);
-      expect(find.text(age), findsOneWidget);
-      expect(find.byType(TextSeparator), findsOneWidget);
+      expect(
+        find.textRange.ofSubstring(urlHost),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(user),
+        findsNothing,
+      );
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(l10n.separator),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders user, age and one separator '
         'when urlHost is null', (tester) async {
       when(() => data.user).thenReturn(user);
       await tester.pumpApp(buildSubject());
-      expect(find.text(urlHost), findsNothing);
-      expect(find.text(user), findsOneWidget);
-      expect(find.text(age), findsOneWidget);
-      expect(find.byType(TextSeparator), findsOneWidget);
+      expect(
+        find.textRange.ofSubstring(urlHost),
+        findsNothing,
+      );
+      expect(
+        find.textRange.ofSubstring(user),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(l10n.separator),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders age and no separators '
         'when urlHost and user are null', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(urlHost), findsNothing);
-      expect(find.text(user), findsNothing);
-      expect(find.text(age), findsOneWidget);
-      expect(find.byType(TextSeparator), findsNothing);
+      expect(
+        find.textRange.ofSubstring(urlHost),
+        findsNothing,
+      );
+      expect(
+        find.textRange.ofSubstring(user),
+        findsNothing,
+      );
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
+      expect(
+        find.textRange.ofSubstring(l10n.separator),
+        findsNothing,
+      );
     });
   });
 }
