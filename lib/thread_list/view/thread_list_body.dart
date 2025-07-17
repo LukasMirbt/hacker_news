@@ -1,7 +1,7 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/thread_list/thread_list.dart';
 import 'package:provider/provider.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class ThreadListBody extends StatelessWidget {
   const ThreadListBody({
@@ -29,17 +29,17 @@ class ThreadListBody extends StatelessWidget {
       children: [
         const Divider(height: 1),
         Expanded(
-          child: AppPaginatedList(
+          child: InfiniteList(
             padding: builder.padding(
               hasReachedMax: hasReachedMax,
             ),
             hasReachedMax: hasReachedMax,
             isLoading: isLoading,
-            items: visibleItems,
+            itemCount: visibleItems.length,
             itemBuilder: builder.itemBuilder,
             separatorBuilder: builder.separatorBuilder,
             loadingBuilder: builder.loadingBuilder,
-            onBottomReached: () {
+            onFetchData: () {
               context.read<ThreadListBloc>().add(
                 const ThreadListBottomReached(),
               );

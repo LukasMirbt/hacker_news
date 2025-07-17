@@ -29,34 +29,17 @@ class FeedBody extends StatelessWidget {
       padding: builder.padding(
         hasReachedMax: hasReachedMax,
       ),
-      isLoading: isLoading,
       hasReachedMax: hasReachedMax,
+      isLoading: isLoading,
       itemCount: items.length,
+      itemBuilder: builder.itemBuilder,
+      separatorBuilder: builder.separatorBuilder,
+      loadingBuilder: builder.loadingBuilder,
       onFetchData: () {
         context.read<FeedBloc>().add(
           const FeedBottomReached(),
         );
       },
-      itemBuilder: builder.itemBuilder,
-      separatorBuilder: builder.separatorBuilder,
-      loadingBuilder: builder.loadingBuilder,
     );
-    /* 
-    return AppPaginatedList(
-      padding: builder.padding(
-        hasReachedMax: hasReachedMax,
-      ),
-      hasReachedMax: hasReachedMax,
-      isLoading: isLoading,
-      items: items,
-      itemBuilder: builder.itemBuilder,
-      separatorBuilder: builder.separatorBuilder,
-      loadingBuilder: builder.loadingBuilder,
-      onBottomReached: () {
-        context.read<FeedBloc>().add(
-          const FeedBottomReached(),
-        );
-      },
-    ); */
   }
 }

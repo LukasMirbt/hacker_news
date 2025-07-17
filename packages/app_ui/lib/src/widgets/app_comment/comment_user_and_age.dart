@@ -18,29 +18,32 @@ class CommentUserAndAge extends StatelessWidget {
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
     final extendedTextTheme = ExtendedTextTheme.of(context);
-
-    final prominentStyle = extendedTextTheme.labelMediumProminent?.copyWith(
-      color: colorScheme.onSurface,
-    );
+    final l10n = AppUiLocalizations.of(context);
 
     final regularStyle = textTheme.labelMedium?.copyWith(
       color: colorScheme.onSurfaceVariant,
     );
 
-    return Row(
-      children: [
-        Text(
-          user,
-          style: prominentStyle,
-        ),
-        TextSeparator(
-          style: regularStyle,
-        ),
-        Text(
-          age,
-          style: regularStyle,
-        ),
-      ],
+    final prominentStyle = extendedTextTheme.labelMediumProminent?.copyWith(
+      color: colorScheme.onSurface,
+    );
+
+    return Text.rich(
+      style: regularStyle,
+      TextSpan(
+        children: [
+          TextSpan(
+            text: user,
+            style: prominentStyle,
+          ),
+          MiddleDotSpan(
+            l10n: l10n,
+          ),
+          TextSpan(
+            text: age,
+          ),
+        ],
+      ),
     );
   }
 }

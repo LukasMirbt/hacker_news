@@ -66,7 +66,7 @@ class ThreadApi {
     final page = _parser.parse(html);
     return page; */
 
-    await Future.delayed(const Duration(milliseconds: 5000));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     const pageSize = 30;
 

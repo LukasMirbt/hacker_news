@@ -31,7 +31,7 @@ abstract class ThreadListState with _$ThreadListState {
 
   factory ThreadListState.initial() {
     return ThreadListState(
-      list: ThreadListPlaceholder(),
+      list: ThreadListModelPlaceholder(),
     );
   }
 }

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 import '../../app/pump_app.dart';
 
@@ -75,48 +75,52 @@ void main() {
       );
     }
 
-    group(AppPaginatedList<FeedItemModel>, () {
-      AppPaginatedList<FeedItemModel> findAppPaginatedList(
+    group(InfiniteList, () {
+      InfiniteList findWidget(
         WidgetTester tester,
       ) {
-        return tester.widget<AppPaginatedList<FeedItemModel>>(
-          find.byType(AppPaginatedList<FeedItemModel>),
+        return tester.widget<InfiniteList>(
+          find.byType(InfiniteList),
         );
       }
 
       testWidgets('has correct padding', (tester) async {
         await tester.pumpApp(buildSubject());
-        final appPaginatedList = findAppPaginatedList(tester);
-        expect(appPaginatedList.padding, padding);
+        final widget = findWidget(tester);
+        expect(widget.padding, padding);
       });
 
       testWidgets('has correct separatorBuilder', (tester) async {
         await tester.pumpApp(buildSubject());
-        final appPaginatedList = findAppPaginatedList(tester);
-        final widget = appPaginatedList.separatorBuilder(context, index);
-        expect(widget, separator);
+        final widget = findWidget(tester);
+        expect(
+          widget.separatorBuilder?.call(context, index),
+          separator,
+        );
       });
 
       testWidgets('has correct itemBuilder', (tester) async {
         await tester.pumpApp(buildSubject());
-        final appPaginatedList = findAppPaginatedList(tester);
-        final widget = appPaginatedList.itemBuilder(context, index);
-        expect(widget, item);
+        final widget = findWidget(tester);
+        expect(
+          widget.itemBuilder(context, index),
+          item,
+        );
       });
 
       testWidgets('has correct loadingBuilder', (tester) async {
         await tester.pumpApp(buildSubject());
-        final appPaginatedList = findAppPaginatedList(tester);
-        final widget = appPaginatedList.loadingBuilder(context);
-        expect(widget, loadingWidget);
+        final widget = findWidget(tester);
+        expect(
+          widget.loadingBuilder?.call(context),
+          loadingWidget,
+        );
       });
 
       testWidgets('adds $FeedBottomReached onBottomReached', (tester) async {
         await tester.pumpApp(buildSubject());
-        final appPaginatedList = tester.widget<AppPaginatedList<FeedItemModel>>(
-          find.byType(AppPaginatedList<FeedItemModel>),
-        );
-        appPaginatedList.onBottomReached();
+        final widget = findWidget(tester);
+        widget.onFetchData();
         verify(() => bloc.add(FeedBottomReached())).called(1);
       });
     });

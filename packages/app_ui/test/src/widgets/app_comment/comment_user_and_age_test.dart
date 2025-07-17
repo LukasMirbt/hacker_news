@@ -32,12 +32,18 @@ void main() {
 
     testWidgets('renders user', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(user), findsOneWidget);
+      expect(
+        find.textRange.ofSubstring(user),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders age', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(age), findsOneWidget);
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
     });
   });
 }
