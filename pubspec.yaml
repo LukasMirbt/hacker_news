@@ -14,7 +14,7 @@ workspace:
   - packages/authentication_api
   - packages/authentication_parser
   - packages/authentication_repository
-  - packages/collapsible_list
+  - packages/collapse_handler
   - packages/date_formatter
   - packages/feed_api
   - packages/feed_parser
@@ -53,8 +53,8 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   clock: ^1.1.2
-  collapsible_list:
-    path: packages/collapsible_list
+  collapse_handler:
+    path: packages/collapse_handler
   collection: ^1.19.1
   date_formatter:
     path: packages/date_formatter

@@ -1,4 +1,4 @@
-import 'package:collapsible_list/collapsible_list.dart';
+import 'package:collapse_handler/collapse_handler.dart';
 
 class CollapseHandler<T extends Collapsible<T>> {
   const CollapseHandler();

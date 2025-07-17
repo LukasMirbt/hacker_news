@@ -1,4 +1,4 @@
-import 'package:collapsible_list/collapsible_list.dart';
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -51,6 +51,7 @@ class ThreadListModel extends Equatable {
       for (final item in items)
         if (item.id == updatedItem.id) updatedItem else item,
     ];
+
     return ThreadListModel(
       repositoryList: repositoryList,
       items: updatedList,

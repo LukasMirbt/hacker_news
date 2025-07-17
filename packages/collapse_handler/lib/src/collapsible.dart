@@ -1,6 +1,4 @@
-abstract class Collapsible<T> {
-  const Collapsible();
-
+abstract interface class Collapsible<T> {
   String get id;
   int get indent;
   bool get isExpanded;

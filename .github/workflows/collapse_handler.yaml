@@ -1,0 +1,20 @@
+name: collapse_handler
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/collapse_handler/**"
+      - ".github/workflows/collapse_handler.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/collapse_handler

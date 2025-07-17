@@ -1,12 +1,12 @@
-import 'package:collapsible_list/collapsible_list.dart';
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:thread_repository/thread_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class ThreadCommentModel extends Collapsible<ThreadCommentModel>
-    with EquatableMixin {
+class ThreadCommentModel extends Equatable
+    implements Collapsible<ThreadCommentModel> {
   const ThreadCommentModel({
     required this.comment,
     this.isExpanded = true,

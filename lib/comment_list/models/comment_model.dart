@@ -1,11 +1,11 @@
-import 'package:collapsible_list/collapsible_list.dart';
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class CommentModel extends Collapsible<CommentModel> with EquatableMixin {
+class CommentModel extends Equatable implements Collapsible<CommentModel> {
   const CommentModel({
     required this.comment,
     this.isExpanded = true,

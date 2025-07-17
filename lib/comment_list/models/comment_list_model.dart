@@ -1,4 +1,4 @@
-import 'package:collapsible_list/collapsible_list.dart';
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
