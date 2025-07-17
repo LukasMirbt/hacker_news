@@ -40,10 +40,29 @@ class _Body extends StatelessWidget {
       padding: EdgeInsets.only(top: AppSpacing.lg),
       child: Column(
         children: [
-          FeedItemContentRow(),
+          _ContentRow(),
           FeedItemActionRow(),
         ],
       ),
+    );
+  }
+}
+
+class _ContentRow extends StatelessWidget {
+  const _ContentRow();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
+    final theme = Theme.of(context);
+
+    return Theme(
+      data: theme.copyWith(
+        textTheme: theme.textTheme.apply(
+          bodyColor: colorScheme.onSurfaceVariant,
+        ),
+      ),
+      child: const FeedItemContentRow(),
     );
   }
 }
