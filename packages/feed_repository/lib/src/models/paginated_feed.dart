@@ -33,13 +33,13 @@ class PaginatedFeed extends Equatable {
   bool get isEmpty => !isInitial && items.isEmpty;
   bool get hasReachedMax => !isInitial && _next == null;
 
-  String get nextUrl {
-    if (isInitial) return type.endpoint;
+  FeedPageUrl get nextUrl {
+    if (isInitial) return InitialPageUrl(type);
 
     final next = _next;
     if (next == null) throw const ReachedMaxFailure();
 
-    return next;
+    return NextPageUrl(url: next);
   }
 
   PaginatedFeed extendWith(FeedPageData nextPage) {

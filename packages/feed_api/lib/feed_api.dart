@@ -4,3 +4,4 @@ library;
 export 'package:feed_parser/feed_parser.dart';
 
 export 'src/feed_api.dart';
+export 'src/models/models.dart';

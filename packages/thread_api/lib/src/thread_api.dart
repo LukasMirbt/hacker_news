@@ -3,6 +3,51 @@ import 'dart:math';
 import 'package:app_client/app_client.dart';
 import 'package:thread_api/thread_api.dart';
 
+class ThreadApi {
+  ThreadApi({
+    required AppClient appClient,
+    ThreadParser? threadParser,
+  }) : _client = appClient,
+       _parser = threadParser ?? const ThreadParser();
+
+  final AppClient _client;
+  final ThreadParser _parser;
+
+  Future<ThreadListPageData> fetchFeedPage(
+    ThreadFeedPageUrl pageUrl,
+  ) async {
+    final response = await _client.http.get<String>(pageUrl.url);
+    final html = response.data!;
+    final page = _parser.parse(html);
+    return page;
+
+    /*   await Future.delayed(const Duration(milliseconds: 1000));
+
+    const pageSize = 30;
+
+    final pageNumber = int.tryParse(url.split('/').last) ?? 1;
+
+    final startIndex = (pageNumber - 1) * pageSize;
+    final int endIndex = min(
+      startIndex + pageSize,
+      data.length,
+    );
+
+    final commentsForPage = (startIndex < data.length)
+        ? data.sublist(startIndex, endIndex)
+        : <ThreadCommentData>[];
+
+    final moreLink = (endIndex < data.length)
+        ? 'https://fake.api/page/${pageNumber + 1}'
+        : null;
+
+    return ThreadListPageDataPlaceholder(
+      comments: commentsForPage,
+      moreLink: moreLink,
+    ); */
+  }
+}
+
 final _random = Random();
 
 // A list of predefined sample texts to make the data more realistic.
@@ -49,46 +94,3 @@ final data = List.generate(1000, (index) {
     htmlText: randomHtmlText,
   );
 });
-
-class ThreadApi {
-  ThreadApi({
-    required AppClient appClient,
-    ThreadParser? threadParser,
-  }) : _client = appClient,
-       _parser = threadParser ?? const ThreadParser();
-
-  final AppClient _client;
-  final ThreadParser _parser;
-
-  Future<ThreadListPageData> fetchThreadListPage(String url) async {
-    /*     final response = await _client.http.get<String>(url);
-    final html = response.data!;
-    final page = _parser.parse(html);
-    return page; */
-
-    await Future.delayed(const Duration(milliseconds: 1000));
-
-    const pageSize = 30;
-
-    final pageNumber = int.tryParse(url.split('/').last) ?? 1;
-
-    final startIndex = (pageNumber - 1) * pageSize;
-    final int endIndex = min(
-      startIndex + pageSize,
-      data.length,
-    );
-
-    final commentsForPage = (startIndex < data.length)
-        ? data.sublist(startIndex, endIndex)
-        : <ThreadCommentData>[];
-
-    final moreLink = (endIndex < data.length)
-        ? 'https://fake.api/page/${pageNumber + 1}'
-        : null;
-
-    return ThreadListPageDataPlaceholder(
-      comments: commentsForPage,
-      moreLink: moreLink,
-    );
-  }
-}

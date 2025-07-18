@@ -11,8 +11,8 @@ class FeedApi {
   final AppClient _client;
   final FeedParser _parser;
 
-  Future<FeedPageData> fetchFeedPage(String url) async {
-    final response = await _client.http.get<String>(url);
+  Future<FeedPageData> fetchFeedPage(FeedPageUrl pageUrl) async {
+    final response = await _client.http.get<String>(pageUrl.url);
     final html = response.data!;
     final page = _parser.parse(html);
     return page;

@@ -2,26 +2,31 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 // ignore_for_file: avoid_redundant_argument_values
 
-import 'package:feed_repository/feed_repository.dart';
+import 'package:authentication_api/authentication_api.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:thread_repository/thread_repository.dart';
 
 void main() {
-  const type = FeedType.top;
+  final user = UserPlaceholder();
 
   final items = [
-    FeedItemPlaceholder(),
+    ThreadFeedItemPlaceholder(),
   ];
 
+  final initialUri = Uri.parse('https://www.example.com/');
   const isInitial = false;
   const next = 'next';
 
-  group(PaginatedFeed, () {
+  group(PaginatedThreadFeed, () {
     group('initial', () {
-      test('returns $PaginatedFeed', () {
+      test('returns $PaginatedThreadFeed', () {
         expect(
-          PaginatedFeed.initial(type),
-          PaginatedFeed(
-            type: type,
+          PaginatedThreadFeed.initial(user),
+          PaginatedThreadFeed(
+            initialUri: Uri(
+              path: 'threads',
+              queryParameters: {'id': user.id},
+            ),
             next: null,
             isInitial: true,
             items: [],
@@ -32,8 +37,8 @@ void main() {
 
     group('isEmpty', () {
       test('returns true when !isInitial and items.isEmpty', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           next: next,
           isInitial: false,
           items: [],
@@ -42,8 +47,8 @@ void main() {
       });
 
       test('returns false when isInitial', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           next: next,
           isInitial: true,
           items: [],
@@ -52,8 +57,8 @@ void main() {
       });
 
       test('returns false when !items.isEmpty', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           isInitial: isInitial,
           next: next,
           items: items,
@@ -64,8 +69,8 @@ void main() {
 
     group('hasReachedMax', () {
       test('returns true when !isInitial and next is null', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           isInitial: false,
           next: null,
@@ -74,8 +79,8 @@ void main() {
       });
 
       test('returns false when isInitial', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           next: next,
           isInitial: true,
@@ -84,8 +89,8 @@ void main() {
       });
 
       test('returns false when next is not null', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           isInitial: isInitial,
           next: next,
@@ -94,26 +99,29 @@ void main() {
       });
     });
 
-    group('nextUrl', () {
-      test('returns type.endpoint when isInitial', () {
-        final feed = PaginatedFeed(
-          type: type,
+    group('next', () {
+      test('returns initialUri when isInitial', () {
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           next: next,
           isInitial: true,
         );
-        expect(feed.nextUrl, type.endpoint);
+        expect(
+          feed.next,
+          initialUri.toString(),
+        );
       });
 
       test('throws $ReachedMaxFailure when !isInitial and next is null', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           isInitial: false,
           next: null,
         );
         expect(
-          () => feed.nextUrl,
+          () => feed.next,
           throwsA(
             ReachedMaxFailure(),
           ),
@@ -121,35 +129,35 @@ void main() {
       });
 
       test('returns next when !isInitial and next is non-null', () {
-        final feed = PaginatedFeed(
-          type: type,
+        final feed = PaginatedThreadFeed(
+          initialUri: initialUri,
           items: items,
           isInitial: isInitial,
           next: next,
         );
-        expect(feed.nextUrl, next);
+        expect(feed.next, next);
       });
     });
 
     group('extendWith', () {
-      final feed = PaginatedFeed.initial(type);
+      final feed = PaginatedThreadFeed.initial(user);
 
-      final nextPage = FeedPageDataPlaceholder(
+      final nextPage = ThreadListPageDataPlaceholder(
         moreLink: 'moreLink',
-        items: [
-          FeedItemDataPlaceholder(),
+        comments: [
+          ThreadCommentDataPlaceholder(),
         ],
       );
 
       test('returns extended feed', () {
         expect(
           feed.extendWith(nextPage),
-          PaginatedFeed(
-            type: feed.type,
+          PaginatedThreadFeed(
+            initialUri: feed.initialUri,
             next: nextPage.moreLink,
             items: [
               ...feed.items,
-              for (final item in nextPage.items) FeedItem.from(item),
+              for (final item in nextPage.comments) ThreadFeedItem.from(item),
             ],
           ),
         );
@@ -159,25 +167,25 @@ void main() {
     group('update', () {
       const idToUpdate = 'idToUpdate';
 
-      final firstItem = FeedItemPlaceholder();
-      final secondItem = FeedItemPlaceholder(id: idToUpdate);
+      final firstItem = ThreadFeedItemPlaceholder();
+      final secondItem = ThreadFeedItemPlaceholder(id: idToUpdate);
 
       final updatedItem = secondItem.copyWith(
-        title: 'Updated Title',
+        htmlText: 'updatedHtmlText',
       );
 
-      final feed = PaginatedFeed(
-        type: type,
+      final feed = PaginatedThreadFeed(
+        initialUri: initialUri,
         next: next,
         isInitial: isInitial,
         items: [firstItem, secondItem],
       );
 
-      test('returns $PaginatedFeed with updated item', () {
+      test('returns $PaginatedThreadFeed with updated item', () {
         expect(
           feed.update(updatedItem),
-          PaginatedFeed(
-            type: type,
+          PaginatedThreadFeed(
+            initialUri: initialUri,
             next: next,
             isInitial: isInitial,
             items: [firstItem, updatedItem],

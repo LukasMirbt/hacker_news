@@ -1,15 +1,16 @@
+import 'package:authentication_api/authentication_api.dart';
 import 'package:thread_repository/thread_repository.dart';
 
 class PaginatedThreadFeedPlaceholder extends PaginatedThreadFeed {
-  PaginatedThreadFeedPlaceholder({
-    Uri? initialUri,
+  const PaginatedThreadFeedPlaceholder({
+    User? user,
     List<ThreadFeedItem>? items,
     bool? isInitial,
-    String? nextUrl,
+    String? next,
   }) : super(
-         initialUri: initialUri ?? Uri.parse('https://example.com'),
+         user: user ?? const UserPlaceholder(),
          items: items ?? const [],
          isInitial: isInitial ?? false,
-         nextUrl: nextUrl ?? 'nextUrl',
+         next: next ?? 'next',
        );
 }

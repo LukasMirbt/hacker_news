@@ -12,7 +12,7 @@ class ThreadRepository {
   Future<PaginatedThreadFeed> fetchMore(
     PaginatedThreadFeed paginatedList,
   ) async {
-    final page = await _api.fetchThreadListPage(paginatedList.nextUrl);
+    final page = await _api.fetchFeedPage(paginatedList.nextUrl);
     final extendedFeed = paginatedList.extendWith(page);
     return extendedFeed;
   }

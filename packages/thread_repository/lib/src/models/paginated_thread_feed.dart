@@ -11,45 +11,42 @@ class ReachedMaxFailure with EquatableMixin implements Exception {
 
 class PaginatedThreadFeed extends Equatable {
   const PaginatedThreadFeed({
-    required this.initialUri,
+    required this.user,
     required this.items,
-    required String? nextUrl,
+    required String? next,
     this.isInitial = false,
-  }) : _next = nextUrl;
+  }) : _next = next;
 
   factory PaginatedThreadFeed.initial(User user) {
     return PaginatedThreadFeed(
-      initialUri: Uri(
-        path: 'threads',
-        queryParameters: {'id': user.id},
-      ),
-      nextUrl: null,
+      user: user,
+      next: null,
       isInitial: true,
       items: const [],
     );
   }
 
   final String? _next;
-  final Uri initialUri;
+  final User user;
   final List<ThreadFeedItem> items;
   final bool isInitial;
 
   bool get isEmpty => !isInitial && items.isEmpty;
   bool get hasReachedMax => !isInitial && _next == null;
 
-  String get nextUrl {
-    if (isInitial) return initialUri.toString();
+  ThreadFeedPageUrl get nextUrl {
+    if (isInitial) return InitialPageUrl(id: user.id);
 
     final next = _next;
     if (next == null) throw const ReachedMaxFailure();
 
-    return next;
+    return NextPageUrl(url: next);
   }
 
   PaginatedThreadFeed extendWith(ThreadListPageData nextPage) {
     return PaginatedThreadFeed(
-      initialUri: initialUri,
-      nextUrl: nextPage.moreLink,
+      user: user,
+      next: nextPage.moreLink,
       items: [
         ...items,
         for (final item in nextPage.comments) ThreadFeedItem.from(item),
@@ -57,22 +54,10 @@ class PaginatedThreadFeed extends Equatable {
     );
   }
 
-  PaginatedThreadFeed update(ThreadFeedItem updatedItem) {
-    return PaginatedThreadFeed(
-      initialUri: initialUri,
-      nextUrl: _next,
-      isInitial: isInitial,
-      items: [
-        for (final item in items)
-          if (item.id == updatedItem.id) updatedItem else item,
-      ],
-    );
-  }
-
   @override
   List<Object?> get props => [
     _next,
-    initialUri,
+    user,
     items,
     isInitial,
   ];
