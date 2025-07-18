@@ -56,64 +56,103 @@ void main() async {
       );
     }
 
-    testWidgets('renders $UserAvatar when isAuthenticated', (tester) async {
-      when(() => authenticationState.status).thenReturn(
-        AuthenticationStatus.authenticated,
-      );
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(UserAvatar), findsOneWidget);
-    });
+    group(AppBar, () {
+      AppBar findWidget(WidgetTester tester) {
+        return tester.widget<AppBar>(
+          find.byType(AppBar),
+        );
+      }
 
-    testWidgets('does not render $UserAvatar '
-        'when !isAuthenticated', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(UserAvatar), findsNothing);
-    });
+      testWidgets('leading is $UserAvatar '
+          'when isAuthenticated', (tester) async {
+        when(() => authenticationState.status).thenReturn(
+          AuthenticationStatus.authenticated,
+        );
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.leading, isA<UserAvatar>());
+      });
 
-    testWidgets('centerTitle is true', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = tester.widget<AppBar>(
-        find.byType(AppBar),
-      );
-      expect(widget.centerTitle, true);
-    });
+      testWidgets('leading is null when !isAuthenticated', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.leading, null);
+      });
 
-    testWidgets('renders $Logo when currentIndex is 0', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(Logo), findsOneWidget);
-    });
+      testWidgets('centerTitle is true', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.centerTitle, true);
+      });
 
-    testWidgets('renders correct title when currentIndex is 1', (tester) async {
-      when(() => shell.currentIndex).thenReturn(1);
-      await tester.pumpApp(buildSubject());
-      expect(
-        find.text(l10n.appShell_threads),
-        findsOneWidget,
-      );
-    });
+      testWidgets('has correct title when currentIndex is 1', (tester) async {
+        when(() => shell.currentIndex).thenReturn(1);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.title,
+          isA<Text>().having(
+            (text) => text.data,
+            'text',
+            l10n.appShell_threads,
+          ),
+        );
+      });
 
-    testWidgets('renders correct title when currentIndex is 2', (tester) async {
-      when(() => shell.currentIndex).thenReturn(2);
-      await tester.pumpApp(buildSubject());
-      expect(
-        find.text(l10n.appShell_settings),
-        findsOneWidget,
-      );
-    });
+      testWidgets('has correct title when currentIndex is 2', (tester) async {
+        when(() => shell.currentIndex).thenReturn(2);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.title,
+          isA<Text>().having(
+            (text) => text.data,
+            'text',
+            l10n.appShell_settings,
+          ),
+        );
+      });
 
-    testWidgets('renders $LoginButton when !isAuthenticated', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginButton), findsOneWidget);
-    });
+      testWidgets('has correct title when currentIndex '
+          'is not 1 or 2', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.title, isA<Logo>());
+      });
 
-    testWidgets('does not render $LoginButton when isAuthenticated', (
-      tester,
-    ) async {
-      when(() => authenticationState.status).thenReturn(
-        AuthenticationStatus.authenticated,
-      );
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginButton), findsNothing);
+      testWidgets('shape is null when isHome', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.shape, null);
+      });
+
+      testWidgets('shape is $Border when !isHome', (tester) async {
+        when(() => shell.currentIndex).thenReturn(1);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.shape, isA<Border>());
+      });
+
+      testWidgets('actions contains $LoginButton '
+          'when !isAuthenticated', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.actions,
+          contains(
+            isA<LoginButton>(),
+          ),
+        );
+      });
+
+      testWidgets('actions is empty when isAuthenticated', (tester) async {
+        when(() => authenticationState.status).thenReturn(
+          AuthenticationStatus.authenticated,
+        );
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.actions, <Widget>[]);
+      });
     });
   });
 }
