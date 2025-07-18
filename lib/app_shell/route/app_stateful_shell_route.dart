@@ -14,7 +14,9 @@ import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/post_options/post_options.dart';
 import 'package:hacker_client/reply_form/reply_form.dart';
 import 'package:hacker_client/settings/settings.dart';
+import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
+import 'package:thread_repository/thread_repository.dart';
 
 part '../../comment_form/route/comment_form_route.dart';
 part '../../comment_options/route/comment_options_route.dart';
@@ -26,6 +28,7 @@ part '../../post/route/post_route.dart';
 part '../../post_options/route/post_options_route.dart';
 part '../../reply_form/route/reply_form_route.dart';
 part '../../settings/route/settings_route.dart';
+part '../../thread_feed/route/thread_feed_route.dart';
 part 'app_stateful_shell_route.g.dart';
 
 @AppStatefulShellRoute.config
@@ -35,6 +38,7 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
   static const config = TypedStatefulShellRoute<AppStatefulShellRoute>(
     branches: [
       HomeBranch.config,
+      ThreadFeedBranch.config,
       SettingsBranch.config,
     ],
   );

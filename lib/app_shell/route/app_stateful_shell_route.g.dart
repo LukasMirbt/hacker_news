@@ -65,6 +65,15 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     StatefulShellBranchData.$branch(
       routes: [
         GoRouteData.$route(
+          path: '/threads',
+
+          factory: _$ThreadFeedRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
           path: '/settings',
 
           factory: _$SettingsRoute._fromState,
@@ -259,6 +268,27 @@ mixin _$CommentOptionsRoute on GoRouteData {
   String get location => GoRouteData.$location(
     '/home/${Uri.encodeComponent(_self.postId)}/${Uri.encodeComponent(_self.commentId)}/options',
   );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$ThreadFeedRoute on GoRouteData {
+  static ThreadFeedRoute _fromState(GoRouterState state) =>
+      const ThreadFeedRoute();
+
+  @override
+  String get location => GoRouteData.$location('/threads');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -1,8 +1,10 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/authentication/authentication.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 
 class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ShellAppBar({super.key});
@@ -16,10 +18,34 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
       (AuthenticationBloc bloc) => bloc.state.status.isAuthenticated,
     );
 
+    final currentIndex = context.select(
+      (StatefulNavigationShell shell) => shell.currentIndex,
+    );
+
+    final colorScheme = ColorScheme.of(context);
+    final l10n = AppLocalizations.of(context);
+
+    final isHome = currentIndex == 0;
+
+    ShapeBorder? shape;
+
+    if (!isHome) {
+      shape = Border(
+        bottom: BorderSide(
+          color: colorScheme.outlineVariant,
+        ),
+      );
+    }
+
     return AppBar(
       leading: isAuthenticated ? const UserAvatar() : null,
       centerTitle: true,
-      title: const Logo(),
+      title: switch (currentIndex) {
+        1 => Text(l10n.appShell_threads),
+        2 => Text(l10n.appShell_settings),
+        _ => const Logo(),
+      },
+      shape: shape,
       actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
         if (!isAuthenticated) const LoginButton(),

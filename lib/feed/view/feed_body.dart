@@ -37,7 +37,7 @@ class FeedBody extends StatelessWidget {
       loadingBuilder: builder.loadingBuilder,
       onFetchData: () {
         context.read<FeedBloc>().add(
-          const FeedBottomReached(),
+          const FeedDataFetched(),
         );
       },
     );

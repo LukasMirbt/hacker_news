@@ -22,7 +22,7 @@ void main() {
 
     group('fetchMore', () {
       final feed = _MockPaginatedFeed();
-      const nextUrl = 'nextUrl';
+      const nextUrl = NextPageUrl(url: 'url');
 
       const page = FeedPageDataPlaceholder();
       final extendedFeed = _MockPaginatedFeed();

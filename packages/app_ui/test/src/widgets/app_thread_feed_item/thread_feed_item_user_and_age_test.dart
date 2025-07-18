@@ -1,0 +1,50 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app_ui/app_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
+
+import '../../helpers/helpers.dart';
+
+class _MockAppThreadFeedItemData extends Mock
+    implements AppThreadFeedItemData {}
+
+void main() {
+  const user = 'user';
+  const age = 'age';
+
+  group(ThreadFeedItemUserAndAge, () {
+    late AppThreadFeedItemData data;
+
+    setUp(() {
+      data = _MockAppThreadFeedItemData();
+      when(() => data.user).thenReturn(user);
+      when(() => data.age).thenReturn(age);
+    });
+
+    Widget buildSubject() {
+      return Provider.value(
+        value: data,
+        child: ThreadFeedItemUserAndAge(),
+      );
+    }
+
+    testWidgets('renders user', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(
+        find.textRange.ofSubstring(user),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('renders age', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(
+        find.textRange.ofSubstring(age),
+        findsOneWidget,
+      );
+    });
+  });
+}

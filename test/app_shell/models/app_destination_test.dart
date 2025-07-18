@@ -15,6 +15,11 @@ void main() async {
         expect(destination.label(l10n), l10n.appShell_home);
       });
 
+      test('returns correct value for ${AppDestination.threads}', () {
+        const destination = AppDestination.threads;
+        expect(destination.label(l10n), l10n.appShell_threads);
+      });
+
       test('returns correct value for ${AppDestination.settings}', () {
         const destination = AppDestination.settings;
         expect(destination.label(l10n), l10n.appShell_settings);
@@ -27,6 +32,11 @@ void main() async {
         expect(destination.icon, Icons.home_outlined);
       });
 
+      test('returns correct icon for ${AppDestination.threads}', () {
+        const destination = AppDestination.threads;
+        expect(destination.icon, Icons.forum_outlined);
+      });
+
       test('returns correct icon for ${AppDestination.settings}', () {
         const destination = AppDestination.settings;
         expect(destination.icon, Icons.settings_outlined);
@@ -37,6 +47,11 @@ void main() async {
       test('returns correct selected icon for ${AppDestination.home}', () {
         const destination = AppDestination.home;
         expect(destination.selectedIcon, Icons.home);
+      });
+
+      test('returns correct selected icon for ${AppDestination.threads}', () {
+        const destination = AppDestination.threads;
+        expect(destination.selectedIcon, Icons.forum);
       });
 
       test('returns correct selected icon for ${AppDestination.settings}', () {

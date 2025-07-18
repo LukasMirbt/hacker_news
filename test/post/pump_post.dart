@@ -21,7 +21,7 @@ class _MockPostRepository extends Mock implements PostRepository {
   Stream<Post> get stream => Stream.empty();
 }
 
-extension PumpDetailExtension on WidgetTester {
+extension PumpPostExtension on WidgetTester {
   Future<void> pumpPost(
     Widget widgetUnderTest, {
     GoRouter? router,

@@ -11,6 +11,7 @@ import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:post_api/post_api.dart';
 import 'package:provider/provider.dart';
+import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
@@ -18,8 +19,9 @@ import 'package:vote_repository/vote_repository.dart';
 class App extends StatelessWidget {
   const App({
     required AuthenticationApi authenticationApi,
-    required PostApi postApi,
     required FeedApi feedApi,
+    required PostApi postApi,
+    required ThreadApi threadApi,
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
     required VersionRepository versionRepository,
@@ -29,8 +31,9 @@ class App extends StatelessWidget {
   }) : _authenticationApi = authenticationApi,
        _analyticsRepository = analyticsRepository,
        _authenticationRepository = authenticationRepository,
-       _postApi = postApi,
        _feedApi = feedApi,
+       _postApi = postApi,
+       _threadApi = threadApi,
        _versionRepository = versionRepository,
        _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
@@ -40,6 +43,7 @@ class App extends StatelessWidget {
   final AuthenticationRepository _authenticationRepository;
   final PostApi _postApi;
   final FeedApi _feedApi;
+  final ThreadApi _threadApi;
   final VersionRepository _versionRepository;
   final VisitedPostRepository _visitedPostRepository;
   final VoteRepository _voteRepository;
@@ -49,8 +53,9 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         RepositoryProvider.value(value: _authenticationApi),
-        RepositoryProvider.value(value: _postApi),
         RepositoryProvider.value(value: _feedApi),
+        RepositoryProvider.value(value: _postApi),
+        RepositoryProvider.value(value: _threadApi),
       ],
       child: MultiRepositoryProvider(
         providers: [

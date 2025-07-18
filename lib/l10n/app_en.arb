@@ -6,6 +6,7 @@
   "analyticsConsent_continue": "Continue",
   "analyticsConsent_skip": "Skip",
   "appShell_home": "Home",
+  "appShell_threads": "Threads",
   "appShell_settings": "Settings",
   "appShell_login": "Login",
   "commentForm_title": "Comment",
@@ -64,5 +65,6 @@
   "theme_system": "Use device settings",
   "theme_light": "Light",
   "theme_dark": "Dark",
+  "threadFeed_age": "{age} ago",
   "voteFailure_invalidUrl": "Something went wrong. Try refreshing the page."
 }

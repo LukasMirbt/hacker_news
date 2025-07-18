@@ -15,6 +15,7 @@ import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_api/post_api.dart';
+import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
@@ -26,6 +27,8 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
+
+class _MockThreadApi extends Mock implements ThreadApi {}
 
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 
@@ -58,6 +61,7 @@ void main() {
     late AuthenticationApi authenticationApi;
     late FeedApi feedApi;
     late PostApi postApi;
+    late ThreadApi threadApi;
     late AnalyticsRepository analyticsRepository;
     late AuthenticationRepository authenticationRepository;
     late VersionRepository versionRepository;
@@ -68,6 +72,7 @@ void main() {
       authenticationApi = _MockAuthenticationApi();
       feedApi = _MockFeedApi();
       postApi = _MockPostApi();
+      threadApi = _MockThreadApi();
       analyticsRepository = _MockAnalyticsRepository();
       authenticationRepository = _MockAuthenticationRepository();
       voteRepository = _MockVoteRepository();
@@ -79,9 +84,10 @@ void main() {
       return App(
         authenticationApi: authenticationApi,
         feedApi: feedApi,
+        postApi: postApi,
+        threadApi: threadApi,
         analyticsRepository: analyticsRepository,
         authenticationRepository: authenticationRepository,
-        postApi: postApi,
         versionRepository: versionRepository,
         visitedPostRepository: visitedPostRepository,
         voteRepository: voteRepository,
@@ -98,16 +104,22 @@ void main() {
       expect(context.read<AuthenticationApi>(), isNotNull);
     });
 
+    testWidgets('provides $FeedApi', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<FeedApi>(), isNotNull);
+    });
+
     testWidgets('provides $PostApi', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<PostApi>(), isNotNull);
     });
 
-    testWidgets('provides $FeedApi', (tester) async {
+    testWidgets('provides $ThreadApi', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
-      expect(context.read<FeedApi>(), isNotNull);
+      expect(context.read<ThreadApi>(), isNotNull);
     });
 
     testWidgets('provides $AnalyticsRepository', (tester) async {

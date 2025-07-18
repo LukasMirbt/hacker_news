@@ -31,11 +31,11 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       _onVisitedPostSubscriptionRequested,
     );
     on<FeedStarted>(_onStarted);
+    on<FeedDataFetched>(_onDataFetched);
+    on<FeedRefreshTriggered>(_onRefreshTriggered);
     on<FeedItemPressed>(_onItemPressed);
     on<FeedItemVotePressed>(_onItemVotePressed);
     on<FeedItemSharePressed>(_onItemSharePressed);
-    on<FeedBottomReached>(_onBottomReached);
-    on<FeedRefreshTriggered>(_onRefreshTriggered);
   }
 
   final FeedRepository _feedRepository;
@@ -106,8 +106,8 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     }
   }
 
-  Future<void> _onBottomReached(
-    FeedBottomReached event,
+  Future<void> _onDataFetched(
+    FeedDataFetched event,
     Emitter<FeedState> emit,
   ) async {
     emit(
@@ -132,6 +132,38 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
       emit(
         state.copyWith(
           fetchStatus: FetchStatus.failure,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onRefreshTriggered(
+    FeedRefreshTriggered event,
+    Emitter<FeedState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        refreshStatus: RefreshStatus.loading,
+      ),
+    );
+
+    try {
+      final feed = await _feedRepository.fetchMore(
+        PaginatedFeed.initial(state.type),
+      );
+
+      emit(
+        state.copyWith(
+          refreshStatus: RefreshStatus.success,
+          fetchStatus: FetchStatus.success,
+          feed: PaginatedFeedModel.fromRepository(feed),
+        ),
+      );
+    } catch (e, s) {
+      addError(e, s);
+      emit(
+        state.copyWith(
+          refreshStatus: RefreshStatus.failure,
         ),
       );
     }
@@ -175,37 +207,5 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     Emitter<FeedState> emit,
   ) {
     _shareLauncher.share(text: event.text);
-  }
-
-  Future<void> _onRefreshTriggered(
-    FeedRefreshTriggered event,
-    Emitter<FeedState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        refreshStatus: RefreshStatus.loading,
-      ),
-    );
-
-    try {
-      final feed = await _feedRepository.fetchMore(
-        PaginatedFeed.initial(state.type),
-      );
-
-      emit(
-        state.copyWith(
-          refreshStatus: RefreshStatus.success,
-          fetchStatus: FetchStatus.success,
-          feed: PaginatedFeedModel.fromRepository(feed),
-        ),
-      );
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
-          refreshStatus: RefreshStatus.failure,
-        ),
-      );
-    }
   }
 }

@@ -32,13 +32,13 @@ void main() {
     }
 
     group('fetchFeedPage', () {
-      const url = 'url';
+      const pageUrl = InitialPageUrl(FeedType.top);
       const html = 'html';
       const page = FeedPageDataPlaceholder();
-      final request = () => http.get<String>(url);
+      final request = () => http.get<String>(pageUrl.url);
       final parse = () => parser.parse(html);
 
-      test('returns newsList', () async {
+      test('returns $FeedPageData', () async {
         when(request).thenAnswer(
           (_) async => Response(
             requestOptions: RequestOptions(),
@@ -48,7 +48,7 @@ void main() {
         when(parse).thenReturn(page);
         final api = createSubject();
         await expectLater(
-          api.fetchFeedPage(url),
+          api.fetchFeedPage(pageUrl),
           completion(page),
         );
         verify(request).called(1);

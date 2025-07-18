@@ -155,7 +155,6 @@ void main() {
       });
 
       testWidgets('voteButton is null when score is null', (tester) async {
-        when(() => item.score).thenReturn(null);
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.data.voteButton, null);

@@ -28,6 +28,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appShell_home => 'Home';
 
   @override
+  String get appShell_threads => 'Threads';
+
+  @override
   String get appShell_settings => 'Settings';
 
   @override
@@ -211,6 +214,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get theme_dark => 'Dark';
+
+  @override
+  String threadFeed_age({required Object age}) {
+    return '$age ago';
+  }
 
   @override
   String get voteFailure_invalidUrl =>

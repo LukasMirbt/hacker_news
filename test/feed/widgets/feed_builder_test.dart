@@ -63,6 +63,22 @@ void main() {
       });
     });
 
+    group('itemBuilder', () {
+      testWidgets('renders $FeedItem', (tester) async {
+        final item = FeedItemModel(FeedItemPlaceholder());
+        when(() => feed.items).thenReturn([item]);
+        final builder = createSubject();
+
+        await tester.pumpApp(
+          buildSubject(
+            (context) => builder.itemBuilder(context, 0),
+          ),
+        );
+
+        expect(find.byType(FeedItem), findsOneWidget);
+      });
+    });
+
     group('separatorBuilder', () {
       testWidgets('renders $Divider', (tester) async {
         final builder = createSubject();
@@ -79,22 +95,6 @@ void main() {
           ),
           findsOneWidget,
         );
-      });
-    });
-
-    group('itemBuilder', () {
-      testWidgets('renders $FeedItem', (tester) async {
-        final item = FeedItemModel(FeedItemPlaceholder());
-        when(() => feed.items).thenReturn([item]);
-        final builder = createSubject();
-
-        await tester.pumpApp(
-          buildSubject(
-            (context) => builder.itemBuilder(context, 0),
-          ),
-        );
-
-        expect(find.byType(FeedItem), findsOneWidget);
       });
     });
 

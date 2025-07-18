@@ -1,8 +1,13 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+
+class _MockCollapseHandler extends Mock
+    implements CollapseHandler<CommentModel> {}
 
 void main() {
   final repositoryItems = List.generate(
@@ -20,8 +25,17 @@ void main() {
   ];
 
   group(CommentListModel, () {
+    late CollapseHandler<CommentModel> collapseHandler;
+
+    setUp(() {
+      collapseHandler = _MockCollapseHandler();
+    });
+
     CommentListModel createSubject() {
-      return CommentListModel(items: items);
+      return CommentListModel(
+        items: items,
+        collapseHandler: collapseHandler,
+      );
     }
 
     group('constructor', () {
@@ -85,162 +99,57 @@ void main() {
     });
 
     group('rebuildWith', () {
-      final initialItems = [
+      final comments = [
+        CommentPlaceholder(id: '0'),
+        CommentPlaceholder(id: '1'),
+      ];
+
+      final updatedItems = [
         CommentModel(
-          comment: CommentPlaceholder(
-            id: '0',
-            indent: 0,
-          ),
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(
-            id: '1',
-            indent: 1,
-          ),
-          isExpanded: false,
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(
-            id: '2',
-            indent: 2,
-          ),
-          isParentExpanded: false,
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(
-            id: '3',
-            indent: 0,
-          ),
+          comment: CommentPlaceholder(),
         ),
       ];
 
-      final newRepositoryComments = [
-        CommentPlaceholder(id: '0', indent: 0),
-        CommentPlaceholder(id: '1', indent: 1),
-        CommentPlaceholder(id: '2', indent: 2),
-        CommentPlaceholder(id: '3', indent: 0),
-        CommentPlaceholder(id: '4', indent: 1),
-      ];
+      final rebuildWith = () => collapseHandler.rebuildWith(
+        oldItems: items,
+        newItems: [
+          for (final comment in comments) CommentModel(comment: comment),
+        ],
+      );
 
-      test('preserves existing expansion states for old comments', () {
-        final model = CommentListModel(items: initialItems);
-        final rebuiltModel = model.rebuildWith(newRepositoryComments);
-        final rebuiltItem1 = rebuiltModel.findById('1');
-        expect(rebuiltItem1?.isExpanded, false);
-      });
-
-      test('sets isExpanded to true for new comments', () {
-        final model = CommentListModel(items: initialItems);
-        final rebuiltModel = model.rebuildWith(newRepositoryComments);
-        final newItem = rebuiltModel.findById('4');
-        expect(newItem?.isExpanded, true);
-      });
-
-      test('correctly recalculates isParentExpanded for all items', () {
-        final model = CommentListModel(items: initialItems);
-        final rebuiltModel = model.rebuildWith(newRepositoryComments);
-        final items = rebuiltModel.items;
-        expect(items[0].isExpanded, true);
-        expect(items[0].isParentExpanded, true);
-        expect(items[1].isExpanded, false);
-        expect(items[1].isParentExpanded, true);
-        expect(items[2].isParentExpanded, false);
-        expect(items[3].isExpanded, true);
-        expect(items[3].isParentExpanded, true);
-        expect(items[4].isExpanded, true);
-        expect(items[4].isParentExpanded, true);
-      });
-
-      test('handles an empty initial list', () {
-        final model = CommentListModel(items: []);
-        final rebuiltModel = model.rebuildWith(newRepositoryComments);
-        expect(rebuiltModel.items.length, 5);
-        expect(rebuiltModel.visibleItems.length, 5);
-        expect(rebuiltModel.items.every((item) => item.isExpanded), true);
+      test('returns updated $CommentListModel', () {
+        when(rebuildWith).thenReturn(updatedItems);
+        final model = createSubject();
+        expect(
+          model.rebuildWith(comments),
+          CommentListModel(items: updatedItems),
+        );
+        verify(rebuildWith).called(1);
       });
     });
 
     group('toggleExpansion', () {
-      CommentListModel createSubject({
-        required List<CommentModel> items,
-      }) {
-        return CommentListModel(items: items);
-      }
+      final comment = items.first;
 
-      final nestedItems = [
+      final updatedItems = [
         CommentModel(
-          comment: CommentPlaceholder(id: '0', indent: 0),
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(id: '1', indent: 1),
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(id: '2', indent: 2),
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(id: '3', indent: 1),
-        ),
-        CommentModel(
-          comment: CommentPlaceholder(id: '4', indent: 0),
+          comment: CommentPlaceholder(),
         ),
       ];
 
-      test('returns original model when comment is not found', () {
-        final comment = CommentModel(
-          comment: CommentPlaceholder(id: ''),
+      final toggleExpansion = () => collapseHandler.toggleExpansion(
+        items: items,
+        itemToToggle: comment,
+      );
+
+      test('returns updated $CommentListModel', () {
+        when(toggleExpansion).thenReturn(updatedItems);
+        final model = createSubject();
+        expect(
+          model.toggleExpansion(comment: comment),
+          CommentListModel(items: updatedItems),
         );
-        final model = createSubject(items: nestedItems);
-        final updatedModel = model.toggleExpansion(comment: comment);
-        expect(updatedModel, model);
-      });
-
-      test('correctly collapses a parent comment '
-          'and hides all its children', () {
-        final model = createSubject(items: nestedItems);
-        final tappedComment = model.items[0];
-        final updatedModel = model.toggleExpansion(comment: tappedComment);
-        expect(updatedModel.items[0].isExpanded, false);
-        expect(updatedModel.items[1].isParentExpanded, false);
-        expect(updatedModel.items[2].isParentExpanded, false);
-        expect(updatedModel.items[3].isParentExpanded, false);
-        expect(updatedModel.items[4].isParentExpanded, true);
-      });
-
-      test('correctly expands a collapsed parent comment '
-          'and shows its children', () {
-        final initialItems = [
-          nestedItems[0].copyWith(isExpanded: false),
-          nestedItems[1].copyWith(isParentExpanded: false),
-          nestedItems[2].copyWith(isParentExpanded: false),
-          nestedItems[3].copyWith(isParentExpanded: false),
-          nestedItems[4],
-        ];
-        final model = createSubject(items: initialItems);
-        final tappedComment = model.items[0];
-        final updatedModel = model.toggleExpansion(
-          comment: tappedComment,
-        );
-        expect(updatedModel.items[0].isExpanded, true);
-        expect(updatedModel.items[1].isParentExpanded, true);
-        expect(updatedModel.items[2].isParentExpanded, true);
-        expect(updatedModel.items[3].isParentExpanded, true);
-      });
-
-      test('correctly expands a parent but keeps grandchildren hidden '
-          'when their direct parent is collapsed', () {
-        final initialItems = [
-          nestedItems[0].copyWith(isExpanded: false),
-          nestedItems[1].copyWith(isExpanded: false, isParentExpanded: false),
-          nestedItems[2].copyWith(isParentExpanded: false),
-          nestedItems[3].copyWith(isParentExpanded: false),
-          nestedItems[4],
-        ];
-        final model = createSubject(items: initialItems);
-        final tappedComment = model.items[0];
-        final updatedModel = model.toggleExpansion(comment: tappedComment);
-        expect(updatedModel.items[0].isExpanded, true);
-        expect(updatedModel.items[1].isParentExpanded, true);
-        expect(updatedModel.items[2].isParentExpanded, false);
+        verify(toggleExpansion).called(1);
       });
     });
   });

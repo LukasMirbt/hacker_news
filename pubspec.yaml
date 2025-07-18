@@ -14,6 +14,7 @@ workspace:
   - packages/authentication_api
   - packages/authentication_parser
   - packages/authentication_repository
+  - packages/collapse_handler
   - packages/date_formatter
   - packages/feed_api
   - packages/feed_parser
@@ -29,6 +30,9 @@ workspace:
   - packages/storage/persistent_storage
   - packages/storage/secure_storage
   - packages/storage/storage
+  - packages/thread_api
+  - packages/thread_parser
+  - packages/thread_repository
   - packages/version_repository
   - packages/visited_post_repository
   - packages/vote_api
@@ -49,6 +53,8 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   clock: ^1.1.2
+  collapse_handler:
+    path: packages/collapse_handler
   collection: ^1.19.1
   date_formatter:
     path: packages/date_formatter
@@ -81,6 +87,7 @@ dependencies:
   link_launcher:
     path: packages/link_launcher
   logging: ^1.3.0
+  material_symbols_icons: ^4.2815.1
   nested: ^1.0.0
   path_provider: ^2.1.5
   persistent_storage:
@@ -100,6 +107,10 @@ dependencies:
   shared_preferences: ^2.5.3
   skeletonizer: ^2.0.1
   super_sliver_list: ^0.4.1
+  thread_api:
+    path: packages/thread_api
+  thread_repository:
+    path: packages/thread_repository
   url_launcher: ^6.3.1
   version_repository:
     path: packages/version_repository

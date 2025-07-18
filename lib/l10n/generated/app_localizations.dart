@@ -130,6 +130,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get appShell_home;
 
+  /// No description provided for @appShell_threads.
+  ///
+  /// In en, this message translates to:
+  /// **'Threads'**
+  String get appShell_threads;
+
   /// No description provided for @appShell_settings.
   ///
   /// In en, this message translates to:
@@ -477,6 +483,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get theme_dark;
+
+  /// No description provided for @threadFeed_age.
+  ///
+  /// In en, this message translates to:
+  /// **'{age} ago'**
+  String threadFeed_age({required Object age});
 
   /// No description provided for @voteFailure_invalidUrl.
   ///
