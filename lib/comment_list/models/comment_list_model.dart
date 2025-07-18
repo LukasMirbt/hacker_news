@@ -6,12 +6,14 @@ import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:post_repository/post_repository.dart';
 
 class CommentListModel extends Equatable {
-  CommentListModel({required this.items})
-    : _collapseHandler = const CollapseHandler(),
-      visibleItems = [
-        for (final item in items)
-          if (item.isParentExpanded) item,
-      ];
+  CommentListModel({
+    required this.items,
+    CollapseHandler<CommentModel>? collapseHandler,
+  }) : _collapseHandler = collapseHandler ?? const CollapseHandler(),
+       visibleItems = [
+         for (final item in items)
+           if (item.isParentExpanded) item,
+       ];
 
   factory CommentListModel.from(List<Comment> items) {
     return CommentListModel(

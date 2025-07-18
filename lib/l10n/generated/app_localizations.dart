@@ -484,6 +484,12 @@ abstract class AppLocalizations {
   /// **'Dark'**
   String get theme_dark;
 
+  /// No description provided for @threadFeed_age.
+  ///
+  /// In en, this message translates to:
+  /// **'{age} ago'**
+  String threadFeed_age({required Object age});
+
   /// No description provided for @voteFailure_invalidUrl.
   ///
   /// In en, this message translates to:

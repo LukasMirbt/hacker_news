@@ -64,7 +64,11 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(path: '/threads', factory: _$ThreadRoute._fromState),
+        GoRouteData.$route(
+          path: '/threads',
+
+          factory: _$ThreadFeedRoute._fromState,
+        ),
       ],
     ),
     StatefulShellBranchData.$branch(
@@ -279,8 +283,9 @@ mixin _$CommentOptionsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$ThreadRoute on GoRouteData {
-  static ThreadRoute _fromState(GoRouterState state) => const ThreadRoute();
+mixin _$ThreadFeedRoute on GoRouteData {
+  static ThreadFeedRoute _fromState(GoRouterState state) =>
+      const ThreadFeedRoute();
 
   @override
   String get location => GoRouteData.$location('/threads');

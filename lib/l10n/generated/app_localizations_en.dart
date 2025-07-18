@@ -216,6 +216,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theme_dark => 'Dark';
 
   @override
+  String threadFeed_age({required Object age}) {
+    return '$age ago';
+  }
+
+  @override
   String get voteFailure_invalidUrl =>
       'Something went wrong. Try refreshing the page.';
 }

@@ -36,8 +36,8 @@ void main() {
   const indent = 1;
   const user = 'user';
   const age = 'age';
-  const htmlText = 'htmlText';
   const hasBeenUpvoted = true;
+  const htmlText = 'htmlText';
 
   const postId = 'postId';
 
@@ -109,16 +109,16 @@ void main() {
       expect(widget.data.age, age);
     });
 
-    testWidgets('has correct htmlText', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.htmlText, htmlText);
-    });
-
     testWidgets('has correct hasBeenUpvoted', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(widget.data.hasBeenUpvoted, hasBeenUpvoted);
+    });
+
+    testWidgets('has correct htmlText', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.data.htmlText, htmlText);
     });
 
     testWidgets('adds $CommentListExpansionToggled '

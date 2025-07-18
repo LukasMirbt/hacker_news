@@ -47,8 +47,8 @@ final class FeedItemSharePressed extends FeedEvent {
   List<Object> get props => [text];
 }
 
-final class FeedBottomReached extends FeedEvent {
-  const FeedBottomReached();
+final class FeedDataFetched extends FeedEvent {
+  const FeedDataFetched();
 }
 
 final class FeedRefreshTriggered extends FeedEvent {

@@ -10,6 +10,7 @@ class ThreadCommentData extends Equatable {
     required this.indent,
     required this.score,
     required this.hasBeenUpvoted,
+    required this.upvoteUrl,
     required this.parentUrl,
     required this.contextUrl,
   });
@@ -22,6 +23,7 @@ class ThreadCommentData extends Equatable {
     required int? indent,
     required int? score,
     required bool? hasBeenUpvoted,
+    required String? upvoteUrl,
     required String? parentUrl,
     required String? contextUrl,
   }) {
@@ -33,6 +35,7 @@ class ThreadCommentData extends Equatable {
       indent: indent ?? 0,
       score: score,
       hasBeenUpvoted: hasBeenUpvoted,
+      upvoteUrl: upvoteUrl,
       parentUrl: parentUrl,
       contextUrl: contextUrl,
     );
@@ -45,6 +48,7 @@ class ThreadCommentData extends Equatable {
   final int indent;
   final int? score;
   final bool? hasBeenUpvoted;
+  final String? upvoteUrl;
   final String? parentUrl;
   final String? contextUrl;
 
@@ -57,6 +61,7 @@ class ThreadCommentData extends Equatable {
     indent,
     score,
     hasBeenUpvoted,
+    upvoteUrl,
     parentUrl,
     contextUrl,
   ];

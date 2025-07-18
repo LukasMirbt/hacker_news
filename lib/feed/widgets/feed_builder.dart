@@ -12,14 +12,14 @@ class FeedBuilder {
     );
   }
 
-  Widget separatorBuilder(BuildContext context, int index) {
-    return const Divider(height: 0);
-  }
-
   Widget itemBuilder(BuildContext context, int index) {
     final items = context.read<FeedBloc>().state.feed.items;
     final item = items[index];
     return FeedItem(item: item);
+  }
+
+  Widget separatorBuilder(BuildContext context, int index) {
+    return const Divider(height: 0);
   }
 
   Widget loadingBuilder(BuildContext context) {

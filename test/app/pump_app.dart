@@ -24,6 +24,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:post_api/post_api.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
+import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
@@ -33,6 +34,8 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
+
+class _MockThreadApi extends Mock implements ThreadApi {}
 
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {
   @override
@@ -141,6 +144,9 @@ extension PumpAppExtension on WidgetTester {
           ),
           Provider<PostApi>(
             create: (_) => _MockPostApi(),
+          ),
+          Provider<ThreadApi>(
+            create: (_) => _MockThreadApi(),
           ),
         ],
         child: MultiRepositoryProvider(

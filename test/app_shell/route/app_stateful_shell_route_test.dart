@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/settings/settings.dart';
-import 'package:hacker_client/thread_list/thread_list.dart';
+import 'package:hacker_client/thread_feed/thread_feed.dart';
 
 import '../../app/pump_app.dart';
 
@@ -37,7 +37,7 @@ void main() {
           AppStatefulShellRoute.config.branches,
           [
             HomeBranch.config,
-            ThreadListBranch.config,
+            ThreadFeedBranch.config,
             SettingsBranch.config,
           ],
         );

@@ -1,2 +1,2 @@
-export 'paginated_thread_list.dart';
-export 'thread_comment.dart';
+export 'paginated_thread_feed.dart';
+export 'thread_feed_item.dart';

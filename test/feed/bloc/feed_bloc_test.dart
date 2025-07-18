@@ -189,7 +189,7 @@ void main() {
       );
     });
 
-    group(FeedBottomReached, () {
+    group(FeedDataFetched, () {
       final feed = _MockPaginatedFeedModel();
 
       final initialRepositoryFeed = PaginatedFeedPlaceholder(
@@ -223,7 +223,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            FeedBottomReached(),
+            FeedDataFetched(),
           );
         },
         expect: () => [
@@ -250,7 +250,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            FeedBottomReached(),
+            FeedDataFetched(),
           );
         },
         expect: () => [
@@ -259,6 +259,75 @@ void main() {
           ),
           state.copyWith(
             fetchStatus: FetchStatus.failure,
+          ),
+        ],
+        verify: (_) {
+          verify(request).called(1);
+        },
+      );
+    });
+
+    group(FeedRefreshTriggered, () {
+      final request = () => feedRepository.fetchMore(
+        PaginatedFeed.initial(type),
+      );
+
+      final feed = PaginatedFeedPlaceholder(
+        items: [
+          FeedItemPlaceholder(),
+        ],
+      );
+
+      final state = initialState.copyWith(
+        fetchStatus: FetchStatus.success,
+      );
+
+      blocTest<FeedBloc, FeedState>(
+        'emits [loading, success] and $PaginatedFeedModel '
+        'when request succeeds',
+        setUp: () {
+          when(request).thenAnswer((_) async => feed);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            FeedRefreshTriggered(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            refreshStatus: RefreshStatus.loading,
+          ),
+          state.copyWith(
+            refreshStatus: RefreshStatus.success,
+            fetchStatus: FetchStatus.success,
+            feed: PaginatedFeedModel.fromRepository(feed),
+          ),
+        ],
+        verify: (_) {
+          verify(request).called(1);
+        },
+      );
+
+      blocTest<FeedBloc, FeedState>(
+        'emits [loading, failure] when request throws',
+        setUp: () {
+          when(request).thenThrow(Exception('oops'));
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            FeedRefreshTriggered(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            refreshStatus: RefreshStatus.loading,
+          ),
+          state.copyWith(
+            refreshStatus: RefreshStatus.failure,
           ),
         ],
         verify: (_) {
@@ -358,75 +427,6 @@ void main() {
         },
         verify: (_) {
           verify(share).called(1);
-        },
-      );
-    });
-
-    group(FeedRefreshTriggered, () {
-      final request = () => feedRepository.fetchMore(
-        PaginatedFeed.initial(type),
-      );
-
-      final feed = PaginatedFeedPlaceholder(
-        items: [
-          FeedItemPlaceholder(),
-        ],
-      );
-
-      final state = initialState.copyWith(
-        fetchStatus: FetchStatus.success,
-      );
-
-      blocTest<FeedBloc, FeedState>(
-        'emits [loading, success] and $PaginatedFeedModel '
-        'when request succeeds',
-        setUp: () {
-          when(request).thenAnswer((_) async => feed);
-        },
-        seed: () => state,
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            FeedRefreshTriggered(),
-          );
-        },
-        expect: () => [
-          state.copyWith(
-            refreshStatus: RefreshStatus.loading,
-          ),
-          state.copyWith(
-            refreshStatus: RefreshStatus.success,
-            fetchStatus: FetchStatus.success,
-            feed: PaginatedFeedModel.fromRepository(feed),
-          ),
-        ],
-        verify: (_) {
-          verify(request).called(1);
-        },
-      );
-
-      blocTest<FeedBloc, FeedState>(
-        'emits [loading, failure] when request throws',
-        setUp: () {
-          when(request).thenThrow(Exception('oops'));
-        },
-        seed: () => state,
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            FeedRefreshTriggered(),
-          );
-        },
-        expect: () => [
-          state.copyWith(
-            refreshStatus: RefreshStatus.loading,
-          ),
-          state.copyWith(
-            refreshStatus: RefreshStatus.failure,
-          ),
-        ],
-        verify: (_) {
-          verify(request).called(1);
         },
       );
     });

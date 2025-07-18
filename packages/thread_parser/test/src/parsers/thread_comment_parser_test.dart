@@ -19,6 +19,8 @@ class _MockScoreParser extends Mock implements ScoreParser {}
 
 class _MockHasBeenUpvotedParser extends Mock implements HasBeenUpvotedParser {}
 
+class _MockUpvoteUrlParser extends Mock implements UpvoteUrlParser {}
+
 class _MockParentUrlParser extends Mock implements ParentUrlParser {}
 
 class _MockContextUrlParser extends Mock implements ContextUrlParser {}
@@ -33,6 +35,7 @@ void main() {
   const indent = 1;
   const score = 1;
   const hasBeenUpvoted = true;
+  const upvoteUrl = 'upvoteUrl';
   const parentUrl = 'parentUrl';
   const contextUrl = 'contextUrl';
 
@@ -44,6 +47,7 @@ void main() {
     late IndentParser indentParser;
     late ScoreParser scoreParser;
     late HasBeenUpvotedParser hasBeenUpvotedParser;
+    late UpvoteUrlParser upvoteUrlParser;
     late ParentUrlParser parentUrlParser;
     late ContextUrlParser contextUrlParser;
     late Element element;
@@ -56,6 +60,7 @@ void main() {
       indentParser = _MockIndentParser();
       scoreParser = _MockScoreParser();
       hasBeenUpvotedParser = _MockHasBeenUpvotedParser();
+      upvoteUrlParser = _MockUpvoteUrlParser();
       parentUrlParser = _MockParentUrlParser();
       contextUrlParser = _MockContextUrlParser();
       element = _MockElement();
@@ -71,6 +76,7 @@ void main() {
         indentParser: indentParser,
         scoreParser: scoreParser,
         hasBeenUpvotedParser: hasBeenUpvotedParser,
+        upvoteUrlParser: upvoteUrlParser,
         parentUrlParser: parentUrlParser,
         contextUrlParser: contextUrlParser,
       );
@@ -84,6 +90,7 @@ void main() {
       final parseIndent = () => indentParser.parse(element);
       final parseScore = () => scoreParser.parse(element);
       final parseHasBeenUpvoted = () => hasBeenUpvotedParser.parse(element);
+      final parseUpvoteUrl = () => upvoteUrlParser.parse(element);
       final parseParentUrl = () => parentUrlParser.parse(element);
       final parseContextUrl = () => contextUrlParser.parse(element);
 
@@ -95,6 +102,7 @@ void main() {
         when(parseIndent).thenReturn(indent);
         when(parseScore).thenReturn(score);
         when(parseHasBeenUpvoted).thenReturn(hasBeenUpvoted);
+        when(parseUpvoteUrl).thenReturn(upvoteUrl);
         when(parseParentUrl).thenReturn(parentUrl);
         when(parseContextUrl).thenReturn(contextUrl);
         final parser = createSubject();
@@ -108,6 +116,7 @@ void main() {
             indent: indent,
             score: score,
             hasBeenUpvoted: hasBeenUpvoted,
+            upvoteUrl: upvoteUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
           ),
@@ -119,6 +128,7 @@ void main() {
         verify(parseIndent).called(1);
         verify(parseScore).called(1);
         verify(parseHasBeenUpvoted).called(1);
+        verify(parseUpvoteUrl).called(1);
         verify(parseParentUrl).called(1);
         verify(parseContextUrl).called(1);
       });

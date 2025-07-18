@@ -23,8 +23,8 @@ class CommentWidget extends StatelessWidget {
         indent: item.indent,
         user: item.user,
         age: item.age(appL10n, formatterL10n),
-        htmlText: item.htmlText,
         hasBeenUpvoted: item.hasBeenUpvoted,
+        htmlText: item.htmlText,
         onHeaderPressed: () {
           context.read<CommentListBloc>().add(
             CommentListExpansionToggled(item),

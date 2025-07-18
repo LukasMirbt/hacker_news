@@ -117,11 +117,11 @@ void main() {
         );
       });
 
-      testWidgets('adds $FeedBottomReached onBottomReached', (tester) async {
+      testWidgets('adds $FeedDataFetched onFetchData', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onFetchData();
-        verify(() => bloc.add(FeedBottomReached())).called(1);
+        verify(() => bloc.add(FeedDataFetched())).called(1);
       });
     });
   });

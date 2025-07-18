@@ -9,6 +9,7 @@ class ThreadCommentParser {
     IndentParser? indentParser,
     ScoreParser? scoreParser,
     HasBeenUpvotedParser? hasBeenUpvotedParser,
+    UpvoteUrlParser? upvoteUrlParser,
     ParentUrlParser? parentUrlParser,
     ContextUrlParser? contextUrlParser,
   }) : _idParser = idParser ?? const IdParser(),
@@ -20,6 +21,7 @@ class ThreadCommentParser {
        _scoreParser = scoreParser ?? const ScoreParser(),
        _hasBeenUpvotedParser =
            hasBeenUpvotedParser ?? const HasBeenUpvotedParser(),
+       _upvoteUrlParser = upvoteUrlParser ?? const UpvoteUrlParser(),
        _parentUrlParser = parentUrlParser ?? const ParentUrlParser(),
        _contextUrlParser = contextUrlParser ?? const ContextUrlParser();
 
@@ -30,6 +32,7 @@ class ThreadCommentParser {
   final IndentParser _indentParser;
   final ScoreParser _scoreParser;
   final HasBeenUpvotedParser _hasBeenUpvotedParser;
+  final UpvoteUrlParser _upvoteUrlParser;
   final ParentUrlParser _parentUrlParser;
   final ContextUrlParser _contextUrlParser;
 
@@ -41,6 +44,7 @@ class ThreadCommentParser {
     final indent = _indentParser.parse(athing);
     final score = _scoreParser.parse(athing);
     final hasBeenUpvoted = _hasBeenUpvotedParser.parse(athing);
+    final upvoteUrl = _upvoteUrlParser.parse(athing);
     final parentUrl = _parentUrlParser.parse(athing);
     final contextUrl = _contextUrlParser.parse(athing);
 
@@ -52,6 +56,7 @@ class ThreadCommentParser {
       indent: indent,
       score: score,
       hasBeenUpvoted: hasBeenUpvoted,
+      upvoteUrl: upvoteUrl,
       parentUrl: parentUrl,
       contextUrl: contextUrl,
     );

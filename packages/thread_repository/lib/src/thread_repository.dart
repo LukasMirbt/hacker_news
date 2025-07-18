@@ -9,9 +9,11 @@ class ThreadRepository {
 
   final ThreadApi _api;
 
-  Future<PaginatedThreadList> fetchMore(PaginatedThreadList list) async {
-    final page = await _api.fetchThreadListPage(list.nextUrl);
-    final extendedFeed = list.extendWith(page);
+  Future<PaginatedThreadFeed> fetchMore(
+    PaginatedThreadFeed paginatedList,
+  ) async {
+    final page = await _api.fetchThreadListPage(paginatedList.nextUrl);
+    final extendedFeed = paginatedList.extendWith(page);
     return extendedFeed;
   }
 }

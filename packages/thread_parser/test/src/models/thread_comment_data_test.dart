@@ -13,6 +13,7 @@ void main() {
         const indent = 1;
         const score = 1;
         const hasBeenUpvoted = true;
+        const upvoteUrl = 'upvoteUrl';
         const parentUrl = 'parentUrl';
         const contextUrl = 'contextUrl';
 
@@ -25,6 +26,7 @@ void main() {
             indent: indent,
             score: score,
             hasBeenUpvoted: hasBeenUpvoted,
+            upvoteUrl: upvoteUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
           ),
@@ -36,6 +38,7 @@ void main() {
             indent: indent,
             score: score,
             hasBeenUpvoted: hasBeenUpvoted,
+            upvoteUrl: upvoteUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
           ),
@@ -53,6 +56,7 @@ void main() {
             indent: null,
             score: null,
             hasBeenUpvoted: null,
+            upvoteUrl: null,
             parentUrl: null,
             contextUrl: null,
           ),
@@ -64,6 +68,7 @@ void main() {
             indent: 0,
             score: null,
             hasBeenUpvoted: null,
+            upvoteUrl: null,
             parentUrl: null,
             contextUrl: null,
           ),
