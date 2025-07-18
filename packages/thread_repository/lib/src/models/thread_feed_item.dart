@@ -20,7 +20,7 @@ class ThreadFeedItem with _$ThreadFeedItem {
     required this.contextUrl,
   });
 
-  factory ThreadFeedItem.from(ThreadCommentData data) {
+  factory ThreadFeedItem.from(ThreadFeedItemData data) {
     return ThreadFeedItem(
       id: data.id,
       hnuser: data.hnuser,

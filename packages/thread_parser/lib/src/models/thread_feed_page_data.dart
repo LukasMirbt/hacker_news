@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:thread_parser/thread_parser.dart';
 
-class ThreadListPageData extends Equatable {
-  const ThreadListPageData({
+class ThreadFeedPageData extends Equatable {
+  const ThreadFeedPageData({
     required this.comments,
     required this.moreLink,
   });
 
-  final List<ThreadCommentData> comments;
+  final List<ThreadFeedItemData> comments;
   final String? moreLink;
 
   @override

@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:thread_parser/thread_parser.dart';
 
 void main() {
-  group(ThreadCommentData, () {
+  group(ThreadFeedItemData, () {
     group('fromParsed', () {
-      test('returns $ThreadCommentData with correct values '
+      test('returns $ThreadFeedItemData with correct values '
           'when data is non-null', () {
         const id = 'id';
         const hnuser = HnuserPlaceholder();
@@ -18,7 +18,7 @@ void main() {
         const contextUrl = 'contextUrl';
 
         expect(
-          ThreadCommentData.fromParsed(
+          ThreadFeedItemData.fromParsed(
             id: id,
             hnuser: hnuser,
             age: age,
@@ -30,7 +30,7 @@ void main() {
             parentUrl: parentUrl,
             contextUrl: contextUrl,
           ),
-          ThreadCommentData(
+          ThreadFeedItemData(
             id: id,
             hnuser: hnuser,
             age: age,
@@ -45,10 +45,10 @@ void main() {
         );
       });
 
-      test('returns $ThreadCommentData with correct values '
+      test('returns $ThreadFeedItemData with correct values '
           'when data is null', () {
         expect(
-          ThreadCommentData.fromParsed(
+          ThreadFeedItemData.fromParsed(
             id: null,
             hnuser: null,
             age: null,
@@ -60,7 +60,7 @@ void main() {
             parentUrl: null,
             contextUrl: null,
           ),
-          ThreadCommentData(
+          ThreadFeedItemData(
             id: '',
             hnuser: Hnuser.empty,
             age: DateTime(0),

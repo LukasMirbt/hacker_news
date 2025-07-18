@@ -20,8 +20,6 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
     final index = context.watch<StatefulNavigationShell>().currentIndex;
     final colorScheme = ColorScheme.of(context);
 
-    print(index);
-
     return AppBar(
       leading: isAuthenticated ? const UserAvatar() : null,
       centerTitle: true,

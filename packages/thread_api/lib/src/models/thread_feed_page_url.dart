@@ -1,4 +1,6 @@
-sealed class ThreadFeedPageUrl {
+import 'package:equatable/equatable.dart';
+
+sealed class ThreadFeedPageUrl extends Equatable {
   const ThreadFeedPageUrl();
 
   String get url;
@@ -17,6 +19,9 @@ final class InitialPageUrl extends ThreadFeedPageUrl {
     );
     return url.toString();
   }
+
+  @override
+  List<Object> get props => [id];
 }
 
 final class NextPageUrl extends ThreadFeedPageUrl {
@@ -24,4 +29,7 @@ final class NextPageUrl extends ThreadFeedPageUrl {
 
   @override
   final String url;
+
+  @override
+  List<Object> get props => [url];
 }

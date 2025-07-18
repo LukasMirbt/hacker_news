@@ -39,7 +39,7 @@ void main() {
   const parentUrl = 'parentUrl';
   const contextUrl = 'contextUrl';
 
-  group(ThreadCommentParser, () {
+  group(ThreadFeedItemParser, () {
     late IdParser idParser;
     late HnuserParser hnuserParser;
     late AgeParser ageParser;
@@ -67,8 +67,8 @@ void main() {
       registerFallbackValue(_MockElement());
     });
 
-    ThreadCommentParser createSubject() {
-      return ThreadCommentParser(
+    ThreadFeedItemParser createSubject() {
+      return ThreadFeedItemParser(
         idParser: idParser,
         hnuserParser: hnuserParser,
         ageParser: ageParser,
@@ -94,7 +94,7 @@ void main() {
       final parseParentUrl = () => parentUrlParser.parse(element);
       final parseContextUrl = () => contextUrlParser.parse(element);
 
-      test('calls parsers and returns $ThreadCommentData', () {
+      test('calls parsers and returns $ThreadFeedItemData', () {
         when(parseId).thenReturn(id);
         when(parseHnuser).thenReturn(hnuser);
         when(parseAge).thenReturn(age);
@@ -108,7 +108,7 @@ void main() {
         final parser = createSubject();
         expect(
           parser.parse(element),
-          ThreadCommentData.fromParsed(
+          ThreadFeedItemData.fromParsed(
             id: id,
             hnuser: hnuser,
             age: age,

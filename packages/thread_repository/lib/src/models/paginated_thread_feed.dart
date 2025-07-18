@@ -43,7 +43,7 @@ class PaginatedThreadFeed extends Equatable {
     return NextPageUrl(url: next);
   }
 
-  PaginatedThreadFeed extendWith(ThreadListPageData nextPage) {
+  PaginatedThreadFeed extendWith(ThreadFeedPageData nextPage) {
     return PaginatedThreadFeed(
       user: user,
       next: nextPage.moreLink,

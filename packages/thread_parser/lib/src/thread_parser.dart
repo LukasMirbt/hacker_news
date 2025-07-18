@@ -3,22 +3,21 @@ import 'package:thread_parser/thread_parser.dart';
 class ThreadParser {
   const ThreadParser({
     HtmlParser? htmlParser,
-    ThreadCommentListParser? threadCommentListParser,
+    ThreadFeedParser? threadCommentListParser,
     MoreLinkParser? moreLinkParser,
   }) : _htmlParser = htmlParser ?? const HtmlParser(),
-       _commentListParser =
-           threadCommentListParser ?? const ThreadCommentListParser(),
+       _commentListParser = threadCommentListParser ?? const ThreadFeedParser(),
        _moreLinkParser = moreLinkParser ?? const MoreLinkParser();
 
   final HtmlParser _htmlParser;
-  final ThreadCommentListParser _commentListParser;
+  final ThreadFeedParser _commentListParser;
   final MoreLinkParser _moreLinkParser;
 
-  ThreadListPageData parse(String html) {
+  ThreadFeedPageData parse(String html) {
     final document = _htmlParser.parse(html);
     final comments = _commentListParser.parse(document);
     final moreLink = _moreLinkParser.parse(document);
-    return ThreadListPageData(
+    return ThreadFeedPageData(
       comments: comments,
       moreLink: moreLink,
     );

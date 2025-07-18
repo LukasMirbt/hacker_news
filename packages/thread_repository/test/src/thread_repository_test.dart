@@ -22,16 +22,16 @@ void main() {
 
     group('fetchMore', () {
       final feed = _MockPaginatedThreadFeed();
-      const next = 'next';
+      const nextUrl = NextPageUrl(url: 'url');
 
-      const page = ThreadListPageDataPlaceholder();
+      const page = ThreadFeedPageDataPlaceholder();
       final extendedFeed = _MockPaginatedThreadFeed();
 
-      final fetchFeedPage = () => api.fetchFeedPage(next);
+      final fetchFeedPage = () => api.fetchFeedPage(nextUrl);
       final extendWith = () => feed.extendWith(page);
 
       test('returns extended $PaginatedThreadFeed', () async {
-        when(() => feed.next).thenReturn(next);
+        when(() => feed.nextUrl).thenReturn(nextUrl);
         when(fetchFeedPage).thenAnswer((_) async => page);
         when(extendWith).thenReturn(extendedFeed);
         final repository = createSubject();

@@ -6,19 +6,18 @@ import 'package:thread_parser/thread_parser.dart';
 
 class _MockHtmlParser extends Mock implements HtmlParser {}
 
-class _MockThreadCommentListParser extends Mock
-    implements ThreadCommentListParser {}
+class _MockThreadCommentListParser extends Mock implements ThreadFeedParser {}
 
 class _MockMoreLinkParser extends Mock implements MoreLinkParser {}
 
 class _MockDocument extends Mock implements Document {}
 
-class _MockThreadCommentData extends Mock implements ThreadCommentData {}
+class _MockThreadCommentData extends Mock implements ThreadFeedItemData {}
 
 void main() {
   group(ThreadParser, () {
     late HtmlParser htmlParser;
-    late ThreadCommentListParser commentListParser;
+    late ThreadFeedParser commentListParser;
     late MoreLinkParser moreLinkParser;
     late Document document;
 
@@ -46,14 +45,14 @@ void main() {
       final parseCommentList = () => commentListParser.parse(document);
       final parseMoreLink = () => moreLinkParser.parse(document);
 
-      test('returns $ThreadListPageData', () {
+      test('returns $ThreadFeedPageData', () {
         when(parseHtml).thenReturn(document);
         when(parseCommentList).thenReturn(comments);
         when(parseMoreLink).thenReturn(moreLink);
         final parser = createSubject();
         expect(
           parser.parse(html),
-          ThreadListPageData(
+          ThreadFeedPageData(
             comments: comments,
             moreLink: moreLink,
           ),

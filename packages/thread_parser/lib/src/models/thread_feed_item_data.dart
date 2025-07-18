@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:thread_parser/thread_parser.dart';
 
-class ThreadCommentData extends Equatable {
-  const ThreadCommentData({
+class ThreadFeedItemData extends Equatable {
+  const ThreadFeedItemData({
     required this.id,
     required this.hnuser,
     required this.age,
@@ -15,7 +15,7 @@ class ThreadCommentData extends Equatable {
     required this.contextUrl,
   });
 
-  factory ThreadCommentData.fromParsed({
+  factory ThreadFeedItemData.fromParsed({
     required String? id,
     required Hnuser? hnuser,
     required DateTime? age,
@@ -27,7 +27,7 @@ class ThreadCommentData extends Equatable {
     required String? parentUrl,
     required String? contextUrl,
   }) {
-    return ThreadCommentData(
+    return ThreadFeedItemData(
       id: id ?? '',
       hnuser: hnuser ?? Hnuser.empty,
       age: age ?? DateTime(0),

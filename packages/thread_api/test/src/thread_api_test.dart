@@ -7,19 +7,19 @@ import 'package:thread_api/thread_api.dart';
 
 class _MockAppClient extends Mock implements AppClient {}
 
-class _MockFeedParser extends Mock implements FeedParser {}
+class _MockThreadParser extends Mock implements ThreadParser {}
 
 class _MockDio extends Mock implements Dio {}
 
 void main() {
   group(ThreadApi, () {
     late AppClient client;
-    late FeedParser parser;
+    late ThreadParser parser;
     late Dio http;
 
     setUp(() {
       client = _MockAppClient();
-      parser = _MockFeedParser();
+      parser = _MockThreadParser();
       http = _MockDio();
       when(() => client.http).thenReturn(http);
     });
@@ -27,18 +27,18 @@ void main() {
     ThreadApi createSubject() {
       return ThreadApi(
         appClient: client,
-        feedParser: parser,
+        threadParser: parser,
       );
     }
 
     group('fetchFeedPage', () {
-      const url = 'url';
+      const pageUrl = InitialPageUrl(id: 'id');
       const html = 'html';
-      const page = FeedPageDataPlaceholder();
-      final request = () => http.get<String>(url);
+      const page = ThreadFeedPageDataPlaceholder();
+      final request = () => http.get<String>(pageUrl.url);
       final parse = () => parser.parse(html);
 
-      test('returns newsList', () async {
+      test('returns $ThreadFeedPageData', () async {
         when(request).thenAnswer(
           (_) async => Response(
             requestOptions: RequestOptions(),
@@ -48,7 +48,7 @@ void main() {
         when(parse).thenReturn(page);
         final api = createSubject();
         await expectLater(
-          api.fetchFeedPage(url),
+          api.fetchFeedPage(pageUrl),
           completion(page),
         );
         verify(request).called(1);

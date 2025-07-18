@@ -13,7 +13,6 @@ void main() {
     ThreadFeedItemPlaceholder(),
   ];
 
-  final initialUri = Uri.parse('https://www.example.com/');
   const isInitial = false;
   const next = 'next';
 
@@ -23,10 +22,7 @@ void main() {
         expect(
           PaginatedThreadFeed.initial(user),
           PaginatedThreadFeed(
-            initialUri: Uri(
-              path: 'threads',
-              queryParameters: {'id': user.id},
-            ),
+            user: user,
             next: null,
             isInitial: true,
             items: [],
@@ -38,7 +34,7 @@ void main() {
     group('isEmpty', () {
       test('returns true when !isInitial and items.isEmpty', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           next: next,
           isInitial: false,
           items: [],
@@ -48,7 +44,7 @@ void main() {
 
       test('returns false when isInitial', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           next: next,
           isInitial: true,
           items: [],
@@ -58,7 +54,7 @@ void main() {
 
       test('returns false when !items.isEmpty', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           isInitial: isInitial,
           next: next,
           items: items,
@@ -70,7 +66,7 @@ void main() {
     group('hasReachedMax', () {
       test('returns true when !isInitial and next is null', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           isInitial: false,
           next: null,
@@ -80,7 +76,7 @@ void main() {
 
       test('returns false when isInitial', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           next: next,
           isInitial: true,
@@ -90,7 +86,7 @@ void main() {
 
       test('returns false when next is not null', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           isInitial: isInitial,
           next: next,
@@ -99,53 +95,57 @@ void main() {
       });
     });
 
-    group('next', () {
-      test('returns initialUri when isInitial', () {
+    group('nextUrl', () {
+      test('returns $InitialPageUrl when isInitial', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           next: next,
           isInitial: true,
         );
         expect(
-          feed.next,
-          initialUri.toString(),
+          feed.nextUrl,
+          InitialPageUrl(id: user.id),
         );
       });
 
       test('throws $ReachedMaxFailure when !isInitial and next is null', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           isInitial: false,
           next: null,
         );
         expect(
-          () => feed.next,
+          () => feed.nextUrl,
           throwsA(
             ReachedMaxFailure(),
           ),
         );
       });
 
-      test('returns next when !isInitial and next is non-null', () {
+      test('returns $NextPageUrl when !isInitial and next '
+          'is non-null', () {
         final feed = PaginatedThreadFeed(
-          initialUri: initialUri,
+          user: user,
           items: items,
           isInitial: isInitial,
           next: next,
         );
-        expect(feed.next, next);
+        expect(
+          feed.nextUrl,
+          NextPageUrl(url: next),
+        );
       });
     });
 
     group('extendWith', () {
       final feed = PaginatedThreadFeed.initial(user);
 
-      final nextPage = ThreadListPageDataPlaceholder(
+      final nextPage = ThreadFeedPageDataPlaceholder(
         moreLink: 'moreLink',
         comments: [
-          ThreadCommentDataPlaceholder(),
+          ThreadFeedItemDataPlaceholder(),
         ],
       );
 
@@ -153,42 +153,12 @@ void main() {
         expect(
           feed.extendWith(nextPage),
           PaginatedThreadFeed(
-            initialUri: feed.initialUri,
+            user: feed.user,
             next: nextPage.moreLink,
             items: [
               ...feed.items,
               for (final item in nextPage.comments) ThreadFeedItem.from(item),
             ],
-          ),
-        );
-      });
-    });
-
-    group('update', () {
-      const idToUpdate = 'idToUpdate';
-
-      final firstItem = ThreadFeedItemPlaceholder();
-      final secondItem = ThreadFeedItemPlaceholder(id: idToUpdate);
-
-      final updatedItem = secondItem.copyWith(
-        htmlText: 'updatedHtmlText',
-      );
-
-      final feed = PaginatedThreadFeed(
-        initialUri: initialUri,
-        next: next,
-        isInitial: isInitial,
-        items: [firstItem, secondItem],
-      );
-
-      test('returns $PaginatedThreadFeed with updated item', () {
-        expect(
-          feed.update(updatedItem),
-          PaginatedThreadFeed(
-            initialUri: initialUri,
-            next: next,
-            isInitial: isInitial,
-            items: [firstItem, updatedItem],
           ),
         );
       });

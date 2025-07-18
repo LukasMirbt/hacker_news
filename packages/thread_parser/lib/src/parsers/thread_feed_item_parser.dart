@@ -1,7 +1,7 @@
 import 'package:thread_parser/thread_parser.dart';
 
-class ThreadCommentParser {
-  const ThreadCommentParser({
+class ThreadFeedItemParser {
+  const ThreadFeedItemParser({
     IdParser? idParser,
     HnuserParser? hnuserParser,
     AgeParser? ageParser,
@@ -36,7 +36,7 @@ class ThreadCommentParser {
   final ParentUrlParser _parentUrlParser;
   final ContextUrlParser _contextUrlParser;
 
-  ThreadCommentData parse(Element athing) {
+  ThreadFeedItemData parse(Element athing) {
     final id = _idParser.parse(athing);
     final hnuser = _hnuserParser.parse(athing);
     final age = _ageParser.parse(athing);
@@ -48,7 +48,7 @@ class ThreadCommentParser {
     final parentUrl = _parentUrlParser.parse(athing);
     final contextUrl = _contextUrlParser.parse(athing);
 
-    return ThreadCommentData.fromParsed(
+    return ThreadFeedItemData.fromParsed(
       id: id,
       hnuser: hnuser,
       age: age,

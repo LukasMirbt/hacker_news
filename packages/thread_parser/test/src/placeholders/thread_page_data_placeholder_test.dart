@@ -4,11 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:thread_parser/thread_parser.dart';
 
 void main() {
-  group(ThreadListPageDataPlaceholder, () {
-    test('returns $ThreadListPageData', () {
+  group(ThreadFeedPageDataPlaceholder, () {
+    test('returns $ThreadFeedPageData', () {
       expect(
-        ThreadListPageDataPlaceholder(),
-        isA<ThreadListPageData>(),
+        ThreadFeedPageDataPlaceholder(),
+        isA<ThreadFeedPageData>(),
       );
     });
   });

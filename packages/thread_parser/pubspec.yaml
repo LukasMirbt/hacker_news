@@ -13,9 +13,9 @@ dependencies:
   equatable: ^2.0.7
   flutter:
     sdk: flutter
+  html: ^0.15.5
   parser_core:
     path: ../parser_core
-  html: ^0.15.5
 
 dev_dependencies:
   flutter_test:

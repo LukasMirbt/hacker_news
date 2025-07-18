@@ -1,7 +1,7 @@
-import 'package:thread_repository/thread_repository.dart';
+import 'package:thread_parser/thread_parser.dart';
 
-class ThreadFeedItemPlaceholder extends ThreadFeedItem {
-  ThreadFeedItemPlaceholder({
+class ThreadFeedItemDataPlaceholder extends ThreadFeedItemData {
+  ThreadFeedItemDataPlaceholder({
     String? id,
     Hnuser? hnuser,
     DateTime? age,
