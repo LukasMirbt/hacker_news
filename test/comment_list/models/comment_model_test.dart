@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:collapse_handler/collapse_handler.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,6 +35,13 @@ void main() async {
         formatter: formatter,
       );
     }
+
+    test('is ${Collapsible<CommentModel>}', () {
+      expect(
+        createSubject(),
+        isA<Collapsible<CommentModel>>(),
+      );
+    });
 
     group('id', () {
       test('returns comment.id', () {
@@ -105,6 +113,13 @@ void main() async {
       });
     });
 
+    group('toRepository', () {
+      test('returns comment', () {
+        final model = createSubject();
+        expect(model.toRepository(), comment);
+      });
+    });
+
     group('age', () {
       test('returns correct string', () {
         final age = DateTime(1);
@@ -118,13 +133,6 @@ void main() async {
           model.age(appL10n, formatterL10n),
           appL10n.commentList_age(age: formattedAge),
         );
-      });
-    });
-
-    group('toRepository', () {
-      test('returns comment', () {
-        final model = createSubject();
-        expect(model.toRepository(), comment);
       });
     });
 
@@ -154,6 +162,35 @@ void main() async {
           model.copyWith(comment: updatedItem),
         );
         verify(unvote).called(1);
+      });
+    });
+
+    group('copyWith', () {
+      test('returns $CommentModel with updated fields '
+          'when values are non-null', () {
+        final updatedComment = _MockComment();
+        const updatedIsExpanded = false;
+        const updatedIsParentExpanded = false;
+        final model = createSubject();
+        expect(
+          model.copyWith(
+            comment: updatedComment,
+            isExpanded: updatedIsExpanded,
+            isParentExpanded: updatedIsParentExpanded,
+          ),
+          CommentModel(
+            formatter: formatter,
+            comment: updatedComment,
+            isExpanded: updatedIsExpanded,
+            isParentExpanded: updatedIsParentExpanded,
+          ),
+        );
+      });
+
+      test('returns $CommentModel with previous fields '
+          'when values are null', () {
+        final model = createSubject();
+        expect(model.copyWith(), model);
       });
     });
   });
