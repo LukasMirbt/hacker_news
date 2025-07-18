@@ -1,6 +1,6 @@
 definitions:
     flutter-version: &flutter-version
-        flutter: 3.32.6
+        flutter: 3.32.7
 
     set-build-version: &set-build-version
         name: Set build version
