@@ -45,52 +45,13 @@ class PostRepository extends Cubit<Post> {
     emit(post);
   }
 
-  Future<void> comment({
-    required Post post,
-    required String text,
-  }) async {
-    final postId = post.header.id;
-    final hmac = post.header.hmac;
-    if (hmac == null) throw CommentFailure(postId: postId);
-
-    final data = await _api.comment(
-      postId: postId,
-      hmac: hmac,
-      text: text,
+  Future<void> comment(CommentForm form) async {
+    await _api.comment(
+      form.toApi(),
     );
-
-    final updatedPost = Post.from(data);
-    emit(updatedPost);
-  }
-
-  Future<ReplyForm> fetchReplyForm({
-    required Post post,
-    required String commentId,
-  }) async {
-    final data = await _api.fetchReplyForm(
-      itemId: post.header.id,
-      commentId: commentId,
+    final data = await _api.fetchPost(
+      id: form.parent,
     );
-    final replyForm = ReplyForm.from(data);
-    return replyForm;
-  }
-
-  Future<void> reply({
-    required Post post,
-    required ReplyForm replyForm,
-    required String text,
-  }) async {
-    final commentId = replyForm.id;
-    final hmac = replyForm.hmac;
-    if (hmac == null) throw ReplyFailure(commentId: commentId);
-
-    final data = await _api.reply(
-      postId: post.header.id,
-      commentId: commentId,
-      hmac: hmac,
-      text: text,
-    );
-
     final updatedPost = Post.from(data);
     emit(updatedPost);
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:hacker_client/post/post.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:web_links/web_links.dart';
 
@@ -29,7 +29,7 @@ class FeedItemPressListener extends StatelessWidget {
         if (urlHost != null) {
           linkLauncher.launch(itemPress.url);
         } else {
-          PostRoute(postId: itemPress.id).go(context);
+          PostRoute(postId: itemPress.id).push<void>(context);
         }
       },
       child: child,

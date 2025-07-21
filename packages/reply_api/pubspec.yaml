@@ -1,0 +1,31 @@
+name: reply_api
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dependencies:
+  app_client:
+    path: ../app_client
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  post_parser:
+    path: ../post_parser
+  reply_parser:
+    path: ../reply_parser
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true

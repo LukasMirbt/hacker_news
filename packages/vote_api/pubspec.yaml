@@ -17,8 +17,8 @@ dependencies:
   html: ^0.15.5
   post_parser:
     path: ../post_parser
-  reply_form_parser:
-    path: ../reply_form_parser
+  reply_parser:
+    path: ../reply_parser
   stream_transform: ^2.1.1
 
 dev_dependencies:

@@ -15,13 +15,11 @@ class _RouterDelegateListenerState
   @override
   void initState() {
     super.initState();
-    final state = context.read<AppRouterBloc>().state;
-    final routerDelegate = state.router.goRouter.routerDelegate;
+    final state = context.read<AppRouter>().state;
+    final routerDelegate = state.goRouter.routerDelegate;
     routerDelegate.addListener(() {
       final matchedLocation = routerDelegate.state.matchedLocation;
-      context.read<AppRouterBloc>().add(
-        AppRouterLocationChanged(matchedLocation),
-      );
+      context.read<AppRouter>().updateLocation(matchedLocation);
     });
   }
 

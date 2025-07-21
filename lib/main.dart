@@ -12,6 +12,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_api/post_api.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread_api/thread_api.dart';
@@ -80,10 +81,16 @@ void main() async {
   final authenticationApi = AuthenticationApi(appClient: appClient);
   final feedApi = FeedApi(appClient: appClient);
   final postApi = PostApi(appClient: appClient);
+  final replyApi = ReplyApi(appClient: appClient);
   final threadApi = ThreadApi(appClient: appClient);
   final voteApi = VoteApi(appClient: appClient);
 
   final authenticationRepository = AuthenticationRepository(
+    authenticationApi: authenticationApi,
+  );
+
+  final replyRepository = ReplyRepository(
+    replyApi: replyApi,
     authenticationApi: authenticationApi,
   );
 
@@ -103,6 +110,7 @@ void main() async {
       threadApi: threadApi,
       analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
+      replyRepository: replyRepository,
       versionRepository: versionRepository,
       visitedPostRepository: visitedPostRepository,
       voteRepository: voteRepository,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/reply_form/reply_form.dart';
+import 'package:hacker_client/reply/reply_form.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 

@@ -1,17 +1,17 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+part of '../../post/route/post_shell_route.dart';
 
 class CommentOptionsRoute extends GoRouteData with _$CommentOptionsRoute {
   const CommentOptionsRoute({
     required this.postId,
-    required this.commentId,
+    required this.$extra,
   });
 
   static const config = TypedGoRoute<CommentOptionsRoute>(
-    path: ':commentId/options',
+    path: 'comment/options',
   );
 
   final String postId;
-  final String commentId;
+  final Comment $extra;
 
   @override
   Page<void> buildPage(
@@ -20,7 +20,7 @@ class CommentOptionsRoute extends GoRouteData with _$CommentOptionsRoute {
   ) {
     return ModalBottomSheetPage(
       showDragHandle: true,
-      builder: (_) => CommentOptionsSheet(commentId: commentId),
+      builder: (_) => CommentOptionsSheet(comment: $extra),
     );
   }
 }

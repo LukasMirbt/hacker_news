@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentOptionsState {
 
- String get postId; CommentModel get comment;
+ CommentModel get comment;
 /// Create a copy of CommentOptionsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CommentOptionsStateCopyWith<CommentOptionsState> get copyWith => _$CommentOptio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentOptionsState&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.comment, comment) || other.comment == comment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentOptionsState&&(identical(other.comment, comment) || other.comment == comment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,postId,comment);
+int get hashCode => Object.hash(runtimeType,comment);
 
 @override
 String toString() {
-  return 'CommentOptionsState(postId: $postId, comment: $comment)';
+  return 'CommentOptionsState(comment: $comment)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CommentOptionsStateCopyWith<$Res>  {
   factory $CommentOptionsStateCopyWith(CommentOptionsState value, $Res Function(CommentOptionsState) _then) = _$CommentOptionsStateCopyWithImpl;
 @useResult
 $Res call({
- String postId, CommentModel comment
+ CommentModel comment
 });
 
 
@@ -63,10 +63,9 @@ class _$CommentOptionsStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentOptionsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? postId = null,Object? comment = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? comment = null,}) {
   return _then(_self.copyWith(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
+comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
 as CommentModel,
   ));
 }
@@ -78,10 +77,9 @@ as CommentModel,
 
 
 class _CommentOptionsState implements CommentOptionsState {
-  const _CommentOptionsState({required this.postId, required this.comment});
+  const _CommentOptionsState({required this.comment});
   
 
-@override final  String postId;
 @override final  CommentModel comment;
 
 /// Create a copy of CommentOptionsState
@@ -94,16 +92,16 @@ _$CommentOptionsStateCopyWith<_CommentOptionsState> get copyWith => __$CommentOp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentOptionsState&&(identical(other.postId, postId) || other.postId == postId)&&(identical(other.comment, comment) || other.comment == comment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentOptionsState&&(identical(other.comment, comment) || other.comment == comment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,postId,comment);
+int get hashCode => Object.hash(runtimeType,comment);
 
 @override
 String toString() {
-  return 'CommentOptionsState(postId: $postId, comment: $comment)';
+  return 'CommentOptionsState(comment: $comment)';
 }
 
 
@@ -114,7 +112,7 @@ abstract mixin class _$CommentOptionsStateCopyWith<$Res> implements $CommentOpti
   factory _$CommentOptionsStateCopyWith(_CommentOptionsState value, $Res Function(_CommentOptionsState) _then) = __$CommentOptionsStateCopyWithImpl;
 @override @useResult
 $Res call({
- String postId, CommentModel comment
+ CommentModel comment
 });
 
 
@@ -131,10 +129,9 @@ class __$CommentOptionsStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentOptionsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? postId = null,Object? comment = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? comment = null,}) {
   return _then(_CommentOptionsState(
-postId: null == postId ? _self.postId : postId // ignore: cast_nullable_to_non_nullable
-as String,comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
+comment: null == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
 as CommentModel,
   ));
 }

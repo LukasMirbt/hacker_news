@@ -16,8 +16,6 @@ class _MockCancelTokenService extends Mock implements CancelTokenService {}
 
 class _MockPostStreamParser extends Mock implements PostStreamParser {}
 
-class _MockReplyFormParser extends Mock implements ReplyFormParser {}
-
 class _MockBackgroundPostParser extends Mock implements BackgroundPostParser {}
 
 class _MockResponse<T> extends Mock implements Response<T> {}
@@ -30,7 +28,6 @@ void main() {
     late Dio http;
     late CancelTokenService cancelTokenService;
     late PostStreamParser postStreamParser;
-    late ReplyFormParser replyFormParser;
     late BackgroundPostParser postParser;
 
     setUp(() {
@@ -38,7 +35,6 @@ void main() {
       http = _MockDio();
       cancelTokenService = _MockCancelTokenService();
       postStreamParser = _MockPostStreamParser();
-      replyFormParser = _MockReplyFormParser();
       postParser = _MockBackgroundPostParser();
       when(() => client.http).thenReturn(http);
       registerFallbackValue(RedirectValidationOptions());
@@ -49,7 +45,6 @@ void main() {
         appClient: client,
         cancelTokenService: cancelTokenService,
         postStreamParser: postStreamParser,
-        replyFormParser: replyFormParser,
         postParser: postParser,
       );
     }
@@ -253,127 +248,6 @@ void main() {
           completion(post),
         );
         verify(commentRequest).called(1);
-        verify(redirectRequest).called(1);
-        verify(parse).called(1);
-      });
-    });
-
-    group('fetchReplyForm', () {
-      const itemId = 'itemId';
-      const commentId = 'commentId';
-
-      final gotoUri = Uri(
-        path: 'item',
-        queryParameters: {'id': itemId},
-        fragment: commentId,
-      );
-
-      final goto = gotoUri.toString();
-
-      final request = () => http.get<String>(
-        'reply',
-        queryParameters: {
-          'id': commentId,
-          'goto': goto,
-        },
-      );
-
-      const html = 'html';
-      final replyForm = ReplyFormDataPlaceholder();
-
-      final parse = () => replyFormParser.parse(html);
-
-      test('returns $ReplyFormData', () async {
-        when(request).thenAnswer(
-          (_) async => Response(
-            requestOptions: RequestOptions(),
-            data: html,
-          ),
-        );
-        when(parse).thenAnswer((_) => replyForm);
-        final api = createSubject();
-        await expectLater(
-          api.fetchReplyForm(
-            itemId: itemId,
-            commentId: commentId,
-          ),
-          completion(replyForm),
-        );
-        verify(request).called(1);
-        verify(parse).called(1);
-      });
-    });
-
-    group('reply', () {
-      const postId = 'postId';
-      const commentId = 'commentId';
-      const hmac = 'hmac';
-      const text = 'text';
-
-      final gotoUri = Uri(
-        path: 'item',
-        queryParameters: {'id': postId},
-        fragment: commentId,
-      );
-
-      final goto = gotoUri.toString();
-
-      final replyRequest = () => http.post<String>(
-        'comment',
-        options: any(
-          named: 'options',
-          that: isA<RedirectValidationOptions>().having(
-            (options) => options.contentType,
-            'contentType',
-            Headers.formUrlEncodedContentType,
-          ),
-        ),
-        data: {
-          'parent': commentId,
-          'goto': goto,
-          'hmac': hmac,
-          'text': text,
-        },
-      );
-
-      const redirect = 'redirect';
-
-      final headers = Headers.fromMap({
-        HttpHeaders.locationHeader: [redirect],
-      });
-
-      final redirectRequest = () => http.get<String>(redirect);
-      const html = 'html';
-
-      final post = PostDataPlaceholder();
-      final parse = () => postParser.parse(html);
-
-      test('makes reply request, follows redirect '
-          'and returns parsed post', () async {
-        when(replyRequest).thenAnswer(
-          (_) async => Response(
-            requestOptions: RequestOptions(),
-            headers: headers,
-          ),
-        );
-        when(redirectRequest).thenAnswer(
-          (_) async => Response(
-            requestOptions: RequestOptions(),
-            data: html,
-          ),
-        );
-        when(parse).thenAnswer((_) async => post);
-        final api = createSubject();
-        await expectLater(
-          api.reply(
-            postId: postId,
-            commentId: commentId,
-            hmac: hmac,
-            text: text,
-          ),
-          completion(post),
-        );
-        verify(replyRequest).called(1);
         verify(redirectRequest).called(1);
         verify(parse).called(1);
       });

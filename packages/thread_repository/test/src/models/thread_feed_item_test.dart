@@ -20,6 +20,7 @@ void main() {
             upvoteUrl: data.upvoteUrl,
             parentUrl: data.parentUrl,
             contextUrl: data.contextUrl,
+            onUrl: data.onUrl,
           ),
         );
       });

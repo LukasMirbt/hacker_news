@@ -13,6 +13,10 @@ final class CommentListVoteSubscriptionRequested extends CommentListEvent {
   const CommentListVoteSubscriptionRequested();
 }
 
+final class CommentListReplySubscriptionRequested extends CommentListEvent {
+  const CommentListReplySubscriptionRequested();
+}
+
 final class CommentListExpansionToggled extends CommentListEvent
     with EquatableMixin {
   const CommentListExpansionToggled(this.comment);

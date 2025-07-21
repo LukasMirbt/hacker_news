@@ -7,6 +7,8 @@ import 'package:hacker_client/login_loading/login_loading.dart'
     as login_loading;
 import 'package:hacker_client/logout_loading/logout_loading.dart'
     as logout_loading;
+import 'package:hacker_client/post/post.dart' as post;
+import 'package:hacker_client/reply/reply.dart' as reply;
 import 'package:hacker_client/web_redirect/web_redirect.dart' as web_redirect;
 
 class AppRouteList {
@@ -18,6 +20,8 @@ class AppRouteList {
         ...login_loading.$appRoutes,
         ...logout_loading.$appRoutes,
         ...app_tab.$appRoutes,
+        ...post.$appRoutes,
+        ...reply.$appRoutes,
       ];
 
   final List<RouteBase> routes;

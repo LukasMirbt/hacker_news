@@ -60,6 +60,21 @@ class PaginatedThreadFeedModel extends Equatable {
     );
   }
 
+  PaginatedThreadFeedModel insertAfter({
+    required ThreadFeedItemModel afterItem,
+    required ThreadFeedItemModel newItem,
+  }) {
+    final index = items.indexOf(afterItem);
+    if (index == -1) return this;
+
+    final updatedItems = [...items]..insert(index + 1, newItem);
+
+    return PaginatedThreadFeedModel(
+      feed: feed,
+      items: updatedItems,
+    );
+  }
+
   PaginatedThreadFeedModel rebuildWith(PaginatedThreadFeed feed) {
     final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,

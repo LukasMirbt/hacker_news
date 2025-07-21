@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Post {
 
- PostHeader get header; List<Comment> get comments;
+ PostHeader get header; CommentForm get commentForm; List<Comment> get comments;
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $PostCopyWith<Post> get copyWith => _$PostCopyWithImpl<Post>(this as Post, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.header, header) || other.header == header)&&const DeepCollectionEquality().equals(other.comments, comments));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Post&&(identical(other.header, header) || other.header == header)&&(identical(other.commentForm, commentForm) || other.commentForm == commentForm)&&const DeepCollectionEquality().equals(other.comments, comments));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,header,const DeepCollectionEquality().hash(comments));
+int get hashCode => Object.hash(runtimeType,header,commentForm,const DeepCollectionEquality().hash(comments));
 
 @override
 String toString() {
-  return 'Post(header: $header, comments: $comments)';
+  return 'Post(header: $header, commentForm: $commentForm, comments: $comments)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $PostCopyWith<$Res>  {
   factory $PostCopyWith(Post value, $Res Function(Post) _then) = _$PostCopyWithImpl;
 @useResult
 $Res call({
- PostHeader header, List<Comment> comments
+ PostHeader header, CommentForm commentForm, List<Comment> comments
 });
 
 
@@ -63,10 +63,11 @@ class _$PostCopyWithImpl<$Res>
 
 /// Create a copy of Post
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? header = null,Object? comments = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? header = null,Object? commentForm = null,Object? comments = null,}) {
   return _then(Post(
 header: null == header ? _self.header : header // ignore: cast_nullable_to_non_nullable
-as PostHeader,comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
+as PostHeader,commentForm: null == commentForm ? _self.commentForm : commentForm // ignore: cast_nullable_to_non_nullable
+as CommentForm,comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,
   ));
 }

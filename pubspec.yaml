@@ -24,7 +24,9 @@ workspace:
   - packages/post_api
   - packages/post_parser
   - packages/post_repository
-  - packages/reply_form_parser
+  - packages/reply_api
+  - packages/reply_parser
+  - packages/reply_repository
   - packages/secure_cookie_storage
   - packages/share_launcher
   - packages/storage/persistent_storage
@@ -100,6 +102,10 @@ dependencies:
   post_repository:
     path: packages/post_repository
   provider: ^6.1.2
+  reply_api:
+    path: packages/reply_api
+  reply_repository:
+    path: packages/reply_repository
   secure_cookie_storage:
     path: packages/secure_cookie_storage
   share_launcher:

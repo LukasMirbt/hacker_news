@@ -23,7 +23,7 @@ class _LogoutLoadingPageState extends State<LogoutLoadingPage> {
   Future<void> _waitAndRedirect() async {
     await Future<void>.delayed(LogoutLoadingPage.delay);
     if (!mounted) return;
-    GoRouter.of(context).go(AppRouter.initialLocation);
+    GoRouter.of(context).go(AppRouterState.initialLocation);
   }
 
   @override

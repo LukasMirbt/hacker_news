@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:app_client/app_client.dart';
 import 'package:equatable/equatable.dart';
@@ -19,18 +18,15 @@ class PostApi {
     required AppClient appClient,
     CancelTokenService? cancelTokenService,
     PostStreamParser? postStreamParser,
-    ReplyFormParser? replyFormParser,
     BackgroundPostParser? postParser,
   }) : _client = appClient,
        _cancelTokenService = cancelTokenService ?? CancelTokenService(),
        _postStreamParser = postStreamParser ?? PostStreamParser(),
-       _replyFormParser = replyFormParser ?? ReplyFormParser(),
        _postParser = postParser ?? BackgroundPostParser();
 
   final AppClient _client;
   final CancelTokenService _cancelTokenService;
   final PostStreamParser _postStreamParser;
-  final ReplyFormParser _replyFormParser;
   final BackgroundPostParser _postParser;
 
   Stream<PostData> fetchPostStream({required String id}) async* {
@@ -71,100 +67,28 @@ class PostApi {
     return post;
   }
 
-  Future<PostData> comment({
-    required String postId,
-    required String hmac,
-    required String text,
-  }) async {
-    final gotoUri = Uri(
-      path: 'item',
-      queryParameters: {'id': postId},
-    );
-
-    final goto = gotoUri.toString();
-
-    final response = await _client.http.post<String>(
+  Future<void> comment(CommentForm form) async {
+    await _client.http.post<String>(
       'comment',
       options: RedirectValidationOptions(
         contentType: Headers.formUrlEncodedContentType,
       ),
-      data: {
-        'parent': postId,
-        'goto': goto,
-        'hmac': hmac,
-        'text': text,
-      },
+      data: form.toData(),
     );
-
-    final redirect = response.headers.value(HttpHeaders.locationHeader)!;
-
-    final redirectResponse = await _client.http.get<String>(redirect);
-    final html = redirectResponse.data!;
-    final post = _postParser.parse(html);
-
-    return post;
   }
 
-  Future<ReplyFormData> fetchReplyForm({
-    required String itemId,
-    required String commentId,
-  }) async {
-    final gotoUri = Uri(
-      path: 'item',
-      queryParameters: {'id': itemId},
-      fragment: commentId,
-    );
-
-    final goto = gotoUri.toString();
-
+  Future<List<CommentData>> fetchCommentThread({required String id}) async {
     final response = await _client.http.get<String>(
-      'reply',
-      queryParameters: {
-        'id': commentId,
-        'goto': goto,
-      },
+      'item',
+      data: {'id': id},
     );
 
     final html = response.data!;
-    final data = _replyFormParser.parse(html);
-    return data;
-  }
 
-  Future<PostData> reply({
-    required String postId,
-    required String commentId,
-    required String hmac,
-    required String text,
-  }) async {
-    final gotoUri = Uri(
-      path: 'item',
-      queryParameters: {
-        'id': postId,
-      },
-      fragment: commentId,
-    );
+    final document = const HtmlParser().parse(html);
+    final commentElement = document.querySelector('.comment-tree');
 
-    final goto = gotoUri.toString();
-
-    final response = await _client.http.post<String>(
-      'comment',
-      options: RedirectValidationOptions(
-        contentType: Headers.formUrlEncodedContentType,
-      ),
-      data: {
-        'parent': commentId,
-        'goto': goto,
-        'hmac': hmac,
-        'text': text,
-      },
-    );
-
-    final redirect = response.headers.value(HttpHeaders.locationHeader)!;
-
-    final redirectResponse = await _client.http.get<String>(redirect);
-    final html = redirectResponse.data!;
-    final post = _postParser.parse(html);
-
-    return post;
+    final comments = const CommentListParser().parse(commentElement!);
+    return comments;
   }
 }

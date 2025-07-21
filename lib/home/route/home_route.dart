@@ -7,7 +7,6 @@ class HomeRoute extends GoRouteData with _$HomeRoute {
     path: '/home',
     routes: [
       FeedItemOptionsRoute.config,
-      PostShellRoute.config,
     ],
   );
 

@@ -6,17 +6,17 @@ class ThreadApi {
     required AppClient appClient,
     ThreadParser? threadParser,
   }) : _client = appClient,
-       _parser = threadParser ?? const ThreadParser();
+       _threadParser = threadParser ?? const ThreadParser();
 
   final AppClient _client;
-  final ThreadParser _parser;
+  final ThreadParser _threadParser;
 
   Future<ThreadFeedPageData> fetchFeedPage(
     ThreadFeedPageUrl pageUrl,
   ) async {
     final response = await _client.http.get<String>(pageUrl.url);
     final html = response.data!;
-    final page = _parser.parse(html);
+    final page = _threadParser.parse(html);
     return page;
   }
 }

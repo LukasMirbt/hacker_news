@@ -13,9 +13,11 @@ void main() {
             indent: data.indent,
             upvoteUrl: data.upvoteUrl,
             hasBeenUpvoted: data.hasBeenUpvoted,
+            score: data.score,
             hnuser: data.hnuser,
             age: data.age,
             htmlText: data.htmlText,
+            replyUrl: data.replyUrl,
           ),
         );
       });

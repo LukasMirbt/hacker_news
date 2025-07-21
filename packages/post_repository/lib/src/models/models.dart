@@ -1,4 +1,4 @@
 export 'comment.dart';
+export 'comment_form.dart';
 export 'post.dart';
 export 'post_header.dart';
-export 'reply_form.dart';

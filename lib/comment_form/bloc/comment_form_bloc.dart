@@ -10,7 +10,7 @@ class CommentFormBloc extends Bloc<CommentFormEvent, CommentFormState> {
   }) : _repository = postRepository,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentFormState(
+         CommentFormState.initial(
            post: postRepository.state,
          ),
        ) {
@@ -41,7 +41,9 @@ class CommentFormBloc extends Bloc<CommentFormEvent, CommentFormState> {
   ) {
     emit(
       state.copyWith(
-        text: event.text,
+        form: state.form.copyWith(
+          text: event.text,
+        ),
       ),
     );
   }
@@ -58,8 +60,7 @@ class CommentFormBloc extends Bloc<CommentFormEvent, CommentFormState> {
 
     try {
       await _repository.comment(
-        post: state.post,
-        text: state.text,
+        state.form.toRepository(),
       );
 
       emit(

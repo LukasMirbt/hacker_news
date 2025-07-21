@@ -20,6 +20,8 @@ class CommentModel extends Equatable {
     return WebRedirect(url: url);
   }
 
+  String? get replyUrl => _comment.replyUrl;
+
   @override
   List<Object?> get props => [
     _comment,

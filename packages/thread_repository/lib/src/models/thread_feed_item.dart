@@ -18,6 +18,8 @@ class ThreadFeedItem with _$ThreadFeedItem {
     required this.upvoteUrl,
     required this.parentUrl,
     required this.contextUrl,
+    required this.onUrl,
+    required this.replyUrl,
   });
 
   factory ThreadFeedItem.from(ThreadFeedItemData data) {
@@ -32,6 +34,8 @@ class ThreadFeedItem with _$ThreadFeedItem {
       upvoteUrl: data.upvoteUrl,
       parentUrl: data.parentUrl,
       contextUrl: data.contextUrl,
+      onUrl: data.onUrl,
+      replyUrl: data.replyUrl,
     );
   }
 
@@ -45,6 +49,8 @@ class ThreadFeedItem with _$ThreadFeedItem {
   final String? upvoteUrl;
   final String? parentUrl;
   final String? contextUrl;
+  final String? onUrl;
+  final String? replyUrl;
 
   ThreadFeedItem upvote() => copyWith(hasBeenUpvoted: true);
 

@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/reply_form/reply_form.dart';
+import 'package:hacker_client/reply/reply_form.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../post/pump_post.dart';

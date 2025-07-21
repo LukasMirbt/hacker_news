@@ -5,20 +5,16 @@ import 'package:post_repository/post_repository.dart';
 
 class CommentOptionsSheet extends StatelessWidget {
   const CommentOptionsSheet({
-    required this.commentId,
+    required this.comment,
     super.key,
   });
 
-  final String commentId;
+  final Comment comment;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      lazy: false,
-      create: (context) => CommentOptionsBloc(
-        commentId: commentId,
-        postRepository: context.read<PostRepository>(),
-      ),
+      create: (_) => CommentOptionsBloc(comment: comment),
       child: const CommentOptionsView(),
     );
   }

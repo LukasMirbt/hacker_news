@@ -11,6 +11,7 @@ import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:post_api/post_api.dart';
 import 'package:provider/provider.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
@@ -24,6 +25,7 @@ class App extends StatelessWidget {
     required ThreadApi threadApi,
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
+    required ReplyRepository replyRepository,
     required VersionRepository versionRepository,
     required VisitedPostRepository visitedPostRepository,
     required VoteRepository voteRepository,
@@ -34,16 +36,18 @@ class App extends StatelessWidget {
        _feedApi = feedApi,
        _postApi = postApi,
        _threadApi = threadApi,
+       _replyRepository = replyRepository,
        _versionRepository = versionRepository,
        _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
-  final AnalyticsRepository _analyticsRepository;
-  final AuthenticationRepository _authenticationRepository;
   final PostApi _postApi;
   final FeedApi _feedApi;
   final ThreadApi _threadApi;
+  final AnalyticsRepository _analyticsRepository;
+  final AuthenticationRepository _authenticationRepository;
+  final ReplyRepository _replyRepository;
   final VersionRepository _versionRepository;
   final VisitedPostRepository _visitedPostRepository;
   final VoteRepository _voteRepository;
@@ -61,6 +65,7 @@ class App extends StatelessWidget {
         providers: [
           RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
+          RepositoryProvider.value(value: _replyRepository),
           RepositoryProvider.value(value: _versionRepository),
           RepositoryProvider.value(value: _visitedPostRepository),
           RepositoryProvider.value(value: _voteRepository),
@@ -71,7 +76,10 @@ class App extends StatelessWidget {
               create: (_) => AppBloc(),
             ),
             BlocProvider(
-              create: (_) => AppRouterBloc(),
+              create: (context) => AppRouter(
+                authenticationRepository: context
+                    .read<AuthenticationRepository>(),
+              ),
             ),
             BlocProvider(
               create: (context) =>

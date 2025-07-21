@@ -1,4 +1,4 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+part of '../../post/route/post_shell_route.dart';
 
 class CommentFormRoute extends GoRouteData
     with _$CommentFormRoute, AuthenticatedRoute {

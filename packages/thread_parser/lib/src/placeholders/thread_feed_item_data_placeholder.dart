@@ -12,6 +12,8 @@ class ThreadFeedItemDataPlaceholder extends ThreadFeedItemData {
     String? upvoteUrl,
     String? parentUrl,
     String? contextUrl,
+    String? onUrl,
+    String? replyUrl,
   }) : super(
          id: id ?? 'id',
          hnuser: hnuser ?? const HnuserPlaceholder(),
@@ -23,5 +25,7 @@ class ThreadFeedItemDataPlaceholder extends ThreadFeedItemData {
          upvoteUrl: upvoteUrl ?? 'upvoteUrl',
          parentUrl: parentUrl ?? 'parentUrl',
          contextUrl: contextUrl ?? 'contextUrl',
+         onUrl: onUrl ?? 'onUrl',
+         replyUrl: replyUrl ?? 'replyUrl',
        );
 }

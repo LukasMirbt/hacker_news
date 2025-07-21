@@ -21,7 +21,7 @@ class AppView extends StatelessWidget {
     );
 
     final goRouter = context.select(
-      (AppRouterBloc bloc) => bloc.state.router.goRouter,
+      (AppRouter router) => router.state.goRouter,
     );
 
     return MaterialApp.router(

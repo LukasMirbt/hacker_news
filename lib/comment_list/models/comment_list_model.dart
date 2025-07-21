@@ -44,6 +44,18 @@ class CommentListModel extends Equatable {
     return CommentListModel(items: updatedList);
   }
 
+  CommentListModel insertAfter({
+    required CommentModel afterItem,
+    required CommentModel newItem,
+  }) {
+    final index = items.indexOf(afterItem);
+    if (index == -1) return this;
+
+    final updatedItems = [...items]..insert(index + 1, newItem);
+
+    return CommentListModel(items: updatedItems);
+  }
+
   CommentListModel rebuildWith(List<Comment> comments) {
     final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,

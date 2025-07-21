@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply_form/reply_form.dart';
+import 'package:hacker_client/reply/reply_form.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 

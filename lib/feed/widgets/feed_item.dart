@@ -47,8 +47,9 @@ class FeedItem extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          final item = this.item.toRepository();
-          FeedItemOptionsRoute(item).go(context);
+          FeedItemOptionsRoute(
+            $extra: item.toRepository(),
+          ).pushReplacement(context);
         },
         voteButton: score == null
             ? null

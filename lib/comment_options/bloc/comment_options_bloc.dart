@@ -4,13 +4,8 @@ import 'package:post_repository/post_repository.dart';
 
 class CommentOptionsBloc extends Bloc<void, CommentOptionsState> {
   CommentOptionsBloc({
-    required String commentId,
-    required PostRepository postRepository,
+    required Comment comment,
   }) : super(
-         CommentOptionsState.from(
-           postId: postRepository.state.header.id,
-           comments: postRepository.state.comments,
-           commentId: commentId,
-         ),
+         CommentOptionsState.from(comment: comment),
        );
 }

@@ -30,6 +30,7 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
 
   String get upvoteUrl => comment.upvoteUrl;
   bool get hasBeenUpvoted => comment.hasBeenUpvoted;
+  int? get score => comment.score;
   String get user => comment.hnuser.id;
   String get htmlText => comment.htmlText;
 

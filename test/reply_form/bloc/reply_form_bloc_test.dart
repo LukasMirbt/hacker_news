@@ -3,7 +3,7 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply_form/reply_form.dart';
+import 'package:hacker_client/reply/reply_form.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';

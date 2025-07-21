@@ -6,6 +6,10 @@ class DetailHtmlTextParser {
   String? parse(Element item) {
     final div = item.querySelector('.toptext');
     if (div == null) return null;
-    return div.innerHtml;
+
+    final innerHtml = div.innerHtml;
+    if (innerHtml.isEmpty) return null;
+
+    return innerHtml;
   }
 }

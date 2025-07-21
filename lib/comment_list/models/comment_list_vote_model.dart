@@ -11,7 +11,7 @@ class CommentListVoteModel {
     final item = commentList.findById(vote.id);
     if (item == null) return commentList;
     final updatedItem = item.vote(vote.type);
-    final updatedFeed = commentList.update(updatedItem);
-    return updatedFeed;
+    final updatedList = commentList.update(updatedItem);
+    return updatedList;
   }
 }

@@ -7,9 +7,11 @@ class CommentData extends Equatable {
     required this.indent,
     required this.upvoteUrl,
     required this.hasBeenUpvoted,
+    required this.score,
     required this.hnuser,
     required this.age,
     required this.htmlText,
+    required this.replyUrl,
   });
 
   factory CommentData.fromParsed({
@@ -17,18 +19,22 @@ class CommentData extends Equatable {
     required int? indent,
     required String? upvoteUrl,
     required bool? hasBeenUpvoted,
+    required int? score,
     required Hnuser? hnuser,
     required DateTime? age,
     required String? htmlText,
+    required String? replyUrl,
   }) {
     return CommentData(
       id: id ?? '',
       indent: indent ?? 0,
       upvoteUrl: upvoteUrl ?? '',
       hasBeenUpvoted: hasBeenUpvoted ?? false,
+      score: score,
       hnuser: hnuser ?? Hnuser.empty,
       age: age ?? DateTime(0),
       htmlText: htmlText ?? '',
+      replyUrl: replyUrl,
     );
   }
 
@@ -36,9 +42,11 @@ class CommentData extends Equatable {
   final int indent;
   final String upvoteUrl;
   final bool hasBeenUpvoted;
+  final int? score;
   final Hnuser hnuser;
   final DateTime age;
   final String htmlText;
+  final String? replyUrl;
 
   @override
   List<Object?> get props => [
@@ -46,8 +54,10 @@ class CommentData extends Equatable {
     indent,
     upvoteUrl,
     hasBeenUpvoted,
+    score,
     hnuser,
     age,
     htmlText,
+    replyUrl,
   ];
 }

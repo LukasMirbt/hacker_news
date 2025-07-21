@@ -11,7 +11,8 @@ class _MockDetailSubtitleRowParser extends Mock
 
 class _MockDetailHtmlTextParser extends Mock implements DetailHtmlTextParser {}
 
-class _MockHmacParser extends Mock implements HmacParser {}
+class _MockDetailCommentFormParser extends Mock
+    implements DetailCommentFormParser {}
 
 class _MockElement extends Mock implements Element {}
 
@@ -19,13 +20,13 @@ void main() {
   const titleRowData = DetailTitleRowDataPlaceholder();
   final subtitleRowData = DetailSubtitleRowDataPlaceholder();
   const htmlText = 'htmlText';
-  const hmac = 'hmac';
+  const commentFormData = DetailCommentFormDataPlaceholder();
 
   group(DetailFatItemParser, () {
     late DetailTitleRowParser titleRowParser;
     late DetailSubtitleRowParser subtitleRowParser;
     late DetailHtmlTextParser htmlTextParser;
-    late HmacParser hmacParser;
+    late DetailCommentFormParser commentFormParser;
     late Element fatItem;
     late Element athing;
     late Element subtext;
@@ -34,7 +35,7 @@ void main() {
       titleRowParser = _MockDetailTitleRowParser();
       subtitleRowParser = _MockDetailSubtitleRowParser();
       htmlTextParser = _MockDetailHtmlTextParser();
-      hmacParser = _MockHmacParser();
+      commentFormParser = _MockDetailCommentFormParser();
       fatItem = _MockElement();
       athing = _MockElement();
       subtext = _MockElement();
@@ -45,7 +46,7 @@ void main() {
         titleRowParser: titleRowParser,
         subtitleRowParser: subtitleRowParser,
         htmlTextParser: htmlTextParser,
-        detailHmacParser: hmacParser,
+        commentFormParser: commentFormParser,
       );
     }
 
@@ -56,7 +57,7 @@ void main() {
       final parseTitleRow = () => titleRowParser.parse(athing);
       final parseSubtitleRow = () => subtitleRowParser.parse(subtext);
       final parseHtmlText = () => htmlTextParser.parse(fatItem);
-      final parseHmac = () => hmacParser.parse(fatItem);
+      final parseCommentForm = () => commentFormParser.parse(fatItem);
 
       test('returns $DetailFatItemData with correct values '
           'when data is non-null', () {
@@ -65,7 +66,7 @@ void main() {
         when(parseTitleRow).thenReturn(titleRowData);
         when(parseSubtitleRow).thenReturn(subtitleRowData);
         when(parseHtmlText).thenReturn(htmlText);
-        when(parseHmac).thenReturn(hmac);
+        when(parseCommentForm).thenReturn(commentFormData);
         final parser = createSubject();
         expect(
           parser.parse(fatItem),
@@ -73,7 +74,7 @@ void main() {
             titleRowData: titleRowData,
             subtitleRowData: subtitleRowData,
             htmlText: htmlText,
-            hmac: hmac,
+            commentFormData: commentFormData,
           ),
         );
         verify(athingSelector).called(1);
@@ -81,7 +82,7 @@ void main() {
         verify(parseTitleRow).called(1);
         verify(parseSubtitleRow).called(1);
         verify(parseHtmlText).called(1);
-        verify(parseHmac).called(1);
+        verify(parseCommentForm).called(1);
       });
 
       test('returns $DetailFatItemData with correct values '
@@ -93,7 +94,7 @@ void main() {
             titleRowData: DetailTitleRowData.empty,
             subtitleRowData: DetailSubtitleRowData.empty,
             htmlText: null,
-            hmac: null,
+            commentFormData: DetailCommentFormData.empty,
           ),
         );
       });

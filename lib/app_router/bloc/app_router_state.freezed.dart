@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppRouterState {
 
- AppRouter get router; List<String> get history;
+ GoRouter get goRouter; List<String> get history;
 /// Create a copy of AppRouterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $AppRouterStateCopyWith<AppRouterState> get copyWith => _$AppRouterStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppRouterState&&(identical(other.router, router) || other.router == router)&&const DeepCollectionEquality().equals(other.history, history));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppRouterState&&(identical(other.goRouter, goRouter) || other.goRouter == goRouter)&&const DeepCollectionEquality().equals(other.history, history));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,router,const DeepCollectionEquality().hash(history));
+int get hashCode => Object.hash(runtimeType,goRouter,const DeepCollectionEquality().hash(history));
 
 @override
 String toString() {
-  return 'AppRouterState(router: $router, history: $history)';
+  return 'AppRouterState(goRouter: $goRouter, history: $history)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $AppRouterStateCopyWith<$Res>  {
   factory $AppRouterStateCopyWith(AppRouterState value, $Res Function(AppRouterState) _then) = _$AppRouterStateCopyWithImpl;
 @useResult
 $Res call({
- AppRouter router, List<String> history
+ GoRouter goRouter, List<String> history
 });
 
 
@@ -63,10 +63,10 @@ class _$AppRouterStateCopyWithImpl<$Res>
 
 /// Create a copy of AppRouterState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? router = null,Object? history = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? goRouter = null,Object? history = null,}) {
   return _then(_self.copyWith(
-router: null == router ? _self.router : router // ignore: cast_nullable_to_non_nullable
-as AppRouter,history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
+goRouter: null == goRouter ? _self.goRouter : goRouter // ignore: cast_nullable_to_non_nullable
+as GoRouter,history: null == history ? _self.history : history // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }
@@ -78,10 +78,10 @@ as List<String>,
 
 
 class _AppRouterState extends AppRouterState {
-  const _AppRouterState({required this.router, final  List<String> history = const []}): _history = history,super._();
+  const _AppRouterState({required this.goRouter, final  List<String> history = const []}): _history = history,super._();
   
 
-@override final  AppRouter router;
+@override final  GoRouter goRouter;
  final  List<String> _history;
 @override@JsonKey() List<String> get history {
   if (_history is EqualUnmodifiableListView) return _history;
@@ -100,16 +100,16 @@ _$AppRouterStateCopyWith<_AppRouterState> get copyWith => __$AppRouterStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppRouterState&&(identical(other.router, router) || other.router == router)&&const DeepCollectionEquality().equals(other._history, _history));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppRouterState&&(identical(other.goRouter, goRouter) || other.goRouter == goRouter)&&const DeepCollectionEquality().equals(other._history, _history));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,router,const DeepCollectionEquality().hash(_history));
+int get hashCode => Object.hash(runtimeType,goRouter,const DeepCollectionEquality().hash(_history));
 
 @override
 String toString() {
-  return 'AppRouterState(router: $router, history: $history)';
+  return 'AppRouterState(goRouter: $goRouter, history: $history)';
 }
 
 
@@ -120,7 +120,7 @@ abstract mixin class _$AppRouterStateCopyWith<$Res> implements $AppRouterStateCo
   factory _$AppRouterStateCopyWith(_AppRouterState value, $Res Function(_AppRouterState) _then) = __$AppRouterStateCopyWithImpl;
 @override @useResult
 $Res call({
- AppRouter router, List<String> history
+ GoRouter goRouter, List<String> history
 });
 
 
@@ -137,10 +137,10 @@ class __$AppRouterStateCopyWithImpl<$Res>
 
 /// Create a copy of AppRouterState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? router = null,Object? history = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? goRouter = null,Object? history = null,}) {
   return _then(_AppRouterState(
-router: null == router ? _self.router : router // ignore: cast_nullable_to_non_nullable
-as AppRouter,history: null == history ? _self._history : history // ignore: cast_nullable_to_non_nullable
+goRouter: null == goRouter ? _self.goRouter : goRouter // ignore: cast_nullable_to_non_nullable
+as GoRouter,history: null == history ? _self._history : history // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }
