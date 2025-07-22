@@ -2,8 +2,9 @@ import 'package:app_ui/app_ui.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/comment_options/comment_options.dart'
+    hide CommentModel;
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/post/post.dart';
 import 'package:provider/provider.dart';
 
 class CommentWidget extends StatelessWidget {
@@ -30,10 +31,14 @@ class CommentWidget extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          CommentOptionsRoute(
-            postId: item.id,
+          /*  CommentOptionsRoute(
             $extra: item.comment,
-          ).push<void>(context);
+          ).pushRelative<void>(context); */
+
+          CommentOptionsSheet.show(
+            context,
+            comment: item.comment,
+          );
         },
         onLinkPressed: (url) {
           context.read<CommentListBloc>().add(

@@ -1,16 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
-import 'package:hacker_client/reply/reply.dart';
+part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-part 'reply_route.g.dart';
-
-@ReplyRoute.config
-class ReplyRoute extends GoRouteData with _$ReplyRoute, AuthenticatedRoute {
+class ReplyRoute extends GoRouteData
+    with _$ReplyRoute, AppRelativeRoute, AuthenticatedRoute {
   const ReplyRoute({required this.url});
 
-  static const config = TypedGoRoute<ReplyRoute>(
-    path: '/reply',
+  static final $parentNavigatorKey = AppRouter.navigatorKey;
+
+  static const config = TypedRelativeGoRoute<ReplyRoute>(
+    path: 'reply',
   );
 
   final String url;

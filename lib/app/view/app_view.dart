@@ -21,7 +21,7 @@ class AppView extends StatelessWidget {
     );
 
     final goRouter = context.select(
-      (AppRouter router) => router.state.goRouter,
+      (AppRouter router) => router.goRouter,
     );
 
     return MaterialApp.router(
@@ -49,7 +49,6 @@ class AppView extends StatelessWidget {
               WebRedirectListener(),
               LogoutListener(),
               VoteFailureListener(),
-              const RouterDelegateListener(),
               AppStatusListener(),
             ],
             child: child,

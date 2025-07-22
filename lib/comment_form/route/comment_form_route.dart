@@ -1,16 +1,12 @@
-part of '../../post/route/post_shell_route.dart';
+part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class CommentFormRoute extends GoRouteData
-    with _$CommentFormRoute, AuthenticatedRoute {
-  const CommentFormRoute({
-    required this.postId,
-  });
+    with _$CommentFormRoute, AppRelativeRoute, AuthenticatedRoute {
+  const CommentFormRoute();
 
-  static const config = TypedGoRoute<CommentFormRoute>(
+  static const config = TypedRelativeGoRoute<CommentFormRoute>(
     path: 'comment',
   );
-
-  final String postId;
 
   @override
   Page<void> buildPage(

@@ -17,7 +17,8 @@ class OpenOnWebOption extends StatelessWidget {
       onTap: () {
         final state = context.read<CommentOptionsBloc>().state;
         final url = state.comment.webRedirect.urlString;
-        WebRedirectRoute(url: url).pushReplacement(context);
+        Navigator.of(context).pop();
+        WebRedirectRoute(url: url).push<void>(context);
       },
     );
   }

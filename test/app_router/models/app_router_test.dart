@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: cascade_invocations
+// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,27 +8,47 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
+
+import '../../app/pump_app.dart';
 
 class _MockAppRedirect extends Mock implements AppRedirect {}
 
 class _MockAppRouteList extends Mock implements AppRouteList {}
 
+class _MockAppNavigationModel extends Mock implements AppNavigationModel {}
+
 class _MockBuildContext extends Mock implements BuildContext {}
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
+
+class _MockAppAbsoluteRoute extends Mock implements AppAbsoluteRoute {}
+
+class _MockAppRelativeRoute extends Mock implements AppRelativeRoute {}
+
+class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
   group(AppRouter, () {
     late AppRedirect appRedirect;
     late AppRouteList appRouteList;
+    late AppNavigationModel navigationModel;
     late BuildContext context;
     late GoRouterState state;
+    late AppRelativeRoute relativeRoute;
+    late AppAbsoluteRoute absoluteRoute;
 
     setUp(() {
       appRedirect = _MockAppRedirect();
       appRouteList = _MockAppRouteList();
+      navigationModel = _MockAppNavigationModel();
       context = _MockBuildContext();
       state = _MockGoRouterState();
+      relativeRoute = _MockAppRelativeRoute();
+      absoluteRoute = _MockAppAbsoluteRoute();
+      registerFallbackValue(_MockGoRouter());
+      registerFallbackValue(relativeRoute);
+      registerFallbackValue(absoluteRoute);
       when(() => appRouteList.routes).thenReturn([]);
     });
 
@@ -34,6 +56,7 @@ void main() {
       return AppRouter(
         appRedirect: appRedirect,
         appRouteList: appRouteList,
+        appNavigationModel: navigationModel,
       );
     }
 
@@ -52,6 +75,29 @@ void main() {
           AppRouter.initialLocation,
           HomeRoute().location,
         );
+      });
+    });
+
+    group('of', () {
+      late AppRouter appRouter;
+      late Widget child;
+
+      setUp(() {
+        appRouter = createSubject();
+        child = Container();
+      });
+
+      Widget buildSubject() {
+        return Provider.value(
+          value: appRouter,
+          child: child,
+        );
+      }
+
+      testWidgets('returns $AppRouter', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final context = tester.element(find.byWidget(child));
+        expect(AppRouter.of(context), appRouter);
       });
     });
 
@@ -88,6 +134,76 @@ void main() {
         verify(
           () => appRedirect.redirect(context, state),
         ).called(1);
+      });
+    });
+
+    group('go', () {
+      test('calls navigationModel.go', () {
+        const extra = 'extra';
+        final route = _MockAppAbsoluteRoute();
+        final go = () => navigationModel.go(
+          goRouter: any(named: 'goRouter'),
+          route: route,
+          extra: extra,
+        );
+        final appRouter = createSubject();
+        appRouter.go(route, extra: extra);
+        verify(go).called(1);
+      });
+    });
+
+    group('push', () {
+      test('calls navigationModel.push', () {
+        const extra = 'extra';
+        final route = _MockAppAbsoluteRoute();
+        const result = 'result';
+        final push = () => navigationModel.push<String>(
+          goRouter: any(named: 'goRouter'),
+          route: route,
+          extra: extra,
+        );
+        when(push).thenAnswer((_) async => result);
+        final appRouter = createSubject();
+        expect(
+          appRouter.push<String>(route, extra: extra),
+          completion(result),
+        );
+        verify(push).called(1);
+      });
+    });
+
+    group('goRelative', () {
+      test('calls navigationModel.go', () {
+        const extra = 'extra';
+        final route = _MockAppRelativeRoute();
+        final go = () => navigationModel.go(
+          goRouter: any(named: 'goRouter'),
+          route: route,
+          extra: extra,
+        );
+        final appRouter = createSubject();
+        appRouter.goRelative(route, extra: extra);
+        verify(go).called(1);
+      });
+    });
+
+    group('pushRelative', () {
+      test('calls navigationModel.push', () {
+        const extra = 'extra';
+        final route = _MockAppRelativeRoute();
+        const result = 'result';
+        final push = () => navigationModel.push<String>(
+          goRouter: any(named: 'goRouter'),
+          route: route,
+          extra: extra,
+        );
+        when(push).thenAnswer((_) async => result);
+        final appRouter = createSubject();
+        expect(
+          appRouter.pushRelative<String>(route, extra: extra),
+          completion(result),
+        );
+        verify(push).called(1);
       });
     });
   });

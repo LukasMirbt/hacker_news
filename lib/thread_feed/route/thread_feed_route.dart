@@ -7,7 +7,8 @@ class ThreadFeedRoute extends GoRouteData
   static const config = TypedGoRoute<ThreadFeedRoute>(
     path: '/threads',
     routes: [
-      ThreadItemOptionsRoute.config,
+      ReplyRoute.config,
+      PostShellRoute.config,
     ],
   );
 

@@ -1,9 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
+import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/reply/reply.dart';
 
 class ReplyOptionBody extends StatelessWidget {
   const ReplyOptionBody({
@@ -26,7 +25,8 @@ class ReplyOptionBody extends StatelessWidget {
       ),
       title: Text(l10n.commentOptions_reply),
       onTap: () {
-        context.read<AppRouter>().pushReplacement(
+        Navigator.of(context).pop();
+        AppRouter.of(context).goRelative(
           ReplyRoute(url: url),
         );
       },

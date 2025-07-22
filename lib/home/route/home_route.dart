@@ -6,7 +6,7 @@ class HomeRoute extends GoRouteData with _$HomeRoute {
   static const config = TypedGoRoute<HomeRoute>(
     path: '/home',
     routes: [
-      FeedItemOptionsRoute.config,
+      PostShellRoute.config,
     ],
   );
 

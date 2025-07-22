@@ -2,7 +2,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app/app.dart';
-import 'package:hacker_client/app_router/bloc/bloc.dart';
 
 void main() {
   final excludedSuffixes = AppEventFilter.excludedSuffixes;
@@ -15,9 +14,7 @@ void main() {
       test('contains correct values', () {
         expect(
           AppEventFilter.excludedEvents,
-          [
-            AppRouterLocationChanged,
-          ],
+          <Object>[],
         );
       });
     });

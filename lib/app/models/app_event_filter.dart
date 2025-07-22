@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:hacker_client/app_router/app_router.dart';
 
 class AppEventFilter {
   const AppEventFilter();
 
   @visibleForTesting
-  static final excludedEvents = [
-    AppRouterLocationChanged,
-  ];
+  static final excludedEvents = <Object>[];
 
   @visibleForTesting
   static final excludedSuffixes = [

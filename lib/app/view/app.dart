@@ -76,12 +76,6 @@ class App extends StatelessWidget {
               create: (_) => AppBloc(),
             ),
             BlocProvider(
-              create: (context) => AppRouter(
-                authenticationRepository: context
-                    .read<AuthenticationRepository>(),
-              ),
-            ),
-            BlocProvider(
               create: (context) =>
                   AuthenticationBloc(
                     authenticationRepository: context
@@ -110,7 +104,19 @@ class App extends StatelessWidget {
                   ),
             ),
           ],
-          child: const AppView(),
+          child: Provider(
+            create: (context) => AppRouter(
+              appRedirect: const AppRedirect(),
+              appRouteList: AppRouteList(),
+              appNavigationModel: AppNavigationModel(
+                loginRedirectModel: LoginRedirectModel(
+                  authenticationRepository: context
+                      .read<AuthenticationRepository>(),
+                ),
+              ),
+            ),
+            child: const AppView(),
+          ),
         ),
       ),
     );

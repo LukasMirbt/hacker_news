@@ -2,12 +2,16 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/analytics_consent/analytics_consent.dart'
+    as analytics_consent;
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart' as app_tab;
+import 'package:hacker_client/login/login.dart' as login;
 import 'package:hacker_client/login_loading/login_loading.dart'
     as login_loading;
 import 'package:hacker_client/logout_loading/logout_loading.dart'
     as logout_loading;
+import 'package:hacker_client/web_redirect/web_redirect.dart' as web_redirect;
 
 void main() {
   group(AppRouteList, () {});
@@ -31,32 +35,58 @@ void main() {
       );
     }
 
-    List<String> allPaths() {
-      final routeList = createSubject();
-      return routeList.routes.expand(paths).toList();
-    }
+    late List<String> allPaths;
 
-    test('contains loginLoading routes', () {
-      final loginLoadingPaths = login_loading.$appRoutes.expand(paths);
+    setUp(() {
+      final routeList = createSubject();
+      allPaths = routeList.routes.expand(paths).toList();
+    });
+
+    test('contains analytics_consent routes', () {
+      final analyticsConsentPaths = analytics_consent.$appRoutes.expand(paths);
       expect(
-        allPaths(),
-        containsAll(loginLoadingPaths),
+        allPaths,
+        containsAll(analyticsConsentPaths),
       );
     });
 
-    test('contains appTab routes', () {
+    test('contains app_shell routes', () {
       final appTabPaths = app_tab.$appRoutes.expand(paths);
       expect(
-        allPaths(),
+        allPaths,
         containsAll(appTabPaths),
       );
     });
 
-    test('contains logoutLoading routes', () {
+    test('contains login routes', () {
+      final loginPaths = login.$appRoutes.expand(paths);
+      expect(
+        allPaths,
+        containsAll(loginPaths),
+      );
+    });
+
+    test('contains login_loading routes', () {
+      final loginLoadingPaths = login_loading.$appRoutes.expand(paths);
+      expect(
+        allPaths,
+        containsAll(loginLoadingPaths),
+      );
+    });
+
+    test('contains logout_loading routes', () {
       final logoutLoadingPaths = logout_loading.$appRoutes.expand(paths);
       expect(
-        allPaths(),
+        allPaths,
         containsAll(logoutLoadingPaths),
+      );
+    });
+
+    test('contains web_redirect routes', () {
+      final webRedirectPaths = web_redirect.$appRoutes.expand(paths);
+      expect(
+        allPaths,
+        containsAll(webRedirectPaths),
       );
     });
   });

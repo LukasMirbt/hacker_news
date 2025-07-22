@@ -23,7 +23,7 @@ class AppRedirect {
       return analyticsConsentLocation;
     }
 
-    final initialLocation = AppRouterState.initialLocation;
+    final initialLocation = AppRouter.initialLocation;
     final matchedLocation = state.matchedLocation;
 
     if (matchedLocation == analyticsConsentLocation) {

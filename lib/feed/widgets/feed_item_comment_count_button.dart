@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
-import 'package:hacker_client/post/post.dart';
 
 class FeedItemCommentCountButton extends StatelessWidget {
   const FeedItemCommentCountButton({
@@ -19,7 +19,7 @@ class FeedItemCommentCountButton extends StatelessWidget {
       data: AppFeedItemCommentCountButtonData(
         commentCount: commentCount,
         onPressed: () {
-          PostRoute(postId: item.id).push<void>(context);
+          PostRoute(postId: item.id).goRelative(context);
         },
       ),
     );

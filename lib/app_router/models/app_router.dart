@@ -1,0 +1,71 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
+import 'package:hacker_client/app_shell/app_shell.dart';
+
+class AppRouter {
+  AppRouter({
+    required AppRouteList appRouteList,
+    required AppRedirect appRedirect,
+    required AppNavigationModel appNavigationModel,
+  }) : _navigationModel = appNavigationModel,
+       goRouter = GoRouter(
+         navigatorKey: navigatorKey,
+         initialLocation: initialLocation,
+         routes: appRouteList.routes,
+         redirect: appRedirect.redirect,
+       );
+
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
+  static final initialLocation = const HomeRoute().location;
+
+  static AppRouter of(BuildContext context) {
+    return context.read<AppRouter>();
+  }
+
+  final AppNavigationModel _navigationModel;
+  final GoRouter goRouter;
+
+  void go(AppAbsoluteRoute route, {Object? extra}) {
+    return _navigationModel.go(
+      goRouter: goRouter,
+      route: route,
+      extra: extra,
+    );
+  }
+
+  Future<T?> push<T extends Object?>(
+    AppAbsoluteRoute route, {
+    Object? extra,
+  }) {
+    return _navigationModel.push(
+      goRouter: goRouter,
+      route: route,
+      extra: extra,
+    );
+  }
+
+  void goRelative(
+    AppRelativeRoute route, {
+    Object? extra,
+  }) {
+    return _navigationModel.go(
+      goRouter: goRouter,
+      route: route,
+      extra: extra,
+    );
+  }
+
+  Future<T?> pushRelative<T extends Object?>(
+    AppRelativeRoute route, {
+    Object? extra,
+  }) {
+    return _navigationModel.push(
+      goRouter: goRouter,
+      route: route,
+      extra: extra,
+    );
+  }
+}

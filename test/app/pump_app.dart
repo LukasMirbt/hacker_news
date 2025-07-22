@@ -80,11 +80,7 @@ class _MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
   AppState get state => AppState();
 }
 
-class _MockAppRouterBloc extends MockBloc<AppRouterEvent, AppRouterState>
-    implements AppRouterBloc {
-  @override
-  AppRouterState get state => AppRouterState.initial();
-}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, authentication.AuthenticationState>
@@ -117,11 +113,6 @@ class _MockVoteFailureBloc extends MockBloc<VoteFailureEvent, VoteState>
 }
 
 class _MockGoRouter extends Mock implements GoRouter {}
-
-class _MockAppRouter extends Mock implements AppRouter {
-  @override
-  GoRouter get goRouter => _MockGoRouter();
-}
 
 typedef MaterialAppBuilder =
     Widget Function(
@@ -172,9 +163,7 @@ extension PumpAppExtension on WidgetTester {
               BlocProvider<AppBloc>(
                 create: (_) => _MockAppBloc(),
               ),
-              BlocProvider<AppRouterBloc>(
-                create: (_) => _MockAppRouterBloc(),
-              ),
+
               BlocProvider<AuthenticationBloc>(
                 create: (_) => _MockAuthenticationBloc(),
               ),

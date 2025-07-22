@@ -666,19 +666,21 @@ packages:
   go_router:
     dependency: "direct main"
     description:
-      name: go_router
-      sha256: c489908a54ce2131f1d1b7cc631af9c1a06fac5ca7c449e959192089f9489431
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/go_router"
+      ref: HEAD
+      resolved-ref: "20fd5d629a3e98c3c5e490df011ee547895a9ebc"
+      url: "https://github.com/ThangVuNguyenViet/packages.git"
+    source: git
     version: "16.0.0"
   go_router_builder:
     dependency: "direct dev"
     description:
-      name: go_router_builder
-      sha256: "2357997b3419219ee7096c861e65506475202a49cf38153efab0e82370925eaa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
+      path: "packages/go_router_builder"
+      ref: HEAD
+      resolved-ref: "20fd5d629a3e98c3c5e490df011ee547895a9ebc"
+      url: "https://github.com/ThangVuNguyenViet/packages.git"
+    source: git
+    version: "3.0.2"
   graphs:
     dependency: transitive
     description:
@@ -973,7 +975,7 @@ packages:
     source: hosted
     version: "3.2.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "75cca69d1490965be98c73ceaea117e8a04dd21217b37b292c9ddbec0d955bc5"

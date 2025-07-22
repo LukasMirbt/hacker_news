@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/post/post.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ContextOptionBody extends StatelessWidget {
@@ -19,7 +19,8 @@ class ContextOptionBody extends StatelessWidget {
       leading: const Icon(Symbols.arrow_forward),
       title: const Text('Context'),
       onTap: () {
-        PostRoute(postId: postId).pushReplacement(context);
+        Navigator.of(context).pop();
+        PostRoute(postId: postId).goRelative(context);
       },
     );
   }

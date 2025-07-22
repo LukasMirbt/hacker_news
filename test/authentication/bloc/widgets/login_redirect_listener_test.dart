@@ -89,7 +89,7 @@ void main() {
     });
 
     testWidgets('returns when matchedLocation '
-        'contains $LoginRoute path', (tester) async {
+        'is $LoginRoute path', (tester) async {
       when(() => goRouterState.matchedLocation).thenReturn(
         LoginRoute.config.path,
       );
@@ -110,7 +110,7 @@ void main() {
     });
 
     testWidgets('pushes $LoginRoute when redirect is $LoginRedirect '
-        'and !isAuthenticated and matchedLocation does not contain '
+        'and !isAuthenticated and matchedLocation is not '
         '$LoginRoute path', (tester) async {
       const matchedLocation = 'matchedLocation';
       const loginRoute = LoginRoute(from: matchedLocation);

@@ -7,7 +7,6 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute {
     path: '/settings',
     routes: [
       DataCollectionRoute.config,
-      LicenseRoute.config,
     ],
   );
 

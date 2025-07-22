@@ -1,22 +1,19 @@
-part of 'post_shell_route.dart';
+part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class PostRoute extends GoRouteData with _$PostRoute {
   const PostRoute({
     required this.postId,
-    this.from,
   });
 
-  static const config = TypedGoRoute<PostRoute>(
-    path: '/post/:postId',
+  static const config = TypedRelativeGoRoute<PostRoute>(
+    path: 'post/:postId',
     routes: [
-      PostOptionsRoute.config,
       CommentFormRoute.config,
-      CommentOptionsRoute.config,
+      ReplyRoute.config,
     ],
   );
 
   final String postId;
-  final String? from;
 
   @override
   Widget build(
