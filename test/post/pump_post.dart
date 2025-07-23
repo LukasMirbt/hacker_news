@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -22,10 +21,7 @@ class _MockPostRepository extends Mock implements PostRepository {
 }
 
 extension PumpPostExtension on WidgetTester {
-  Future<void> pumpPost(
-    Widget widgetUnderTest, {
-    GoRouter? router,
-  }) async {
+  Future<void> pumpPost(Widget widgetUnderTest) async {
     return pumpAppShell(
       MultiRepositoryProvider(
         providers: [

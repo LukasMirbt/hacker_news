@@ -21,10 +21,7 @@ class _MockStatefulNavigationShell extends Mock
 }
 
 extension PumpAppShellExtension on WidgetTester {
-  Future<void> pumpAppShell(
-    Widget widgetUnderTest, {
-    GoRouter? router,
-  }) async {
+  Future<void> pumpAppShell(Widget widgetUnderTest) async {
     return pumpApp(
       RepositoryProvider<FeedRepository>(
         create: (_) => _MockFeedRepository(),
