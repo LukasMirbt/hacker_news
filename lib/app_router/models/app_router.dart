@@ -9,13 +9,16 @@ class AppRouter {
     required AppRouteList appRouteList,
     required AppRedirect appRedirect,
     required AppNavigationModel appNavigationModel,
+    GoRouter? goRouter,
   }) : _navigationModel = appNavigationModel,
-       goRouter = GoRouter(
-         navigatorKey: navigatorKey,
-         initialLocation: initialLocation,
-         routes: appRouteList.routes,
-         redirect: appRedirect.redirect,
-       );
+       goRouter =
+           goRouter ??
+           GoRouter(
+             navigatorKey: navigatorKey,
+             initialLocation: initialLocation,
+             routes: appRouteList.routes,
+             redirect: appRedirect.redirect,
+           );
 
   static final navigatorKey = GlobalKey<NavigatorState>();
 
