@@ -1,52 +1,56 @@
 import 'package:flutter_test/flutter_test.dart';
-
-import '../../../lib/reply_parser.dart';
+import 'package:reply_parser/reply_parser.dart';
 
 void main() {
-  group(ReplyFormTitleRowData, () {
+  group(ReplyCommentData, () {
     group('fromParsed', () {
-      test('returns $ReplyFormTitleRowData with correct values '
+      test('returns $ReplyCommentData with correct values '
           'when data is non-null', () {
         const id = 'id';
         const hnuser = HnuserPlaceholder();
         final age = DateTime(1);
+        const htmlText = 'htmlText';
 
         expect(
-          ReplyFormTitleRowData.fromParsed(
+          ReplyCommentData.fromParsed(
             id: id,
             hnuser: hnuser,
             age: age,
+            htmlText: htmlText,
           ),
-          ReplyFormTitleRowData(
+          ReplyCommentData(
             id: id,
             hnuser: hnuser,
             age: age,
+            htmlText: htmlText,
           ),
         );
       });
 
-      test('returns $ReplyFormTitleRowData with correct values '
+      test('returns $ReplyCommentData with correct values '
           'when data is null', () {
         expect(
-          ReplyFormTitleRowData.fromParsed(
+          ReplyCommentData.fromParsed(
             id: null,
             age: null,
             hnuser: null,
+            htmlText: null,
           ),
-          ReplyFormTitleRowData(
+          ReplyCommentData(
             id: '',
             hnuser: Hnuser.empty,
             age: DateTime(0),
+            htmlText: '',
           ),
         );
       });
     });
 
     group('empty', () {
-      test('returns $ReplyFormTitleRowData', () {
+      test('returns $ReplyCommentData', () {
         expect(
-          ReplyFormTitleRowData.empty,
-          isA<ReplyFormTitleRowData>(),
+          ReplyCommentData.empty,
+          isA<ReplyCommentData>(),
         );
       });
     });

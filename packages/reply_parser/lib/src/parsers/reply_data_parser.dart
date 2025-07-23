@@ -2,10 +2,10 @@ import 'package:reply_parser/reply_parser.dart';
 
 class ReplyDataParser {
   const ReplyDataParser({
-    ReplyCommentDataParser? replyHeaderDataParser,
+    ReplyCommentDataParser? replyCommentDataParser,
     ReplyFormDataParser? replyFormDataParser,
   }) : _commentDataParser =
-           replyHeaderDataParser ?? const ReplyCommentDataParser(),
+           replyCommentDataParser ?? const ReplyCommentDataParser(),
        _formDataParser = replyFormDataParser ?? const ReplyFormDataParser();
 
   final ReplyCommentDataParser _commentDataParser;

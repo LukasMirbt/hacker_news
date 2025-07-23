@@ -1,0 +1,20 @@
+name: reply_api
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/reply_api/**"
+      - ".github/workflows/reply_api.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/reply_api
