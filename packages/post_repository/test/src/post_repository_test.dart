@@ -7,17 +7,39 @@ import 'package:post_repository/post_repository.dart';
 
 class _MockPostApi extends Mock implements PostApi {}
 
+class _MockCancelTokenService extends Mock implements CancelTokenService {}
+
+class _MockCancelToken extends Mock implements CancelToken {}
+
 void main() {
   group(PostRepository, () {
     late PostApi api;
+    late CancelTokenService cancelTokenService;
+    late CancelToken cancelToken;
 
     setUp(() {
       api = _MockPostApi();
+      cancelTokenService = _MockCancelTokenService();
+      cancelToken = _MockCancelToken();
     });
 
     PostRepository buildCubit() {
-      return PostRepository(postApi: api);
+      return PostRepository(
+        postApi: api,
+        cancelTokenService: cancelTokenService,
+      );
     }
+
+    final generate = () => cancelTokenService.generate();
+
+    group('constructor', () {
+      test('returns normally', () {
+        expect(
+          () => PostRepository(postApi: api),
+          returnsNormally,
+        );
+      });
+    });
 
     group('fetchPostStream', () {
       const id = 'id';
@@ -33,11 +55,15 @@ void main() {
         ),
       );
 
-      final fetchPostStream = () => api.fetchPostStream(id: id);
+      final fetchPostStream = () => api.fetchPostStream(
+        id: id,
+        cancelToken: cancelToken,
+      );
 
       blocTest<PostRepository, Post>(
         'calls fetchPostStream and emits $Post for each stream value',
         setUp: () {
+          when(generate).thenReturn(cancelToken);
           when(fetchPostStream).thenAnswer(
             (_) => Stream.fromIterable(values),
           );
@@ -48,6 +74,7 @@ void main() {
           for (final data in values) Post.from(data),
         ],
         verify: (_) {
+          verify(generate).called(1);
           verify(fetchPostStream).called(1);
         },
       );
@@ -56,17 +83,23 @@ void main() {
     group('fetchPost', () {
       const id = 'id';
       final data = PostDataPlaceholder();
-      final fetchPost = () => api.fetchPost(id: id);
+
+      final fetchPost = () => api.fetchPost(
+        id: id,
+        cancelToken: cancelToken,
+      );
 
       blocTest<PostRepository, Post>(
         'calls fetchPost and emits $Post',
         setUp: () {
+          when(generate).thenReturn(cancelToken);
           when(fetchPost).thenAnswer((_) async => data);
         },
         build: buildCubit,
         act: (cubit) => cubit.fetchPost(id: id),
         expect: () => [Post.from(data)],
         verify: (_) {
+          verify(generate).called(1);
           verify(fetchPost).called(1);
         },
       );
@@ -77,12 +110,15 @@ void main() {
       final data = PostDataPlaceholder();
 
       final comment = () => api.comment(form.toApi());
-      final fetchPost = () => api.fetchPost(id: form.parent);
+
+      final fetchPost = () =>
+          api.fetchPost(id: form.parent, cancelToken: cancelToken);
 
       blocTest<PostRepository, Post>(
         'calls comment and emits updated $Post '
         'when fetchPost succeeds',
         setUp: () {
+          when(generate).thenReturn(cancelToken);
           when(comment).thenAnswer((_) async {});
           when(fetchPost).thenAnswer((_) async => data);
         },
@@ -93,6 +129,7 @@ void main() {
           Post.from(data),
         ],
         verify: (_) {
+          verify(generate).called(1);
           verify(comment).called(1);
           verify(fetchPost).called(1);
         },
@@ -101,6 +138,7 @@ void main() {
       blocTest<PostRepository, Post>(
         'calls comment and returns when fetchPost throws',
         setUp: () {
+          when(generate).thenReturn(cancelToken);
           when(comment).thenAnswer((_) async {});
           when(fetchPost).thenThrow(Exception('oops'));
         },
@@ -109,6 +147,7 @@ void main() {
         expect: () => <Post>[],
         errors: () => <Object?>[],
         verify: (_) {
+          verify(generate).called(1);
           verify(comment).called(1);
           verify(fetchPost).called(1);
         },
