@@ -1,28 +1,40 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:reply_api/reply_api.dart' as api;
 import 'package:reply_repository/reply_repository.dart';
 
 void main() {
   group(ReplyForm, () {
     group('from', () {
       test('returns $ReplyForm', () {
-        const htmlText = 'htmlText';
-        const hmac = 'hmac';
-
-        final data = ReplyFormDataPlaceholder(
-          htmlText: htmlText,
-          hmac: hmac,
-        );
-
-        final titleRowData = data.titleRowData;
+        final data = ReplyDataPlaceholder();
+        final commentData = ReplyCommentDataPlaceholder();
+        const formData = ReplyFormDataPlaceholder();
 
         expect(
           ReplyForm.from(data),
           ReplyForm(
-            id: titleRowData.id,
-            hnuser: titleRowData.hnuser,
-            age: titleRowData.age,
-            htmlText: htmlText,
-            hmac: hmac,
+            hnuser: commentData.hnuser,
+            age: commentData.age,
+            htmlText: commentData.htmlText,
+            parent: formData.parent,
+            goto: formData.goto,
+            hmac: formData.hmac,
+          ),
+        );
+      });
+    });
+
+    group('toApi', () {
+      test('returns ${api.ReplyForm}', () {
+        final form = ReplyFormPlaceholder();
+
+        expect(
+          form.toApi(),
+          api.ReplyForm(
+            parent: form.parent,
+            goto: form.goto,
+            hmac: form.hmac,
+            text: form.text,
           ),
         );
       });

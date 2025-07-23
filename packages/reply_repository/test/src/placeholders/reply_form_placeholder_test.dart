@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:reply_repository/reply_repository.dart';
 
 void main() {
   group(ReplyFormPlaceholder, () {

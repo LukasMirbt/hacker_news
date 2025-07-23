@@ -73,7 +73,7 @@ void main() {
     });
 
     group('comment', () {
-      final form = CommentFormPlaceholder();
+      const form = CommentFormPlaceholder();
       final data = PostDataPlaceholder();
 
       final comment = () => api.comment(form.toApi());
@@ -99,7 +99,7 @@ void main() {
       );
 
       blocTest<PostRepository, Post>(
-        'calls comment and returns when fetchPost fails',
+        'calls comment and returns when fetchPost throws',
         setUp: () {
           when(comment).thenAnswer((_) async {});
           when(fetchPost).thenThrow(Exception('oops'));

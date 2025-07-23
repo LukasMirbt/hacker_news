@@ -1,17 +1,16 @@
 import 'dart:async';
 
-import 'package:authentication_api/authentication_api.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class ReplyRepository {
   ReplyRepository({
     required ReplyApi replyApi,
-    required AuthenticationApi authenticationApi,
+    required UserReplyService userReplyService,
   }) : _replyApi = replyApi,
-       _authenticationApi = authenticationApi;
+       _userReplyService = userReplyService;
 
   final ReplyApi _replyApi;
-  final AuthenticationApi _authenticationApi;
+  final UserReplyService _userReplyService;
 
   final _controller = StreamController<ReplyUpdate>.broadcast();
   Stream<ReplyUpdate> get stream => _controller.stream;
@@ -20,38 +19,29 @@ class ReplyRepository {
     required String url,
   }) async {
     final data = await _replyApi.fetchReplyForm(url: url);
-    final replyForm = ReplyForm.from(data);
-    return replyForm;
+    final form = ReplyForm.from(data);
+    return form;
   }
 
   Future<void> reply(ReplyForm form) async {
     await _replyApi.reply(form.toApi());
 
-    final commentThread = await _replyApi.fetchCommentThread(
-      id: form.parent,
-    );
+    try {
+      final commentThread = await _replyApi.fetchCommentThread(
+        id: form.parent,
+      );
 
-    final user = _authenticationApi.state.user;
+      final comment = _userReplyService.newestComment(commentThread);
 
-    final userComments =
-        commentThread
-            .where(
-              (comment) => comment.hnuser.id == user.id,
-            )
-            .toList()
-          ..sort(
-            (a, b) => b.age.compareTo(a.age),
-          );
-
-    if (userComments.isEmpty) throw Exception('No comments found after reply');
-
-    final newUserComment = userComments.first;
-
-    _controller.add(
-      ReplyUpdate(
-        form: form,
-        comment: newUserComment,
-      ),
-    );
+      _controller.add(
+        ReplyUpdate(
+          form: form,
+          comment: comment,
+        ),
+      );
+    } catch (_) {
+      // Don't throw when reply succeeds but fetchCommentThread fails
+      // so the user doesn't submit a reply twice.
+    }
   }
 }
