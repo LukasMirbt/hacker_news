@@ -6,15 +6,14 @@ class ThreadFeedRoute extends GoRouteData
 
   static const config = TypedGoRoute<ThreadFeedRoute>(
     path: '/threads',
+    routes: [
+      ReplyRoute.config,
+      PostShellRoute.config,
+    ],
   );
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return RepositoryProvider(
-      create: (context) => ThreadRepository(
-        threadApi: context.read<ThreadApi>(),
-      ),
-      child: const ThreadFeedPage(),
-    );
+    return const ThreadFeedPage();
   }
 }

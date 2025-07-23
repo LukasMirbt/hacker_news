@@ -3,8 +3,9 @@ import 'package:app_ui/app_ui.dart'
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:hacker_client/feed_item_options/feed_item_options.dart'
+    hide FeedItemModel;
 import 'package:hacker_client/l10n/l10n.dart';
 
 class FeedItem extends StatelessWidget {
@@ -47,8 +48,10 @@ class FeedItem extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          final item = this.item.toRepository();
-          FeedItemOptionsRoute(item).go(context);
+          FeedItemOptionsSheet.show(
+            context: context,
+            item: item.toRepository(),
+          );
         },
         voteButton: score == null
             ? null

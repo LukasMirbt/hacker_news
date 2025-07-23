@@ -18,6 +18,11 @@ void main() {
   group(PostShellRoute, () {
     PostShellRoute createSubject() => PostShellRoute();
 
+    test('is a $ShellRouteData', () {
+      final route = createSubject();
+      expect(route, isA<ShellRouteData>());
+    });
+
     group('parentNavigatorKey', () {
       test('returns correct navigatorKey', () {
         expect(
@@ -43,14 +48,6 @@ void main() {
           ],
         );
       });
-    });
-
-    test('has correct type', () {
-      final route = createSubject();
-      expect(
-        route,
-        isA<ShellRouteData>(),
-      );
     });
 
     group('builder', () {

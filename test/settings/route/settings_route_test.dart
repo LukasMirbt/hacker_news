@@ -46,7 +46,6 @@ void main() {
           SettingsRoute.config.routes,
           [
             DataCollectionRoute.config,
-            LicenseRoute.config,
           ],
         );
       });

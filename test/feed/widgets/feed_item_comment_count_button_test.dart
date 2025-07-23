@@ -1,14 +1,17 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:app_ui/app_ui.dart' hide FeedItemCommentCountButton;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockFeedItemModel extends Mock implements FeedItemModel {}
 
@@ -17,20 +20,23 @@ void main() {
   const id = 'id';
 
   group(FeedItemCommentCountButton, () {
-    late GoRouter router;
+    late AppRouter router;
     late FeedItemModel item;
 
     setUp(() {
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       item = _MockFeedItemModel();
       when(() => item.commentCount).thenReturn(commentCount);
       when(() => item.id).thenReturn(id);
     });
 
     Widget buildSubject() {
-      return FeedItemCommentCountButton(
-        commentCount: commentCount,
-        item: item,
+      return Provider.value(
+        value: router,
+        child: FeedItemCommentCountButton(
+          commentCount: commentCount,
+          item: item,
+        ),
       );
     }
 
@@ -49,14 +55,14 @@ void main() {
     testWidgets('navigates to $PostRoute onPressed', (tester) async {
       const id = 'id';
       when(() => item.id).thenReturn(id);
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       widget.data.onPressed();
-      const route = PostRoute(postId: id);
-      verify(() => router.go(route.location)).called(1);
+      verify(
+        () => router.goRelative(
+          PostRoute(postId: id),
+        ),
+      ).called(1);
     });
   });
 }

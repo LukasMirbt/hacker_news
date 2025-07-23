@@ -20,6 +20,9 @@ void main() {
             upvoteUrl: data.upvoteUrl,
             parentUrl: data.parentUrl,
             contextUrl: data.contextUrl,
+            onUrl: data.onUrl,
+            onTitle: data.onTitle,
+            replyUrl: data.replyUrl,
           ),
         );
       });

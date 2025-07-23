@@ -16,6 +16,9 @@ void main() {
         const upvoteUrl = 'upvoteUrl';
         const parentUrl = 'parentUrl';
         const contextUrl = 'contextUrl';
+        const onUrl = 'onUrl';
+        const onTitle = 'onTitle';
+        const replyUrl = 'replyUrl';
 
         expect(
           ThreadFeedItemData.fromParsed(
@@ -29,6 +32,9 @@ void main() {
             upvoteUrl: upvoteUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
+            onUrl: onUrl,
+            onTitle: onTitle,
+            replyUrl: replyUrl,
           ),
           ThreadFeedItemData(
             id: id,
@@ -41,6 +47,9 @@ void main() {
             upvoteUrl: upvoteUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
+            onUrl: onUrl,
+            onTitle: onTitle,
+            replyUrl: replyUrl,
           ),
         );
       });
@@ -59,6 +68,9 @@ void main() {
             upvoteUrl: null,
             parentUrl: null,
             contextUrl: null,
+            onUrl: null,
+            onTitle: null,
+            replyUrl: null,
           ),
           ThreadFeedItemData(
             id: '',
@@ -71,6 +83,9 @@ void main() {
             upvoteUrl: null,
             parentUrl: null,
             contextUrl: null,
+            onUrl: null,
+            onTitle: null,
+            replyUrl: null,
           ),
         );
       });

@@ -13,6 +13,9 @@ class ThreadFeedItemData extends Equatable {
     required this.upvoteUrl,
     required this.parentUrl,
     required this.contextUrl,
+    required this.onUrl,
+    required this.onTitle,
+    required this.replyUrl,
   });
 
   factory ThreadFeedItemData.fromParsed({
@@ -26,6 +29,9 @@ class ThreadFeedItemData extends Equatable {
     required String? upvoteUrl,
     required String? parentUrl,
     required String? contextUrl,
+    required String? onUrl,
+    required String? onTitle,
+    required String? replyUrl,
   }) {
     return ThreadFeedItemData(
       id: id ?? '',
@@ -38,6 +44,9 @@ class ThreadFeedItemData extends Equatable {
       upvoteUrl: upvoteUrl,
       parentUrl: parentUrl,
       contextUrl: contextUrl,
+      onUrl: onUrl,
+      onTitle: onTitle,
+      replyUrl: replyUrl,
     );
   }
 
@@ -51,6 +60,9 @@ class ThreadFeedItemData extends Equatable {
   final String? upvoteUrl;
   final String? parentUrl;
   final String? contextUrl;
+  final String? onUrl;
+  final String? onTitle;
+  final String? replyUrl;
 
   @override
   List<Object?> get props => [
@@ -64,5 +76,8 @@ class ThreadFeedItemData extends Equatable {
     upvoteUrl,
     parentUrl,
     contextUrl,
+    onUrl,
+    onTitle,
+    replyUrl,
   ];
 }

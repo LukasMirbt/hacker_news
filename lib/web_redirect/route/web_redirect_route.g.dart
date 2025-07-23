@@ -20,20 +20,15 @@ mixin _$WebRedirectRoute on GoRouteData {
 
   WebRedirectRoute get _self => this as WebRedirectRoute;
 
-  @override
   String get location =>
       GoRouteData.$location('/web-redirect', queryParams: {'url': _self.url});
 
-  @override
   void go(BuildContext context) => context.go(location);
 
-  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
-  @override
   void replace(BuildContext context) => context.replace(location);
 }

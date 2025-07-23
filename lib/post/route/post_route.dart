@@ -1,17 +1,16 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class PostRoute extends GoRouteData with _$PostRoute {
+class PostRoute extends GoRouteData
+    with _$PostRoute, AppRelativeRoute, EquatableMixin {
   const PostRoute({
     required this.postId,
   });
 
-  static const config = TypedGoRoute<PostRoute>(
-    path: ':postId',
+  static const config = TypedRelativeGoRoute<PostRoute>(
+    path: 'post/:postId',
     routes: [
-      PostOptionsRoute.config,
-      CommentFormRoute.config,
-      ReplyFormRoute.config,
-      CommentOptionsRoute.config,
+      CommentRoute.config,
+      ReplyRoute.config,
     ],
   );
 
@@ -24,4 +23,7 @@ class PostRoute extends GoRouteData with _$PostRoute {
   ) {
     return PostPage(id: postId);
   }
+
+  @override
+  List<Object> get props => [postId];
 }

@@ -98,6 +98,43 @@ void main() {
       });
     });
 
+    group('insertAfter', () {
+      final newItem = CommentModel(
+        comment: CommentPlaceholder(),
+      );
+
+      test('returns updated $CommentListModel when afterItem index '
+          'is found', () {
+        final model = createSubject();
+        final afterItem = model.items.first;
+        final updatedModel = model.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(
+          updatedModel.items,
+          [
+            model.items.first,
+            newItem,
+            ...model.items.skip(1),
+          ],
+        );
+      });
+
+      test('returns same $CommentListModel when afterItem index '
+          'is not found', () {
+        final model = createSubject();
+        final afterItem = CommentModel(
+          comment: CommentPlaceholder(id: 'non-existent'),
+        );
+        final updatedModel = model.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(updatedModel, model);
+      });
+    });
+
     group('rebuildWith', () {
       final comments = [
         CommentPlaceholder(id: '0'),

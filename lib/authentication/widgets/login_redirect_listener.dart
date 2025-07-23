@@ -20,7 +20,7 @@ class LoginRedirectListener
 
           final goRouterState = GoRouter.of(context).state;
           final matchedLocation = goRouterState.matchedLocation;
-          if (matchedLocation.contains(LoginRoute.config.path)) return;
+          if (matchedLocation == LoginRoute.config.path) return;
 
           LoginRoute(from: matchedLocation).push<void>(context);
         },

@@ -175,6 +175,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get post_title => 'Post';
 
   @override
+  String get postOptions_openOnWeb => 'Open on web';
+
+  @override
   String postHeader_shareText({required Object title, required Object url}) {
     return '$title $url';
   }
@@ -204,7 +207,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_dataCollection => 'Data collection';
 
   @override
-  String get settings_privacyPolicy => 'Privacy policy';
+  String get settings_privacyPolicy => 'Privacy policy';
 
   @override
   String get theme_system => 'Use device settings';
@@ -219,6 +222,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String threadFeed_age({required Object age}) {
     return '$age ago';
   }
+
+  @override
+  String get threadItemOptions_reply => 'Reply';
+
+  @override
+  String get threadItemOptions_viewPost => 'View post';
+
+  @override
+  String get threadItemOptions_openOnWeb => 'Open on web';
 
   @override
   String get voteFailure_invalidUrl =>

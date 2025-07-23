@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
@@ -9,11 +10,15 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     required String id,
     required PostRepository postRepository,
     required VoteRepository voteRepository,
+    required ReplyRepository replyRepository,
     CommentListVoteModel? voteModel,
+    CommentListReplyModel? replyModel,
     LinkLauncher? linkLauncher,
   }) : _postRepository = postRepository,
        _voteRepository = voteRepository,
+       _replyRepository = replyRepository,
        _voteModel = voteModel ?? const CommentListVoteModel(),
+       _replyModel = replyModel ?? const CommentListReplyModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          CommentListState.initial(id: id),
@@ -24,6 +29,9 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     on<CommentListVoteSubscriptionRequested>(
       _onVoteSubscriptionRequested,
     );
+    on<CommentListReplySubscriptionRequested>(
+      _onReplySubscriptionRequested,
+    );
     on<CommentListExpansionToggled>(_onExpansionToggled);
     on<CommentListLinkPressed>(_onLinkPressed);
     on<CommentListVotePressed>(_onVotePressed);
@@ -31,7 +39,9 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
 
   final PostRepository _postRepository;
   final VoteRepository _voteRepository;
+  final ReplyRepository _replyRepository;
   final CommentListVoteModel _voteModel;
+  final CommentListReplyModel _replyModel;
   final LinkLauncher _linkLauncher;
 
   Future<void> _onSubscriptionRequested(
@@ -63,6 +73,25 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
             ),
           );
         }
+      },
+    );
+  }
+
+  Future<void> _onReplySubscriptionRequested(
+    CommentListReplySubscriptionRequested event,
+    Emitter<CommentListState> emit,
+  ) async {
+    return emit.onEach(
+      _replyRepository.stream,
+      onData: (update) {
+        emit(
+          state.copyWith(
+            commentList: _replyModel.updateCommentList(
+              update: update,
+              commentList: state.commentList,
+            ),
+          ),
+        );
       },
     );
   }

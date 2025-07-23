@@ -406,6 +406,12 @@ abstract class AppLocalizations {
   /// **'Post'**
   String get post_title;
 
+  /// No description provided for @postOptions_openOnWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on web'**
+  String get postOptions_openOnWeb;
+
   /// No description provided for @postHeader_shareText.
   ///
   /// In en, this message translates to:
@@ -463,7 +469,7 @@ abstract class AppLocalizations {
   /// No description provided for @settings_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'Privacy policy'**
+  /// **'Privacy policy'**
   String get settings_privacyPolicy;
 
   /// No description provided for @theme_system.
@@ -489,6 +495,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{age} ago'**
   String threadFeed_age({required Object age});
+
+  /// No description provided for @threadItemOptions_reply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get threadItemOptions_reply;
+
+  /// No description provided for @threadItemOptions_viewPost.
+  ///
+  /// In en, this message translates to:
+  /// **'View post'**
+  String get threadItemOptions_viewPost;
+
+  /// No description provided for @threadItemOptions_openOnWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on web'**
+  String get threadItemOptions_openOnWeb;
 
   /// No description provided for @voteFailure_invalidUrl.
   ///

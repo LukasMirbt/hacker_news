@@ -17,7 +17,7 @@ class WebRedirectListener
 
           final goRouterState = GoRouter.of(context).state;
           final matchedLocation = goRouterState.matchedLocation;
-          if (matchedLocation.contains(WebRedirectRoute.config.path)) return;
+          if (matchedLocation == WebRedirectRoute.config.path) return;
 
           final url = redirect.urlString;
           WebRedirectRoute(url: url).push<void>(context);

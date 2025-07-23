@@ -1,25 +1,33 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:post_repository/post_repository.dart';
 
 class CommentOptionsSheet extends StatelessWidget {
-  const CommentOptionsSheet({
-    required this.commentId,
-    super.key,
-  });
+  const CommentOptionsSheet({super.key});
 
-  final String commentId;
+  static Future<void> show({
+    required BuildContext context,
+    required Comment comment,
+  }) {
+    return showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (_) => BlocProvider(
+        create: (_) => CommentOptionsBloc(comment: comment),
+        child: const CommentOptionsSheet(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      lazy: false,
-      create: (context) => CommentOptionsBloc(
-        commentId: commentId,
-        postRepository: context.read<PostRepository>(),
-      ),
-      child: const CommentOptionsView(),
+    return const AppBottomSheet(
+      children: [
+        ReplyOption(),
+        OpenOnWebOption(),
+      ],
     );
   }
 }

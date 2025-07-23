@@ -9,15 +9,18 @@ part 'post.freezed.dart';
 class Post with _$Post {
   const Post({
     required this.header,
+    required this.commentForm,
     required this.comments,
   });
 
   factory Post.from(PostData data) {
     final fatItemData = data.fatItemData;
+    final commentFormData = fatItemData.commentFormData;
     final comments = data.comments;
 
     return Post(
       header: PostHeader.from(fatItemData),
+      commentForm: CommentForm.from(commentFormData),
       comments: [
         for (final item in comments) Comment.from(item),
       ],
@@ -26,9 +29,11 @@ class Post with _$Post {
 
   static final empty = Post(
     header: PostHeader.empty,
+    commentForm: CommentForm.empty,
     comments: const [],
   );
 
   final PostHeader header;
+  final CommentForm commentForm;
   final List<Comment> comments;
 }

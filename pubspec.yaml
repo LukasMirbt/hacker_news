@@ -24,7 +24,9 @@ workspace:
   - packages/post_api
   - packages/post_parser
   - packages/post_repository
-  - packages/reply_form_parser
+  - packages/reply_api
+  - packages/reply_parser
+  - packages/reply_repository
   - packages/secure_cookie_storage
   - packages/share_launcher
   - packages/storage/persistent_storage
@@ -80,7 +82,10 @@ dependencies:
   flutter_sticky_header: ^0.8.0
   flutter_widget_from_html_core: 0.16.0
   freezed_annotation: ^3.0.0
-  go_router: ^16.0.0
+  go_router:
+    git:
+      url: https://github.com/ThangVuNguyenViet/packages.git
+      path: packages/go_router
   hydrated_bloc: ^10.0.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
@@ -89,6 +94,7 @@ dependencies:
   logging: ^1.3.0
   material_symbols_icons: ^4.2815.1
   nested: ^1.0.0
+  path: ^1.9.1
   path_provider: ^2.1.5
   persistent_storage:
     path: packages/storage/persistent_storage
@@ -100,6 +106,10 @@ dependencies:
   post_repository:
     path: packages/post_repository
   provider: ^6.1.2
+  reply_api:
+    path: packages/reply_api
+  reply_repository:
+    path: packages/reply_repository
   secure_cookie_storage:
     path: packages/secure_cookie_storage
   share_launcher:
@@ -131,8 +141,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^3.0.3
-  go_router_builder: ^3.0.1
+  go_router_builder:
+    git:
+      url: https://github.com/ThangVuNguyenViet/packages.git
+      path: packages/go_router_builder
   json_serializable: ^6.9.5
+  mockingjay: ^2.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
 

@@ -2,7 +2,6 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 
 void main() {
@@ -26,7 +25,7 @@ void main() {
         expect(
           ThreadFeedBranch.config.routes,
           [
-            ThreadFeedRoute.config,
+            ThreadFeedShellRoute.config,
           ],
         );
       });

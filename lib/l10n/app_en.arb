@@ -52,6 +52,7 @@
   "loginLoading_text": "Logging in...",
   "logoutLoading_text": "Logging out...",
   "post_title": "Post",
+  "postOptions_openOnWeb": "Open on web",
   "postHeader_shareText": "{title} {url}",
   "replyForm_title": "Reply",
   "replyForm_submitAction": "Reply",
@@ -61,10 +62,13 @@
   "settings_userSectionTitle": "User",
   "settings_licenses": "Licenses",
   "settings_dataCollection": "Data collection",
-  "settings_privacyPolicy": "Privacy policy",
+  "settings_privacyPolicy": "Privacy policy",
   "theme_system": "Use device settings",
   "theme_light": "Light",
   "theme_dark": "Dark",
   "threadFeed_age": "{age} ago",
+  "threadItemOptions_reply": "Reply",
+  "threadItemOptions_viewPost": "View post",
+  "threadItemOptions_openOnWeb": "Open on web",
   "voteFailure_invalidUrl": "Something went wrong. Try refreshing the page."
 }

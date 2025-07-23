@@ -4,12 +4,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_options/comment_options.dart';
-import 'package:hacker_client/l10n/l10n.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
@@ -18,28 +14,21 @@ class _MockCommentOptionsBloc extends MockBloc<void, CommentOptionsState>
 
 class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockCommentModel extends Mock implements CommentModel {}
 
-void main() async {
-  final l10n = await AppLocalizations.delegate.load(Locale('en'));
-
-  const postId = 'postId';
-
-  final comment = CommentModel(
-    CommentPlaceholder(),
-  );
+void main() {
+  const replyUrl = 'replyUrl';
 
   group(ReplyOption, () {
     late CommentOptionsBloc bloc;
     late CommentOptionsState state;
-    late GoRouter router;
+    late CommentModel comment;
 
     setUp(() {
       bloc = _MockCommentOptionsBloc();
       state = _MockCommentOptionsState();
-      router = _MockGoRouter();
+      comment = _MockCommentModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.postId).thenReturn(postId);
       when(() => state.comment).thenReturn(comment);
     });
 
@@ -50,36 +39,17 @@ void main() async {
       );
     }
 
-    testWidgets('renders $ListTile', (tester) async {
+    testWidgets('renders $ReplyOptionBody when replyUrl '
+        'is non-null', (tester) async {
+      when(() => comment.replyUrl).thenReturn(replyUrl);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ListTile), findsOneWidget);
+      expect(find.byType(ReplyOptionBody), findsOneWidget);
     });
 
-    testWidgets('renders $Image', (tester) async {
+    testWidgets('does not render $ReplyOptionBody when replyUrl '
+        'is null', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(Image), findsOneWidget);
-    });
-
-    testWidgets('renders correct title', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(
-        find.text(l10n.commentOptions_reply),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('navigates to $ReplyFormRoute when $ListTile '
-        'is tapped', (tester) async {
-      await tester.pumpApp(buildSubject(), router: router);
-      await tester.tap(find.byType(ListTile));
-      verify(
-        () => router.go(
-          ReplyFormRoute(
-            postId: postId,
-            commentId: comment.id,
-          ).location,
-        ),
-      ).called(1);
+      expect(find.byType(ReplyOptionBody), findsNothing);
     });
   });
 }

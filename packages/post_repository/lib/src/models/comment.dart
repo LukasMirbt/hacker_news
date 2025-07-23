@@ -12,9 +12,11 @@ class Comment with _$Comment {
     required this.indent,
     required this.upvoteUrl,
     required this.hasBeenUpvoted,
+    required this.score,
     required this.hnuser,
     required this.age,
     required this.htmlText,
+    required this.replyUrl,
   });
 
   factory Comment.from(CommentData data) {
@@ -23,9 +25,11 @@ class Comment with _$Comment {
       indent: data.indent,
       upvoteUrl: data.upvoteUrl,
       hasBeenUpvoted: data.hasBeenUpvoted,
+      score: data.score,
       hnuser: data.hnuser,
       age: data.age,
       htmlText: data.htmlText,
+      replyUrl: data.replyUrl,
     );
   }
 
@@ -33,9 +37,11 @@ class Comment with _$Comment {
   final int indent;
   final String upvoteUrl;
   final bool hasBeenUpvoted;
+  final int? score;
   final Hnuser hnuser;
   final DateTime age;
   final String htmlText;
+  final String? replyUrl;
 
   Comment upvote() => copyWith(hasBeenUpvoted: true);
 

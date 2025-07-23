@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:link_launcher/link_launcher.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_repository/thread_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -10,18 +11,25 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
     required ThreadRepository threadRepository,
     required AuthenticationRepository authenticationRepository,
     required VoteRepository voteRepository,
+    required ReplyRepository replyRepository,
     ThreadFeedVoteModel? voteModel,
+    ThreadFeedReplyModel? replyModel,
     LinkLauncher? linkLauncher,
   }) : _threadRepository = threadRepository,
        _authenticationRepository = authenticationRepository,
        _voteRepository = voteRepository,
+       _replyRepository = replyRepository,
        _voteModel = voteModel ?? const ThreadFeedVoteModel(),
+       _replyModel = replyModel ?? const ThreadFeedReplyModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          ThreadFeedState.initial(),
        ) {
     on<ThreadFeedVoteSubscriptionRequested>(
       _onVoteSubscriptionRequested,
+    );
+    on<ThreadFeedReplySubscriptionRequested>(
+      _onReplySubscriptionRequested,
     );
     on<ThreadFeedStarted>(_onStarted);
     on<ThreadFeedDataFetched>(_onDataFetched);
@@ -34,7 +42,9 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
   final ThreadRepository _threadRepository;
   final AuthenticationRepository _authenticationRepository;
   final VoteRepository _voteRepository;
+  final ReplyRepository _replyRepository;
   final ThreadFeedVoteModel _voteModel;
+  final ThreadFeedReplyModel _replyModel;
   final LinkLauncher _linkLauncher;
 
   Future<void> _onVoteSubscriptionRequested(
@@ -54,6 +64,25 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
             ),
           );
         }
+      },
+    );
+  }
+
+  Future<void> _onReplySubscriptionRequested(
+    ThreadFeedReplySubscriptionRequested event,
+    Emitter<ThreadFeedState> emit,
+  ) async {
+    return emit.onEach(
+      _replyRepository.stream,
+      onData: (update) {
+        emit(
+          state.copyWith(
+            feed: _replyModel.updateFeed(
+              update: update,
+              feed: state.feed,
+            ),
+          ),
+        );
       },
     );
   }

@@ -5,23 +5,22 @@ class DetailFatItemParser {
     DetailTitleRowParser? titleRowParser,
     DetailSubtitleRowParser? subtitleRowParser,
     DetailHtmlTextParser? htmlTextParser,
-    HmacParser? detailHmacParser,
+    DetailCommentFormParser? commentFormParser,
   }) : _titleRowParser = titleRowParser ?? const DetailTitleRowParser(),
        _subtitleRowParser =
            subtitleRowParser ?? const DetailSubtitleRowParser(),
        _htmlTextParser = htmlTextParser ?? const DetailHtmlTextParser(),
-       _hmacParser = detailHmacParser ?? const HmacParser();
+       _commentFormParser =
+           commentFormParser ?? const DetailCommentFormParser();
 
   final DetailTitleRowParser _titleRowParser;
   final DetailSubtitleRowParser _subtitleRowParser;
   final DetailHtmlTextParser _htmlTextParser;
-  final HmacParser _hmacParser;
+  final DetailCommentFormParser _commentFormParser;
 
   DetailFatItemData parse(Element fatItem) {
     var titleRowData = DetailTitleRowData.empty;
     var subtitleRowData = DetailSubtitleRowData.empty;
-    String? htmlText;
-    String? hmac;
 
     // Can be both a submission and a comment.
     final athing = fatItem.querySelector('.athing');
@@ -36,14 +35,14 @@ class DetailFatItemParser {
       subtitleRowData = _subtitleRowParser.parse(subtext);
     }
 
-    htmlText = _htmlTextParser.parse(fatItem);
-    hmac = _hmacParser.parse(fatItem);
+    final htmlText = _htmlTextParser.parse(fatItem);
+    final commentFormData = _commentFormParser.parse(fatItem);
 
     return DetailFatItemData(
       titleRowData: titleRowData,
       subtitleRowData: subtitleRowData,
       htmlText: htmlText,
-      hmac: hmac,
+      commentFormData: commentFormData,
     );
   }
 }

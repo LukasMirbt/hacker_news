@@ -6,18 +6,19 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/post_options/post_options.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockPostOptionsBloc extends MockBloc<void, PostOptionsState>
     implements PostOptionsBloc {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockPostModel extends Mock implements PostModel {}
 
@@ -31,21 +32,24 @@ void main() async {
     late PostOptionsBloc bloc;
     late PostOptionsState state;
     late PostModel post;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       bloc = _MockPostOptionsBloc();
       state = _MockPostOptionsState();
       post = _MockPostModel();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       when(() => bloc.state).thenReturn(state);
       when(() => state.post).thenReturn(post);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: OpenOnWebOption(),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: bloc,
+          child: OpenOnWebOption(),
+        ),
       );
     }
 
@@ -62,24 +66,23 @@ void main() async {
     testWidgets('renders correct title', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.text(l10n.feedItemOptions_openOnWeb),
+        find.text(l10n.postOptions_openOnWeb),
         findsOneWidget,
       );
     });
 
     testWidgets('navigates to $WebRedirectRoute when $ListTile '
         'is tapped', (tester) async {
-      final route = WebRedirectRoute(url: webRedirect.urlString);
-      final pushReplacement = () =>
-          router.pushReplacement<Object?>(route.location);
-      when(pushReplacement).thenAnswer((_) async => null);
-      when(() => post.webRedirect).thenReturn(webRedirect);
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
+      final push = () => router.push(
+        WebRedirectRoute(
+          url: webRedirect.urlString,
+        ),
       );
+      when(push).thenAnswer((_) async => null);
+      when(() => post.webRedirect).thenReturn(webRedirect);
+      await tester.pumpApp(buildSubject());
       await tester.tap(find.byType(ListTile));
-      verify(pushReplacement).called(1);
+      verify(push).called(1);
     });
   });
 }

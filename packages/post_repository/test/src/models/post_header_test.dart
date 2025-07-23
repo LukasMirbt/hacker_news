@@ -5,14 +5,7 @@ void main() {
   group(PostHeader, () {
     group('from', () {
       test('returns $PostHeader', () {
-        const htmlText = 'htmlText';
-        const hmac = 'hmac';
-
-        final data = DetailFatItemDataPlaceholder(
-          htmlText: htmlText,
-          hmac: hmac,
-        );
-
+        final data = DetailFatItemDataPlaceholder();
         final titleRowData = data.titleRowData;
         final subtitleRowData = data.subtitleRowData;
 
@@ -29,8 +22,7 @@ void main() {
             hnuser: subtitleRowData.hnuser,
             age: subtitleRowData.age,
             commentCount: subtitleRowData.commentCount,
-            htmlText: htmlText,
-            hmac: hmac,
+            htmlText: data.htmlText,
           ),
         );
       });

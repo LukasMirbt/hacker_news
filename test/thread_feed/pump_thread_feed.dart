@@ -17,12 +17,8 @@ extension PumpThreadFeedExtension on WidgetTester {
     GoRouter? router,
   }) async {
     return pumpAppShell(
-      MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider<ThreadRepository>(
-            create: (_) => _MockThreadRepository(),
-          ),
-        ],
+      RepositoryProvider<ThreadRepository>(
+        create: (_) => _MockThreadRepository(),
         child: widgetUnderTest,
       ),
     );

@@ -6,17 +6,16 @@ import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
+import 'package:hacker_client/thread_item_options/thread_item_options.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:thread_repository/thread_repository.dart' hide ThreadFeedItem;
 
 import '../../app/pump_app.dart';
 
 class _MockThreadFeedBloc extends MockBloc<ThreadFeedEvent, ThreadFeedState>
     implements ThreadFeedBloc {}
-
-class _MockGoRouter extends Mock implements GoRouter {}
 
 class _MockThreadFeedItemModel extends Mock implements ThreadFeedItemModel {}
 
@@ -36,12 +35,10 @@ void main() {
 
   group(ThreadFeedItem, () {
     late ThreadFeedBloc bloc;
-    late GoRouter router;
     late ThreadFeedItemModel item;
 
     setUp(() {
       bloc = _MockThreadFeedBloc();
-      router = _MockGoRouter();
       item = _MockThreadFeedItemModel();
       when(() => item.id).thenReturn(id);
       when(() => item.isExpanded).thenReturn(isExpanded);
@@ -115,39 +112,20 @@ void main() {
       );
     });
 
-    /*     testWidgets(
-      'navigates to $CommentOptionsRoute onMorePressed',
-      (tester) async {
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
-        final widget = findWidget(tester);
-        widget.data.onMorePressed();
-        final route = CommentOptionsRoute(
-          postId: postId,
-          commentId: id,
-        );
-        verify(
-          () => router.go(route.location),
-        ).called(1);
-      },
-    ); */
-
-    testWidgets(
-      'does nothing onMorePressed',
-      (tester) async {
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
-        final widget = findWidget(tester);
-        expect(
-          widget.data.onMorePressed,
-          returnsNormally,
-        );
-      },
-    );
+    testWidgets('navigates to $ThreadItemOptionsSheet '
+        'onMorePressed', (tester) async {
+      when(item.toRepository).thenReturn(
+        ThreadFeedItemPlaceholder(),
+      );
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      widget.data.onMorePressed();
+      await tester.pump();
+      expect(
+        find.byType(ThreadItemOptionsSheet),
+        findsOneWidget,
+      );
+    });
 
     testWidgets(
       'adds $ThreadFeedItemLinkPressed onLinkPressed',

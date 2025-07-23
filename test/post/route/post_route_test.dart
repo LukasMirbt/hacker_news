@@ -3,6 +3,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:mocktail/mocktail.dart';
@@ -30,18 +31,23 @@ void main() {
       expect(route, isA<GoRouteData>());
     });
 
+    test('is an $AppRelativeRoute', () {
+      final route = createSubject();
+      expect(route, isA<AppRelativeRoute>());
+    });
+
     group('config', () {
       test('has correct type', () {
         expect(
           PostRoute.config,
-          isA<TypedGoRoute<PostRoute>>(),
+          isA<TypedRelativeGoRoute<PostRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
           PostRoute.config.path,
-          ':postId',
+          'post/:postId',
         );
       });
 
@@ -49,10 +55,8 @@ void main() {
         expect(
           PostRoute.config.routes,
           [
-            PostOptionsRoute.config,
-            CommentFormRoute.config,
-            ReplyFormRoute.config,
-            CommentOptionsRoute.config,
+            CommentRoute.config,
+            ReplyRoute.config,
           ],
         );
       });

@@ -37,4 +37,14 @@ extension PumpPostExtension on WidgetTester {
       ),
     );
   }
+
+  Future<void> pumpPostWithContext(
+    void Function(BuildContext) show,
+  ) async {
+    final widget = Container();
+    await pumpPost(widget);
+    final context = element(find.byWidget(widget));
+    show(context);
+    await pump();
+  }
 }

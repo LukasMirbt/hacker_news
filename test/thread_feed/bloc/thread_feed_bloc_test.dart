@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_repository/thread_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -19,7 +20,11 @@ class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
+class _MockReplyRepository extends Mock implements ReplyRepository {}
+
 class _MockThreadFeedVoteModel extends Mock implements ThreadFeedVoteModel {}
+
+class _MockThreadFeedReplyModel extends Mock implements ThreadFeedReplyModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
@@ -39,7 +44,9 @@ void main() {
     late AuthenticationRepository authenticationRepository;
     late AuthenticationState authenticationState;
     late VoteRepository voteRepository;
+    late ReplyRepository replyRepository;
     late ThreadFeedVoteModel voteModel;
+    late ThreadFeedReplyModel replyModel;
     late LinkLauncher linkLauncher;
 
     setUp(() {
@@ -47,7 +54,9 @@ void main() {
       authenticationRepository = _MockAuthenticationRepository();
       authenticationState = _MockAuthenticationState();
       voteRepository = _MockVoteRepository();
+      replyRepository = _MockReplyRepository();
       voteModel = _MockThreadFeedVoteModel();
+      replyModel = _MockThreadFeedReplyModel();
       linkLauncher = _MockLinkLauncher();
       when(
         () => authenticationRepository.state,
@@ -60,7 +69,9 @@ void main() {
         threadRepository: threadRepository,
         authenticationRepository: authenticationRepository,
         voteRepository: voteRepository,
+        replyRepository: replyRepository,
         voteModel: voteModel,
+        replyModel: replyModel,
         linkLauncher: linkLauncher,
       );
     }
@@ -107,6 +118,52 @@ void main() {
         ],
         verify: (_) {
           verify(updateFeed).called(1);
+        },
+      );
+    });
+
+    group(ThreadFeedReplySubscriptionRequested, () {
+      final user = UserPlaceholder();
+
+      final update = ReplyUpdate(
+        form: ReplyFormPlaceholder(),
+        comment: CommentDataPlaceholder(),
+      );
+
+      final state = initialState.copyWith(
+        feed: _MockThreadFeedModel(),
+      );
+
+      final updatedThreadFeed = _MockThreadFeedModel();
+
+      final updateThreadFeed = () => replyModel.updateFeed(
+        update: update,
+        feed: state.feed,
+      );
+
+      blocTest<ThreadFeedBloc, ThreadFeedState>(
+        'emits updated commentList when repository emits $ReplyUpdate',
+        setUp: () {
+          when(() => authenticationState.user).thenReturn(user);
+          when(() => replyRepository.stream).thenAnswer(
+            (_) => Stream.value(update),
+          );
+          when(updateThreadFeed).thenReturn(updatedThreadFeed);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            ThreadFeedReplySubscriptionRequested(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            feed: updatedThreadFeed,
+          ),
+        ],
+        verify: (_) {
+          verify(updateThreadFeed).called(1);
         },
       );
     });
@@ -183,7 +240,7 @@ void main() {
         ],
       );
 
-      final rebuiltCommentList = _MockThreadFeedModel();
+      final rebuiltThreadFeed = _MockThreadFeedModel();
 
       final state = initialState.copyWith(
         feed: feed,
@@ -200,7 +257,7 @@ void main() {
         setUp: () {
           when(feed.toRepository).thenReturn(initialRepositoryList);
           when(request).thenAnswer((_) async => extendedRepositoryList);
-          when(rebuildWith).thenReturn(rebuiltCommentList);
+          when(rebuildWith).thenReturn(rebuiltThreadFeed);
         },
         seed: () => state,
         build: buildBloc,
@@ -215,7 +272,7 @@ void main() {
           ),
           state.copyWith(
             fetchStatus: FetchStatus.success,
-            feed: rebuiltCommentList,
+            feed: rebuiltThreadFeed,
           ),
         ],
         verify: (_) {

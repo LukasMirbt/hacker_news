@@ -12,6 +12,10 @@ final class ThreadFeedVoteSubscriptionRequested extends ThreadFeedEvent {
   const ThreadFeedVoteSubscriptionRequested();
 }
 
+final class ThreadFeedReplySubscriptionRequested extends ThreadFeedEvent {
+  const ThreadFeedReplySubscriptionRequested();
+}
+
 final class ThreadFeedStarted extends ThreadFeedEvent {
   const ThreadFeedStarted();
 }

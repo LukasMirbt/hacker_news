@@ -15,6 +15,7 @@ import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_api/post_api.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
@@ -41,6 +42,8 @@ class _MockAuthenticationRepository extends Mock
   Stream<AuthenticationState> get stream => Stream.empty();
 }
 
+class _MockReplyRepository extends Mock implements ReplyRepository {}
+
 class _MockVersionRepository extends Mock implements VersionRepository {
   @override
   Future<Version> currentVersion() async => Version(1, 0, 0);
@@ -64,6 +67,7 @@ void main() {
     late ThreadApi threadApi;
     late AnalyticsRepository analyticsRepository;
     late AuthenticationRepository authenticationRepository;
+    late ReplyRepository replyRepository;
     late VersionRepository versionRepository;
     late VisitedPostRepository visitedPostRepository;
     late VoteRepository voteRepository;
@@ -75,6 +79,7 @@ void main() {
       threadApi = _MockThreadApi();
       analyticsRepository = _MockAnalyticsRepository();
       authenticationRepository = _MockAuthenticationRepository();
+      replyRepository = _MockReplyRepository();
       voteRepository = _MockVoteRepository();
       visitedPostRepository = VisitedPostRepository();
       versionRepository = _MockVersionRepository();
@@ -88,6 +93,7 @@ void main() {
         threadApi: threadApi,
         analyticsRepository: analyticsRepository,
         authenticationRepository: authenticationRepository,
+        replyRepository: replyRepository,
         versionRepository: versionRepository,
         visitedPostRepository: visitedPostRepository,
         voteRepository: voteRepository,
@@ -134,6 +140,12 @@ void main() {
       expect(context.read<AuthenticationRepository>(), isNotNull);
     });
 
+    testWidgets('provides $ReplyRepository', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<ReplyRepository>(), isNotNull);
+    });
+
     testWidgets('provides $VersionRepository', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
@@ -158,10 +170,10 @@ void main() {
       expect(context.read<AppBloc>(), isNotNull);
     });
 
-    testWidgets('provides $AppRouterBloc', (tester) async {
+    testWidgets('provides $AppRouter', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
-      expect(context.read<AppRouterBloc>(), isNotNull);
+      expect(context.read<AppRouter>(), isNotNull);
     });
 
     testWidgets('provides $AuthenticationBloc', (tester) async {

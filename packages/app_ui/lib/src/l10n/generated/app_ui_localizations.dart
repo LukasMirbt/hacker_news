@@ -103,7 +103,7 @@ abstract class AppUiLocalizations {
   /// No description provided for @separator.
   ///
   /// In en, this message translates to:
-  /// **' • '**
+  /// **'·'**
   String get separator;
 }
 

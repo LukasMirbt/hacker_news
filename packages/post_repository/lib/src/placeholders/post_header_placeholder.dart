@@ -13,7 +13,6 @@ class PostHeaderPlaceholder extends PostHeader {
     DateTime? age,
     int? commentCount,
     super.htmlText,
-    super.hmac,
   }) : super(
          id: id ?? 'id',
          title: title ?? 'title',

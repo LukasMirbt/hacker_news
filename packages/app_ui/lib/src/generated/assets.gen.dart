@@ -20,17 +20,9 @@ class $AssetsImagesGen {
   AssetGenImage get appIcon =>
       const AssetGenImage('assets/images/app_icon.png');
 
-  /// File path: assets/images/chat_add_on_icon.png
-  AssetGenImage get chatAddOnIcon =>
-      const AssetGenImage('assets/images/chat_add_on_icon.png');
-
   /// File path: assets/images/image_ios_dark_transparent.png
   AssetGenImage get imageIosDarkTransparent =>
       const AssetGenImage('assets/images/image_ios_dark_transparent.png');
-
-  /// File path: assets/images/reply_icon.png
-  AssetGenImage get replyIcon =>
-      const AssetGenImage('assets/images/reply_icon.png');
 
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
@@ -51,9 +43,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     adaptiveIconForeground,
     appIcon,
-    chatAddOnIcon,
     imageIosDarkTransparent,
-    replyIcon,
     splash,
     splashAndroid12,
     splashDark,

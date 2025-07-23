@@ -73,7 +73,7 @@ void main() {
     });
 
     testWidgets('returns when matchedLocation '
-        'contains $WebRedirectRoute path', (tester) async {
+        'is $WebRedirectRoute path', (tester) async {
       when(
         () => goRouterState.matchedLocation,
       ).thenReturn(
@@ -96,7 +96,7 @@ void main() {
     });
 
     testWidgets('pushes $WebRedirectRoute when redirect '
-        'is $WebRedirect and matchedLocation does not contain '
+        'is $WebRedirect and matchedLocation is not '
         '$WebRedirectRoute path', (tester) async {
       final route = WebRedirectRoute(url: redirect.urlString);
       final pushWebRedirectRoute = () => router.push<void>(route.location);

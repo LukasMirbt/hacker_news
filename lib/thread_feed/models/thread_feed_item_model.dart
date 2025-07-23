@@ -33,7 +33,6 @@ class ThreadFeedItemModel extends Equatable
   bool get hasBeenUpvoted => item.hasBeenUpvoted ?? false;
   String get user => item.hnuser.id;
   String get htmlText => item.htmlText;
-
   bool get isTopLevel => item.indent == 0;
 
   ThreadFeedItem toRepository() => item;

@@ -14,14 +14,12 @@ import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../pump_app.dart';
 
 class _MockThemeBloc extends MockBloc<ThemeEvent, ThemeState>
     implements ThemeBloc {}
-
-class _MockAppRouterBloc extends MockBloc<AppRouterEvent, AppRouterState>
-    implements AppRouterBloc {}
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
@@ -30,19 +28,14 @@ void main() {
 
   group(AppView, () {
     late ThemeBloc themeBloc;
-    late AppRouterBloc appRouterBloc;
-    late AppRouter router;
+    late AppRouter appRouter;
     late GoRouter goRouter;
 
     setUp(() {
       themeBloc = _MockThemeBloc();
-      appRouterBloc = _MockAppRouterBloc();
-      router = _MockAppRouter();
+      appRouter = _MockAppRouter();
       when(() => themeBloc.state).thenReturn(
         ThemeState(mode: themeMode),
-      );
-      when(() => appRouterBloc.state).thenReturn(
-        AppRouterState(router: router),
       );
       goRouter = GoRouter(
         routes: [
@@ -52,14 +45,14 @@ void main() {
           ),
         ],
       );
-      when(() => router.goRouter).thenReturn(goRouter);
+      when(() => appRouter.goRouter).thenReturn(goRouter);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: themeBloc,
-        child: BlocProvider.value(
-          value: appRouterBloc,
+        child: Provider.value(
+          value: appRouter,
           child: AppView(),
         ),
       );
@@ -135,11 +128,6 @@ void main() {
     testWidgets('renders $VoteFailureListener', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(VoteFailureListener), findsOneWidget);
-    });
-
-    testWidgets('renders $RouterDelegateListener', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(RouterDelegateListener), findsOneWidget);
     });
 
     testWidgets('renders $AppStatusListener', (tester) async {

@@ -6,26 +6,26 @@ class DetailFatItemData extends Equatable {
     required this.titleRowData,
     required this.subtitleRowData,
     required this.htmlText,
-    required this.hmac,
+    required this.commentFormData,
   });
 
   static final empty = DetailFatItemData(
     titleRowData: DetailTitleRowData.empty,
     subtitleRowData: DetailSubtitleRowData.empty,
     htmlText: null,
-    hmac: null,
+    commentFormData: DetailCommentFormData.empty,
   );
 
   final DetailTitleRowData titleRowData;
   final DetailSubtitleRowData subtitleRowData;
   final String? htmlText;
-  final String? hmac;
+  final DetailCommentFormData commentFormData;
 
   @override
   List<Object?> get props => [
     titleRowData,
     subtitleRowData,
     htmlText,
-    hmac,
+    commentFormData,
   ];
 }

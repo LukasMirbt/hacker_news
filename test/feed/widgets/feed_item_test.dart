@@ -9,8 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:hacker_client/feed_item_options/feed_item_options.dart'
+    hide FeedItemModel;
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -135,8 +136,7 @@ void main() {
         ).called(1);
       });
 
-      testWidgets('navigates to $FeedItemOptionsRoute '
-          'onMorePressed', (tester) async {
+      testWidgets('shows $FeedItemOptionsSheet onMorePressed', (tester) async {
         final repositoryItem = FeedItemPlaceholder();
         when(item.toRepository).thenReturn(repositoryItem);
         await tester.pumpApp(
@@ -145,13 +145,11 @@ void main() {
         );
         final widget = findWidget(tester);
         widget.data.onMorePressed();
-        final route = FeedItemOptionsRoute(repositoryItem);
-        verify(
-          () => router.go(
-            route.location,
-            extra: route.$extra,
-          ),
-        ).called(1);
+        await tester.pump();
+        expect(
+          find.byType(FeedItemOptionsSheet),
+          findsOneWidget,
+        );
       });
 
       testWidgets('voteButton is null when score is null', (tester) async {
