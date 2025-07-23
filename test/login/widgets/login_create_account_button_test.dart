@@ -5,9 +5,10 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/login/login.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
@@ -16,7 +17,7 @@ class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
 
 class _MockLoginState extends Mock implements LoginState {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
   const from = 'from';
@@ -24,20 +25,23 @@ void main() {
   group(LoginCreateAccountButton, () {
     late LoginBloc bloc;
     late LoginState state;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       bloc = _MockLoginBloc();
       state = _MockLoginState();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       when(() => bloc.state).thenReturn(state);
       when(() => state.from).thenReturn(from);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: LoginCreateAccountButton(),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: bloc,
+          child: LoginCreateAccountButton(),
+        ),
       );
     }
 
@@ -46,20 +50,15 @@ void main() {
       expect(find.byType(TextButton), findsOneWidget);
     });
 
-    testWidgets(
-      'pushes $CreateAccountRoute when $TextButton '
-      'is pressed',
-      (tester) async {
-        final route = CreateAccountRoute(from: from);
-        final push = () => router.push<void>(route.location);
-        when(push).thenAnswer((_) async {});
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
-        await tester.tap(find.byType(TextButton));
-        verify(push).called(1);
-      },
-    );
+    testWidgets('pushes $CreateAccountRoute when $TextButton '
+        'is pressed', (tester) async {
+      final push = () => router.push(
+        CreateAccountRoute(from: from),
+      );
+      when(push).thenAnswer((_) async => null);
+      await tester.pumpApp(buildSubject());
+      await tester.tap(find.byType(TextButton));
+      verify(push).called(1);
+    });
   });
 }

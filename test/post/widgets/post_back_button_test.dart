@@ -12,13 +12,18 @@ class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
   group(PostBackButton, () {
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
     });
 
-    Widget buildSubject() => PostBackButton();
+    Widget buildSubject() {
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: PostBackButton(),
+      );
+    }
 
     testWidgets('renders $BackButton', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -26,12 +31,9 @@ void main() {
     });
 
     testWidgets('pops when $BackButton is pressed', (tester) async {
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       await tester.tap(find.byType(BackButton));
-      verify(router.pop).called(1);
+      verify(goRouter.pop).called(1);
     });
   });
 }

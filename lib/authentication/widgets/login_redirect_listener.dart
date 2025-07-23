@@ -1,7 +1,7 @@
 import 'package:authentication_repository/authentication_repository.dart'
     hide AuthenticationState;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/login/login.dart';
 
@@ -18,11 +18,13 @@ class LoginRedirectListener
           final isAuthenticated = state.status.isAuthenticated;
           if (isAuthenticated) return;
 
-          final goRouterState = GoRouter.of(context).state;
-          final matchedLocation = goRouterState.matchedLocation;
+          final appRouter = AppRouter.of(context);
+          final matchedLocation = appRouter.matchedLocation;
           if (matchedLocation == LoginRoute.config.path) return;
 
-          LoginRoute(from: matchedLocation).push<void>(context);
+          appRouter.push(
+            LoginRoute(from: matchedLocation),
+          );
         },
       );
 }

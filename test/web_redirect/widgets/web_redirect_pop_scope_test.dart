@@ -23,22 +23,25 @@ void main() {
   group(WebRedirectPopScope, () {
     late WebRedirectBloc bloc;
     late WebRedirectState state;
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
       bloc = _MockWebRedirectBloc();
       state = _MockWebRedirectState();
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
       when(() => bloc.state).thenReturn(state);
       when(() => state.canGoBack).thenReturn(false);
       registerFallbackValue(WebRedirectStarted());
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: WebRedirectPopScope(
-          child: child,
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: BlocProvider.value(
+          value: bloc,
+          child: WebRedirectPopScope(
+            child: child,
+          ),
         ),
       );
     }
@@ -64,7 +67,7 @@ void main() {
           final widget = findWidget(tester);
           widget.onPopInvokedWithResult?.call(true, null);
           verifyNever(() => bloc.add(any()));
-          verifyNever(() => router.pop<Object>(any()));
+          verifyNever(() => goRouter.pop<Object>(any()));
         });
 
         testWidgets('adds $WebRedirectBackPressed when !didPop '
@@ -82,13 +85,10 @@ void main() {
 
         testWidgets('pops when !didPop and !canGoBack', (tester) async {
           const result = 'result';
-          await tester.pumpApp(
-            buildSubject(),
-            router: router,
-          );
+          await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           widget.onPopInvokedWithResult?.call(false, result);
-          verify(() => router.pop<Object>(result)).called(1);
+          verify(() => goRouter.pop<Object>(result)).called(1);
         });
       });
 

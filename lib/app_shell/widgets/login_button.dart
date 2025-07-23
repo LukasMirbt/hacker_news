@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/login/login.dart';
 
@@ -12,8 +12,11 @@ class LoginButton extends StatelessWidget {
 
     return TextButton(
       onPressed: () {
-        final state = GoRouter.of(context).state;
-        LoginRoute(from: state.matchedLocation).push<void>(context);
+        final appRouter = AppRouter.of(context);
+        final matchedLocation = appRouter.matchedLocation;
+        appRouter.push(
+          LoginRoute(from: matchedLocation),
+        );
       },
       child: Text(l10n.appShell_login),
     );

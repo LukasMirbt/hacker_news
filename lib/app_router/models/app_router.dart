@@ -28,6 +28,8 @@ class AppRouter {
   final AppNavigationModel _navigationModel;
   final GoRouter goRouter;
 
+  String get matchedLocation => goRouter.state.matchedLocation;
+
   void go(AppAbsoluteRoute route, {Object? extra}) {
     return _navigationModel.go(
       goRouter: goRouter,
