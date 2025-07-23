@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
@@ -59,8 +58,6 @@ class PostPage extends StatelessWidget {
                   postRepository: context.read<PostRepository>(),
                   voteRepository: context.read<VoteRepository>(),
                   replyRepository: context.read<ReplyRepository>(),
-                  authenticationRepository: context
-                      .read<AuthenticationRepository>(),
                 )
                 ..add(
                   const CommentListSubscriptionRequested(),

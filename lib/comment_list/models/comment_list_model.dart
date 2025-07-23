@@ -50,9 +50,7 @@ class CommentListModel extends Equatable {
   }) {
     final index = items.indexOf(afterItem);
     if (index == -1) return this;
-
     final updatedItems = [...items]..insert(index + 1, newItem);
-
     return CommentListModel(items: updatedItems);
   }
 

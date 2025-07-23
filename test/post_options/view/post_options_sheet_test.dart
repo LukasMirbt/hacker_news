@@ -10,6 +10,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
+import '../../post/pump_post.dart';
 
 class _MockPostOptionsBloc extends MockBloc<void, PostOptionsState>
     implements PostOptionsBloc {}
@@ -36,7 +37,7 @@ void main() {
 
     group('show', () {
       testWidgets('renders $PostOptionsSheet', (tester) async {
-        await tester.pumpAppWithContext(PostOptionsSheet.show);
+        await tester.pumpPostWithContext(PostOptionsSheet.show);
         expect(
           find.byType(PostOptionsSheet),
           findsOneWidget,

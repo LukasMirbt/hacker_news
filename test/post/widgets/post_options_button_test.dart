@@ -9,6 +9,7 @@ import 'package:hacker_client/post_options/post_options.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
+import '../pump_post.dart';
 
 class _MockPostBloc extends MockBloc<PostEvent, PostState>
     implements PostBloc {}
@@ -43,7 +44,7 @@ void main() {
 
     testWidgets('shows $PostOptionsSheet when $IconButton '
         'is pressed', (tester) async {
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       await tester.tap(find.byType(IconButton));
       await tester.pump();
       expect(

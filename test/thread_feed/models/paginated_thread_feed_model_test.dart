@@ -119,6 +119,43 @@ void main() {
       });
     });
 
+    group('insertAfter', () {
+      final newItem = ThreadFeedItemModel(
+        item: ThreadFeedItemPlaceholder(),
+      );
+
+      test('returns updated $PaginatedThreadFeedModel '
+          'when afterItem index is found', () {
+        final feed = createSubject();
+        final afterItem = feed.items.first;
+        final updatedFeed = feed.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(
+          updatedFeed.items,
+          [
+            feed.items.first,
+            newItem,
+            ...feed.items.skip(1),
+          ],
+        );
+      });
+
+      test('returns same $PaginatedThreadFeedModel '
+          'when afterItem index is not found', () {
+        final feed = createSubject();
+        final afterItem = ThreadFeedItemModel(
+          item: ThreadFeedItemPlaceholder(id: 'non-existent'),
+        );
+        final updatedFeed = feed.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(updatedFeed, feed);
+      });
+    });
+
     group('rebuildWith', () {
       final feed = PaginatedThreadFeedPlaceholder(
         items: [

@@ -13,6 +13,7 @@ class PostOptionsSheet extends StatelessWidget {
       useRootNavigator: true,
       showDragHandle: true,
       builder: (_) => BlocProvider(
+        lazy: false,
         create: (_) => PostOptionsBloc(
           postRepository: context.read<PostRepository>(),
         ),

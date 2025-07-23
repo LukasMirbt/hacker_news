@@ -16,6 +16,7 @@ class FeedItemOptionsSheet extends StatelessWidget {
       useRootNavigator: true,
       showDragHandle: true,
       builder: (_) => BlocProvider(
+        lazy: false,
         create: (_) => FeedItemOptionsBloc(item: item),
         child: const FeedItemOptionsSheet(),
       ),

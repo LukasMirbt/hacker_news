@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
@@ -16,11 +15,6 @@ class _MockPostRepository extends Mock implements PostRepository {}
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
 class _MockReplyRepository extends Mock implements ReplyRepository {}
-
-class _MockAuthenticationRepository extends Mock
-    implements AuthenticationRepository {}
-
-class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
 class _MockCommentListVoteModel extends Mock implements CommentListVoteModel {}
 
@@ -43,8 +37,6 @@ void main() {
     late PostRepository postRepository;
     late VoteRepository voteRepository;
     late ReplyRepository replyRepository;
-    late AuthenticationRepository authenticationRepository;
-    late AuthenticationState authenticationState;
     late CommentListVoteModel voteModel;
     late CommentListReplyModel replyModel;
     late LinkLauncher linkLauncher;
@@ -53,14 +45,9 @@ void main() {
       postRepository = _MockPostRepository();
       voteRepository = _MockVoteRepository();
       replyRepository = _MockReplyRepository();
-      authenticationRepository = _MockAuthenticationRepository();
-      authenticationState = _MockAuthenticationState();
       voteModel = _MockCommentListVoteModel();
       replyModel = _MockCommentListReplyModel();
       linkLauncher = _MockLinkLauncher();
-      when(
-        () => authenticationRepository.state,
-      ).thenReturn(authenticationState);
     });
 
     CommentListBloc buildBloc() {
@@ -69,7 +56,6 @@ void main() {
         postRepository: postRepository,
         voteRepository: voteRepository,
         replyRepository: replyRepository,
-        authenticationRepository: authenticationRepository,
         voteModel: voteModel,
         replyModel: replyModel,
         linkLauncher: linkLauncher,
@@ -163,8 +149,6 @@ void main() {
     });
 
     group(CommentListReplySubscriptionRequested, () {
-      final user = UserPlaceholder();
-
       final update = ReplyUpdate(
         form: ReplyFormPlaceholder(),
         comment: CommentDataPlaceholder(),
@@ -177,7 +161,6 @@ void main() {
       final updatedCommentList = _MockCommentListModel();
 
       final updateCommentList = () => replyModel.updateCommentList(
-        user: user,
         update: update,
         commentList: state.commentList,
       );
@@ -185,7 +168,6 @@ void main() {
       blocTest<CommentListBloc, CommentListState>(
         'emits updated commentList when repository emits $ReplyUpdate',
         setUp: () {
-          when(() => authenticationState.user).thenReturn(user);
           when(() => replyRepository.stream).thenAnswer(
             (_) => Stream.value(update),
           );

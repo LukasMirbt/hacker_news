@@ -31,18 +31,9 @@ class ThreadFeedItemModel extends Equatable
 
   String? get upvoteUrl => item.upvoteUrl;
   bool get hasBeenUpvoted => item.hasBeenUpvoted ?? false;
-  int? get score => item.score;
   String get user => item.hnuser.id;
   String get htmlText => item.htmlText;
-
   bool get isTopLevel => item.indent == 0;
-
-  String? get postId {
-    final onUrl = item.onUrl;
-    if (onUrl == null) return null;
-    final url = Uri.parse(onUrl);
-    return url.queryParameters['id'];
-  }
 
   ThreadFeedItem toRepository() => item;
 

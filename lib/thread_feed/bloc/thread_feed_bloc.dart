@@ -78,7 +78,6 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
         emit(
           state.copyWith(
             feed: _replyModel.updateFeed(
-              user: _authenticationRepository.state.user,
               update: update,
               feed: state.feed,
             ),

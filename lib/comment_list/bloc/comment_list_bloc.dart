@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:link_launcher/link_launcher.dart';
@@ -12,14 +11,12 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     required PostRepository postRepository,
     required VoteRepository voteRepository,
     required ReplyRepository replyRepository,
-    required AuthenticationRepository authenticationRepository,
     CommentListVoteModel? voteModel,
     CommentListReplyModel? replyModel,
     LinkLauncher? linkLauncher,
   }) : _postRepository = postRepository,
        _voteRepository = voteRepository,
        _replyRepository = replyRepository,
-       _authenticationRepository = authenticationRepository,
        _voteModel = voteModel ?? const CommentListVoteModel(),
        _replyModel = replyModel ?? const CommentListReplyModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
@@ -43,7 +40,6 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   final PostRepository _postRepository;
   final VoteRepository _voteRepository;
   final ReplyRepository _replyRepository;
-  final AuthenticationRepository _authenticationRepository;
   final CommentListVoteModel _voteModel;
   final CommentListReplyModel _replyModel;
   final LinkLauncher _linkLauncher;
@@ -91,7 +87,6 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
         emit(
           state.copyWith(
             commentList: _replyModel.updateCommentList(
-              user: _authenticationRepository.state.user,
               update: update,
               commentList: state.commentList,
             ),

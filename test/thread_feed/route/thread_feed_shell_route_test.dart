@@ -4,47 +4,37 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/post/post.dart';
+import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:thread_repository/thread_repository.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  group(PostShellRoute, () {
-    PostShellRoute createSubject() => PostShellRoute();
+  group(ThreadFeedShellRoute, () {
+    ThreadFeedShellRoute createSubject() => ThreadFeedShellRoute();
 
     test('is a $ShellRouteData', () {
       final route = createSubject();
       expect(route, isA<ShellRouteData>());
     });
 
-    group('parentNavigatorKey', () {
-      test('returns correct navigatorKey', () {
-        expect(
-          PostShellRoute.$parentNavigatorKey,
-          AppRouter.navigatorKey,
-        );
-      });
-    });
-
     group('config', () {
       test('has correct type', () {
         expect(
-          PostShellRoute.config,
-          isA<TypedShellRoute<PostShellRoute>>(),
+          ThreadFeedShellRoute.config,
+          isA<TypedShellRoute<ThreadFeedShellRoute>>(),
         );
       });
 
       test('has correct routes', () {
         expect(
-          PostShellRoute.config.routes,
+          ThreadFeedShellRoute.config.routes,
           [
-            PostRoute.config,
+            ThreadFeedRoute.config,
           ],
         );
       });
@@ -66,13 +56,13 @@ void main() {
         );
       }
 
-      testWidgets('provides $PostRepository', (tester) async {
+      testWidgets('provides $ThreadRepository', (tester) async {
         await tester.pumpApp(buildSubject());
         final context = tester.element(
           find.byWidget(navigator),
         );
         expect(
-          context.read<PostRepository>(),
+          context.read<ThreadRepository>(),
           isNotNull,
         );
       });

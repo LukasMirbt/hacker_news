@@ -137,7 +137,6 @@ void main() {
       final updatedThreadFeed = _MockThreadFeedModel();
 
       final updateThreadFeed = () => replyModel.updateFeed(
-        user: user,
         update: update,
         feed: state.feed,
       );
