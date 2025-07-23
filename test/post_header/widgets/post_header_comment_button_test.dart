@@ -44,13 +44,13 @@ void main() {
       expect(widget.data.commentCount, commentCount);
     });
 
-    testWidgets('navigates to $CommentFormRoute onPressed', (tester) async {
+    testWidgets('navigates to $CommentRoute onPressed', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       widget.data.onPressed();
       verify(
         () => router.goRelative(
-          CommentFormRoute(),
+          CommentRoute(),
         ),
       ).called(1);
     });

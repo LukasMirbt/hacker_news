@@ -9,7 +9,7 @@ class PostRoute extends GoRouteData
   static const config = TypedRelativeGoRoute<PostRoute>(
     path: 'post/:postId',
     routes: [
-      CommentFormRoute.config,
+      CommentRoute.config,
       ReplyRoute.config,
     ],
   );

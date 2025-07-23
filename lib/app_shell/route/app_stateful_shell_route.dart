@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/comment_form/comment_form.dart';
+import 'package:hacker_client/comment/comment.dart';
 import 'package:hacker_client/data_collection/data_collection.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/post/post.dart';
@@ -14,7 +14,7 @@ import 'package:hacker_client/settings/settings.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadFeedItem;
 import 'package:provider/provider.dart';
 
-part '../../comment_form/route/comment_form_route.dart';
+part '../../comment/route/comment_route.dart';
 part '../../data_collection/route/data_collection_route.dart';
 part '../../home/route/home_route.dart';
 part '../../post/route/post_route.dart';

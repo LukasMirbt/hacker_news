@@ -17,17 +17,12 @@ class ReplyBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: AppSpacing.md),
-              child: _UserId(),
-            ),
-            ReplyHtml(
-              padding: EdgeInsets.only(bottom: AppSpacing.lg),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: AppSpacing.lg),
-              child: ReplyTextField(),
-            ),
+            _UserId(),
+            SizedBox(height: AppSpacing.sm),
+            ReplyHtml(),
+            SizedBox(height: AppSpacing.lg),
+            ReplyTextField(),
+            SizedBox(height: AppSpacing.lg),
             ReplyButton(),
           ],
         ),
@@ -42,7 +37,7 @@ class _UserId extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.select(
-      (ReplyBloc bloc) => bloc.state.form.user,
+      (ReplyBloc bloc) => bloc.state.form.hnuser.id,
     );
 
     final textTheme = ExtendedTextTheme.of(context);

@@ -5,40 +5,30 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/comment/comment.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:reply_repository/reply_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
-    implements ReplyBloc {}
-
-class _MockReplyState extends Mock implements ReplyState {}
-
-class _MockReplyForm extends Mock implements ReplyForm {}
+class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
+    implements CommentBloc {}
 
 void main() {
   const htmlText = 'htmlText';
 
-  group(ReplyHtml, () {
-    late ReplyBloc bloc;
-    late ReplyState state;
-    late ReplyForm form;
+  group(CommentHtmlBody, () {
+    late CommentBloc bloc;
 
     setUp(() {
-      bloc = _MockReplyBloc();
-      state = _MockReplyState();
-      form = _MockReplyForm();
-      when(() => bloc.state).thenReturn(state);
-      when(() => state.form).thenReturn(form);
-      when(() => form.htmlText).thenReturn(htmlText);
+      bloc = _MockCommentBloc();
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyHtml(),
+        child: CommentHtmlBody(
+          htmlText: htmlText,
+        ),
       );
     }
 
@@ -55,14 +45,14 @@ void main() {
         expect(widget.html, htmlText);
       });
 
-      testWidgets('adds $ReplyLinkPressed onLinkPressed', (tester) async {
+      testWidgets('adds $CommentLinkPressed onLinkPressed', (tester) async {
         const url = 'url';
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onLinkPressed(url);
         verify(
           () => bloc.add(
-            ReplyLinkPressed(url),
+            CommentLinkPressed(url),
           ),
         ).called(1);
       });

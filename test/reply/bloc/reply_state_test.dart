@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/reply/reply.dart';
+import 'package:reply_repository/reply_repository.dart';
 
 void main() {
   const url = 'url';
@@ -8,7 +9,7 @@ void main() {
     ReplyState createSubject(SubmissionStatus submissionStatus) {
       return ReplyState(
         url: url,
-        form: ReplyFormModel.empty,
+        form: ReplyForm.empty,
         submissionStatus: submissionStatus,
       );
     }
@@ -19,7 +20,7 @@ void main() {
           ReplyState.initial(url: url),
           ReplyState(
             url: url,
-            form: ReplyFormModel.empty,
+            form: ReplyForm.empty,
           ),
         );
       });

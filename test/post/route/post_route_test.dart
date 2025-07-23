@@ -55,7 +55,7 @@ void main() {
         expect(
           PostRoute.config.routes,
           [
-            CommentFormRoute.config,
+            CommentRoute.config,
             ReplyRoute.config,
           ],
         );

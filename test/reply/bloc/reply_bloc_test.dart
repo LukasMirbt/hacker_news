@@ -39,13 +39,12 @@ void main() {
 
     group(ReplyStarted, () {
       final request = () => repository.fetchReplyForm(url: url);
-      final replyForm = ReplyFormPlaceholder();
+      final form = ReplyFormPlaceholder();
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits [success] and $ReplyFormModel '
-        'when request succeeds',
+        'emits [success] and $ReplyForm when request succeeds',
         setUp: () {
-          when(request).thenAnswer((_) async => replyForm);
+          when(request).thenAnswer((_) async => form);
         },
         build: buildBloc,
         act: (bloc) {
@@ -55,7 +54,7 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            form: ReplyFormModel(replyForm),
+            form: form,
             fetchStatus: FetchStatus.success,
           ),
         ],
@@ -129,9 +128,7 @@ void main() {
     });
 
     group(ReplySubmitted, () {
-      final request = () => repository.reply(
-        initialState.form.toRepository(),
-      );
+      final request = () => repository.reply(initialState.form);
 
       blocTest<ReplyBloc, ReplyState>(
         'emits [loading, success] when request succeds',

@@ -30,7 +30,7 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'comment',
 
-                      factory: _$CommentFormRoute._fromState,
+                      factory: _$CommentRoute._fromState,
                     ),
                     GoRouteData.$route(
                       path: 'reply',
@@ -74,7 +74,7 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                         GoRouteData.$route(
                           path: 'comment',
 
-                          factory: _$CommentFormRoute._fromState,
+                          factory: _$CommentRoute._fromState,
                         ),
                         GoRouteData.$route(
                           path: 'reply',
@@ -161,9 +161,8 @@ mixin _$PostRoute on GoRouteData {
       context.replace(relativeLocation);
 }
 
-mixin _$CommentFormRoute on GoRouteData {
-  static CommentFormRoute _fromState(GoRouterState state) =>
-      const CommentFormRoute();
+mixin _$CommentRoute on GoRouteData {
+  static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
 
   String get location => GoRouteData.$location('comment');
 

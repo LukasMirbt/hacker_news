@@ -18,7 +18,7 @@ class PostHeaderCommentButton extends StatelessWidget {
         commentCount: commentCount,
         onPressed: () {
           AppRouter.of(context).goRelative(
-            const CommentFormRoute(),
+            const CommentRoute(),
           );
         },
       ),

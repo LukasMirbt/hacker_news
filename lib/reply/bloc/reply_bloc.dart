@@ -33,7 +33,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
 
       emit(
         state.copyWith(
-          form: ReplyFormModel(form),
+          form: form,
           fetchStatus: FetchStatus.success,
         ),
       );
@@ -78,9 +78,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     try {
-      await _repository.reply(
-        state.form.toRepository(),
-      );
+      await _repository.reply(state.form);
 
       emit(
         state.copyWith(

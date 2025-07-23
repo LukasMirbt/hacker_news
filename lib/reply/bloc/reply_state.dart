@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hacker_client/reply/reply.dart';
+import 'package:reply_repository/reply_repository.dart';
 
 part 'reply_state.freezed.dart';
 
@@ -27,7 +27,7 @@ enum SubmissionStatus {
 abstract class ReplyState with _$ReplyState {
   const factory ReplyState({
     required String url,
-    required ReplyFormModel form,
+    required ReplyForm form,
     @Default(FetchStatus.loading) FetchStatus fetchStatus,
     @Default(SubmissionStatus.initial) SubmissionStatus submissionStatus,
   }) = _ReplyState;
@@ -37,7 +37,7 @@ abstract class ReplyState with _$ReplyState {
   }) {
     return ReplyState(
       url: url,
-      form: ReplyFormModel.empty,
+      form: ReplyForm.empty,
     );
   }
 
