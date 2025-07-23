@@ -17,6 +17,7 @@ void main() {
         const parentUrl = 'parentUrl';
         const contextUrl = 'contextUrl';
         const onUrl = 'onUrl';
+        const onTitle = 'onTitle';
         const replyUrl = 'replyUrl';
 
         expect(
@@ -32,6 +33,7 @@ void main() {
             parentUrl: parentUrl,
             contextUrl: contextUrl,
             onUrl: onUrl,
+            onTitle: onTitle,
             replyUrl: replyUrl,
           ),
           ThreadFeedItemData(
@@ -46,6 +48,7 @@ void main() {
             parentUrl: parentUrl,
             contextUrl: contextUrl,
             onUrl: onUrl,
+            onTitle: onTitle,
             replyUrl: replyUrl,
           ),
         );
@@ -66,6 +69,7 @@ void main() {
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
+            onTitle: null,
             replyUrl: null,
           ),
           ThreadFeedItemData(
@@ -80,6 +84,7 @@ void main() {
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
+            onTitle: null,
             replyUrl: null,
           ),
         );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/feed_item_options/feed_item_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
@@ -18,7 +19,9 @@ class OpenOnWebOption extends StatelessWidget {
         final state = context.read<FeedItemOptionsBloc>().state;
         final url = state.item.webRedirect.urlString;
         Navigator.of(context).pop();
-        WebRedirectRoute(url: url).push<void>(context);
+        AppRouter.of(context).push(
+          WebRedirectRoute(url: url),
+        );
       },
     );
   }

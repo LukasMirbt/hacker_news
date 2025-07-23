@@ -5,6 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     show InAppWebViewPlatform;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -30,6 +31,11 @@ void main() {
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
+    });
+
+    test('is an $AppAbsoluteRoute', () {
+      final route = createSubject();
+      expect(route, isA<AppAbsoluteRoute>());
     });
 
     group('config', () {

@@ -13,6 +13,7 @@ class ThreadFeedItemPlaceholder extends ThreadFeedItem {
     String? parentUrl,
     String? contextUrl,
     String? onUrl,
+    String? onTitle,
     String? replyUrl,
   }) : super(
          id: id ?? 'id',
@@ -26,6 +27,7 @@ class ThreadFeedItemPlaceholder extends ThreadFeedItem {
          parentUrl: parentUrl ?? 'parentUrl',
          contextUrl: contextUrl ?? 'contextUrl',
          onUrl: onUrl ?? 'onUrl',
+         onTitle: onTitle ?? 'onTitle',
          replyUrl: replyUrl ?? 'replyUrl',
        );
 }

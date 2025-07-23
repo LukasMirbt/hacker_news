@@ -39,6 +39,7 @@ class ThreadFeedReplyModel {
         parentUrl: null,
         contextUrl: null,
         onUrl: null,
+        onTitle: null,
         replyUrl: replyUrl,
       ),
     );

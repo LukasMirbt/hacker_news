@@ -14,6 +14,7 @@ class ThreadFeedItemData extends Equatable {
     required this.parentUrl,
     required this.contextUrl,
     required this.onUrl,
+    required this.onTitle,
     required this.replyUrl,
   });
 
@@ -29,6 +30,7 @@ class ThreadFeedItemData extends Equatable {
     required String? parentUrl,
     required String? contextUrl,
     required String? onUrl,
+    required String? onTitle,
     required String? replyUrl,
   }) {
     return ThreadFeedItemData(
@@ -43,6 +45,7 @@ class ThreadFeedItemData extends Equatable {
       parentUrl: parentUrl,
       contextUrl: contextUrl,
       onUrl: onUrl,
+      onTitle: onTitle,
       replyUrl: replyUrl,
     );
   }
@@ -58,6 +61,7 @@ class ThreadFeedItemData extends Equatable {
   final String? parentUrl;
   final String? contextUrl;
   final String? onUrl;
+  final String? onTitle;
   final String? replyUrl;
 
   @override
@@ -73,6 +77,7 @@ class ThreadFeedItemData extends Equatable {
     parentUrl,
     contextUrl,
     onUrl,
+    onTitle,
     replyUrl,
   ];
 }

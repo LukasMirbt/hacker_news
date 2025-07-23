@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/thread_item_options/thread_item_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:provider/provider.dart';
@@ -29,10 +29,10 @@ void main() async {
     });
 
     Widget buildSubject() {
-      return MockNavigatorProvider(
-        navigator: navigator,
-        child: Provider.value(
-          value: router,
+      return Provider.value(
+        value: router,
+        child: MockNavigatorProvider(
+          navigator: navigator,
           child: ReplyOptionBody(url: url),
         ),
       );
@@ -51,7 +51,7 @@ void main() async {
     testWidgets('renders correct title', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.text(l10n.commentOptions_reply),
+        find.text(l10n.threadItemOptions_reply),
         findsOneWidget,
       );
     });

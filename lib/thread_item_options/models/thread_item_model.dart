@@ -14,20 +14,14 @@ class ThreadItemModel extends Equatable {
   final WebLinks _links;
 
   String get id => _item.id;
+  String? get postId => _item.postId;
+  String? get replyUrl => _item.replyUrl;
+  String? get onTitle => _item.onTitle;
 
   WebRedirect get webRedirect {
-    final url = _links.feedItemUrl(_item.id);
+    final url = _links.commentUrl(_item.id);
     return WebRedirect(url: url);
   }
-
-  String? get postId {
-    final onUrl = _item.onUrl;
-    if (onUrl == null) return null;
-    final url = Uri.parse(onUrl);
-    return url.queryParameters['id'];
-  }
-
-  String? get replyUrl => _item.replyUrl;
 
   @override
   List<Object> get props => [

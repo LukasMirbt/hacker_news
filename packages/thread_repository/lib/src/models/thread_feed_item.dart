@@ -19,6 +19,7 @@ class ThreadFeedItem with _$ThreadFeedItem {
     required this.parentUrl,
     required this.contextUrl,
     required this.onUrl,
+    required this.onTitle,
     required this.replyUrl,
   });
 
@@ -35,6 +36,7 @@ class ThreadFeedItem with _$ThreadFeedItem {
       parentUrl: data.parentUrl,
       contextUrl: data.contextUrl,
       onUrl: data.onUrl,
+      onTitle: data.onTitle,
       replyUrl: data.replyUrl,
     );
   }
@@ -50,7 +52,15 @@ class ThreadFeedItem with _$ThreadFeedItem {
   final String? parentUrl;
   final String? contextUrl;
   final String? onUrl;
+  final String? onTitle;
   final String? replyUrl;
+
+  String? get postId {
+    final onUrl = this.onUrl;
+    if (onUrl == null) return null;
+    final url = Uri.parse(onUrl);
+    return url.queryParameters['id'];
+  }
 
   ThreadFeedItem upvote() => copyWith(hasBeenUpvoted: true);
 

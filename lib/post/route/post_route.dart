@@ -1,6 +1,7 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class PostRoute extends GoRouteData with _$PostRoute {
+class PostRoute extends GoRouteData
+    with _$PostRoute, AppRelativeRoute, EquatableMixin {
   const PostRoute({
     required this.postId,
   });
@@ -22,4 +23,7 @@ class PostRoute extends GoRouteData with _$PostRoute {
   ) {
     return PostPage(id: postId);
   }
+
+  @override
+  List<Object> get props => [postId];
 }

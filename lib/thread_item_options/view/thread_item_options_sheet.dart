@@ -5,12 +5,7 @@ import 'package:hacker_client/thread_item_options/thread_item_options.dart';
 import 'package:thread_repository/thread_repository.dart';
 
 class ThreadItemOptionsSheet extends StatelessWidget {
-  const ThreadItemOptionsSheet({
-    required this.item,
-    super.key,
-  });
-
-  final ThreadFeedItem item;
+  const ThreadItemOptionsSheet({super.key});
 
   static void show({
     required BuildContext context,
@@ -22,7 +17,7 @@ class ThreadItemOptionsSheet extends StatelessWidget {
       showDragHandle: true,
       builder: (_) => BlocProvider(
         create: (_) => ThreadItemOptionsBloc(item: item),
-        child: ThreadItemOptionsSheet(item: item),
+        child: const ThreadItemOptionsSheet(),
       ),
     );
   }
@@ -32,7 +27,7 @@ class ThreadItemOptionsSheet extends StatelessWidget {
     return const AppBottomSheet(
       children: [
         ReplyOption(),
-        ContextOption(),
+        ViewPostOption(),
         OpenOnWebOption(),
       ],
     );

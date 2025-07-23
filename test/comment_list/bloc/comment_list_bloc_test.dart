@@ -183,7 +183,7 @@ void main() {
       );
 
       blocTest<CommentListBloc, CommentListState>(
-        'emits updated commentList when repository emits $VoteSuccess',
+        'emits updated commentList when repository emits $ReplyUpdate',
         setUp: () {
           when(() => authenticationState.user).thenReturn(user);
           when(() => replyRepository.stream).thenAnswer(
