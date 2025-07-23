@@ -1,8 +1,7 @@
 // ignore_for_file: cascade_invocations
 
-import 'package:app_client/app_client.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:post_api/post_api.dart';
+import 'package:post_repository/post_repository.dart';
 
 void main() {
   group(CancelTokenService, () {

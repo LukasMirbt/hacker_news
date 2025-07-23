@@ -16,22 +16,20 @@ class PostStreamFailure with EquatableMixin implements Exception {
 class PostApi {
   PostApi({
     required AppClient appClient,
-    CancelTokenService? cancelTokenService,
     PostStreamParser? postStreamParser,
     BackgroundPostParser? postParser,
   }) : _client = appClient,
-       _cancelTokenService = cancelTokenService ?? CancelTokenService(),
        _postStreamParser = postStreamParser ?? PostStreamParser(),
        _postParser = postParser ?? BackgroundPostParser();
 
   final AppClient _client;
-  final CancelTokenService _cancelTokenService;
   final PostStreamParser _postStreamParser;
   final BackgroundPostParser _postParser;
 
-  Stream<PostData> fetchPostStream({required String id}) async* {
-    final cancelToken = _cancelTokenService.generate();
-
+  Stream<PostData> fetchPostStream({
+    required String id,
+    required CancelToken cancelToken,
+  }) async* {
     final response = await _client.http.get<ResponseBody>(
       'item',
       queryParameters: {'id': id},
@@ -53,9 +51,10 @@ class PostApi {
     }
   }
 
-  Future<PostData> fetchPost({required String id}) async {
-    final cancelToken = _cancelTokenService.generate();
-
+  Future<PostData> fetchPost({
+    required String id,
+    required CancelToken cancelToken,
+  }) async {
     final response = await _client.http.get<String>(
       'item',
       queryParameters: {'id': id},

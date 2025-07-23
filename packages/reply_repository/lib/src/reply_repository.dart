@@ -25,9 +25,7 @@ class ReplyRepository {
   }
 
   Future<void> reply(ReplyForm form) async {
-    await _replyApi.reply(
-      form.toApi(),
-    );
+    await _replyApi.reply(form.toApi());
 
     final commentThread = await _replyApi.fetchCommentThread(
       id: form.parent,

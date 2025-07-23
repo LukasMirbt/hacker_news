@@ -5,11 +5,14 @@ class ReplyApi {
   ReplyApi({
     required AppClient appClient,
     ReplyParser? replyParser,
+    PostParser? postParser,
   }) : _client = appClient,
-       _replyParser = replyParser ?? const ReplyParser();
+       _replyParser = replyParser ?? const ReplyParser(),
+       _postParser = postParser ?? const PostParser();
 
   final AppClient _client;
   final ReplyParser _replyParser;
+  final PostParser _postParser;
 
   Future<ReplyData> fetchReplyForm({required String url}) async {
     final response = await _client.http.get<String>(url);
@@ -33,13 +36,8 @@ class ReplyApi {
       'item',
       data: {'id': id},
     );
-
     final html = response.data!;
-
-    final document = const HtmlParser().parse(html);
-    final commentElement = document.querySelector('.comment-tree');
-
-    final comments = const CommentListParser().parse(commentElement!);
-    return comments;
+    final post = _postParser.parse(html);
+    return post.comments;
   }
 }
