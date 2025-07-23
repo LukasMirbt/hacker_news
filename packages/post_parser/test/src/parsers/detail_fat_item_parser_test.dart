@@ -87,6 +87,7 @@ void main() {
 
       test('returns $DetailFatItemData with correct values '
           'when data is null', () {
+        when(parseCommentForm).thenReturn(commentFormData);
         final parser = createSubject();
         expect(
           parser.parse(fatItem),
@@ -94,7 +95,7 @@ void main() {
             titleRowData: DetailTitleRowData.empty,
             subtitleRowData: DetailSubtitleRowData.empty,
             htmlText: null,
-            commentFormData: DetailCommentFormData.empty,
+            commentFormData: commentFormData,
           ),
         );
       });
