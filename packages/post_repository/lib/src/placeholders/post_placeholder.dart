@@ -7,7 +7,7 @@ class PostPlaceholder extends Post {
     List<Comment>? comments,
   }) : super(
          header: header ?? PostHeaderPlaceholder(),
-         commentForm: commentForm ?? CommentFormPlaceholder(),
+         commentForm: commentForm ?? const CommentFormPlaceholder(),
          comments: comments ?? const [],
        );
 }

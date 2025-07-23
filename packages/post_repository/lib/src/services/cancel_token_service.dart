@@ -1,4 +1,4 @@
-import 'package:app_client/app_client.dart';
+import 'package:post_repository/post_repository.dart';
 
 class CancelTokenService {
   var _cancelToken = CancelToken();
