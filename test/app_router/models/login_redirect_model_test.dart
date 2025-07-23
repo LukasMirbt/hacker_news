@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,12 +17,12 @@ class _MockGoRouter extends Mock implements GoRouter {}
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
+class _MockLoginRedirectFromModel extends Mock
+    implements LoginRedirectFromModel {}
+
 class _TestAppRoute implements AppRoute {
   @override
   String get location => throw UnimplementedError();
-
-  @override
-  String from(GoRouter router) => throw UnimplementedError();
 
   @override
   String get navigationLocation => throw UnimplementedError();
@@ -28,17 +30,10 @@ class _TestAppRoute implements AppRoute {
 
 class _TestAppAuthenticatedRoute extends GoRouteData
     with AppAbsoluteRoute, AuthenticatedRoute {
-  _TestAppAuthenticatedRoute({
-    required String from,
-  }) : _from = from;
-
-  final String _from;
+  _TestAppAuthenticatedRoute();
 
   @override
   String get location => throw UnimplementedError();
-
-  @override
-  String from(GoRouter router) => _from;
 
   @override
   void go(BuildContext context) => throw UnimplementedError();
@@ -59,11 +54,13 @@ void main() {
     late AuthenticationState authenticationState;
     late GoRouter goRouter;
     late GoRouterState goRouterState;
+    late LoginRedirectFromModel fromModel;
 
     setUp(() {
       repository = _MockAuthenticationRepository();
       authenticationState = _MockAuthenticationState();
       goRouter = _MockGoRouter();
+      fromModel = _MockLoginRedirectFromModel();
       goRouterState = _MockGoRouterState();
       when(() => repository.state).thenReturn(authenticationState);
       when(() => goRouter.state).thenReturn(goRouterState);
@@ -72,6 +69,7 @@ void main() {
     LoginRedirectModel createSubject() {
       return LoginRedirectModel(
         authenticationRepository: repository,
+        loginRedirectFromModel: fromModel,
       );
     }
 
@@ -90,7 +88,7 @@ void main() {
       });
 
       test('returns null when isAuthenticated', () {
-        final route = _TestAppAuthenticatedRoute(from: from);
+        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -105,7 +103,7 @@ void main() {
       });
 
       test('returns null when currentLocation is $LoginRoute path', () {
-        final route = _TestAppAuthenticatedRoute(from: from);
+        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -125,7 +123,7 @@ void main() {
       test('returns loginRoute.location when route '
           'is $AuthenticatedRoute and !isAuthenticated '
           'and currentLocation is not $LoginRoute path', () {
-        final route = _TestAppAuthenticatedRoute(from: from);
+        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -134,12 +132,18 @@ void main() {
         when(
           () => goRouterState.matchedLocation,
         ).thenReturn('matchedLocation');
+        final fromMethod = () => fromModel.from(
+          route: route,
+          goRouter: goRouter,
+        );
+        when(fromMethod).thenReturn(from);
         final model = createSubject();
         final redirect = model.redirect(
           route: route,
           goRouter: goRouter,
         );
         expect(redirect, loginRoute.location);
+        verify(fromMethod).called(1);
       });
     });
   });

@@ -33,10 +33,6 @@ class ThreadFeedItem extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          /*          ThreadItemOptionsRoute(
-            $extra: item.toRepository(),
-          ).push<void>(context); */
-
           ThreadItemOptionsSheet.show(
             context: context,
             item: item.toRepository(),

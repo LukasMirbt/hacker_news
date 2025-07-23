@@ -13,7 +13,4 @@ mixin AppAbsoluteRoute on GoRouteData implements AppRoute {
 
   @override
   String get navigationLocation => location;
-
-  @override
-  String from(GoRouter router) => router.state.matchedLocation;
 }

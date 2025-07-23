@@ -55,7 +55,10 @@ class _MockAuthenticationRepository extends Mock
   Future<List<Cookie>> cookies() async => [];
 }
 
-class _MockReplyRepository extends Mock implements ReplyRepository {}
+class _MockReplyRepository extends Mock implements ReplyRepository {
+  @override
+  Stream<ReplyUpdate> get stream => Stream.empty();
+}
 
 class _MockVersionRepository extends Mock implements VersionRepository {
   @override

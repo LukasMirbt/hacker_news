@@ -10,6 +10,7 @@ import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/thread_item_options/thread_item_options.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +68,7 @@ void main() async {
 
     testWidgets('renders correct icon', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byIcon(Icons.open_in_browser), findsOneWidget);
+      expect(find.byIcon(Symbols.open_in_browser), findsOneWidget);
     });
 
     testWidgets('renders correct title', (tester) async {

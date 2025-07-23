@@ -6,9 +6,12 @@ import 'package:hacker_client/login/login.dart';
 class LoginRedirectModel {
   const LoginRedirectModel({
     required AuthenticationRepository authenticationRepository,
-  }) : _repository = authenticationRepository;
+    LoginRedirectFromModel? loginRedirectFromModel,
+  }) : _repository = authenticationRepository,
+       _fromModel = loginRedirectFromModel ?? const LoginRedirectFromModel();
 
   final AuthenticationRepository _repository;
+  final LoginRedirectFromModel _fromModel;
 
   String? redirect({
     required AppRoute route,
@@ -22,7 +25,11 @@ class LoginRedirectModel {
     final currentLocation = goRouter.state.matchedLocation;
     if (currentLocation == LoginRoute.config.path) return null;
 
-    final from = route.from(goRouter);
+    final from = _fromModel.from(
+      route: route,
+      goRouter: goRouter,
+    );
+
     return LoginRoute(from: from).location;
   }
 }

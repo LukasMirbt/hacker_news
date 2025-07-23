@@ -5,17 +5,18 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
@@ -31,21 +32,24 @@ void main() {
   group(FeedItemPressListener, () {
     late FeedBloc bloc;
     late LinkLauncher linkLauncher;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       bloc = _MockFeedBloc();
       linkLauncher = _MockLinkLauncher();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: FeedItemPressListener(
-          linkLauncher: linkLauncher,
-          child: child,
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: bloc,
+          child: FeedItemPressListener(
+            linkLauncher: linkLauncher,
+            child: child,
+          ),
         ),
       );
     }
@@ -86,12 +90,12 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
-      final route = PostRoute(postId: itemPress.id);
-      verify(() => router.go(route.location)).called(1);
+      await tester.pumpApp(buildSubject());
+      verify(
+        () => router.goRelative(
+          PostRoute(postId: itemPress.id),
+        ),
+      ).called(1);
     });
 
     testWidgets('renders child', (tester) async {

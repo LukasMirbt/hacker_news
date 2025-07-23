@@ -10,15 +10,14 @@ class _MockGoRouterState extends Mock implements GoRouterState {}
 
 class _TestAppRelativeRoute extends GoRouteData with AppRelativeRoute {
   _TestAppRelativeRoute({
-    required this.location,
     required this.relativeLocation,
   });
 
   @override
-  final String location;
+  final String relativeLocation;
 
   @override
-  final String relativeLocation;
+  String get location => throw UnimplementedError();
 
   @override
   void goRelative(BuildContext context) => throw UnimplementedError();
@@ -36,7 +35,6 @@ class _TestAppRelativeRoute extends GoRouteData with AppRelativeRoute {
 }
 
 void main() {
-  const location = 'location';
   const relativeLocation = 'relativeLocation';
 
   group(AppRelativeRoute, () {
@@ -51,7 +49,6 @@ void main() {
 
     AppRelativeRoute createSubject() {
       return _TestAppRelativeRoute(
-        location: location,
         relativeLocation: relativeLocation,
       );
     }
@@ -60,15 +57,6 @@ void main() {
       test('returns relativeLocation', () {
         final route = createSubject();
         expect(route.navigationLocation, relativeLocation);
-      });
-    });
-
-    group('from', () {
-      test('returns correct value', () {
-        const currentLocation = '/post/123';
-        when(() => state.matchedLocation).thenReturn(currentLocation);
-        final route = createSubject();
-        expect(route.from(router), '/post/123/location');
       });
     });
   });

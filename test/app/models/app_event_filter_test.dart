@@ -5,19 +5,9 @@ import 'package:hacker_client/app/app.dart';
 
 void main() {
   final excludedSuffixes = AppEventFilter.excludedSuffixes;
-  final excludedEvents = AppEventFilter.excludedEvents;
 
   group(AppEventFilter, () {
     AppEventFilter createSubject() => AppEventFilter();
-
-    group('excludedEvents', () {
-      test('contains correct values', () {
-        expect(
-          AppEventFilter.excludedEvents,
-          <Object>[],
-        );
-      });
-    });
 
     group('excludedSuffixes', () {
       test('contains correct values', () {
@@ -32,13 +22,6 @@ void main() {
     });
 
     group('isAnalytic', () {
-      test('returns false when excludedEvents contains eventName', () {
-        final filter = createSubject();
-        final eventName = excludedEvents.first.toString();
-        final isAnalytic = filter.isAnalytic(eventName);
-        expect(isAnalytic, false);
-      });
-
       test('returns false when eventName ends with excluded suffix', () {
         final filter = createSubject();
         final eventName = 'Feature${excludedSuffixes.first}';

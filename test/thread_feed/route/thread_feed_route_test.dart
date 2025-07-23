@@ -5,10 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
+import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../app/pump_app.dart';
+import '../pump_thread_feed.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
@@ -50,7 +51,10 @@ void main() {
       test('has correct routes', () {
         expect(
           ThreadFeedRoute.config.routes,
-          <TypedRoute<RouteData>>[],
+          [
+            ReplyRoute.config,
+            PostShellRoute.config,
+          ],
         );
       });
     });
@@ -64,7 +68,7 @@ void main() {
       }
 
       testWidgets('renders $ThreadFeedPage', (tester) async {
-        await tester.pumpApp(buildSubject());
+        await tester.pumpThreadFeed(buildSubject());
         expect(find.byType(ThreadFeedPage), findsOneWidget);
       });
     });

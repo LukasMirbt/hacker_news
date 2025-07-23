@@ -50,14 +50,5 @@ void main() {
         expect(route.navigationLocation, location);
       });
     });
-
-    group('from', () {
-      test('returns correct value', () {
-        const matchedLocation = 'matchedLocation';
-        when(() => state.matchedLocation).thenReturn(matchedLocation);
-        final route = createSubject();
-        expect(route.from(router), matchedLocation);
-      });
-    });
   });
 }

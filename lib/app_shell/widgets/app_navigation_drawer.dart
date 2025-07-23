@@ -2,6 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/l10n/generated/app_localizations.dart';
@@ -23,16 +24,15 @@ class AppNavigationDrawer extends StatelessWidget {
       selectedIndex: selectedIndex,
       onDestinationSelected: (index) {
         if (index == 1) {
-          final isAuthenticated = context
-              .read<AuthenticationBloc>()
-              .state
-              .status
-              .isAuthenticated;
+          final state = context.read<AuthenticationBloc>().state;
+          final isAuthenticated = state.status.isAuthenticated;
 
           if (!isAuthenticated) {
-            LoginRoute(
-              from: const ThreadFeedRoute().location,
-            ).push<void>(context);
+            AppRouter.of(context).push(
+              LoginRoute(
+                from: const ThreadFeedRoute().location,
+              ),
+            );
             return;
           }
         }
