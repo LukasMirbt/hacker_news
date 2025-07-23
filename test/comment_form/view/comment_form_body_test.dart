@@ -20,7 +20,7 @@ void main() {
     setUp(() {
       bloc = _MockCommentFormBloc();
       when(() => bloc.state).thenReturn(
-        CommentFormState(
+        CommentFormState.initial(
           post: PostPlaceholder(),
         ),
       );

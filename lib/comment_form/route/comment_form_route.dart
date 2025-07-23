@@ -1,7 +1,11 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class CommentFormRoute extends GoRouteData
-    with _$CommentFormRoute, AppRelativeRoute, AuthenticatedRoute {
+    with
+        _$CommentFormRoute,
+        AppRelativeRoute,
+        AuthenticatedRoute,
+        EquatableMixin {
   const CommentFormRoute();
 
   static const config = TypedRelativeGoRoute<CommentFormRoute>(
@@ -18,4 +22,7 @@ class CommentFormRoute extends GoRouteData
       child: CommentFormPage(),
     );
   }
+
+  @override
+  List<Object> get props => [];
 }

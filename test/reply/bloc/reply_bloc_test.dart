@@ -3,55 +3,45 @@
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:reply_repository/reply_repository.dart';
 
-class _MockPostRepository extends Mock implements PostRepository {}
+class _MockReplyRepository extends Mock implements ReplyRepository {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 void main() {
-  const commentId = 'commentId';
-  final post = PostPlaceholder();
+  const url = 'url';
+  final initialState = ReplyState.initial(url: url);
 
-  final initialState = ReplyFormState.initial(
-    commentId: commentId,
-    post: post,
-  );
-
-  group(ReplyFormBloc, () {
-    late PostRepository repository;
+  group(ReplyBloc, () {
+    late ReplyRepository repository;
     late LinkLauncher linkLauncher;
 
     setUp(() {
-      repository = _MockPostRepository();
+      repository = _MockReplyRepository();
       linkLauncher = _MockLinkLauncher();
-      when(() => repository.state).thenReturn(post);
     });
 
-    ReplyFormBloc buildBloc() {
-      return ReplyFormBloc(
-        commentId: commentId,
-        postRepository: repository,
+    ReplyBloc buildBloc() {
+      return ReplyBloc(
+        url: url,
+        replyRepository: repository,
         linkLauncher: linkLauncher,
       );
     }
 
-    test('initial state is $ReplyFormState', () {
+    test('initial state is $ReplyState', () {
       expect(buildBloc().state, initialState);
     });
 
-    group(ReplyFormStarted, () {
-      final request = () => repository.fetchReplyForm(
-        post: initialState.post,
-        commentId: initialState.commentId,
-      );
-
+    group(ReplyStarted, () {
+      final request = () => repository.fetchReplyForm(url: url);
       final replyForm = ReplyFormPlaceholder();
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'emits [success] and $ReplyFormModel '
         'when request succeeds',
         setUp: () {
@@ -60,12 +50,12 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormStarted(),
+            ReplyStarted(),
           );
         },
         expect: () => [
           initialState.copyWith(
-            replyForm: ReplyFormModel(replyForm),
+            form: ReplyFormModel(replyForm),
             fetchStatus: FetchStatus.success,
           ),
         ],
@@ -74,7 +64,7 @@ void main() {
         },
       );
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'emits [failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -82,7 +72,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormStarted(),
+            ReplyStarted(),
           );
         },
         expect: () => [
@@ -96,28 +86,32 @@ void main() {
       );
     });
 
-    group(ReplyFormTextChanged, () {
+    group(ReplyTextChanged, () {
       const text = 'text';
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'emits text',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormTextChanged(text),
+            ReplyTextChanged(text),
           );
         },
         expect: () => [
-          initialState.copyWith(text: text),
+          initialState.copyWith(
+            form: initialState.form.copyWith(
+              text: text,
+            ),
+          ),
         ],
       );
     });
 
-    group(ReplyFormLinkPressed, () {
+    group(ReplyLinkPressed, () {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -125,7 +119,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormLinkPressed(url),
+            ReplyLinkPressed(url),
           );
         },
         verify: (_) {
@@ -134,14 +128,12 @@ void main() {
       );
     });
 
-    group(ReplyFormSubmitted, () {
+    group(ReplySubmitted, () {
       final request = () => repository.reply(
-        post: initialState.post,
-        replyForm: initialState.replyForm.toRepository(),
-        text: initialState.text,
+        initialState.form.toRepository(),
       );
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'emits [loading, success] when request succeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
@@ -149,7 +141,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormSubmitted(),
+            ReplySubmitted(),
           );
         },
         expect: () => [
@@ -162,7 +154,7 @@ void main() {
         ],
       );
 
-      blocTest<ReplyFormBloc, ReplyFormState>(
+      blocTest<ReplyBloc, ReplyState>(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -170,7 +162,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyFormSubmitted(),
+            ReplySubmitted(),
           );
         },
         expect: () => [

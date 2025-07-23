@@ -5,24 +5,24 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyFormBloc extends MockBloc<ReplyFormEvent, ReplyFormState>
-    implements ReplyFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
 
-class _MockReplyFormState extends Mock implements ReplyFormState {}
+class _MockReplyState extends Mock implements ReplyState {}
 
 void main() {
   group(ReplyButton, () {
-    late ReplyFormBloc bloc;
-    late ReplyFormState state;
+    late ReplyBloc bloc;
+    late ReplyState state;
 
     setUp(() {
-      bloc = _MockReplyFormBloc();
-      state = _MockReplyFormState();
+      bloc = _MockReplyBloc();
+      state = _MockReplyState();
       when(() => bloc.state).thenReturn(state);
       when(() => state.isSubmissionLoading).thenReturn(false);
     });
@@ -56,11 +56,11 @@ void main() {
         });
       });
 
-      testWidgets('adds $ReplyFormSubmitted onPressed', (tester) async {
+      testWidgets('adds $ReplySubmitted onPressed', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onPressed?.call();
-        verify(() => bloc.add(ReplyFormSubmitted()));
+        verify(() => bloc.add(ReplySubmitted()));
       });
     });
   });

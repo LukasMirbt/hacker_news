@@ -6,12 +6,13 @@ import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/comment_options/comment_options.dart'
+    hide CommentModel;
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
@@ -20,8 +21,6 @@ class _MockCommentListBloc extends MockBloc<CommentListEvent, CommentListState>
 
 class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
     implements PostHeaderBloc {}
-
-class _MockGoRouter extends Mock implements GoRouter {}
 
 class _MockCommentModel extends Mock implements CommentModel {}
 
@@ -44,13 +43,11 @@ void main() {
   group(CommentWidget, () {
     late CommentListBloc commentListBloc;
     late PostHeaderBloc postHeaderBloc;
-    late GoRouter router;
     late CommentModel item;
 
     setUp(() {
       commentListBloc = _MockCommentListBloc();
       postHeaderBloc = _MockPostHeaderBloc();
-      router = _MockGoRouter();
       item = _MockCommentModel();
       when(() => item.id).thenReturn(id);
       when(() => item.isExpanded).thenReturn(isExpanded);
@@ -69,12 +66,12 @@ void main() {
       );
     });
 
-    Widget buildSubject() {
+    Widget buildSubject([CommentModel? commentModel]) {
       return BlocProvider.value(
         value: commentListBloc,
         child: BlocProvider.value(
           value: postHeaderBloc,
-          child: CommentWidget(item),
+          child: CommentWidget(commentModel ?? item),
         ),
       );
     }
@@ -134,21 +131,22 @@ void main() {
     });
 
     testWidgets(
-      'navigates to $CommentOptionsRoute onMorePressed',
+      'shows $CommentOptionsSheet onMorePressed',
       (tester) async {
         await tester.pumpApp(
-          buildSubject(),
-          router: router,
+          buildSubject(
+            CommentModel(
+              comment: CommentPlaceholder(),
+            ),
+          ),
         );
         final widget = findWidget(tester);
         widget.data.onMorePressed();
-        final route = CommentOptionsRoute(
-          postId: postId,
-          commentId: id,
+        await tester.pump();
+        expect(
+          find.byType(CommentOptionsSheet),
+          findsOneWidget,
         );
-        verify(
-          () => router.go(route.location),
-        ).called(1);
       },
     );
 

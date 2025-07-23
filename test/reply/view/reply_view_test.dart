@@ -5,44 +5,40 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyFormBloc extends MockBloc<ReplyFormEvent, ReplyFormState>
-    implements ReplyFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
 
 void main() {
-  final initialState = ReplyFormState.initial(
-    commentId: 'commentId',
-    post: PostPlaceholder(),
-  );
+  final initialState = ReplyState.initial(url: 'url');
 
-  group(ReplyFormView, () {
-    late ReplyFormBloc bloc;
+  group(ReplyView, () {
+    late ReplyBloc bloc;
 
     setUp(() {
-      bloc = _MockReplyFormBloc();
+      bloc = _MockReplyBloc();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyFormView(),
+        child: ReplyView(),
       );
     }
 
-    testWidgets('renders $ReplyFormSuccessListener', (tester) async {
+    testWidgets('renders $ReplySuccessListener', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyFormSuccessListener), findsOneWidget);
+      expect(find.byType(ReplySuccessListener), findsOneWidget);
     });
 
-    testWidgets('renders $ReplyFormFailureListener', (tester) async {
+    testWidgets('renders $ReplyFailureListener', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyFormFailureListener), findsOneWidget);
+      expect(find.byType(ReplyFailureListener), findsOneWidget);
     });
 
     testWidgets('renders $AppBar', (tester) async {
@@ -66,7 +62,7 @@ void main() {
       expect(find.byType(Spinner), findsOneWidget);
     });
 
-    testWidgets('renders $ReplyFormBody when !isFailure '
+    testWidgets('renders $ReplyBody when !isFailure '
         'and !isLoading', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
@@ -74,7 +70,7 @@ void main() {
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyFormBody), findsOneWidget);
+      expect(find.byType(ReplyBody), findsOneWidget);
     });
   });
 }

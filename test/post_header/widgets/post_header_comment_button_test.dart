@@ -1,42 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_ui/app_ui.dart' hide PostHeaderCommentButton;
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockGoRouter extends Mock implements GoRouter {}
-
-class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
-    implements PostHeaderBloc {}
-
-class _MockPostHeaderState extends Mock implements PostHeaderState {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
   const commentCount = 'commentCount';
 
   group(PostHeaderCommentButton, () {
-    late PostHeaderBloc bloc;
-    late PostHeaderState state;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
-      bloc = _MockPostHeaderBloc();
-      state = _MockPostHeaderState();
-      router = _MockGoRouter();
-      when(() => bloc.state).thenReturn(state);
+      router = _MockAppRouter();
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
+      return Provider.value(
+        value: router,
         child: PostHeaderCommentButton(
           commentCount: commentCount,
         ),
@@ -56,16 +45,14 @@ void main() {
     });
 
     testWidgets('navigates to $CommentFormRoute onPressed', (tester) async {
-      const postId = 'postId';
-      when(() => state.id).thenReturn(postId);
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       widget.data.onPressed();
-      const route = CommentFormRoute(postId: postId);
-      verify(() => router.go(route.location)).called(1);
+      verify(
+        () => router.goRelative(
+          CommentFormRoute(),
+        ),
+      ).called(1);
     });
   });
 }

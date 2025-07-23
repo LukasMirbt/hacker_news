@@ -34,14 +34,14 @@ void main() {
       test('has correct type', () {
         expect(
           PostRoute.config,
-          isA<TypedGoRoute<PostRoute>>(),
+          isA<TypedRelativeGoRoute<PostRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
           PostRoute.config.path,
-          ':postId',
+          'post/:postId',
         );
       });
 
@@ -49,10 +49,8 @@ void main() {
         expect(
           PostRoute.config.routes,
           [
-            PostOptionsRoute.config,
             CommentFormRoute.config,
-            ReplyFormRoute.config,
-            CommentOptionsRoute.config,
+            ReplyRoute.config,
           ],
         );
       });

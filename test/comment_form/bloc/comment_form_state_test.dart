@@ -3,15 +3,27 @@ import 'package:hacker_client/comment_form/comment_form.dart';
 import 'package:post_repository/post_repository.dart';
 
 void main() {
+  final post = PostPlaceholder();
+
   group(CommentFormState, () {
     CommentFormState createSubject({
       CommentFormStatus? status,
     }) {
       return CommentFormState(
-        post: PostPlaceholder(),
+        post: post,
+        form: CommentFormModel.empty,
         status: status ?? CommentFormStatus.initial,
       );
     }
+
+    group('initial', () {
+      test('returns $CommentFormState', () {
+        expect(
+          CommentFormState.initial(post: post),
+          isA<CommentFormState>(),
+        );
+      });
+    });
 
     group('isLoading', () {
       test('returns false when status is '

@@ -14,7 +14,7 @@ class _MockCommentFormBloc extends MockBloc<CommentFormEvent, CommentFormState>
     implements CommentFormBloc {}
 
 void main() {
-  final initialState = CommentFormState(
+  final initialState = CommentFormState.initial(
     post: PostPlaceholder(),
   );
 

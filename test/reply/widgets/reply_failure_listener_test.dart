@@ -2,47 +2,41 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_form/comment_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockCommentFormBloc extends MockBloc<CommentFormEvent, CommentFormState>
-    implements CommentFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
 
 void main() {
   final child = Container();
+  final initialState = ReplyState.initial(url: 'url');
 
-  final initialState = CommentFormState.initial(
-    post: PostPlaceholder(),
-  );
-
-  group(CommentFormFailureListener, () {
-    late CommentFormBloc bloc;
+  group(ReplyFailureListener, () {
+    late ReplyBloc bloc;
 
     setUp(() {
-      bloc = _MockCommentFormBloc();
+      bloc = _MockReplyBloc();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: CommentFormFailureListener(
-          child: child,
-        ),
+        child: ReplyFailureListener(child: child),
       );
     }
 
-    testWidgets('shows $SnackBar when status changes '
-        'to ${CommentFormStatus.failure}', (tester) async {
+    testWidgets('shows $SnackBar when submissionStatus changes '
+        'to ${SubmissionStatus.failure}', (tester) async {
       whenListen(
         bloc,
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            status: CommentFormStatus.failure,
+            submissionStatus: SubmissionStatus.failure,
           ),
         ),
       );

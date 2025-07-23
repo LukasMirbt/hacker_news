@@ -4,26 +4,26 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyFormBloc extends MockBloc<ReplyFormEvent, ReplyFormState>
-    implements ReplyFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
 
 void main() {
-  group(ReplyFormTextField, () {
-    late ReplyFormBloc bloc;
+  group(ReplyTextField, () {
+    late ReplyBloc bloc;
 
     setUp(() {
-      bloc = _MockReplyFormBloc();
+      bloc = _MockReplyBloc();
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyFormTextField(),
+        child: ReplyTextField(),
       );
     }
 
@@ -46,14 +46,14 @@ void main() {
         expect(widget.maxLines, null);
       });
 
-      testWidgets('adds $ReplyFormTextChanged onChanged', (tester) async {
+      testWidgets('adds $ReplyTextChanged onChanged', (tester) async {
         const text = 'text';
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onChanged?.call(text);
         verify(
           () => bloc.add(
-            ReplyFormTextChanged(text),
+            ReplyTextChanged(text),
           ),
         ).called(1);
       });

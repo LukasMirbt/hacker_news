@@ -31,12 +31,8 @@ class CommentWidget extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          /*  CommentOptionsRoute(
-            $extra: item.comment,
-          ).pushRelative<void>(context); */
-
           CommentOptionsSheet.show(
-            context,
+            context: context,
             comment: item.comment,
           );
         },

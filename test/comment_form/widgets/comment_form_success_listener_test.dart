@@ -17,7 +17,7 @@ class _MockGoRouter extends Mock implements GoRouter {}
 void main() {
   final child = Container();
 
-  final initialState = CommentFormState(
+  final initialState = CommentFormState.initial(
     post: PostPlaceholder(),
   );
 

@@ -20,11 +20,16 @@ void main() {
       state = _MockGoRouterState();
     });
 
-    CommentFormRoute createSubject() => CommentFormRoute(postId: 'postId');
+    CommentFormRoute createSubject() => CommentFormRoute();
 
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
+    });
+
+    test('is an $AppRelativeRoute', () {
+      final route = createSubject();
+      expect(route, isA<AppRelativeRoute>());
     });
 
     test('is an $AuthenticatedRoute', () {
@@ -36,7 +41,7 @@ void main() {
       test('has correct type', () {
         expect(
           CommentFormRoute.config,
-          isA<TypedGoRoute<CommentFormRoute>>(),
+          isA<TypedRelativeGoRoute<CommentFormRoute>>(),
         );
       });
 
@@ -44,6 +49,13 @@ void main() {
         expect(
           CommentFormRoute.config.path,
           'comment',
+        );
+      });
+
+      test('has correct routes', () {
+        expect(
+          CommentFormRoute.config.routes,
+          <TypedRoute<RouteData>>[],
         );
       });
     });

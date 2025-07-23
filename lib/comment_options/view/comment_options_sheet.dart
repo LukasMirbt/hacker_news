@@ -7,8 +7,8 @@ import 'package:post_repository/post_repository.dart';
 class CommentOptionsSheet extends StatelessWidget {
   const CommentOptionsSheet({super.key});
 
-  static Future<void> show(
-    BuildContext context, {
+  static Future<void> show({
+    required BuildContext context,
     required Comment comment,
   }) {
     return showModalBottomSheet<void>(

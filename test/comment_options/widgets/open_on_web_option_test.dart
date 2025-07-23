@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:mockingjay/mockingjay.dart';
 
 import '../../app/pump_app.dart';
 
@@ -31,6 +31,7 @@ void main() async {
     late CommentOptionsBloc bloc;
     late CommentOptionsState state;
     late CommentModel comment;
+    late MockNavigator navigator;
     late GoRouter router;
 
     setUp(() {
@@ -38,14 +39,19 @@ void main() async {
       state = _MockCommentOptionsState();
       comment = _MockCommentModel();
       router = _MockGoRouter();
+      navigator = MockNavigator();
+      when(navigator.canPop).thenReturn(true);
       when(() => bloc.state).thenReturn(state);
       when(() => state.comment).thenReturn(comment);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: OpenOnWebOption(),
+      return MockNavigatorProvider(
+        navigator: navigator,
+        child: BlocProvider.value(
+          value: bloc,
+          child: OpenOnWebOption(),
+        ),
       );
     }
 
@@ -67,19 +73,19 @@ void main() async {
       );
     });
 
-    testWidgets('navigates to $WebRedirectRoute when $ListTile '
+    testWidgets('pops and pushes $WebRedirectRoute when $ListTile '
         'is tapped', (tester) async {
       final route = WebRedirectRoute(url: webRedirect.urlString);
-      final pushReplacement = () =>
-          router.pushReplacement<Object?>(route.location);
-      when(pushReplacement).thenAnswer((_) async => null);
+      final push = () => router.push<void>(route.location);
+      when(push).thenAnswer((_) async {});
       when(() => comment.webRedirect).thenReturn(webRedirect);
       await tester.pumpApp(
         buildSubject(),
         router: router,
       );
       await tester.tap(find.byType(ListTile));
-      verify(pushReplacement).called(1);
+      verify(navigator.pop).called(1);
+      verify(push).called(1);
     });
   });
 }

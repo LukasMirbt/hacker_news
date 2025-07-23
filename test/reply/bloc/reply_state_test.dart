@@ -1,32 +1,25 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:hacker_client/reply/reply.dart';
 
 void main() {
-  const commentId = 'commentId';
-  final post = PostPlaceholder();
+  const url = 'url';
 
-  group(ReplyFormState, () {
-    ReplyFormState createSubject(SubmissionStatus submissionStatus) {
-      return ReplyFormState(
-        commentId: commentId,
-        post: post,
-        replyForm: ReplyFormModel.empty,
+  group(ReplyState, () {
+    ReplyState createSubject(SubmissionStatus submissionStatus) {
+      return ReplyState(
+        url: url,
+        form: ReplyFormModel.empty,
         submissionStatus: submissionStatus,
       );
     }
 
     group('initial', () {
-      test('returns $ReplyFormState', () {
+      test('returns $ReplyState', () {
         expect(
-          ReplyFormState.initial(
-            commentId: commentId,
-            post: post,
-          ),
-          ReplyFormState(
-            commentId: commentId,
-            post: post,
-            replyForm: ReplyFormModel.empty,
+          ReplyState.initial(url: url),
+          ReplyState(
+            url: url,
+            form: ReplyFormModel.empty,
           ),
         );
       });

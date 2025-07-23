@@ -46,7 +46,6 @@ void main() {
         expect(
           HomeRoute.config.routes,
           [
-            FeedItemOptionsRoute.config,
             PostShellRoute.config,
           ],
         );

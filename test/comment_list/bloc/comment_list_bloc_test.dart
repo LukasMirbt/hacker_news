@@ -1,19 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
+class _MockReplyRepository extends Mock implements ReplyRepository {}
+
+class _MockAuthenticationRepository extends Mock
+    implements AuthenticationRepository {}
+
+class _MockAuthenticationState extends Mock implements AuthenticationState {}
+
 class _MockCommentListVoteModel extends Mock implements CommentListVoteModel {}
+
+class _MockCommentListReplyModel extends Mock
+    implements CommentListReplyModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
@@ -30,14 +42,25 @@ void main() {
   group(CommentListBloc, () {
     late PostRepository postRepository;
     late VoteRepository voteRepository;
+    late ReplyRepository replyRepository;
+    late AuthenticationRepository authenticationRepository;
+    late AuthenticationState authenticationState;
     late CommentListVoteModel voteModel;
+    late CommentListReplyModel replyModel;
     late LinkLauncher linkLauncher;
 
     setUp(() {
       postRepository = _MockPostRepository();
       voteRepository = _MockVoteRepository();
+      replyRepository = _MockReplyRepository();
+      authenticationRepository = _MockAuthenticationRepository();
+      authenticationState = _MockAuthenticationState();
       voteModel = _MockCommentListVoteModel();
+      replyModel = _MockCommentListReplyModel();
       linkLauncher = _MockLinkLauncher();
+      when(
+        () => authenticationRepository.state,
+      ).thenReturn(authenticationState);
     });
 
     CommentListBloc buildBloc() {
@@ -45,7 +68,10 @@ void main() {
         id: id,
         postRepository: postRepository,
         voteRepository: voteRepository,
+        replyRepository: replyRepository,
+        authenticationRepository: authenticationRepository,
         voteModel: voteModel,
+        replyModel: replyModel,
         linkLauncher: linkLauncher,
       );
     }
@@ -123,6 +149,53 @@ void main() {
         act: (bloc) {
           bloc.add(
             CommentListVoteSubscriptionRequested(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            commentList: updatedCommentList,
+          ),
+        ],
+        verify: (_) {
+          verify(updateCommentList).called(1);
+        },
+      );
+    });
+
+    group(CommentListReplySubscriptionRequested, () {
+      final user = UserPlaceholder();
+
+      final update = ReplyUpdate(
+        form: ReplyFormPlaceholder(),
+        comment: CommentDataPlaceholder(),
+      );
+
+      final state = initialState.copyWith(
+        commentList: _MockCommentListModel(),
+      );
+
+      final updatedCommentList = _MockCommentListModel();
+
+      final updateCommentList = () => replyModel.updateCommentList(
+        user: user,
+        update: update,
+        commentList: state.commentList,
+      );
+
+      blocTest<CommentListBloc, CommentListState>(
+        'emits updated commentList when repository emits $VoteSuccess',
+        setUp: () {
+          when(() => authenticationState.user).thenReturn(user);
+          when(() => replyRepository.stream).thenAnswer(
+            (_) => Stream.value(update),
+          );
+          when(updateCommentList).thenReturn(updatedCommentList);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentListReplySubscriptionRequested(),
           );
         },
         expect: () => [

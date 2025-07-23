@@ -2,52 +2,56 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyFormBloc extends MockBloc<ReplyFormEvent, ReplyFormState>
-    implements ReplyFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
+
+class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
   final child = Container();
+  final initialState = ReplyState.initial(url: 'url');
 
-  final initialState = ReplyFormState.initial(
-    commentId: 'commentId',
-    post: PostPlaceholder(),
-  );
-
-  group(ReplyFormFailureListener, () {
-    late ReplyFormBloc bloc;
+  group(ReplySuccessListener, () {
+    late ReplyBloc bloc;
+    late GoRouter router;
 
     setUp(() {
-      bloc = _MockReplyFormBloc();
+      bloc = _MockReplyBloc();
+      router = _MockGoRouter();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyFormFailureListener(child: child),
+        child: ReplySuccessListener(
+          child: child,
+        ),
       );
     }
 
-    testWidgets('shows $SnackBar when submissionStatus changes '
-        'to ${SubmissionStatus.failure}', (tester) async {
+    testWidgets('pops when submissionStatus changes '
+        'to ${SubmissionStatus.success}', (tester) async {
       whenListen(
         bloc,
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            submissionStatus: SubmissionStatus.failure,
+            submissionStatus: SubmissionStatus.success,
           ),
         ),
       );
-      await tester.pumpApp(buildSubject());
-      await tester.pump();
-      expect(find.byType(SnackBar), findsOneWidget);
+      await tester.pumpApp(
+        buildSubject(),
+        router: router,
+      );
+      verify(router.pop).called(1);
     });
 
     testWidgets('renders child', (tester) async {

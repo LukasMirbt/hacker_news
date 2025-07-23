@@ -14,7 +14,7 @@ class _MockPostRepository extends Mock implements PostRepository {}
 
 void main() {
   final post = PostPlaceholder();
-  final initialState = CommentFormState(post: post);
+  final initialState = CommentFormState.initial(post: post);
 
   group(CommentFormBloc, () {
     late LinkLauncher linkLauncher;
@@ -78,19 +78,17 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            text: text,
+            form: initialState.form.copyWith(
+              text: text,
+            ),
           ),
         ],
       );
     });
 
     group(CommentFormSubmitted, () {
-      const text = 'text';
-      final state = initialState.copyWith(text: text);
-
       final request = () => repository.comment(
-        post: initialState.post,
-        text: text,
+        initialState.form.toRepository(),
       );
 
       blocTest<CommentFormBloc, CommentFormState>(
@@ -98,7 +96,6 @@ void main() {
         setUp: () {
           when(request).thenAnswer((_) async {});
         },
-        seed: () => state,
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -106,10 +103,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          initialState.copyWith(
             status: CommentFormStatus.loading,
           ),
-          state.copyWith(
+          initialState.copyWith(
             status: CommentFormStatus.success,
           ),
         ],
@@ -123,7 +120,6 @@ void main() {
         setUp: () {
           when(request).thenThrow(Exception('oops'));
         },
-        seed: () => state,
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -131,10 +127,10 @@ void main() {
           );
         },
         expect: () => [
-          state.copyWith(
+          initialState.copyWith(
             status: CommentFormStatus.loading,
           ),
-          state.copyWith(
+          initialState.copyWith(
             status: CommentFormStatus.failure,
           ),
         ],

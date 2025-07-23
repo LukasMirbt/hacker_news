@@ -1,31 +1,29 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
-import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/feed_item_options/feed_item_options.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../post/pump_post.dart';
+import '../../app/pump_app.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  final item = FeedItemPlaceholder();
+  const url = 'url';
 
-  group(FeedItemOptionsRoute, () {
+  group(ReplyRoute, () {
     late GoRouterState state;
 
     setUp(() {
       state = _MockGoRouterState();
     });
 
-    FeedItemOptionsRoute createSubject() {
-      return FeedItemOptionsRoute(item);
+    ReplyRoute createSubject() {
+      return ReplyRoute(url: url);
     }
 
     test('is a $GoRouteData', () {
@@ -33,27 +31,28 @@ void main() {
       expect(route, isA<GoRouteData>());
     });
 
-    group('parentNavigatorKey', () {
-      test('returns correct navigatorKey', () {
-        expect(
-          FeedItemOptionsRoute.$parentNavigatorKey,
-          AppRouter.navigatorKey,
-        );
-      });
+    test('is an $AppRelativeRoute', () {
+      final route = createSubject();
+      expect(route, isA<AppRelativeRoute>());
+    });
+
+    test('is an $AuthenticatedRoute', () {
+      final route = createSubject();
+      expect(route, isA<AuthenticatedRoute>());
     });
 
     group('config', () {
       test('has correct type', () {
         expect(
-          FeedItemOptionsRoute.config,
-          isA<TypedGoRoute<FeedItemOptionsRoute>>(),
+          ReplyRoute.config,
+          isA<TypedRelativeGoRoute<ReplyRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
-          FeedItemOptionsRoute.config.path,
-          'item/options',
+          ReplyRoute.config.path,
+          'reply',
         );
       });
     });
@@ -75,24 +74,23 @@ void main() {
       }
 
       testWidgets('returns correct page', (tester) async {
-        await tester.pumpPost(buildSubject());
+        await tester.pumpApp(buildSubject());
         expect(
           page,
-          isA<ModalBottomSheetPage<void>>().having(
-            (page) => page.showDragHandle,
-            'showDragHandle',
+          isA<MaterialPage<void>>().having(
+            (page) => page.fullscreenDialog,
+            'fullscreenDialog',
             true,
           ),
         );
       });
 
-      testWidgets('renders $FeedItemOptionsSheet '
-          'with correct item', (tester) async {
-        await tester.pumpPost(buildSubject());
-        final widget = tester.widget<FeedItemOptionsSheet>(
-          find.byType(FeedItemOptionsSheet),
+      testWidgets('renders $ReplyPage with correct url', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = tester.widget<ReplyPage>(
+          find.byType(ReplyPage),
         );
-        expect(widget.item, item);
+        expect(widget.url, url);
       });
     });
   });

@@ -5,28 +5,28 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/reply/reply_form.dart';
+import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyFormBloc extends MockBloc<ReplyFormEvent, ReplyFormState>
-    implements ReplyFormBloc {}
+class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
+    implements ReplyBloc {}
 
 void main() {
   const htmlText = 'htmlText';
 
-  group(ReplyFormHtmlBody, () {
-    late ReplyFormBloc bloc;
+  group(ReplyHtmlBody, () {
+    late ReplyBloc bloc;
 
     setUp(() {
-      bloc = _MockReplyFormBloc();
+      bloc = _MockReplyBloc();
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyFormHtmlBody(
+        child: ReplyHtmlBody(
           htmlText: htmlText,
         ),
       );
@@ -45,14 +45,14 @@ void main() {
         expect(widget.html, htmlText);
       });
 
-      testWidgets('adds $ReplyFormLinkPressed onLinkPressed', (tester) async {
+      testWidgets('adds $ReplyLinkPressed onLinkPressed', (tester) async {
         const url = 'url';
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onLinkPressed(url);
         verify(
           () => bloc.add(
-            ReplyFormLinkPressed(url),
+            ReplyLinkPressed(url),
           ),
         ).called(1);
       });

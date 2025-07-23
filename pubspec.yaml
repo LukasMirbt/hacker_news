@@ -146,6 +146,7 @@ dev_dependencies:
       url: https://github.com/ThangVuNguyenViet/packages.git
       path: packages/go_router_builder
   json_serializable: ^6.9.5
+  mockingjay: ^2.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
 

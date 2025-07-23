@@ -24,6 +24,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:post_api/post_api.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
@@ -53,6 +54,8 @@ class _MockAuthenticationRepository extends Mock
   @override
   Future<List<Cookie>> cookies() async => [];
 }
+
+class _MockReplyRepository extends Mock implements ReplyRepository {}
 
 class _MockVersionRepository extends Mock implements VersionRepository {
   @override
@@ -148,6 +151,9 @@ extension PumpAppExtension on WidgetTester {
             RepositoryProvider<AuthenticationRepository>(
               create: (_) => _MockAuthenticationRepository(),
             ),
+            RepositoryProvider<ReplyRepository>(
+              create: (_) => _MockReplyRepository(),
+            ),
             RepositoryProvider<VersionRepository>(
               create: (_) => _MockVersionRepository(),
             ),
@@ -202,6 +208,7 @@ extension PumpAppExtension on WidgetTester {
 
   Future<void> pumpApp(
     Widget widgetUnderTest, {
+    // TODO: Remove this parameter
     GoRouter? router,
   }) async {
     return _pumpApp(
@@ -242,5 +249,15 @@ extension PumpAppExtension on WidgetTester {
         );
       },
     );
+  }
+
+  Future<void> pumpAppWithContext(
+    void Function(BuildContext) show,
+  ) async {
+    final widget = Container();
+    await pumpApp(widget);
+    final context = element(find.byWidget(widget));
+    show(context);
+    await pump();
   }
 }

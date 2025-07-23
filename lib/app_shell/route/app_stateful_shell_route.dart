@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
