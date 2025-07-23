@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:bloc_test/bloc_test.dart';
@@ -55,87 +54,63 @@ void main() {
     });
 
     group('fetchPost', () {
-      group('fetchPostStream', () {
-        const id = 'id';
-        final data = PostDataPlaceholder();
-        final fetchPost = () => api.fetchPost(id: id);
+      const id = 'id';
+      final data = PostDataPlaceholder();
+      final fetchPost = () => api.fetchPost(id: id);
 
-        blocTest<PostRepository, Post>(
-          'calls fetchPost and emits $Post',
-          setUp: () {
-            when(fetchPost).thenAnswer((_) async => data);
-          },
-          build: buildCubit,
-          act: (cubit) => cubit.fetchPost(id: id),
-          expect: () => [Post.from(data)],
-          verify: (_) {
-            verify(fetchPost).called(1);
-          },
-        );
-      });
+      blocTest<PostRepository, Post>(
+        'calls fetchPost and emits $Post',
+        setUp: () {
+          when(fetchPost).thenAnswer((_) async => data);
+        },
+        build: buildCubit,
+        act: (cubit) => cubit.fetchPost(id: id),
+        expect: () => [Post.from(data)],
+        verify: (_) {
+          verify(fetchPost).called(1);
+        },
+      );
     });
 
     group('comment', () {
-      const postId = 'postId';
-      const hmac = 'hmac';
-      const text = 'text';
-
-      final postWithoutHmac = PostPlaceholder(
-        header: PostHeaderPlaceholder(
-          id: postId,
-        ),
-      );
-
-      final postWithHmac = PostPlaceholder(
-        header: PostHeaderPlaceholder(
-          id: postId,
-          hmac: hmac,
-        ),
-      );
-
+      final form = CommentFormPlaceholder();
       final data = PostDataPlaceholder();
 
-      final comment = () => api.comment(
-        postId: postId,
-        hmac: hmac,
-        text: text,
-      );
-
-      blocTest<PostRepository, Post>(
-        'throws $CommentFailure when hmac is null',
-        build: buildCubit,
-        act: (cubit) {
-          expect(
-            () => cubit.comment(
-              post: postWithoutHmac,
-              text: text,
-            ),
-            throwsA(
-              CommentFailure(postId: postId),
-            ),
-          );
-        },
-        expect: () => <Post>[],
-      );
+      final comment = () => api.comment(form.toApi());
+      final fetchPost = () => api.fetchPost(id: form.parent);
 
       blocTest<PostRepository, Post>(
         'calls comment and emits updated $Post '
-        'when hmac is non-null',
+        'when fetchPost succeeds',
         setUp: () {
-          when(comment).thenAnswer((_) async => data);
+          when(comment).thenAnswer((_) async {});
+          when(fetchPost).thenAnswer((_) async => data);
         },
         build: buildCubit,
-        act: (cubit) {
-          cubit.comment(
-            post: postWithHmac,
-            text: text,
-          );
-        },
+        act: (cubit) => cubit.comment(form),
+
         expect: () => [
           Post.from(data),
         ],
         verify: (_) {
           verify(comment).called(1);
+          verify(fetchPost).called(1);
+        },
+      );
+
+      blocTest<PostRepository, Post>(
+        'calls comment and returns when fetchPost fails',
+        setUp: () {
+          when(comment).thenAnswer((_) async {});
+          when(fetchPost).thenThrow(Exception('oops'));
+        },
+        build: buildCubit,
+        act: (cubit) => cubit.comment(form),
+        expect: () => <Post>[],
+        errors: () => <Object?>[],
+        verify: (_) {
+          verify(comment).called(1);
+          verify(fetchPost).called(1);
         },
       );
     });

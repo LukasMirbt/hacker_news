@@ -76,19 +76,4 @@ class PostApi {
       data: form.toData(),
     );
   }
-
-  Future<List<CommentData>> fetchCommentThread({required String id}) async {
-    final response = await _client.http.get<String>(
-      'item',
-      data: {'id': id},
-    );
-
-    final html = response.data!;
-
-    final document = const HtmlParser().parse(html);
-    final commentElement = document.querySelector('.comment-tree');
-
-    final comments = const CommentListParser().parse(commentElement!);
-    return comments;
-  }
 }

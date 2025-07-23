@@ -1,26 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:post_repository/post_repository.dart';
-
-class CommentFailure with EquatableMixin implements Exception {
-  const CommentFailure({required this.postId});
-
-  final String postId;
-
-  @override
-  List<Object> get props => [postId];
-}
-
-class ReplyFailure with EquatableMixin implements Exception {
-  const ReplyFailure({required this.commentId});
-
-  final String commentId;
-
-  @override
-  List<Object> get props => [commentId];
-}
 
 class PostRepository extends Cubit<Post> {
   PostRepository({
@@ -46,13 +27,15 @@ class PostRepository extends Cubit<Post> {
   }
 
   Future<void> comment(CommentForm form) async {
-    await _api.comment(
-      form.toApi(),
-    );
-    final data = await _api.fetchPost(
-      id: form.parent,
-    );
-    final updatedPost = Post.from(data);
-    emit(updatedPost);
+    await _api.comment(form.toApi());
+
+    try {
+      final data = await _api.fetchPost(id: form.parent);
+      final updatedPost = Post.from(data);
+      emit(updatedPost);
+    } catch (_) {
+      // Don't throw when comment succeeds but fetchPost fails
+      // so the user doesn't submit comments twice.
+    }
   }
 }

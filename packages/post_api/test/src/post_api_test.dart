@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:app_client/app_client.dart';
@@ -182,18 +181,9 @@ void main() {
     });
 
     group('comment', () {
-      const postId = 'postId';
-      const hmac = 'hmac';
-      const text = 'text';
+      final form = CommentFormPlaceholder();
 
-      final gotoUri = Uri(
-        path: 'item',
-        queryParameters: {'id': postId},
-      );
-
-      final goto = gotoUri.toString();
-
-      final commentRequest = () => http.post<String>(
+      final request = () => http.post<String>(
         'comment',
         options: any(
           named: 'options',
@@ -203,53 +193,18 @@ void main() {
             Headers.formUrlEncodedContentType,
           ),
         ),
-        data: {
-          'parent': postId,
-          'goto': goto,
-          'hmac': hmac,
-          'text': text,
-        },
+        data: form.toData(),
       );
 
-      const redirect = 'redirect';
-
-      final headers = Headers.fromMap({
-        HttpHeaders.locationHeader: [redirect],
-      });
-
-      final redirectRequest = () => http.get<String>(redirect);
-
-      const html = 'html';
-      final post = PostDataPlaceholder();
-      final parse = () => postParser.parse(html);
-
-      test('makes comment request, follows redirect '
-          'and returns parsed post', () async {
-        when(commentRequest).thenAnswer(
+      test('makes correct request', () async {
+        when(request).thenAnswer(
           (_) async => Response(
             requestOptions: RequestOptions(),
-            headers: headers,
           ),
         );
-        when(redirectRequest).thenAnswer(
-          (_) async => Response(
-            requestOptions: RequestOptions(),
-            data: html,
-          ),
-        );
-        when(parse).thenAnswer((_) async => post);
         final api = createSubject();
-        await expectLater(
-          api.comment(
-            postId: postId,
-            hmac: hmac,
-            text: text,
-          ),
-          completion(post),
-        );
-        verify(commentRequest).called(1);
-        verify(redirectRequest).called(1);
-        verify(parse).called(1);
+        await expectLater(api.comment(form), completes);
+        verify(request).called(1);
       });
     });
   });

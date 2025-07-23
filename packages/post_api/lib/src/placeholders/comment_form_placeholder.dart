@@ -1,4 +1,4 @@
-import 'package:post_repository/post_repository.dart';
+import 'package:post_api/post_api.dart';
 
 class CommentFormPlaceholder extends CommentForm {
   const CommentFormPlaceholder({
