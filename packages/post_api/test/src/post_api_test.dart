@@ -11,8 +11,6 @@ class _MockAppClient extends Mock implements AppClient {}
 
 class _MockDio extends Mock implements Dio {}
 
-class _MockCancelTokenService extends Mock implements CancelTokenService {}
-
 class _MockPostStreamParser extends Mock implements PostStreamParser {}
 
 class _MockBackgroundPostParser extends Mock implements BackgroundPostParser {}
@@ -21,28 +19,30 @@ class _MockResponse<T> extends Mock implements Response<T> {}
 
 class _MockResponseBody extends Mock implements ResponseBody {}
 
+class _MockCancelToken extends Mock implements CancelToken {}
+
 void main() {
   group(PostApi, () {
     late AppClient client;
     late Dio http;
-    late CancelTokenService cancelTokenService;
     late PostStreamParser postStreamParser;
     late BackgroundPostParser postParser;
+    late CancelToken cancelToken;
 
     setUp(() {
       client = _MockAppClient();
       http = _MockDio();
-      cancelTokenService = _MockCancelTokenService();
       postStreamParser = _MockPostStreamParser();
       postParser = _MockBackgroundPostParser();
-      when(() => client.http).thenReturn(http);
+      cancelToken = _MockCancelToken();
       registerFallbackValue(RedirectValidationOptions());
+      when(() => client.http).thenReturn(http);
+      when(() => cancelToken.isCancelled).thenReturn(false);
     });
 
     PostApi createSubject() {
       return PostApi(
         appClient: client,
-        cancelTokenService: cancelTokenService,
         postStreamParser: postStreamParser,
         postParser: postParser,
       );
@@ -63,16 +63,13 @@ void main() {
       final posts = [PostDataPlaceholder()];
       final parsedStream = Stream<PostData>.fromIterable(posts);
 
-      final generate = () => cancelTokenService.generate();
       final parse = () => postStreamParser.parse(bodyStream);
 
-      late CancelToken cancelToken;
       late Response<ResponseBody> response;
       late ResponseBody responseBody;
       late Future<Response<ResponseBody>> Function() request;
 
       setUp(() {
-        cancelToken = CancelToken();
         response = _MockResponse();
         responseBody = _MockResponseBody();
         request = () => http.get<ResponseBody>(
@@ -88,7 +85,6 @@ void main() {
             ),
           ),
         );
-        when(generate).thenReturn(cancelToken);
         when(request).thenAnswer((_) async => response);
         when(() => responseBody.statusCode).thenReturn(200);
         when(() => response.data).thenReturn(responseBody);
@@ -103,13 +99,15 @@ void main() {
         final api = createSubject();
 
         await expectLater(
-          api.fetchPostStream(id: id),
+          api.fetchPostStream(
+            id: id,
+            cancelToken: cancelToken,
+          ),
           emitsError(
             PostStreamFailure(statusCode),
           ),
         );
 
-        verify(generate).called(1);
         verify(request).called(1);
       });
 
@@ -117,26 +115,27 @@ void main() {
         final api = createSubject();
 
         await expectLater(
-          api.fetchPostStream(id: id),
+          api.fetchPostStream(
+            id: id,
+            cancelToken: cancelToken,
+          ),
           emitsInOrder(posts),
         );
 
-        verify(generate).called(1);
         verify(request).called(1);
         verify(parse).called(1);
       });
 
       test('breaks when canceled', () async {
-        cancelToken.cancel();
+        when(() => cancelToken.isCancelled).thenReturn(true);
 
         final api = createSubject();
 
         await expectLater(
-          api.fetchPostStream(id: id),
+          api.fetchPostStream(id: id, cancelToken: cancelToken),
           neverEmits(anything),
         );
 
-        verify(generate).called(1);
         verify(request).called(1);
         verify(parse).called(1);
       });
@@ -144,10 +143,8 @@ void main() {
 
     group('fetchPost', () {
       late Response<String> response;
-      late CancelToken cancelToken;
 
       setUp(() {
-        cancelToken = CancelToken();
         response = _MockResponse<String>();
       });
 
@@ -155,7 +152,6 @@ void main() {
       const html = 'html';
       final post = PostDataPlaceholder();
 
-      final generate = () => cancelTokenService.generate();
       final parse = () => postParser.parse(html);
 
       final request = () => http.get<String>(
@@ -165,16 +161,14 @@ void main() {
       );
 
       test('parses and returns post', () async {
-        when(generate).thenReturn(cancelToken);
         when(request).thenAnswer((_) async => response);
         when(() => response.data).thenReturn(html);
         when(parse).thenAnswer((_) async => post);
         final api = createSubject();
         await expectLater(
-          api.fetchPost(id: id),
+          api.fetchPost(id: id, cancelToken: cancelToken),
           completion(post),
         );
-        verify(generate).called(1);
         verify(request).called(1);
         verify(parse).called(1);
       });
