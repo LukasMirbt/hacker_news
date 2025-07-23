@@ -1,4 +1,4 @@
-name: reply_form_parser
+name: reply_parser
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "packages/reply_form_parser/**"
-      - ".github/workflows/reply_form_parser.yaml"
+      - "packages/reply_parser/**"
+      - ".github/workflows/reply_parser.yaml"
     branches:
       - main
 
@@ -17,4 +17,4 @@ jobs:
   build:
     uses: ./.github/workflows/flutter_package.yaml
     with:
-      working_directory: packages/reply_form_parser
+      working_directory: packages/reply_parser
