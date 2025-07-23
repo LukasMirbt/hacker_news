@@ -9,7 +9,7 @@ class MiddleDotSpan extends TextSpan {
          children: [
            const WidgetSpan(
              child: SizedBox(
-               width: AppSpacing.xxs,
+               width: AppSpacing.xs,
              ),
            ),
            TextSpan(
@@ -18,7 +18,7 @@ class MiddleDotSpan extends TextSpan {
            ),
            const WidgetSpan(
              child: SizedBox(
-               width: AppSpacing.xxs,
+               width: AppSpacing.xs,
              ),
            ),
          ],
