@@ -14,5 +14,8 @@ mixin AppRelativeRoute on GoRouteData implements AppRoute {
   void replaceRelative(BuildContext context);
 
   @override
+  Object? get $extra => null;
+
+  @override
   String get navigationLocation => relativeLocation;
 }

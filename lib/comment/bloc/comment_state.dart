@@ -21,15 +21,6 @@ abstract class CommentState with _$CommentState {
     @Default(CommentStatus.initial) CommentStatus status,
   }) = _CommentState;
 
-  factory CommentState.initial({
-    required Post post,
-  }) {
-    return CommentState(
-      post: post,
-      form: CommentForm.empty,
-    );
-  }
-
   const CommentState._();
 
   bool get isLoading =>

@@ -162,22 +162,26 @@ mixin _$PostRoute on GoRouteData {
 }
 
 mixin _$CommentRoute on GoRouteData {
-  static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
+  static CommentRoute _fromState(GoRouterState state) =>
+      CommentRoute($extra: state.extra as CommentForm);
+
+  CommentRoute get _self => this as CommentRoute;
 
   String get location => GoRouteData.$location('comment');
 
   String get relativeLocation => './$location';
 
-  void goRelative(BuildContext context) => context.go(relativeLocation);
+  void goRelative(BuildContext context) =>
+      context.go(relativeLocation, extra: _self.$extra);
 
   Future<T?> pushRelative<T>(BuildContext context) =>
-      context.push<T>(relativeLocation);
+      context.push<T>(relativeLocation, extra: _self.$extra);
 
   void pushReplacementRelative(BuildContext context) =>
-      context.pushReplacement(relativeLocation);
+      context.pushReplacement(relativeLocation, extra: _self.$extra);
 
   void replaceRelative(BuildContext context) =>
-      context.replace(relativeLocation);
+      context.replace(relativeLocation, extra: _self.$extra);
 }
 
 mixin _$ReplyRoute on GoRouteData {

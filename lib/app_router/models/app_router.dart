@@ -28,44 +28,39 @@ class AppRouter {
   final AppNavigationModel _navigationModel;
   final GoRouter goRouter;
 
-  void go(AppAbsoluteRoute route, {Object? extra}) {
+  void go(AppAbsoluteRoute route) {
     return _navigationModel.go(
       goRouter: goRouter,
       route: route,
-      extra: extra,
+      extra: route.$extra,
     );
   }
 
   Future<T?> push<T extends Object?>(
-    AppAbsoluteRoute route, {
-    Object? extra,
-  }) {
+    AppAbsoluteRoute route,
+  ) {
     return _navigationModel.push(
       goRouter: goRouter,
       route: route,
-      extra: extra,
+      extra: route.$extra,
     );
   }
 
-  void goRelative(
-    AppRelativeRoute route, {
-    Object? extra,
-  }) {
+  void goRelative(AppRelativeRoute route) {
     return _navigationModel.go(
       goRouter: goRouter,
       route: route,
-      extra: extra,
+      extra: route.$extra,
     );
   }
 
   Future<T?> pushRelative<T extends Object?>(
-    AppRelativeRoute route, {
-    Object? extra,
-  }) {
+    AppRelativeRoute route,
+  ) {
     return _navigationModel.push(
       goRouter: goRouter,
       route: route,
-      extra: extra,
+      extra: route.$extra,
     );
   }
 }

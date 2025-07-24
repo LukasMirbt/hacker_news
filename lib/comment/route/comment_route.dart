@@ -2,7 +2,9 @@ part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class CommentRoute extends GoRouteData
     with _$CommentRoute, AppRelativeRoute, AuthenticatedRoute, EquatableMixin {
-  const CommentRoute();
+  const CommentRoute({required this.$extra});
+
+  final CommentForm $extra;
 
   static const config = TypedRelativeGoRoute<CommentRoute>(
     path: 'comment',
@@ -13,9 +15,9 @@ class CommentRoute extends GoRouteData
     BuildContext context,
     GoRouterState state,
   ) {
-    return const MaterialPage(
+    return MaterialPage(
       fullscreenDialog: true,
-      child: CommentPage(),
+      child: CommentPage(form: $extra),
     );
   }
 

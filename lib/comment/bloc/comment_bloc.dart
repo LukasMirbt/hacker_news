@@ -5,12 +5,14 @@ import 'package:post_repository/post_repository.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
+    required CommentForm form,
     required PostRepository postRepository,
     LinkLauncher? linkLauncher,
   }) : _repository = postRepository,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentState.initial(
+         CommentState(
+           form: form,
            post: postRepository.state,
          ),
        ) {

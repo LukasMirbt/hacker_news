@@ -5,5 +5,5 @@ class AppPostHeaderCommentButtonData {
   });
 
   final String commentCount;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 }
