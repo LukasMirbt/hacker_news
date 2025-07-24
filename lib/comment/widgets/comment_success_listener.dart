@@ -15,7 +15,8 @@ class CommentSuccessListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CommentBloc, CommentState>(
       listenWhen: (previous, current) =>
-          !previous.status.isSuccess && current.status.isSuccess,
+          !previous.submissionStatus.isSuccess &&
+          current.submissionStatus.isSuccess,
       listener: (context, state) {
         GoRouter.of(context).pop();
       },

@@ -15,18 +15,18 @@ class PostHeaderCommentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final form = context.select(
-      (PostHeaderBloc bloc) => bloc.state.header.commentForm,
+    final isCommentingEnabled = context.select(
+      (PostHeaderBloc bloc) => bloc.state.header.isCommentingEnabled,
     );
 
     return AppPostHeaderCommentButton(
       data: AppPostHeaderCommentButtonData(
         commentCount: commentCount,
-        onPressed: form == null
+        onPressed: !isCommentingEnabled
             ? null
             : () {
                 AppRouter.of(context).goRelative(
-                  CommentRoute($extra: form),
+                  const CommentRoute(),
                 );
               },
       ),

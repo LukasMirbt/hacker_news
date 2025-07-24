@@ -1,6 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
-import 'package:hacker_client/l10n/l10n.dart';
 
 class CommentView extends StatelessWidget {
   const CommentView({super.key});
@@ -10,26 +11,29 @@ class CommentView extends StatelessWidget {
     return const CommentSuccessListener(
       child: CommentFailureListener(
         child: Scaffold(
-          appBar: _AppBar(),
-          body: CommentBody(),
+          appBar: CommentAppBar(),
+          body: _Body(),
         ),
       ),
     );
   }
 }
 
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar();
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+class _Body extends StatelessWidget {
+  const _Body();
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
-    return AppBar(
-      title: Text(l10n.commentForm_title),
+    final isLoading = context.select(
+      (CommentBloc bloc) => bloc.state.fetchStatus.isLoading,
     );
+
+    final isCommentingEnabled = context.select(
+      (CommentBloc bloc) => bloc.state.isCommentingEnabled,
+    );
+
+    if (isLoading) return const Spinner();
+    if (isCommentingEnabled) return const CommentEnabledBody();
+    return const CommentDisabledBody();
   }
 }

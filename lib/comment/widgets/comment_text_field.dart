@@ -8,10 +8,14 @@ class CommentTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      minLines: 5,
+      autofocus: true,
       maxLines: null,
+
       decoration: const InputDecoration(
-        border: OutlineInputBorder(),
+        hintText: 'Your comment',
+        border: UnderlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
       ),
       onChanged: (value) {
         context.read<CommentBloc>().add(

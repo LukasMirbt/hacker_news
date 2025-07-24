@@ -5,15 +5,14 @@ import 'package:post_repository/post_repository.dart';
 
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
-    required CommentForm form,
     required PostRepository postRepository,
     LinkLauncher? linkLauncher,
   }) : _repository = postRepository,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentState(
-           form: form,
-           post: postRepository.state,
+         CommentState.initial(
+           fetchStatus: postRepository.state.fetchStatus,
+           header: postRepository.state.post.header,
          ),
        ) {
     on<CommentPostSubscriptionRequested>(
@@ -33,7 +32,17 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   ) async {
     return emit.forEach(
       _repository.stream,
-      onData: (post) => state.copyWith(post: post),
+      onData: (repositoryState) {
+        final header = repositoryState.post.header;
+        return state.copyWith(
+          fetchStatus: repositoryState.fetchStatus,
+          title: header.title,
+          htmlText: header.htmlText,
+          form: header.commentForm?.copyWith(
+            text: state.form?.text ?? '',
+          ),
+        );
+      },
     );
   }
 
@@ -41,9 +50,12 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     CommentTextChanged event,
     Emitter<CommentState> emit,
   ) {
+    final form = state.form;
+    if (form == null) return;
+
     emit(
       state.copyWith(
-        form: state.form.copyWith(
+        form: form.copyWith(
           text: event.text,
         ),
       ),
@@ -54,25 +66,28 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     CommentSubmitted event,
     Emitter<CommentState> emit,
   ) async {
+    final form = state.form;
+    if (form == null) return;
+
     emit(
       state.copyWith(
-        status: CommentStatus.loading,
+        submissionStatus: CommentStatus.loading,
       ),
     );
 
     try {
-      await _repository.comment(state.form);
+      await _repository.comment(form);
 
       emit(
         state.copyWith(
-          status: CommentStatus.success,
+          submissionStatus: CommentStatus.success,
         ),
       );
     } catch (e, s) {
       addError(e, s);
       emit(
         state.copyWith(
-          status: CommentStatus.failure,
+          submissionStatus: CommentStatus.failure,
         ),
       );
     }

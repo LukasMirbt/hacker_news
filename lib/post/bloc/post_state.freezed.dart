@@ -79,12 +79,12 @@ as RefreshStatus,
 
 
 class _PostState implements PostState {
-  const _PostState({required this.id, this.fetchStatus = FetchStatus.loading, this.refreshStatus = RefreshStatus.initial});
+  const _PostState({required this.id, required this.fetchStatus, required this.refreshStatus});
   
 
 @override final  String id;
-@override@JsonKey() final  FetchStatus fetchStatus;
-@override@JsonKey() final  RefreshStatus refreshStatus;
+@override final  FetchStatus fetchStatus;
+@override final  RefreshStatus refreshStatus;
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.

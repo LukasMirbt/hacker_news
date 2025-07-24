@@ -12,7 +12,6 @@ import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/reply/reply.dart';
 import 'package:hacker_client/settings/settings.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadFeedItem;
-import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 
 part '../../comment/route/comment_route.dart';

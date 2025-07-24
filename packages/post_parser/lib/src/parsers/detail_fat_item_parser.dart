@@ -21,6 +21,7 @@ class DetailFatItemParser {
   DetailFatItemData parse(Element fatItem) {
     var titleRowData = DetailTitleRowData.empty;
     var subtitleRowData = DetailSubtitleRowData.empty;
+    DetailCommentFormData? commentFormData;
 
     // Can be both a submission and a comment.
     final athing = fatItem.querySelector('.athing');
@@ -35,8 +36,13 @@ class DetailFatItemParser {
       subtitleRowData = _subtitleRowParser.parse(subtext);
     }
 
+    final form = fatItem.querySelector('form[action="comment"]');
+
+    if (form != null) {
+      commentFormData = _commentFormParser.parse(fatItem);
+    }
+
     final htmlText = _htmlTextParser.parse(fatItem);
-    final commentFormData = _commentFormParser.parse(fatItem);
 
     return DetailFatItemData(
       titleRowData: titleRowData,

@@ -1,6 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 
 class PostBody extends StatelessWidget {
@@ -8,19 +10,27 @@ class PostBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
-      physics: AlwaysScrollableScrollPhysics(),
+    final controller = context.watch<ScrollController>();
+
+    final appBarHeight = const PostAppBar().preferredSize.height;
+
+    return CustomScrollView(
+      controller: controller,
+      physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(
+        SliverPadding(
+          padding: EdgeInsets.only(top: appBarHeight),
+        ),
+        const SliverToBoxAdapter(
           child: PostHeader(),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Divider(height: 1),
         ),
-        SliverPadding(
+        const SliverPadding(
           padding: EdgeInsets.only(bottom: AppSpacing.xs),
         ),
-        CommentSliverList(),
+        const CommentSliverList(),
       ],
     );
   }

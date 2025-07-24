@@ -50,8 +50,10 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   ) async {
     return emit.forEach(
       _postRepository.stream,
-      onData: (post) => state.copyWith(
-        commentList: state.commentList.rebuildWith(post.comments),
+      onData: (repositoryState) => state.copyWith(
+        commentList: state.commentList.rebuildWith(
+          repositoryState.post.comments,
+        ),
       ),
     );
   }

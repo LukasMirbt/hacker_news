@@ -16,13 +16,30 @@ enum CommentStatus {
 @freezed
 abstract class CommentState with _$CommentState {
   const factory CommentState({
-    required Post post,
-    required CommentForm form,
-    @Default(CommentStatus.initial) CommentStatus status,
+    required FetchStatus fetchStatus,
+    required String title,
+    required String? htmlText,
+    required CommentForm? form,
+    @Default(CommentStatus.initial) CommentStatus submissionStatus,
   }) = _CommentState;
+
+  factory CommentState.initial({
+    required FetchStatus fetchStatus,
+    required PostHeader header,
+  }) {
+    return CommentState(
+      fetchStatus: fetchStatus,
+      title: header.title,
+      htmlText: header.htmlText,
+      form: header.commentForm,
+    );
+  }
 
   const CommentState._();
 
-  bool get isLoading =>
-      status == CommentStatus.loading || status == CommentStatus.success;
+  bool get isCommentingEnabled => form != null;
+
+  bool get isSubmissionLoading =>
+      submissionStatus == CommentStatus.loading ||
+      submissionStatus == CommentStatus.success;
 }

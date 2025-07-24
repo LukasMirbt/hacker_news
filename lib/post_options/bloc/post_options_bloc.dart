@@ -6,6 +6,6 @@ class PostOptionsBloc extends Bloc<void, PostOptionsState> {
   PostOptionsBloc({
     required PostRepository postRepository,
   }) : super(
-         PostOptionsState.from(postRepository.state),
+         PostOptionsState.from(postRepository.state.post),
        );
 }
