@@ -209,11 +209,7 @@ extension PumpAppExtension on WidgetTester {
     );
   }
 
-  Future<void> pumpApp(
-    Widget widgetUnderTest, {
-    // TODO(LukasMirbt): Remove this parameter
-    GoRouter? router,
-  }) async {
+  Future<void> pumpApp(Widget widgetUnderTest) async {
     return _pumpApp(
       (
         lightTheme,
@@ -223,7 +219,7 @@ extension PumpAppExtension on WidgetTester {
       ) {
         return MaterialApp(
           home: InheritedGoRouter(
-            goRouter: router ?? _MockGoRouter(),
+            goRouter: _MockGoRouter(),
             child: Scaffold(body: widgetUnderTest),
           ),
           theme: lightTheme,

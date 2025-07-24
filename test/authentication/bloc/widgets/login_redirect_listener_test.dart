@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: prefer_const_constructors
 
 import 'package:authentication_repository/authentication_repository.dart'
     hide AuthenticationState;
@@ -6,11 +7,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/login/login.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app/pump_app.dart';
 
@@ -18,9 +20,9 @@ class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, AuthenticationState>
     implements AuthenticationBloc {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockGoRouterState extends Mock implements GoRouterState {}
+class _MockAppAbsoluteRoute extends Mock implements AppAbsoluteRoute {}
 
 void main() {
   const initialState = AuthenticationState(
@@ -35,25 +37,26 @@ void main() {
 
   group(LoginRedirectListener, () {
     late AuthenticationBloc authenticationBloc;
-    late GoRouterState goRouterState;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       authenticationBloc = _MockAuthenticationBloc();
-      goRouterState = _MockGoRouterState();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       when(() => authenticationBloc.state).thenReturn(initialState);
-      when(() => router.state).thenReturn(goRouterState);
+      registerFallbackValue(_MockAppAbsoluteRoute());
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: authenticationBloc,
-        child: Nested(
-          children: [
-            LoginRedirectListener(),
-          ],
-          child: Container(),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: authenticationBloc,
+          child: Nested(
+            children: [
+              LoginRedirectListener(),
+            ],
+            child: Container(),
+          ),
         ),
       );
     }
@@ -90,7 +93,7 @@ void main() {
 
     testWidgets('returns when matchedLocation '
         'is $LoginRoute path', (tester) async {
-      when(() => goRouterState.matchedLocation).thenReturn(
+      when(() => router.matchedLocation).thenReturn(
         LoginRoute.config.path,
       );
       whenListen(
@@ -102,10 +105,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       verifyNever(pushAnyRoute);
     });
 
@@ -113,10 +113,11 @@ void main() {
         'and !isAuthenticated and matchedLocation is not '
         '$LoginRoute path', (tester) async {
       const matchedLocation = 'matchedLocation';
-      const loginRoute = LoginRoute(from: matchedLocation);
-      final pushLoginRoute = () => router.push<void>(loginRoute.location);
-      when(() => goRouterState.matchedLocation).thenReturn(matchedLocation);
-      when(pushLoginRoute).thenAnswer((_) async {});
+      final pushLoginRoute = () => router.push(
+        LoginRoute(from: matchedLocation),
+      );
+      when(() => router.matchedLocation).thenReturn(matchedLocation);
+      when(pushLoginRoute).thenAnswer((_) async => null);
       whenListen(
         authenticationBloc,
         initialState: unauthenticatedState,
@@ -126,10 +127,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       verify(pushLoginRoute).called(1);
     });
   });

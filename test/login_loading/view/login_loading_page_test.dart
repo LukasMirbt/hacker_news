@@ -15,13 +15,18 @@ void main() {
   const from = 'from';
 
   group(LoginLoadingPage, () {
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
     });
 
-    Widget buildSubject() => LoginLoadingPage(from: from);
+    Widget buildSubject() {
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: LoginLoadingPage(from: from),
+      );
+    }
 
     testWidgets('renders $PopScope with !canPop', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -39,11 +44,8 @@ void main() {
     });
 
     testWidgets('navigates after delay', (tester) async {
-      final navigate = () => router.go(from);
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      final navigate = () => goRouter.go(from);
+      await tester.pumpApp(buildSubject());
       verifyNever(navigate);
       await tester.binding.delayed(LoginLoadingPage.delay);
       verify(navigate).called(1);

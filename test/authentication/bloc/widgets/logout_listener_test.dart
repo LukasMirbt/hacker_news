@@ -6,11 +6,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/logout_loading/logout_loading.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app/pump_app.dart';
 
@@ -18,7 +19,7 @@ class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, AuthenticationState>
     implements AuthenticationBloc {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
   const initialState = AuthenticationState(
@@ -29,21 +30,24 @@ void main() {
 
   group(LogoutListener, () {
     late AuthenticationBloc authenticationBloc;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       authenticationBloc = _MockAuthenticationBloc();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: authenticationBloc,
-        child: Nested(
-          children: [
-            LogoutListener(),
-          ],
-          child: Container(),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: authenticationBloc,
+          child: Nested(
+            children: [
+              LogoutListener(),
+            ],
+            child: Container(),
+          ),
         ),
       );
     }
@@ -60,13 +64,10 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       verify(
         () => router.go(
-          LogoutLoadingRoute().location,
+          LogoutLoadingRoute(),
         ),
       ).called(1);
     });

@@ -12,13 +12,18 @@ class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
   group(WebRedirectCloseButton, () {
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
     });
 
-    Widget buildSubject() => WebRedirectCloseButton();
+    Widget buildSubject() {
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: WebRedirectCloseButton(),
+      );
+    }
 
     testWidgets('renders $IconButton', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -26,12 +31,9 @@ void main() {
     });
 
     testWidgets('pops when pressed', (tester) async {
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       await tester.tap(find.byType(IconButton));
-      verify(router.pop).called(1);
+      verify(goRouter.pop).called(1);
     });
   });
 }

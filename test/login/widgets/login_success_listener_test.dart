@@ -4,17 +4,18 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/login/login.dart';
 import 'package:hacker_client/login_loading/login_loading.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
     implements LoginBloc {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
   final child = Container();
@@ -23,18 +24,21 @@ void main() {
 
   group(LoginSuccessListener, () {
     late LoginBloc bloc;
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
       bloc = _MockLoginBloc();
-      router = _MockGoRouter();
+      router = _MockAppRouter();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: LoginSuccessListener(child: child),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: bloc,
+          child: LoginSuccessListener(child: child),
+        ),
       );
     }
 
@@ -49,13 +53,11 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
-      final route = LoginLoadingRoute(from: from);
+      await tester.pumpApp(buildSubject());
       verify(
-        () => router.go(route.location),
+        () => router.go(
+          LoginLoadingRoute(from: from),
+        ),
       ).called(1);
     });
 

@@ -9,13 +9,16 @@ class AppRouter {
     required AppRouteList appRouteList,
     required AppRedirect appRedirect,
     required AppNavigationModel appNavigationModel,
+    GoRouter? goRouter,
   }) : _navigationModel = appNavigationModel,
-       goRouter = GoRouter(
-         navigatorKey: navigatorKey,
-         initialLocation: initialLocation,
-         routes: appRouteList.routes,
-         redirect: appRedirect.redirect,
-       );
+       goRouter =
+           goRouter ??
+           GoRouter(
+             navigatorKey: navigatorKey,
+             initialLocation: initialLocation,
+             routes: appRouteList.routes,
+             redirect: appRedirect.redirect,
+           );
 
   static final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -27,6 +30,8 @@ class AppRouter {
 
   final AppNavigationModel _navigationModel;
   final GoRouter goRouter;
+
+  String get matchedLocation => goRouter.state.matchedLocation;
 
   void go(AppAbsoluteRoute route, {Object? extra}) {
     return _navigationModel.go(

@@ -1,11 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/login_loading/login_loading.dart';
 
 part 'login_loading_route.g.dart';
 
 @LoginLoadingRoute.config
-class LoginLoadingRoute extends GoRouteData with _$LoginLoadingRoute {
+class LoginLoadingRoute extends GoRouteData
+    with _$LoginLoadingRoute, AppAbsoluteRoute, EquatableMixin {
   const LoginLoadingRoute({required this.from});
 
   static const config = TypedGoRoute<LoginLoadingRoute>(
@@ -23,4 +26,7 @@ class LoginLoadingRoute extends GoRouteData with _$LoginLoadingRoute {
       child: LoginLoadingPage(from: from),
     );
   }
+
+  @override
+  List<Object> get props => [from];
 }

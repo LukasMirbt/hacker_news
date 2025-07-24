@@ -6,11 +6,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:nested/nested.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app/pump_app.dart';
 
@@ -18,9 +19,9 @@ class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, AuthenticationState>
     implements AuthenticationBloc {}
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockGoRouterState extends Mock implements GoRouterState {}
+class _MockAppAbsoluteRoute extends Mock implements AppAbsoluteRoute {}
 
 void main() {
   const initialState = AuthenticationState(
@@ -33,25 +34,26 @@ void main() {
 
   group(WebRedirectListener, () {
     late AuthenticationBloc authenticationBloc;
-    late GoRouter router;
-    late GoRouterState goRouterState;
+    late AppRouter router;
 
     setUp(() {
       authenticationBloc = _MockAuthenticationBloc();
-      router = _MockGoRouter();
-      goRouterState = _MockGoRouterState();
+      router = _MockAppRouter();
+      registerFallbackValue(_MockAppAbsoluteRoute());
       when(() => authenticationBloc.state).thenReturn(initialState);
-      when(() => router.state).thenReturn(goRouterState);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: authenticationBloc,
-        child: Nested(
-          children: [
-            WebRedirectListener(),
-          ],
-          child: Container(),
+      return Provider.value(
+        value: router,
+        child: BlocProvider.value(
+          value: authenticationBloc,
+          child: Nested(
+            children: [
+              WebRedirectListener(),
+            ],
+            child: Container(),
+          ),
         ),
       );
     }
@@ -74,9 +76,7 @@ void main() {
 
     testWidgets('returns when matchedLocation '
         'is $WebRedirectRoute path', (tester) async {
-      when(
-        () => goRouterState.matchedLocation,
-      ).thenReturn(
+      when(() => router.matchedLocation).thenReturn(
         WebRedirectRoute.config.path,
       );
       whenListen(
@@ -88,20 +88,20 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       verifyNever(pushAnyRoute);
     });
 
     testWidgets('pushes $WebRedirectRoute when redirect '
         'is $WebRedirect and matchedLocation is not '
         '$WebRedirectRoute path', (tester) async {
-      final route = WebRedirectRoute(url: redirect.urlString);
-      final pushWebRedirectRoute = () => router.push<void>(route.location);
-      when(pushWebRedirectRoute).thenAnswer((_) async {});
-      when(() => goRouterState.matchedLocation).thenReturn('matchedLocation');
+      final pushWebRedirectRoute = () => router.push(
+        WebRedirectRoute(
+          url: redirect.urlString,
+        ),
+      );
+      when(pushWebRedirectRoute).thenAnswer((_) async => null);
+      when(() => router.matchedLocation).thenReturn('matchedLocation');
       whenListen(
         authenticationBloc,
         initialState: initialState,
@@ -111,10 +111,7 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       verify(pushWebRedirectRoute).called(1);
     });
   });

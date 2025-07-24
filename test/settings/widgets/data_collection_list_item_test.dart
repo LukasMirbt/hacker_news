@@ -2,24 +2,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/settings/settings.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockGoRouter extends Mock implements GoRouter {}
+class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
   group(DataCollectionListItem, () {
-    late GoRouter router;
+    late AppRouter router;
 
     setUp(() {
-      router = _MockGoRouter();
+      router = _MockAppRouter();
     });
 
-    Widget buildSubject() => DataCollectionListItem();
+    Widget buildSubject() {
+      return Provider.value(
+        value: router,
+        child: DataCollectionListItem(),
+      );
+    }
 
     testWidgets('renders $ListTile', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -28,14 +34,12 @@ void main() {
 
     testWidgets('naviates to $DataCollectionRoute when $ListTile '
         'is tapped', (tester) async {
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      await tester.pumpApp(buildSubject());
       await tester.tap(find.byType(ListTile));
-      final route = DataCollectionRoute();
       verify(
-        () => router.go(route.location),
+        () => router.go(
+          DataCollectionRoute(),
+        ),
       ).called(1);
     });
   });
