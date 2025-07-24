@@ -1,6 +1,7 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class DataCollectionRoute extends GoRouteData with _$DataCollectionRoute {
+class DataCollectionRoute extends GoRouteData
+    with _$DataCollectionRoute, AppAbsoluteRoute, EquatableMixin {
   const DataCollectionRoute();
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;
@@ -16,4 +17,7 @@ class DataCollectionRoute extends GoRouteData with _$DataCollectionRoute {
   ) {
     return const DataCollectionPage();
   }
+
+  @override
+  List<Object> get props => [];
 }

@@ -11,7 +11,6 @@ class AppNavigationModel {
   void go({
     required AppRoute route,
     required GoRouter goRouter,
-    required Object? extra,
   }) {
     final redirect = _redirectModel.redirect(
       route: route,
@@ -23,16 +22,12 @@ class AppNavigationModel {
       return;
     }
 
-    goRouter.go(
-      route.navigationLocation,
-      extra: extra,
-    );
+    goRouter.go(route.navigationLocation);
   }
 
   Future<T?> push<T extends Object?>({
     required AppRoute route,
     required GoRouter goRouter,
-    required Object? extra,
   }) {
     final redirect = _redirectModel.redirect(
       route: route,
@@ -44,9 +39,6 @@ class AppNavigationModel {
       return Future.value();
     }
 
-    return goRouter.push(
-      route.navigationLocation,
-      extra: extra,
-    );
+    return goRouter.push(route.navigationLocation);
   }
 }

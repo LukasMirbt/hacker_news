@@ -12,8 +12,5 @@ mixin AppAbsoluteRoute on GoRouteData implements AppRoute {
   void replace(BuildContext context);
 
   @override
-  Object? get $extra => null;
-
-  @override
   String get navigationLocation => location;
 }

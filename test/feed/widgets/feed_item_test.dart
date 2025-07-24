@@ -8,7 +8,6 @@ import 'package:feed_repository/feed_repository.dart' hide FeedItem;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hacker_client/feed/feed.dart';
 import 'package:hacker_client/feed_item_options/feed_item_options.dart'
     hide FeedItemModel;
@@ -21,8 +20,6 @@ class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
 
 class _MockFeedState extends Mock implements FeedState {}
-
-class _MockGoRouter extends Mock implements GoRouter {}
 
 class _MockFeedItemModel extends Mock implements FeedItemModel {}
 
@@ -43,13 +40,11 @@ void main() {
   group(FeedItem, () {
     late FeedBloc bloc;
     late FeedState state;
-    late GoRouter router;
     late FeedItemModel item;
 
     setUp(() {
       bloc = _MockFeedBloc();
       state = _MockFeedState();
-      router = _MockGoRouter();
       item = _MockFeedItemModel();
       registerFallbackValue(_MockAppLocalizations());
       registerFallbackValue(_MockDateFormatterLocalizations());
@@ -139,10 +134,7 @@ void main() {
       testWidgets('shows $FeedItemOptionsSheet onMorePressed', (tester) async {
         final repositoryItem = FeedItemPlaceholder();
         when(item.toRepository).thenReturn(repositoryItem);
-        await tester.pumpApp(
-          buildSubject(),
-          router: router,
-        );
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.data.onMorePressed();
         await tester.pump();

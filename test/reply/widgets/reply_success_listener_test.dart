@@ -19,19 +19,22 @@ void main() {
 
   group(ReplySuccessListener, () {
     late ReplyBloc bloc;
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
       bloc = _MockReplyBloc();
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
       when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: ReplySuccessListener(
-          child: child,
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: BlocProvider.value(
+          value: bloc,
+          child: ReplySuccessListener(
+            child: child,
+          ),
         ),
       );
     }
@@ -47,11 +50,8 @@ void main() {
           ),
         ),
       );
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
-      verify(router.pop).called(1);
+      await tester.pumpApp(buildSubject());
+      verify(goRouter.pop).called(1);
     });
 
     testWidgets('renders child', (tester) async {

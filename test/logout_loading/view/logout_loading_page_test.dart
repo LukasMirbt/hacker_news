@@ -14,13 +14,18 @@ class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
   group(LogoutLoadingPage, () {
-    late GoRouter router;
+    late GoRouter goRouter;
 
     setUp(() {
-      router = _MockGoRouter();
+      goRouter = _MockGoRouter();
     });
 
-    Widget buildSubject() => LogoutLoadingPage();
+    Widget buildSubject() {
+      return InheritedGoRouter(
+        goRouter: goRouter,
+        child: LogoutLoadingPage(),
+      );
+    }
 
     testWidgets('renders $PopScope with !canPop', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -38,11 +43,8 @@ void main() {
     });
 
     testWidgets('navigates after delay', (tester) async {
-      final navigate = () => router.go(AppRouter.initialLocation);
-      await tester.pumpApp(
-        buildSubject(),
-        router: router,
-      );
+      final navigate = () => goRouter.go(AppRouter.initialLocation);
+      await tester.pumpApp(buildSubject());
       verifyNever(navigate);
       await tester.binding.delayed(LogoutLoadingPage.delay);
       verify(navigate).called(1);

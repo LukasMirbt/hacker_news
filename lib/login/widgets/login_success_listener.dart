@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/app_router/models/app_router.dart';
 import 'package:hacker_client/login/login.dart';
 import 'package:hacker_client/login_loading/login_loading.dart';
 
@@ -17,7 +18,9 @@ class LoginSuccessListener extends StatelessWidget {
       listenWhen: (previous, current) =>
           !previous.form.status.isSuccess && current.form.status.isSuccess,
       listener: (context, state) {
-        LoginLoadingRoute(from: state.from).go(context);
+        AppRouter.of(context).go(
+          LoginLoadingRoute(from: state.from),
+        );
       },
       child: child,
     );
