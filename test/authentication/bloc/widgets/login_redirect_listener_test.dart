@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_function_declarations_over_variables
-// //ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:authentication_repository/authentication_repository.dart'
     hide AuthenticationState;
@@ -114,7 +114,7 @@ void main() {
         '$LoginRoute path', (tester) async {
       const matchedLocation = 'matchedLocation';
       final pushLoginRoute = () => router.push(
-        const LoginRoute(from: matchedLocation),
+        LoginRoute(from: matchedLocation),
       );
       when(() => router.matchedLocation).thenReturn(matchedLocation);
       when(pushLoginRoute).thenAnswer((_) async => null);
