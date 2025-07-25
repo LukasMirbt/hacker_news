@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hacker_client/comment/comment.dart';
 
-class CommentSuccessListener extends StatelessWidget {
-  const CommentSuccessListener({
+class CommentPostLoadListener extends StatelessWidget {
+  const CommentPostLoadListener({
     required this.child,
     super.key,
   });
@@ -15,10 +14,11 @@ class CommentSuccessListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CommentBloc, CommentState>(
       listenWhen: (previous, current) =>
-          !previous.form.submissionStatus.isSuccess &&
-          current.form.submissionStatus.isSuccess,
+          previous.fetchStatus.isLoading && current.fetchStatus.isSuccess,
       listener: (context, state) {
-        GoRouter.of(context).pop();
+        context.read<CommentBloc>().add(
+          const CommentPostLoaded(),
+        );
       },
       child: child,
     );

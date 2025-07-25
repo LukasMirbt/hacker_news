@@ -1,6 +1,6 @@
 import 'package:post_repository/post_repository.dart';
 
-enum CommentStatus {
+enum SubmissionStatus {
   initial,
   loading,
   success,
@@ -12,23 +12,20 @@ enum CommentStatus {
 
 class CommentFormModel {
   const CommentFormModel({
-    required this.fetchStatus,
     required CommentForm? form,
-    this.submissionStatus = CommentStatus.initial,
+    this.submissionStatus = SubmissionStatus.initial,
   }) : _form = form;
 
-  final FetchStatus fetchStatus;
-  final CommentStatus submissionStatus;
+  final SubmissionStatus submissionStatus;
   final CommentForm? _form;
 
   static const empty = CommentFormModel(
-    fetchStatus: FetchStatus.loading,
     form: null,
   );
 
   String get text => _form?.text ?? '';
 
-  bool get isCommentingEnabled => _form != null && fetchStatus.isSuccess;
+  bool get isCommentingEnabled => _form != null;
 
   bool get isValid {
     final form = _form;
@@ -41,17 +38,15 @@ class CommentFormModel {
   }
 
   bool get isSubmissionLoading =>
-      submissionStatus == CommentStatus.loading ||
-      submissionStatus == CommentStatus.success;
+      submissionStatus == SubmissionStatus.loading ||
+      submissionStatus == SubmissionStatus.success;
 
   CommentForm? toRepository() => _form;
 
   CommentFormModel updateWith({
-    required FetchStatus fetchStatus,
     required CommentForm? form,
   }) {
     return CommentFormModel(
-      fetchStatus: fetchStatus,
       submissionStatus: submissionStatus,
       form: form?.copyWith(
         text: _form?.text ?? '',
@@ -60,12 +55,14 @@ class CommentFormModel {
   }
 
   CommentFormModel copyWith({
-    required String text,
+    String? text,
+    SubmissionStatus? submissionStatus,
   }) {
     return CommentFormModel(
-      fetchStatus: fetchStatus,
-      submissionStatus: submissionStatus,
-      form: _form?.copyWith(text: text),
+      submissionStatus: submissionStatus ?? this.submissionStatus,
+      form: _form?.copyWith(
+        text: text ?? _form.text,
+      ),
     );
   }
 }

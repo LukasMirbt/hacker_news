@@ -13,6 +13,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          CommentState(
+           fetchStatus: postRepository.state.fetchStatus,
            post: postRepository.state.post,
            form: savedCommentForm.load(),
          ),
@@ -20,6 +21,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     on<CommentPostSubscriptionRequested>(
       _onPostSubscriptionRequested,
     );
+    on<CommentPostLoaded>(_onPostLoaded);
     on<CommentTextChanged>(_onTextChanged);
     on<CommentSubmitted>(_onSubmitted);
     on<CommentLinkPressed>(_onLinkPressed);
@@ -37,24 +39,25 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       _repository.stream,
       onData: (repositoryState) {
         final post = repositoryState.post;
-        final previousStatus = state.form.fetchStatus;
-        final currentStatus = repositoryState.fetchStatus;
-
-        if (previousStatus.isLoading && currentStatus.isSuccess) {
-          return CommentState(
-            post: repositoryState.post,
-            form: _savedCommentForm.load(),
-          );
-        }
-
         return state.copyWith(
+          fetchStatus: repositoryState.fetchStatus,
           post: post,
           form: state.form.updateWith(
-            fetchStatus: currentStatus,
             form: post.header.commentForm,
           ),
         );
       },
+    );
+  }
+
+  Future<void> _onPostLoaded(
+    CommentPostLoaded event,
+    Emitter<CommentState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        form: _savedCommentForm.load(),
+      ),
     );
   }
 
@@ -84,7 +87,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
     emit(
       state.copyWith(
-        submissionStatus: CommentStatus.loading,
+        form: state.form.copyWith(
+          submissionStatus: SubmissionStatus.loading,
+        ),
       ),
     );
 
@@ -93,14 +98,18 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
       emit(
         state.copyWith(
-          submissionStatus: CommentStatus.success,
+          form: state.form.copyWith(
+            submissionStatus: SubmissionStatus.success,
+          ),
         ),
       );
     } catch (e, s) {
       addError(e, s);
       emit(
         state.copyWith(
-          submissionStatus: CommentStatus.failure,
+          form: state.form.copyWith(
+            submissionStatus: SubmissionStatus.failure,
+          ),
         ),
       );
     }

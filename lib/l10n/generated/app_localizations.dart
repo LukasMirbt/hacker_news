@@ -154,6 +154,12 @@ abstract class AppLocalizations {
   /// **'Comment'**
   String get comment_title;
 
+  /// No description provided for @comment_textFieldHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your comment'**
+  String get comment_textFieldHintText;
+
   /// No description provided for @comment_disabledExplanationTitle.
   ///
   /// In en, this message translates to:

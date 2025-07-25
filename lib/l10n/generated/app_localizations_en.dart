@@ -40,6 +40,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comment_title => 'Comment';
 
   @override
+  String get comment_textFieldHintText => 'Your comment';
+
+  @override
   String get comment_disabledExplanationTitle => 'Closed for comments';
 
   @override

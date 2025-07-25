@@ -15,8 +15,8 @@ class CommentFailureListener extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<CommentBloc, CommentState>(
       listenWhen: (previous, current) =>
-          !previous.submissionStatus.isFailure &&
-          current.submissionStatus.isFailure,
+          !previous.form.submissionStatus.isFailure &&
+          current.form.submissionStatus.isFailure,
       listener: (context, state) {
         final l10n = AppLocalizations.of(context);
         ScaffoldMessenger.of(context)

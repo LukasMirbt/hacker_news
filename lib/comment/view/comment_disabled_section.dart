@@ -3,31 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:hacker_client/comment/comment.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
-class CommentDisabledBody extends StatelessWidget {
-  const CommentDisabledBody({super.key});
+class CommentDisabledSection extends StatelessWidget {
+  const CommentDisabledSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: AppSpacing.lg,
-        horizontal: AppSpacing.xlg,
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CommentTitle(),
-            SizedBox(height: AppSpacing.lg),
-            Divider(height: 1),
-            Expanded(
-              child: Center(
-                child: _Explanation(),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: AppSpacing.lg,
+      children: [
+        CommentTitle(),
+        Divider(height: 1),
+        _Explanation(),
+      ],
     );
   }
 }
@@ -41,7 +29,6 @@ class _Explanation extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       spacing: AppSpacing.sm,
       children: [
         Text(

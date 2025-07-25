@@ -7,8 +7,13 @@ part 'comment_state.freezed.dart';
 @freezed
 abstract class CommentState with _$CommentState {
   const factory CommentState({
+    required FetchStatus fetchStatus,
     required Post post,
     required CommentFormModel form,
-    @Default(CommentStatus.initial) CommentStatus submissionStatus,
   }) = _CommentState;
+
+  const CommentState._();
+
+  bool get isSubmittingEnabled =>
+      fetchStatus.isSuccess && form.isCommentingEnabled;
 }

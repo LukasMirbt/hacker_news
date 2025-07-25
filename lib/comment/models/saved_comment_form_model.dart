@@ -25,10 +25,7 @@ class SavedCommentForm {
       );
     }
 
-    return CommentFormModel(
-      fetchStatus: fetchStatus,
-      form: form,
-    );
+    return CommentFormModel(form: form);
   }
 
   void save(CommentFormModel form) {

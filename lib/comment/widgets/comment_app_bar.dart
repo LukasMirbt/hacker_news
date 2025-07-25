@@ -12,16 +12,8 @@ class CommentAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCommentingEnabled = context.select(
-      (CommentBloc bloc) => bloc.state.form.isCommentingEnabled,
-    );
-
-    final isFailure = context.select(
-      (CommentBloc bloc) => bloc.state.form.fetchStatus.isFailure,
-    );
-
-    final isLoading = context.select(
-      (CommentBloc bloc) => bloc.state.form.fetchStatus.isLoading,
+    final isSubmittingEnabled = context.select(
+      (CommentBloc bloc) => bloc.state.isSubmittingEnabled,
     );
 
     final colorScheme = ColorScheme.of(context);
@@ -37,8 +29,7 @@ class CommentAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
-        if (isCommentingEnabled && !isLoading && !isFailure)
-          const CommentSubmitButton(),
+        if (isSubmittingEnabled) const CommentSubmitButton(),
       ],
     );
   }
