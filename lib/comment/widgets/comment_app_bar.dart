@@ -13,15 +13,15 @@ class CommentAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final isCommentingEnabled = context.select(
-      (CommentBloc bloc) => bloc.state.isCommentingEnabled,
+      (CommentBloc bloc) => bloc.state.form.isCommentingEnabled,
     );
 
     final isFailure = context.select(
-      (CommentBloc bloc) => bloc.state.fetchStatus.isFailure,
+      (CommentBloc bloc) => bloc.state.form.fetchStatus.isFailure,
     );
 
     final isLoading = context.select(
-      (CommentBloc bloc) => bloc.state.fetchStatus.isLoading,
+      (CommentBloc bloc) => bloc.state.form.fetchStatus.isLoading,
     );
 
     final colorScheme = ColorScheme.of(context);

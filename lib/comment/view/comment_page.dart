@@ -9,16 +9,17 @@ class CommentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          CommentBloc(
-              postRepository: context.read<PostRepository>(),
-            )
-            ..add(
-              const CommentPostSubscriptionRequested(),
-            )
-            ..add(
-              const CommentStarted(),
-            ),
+      create: (context) {
+        final postRepository = context.read<PostRepository>();
+        return CommentBloc(
+          postRepository: postRepository,
+          savedCommentForm: SavedCommentForm(
+            postRepository: postRepository,
+          ),
+        )..add(
+          const CommentPostSubscriptionRequested(),
+        );
+      },
       child: const CommentView(),
     );
   }

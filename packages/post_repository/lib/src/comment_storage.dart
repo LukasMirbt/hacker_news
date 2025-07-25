@@ -1,5 +1,3 @@
-// lib/comment/comment_storage.dart
-
 import 'package:equatable/equatable.dart';
 import 'package:hive_ce/hive.dart';
 

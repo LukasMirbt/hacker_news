@@ -28,9 +28,9 @@ class _CommentTextFieldState extends State<CommentTextField> {
   Widget build(BuildContext context) {
     return BlocListener<CommentBloc, CommentState>(
       listenWhen: (previous, current) =>
-          previous.form?.text != current.form?.text,
+          previous.form.text != current.form.text,
       listener: (context, state) {
-        final text = state.form?.text ?? '';
+        final text = state.form.text;
         if (text != _controller.text) {
           _controller.text = text;
         }

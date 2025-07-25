@@ -10,11 +10,11 @@ class CommentSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isValid = context.select(
-      (CommentBloc bloc) => bloc.state.isValid,
+      (CommentBloc bloc) => bloc.state.form.isValid,
     );
 
     final isLoading = context.select(
-      (CommentBloc bloc) => bloc.state.isSubmissionLoading,
+      (CommentBloc bloc) => bloc.state.form.isSubmissionLoading,
     );
 
     final l10n = AppLocalizations.of(context);

@@ -6,19 +6,20 @@ import 'package:post_repository/post_repository.dart';
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
     required PostRepository postRepository,
+    required SavedCommentForm savedCommentForm,
     LinkLauncher? linkLauncher,
   }) : _repository = postRepository,
+       _savedCommentForm = savedCommentForm,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentState.initial(
-           fetchStatus: postRepository.state.fetchStatus,
+         CommentState(
            post: postRepository.state.post,
+           form: savedCommentForm.load(),
          ),
        ) {
     on<CommentPostSubscriptionRequested>(
       _onPostSubscriptionRequested,
     );
-    on<CommentStarted>(_onStarted);
     on<CommentTextChanged>(_onTextChanged);
     on<CommentSubmitted>(_onSubmitted);
     on<CommentLinkPressed>(_onLinkPressed);
@@ -26,6 +27,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   final LinkLauncher _linkLauncher;
   final PostRepository _repository;
+  final SavedCommentForm _savedCommentForm;
 
   Future<void> _onPostSubscriptionRequested(
     CommentPostSubscriptionRequested event,
@@ -34,72 +36,50 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     return emit.forEach(
       _repository.stream,
       onData: (repositoryState) {
-        var text = state.form?.text ?? '';
+        final post = repositoryState.post;
+        final previousStatus = state.form.fetchStatus;
+        final currentStatus = repositoryState.fetchStatus;
 
-        if (state.post == Post.empty && repositoryState.post != Post.empty) {
-          text =
-              _repository.readComment(
-                postId: repositoryState.post.header.id,
-              ) ??
-              text;
+        if (previousStatus.isLoading && currentStatus.isSuccess) {
+          return CommentState(
+            post: repositoryState.post,
+            form: _savedCommentForm.load(),
+          );
         }
 
-        final header = repositoryState.post.header;
-
         return state.copyWith(
-          fetchStatus: repositoryState.fetchStatus,
-          post: repositoryState.post,
-          form: header.commentForm?.copyWith(
-            text: text,
+          post: post,
+          form: state.form.updateWith(
+            fetchStatus: currentStatus,
+            form: post.header.commentForm,
           ),
         );
       },
     );
   }
 
-  void _onStarted(
-    CommentStarted event,
-    Emitter<CommentState> emit,
-  ) {
-    if (_repository.state.post != Post.empty) {
-      final text = _repository.readComment(
-        postId: _repository.state.post.header.id,
-      );
-
-      emit(
-        state.copyWith(
-          form: state.form?.copyWith(text: text ?? ''),
-        ),
-      );
-    }
-  }
-
   void _onTextChanged(
     CommentTextChanged event,
     Emitter<CommentState> emit,
   ) {
-    final form = state.form;
-    if (form == null) return;
+    final updatedForm = state.form.copyWith(
+      text: event.text,
+    );
 
     emit(
       state.copyWith(
-        form: form.copyWith(
-          text: event.text,
-        ),
+        form: updatedForm,
       ),
     );
 
-    _repository.saveComment(
-      postId: form.parent,
-      text: event.text,
-    );
+    _savedCommentForm.save(updatedForm);
   }
 
   Future<void> _onSubmitted(
     CommentSubmitted event,
     Emitter<CommentState> emit,
   ) async {
-    final form = state.form;
+    final form = state.form.toRepository();
     if (form == null) return;
 
     emit(
