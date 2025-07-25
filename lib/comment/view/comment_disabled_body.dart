@@ -18,6 +18,8 @@ class CommentDisabledBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CommentTitle(),
+            SizedBox(height: AppSpacing.lg),
+            Divider(height: 1),
             Expanded(
               child: Center(
                 child: _Explanation(),

@@ -11,10 +11,14 @@ class CommentPage extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           CommentBloc(
-            postRepository: context.read<PostRepository>(),
-          )..add(
-            const CommentPostSubscriptionRequested(),
-          ),
+              postRepository: context.read<PostRepository>(),
+            )
+            ..add(
+              const CommentPostSubscriptionRequested(),
+            )
+            ..add(
+              const CommentStarted(),
+            ),
       child: const CommentView(),
     );
   }

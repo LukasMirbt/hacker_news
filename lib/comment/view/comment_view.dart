@@ -24,6 +24,10 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isFailure = context.select(
+      (CommentBloc bloc) => bloc.state.fetchStatus.isFailure,
+    );
+
     final isLoading = context.select(
       (CommentBloc bloc) => bloc.state.fetchStatus.isLoading,
     );
@@ -32,6 +36,7 @@ class _Body extends StatelessWidget {
       (CommentBloc bloc) => bloc.state.isCommentingEnabled,
     );
 
+    if (isFailure) return const ErrorText();
     if (isLoading) return const Spinner();
     if (isCommentingEnabled) return const CommentEnabledBody();
     return const CommentDisabledBody();

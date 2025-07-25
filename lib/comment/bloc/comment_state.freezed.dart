@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentState {
 
- FetchStatus get fetchStatus; String get title; String? get htmlText; CommentForm? get form; CommentStatus get submissionStatus;
+ FetchStatus get fetchStatus; Post get post; CommentForm? get form; CommentStatus get submissionStatus;
 /// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CommentStateCopyWith<CommentState> get copyWith => _$CommentStateCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentState&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.title, title) || other.title == title)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.form, form) || other.form == form)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentState&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.post, post) || other.post == post)&&(identical(other.form, form) || other.form == form)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fetchStatus,title,htmlText,form,submissionStatus);
+int get hashCode => Object.hash(runtimeType,fetchStatus,post,form,submissionStatus);
 
 @override
 String toString() {
-  return 'CommentState(fetchStatus: $fetchStatus, title: $title, htmlText: $htmlText, form: $form, submissionStatus: $submissionStatus)';
+  return 'CommentState(fetchStatus: $fetchStatus, post: $post, form: $form, submissionStatus: $submissionStatus)';
 }
 
 
@@ -46,11 +46,11 @@ abstract mixin class $CommentStateCopyWith<$Res>  {
   factory $CommentStateCopyWith(CommentState value, $Res Function(CommentState) _then) = _$CommentStateCopyWithImpl;
 @useResult
 $Res call({
- FetchStatus fetchStatus, String title, String? htmlText, CommentForm? form, CommentStatus submissionStatus
+ FetchStatus fetchStatus, Post post, CommentForm? form, CommentStatus submissionStatus
 });
 
 
-$CommentFormCopyWith<$Res>? get form;
+$PostCopyWith<$Res> get post;$CommentFormCopyWith<$Res>? get form;
 
 }
 /// @nodoc
@@ -63,17 +63,25 @@ class _$CommentStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? fetchStatus = null,Object? title = null,Object? htmlText = freezed,Object? form = freezed,Object? submissionStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? fetchStatus = null,Object? post = null,Object? form = freezed,Object? submissionStatus = null,}) {
   return _then(_self.copyWith(
 fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
-as FetchStatus,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,htmlText: freezed == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
-as String?,form: freezed == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as FetchStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as Post,form: freezed == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
 as CommentForm?,submissionStatus: null == submissionStatus ? _self.submissionStatus : submissionStatus // ignore: cast_nullable_to_non_nullable
 as CommentStatus,
   ));
 }
 /// Create a copy of CommentState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostCopyWith<$Res> get post {
+  
+  return $PostCopyWith<$Res>(_self.post, (value) {
+    return _then(_self.copyWith(post: value));
+  });
+}/// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -93,12 +101,11 @@ $CommentFormCopyWith<$Res>? get form {
 
 
 class _CommentState extends CommentState {
-  const _CommentState({required this.fetchStatus, required this.title, required this.htmlText, required this.form, this.submissionStatus = CommentStatus.initial}): super._();
+  const _CommentState({required this.fetchStatus, required this.post, required this.form, this.submissionStatus = CommentStatus.initial}): super._();
   
 
 @override final  FetchStatus fetchStatus;
-@override final  String title;
-@override final  String? htmlText;
+@override final  Post post;
 @override final  CommentForm? form;
 @override@JsonKey() final  CommentStatus submissionStatus;
 
@@ -112,16 +119,16 @@ _$CommentStateCopyWith<_CommentState> get copyWith => __$CommentStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentState&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.title, title) || other.title == title)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.form, form) || other.form == form)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentState&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.post, post) || other.post == post)&&(identical(other.form, form) || other.form == form)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,fetchStatus,title,htmlText,form,submissionStatus);
+int get hashCode => Object.hash(runtimeType,fetchStatus,post,form,submissionStatus);
 
 @override
 String toString() {
-  return 'CommentState(fetchStatus: $fetchStatus, title: $title, htmlText: $htmlText, form: $form, submissionStatus: $submissionStatus)';
+  return 'CommentState(fetchStatus: $fetchStatus, post: $post, form: $form, submissionStatus: $submissionStatus)';
 }
 
 
@@ -132,11 +139,11 @@ abstract mixin class _$CommentStateCopyWith<$Res> implements $CommentStateCopyWi
   factory _$CommentStateCopyWith(_CommentState value, $Res Function(_CommentState) _then) = __$CommentStateCopyWithImpl;
 @override @useResult
 $Res call({
- FetchStatus fetchStatus, String title, String? htmlText, CommentForm? form, CommentStatus submissionStatus
+ FetchStatus fetchStatus, Post post, CommentForm? form, CommentStatus submissionStatus
 });
 
 
-@override $CommentFormCopyWith<$Res>? get form;
+@override $PostCopyWith<$Res> get post;@override $CommentFormCopyWith<$Res>? get form;
 
 }
 /// @nodoc
@@ -149,18 +156,26 @@ class __$CommentStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? fetchStatus = null,Object? title = null,Object? htmlText = freezed,Object? form = freezed,Object? submissionStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? fetchStatus = null,Object? post = null,Object? form = freezed,Object? submissionStatus = null,}) {
   return _then(_CommentState(
 fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
-as FetchStatus,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,htmlText: freezed == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
-as String?,form: freezed == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as FetchStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as Post,form: freezed == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
 as CommentForm?,submissionStatus: null == submissionStatus ? _self.submissionStatus : submissionStatus // ignore: cast_nullable_to_non_nullable
 as CommentStatus,
   ));
 }
 
 /// Create a copy of CommentState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostCopyWith<$Res> get post {
+  
+  return $PostCopyWith<$Res>(_self.post, (value) {
+    return _then(_self.copyWith(post: value));
+  });
+}/// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

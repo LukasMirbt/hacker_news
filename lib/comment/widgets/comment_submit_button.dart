@@ -9,6 +9,10 @@ class CommentSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isValid = context.select(
+      (CommentBloc bloc) => bloc.state.isValid,
+    );
+
     final isLoading = context.select(
       (CommentBloc bloc) => bloc.state.isSubmissionLoading,
     );
@@ -17,11 +21,13 @@ class CommentSubmitButton extends StatelessWidget {
 
     return AppFilledButton.shrink(
       isLoading: isLoading,
-      onPressed: () {
-        context.read<CommentBloc>().add(
-          const CommentSubmitted(),
-        );
-      },
+      onPressed: !isValid
+          ? null
+          : () {
+              context.read<CommentBloc>().add(
+                const CommentSubmitted(),
+              );
+            },
       child: Text(l10n.comment_submitAction),
     );
   }

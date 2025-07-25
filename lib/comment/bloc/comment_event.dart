@@ -11,6 +11,10 @@ final class CommentPostSubscriptionRequested extends CommentEvent {
   const CommentPostSubscriptionRequested();
 }
 
+final class CommentStarted extends CommentEvent {
+  const CommentStarted();
+}
+
 final class CommentTextChanged extends CommentEvent {
   const CommentTextChanged(this.text);
 

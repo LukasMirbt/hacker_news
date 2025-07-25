@@ -18,7 +18,17 @@ class AppRouter {
              initialLocation: initialLocation,
              routes: appRouteList.routes,
              redirect: appRedirect.redirect,
-           );
+           ) {
+    init();
+  }
+
+  void init() {
+    goRouter.routerDelegate.addListener(() {
+      print(
+        'matchedLocation: ${goRouter.routerDelegate.state.matchedLocation}',
+      );
+    });
+  }
 
   static final navigatorKey = GlobalKey<NavigatorState>();
 

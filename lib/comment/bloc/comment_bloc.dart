@@ -1,5 +1,5 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -12,12 +12,13 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
        super(
          CommentState.initial(
            fetchStatus: postRepository.state.fetchStatus,
-           header: postRepository.state.post.header,
+           post: postRepository.state.post,
          ),
        ) {
     on<CommentPostSubscriptionRequested>(
       _onPostSubscriptionRequested,
     );
+    on<CommentStarted>(_onStarted);
     on<CommentTextChanged>(_onTextChanged);
     on<CommentSubmitted>(_onSubmitted);
     on<CommentLinkPressed>(_onLinkPressed);
@@ -33,17 +34,44 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     return emit.forEach(
       _repository.stream,
       onData: (repositoryState) {
+        var text = state.form?.text ?? '';
+
+        if (state.post == Post.empty && repositoryState.post != Post.empty) {
+          text =
+              _repository.readComment(
+                postId: repositoryState.post.header.id,
+              ) ??
+              text;
+        }
+
         final header = repositoryState.post.header;
+
         return state.copyWith(
           fetchStatus: repositoryState.fetchStatus,
-          title: header.title,
-          htmlText: header.htmlText,
+          post: repositoryState.post,
           form: header.commentForm?.copyWith(
-            text: state.form?.text ?? '',
+            text: text,
           ),
         );
       },
     );
+  }
+
+  void _onStarted(
+    CommentStarted event,
+    Emitter<CommentState> emit,
+  ) {
+    if (_repository.state.post != Post.empty) {
+      final text = _repository.readComment(
+        postId: _repository.state.post.header.id,
+      );
+
+      emit(
+        state.copyWith(
+          form: state.form?.copyWith(text: text ?? ''),
+        ),
+      );
+    }
   }
 
   void _onTextChanged(
@@ -59,6 +87,11 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
           text: event.text,
         ),
       ),
+    );
+
+    _repository.saveComment(
+      postId: form.parent,
+      text: event.text,
     );
   }
 

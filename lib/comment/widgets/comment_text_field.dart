@@ -2,26 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
 
-class CommentTextField extends StatelessWidget {
+class CommentTextField extends StatefulWidget {
   const CommentTextField({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextField(
-      autofocus: true,
-      maxLines: null,
+  State<CommentTextField> createState() => _CommentTextFieldState();
+}
 
-      decoration: const InputDecoration(
-        hintText: 'Your comment',
-        border: UnderlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-      ),
-      onChanged: (value) {
-        context.read<CommentBloc>().add(
-          CommentTextChanged(value),
-        );
+class _CommentTextFieldState extends State<CommentTextField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<CommentBloc, CommentState>(
+      listenWhen: (previous, current) =>
+          previous.form?.text != current.form?.text,
+      listener: (context, state) {
+        final text = state.form?.text ?? '';
+        if (text != _controller.text) {
+          _controller.text = text;
+        }
       },
+      child: TextField(
+        controller: _controller,
+        autofocus: true,
+        maxLines: null,
+        decoration: const InputDecoration.collapsed(
+          hintText: 'Your comment',
+        ),
+        onChanged: (value) {
+          context.read<CommentBloc>().add(
+            CommentTextChanged(value),
+          );
+        },
+      ),
     );
   }
 }

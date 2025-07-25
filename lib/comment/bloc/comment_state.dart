@@ -17,29 +17,37 @@ enum CommentStatus {
 abstract class CommentState with _$CommentState {
   const factory CommentState({
     required FetchStatus fetchStatus,
-    required String title,
-    required String? htmlText,
+    required Post post,
     required CommentForm? form,
     @Default(CommentStatus.initial) CommentStatus submissionStatus,
   }) = _CommentState;
 
   factory CommentState.initial({
     required FetchStatus fetchStatus,
-    required PostHeader header,
+    required Post post,
   }) {
     return CommentState(
       fetchStatus: fetchStatus,
-      title: header.title,
-      htmlText: header.htmlText,
-      form: header.commentForm,
+      post: post,
+      form: post.header.commentForm,
     );
   }
 
   const CommentState._();
 
-  bool get isCommentingEnabled => form != null;
+  bool get isCommentingEnabled => form != null && fetchStatus.isSuccess;
 
   bool get isSubmissionLoading =>
       submissionStatus == CommentStatus.loading ||
       submissionStatus == CommentStatus.success;
+
+  bool get isValid {
+    final form = this.form;
+    if (form == null) return false;
+
+    final text = form.text;
+    if (text.trim().isEmpty) return false;
+
+    return true;
+  }
 }
