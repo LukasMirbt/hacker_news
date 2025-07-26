@@ -1,5 +1,3 @@
-// ignore_for_file: annotate_overrides
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -25,14 +23,14 @@ enum RefreshStatus {
 }
 
 @freezed
-class PostRepositoryState with _$PostRepositoryState {
-  PostRepositoryState({
-    this.fetchStatus = FetchStatus.loading,
-    this.refreshStatus = RefreshStatus.initial,
-    Post? post,
-  }) : post = post ?? Post.empty;
+abstract class PostRepositoryState with _$PostRepositoryState {
+  const factory PostRepositoryState({
+    required Post post,
+    @Default(FetchStatus.loading) FetchStatus fetchStatus,
+    @Default(RefreshStatus.initial) RefreshStatus refreshStatus,
+  }) = _PostRepositoryState;
 
-  final FetchStatus fetchStatus;
-  final RefreshStatus refreshStatus;
-  final Post post;
+  factory PostRepositoryState.initial() {
+    return PostRepositoryState(post: Post.empty);
+  }
 }

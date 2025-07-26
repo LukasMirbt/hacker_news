@@ -15,7 +15,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
        _commentStorage = commentStorage,
        _cancelTokenService = cancelTokenService ?? CancelTokenService(),
        super(
-         PostRepositoryState(),
+         PostRepositoryState.initial(),
        );
 
   final PostApi _postApi;

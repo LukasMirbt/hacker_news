@@ -20,7 +20,7 @@ class _MockCancelTokenService extends Mock implements CancelTokenService {}
 class _MockCancelToken extends Mock implements CancelToken {}
 
 void main() {
-  final initialState = PostRepositoryState();
+  final initialState = PostRepositoryState.initial();
   final exception = Exception('oops');
 
   const postId = 'postId';

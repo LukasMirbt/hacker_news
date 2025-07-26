@@ -10,7 +10,7 @@ import '../app_shell/pump_app_shell.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {
   @override
-  PostRepositoryState get state => PostRepositoryState();
+  PostRepositoryState get state => PostRepositoryState.initial();
 
   @override
   Stream<PostRepositoryState> get stream => Stream.empty();

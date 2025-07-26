@@ -40,7 +40,7 @@ void main() {
     });
   });
 
-  group('refreshStatus', () {
+  group(RefreshStatus, () {
     group('isLoading', () {
       test('returns true when status is ${RefreshStatus.loading}', () {
         const status = RefreshStatus.loading;
@@ -50,6 +50,17 @@ void main() {
       test('returns false when status is not ${RefreshStatus.loading}', () {
         const status = RefreshStatus.success;
         expect(status.isLoading, false);
+      });
+    });
+  });
+
+  group(PostRepositoryState, () {
+    group('initial', () {
+      test('returns $PostRepositoryState', () {
+        expect(
+          PostRepositoryState.initial(),
+          PostRepositoryState(post: Post.empty),
+        );
       });
     });
   });
