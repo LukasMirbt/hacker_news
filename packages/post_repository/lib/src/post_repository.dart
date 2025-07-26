@@ -69,6 +69,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
         state.copyWith(
           post: Post.from(data),
           refreshStatus: RefreshStatus.success,
+          fetchStatus: FetchStatus.success,
         ),
       );
     } catch (_) {

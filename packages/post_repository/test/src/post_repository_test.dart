@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,25 +8,43 @@ import 'package:post_repository/post_repository.dart';
 
 class _MockPostApi extends Mock implements PostApi {}
 
+class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
+
+class _MockAuthenticationState extends Mock implements AuthenticationState {}
+
+class _MockCommentStorage extends Mock implements CommentStorage {}
+
 class _MockCancelTokenService extends Mock implements CancelTokenService {}
 
 class _MockCancelToken extends Mock implements CancelToken {}
 
 void main() {
+  final initialState = PostRepositoryState();
+  final exception = Exception('oops');
+
   group(PostRepository, () {
-    late PostApi api;
+    late PostApi postApi;
+    late AuthenticationApi authenticationApi;
+    late AuthenticationState authenticationState;
+    late CommentStorage commentStorage;
     late CancelTokenService cancelTokenService;
     late CancelToken cancelToken;
 
     setUp(() {
-      api = _MockPostApi();
+      postApi = _MockPostApi();
+      authenticationApi = _MockAuthenticationApi();
+      authenticationState = _MockAuthenticationState();
+      commentStorage = _MockCommentStorage();
       cancelTokenService = _MockCancelTokenService();
       cancelToken = _MockCancelToken();
+      when(() => authenticationApi.state).thenReturn(authenticationState);
     });
 
     PostRepository buildCubit() {
       return PostRepository(
-        postApi: api,
+        postApi: postApi,
+        authenticationApi: authenticationApi,
+        commentStorage: commentStorage,
         cancelTokenService: cancelTokenService,
       );
     }
@@ -35,7 +54,11 @@ void main() {
     group('constructor', () {
       test('returns normally', () {
         expect(
-          () => PostRepository(postApi: api),
+          () => PostRepository(
+            postApi: postApi,
+            authenticationApi: authenticationApi,
+            commentStorage: commentStorage,
+          ),
           returnsNormally,
         );
       });
@@ -55,13 +78,14 @@ void main() {
         ),
       );
 
-      final fetchPostStream = () => api.fetchPostStream(
+      final fetchPostStream = () => postApi.fetchPostStream(
         id: id,
         cancelToken: cancelToken,
       );
 
-      blocTest<PostRepository, Post>(
-        'calls fetchPostStream and emits $Post for each stream value',
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [success] and $Post for each stream value '
+        'when stream succeeds',
         setUp: () {
           when(generate).thenReturn(cancelToken);
           when(fetchPostStream).thenAnswer(
@@ -71,8 +95,34 @@ void main() {
         build: buildCubit,
         act: (cubit) => cubit.fetchPostStream(id: id),
         expect: () => [
-          for (final data in values) Post.from(data),
+          for (final data in values)
+            initialState.copyWith(
+              post: Post.from(data),
+              fetchStatus: FetchStatus.success,
+            ),
         ],
+        verify: (_) {
+          verify(generate).called(1);
+          verify(fetchPostStream).called(1);
+        },
+      );
+
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [failure] and rethrows when stream throws',
+        setUp: () {
+          when(generate).thenReturn(cancelToken);
+          when(fetchPostStream).thenAnswer(
+            (_) => Stream.error(exception),
+          );
+        },
+        build: buildCubit,
+        act: (cubit) => cubit.fetchPostStream(id: id),
+        expect: () => [
+          initialState.copyWith(
+            fetchStatus: FetchStatus.failure,
+          ),
+        ],
+        errors: () => [exception],
         verify: (_) {
           verify(generate).called(1);
           verify(fetchPostStream).called(1);
@@ -80,24 +130,59 @@ void main() {
       );
     });
 
-    group('fetchPost', () {
+    group('refreshPost', () {
       const id = 'id';
       final data = PostDataPlaceholder();
 
-      final fetchPost = () => api.fetchPost(
+      final fetchPost = () => postApi.fetchPost(
         id: id,
         cancelToken: cancelToken,
       );
 
-      blocTest<PostRepository, Post>(
-        'calls fetchPost and emits $Post',
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [loading, success] and $Post '
+        'when request succeeds',
         setUp: () {
           when(generate).thenReturn(cancelToken);
           when(fetchPost).thenAnswer((_) async => data);
         },
         build: buildCubit,
-        act: (cubit) => cubit.fetchPost(id: id),
-        expect: () => [Post.from(data)],
+        act: (cubit) => cubit.refreshPost(id: id),
+        expect: () => [
+          initialState.copyWith(
+            refreshStatus: RefreshStatus.loading,
+          ),
+          initialState.copyWith(
+            post: Post.from(data),
+            refreshStatus: RefreshStatus.success,
+            fetchStatus: FetchStatus.success,
+          ),
+        ],
+        verify: (_) {
+          verify(generate).called(1);
+          verify(fetchPost).called(1);
+        },
+      );
+
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [loading, failure] and rethrows '
+        'when request throws',
+        setUp: () {
+          when(generate).thenReturn(cancelToken);
+          when(fetchPost).thenThrow(exception);
+        },
+        build: buildCubit,
+        act: (cubit) => cubit.refreshPost(id: id),
+        expect: () => [
+          initialState.copyWith(
+            refreshStatus: RefreshStatus.loading,
+          ),
+          initialState.copyWith(
+            refreshStatus: RefreshStatus.failure,
+            fetchStatus: FetchStatus.failure,
+          ),
+        ],
+        errors: () => [exception],
         verify: (_) {
           verify(generate).called(1);
           verify(fetchPost).called(1);
@@ -109,47 +194,80 @@ void main() {
       const form = CommentFormPlaceholder();
       final data = PostDataPlaceholder();
 
-      final comment = () => api.comment(form.toApi());
+      const userId = 'userId';
+      const user = UserPlaceholder(id: userId);
+
+      final comment = () => postApi.comment(form.toApi());
 
       final fetchPost = () =>
-          api.fetchPost(id: form.parent, cancelToken: cancelToken);
+          postApi.fetchPost(id: form.parent, cancelToken: cancelToken);
 
-      blocTest<PostRepository, Post>(
-        'calls comment and emits updated $Post '
+      final clear = () => commentStorage.clear(
+        CommentKey(
+          postId: form.parent,
+          userId: userId,
+        ),
+      );
+
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [success], $Post and clears storage '
         'when fetchPost succeeds',
         setUp: () {
-          when(generate).thenReturn(cancelToken);
           when(comment).thenAnswer((_) async {});
+          when(generate).thenReturn(cancelToken);
           when(fetchPost).thenAnswer((_) async => data);
+          when(clear).thenAnswer((_) async {});
+          when(() => authenticationState.user).thenReturn(user);
         },
         build: buildCubit,
         act: (cubit) => cubit.comment(form),
-
         expect: () => [
-          Post.from(data),
+          initialState.copyWith(
+            post: Post.from(data),
+            fetchStatus: FetchStatus.success,
+          ),
         ],
         verify: (_) {
-          verify(generate).called(1);
           verify(comment).called(1);
+          verify(generate).called(1);
           verify(fetchPost).called(1);
+          verify(clear).called(1);
         },
       );
 
-      blocTest<PostRepository, Post>(
-        'calls comment and returns when fetchPost throws',
+      blocTest<PostRepository, PostRepositoryState>(
+        'emits [failure] and returns when fetchPost throws',
         setUp: () {
-          when(generate).thenReturn(cancelToken);
           when(comment).thenAnswer((_) async {});
+          when(generate).thenReturn(cancelToken);
           when(fetchPost).thenThrow(Exception('oops'));
         },
         build: buildCubit,
         act: (cubit) => cubit.comment(form),
-        expect: () => <Post>[],
+        expect: () => [
+          initialState.copyWith(
+            fetchStatus: FetchStatus.failure,
+          ),
+        ],
         errors: () => <Object?>[],
         verify: (_) {
-          verify(generate).called(1);
           verify(comment).called(1);
+          verify(generate).called(1);
           verify(fetchPost).called(1);
+        },
+      );
+
+      blocTest<PostRepository, PostRepositoryState>(
+        'throws when comment throws',
+        setUp: () {
+          when(comment).thenThrow(exception);
+        },
+        build: buildCubit,
+        act: (cubit) => cubit.comment(form),
+        expect: () => <PostRepositoryState>[],
+        errors: () => [exception],
+        verify: (_) {
+          verify(comment).called(1);
         },
       );
     });

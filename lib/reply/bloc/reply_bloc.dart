@@ -27,7 +27,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     Emitter<ReplyState> emit,
   ) async {
     try {
-      // TODO: Handle replying being disabled
+      // TODO(LukasMirbt): Handle replying being disabled
 
       final form = await _repository.fetchReplyForm(
         url: state.url,
