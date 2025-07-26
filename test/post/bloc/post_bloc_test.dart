@@ -9,15 +9,29 @@ import 'package:post_repository/post_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
+class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
+
 void main() {
   const id = 'id';
-  const initialState = PostState(id: id);
+  const fetchStatus = FetchStatus.loading;
+  const refreshStatus = RefreshStatus.initial;
+
+  final initialState = PostState(
+    id: id,
+    fetchStatus: fetchStatus,
+    refreshStatus: refreshStatus,
+  );
 
   group(PostBloc, () {
     late PostRepository repository;
+    late PostRepositoryState repositoryState;
 
     setUp(() {
       repository = _MockPostRepository();
+      repositoryState = _MockPostRepositoryState();
+      when(() => repository.state).thenReturn(repositoryState);
+      when(() => repositoryState.fetchStatus).thenReturn(fetchStatus);
+      when(() => repositoryState.refreshStatus).thenReturn(refreshStatus);
     });
 
     PostBloc buildBloc() {
@@ -32,14 +46,22 @@ void main() {
     });
 
     group(PostSubscriptionRequested, () {
-      final updatedPost = PostPlaceholder();
+      final updatedRepositoryState = _MockPostRepositoryState();
+      const updatedFetchStatus = FetchStatus.success;
+      const updatedRefreshStatus = RefreshStatus.success;
 
       blocTest<PostBloc, PostState>(
-        'emits success when stream emits new value',
+        'emits updated state when stream emits new value',
         setUp: () {
           when(() => repository.stream).thenAnswer(
-            (_) => Stream.value(updatedPost),
+            (_) => Stream.value(updatedRepositoryState),
           );
+          when(
+            () => updatedRepositoryState.fetchStatus,
+          ).thenReturn(updatedFetchStatus);
+          when(
+            () => updatedRepositoryState.refreshStatus,
+          ).thenReturn(updatedRefreshStatus);
         },
         build: buildBloc,
         act: (bloc) {
@@ -49,7 +71,8 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            fetchStatus: FetchStatus.success,
+            fetchStatus: updatedFetchStatus,
+            refreshStatus: updatedRefreshStatus,
           ),
         ],
       );
@@ -59,7 +82,7 @@ void main() {
       final request = () => repository.fetchPostStream(id: id);
 
       blocTest<PostBloc, PostState>(
-        'returns when request succeeds',
+        'makes request',
         setUp: () {
           when(request).thenAnswer((_) async {});
         },
@@ -69,28 +92,6 @@ void main() {
             PostStarted(),
           );
         },
-        expect: () => <PostState>[],
-        verify: (_) {
-          verify(request).called(1);
-        },
-      );
-
-      blocTest<PostBloc, PostState>(
-        'emits [failure] when request throws',
-        setUp: () {
-          when(request).thenThrow(Exception('oops'));
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            PostStarted(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            fetchStatus: FetchStatus.failure,
-          ),
-        ],
         verify: (_) {
           verify(request).called(1);
         },
@@ -98,10 +99,10 @@ void main() {
     });
 
     group(PostRefreshTriggered, () {
-      final request = () => repository.fetchPost(id: id);
+      final request = () => repository.refreshPost(id: id);
 
       blocTest<PostBloc, PostState>(
-        'emits [loading, success] when request succeeds',
+        'makes request',
         setUp: () {
           when(request).thenAnswer((_) async {});
         },
@@ -111,38 +112,6 @@ void main() {
             PostRefreshTriggered(),
           );
         },
-        expect: () => [
-          initialState.copyWith(
-            refreshStatus: RefreshStatus.loading,
-          ),
-          initialState.copyWith(
-            refreshStatus: RefreshStatus.success,
-          ),
-        ],
-        verify: (_) {
-          verify(request).called(1);
-        },
-      );
-
-      blocTest<PostBloc, PostState>(
-        'emits [loading, failure] when request throws',
-        setUp: () {
-          when(request).thenThrow(Exception('oops'));
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            PostRefreshTriggered(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            refreshStatus: RefreshStatus.loading,
-          ),
-          initialState.copyWith(
-            refreshStatus: RefreshStatus.failure,
-          ),
-        ],
         verify: (_) {
           verify(request).called(1);
         },

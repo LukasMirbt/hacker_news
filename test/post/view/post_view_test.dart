@@ -9,6 +9,7 @@ import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../app/pump_app.dart';
@@ -23,7 +24,11 @@ class _MockCommentListBloc extends MockBloc<CommentListEvent, CommentListState>
     implements CommentListBloc {}
 
 void main() {
-  final initialState = PostState(id: 'id');
+  final initialState = PostState(
+    id: 'id',
+    fetchStatus: FetchStatus.loading,
+    refreshStatus: RefreshStatus.initial,
+  );
 
   group(PostView, () {
     late PostBloc postBloc;

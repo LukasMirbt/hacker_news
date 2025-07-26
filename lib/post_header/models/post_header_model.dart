@@ -28,7 +28,6 @@ class PostHeaderModel extends Equatable {
   String? get htmlText => _header.htmlText;
   bool get hasBeenUpvoted => _header.hasBeenUpvoted;
   String? get upvoteUrl => _header.upvoteUrl;
-
   bool get isCommentingEnabled => _header.commentForm != null;
 
   String shareText(AppLocalizations l10n) {

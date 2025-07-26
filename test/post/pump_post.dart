@@ -14,6 +14,9 @@ class _MockPostRepository extends Mock implements PostRepository {
 
   @override
   Stream<PostRepositoryState> get stream => Stream.empty();
+
+  @override
+  Future<void> fetchPostStream({required String id}) async {}
 }
 
 extension PumpPostExtension on WidgetTester {

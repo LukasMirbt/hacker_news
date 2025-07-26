@@ -12,6 +12,8 @@ import 'package:vote_repository/vote_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
+class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
+
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
 class _MockReplyRepository extends Mock implements ReplyRepository {}
@@ -70,6 +72,8 @@ void main() {
       final commentList = _MockCommentListModel();
       final state = initialState.copyWith(commentList: commentList);
 
+      final updatedRepositoryState = _MockPostRepositoryState();
+
       final updatedPost = PostPlaceholder(
         comments: [
           CommentPlaceholder(),
@@ -83,10 +87,11 @@ void main() {
       blocTest<CommentListBloc, CommentListState>(
         'emits $CommentListModel when stream emits new value',
         setUp: () {
-          when(rebuildWith).thenReturn(updatedCommentList);
           when(() => postRepository.stream).thenAnswer(
-            (_) => Stream.value(updatedPost),
+            (_) => Stream.value(updatedRepositoryState),
           );
+          when(rebuildWith).thenReturn(updatedCommentList);
+          when(() => updatedRepositoryState.post).thenReturn(updatedPost);
         },
         seed: () => state,
         build: buildBloc,

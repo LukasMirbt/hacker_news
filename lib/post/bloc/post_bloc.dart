@@ -8,10 +8,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required PostRepository postRepository,
   }) : _repository = postRepository,
        super(
-         PostState(
+         PostState.from(
            id: id,
-           fetchStatus: postRepository.state.fetchStatus,
-           refreshStatus: postRepository.state.refreshStatus,
+           postRepository: postRepository,
          ),
        ) {
     on<PostSubscriptionRequested>(
