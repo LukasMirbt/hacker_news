@@ -27,9 +27,11 @@ class AppHtmlWidget extends StatelessWidget {
         },
         customWidgetBuilder: (element) {
           final localName = element.localName;
+
           if (localName == 'pre') {
             return PreformattedTextWidget(element: element);
           }
+
           return null;
         },
       ),
