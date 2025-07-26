@@ -16,7 +16,9 @@ class _CommentTextFieldState extends State<CommentTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    final state = context.read<CommentBloc>().state;
+    final text = state.form.text;
+    _controller = TextEditingController(text: text);
   }
 
   @override
