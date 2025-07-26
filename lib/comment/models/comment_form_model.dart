@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:post_repository/post_repository.dart';
 
 enum SubmissionStatus {
@@ -10,30 +11,31 @@ enum SubmissionStatus {
   bool get isSuccess => this == success;
 }
 
-class CommentFormModel {
+class NullCommentFormException with EquatableMixin implements Exception {
+  const NullCommentFormException();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CommentFormModel extends Equatable {
   const CommentFormModel({
     required CommentForm? form,
+    required String? text,
     this.submissionStatus = SubmissionStatus.initial,
-  }) : _form = form;
+  }) : _form = form,
+       text = text ?? '';
 
-  final SubmissionStatus submissionStatus;
   final CommentForm? _form;
-
-  static const empty = CommentFormModel(
-    form: null,
-  );
-
-  String get text => _form?.text ?? '';
+  final String text;
+  final SubmissionStatus submissionStatus;
 
   bool get isCommentingEnabled => _form != null;
 
   bool get isValid {
     final form = _form;
     if (form == null) return false;
-
-    final text = form.text;
     if (text.trim().isEmpty) return false;
-
     return true;
   }
 
@@ -41,28 +43,28 @@ class CommentFormModel {
       submissionStatus == SubmissionStatus.loading ||
       submissionStatus == SubmissionStatus.success;
 
-  CommentForm? toRepository() => _form;
-
-  CommentFormModel updateWith({
-    required CommentForm? form,
-  }) {
-    return CommentFormModel(
-      submissionStatus: submissionStatus,
-      form: form?.copyWith(
-        text: _form?.text ?? '',
-      ),
-    );
+  CommentForm toRepository() {
+    final form = _form;
+    if (form == null) throw const NullCommentFormException();
+    return form.copyWith(text: text);
   }
 
   CommentFormModel copyWith({
+    CommentForm? form,
     String? text,
     SubmissionStatus? submissionStatus,
   }) {
     return CommentFormModel(
+      form: form ?? _form,
+      text: text ?? this.text,
       submissionStatus: submissionStatus ?? this.submissionStatus,
-      form: _form?.copyWith(
-        text: text ?? _form.text,
-      ),
     );
   }
+
+  @override
+  List<Object?> get props => [
+    _form,
+    text,
+    submissionStatus,
+  ];
 }

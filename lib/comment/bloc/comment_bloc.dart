@@ -6,16 +6,15 @@ import 'package:post_repository/post_repository.dart';
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
     required PostRepository postRepository,
-    required SavedCommentForm savedCommentForm,
+    required SavedCommentModel savedCommentModel,
     LinkLauncher? linkLauncher,
   }) : _repository = postRepository,
-       _savedCommentForm = savedCommentForm,
+       _savedCommentModel = savedCommentModel,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentState(
-           fetchStatus: postRepository.state.fetchStatus,
-           post: postRepository.state.post,
-           form: savedCommentForm.load(),
+         CommentState.from(
+           postRepository: postRepository,
+           savedCommentModel: savedCommentModel,
          ),
        ) {
     on<CommentPostSubscriptionRequested>(
@@ -29,7 +28,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   final LinkLauncher _linkLauncher;
   final PostRepository _repository;
-  final SavedCommentForm _savedCommentForm;
+  final SavedCommentModel _savedCommentModel;
 
   Future<void> _onPostSubscriptionRequested(
     CommentPostSubscriptionRequested event,
@@ -38,25 +37,33 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     return emit.forEach(
       _repository.stream,
       onData: (repositoryState) {
-        final post = repositoryState.post;
+        final PostRepositoryState(
+          :fetchStatus,
+          :post,
+        ) = repositoryState;
+
+        final updatedForm = state.form.copyWith(
+          form: post.header.commentForm,
+        );
+
         return state.copyWith(
-          fetchStatus: repositoryState.fetchStatus,
-          post: post,
-          form: state.form.updateWith(
-            form: post.header.commentForm,
-          ),
+          fetchStatus: fetchStatus,
+          post: CommentPostModel(post),
+          form: updatedForm,
         );
       },
     );
   }
 
-  Future<void> _onPostLoaded(
+  void _onPostLoaded(
     CommentPostLoaded event,
     Emitter<CommentState> emit,
-  ) async {
+  ) {
     emit(
       state.copyWith(
-        form: _savedCommentForm.load(),
+        form: state.form.copyWith(
+          text: _savedCommentModel.load(),
+        ),
       ),
     );
   }
@@ -65,26 +72,30 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     CommentTextChanged event,
     Emitter<CommentState> emit,
   ) {
-    final updatedForm = state.form.copyWith(
-      text: event.text,
-    );
+    final text = event.text;
 
     emit(
       state.copyWith(
-        form: updatedForm,
+        form: state.form.copyWith(
+          text: text,
+        ),
       ),
     );
 
-    _savedCommentForm.save(updatedForm);
+    _savedCommentModel.save(text: text);
+  }
+
+  void _onLinkPressed(
+    CommentLinkPressed event,
+    Emitter<CommentState> emit,
+  ) {
+    _linkLauncher.launch(event.url);
   }
 
   Future<void> _onSubmitted(
     CommentSubmitted event,
     Emitter<CommentState> emit,
   ) async {
-    final form = state.form.toRepository();
-    if (form == null) return;
-
     emit(
       state.copyWith(
         form: state.form.copyWith(
@@ -94,7 +105,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     );
 
     try {
-      await _repository.comment(form);
+      await _repository.comment(
+        state.form.toRepository(),
+      );
 
       emit(
         state.copyWith(
@@ -113,12 +126,5 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         ),
       );
     }
-  }
-
-  void _onLinkPressed(
-    CommentLinkPressed event,
-    Emitter<CommentState> emit,
-  ) {
-    _linkLauncher.launch(event.url);
   }
 }

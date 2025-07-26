@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentState {
 
- FetchStatus get fetchStatus; Post get post; CommentFormModel get form;
+ FetchStatus get fetchStatus; CommentPostModel get post; CommentFormModel get form;
 /// Create a copy of CommentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,11 +46,11 @@ abstract mixin class $CommentStateCopyWith<$Res>  {
   factory $CommentStateCopyWith(CommentState value, $Res Function(CommentState) _then) = _$CommentStateCopyWithImpl;
 @useResult
 $Res call({
- FetchStatus fetchStatus, Post post, CommentFormModel form
+ FetchStatus fetchStatus, CommentPostModel post, CommentFormModel form
 });
 
 
-$PostCopyWith<$Res> get post;
+
 
 }
 /// @nodoc
@@ -67,20 +67,11 @@ class _$CommentStateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
-as Post,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as CommentPostModel,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
 as CommentFormModel,
   ));
 }
-/// Create a copy of CommentState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$PostCopyWith<$Res> get post {
-  
-  return $PostCopyWith<$Res>(_self.post, (value) {
-    return _then(_self.copyWith(post: value));
-  });
-}
+
 }
 
 
@@ -92,7 +83,7 @@ class _CommentState extends CommentState {
   
 
 @override final  FetchStatus fetchStatus;
-@override final  Post post;
+@override final  CommentPostModel post;
 @override final  CommentFormModel form;
 
 /// Create a copy of CommentState
@@ -125,11 +116,11 @@ abstract mixin class _$CommentStateCopyWith<$Res> implements $CommentStateCopyWi
   factory _$CommentStateCopyWith(_CommentState value, $Res Function(_CommentState) _then) = __$CommentStateCopyWithImpl;
 @override @useResult
 $Res call({
- FetchStatus fetchStatus, Post post, CommentFormModel form
+ FetchStatus fetchStatus, CommentPostModel post, CommentFormModel form
 });
 
 
-@override $PostCopyWith<$Res> get post;
+
 
 }
 /// @nodoc
@@ -146,21 +137,12 @@ class __$CommentStateCopyWithImpl<$Res>
   return _then(_CommentState(
 fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
-as Post,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as CommentPostModel,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
 as CommentFormModel,
   ));
 }
 
-/// Create a copy of CommentState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$PostCopyWith<$Res> get post {
-  
-  return $PostCopyWith<$Res>(_self.post, (value) {
-    return _then(_self.copyWith(post: value));
-  });
-}
+
 }
 
 // dart format on

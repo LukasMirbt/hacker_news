@@ -13,7 +13,7 @@ class CommentPage extends StatelessWidget {
         final postRepository = context.read<PostRepository>();
         return CommentBloc(
           postRepository: postRepository,
-          savedCommentForm: SavedCommentForm(
+          savedCommentModel: SavedCommentModel(
             postRepository: postRepository,
           ),
         )..add(

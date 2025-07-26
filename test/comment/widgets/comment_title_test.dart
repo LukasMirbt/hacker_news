@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment/comment.dart';
@@ -17,7 +17,9 @@ class _MockCommentState extends Mock implements CommentState {}
 class _MockCommentPostModel extends Mock implements CommentPostModel {}
 
 void main() {
-  group(CommentHtml, () {
+  const title = 'title';
+
+  group(CommentTitle, () {
     late CommentBloc bloc;
     late CommentState state;
     late CommentPostModel post;
@@ -28,28 +30,19 @@ void main() {
       post = _MockCommentPostModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.post).thenReturn(post);
+      when(() => post.title).thenReturn(title);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: CommentHtml(
-          padding: EdgeInsets.zero,
-        ),
+        child: CommentTitle(),
       );
     }
 
-    testWidgets('renders $CommentHtmlBody when htmlText '
-        'is non-null', (tester) async {
-      when(() => post.htmlText).thenReturn('htmlText');
+    testWidgets('renders correct text', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentHtmlBody), findsOneWidget);
-    });
-
-    testWidgets('does not render $CommentHtmlBody when htmlText '
-        'is null', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentHtmlBody), findsNothing);
+      expect(find.text(title), findsOneWidget);
     });
   });
 }

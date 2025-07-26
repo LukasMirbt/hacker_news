@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment/comment.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -15,53 +16,46 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 
 class _MockCommentState extends Mock implements CommentState {}
 
-class _MockCommentFormModel extends Mock implements CommentFormModel {}
+void main() async {
+  final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
-void main() {
-  group(CommentBody, () {
+  group(CommentDisabledSection, () {
     late CommentBloc bloc;
     late CommentState state;
-    late CommentFormModel form;
 
     setUp(() {
       bloc = _MockCommentBloc();
       state = _MockCommentState();
-      form = _MockCommentFormModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.post).thenReturn(
         CommentPostModel(
           PostPlaceholder(),
         ),
       );
-      when(() => state.form).thenReturn(form);
-      when(() => form.text).thenReturn('');
-      when(() => form.submissionStatus).thenReturn(SubmissionStatus.initial);
-      when(() => form.isCommentingEnabled).thenReturn(false);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: CommentBody(),
+        child: CommentDisabledSection(),
       );
     }
 
-    testWidgets('renders $SingleChildScrollView', (tester) async {
+    testWidgets('renders $CommentTitle', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(SingleChildScrollView), findsOneWidget);
+      expect(find.byType(CommentTitle), findsOneWidget);
     });
 
-    testWidgets('renders $CommentEnabledSection '
-        'when isCommentingEnabled', (tester) async {
-      when(() => form.isCommentingEnabled).thenReturn(true);
+    testWidgets('renders correct text', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentEnabledSection), findsOneWidget);
-    });
-
-    testWidgets('renders $CommentDisabledSection '
-        'when !isCommentingEnabled', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentDisabledSection), findsOneWidget);
+      expect(
+        find.text(l10n.comment_disabledExplanationTitle),
+        findsOneWidget,
+      );
+      expect(
+        find.text(l10n.comment_disabledExplanationSubtitle),
+        findsOneWidget,
+      );
     });
   });
 }

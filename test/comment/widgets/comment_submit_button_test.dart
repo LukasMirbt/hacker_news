@@ -15,22 +15,28 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 
 class _MockCommentState extends Mock implements CommentState {}
 
+class _MockCommentFormModel extends Mock implements CommentFormModel {}
+
 void main() {
-  group(AddCommentButton, () {
+  group(CommentSubmitButton, () {
     late CommentBloc bloc;
     late CommentState state;
+    late CommentFormModel form;
 
     setUp(() {
       bloc = _MockCommentBloc();
       state = _MockCommentState();
+      form = _MockCommentFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.isLoading).thenReturn(false);
+      when(() => state.form).thenReturn(form);
+      when(() => form.isSubmissionLoading).thenReturn(false);
+      when(() => form.isValid).thenReturn(false);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: AddCommentButton(),
+        child: CommentSubmitButton(),
       );
     }
 
@@ -42,25 +48,36 @@ void main() {
       }
 
       group('isLoading', () {
-        testWidgets('is true when state.isLoading', (tester) async {
-          when(() => state.isLoading).thenReturn(true);
+        testWidgets('is true when form.isSubmissionLoading', (tester) async {
+          when(() => form.isSubmissionLoading).thenReturn(true);
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           expect(widget.isLoading, true);
         });
 
-        testWidgets('is false when !state.isLoading', (tester) async {
+        testWidgets('is false when !form.isSubmissionLoading', (tester) async {
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           expect(widget.isLoading, false);
         });
       });
 
-      testWidgets('adds $CommentSubmitted onPressed', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.onPressed?.call();
-        verify(() => bloc.add(CommentSubmitted()));
+      group('onPressed', () {
+        testWidgets('adds $CommentSubmitted when isValid', (tester) async {
+          when(() => form.isValid).thenReturn(true);
+          await tester.pumpApp(buildSubject());
+          final widget = findWidget(tester);
+          widget.onPressed?.call();
+          verify(() => bloc.add(CommentSubmitted()));
+        });
+
+        testWidgets('does not add $CommentSubmitted '
+            'when !isValid', (tester) async {
+          await tester.pumpApp(buildSubject());
+          final widget = findWidget(tester);
+          widget.onPressed?.call();
+          verifyNever(() => bloc.add(CommentSubmitted()));
+        });
       });
     });
   });

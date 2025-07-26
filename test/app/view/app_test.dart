@@ -14,7 +14,7 @@ import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_api/post_api.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
@@ -24,6 +24,8 @@ import 'package:vote_repository/vote_repository.dart';
 import '../init_mock_hydrated_storage.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
+
+class _MockCommentStorage extends Mock implements CommentStorage {}
 
 class _MockFeedApi extends Mock implements FeedApi {}
 
@@ -62,6 +64,7 @@ void main() {
 
   group(App, () {
     late AuthenticationApi authenticationApi;
+    late CommentStorage commentStorage;
     late FeedApi feedApi;
     late PostApi postApi;
     late ThreadApi threadApi;
@@ -74,6 +77,7 @@ void main() {
 
     setUp(() {
       authenticationApi = _MockAuthenticationApi();
+      commentStorage = _MockCommentStorage();
       feedApi = _MockFeedApi();
       postApi = _MockPostApi();
       threadApi = _MockThreadApi();
@@ -88,6 +92,7 @@ void main() {
     Widget buildSubject() {
       return App(
         authenticationApi: authenticationApi,
+        commentStorage: commentStorage,
         feedApi: feedApi,
         postApi: postApi,
         threadApi: threadApi,
@@ -108,6 +113,12 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<AuthenticationApi>(), isNotNull);
+    });
+
+    testWidgets('provides $CommentStorage', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<CommentStorage>(), isNotNull);
     });
 
     testWidgets('provides $FeedApi', (tester) async {

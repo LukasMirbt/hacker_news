@@ -8,28 +8,53 @@ import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 
-class _MockLinkLauncher extends Mock implements LinkLauncher {}
-
 class _MockPostRepository extends Mock implements PostRepository {}
 
+class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
+
+class _MockSavedCommentForm extends Mock implements SavedCommentModel {}
+
+class _MockLinkLauncher extends Mock implements LinkLauncher {}
+
 void main() {
+  const fetchStatus = FetchStatus.loading;
   final post = PostPlaceholder();
-  final initialState = CommentState.initial(post: post);
+
+  const text = 'text';
+
+  final form = CommentFormModel(
+    text: text,
+    form: post.header.commentForm,
+  );
+
+  final initialState = CommentState(
+    fetchStatus: fetchStatus,
+    post: CommentPostModel(post),
+    form: form,
+  );
 
   group(CommentBloc, () {
-    late LinkLauncher linkLauncher;
     late PostRepository repository;
+    late PostRepositoryState repositoryState;
+    late SavedCommentModel savedCommentModel;
+    late LinkLauncher linkLauncher;
 
     setUp(() {
-      linkLauncher = _MockLinkLauncher();
       repository = _MockPostRepository();
-      when(() => repository.state).thenReturn(post);
+      repositoryState = _MockPostRepositoryState();
+      savedCommentModel = _MockSavedCommentForm();
+      linkLauncher = _MockLinkLauncher();
+      when(() => repository.state).thenReturn(repositoryState);
+      when(() => repositoryState.fetchStatus).thenReturn(fetchStatus);
+      when(() => repositoryState.post).thenReturn(post);
+      when(savedCommentModel.load).thenReturn(text);
     });
 
     CommentBloc buildBloc() {
       return CommentBloc(
-        linkLauncher: linkLauncher,
         postRepository: repository,
+        savedCommentModel: savedCommentModel,
+        linkLauncher: linkLauncher,
       );
     }
 
@@ -38,18 +63,34 @@ void main() {
     });
 
     group(CommentPostSubscriptionRequested, () {
+      final updatedRepositoryState = _MockPostRepositoryState();
+      const updatedFetchStatus = FetchStatus.success;
+
+      final updatedRepositoryForm = CommentFormPlaceholder();
+
       final updatedPost = PostPlaceholder(
         header: PostHeaderPlaceholder(
           title: 'updatedTitle',
+          commentForm: updatedRepositoryForm,
         ),
       );
 
+      final updatedForm = initialState.form.copyWith(
+        form: updatedRepositoryForm,
+      );
+
       blocTest<CommentBloc, CommentState>(
-        'emits post when stream emits new value',
+        'emits updated state when stream emits new value',
         setUp: () {
           when(() => repository.stream).thenAnswer(
-            (_) => Stream.value(updatedPost),
+            (_) => Stream.value(updatedRepositoryState),
           );
+          when(
+            () => updatedRepositoryState.fetchStatus,
+          ).thenReturn(updatedFetchStatus);
+          when(
+            () => updatedRepositoryState.post,
+          ).thenReturn(updatedPost);
         },
         build: buildBloc,
         act: (bloc) {
@@ -59,17 +100,49 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            post: updatedPost,
+            fetchStatus: updatedFetchStatus,
+            post: CommentPostModel(updatedPost),
+            form: updatedForm,
           ),
         ],
       );
     });
 
-    group(CommentTextChanged, () {
-      const text = 'text';
+    group(CommentPostLoaded, () {
+      const savedComment = 'savedComment';
+      final load = () => savedCommentModel.load();
 
       blocTest<CommentBloc, CommentState>(
-        'emits text',
+        'emits form with saved comment',
+        setUp: () {
+          when(load).thenReturn(savedComment);
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentPostLoaded(),
+          );
+        },
+        expect: () => [
+          initialState.copyWith(
+            form: initialState.form.copyWith(
+              text: savedComment,
+            ),
+          ),
+        ],
+        verify: (_) {
+          verify(load).called(2);
+        },
+      );
+    });
+
+    group(CommentTextChanged, () {
+      const text = 'updatedText';
+      final updatedForm = form.copyWith(text: text);
+      final save = () => savedCommentModel.save(text: text);
+
+      blocTest<CommentBloc, CommentState>(
+        'emits updated form and saves comment',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -78,62 +151,11 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            form: initialState.form.copyWith(
-              text: text,
-            ),
-          ),
-        ],
-      );
-    });
-
-    group(CommentSubmitted, () {
-      final request = () => repository.comment(initialState.form);
-
-      blocTest<CommentBloc, CommentState>(
-        'emits [loading, success] when request succeeds',
-        setUp: () {
-          when(request).thenAnswer((_) async {});
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            CommentSubmitted(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            status: CommentStatus.loading,
-          ),
-          initialState.copyWith(
-            status: CommentStatus.success,
+            form: updatedForm,
           ),
         ],
         verify: (_) {
-          verify(request).called(1);
-        },
-      );
-
-      blocTest<CommentBloc, CommentState>(
-        'emits [loading, failure] when request throws',
-        setUp: () {
-          when(request).thenThrow(Exception('oops'));
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            CommentSubmitted(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            status: CommentStatus.loading,
-          ),
-          initialState.copyWith(
-            status: CommentStatus.failure,
-          ),
-        ],
-        verify: (_) {
-          verify(request).called(1);
+          verify(save).called(1);
         },
       );
     });
@@ -155,6 +177,77 @@ void main() {
         },
         verify: (_) {
           verify(launch).called(1);
+        },
+      );
+    });
+
+    group(CommentSubmitted, () {
+      final form = CommentFormModel(
+        text: 'text',
+        form: CommentFormPlaceholder(),
+      );
+
+      final state = initialState.copyWith(form: form);
+
+      final request = () => repository.comment(
+        form.toRepository(),
+      );
+
+      blocTest<CommentBloc, CommentState>(
+        'emits [loading, success] when request succeeds',
+        setUp: () {
+          when(request).thenAnswer((_) async {});
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentSubmitted(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.loading,
+            ),
+          ),
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.success,
+            ),
+          ),
+        ],
+        verify: (_) {
+          verify(request).called(1);
+        },
+      );
+
+      blocTest<CommentBloc, CommentState>(
+        'emits [loading, failure] when request throws',
+        setUp: () {
+          when(request).thenThrow(Exception('oops'));
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentSubmitted(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.loading,
+            ),
+          ),
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.failure,
+            ),
+          ),
+        ],
+        verify: (_) {
+          verify(request).called(1);
         },
       );
     });

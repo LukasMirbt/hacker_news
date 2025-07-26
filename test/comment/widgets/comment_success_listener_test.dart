@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +19,15 @@ class _MockGoRouter extends Mock implements GoRouter {}
 void main() {
   final child = Container();
 
-  final initialState = CommentState.initial(
-    post: PostPlaceholder(),
+  final initialState = CommentState(
+    fetchStatus: FetchStatus.loading,
+    post: CommentPostModel(
+      PostPlaceholder(),
+    ),
+    form: CommentFormModel(
+      text: '',
+      form: CommentFormPlaceholder(),
+    ),
   );
 
   group(CommentSuccessListener, () {
@@ -44,13 +53,15 @@ void main() {
     }
 
     testWidgets('pops when status changes '
-        'to ${CommentStatus.success}', (tester) async {
+        'to ${SubmissionStatus.success}', (tester) async {
       whenListen(
         bloc,
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            status: CommentStatus.success,
+            form: initialState.form.copyWith(
+              submissionStatus: SubmissionStatus.success,
+            ),
           ),
         ),
       );

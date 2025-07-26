@@ -27,7 +27,7 @@ void main() {
     ),
   );
 
-  group(CommentFailureListener, () {
+  group(CommentPostLoadListener, () {
     late CommentBloc bloc;
 
     setUp(() {
@@ -38,29 +38,29 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: CommentFailureListener(
+        child: CommentPostLoadListener(
           child: child,
         ),
       );
     }
 
-    testWidgets('shows $SnackBar when submissionStatus changes '
-        'to ${SubmissionStatus.failure}', (tester) async {
-      whenListen(
-        bloc,
-        initialState: initialState,
-        Stream.value(
-          initialState.copyWith(
-            form: initialState.form.copyWith(
-              submissionStatus: SubmissionStatus.failure,
+    testWidgets(
+      'adds $CommentPostLoaded when fetchStatus changes '
+      'from ${FetchStatus.loading} to ${FetchStatus.success}',
+      (tester) async {
+        whenListen(
+          bloc,
+          initialState: initialState,
+          Stream.value(
+            initialState.copyWith(
+              fetchStatus: FetchStatus.success,
             ),
           ),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
-      await tester.pump();
-      expect(find.byType(SnackBar), findsOneWidget);
-    });
+        );
+        await tester.pumpApp(buildSubject());
+        verify(() => bloc.add(CommentPostLoaded())).called(1);
+      },
+    );
 
     testWidgets('renders child', (tester) async {
       await tester.pumpApp(buildSubject());
