@@ -18,6 +18,7 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
+  const text = 'text';
 
   final initialState = CommentState(
     fetchStatus: FetchStatus.loading,
@@ -25,7 +26,7 @@ void main() async {
       PostPlaceholder(),
     ),
     form: CommentFormModel(
-      text: '',
+      text: text,
       form: CommentFormPlaceholder(),
     ),
   );
@@ -51,6 +52,12 @@ void main() async {
           find.byType(TextField),
         );
       }
+
+      testWidgets('initial text is form.text', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.controller?.text, text);
+      });
 
       testWidgets('updates controller when form.text changes '
           'to a different value than controller.text', (tester) async {
@@ -78,7 +85,7 @@ void main() async {
           'to the same value as controller.text', (tester) async {
         final completer = Completer<CommentState>();
 
-        const text = 'text';
+        const updatedText = 'updatedText';
 
         final selection = TextSelection.fromPosition(
           TextPosition(offset: 0),
@@ -95,13 +102,13 @@ void main() async {
         final widget = findWidget(tester);
 
         final controller = widget.controller!
-          ..text = text
+          ..text = updatedText
           ..selection = selection;
 
         completer.complete(
           initialState.copyWith(
             form: initialState.form.copyWith(
-              text: text,
+              text: updatedText,
             ),
           ),
         );
@@ -112,12 +119,6 @@ void main() async {
           controller.selection,
           selection,
         );
-      });
-
-      testWidgets('autofocus is true', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.autofocus, true);
       });
 
       testWidgets('autofocus is true', (tester) async {
