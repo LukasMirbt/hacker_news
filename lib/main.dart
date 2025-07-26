@@ -38,7 +38,7 @@ void main() async {
 
   await Hive.initFlutter();
 
-  final commentStorage = await CommentStorage.init();
+  final commentStorage = await CommentStorage.init(Hive);
 
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

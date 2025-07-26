@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:authentication_api/authentication_api.dart';
@@ -22,6 +23,11 @@ void main() {
   final initialState = PostRepositoryState();
   final exception = Exception('oops');
 
+  const postId = 'postId';
+  const userId = 'userId';
+  const text = 'text';
+  final user = UserPlaceholder(id: userId);
+
   group(PostRepository, () {
     late PostApi postApi;
     late AuthenticationApi authenticationApi;
@@ -38,6 +44,7 @@ void main() {
       cancelTokenService = _MockCancelTokenService();
       cancelToken = _MockCancelToken();
       when(() => authenticationApi.state).thenReturn(authenticationState);
+      when(() => authenticationState.user).thenReturn(user);
     });
 
     PostRepository buildCubit() {
@@ -188,6 +195,45 @@ void main() {
           verify(fetchPost).called(1);
         },
       );
+    });
+
+    group('readComment', () {
+      final read = () => commentStorage.read(
+        CommentKey(
+          postId: postId,
+          userId: userId,
+        ),
+      );
+
+      test('calls read and returns text', () {
+        when(read).thenReturn(text);
+        final repository = buildCubit();
+        expect(
+          repository.readComment(postId: postId),
+          text,
+        );
+        verify(read).called(1);
+      });
+    });
+
+    group('saveComment', () {
+      final save = () => commentStorage.save(
+        key: CommentKey(
+          postId: postId,
+          userId: userId,
+        ),
+        text: text,
+      );
+
+      test('calls save', () async {
+        when(save).thenAnswer((_) async {});
+        final repository = buildCubit();
+        await repository.saveComment(
+          postId: postId,
+          text: text,
+        );
+        verify(save).called(1);
+      });
     });
 
     group('comment', () {
