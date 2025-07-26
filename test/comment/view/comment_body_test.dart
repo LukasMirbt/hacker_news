@@ -13,17 +13,30 @@ import '../../app/pump_app.dart';
 class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
     implements CommentBloc {}
 
+class _MockCommentState extends Mock implements CommentState {}
+
+class _MockCommentFormModel extends Mock implements CommentFormModel {}
+
 void main() {
   group(CommentBody, () {
     late CommentBloc bloc;
+    late CommentState state;
+    late CommentFormModel form;
 
     setUp(() {
       bloc = _MockCommentBloc();
-      when(() => bloc.state).thenReturn(
-        CommentState.initial(
-          post: PostPlaceholder(),
+      state = _MockCommentState();
+      form = _MockCommentFormModel();
+      when(() => bloc.state).thenReturn(state);
+      when(() => state.post).thenReturn(
+        CommentPostModel(
+          PostPlaceholder(),
         ),
       );
+      when(() => state.form).thenReturn(form);
+      when(() => form.text).thenReturn('');
+      when(() => form.submissionStatus).thenReturn(SubmissionStatus.initial);
+      when(() => form.isCommentingEnabled).thenReturn(false);
     });
 
     Widget buildSubject() {
@@ -38,19 +51,17 @@ void main() {
       expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
 
-    testWidgets('renders $CommentHtml', (tester) async {
+    testWidgets('renders $CommentEnabledSection '
+        'when isCommentingEnabled', (tester) async {
+      when(() => form.isCommentingEnabled).thenReturn(true);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentHtml), findsOneWidget);
+      expect(find.byType(CommentEnabledSection), findsOneWidget);
     });
 
-    testWidgets('renders $CommentTextField', (tester) async {
+    testWidgets('renders $CommentDisabledSection '
+        'when !isCommentingEnabled', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentTextField), findsOneWidget);
-    });
-
-    testWidgets('renders $AddCommentButton', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(AddCommentButton), findsOneWidget);
+      expect(find.byType(CommentDisabledSection), findsOneWidget);
     });
   });
 }

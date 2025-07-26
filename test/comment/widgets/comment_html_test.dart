@@ -6,24 +6,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment/comment.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
     implements CommentBloc {}
 
-void main() {
-  final initialState = CommentState.initial(
-    post: PostPlaceholder(),
-  );
+class _MockCommentState extends Mock implements CommentState {}
 
+class _MockCommentPostModel extends Mock implements CommentPostModel {}
+
+void main() {
   group(CommentHtml, () {
     late CommentBloc bloc;
+    late CommentState state;
+    late CommentPostModel post;
 
     setUp(() {
       bloc = _MockCommentBloc();
-      when(() => bloc.state).thenReturn(initialState);
+      state = _MockCommentState();
+      post = _MockCommentPostModel();
+      when(() => bloc.state).thenReturn(state);
+      when(() => state.post).thenReturn(post);
     });
 
     Widget buildSubject() {
@@ -37,15 +41,7 @@ void main() {
 
     testWidgets('renders $CommentHtmlBody when htmlText '
         'is non-null', (tester) async {
-      when(() => bloc.state).thenReturn(
-        initialState.copyWith(
-          post: PostPlaceholder(
-            header: PostHeaderPlaceholder(
-              htmlText: 'htmlText',
-            ),
-          ),
-        ),
-      );
+      when(() => post.htmlText).thenReturn('htmlText');
       await tester.pumpApp(buildSubject());
       expect(find.byType(CommentHtmlBody), findsOneWidget);
     });

@@ -8,6 +8,7 @@ import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart' hide PostHeader;
 
 import '../../app/pump_app.dart';
 
@@ -31,7 +32,11 @@ void main() {
       postHeaderBloc = _MockPostHeaderBloc();
       commentListBloc = _MockCommentListBloc();
       when(() => postBloc.state).thenReturn(
-        PostState(id: 'id'),
+        PostState(
+          id: 'id',
+          fetchStatus: FetchStatus.loading,
+          refreshStatus: RefreshStatus.initial,
+        ),
       );
       when(() => postHeaderBloc.state).thenReturn(
         PostHeaderState.initial(

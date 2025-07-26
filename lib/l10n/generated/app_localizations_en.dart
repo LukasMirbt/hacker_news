@@ -37,10 +37,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appShell_login => 'Login';
 
   @override
-  String get commentForm_title => 'Comment';
+  String get comment_title => 'Comment';
 
   @override
-  String get commentForm_submitAction => 'Add comment';
+  String get comment_textFieldHintText => 'Your comment';
+
+  @override
+  String get comment_disabledExplanationTitle => 'Closed for comments';
+
+  @override
+  String get comment_disabledExplanationSubtitle =>
+      'Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.';
+
+  @override
+  String get comment_submitAction => 'Submit';
 
   @override
   String commentList_age({required Object age}) {

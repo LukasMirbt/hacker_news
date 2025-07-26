@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +16,15 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 void main() {
   final child = Container();
 
-  final initialState = CommentState.initial(
-    post: PostPlaceholder(),
+  final initialState = CommentState(
+    fetchStatus: FetchStatus.loading,
+    post: CommentPostModel(
+      PostPlaceholder(),
+    ),
+    form: CommentFormModel(
+      text: '',
+      form: CommentFormPlaceholder(),
+    ),
   );
 
   group(CommentFailureListener, () {
@@ -35,14 +44,16 @@ void main() {
       );
     }
 
-    testWidgets('shows $SnackBar when status changes '
-        'to ${CommentStatus.failure}', (tester) async {
+    testWidgets('shows $SnackBar when submissionStatus changes '
+        'to ${SubmissionStatus.failure}', (tester) async {
       whenListen(
         bloc,
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            status: CommentStatus.failure,
+            form: initialState.form.copyWith(
+              submissionStatus: SubmissionStatus.failure,
+            ),
           ),
         ),
       );

@@ -10,14 +10,13 @@ import '../app_shell/pump_app_shell.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {
   @override
-  Post get state => PostPlaceholder(
-    comments: [
-      CommentPlaceholder(id: 'commentId'),
-    ],
-  );
+  PostRepositoryState get state => PostRepositoryState.initial();
 
   @override
-  Stream<Post> get stream => Stream.empty();
+  Stream<PostRepositoryState> get stream => Stream.empty();
+
+  @override
+  Future<void> fetchPostStream({required String id}) async {}
 }
 
 extension PumpPostExtension on WidgetTester {

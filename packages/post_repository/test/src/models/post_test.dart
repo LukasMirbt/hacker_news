@@ -14,13 +14,11 @@ void main() {
         );
 
         final fatItemData = data.fatItemData;
-        final commentFormData = fatItemData.commentFormData;
 
         expect(
           Post.from(data),
           Post(
             header: PostHeader.from(fatItemData),
-            commentForm: CommentForm.from(commentFormData),
             comments: [
               for (final item in data.comments) Comment.from(item),
             ],

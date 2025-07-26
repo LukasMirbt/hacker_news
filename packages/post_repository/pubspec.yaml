@@ -9,12 +9,15 @@ environment:
 resolution: workspace
 
 dependencies:
+  authentication_api:
+    path: ../authentication_api
   bloc: ^9.0.0
   collection: ^1.19.1
   equatable: ^2.0.7
   flutter:
     sdk: flutter
   freezed_annotation: ^3.0.0
+  hive_ce: ^2.11.3
   post_api:
     path: ../post_api
 

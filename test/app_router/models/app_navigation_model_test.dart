@@ -13,7 +13,6 @@ class _MockAppRoute extends Mock implements AppRoute {}
 class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
-  const extra = 'extra';
   const redirect = 'redirect';
   const navigationLocation = 'navigationLocation';
 
@@ -45,33 +44,17 @@ void main() {
         when(redirectMethod).thenReturn(redirect);
         when(pushRedirect).thenAnswer((_) async => null);
         final model = createSubject();
-        model.go(
-          route: route,
-          goRouter: goRouter,
-          extra: extra,
-        );
+        model.go(route: route, goRouter: goRouter);
         verify(pushRedirect).called(1);
-        verifyNever(
-          () => goRouter.go(
-            any(),
-            extra: any(named: 'extra'),
-          ),
-        );
+        verifyNever(() => goRouter.go(any()));
       });
 
       test('calls go when redirect is null', () {
         when(() => route.navigationLocation).thenReturn(navigationLocation);
         final model = createSubject();
-        model.go(
-          route: route,
-          goRouter: goRouter,
-          extra: extra,
-        );
+        model.go(route: route, goRouter: goRouter);
         verify(
-          () => goRouter.go(
-            route.navigationLocation,
-            extra: extra,
-          ),
+          () => goRouter.go(route.navigationLocation),
         ).called(1);
       });
     });
@@ -83,37 +66,23 @@ void main() {
         when(pushRedirect).thenAnswer((_) async => null);
         final model = createSubject();
         expect(
-          model.push(
-            route: route,
-            goRouter: goRouter,
-            extra: extra,
-          ),
+          model.push(route: route, goRouter: goRouter),
           completes,
         );
         verify(pushRedirect).called(1);
         verifyNever(
-          () => goRouter.push(
-            navigationLocation,
-            extra: any(named: 'extra'),
-          ),
+          () => goRouter.push(navigationLocation),
         );
       });
 
       test('calls push when redirect is null', () {
         when(() => route.navigationLocation).thenReturn(navigationLocation);
-        final push = () => goRouter.push<String>(
-          navigationLocation,
-          extra: extra,
-        );
+        final push = () => goRouter.push<String>(navigationLocation);
         const result = 'result';
         when(push).thenAnswer((_) async => result);
         final model = createSubject();
         expect(
-          model.push<String>(
-            route: route,
-            goRouter: goRouter,
-            extra: extra,
-          ),
+          model.push<String>(route: route, goRouter: goRouter),
           completion(result),
         );
         verify(push).called(1);

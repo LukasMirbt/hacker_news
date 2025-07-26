@@ -8,10 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/firebase_options.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:persistent_storage/persistent_storage.dart';
-import 'package:post_api/post_api.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +35,10 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(directory.path),
   );
+
+  await Hive.initFlutter();
+
+  final commentStorage = await CommentStorage.init(Hive);
 
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -107,6 +112,7 @@ void main() async {
   runApp(
     App(
       authenticationApi: authenticationApi,
+      commentStorage: commentStorage,
       feedApi: feedApi,
       postApi: postApi,
       threadApi: threadApi,

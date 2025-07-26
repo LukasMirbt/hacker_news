@@ -9,49 +9,28 @@ class CommentBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        vertical: AppSpacing.lg,
+        horizontal: AppSpacing.xlg,
+      ),
       child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: AppSpacing.lg,
-            horizontal: AppSpacing.xlg,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: AppSpacing.lg),
-                child: _Title(),
-              ),
-              CommentHtml(
-                padding: EdgeInsets.only(bottom: AppSpacing.lg),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: AppSpacing.lg),
-                child: CommentTextField(),
-              ),
-              AddCommentButton(),
-            ],
-          ),
-        ),
+        child: _Section(),
       ),
     );
   }
 }
 
-class _Title extends StatelessWidget {
-  const _Title();
+class _Section extends StatelessWidget {
+  const _Section();
 
   @override
   Widget build(BuildContext context) {
-    final title = context.select(
-      (CommentBloc bloc) => bloc.state.post.header.title,
+    final isCommentingEnabled = context.select(
+      (CommentBloc bloc) => bloc.state.form.isCommentingEnabled,
     );
 
-    final textTheme = TextTheme.of(context);
+    if (isCommentingEnabled) return const CommentEnabledSection();
 
-    return Text(
-      title,
-      style: textTheme.titleMedium,
-    );
+    return const CommentDisabledSection();
   }
 }

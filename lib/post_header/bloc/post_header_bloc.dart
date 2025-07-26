@@ -55,8 +55,8 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
   ) {
     return emit.forEach(
       _postRepository.stream,
-      onData: (post) => state.copyWith(
-        header: PostHeaderModel(post.header),
+      onData: (repositoryState) => state.copyWith(
+        header: PostHeaderModel(repositoryState.post.header),
       ),
     );
   }

@@ -8,7 +8,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     required PostRepository postRepository,
   }) : _repository = postRepository,
        super(
-         PostState(id: id),
+         PostState.from(
+           id: id,
+           postRepository: postRepository,
+         ),
        ) {
     on<PostSubscriptionRequested>(
       _onSubscriptionRequested,
@@ -25,53 +28,24 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   ) async {
     return emit.forEach(
       _repository.stream,
-      onData: (_) => state.copyWith(
-        fetchStatus: FetchStatus.success,
+      onData: (repositoryState) => state.copyWith(
+        fetchStatus: repositoryState.fetchStatus,
+        refreshStatus: repositoryState.refreshStatus,
       ),
     );
   }
 
-  Future<void> _onStarted(
+  void _onStarted(
     PostStarted event,
     Emitter<PostState> emit,
-  ) async {
-    try {
-      await _repository.fetchPostStream(id: state.id);
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
-          fetchStatus: FetchStatus.failure,
-        ),
-      );
-    }
+  ) {
+    _repository.fetchPostStream(id: state.id);
   }
 
-  Future<void> _onRefreshTriggered(
+  void _onRefreshTriggered(
     PostRefreshTriggered event,
     Emitter<PostState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        refreshStatus: RefreshStatus.loading,
-      ),
-    );
-
-    try {
-      await _repository.fetchPost(id: state.id);
-
-      emit(
-        state.copyWith(
-          refreshStatus: RefreshStatus.success,
-        ),
-      );
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
-          refreshStatus: RefreshStatus.failure,
-        ),
-      );
-    }
+  ) {
+    _repository.refreshPost(id: state.id);
   }
 }

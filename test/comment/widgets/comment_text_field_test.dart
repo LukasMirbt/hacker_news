@@ -1,23 +1,41 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment/comment.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
 class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
     implements CommentBloc {}
 
-void main() {
+void main() async {
+  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+
+  final initialState = CommentState(
+    fetchStatus: FetchStatus.loading,
+    post: CommentPostModel(
+      PostPlaceholder(),
+    ),
+    form: CommentFormModel(
+      text: '',
+      form: CommentFormPlaceholder(),
+    ),
+  );
+
   group(CommentTextField, () {
     late CommentBloc bloc;
 
     setUp(() {
       bloc = _MockCommentBloc();
+      when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
@@ -34,16 +52,95 @@ void main() {
         );
       }
 
-      testWidgets('has correct minLines', (tester) async {
+      testWidgets('updates controller when form.text changes '
+          'to a different value than controller.text', (tester) async {
+        const updatedText = 'updatedText';
+        whenListen(
+          bloc,
+          initialState: initialState,
+          Stream.value(
+            initialState.copyWith(
+              form: initialState.form.copyWith(
+                text: updatedText,
+              ),
+            ),
+          ),
+        );
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.minLines, 5);
+        expect(
+          widget.controller?.text,
+          updatedText,
+        );
       });
 
-      testWidgets('has correct maxLines', (tester) async {
+      testWidgets('does not update controller when form.text changes '
+          'to the same value as controller.text', (tester) async {
+        final completer = Completer<CommentState>();
+
+        const text = 'text';
+
+        final selection = TextSelection.fromPosition(
+          TextPosition(offset: 0),
+        );
+
+        whenListen(
+          bloc,
+          Stream.fromFuture(completer.future),
+          initialState: initialState,
+        );
+
+        await tester.pumpApp(buildSubject());
+
+        final widget = findWidget(tester);
+
+        final controller = widget.controller!
+          ..text = text
+          ..selection = selection;
+
+        completer.complete(
+          initialState.copyWith(
+            form: initialState.form.copyWith(
+              text: text,
+            ),
+          ),
+        );
+
+        await tester.pump();
+
+        expect(
+          controller.selection,
+          selection,
+        );
+      });
+
+      testWidgets('autofocus is true', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.autofocus, true);
+      });
+
+      testWidgets('autofocus is true', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.autofocus, true);
+      });
+
+      testWidgets('maxLines is null', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.maxLines, null);
+      });
+
+      testWidgets('has correct decoration', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.decoration,
+          InputDecoration.collapsed(
+            hintText: l10n.comment_textFieldHintText,
+          ),
+        );
       });
 
       testWidgets('adds $CommentTextChanged onChanged', (tester) async {

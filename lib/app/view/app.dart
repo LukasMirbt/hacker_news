@@ -9,7 +9,7 @@ import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
-import 'package:post_api/post_api.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
@@ -20,6 +20,7 @@ import 'package:vote_repository/vote_repository.dart';
 class App extends StatelessWidget {
   const App({
     required AuthenticationApi authenticationApi,
+    required CommentStorage commentStorage,
     required FeedApi feedApi,
     required PostApi postApi,
     required ThreadApi threadApi,
@@ -31,17 +32,19 @@ class App extends StatelessWidget {
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
-       _analyticsRepository = analyticsRepository,
-       _authenticationRepository = authenticationRepository,
+       _commentStorage = commentStorage,
        _feedApi = feedApi,
        _postApi = postApi,
        _threadApi = threadApi,
+       _analyticsRepository = analyticsRepository,
+       _authenticationRepository = authenticationRepository,
        _replyRepository = replyRepository,
        _versionRepository = versionRepository,
        _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
+  final CommentStorage _commentStorage;
   final PostApi _postApi;
   final FeedApi _feedApi;
   final ThreadApi _threadApi;
@@ -56,10 +59,11 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        RepositoryProvider.value(value: _authenticationApi),
-        RepositoryProvider.value(value: _feedApi),
-        RepositoryProvider.value(value: _postApi),
-        RepositoryProvider.value(value: _threadApi),
+        Provider.value(value: _authenticationApi),
+        Provider.value(value: _commentStorage),
+        Provider.value(value: _feedApi),
+        Provider.value(value: _postApi),
+        Provider.value(value: _threadApi),
       ],
       child: MultiRepositoryProvider(
         providers: [

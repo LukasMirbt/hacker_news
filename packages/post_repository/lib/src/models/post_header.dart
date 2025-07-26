@@ -19,11 +19,19 @@ class PostHeader with _$PostHeader {
     required this.age,
     required this.commentCount,
     required this.htmlText,
+    required this.commentForm,
   });
 
   factory PostHeader.from(DetailFatItemData data) {
     final titleRowData = data.titleRowData;
     final subtitleRowData = data.subtitleRowData;
+    final commentFormData = data.commentFormData;
+
+    CommentForm? commentForm;
+
+    if (commentFormData != null) {
+      commentForm = CommentForm.from(commentFormData);
+    }
 
     return PostHeader(
       id: titleRowData.id,
@@ -37,6 +45,7 @@ class PostHeader with _$PostHeader {
       age: subtitleRowData.age,
       commentCount: subtitleRowData.commentCount,
       htmlText: data.htmlText,
+      commentForm: commentForm,
     );
   }
 
@@ -52,6 +61,7 @@ class PostHeader with _$PostHeader {
     age: DateTime(0),
     commentCount: 0,
     htmlText: null,
+    commentForm: null,
   );
 
   final String id;
@@ -65,6 +75,7 @@ class PostHeader with _$PostHeader {
   final DateTime age;
   final int? commentCount;
   final String? htmlText;
+  final CommentForm? commentForm;
 
   PostHeader upvote() {
     return copyWith(

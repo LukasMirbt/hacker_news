@@ -165,6 +165,23 @@ void main() async {
       });
     });
 
+    group('isCommentingEnabled', () {
+      test('returns true when header.commentForm '
+          'is non-null', () {
+        when(() => header.commentForm).thenReturn(
+          CommentFormPlaceholder(),
+        );
+        final model = createSubject();
+        expect(model.isCommentingEnabled, true);
+      });
+
+      test('returns false when header.commentForm '
+          'is null', () {
+        final model = createSubject();
+        expect(model.isCommentingEnabled, false);
+      });
+    });
+
     group('shareText', () {
       test('returns correct text', () {
         const url = 'url';

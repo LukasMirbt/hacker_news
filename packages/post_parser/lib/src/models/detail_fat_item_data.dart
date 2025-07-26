@@ -13,13 +13,13 @@ class DetailFatItemData extends Equatable {
     titleRowData: DetailTitleRowData.empty,
     subtitleRowData: DetailSubtitleRowData.empty,
     htmlText: null,
-    commentFormData: DetailCommentFormData.empty,
+    commentFormData: null,
   );
 
   final DetailTitleRowData titleRowData;
   final DetailSubtitleRowData subtitleRowData;
   final String? htmlText;
-  final DetailCommentFormData commentFormData;
+  final DetailCommentFormData? commentFormData;
 
   @override
   List<Object?> get props => [

@@ -33,44 +33,35 @@ class AppRouter {
 
   String get matchedLocation => goRouter.state.matchedLocation;
 
-  void go(AppAbsoluteRoute route, {Object? extra}) {
+  void go(AppAbsoluteRoute route) {
     return _navigationModel.go(
       goRouter: goRouter,
       route: route,
-      extra: extra,
     );
   }
 
   Future<T?> push<T extends Object?>(
-    AppAbsoluteRoute route, {
-    Object? extra,
-  }) {
+    AppAbsoluteRoute route,
+  ) {
     return _navigationModel.push(
       goRouter: goRouter,
       route: route,
-      extra: extra,
     );
   }
 
-  void goRelative(
-    AppRelativeRoute route, {
-    Object? extra,
-  }) {
+  void goRelative(AppRelativeRoute route) {
     return _navigationModel.go(
       goRouter: goRouter,
       route: route,
-      extra: extra,
     );
   }
 
   Future<T?> pushRelative<T extends Object?>(
-    AppRelativeRoute route, {
-    Object? extra,
-  }) {
+    AppRelativeRoute route,
+  ) {
     return _navigationModel.push(
       goRouter: goRouter,
       route: route,
-      extra: extra,
     );
   }
 }

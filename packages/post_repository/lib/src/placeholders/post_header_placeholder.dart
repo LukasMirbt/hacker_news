@@ -12,7 +12,8 @@ class PostHeaderPlaceholder extends PostHeader {
     Hnuser? hnuser,
     DateTime? age,
     int? commentCount,
-    super.htmlText,
+    String? htmlText,
+    CommentForm? commentForm,
   }) : super(
          id: id ?? 'id',
          title: title ?? 'title',
@@ -24,5 +25,7 @@ class PostHeaderPlaceholder extends PostHeader {
          hnuser: hnuser ?? const HnuserPlaceholder(),
          age: age ?? DateTime(1),
          commentCount: commentCount ?? 1,
+         htmlText: htmlText ?? 'htmlText',
+         commentForm: commentForm ?? const CommentFormPlaceholder(),
        );
 }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostHeader {
 
- String get id; String get title; String get url; String? get upvoteUrl; bool get hasBeenUpvoted; String? get urlHost; int? get score; Hnuser? get hnuser; DateTime get age; int? get commentCount; String? get htmlText;
+ String get id; String get title; String get url; String? get upvoteUrl; bool get hasBeenUpvoted; String? get urlHost; int? get score; Hnuser? get hnuser; DateTime get age; int? get commentCount; String? get htmlText; CommentForm? get commentForm;
 /// Create a copy of PostHeader
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $PostHeaderCopyWith<PostHeader> get copyWith => _$PostHeaderCopyWithImpl<PostHea
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostHeader&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted)&&(identical(other.urlHost, urlHost) || other.urlHost == urlHost)&&(identical(other.score, score) || other.score == score)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostHeader&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.url, url) || other.url == url)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted)&&(identical(other.urlHost, urlHost) || other.urlHost == urlHost)&&(identical(other.score, score) || other.score == score)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.commentCount, commentCount) || other.commentCount == commentCount)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.commentForm, commentForm) || other.commentForm == commentForm));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,url,upvoteUrl,hasBeenUpvoted,urlHost,score,hnuser,age,commentCount,htmlText);
+int get hashCode => Object.hash(runtimeType,id,title,url,upvoteUrl,hasBeenUpvoted,urlHost,score,hnuser,age,commentCount,htmlText,commentForm);
 
 @override
 String toString() {
-  return 'PostHeader(id: $id, title: $title, url: $url, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted, urlHost: $urlHost, score: $score, hnuser: $hnuser, age: $age, commentCount: $commentCount, htmlText: $htmlText)';
+  return 'PostHeader(id: $id, title: $title, url: $url, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted, urlHost: $urlHost, score: $score, hnuser: $hnuser, age: $age, commentCount: $commentCount, htmlText: $htmlText, commentForm: $commentForm)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $PostHeaderCopyWith<$Res>  {
   factory $PostHeaderCopyWith(PostHeader value, $Res Function(PostHeader) _then) = _$PostHeaderCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String url, String? upvoteUrl, bool hasBeenUpvoted, String? urlHost, int? score, Hnuser? hnuser, DateTime age, int? commentCount, String? htmlText
+ String id, String title, String url, String? upvoteUrl, bool hasBeenUpvoted, String? urlHost, int? score, Hnuser? hnuser, DateTime age, int? commentCount, String? htmlText, CommentForm? commentForm
 });
 
 
@@ -63,7 +63,7 @@ class _$PostHeaderCopyWithImpl<$Res>
 
 /// Create a copy of PostHeader
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? upvoteUrl = freezed,Object? hasBeenUpvoted = null,Object? urlHost = freezed,Object? score = freezed,Object? hnuser = freezed,Object? age = null,Object? commentCount = freezed,Object? htmlText = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? url = null,Object? upvoteUrl = freezed,Object? hasBeenUpvoted = null,Object? urlHost = freezed,Object? score = freezed,Object? hnuser = freezed,Object? age = null,Object? commentCount = freezed,Object? htmlText = freezed,Object? commentForm = freezed,}) {
   return _then(PostHeader(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -76,7 +76,8 @@ as int?,hnuser: freezed == hnuser ? _self.hnuser : hnuser // ignore: cast_nullab
 as Hnuser?,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as DateTime,commentCount: freezed == commentCount ? _self.commentCount : commentCount // ignore: cast_nullable_to_non_nullable
 as int?,htmlText: freezed == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,commentForm: freezed == commentForm ? _self.commentForm : commentForm // ignore: cast_nullable_to_non_nullable
+as CommentForm?,
   ));
 }
 

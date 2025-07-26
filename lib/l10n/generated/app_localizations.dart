@@ -148,17 +148,35 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get appShell_login;
 
-  /// No description provided for @commentForm_title.
+  /// No description provided for @comment_title.
   ///
   /// In en, this message translates to:
   /// **'Comment'**
-  String get commentForm_title;
+  String get comment_title;
 
-  /// No description provided for @commentForm_submitAction.
+  /// No description provided for @comment_textFieldHintText.
   ///
   /// In en, this message translates to:
-  /// **'Add comment'**
-  String get commentForm_submitAction;
+  /// **'Your comment'**
+  String get comment_textFieldHintText;
+
+  /// No description provided for @comment_disabledExplanationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed for comments'**
+  String get comment_disabledExplanationTitle;
+
+  /// No description provided for @comment_disabledExplanationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.'**
+  String get comment_disabledExplanationSubtitle;
+
+  /// No description provided for @comment_submitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get comment_submitAction;
 
   /// No description provided for @commentList_age.
   ///

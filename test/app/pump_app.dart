@@ -21,7 +21,6 @@ import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_api/post_api.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:reply_repository/reply_repository.dart';
@@ -31,6 +30,8 @@ import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
+
+class _MockCommentStorage extends Mock implements CommentStorage {}
 
 class _MockFeedApi extends Mock implements FeedApi {}
 
@@ -135,6 +136,9 @@ extension PumpAppExtension on WidgetTester {
         providers: [
           Provider<AuthenticationApi>(
             create: (_) => _MockAuthenticationApi(),
+          ),
+          Provider<CommentStorage>(
+            create: (_) => _MockCommentStorage(),
           ),
           Provider<FeedApi>(
             create: (_) => _MockFeedApi(),

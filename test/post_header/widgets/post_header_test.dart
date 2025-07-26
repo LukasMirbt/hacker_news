@@ -182,6 +182,7 @@ void main() {
         'when commentCount is non-null', (tester) async {
       const commentCount = 'commentCount';
       when(() => header.commentCount).thenReturn(commentCount);
+      when(() => header.isCommentingEnabled).thenReturn(false);
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(

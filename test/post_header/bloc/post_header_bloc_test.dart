@@ -13,6 +13,8 @@ import 'package:vote_repository/vote_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
+class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
+
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
 class _MockVisitedPostRepository extends Mock
@@ -72,6 +74,8 @@ void main() {
     });
 
     group(PostHeaderSubscriptionRequested, () {
+      final updatedRepositoryState = _MockPostRepositoryState();
+
       final updatedPost = PostPlaceholder(
         header: PostHeaderPlaceholder(),
       );
@@ -80,8 +84,9 @@ void main() {
         'emits $PostHeaderModel when stream emits new value',
         setUp: () {
           when(() => postRepository.stream).thenAnswer(
-            (_) => Stream.value(updatedPost),
+            (_) => Stream.value(updatedRepositoryState),
           );
+          when(() => updatedRepositoryState.post).thenReturn(updatedPost);
         },
         build: buildBloc,
         act: (bloc) {

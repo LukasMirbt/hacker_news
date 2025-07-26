@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
@@ -18,7 +19,12 @@ class _MockCompleter extends Mock implements Completer<void> {}
 
 void main() {
   final child = Container();
-  final initialState = PostState(id: 'id');
+
+  final initialState = PostState(
+    id: 'id',
+    fetchStatus: FetchStatus.loading,
+    refreshStatus: RefreshStatus.initial,
+  );
 
   group(PostRefreshIndicator, () {
     late PostBloc bloc;

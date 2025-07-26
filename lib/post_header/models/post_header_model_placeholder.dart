@@ -14,6 +14,8 @@ class PostHeaderModelPlaceholder extends PostHeaderModel {
           ),
           score: 100,
           commentCount: 100,
+        ).copyWith(
+          htmlText: null,
         ),
       );
 }

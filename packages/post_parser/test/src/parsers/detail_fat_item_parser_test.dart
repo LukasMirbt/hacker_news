@@ -30,6 +30,7 @@ void main() {
     late Element fatItem;
     late Element athing;
     late Element subtext;
+    late Element form;
 
     setUp(() {
       titleRowParser = _MockDetailTitleRowParser();
@@ -39,6 +40,7 @@ void main() {
       fatItem = _MockElement();
       athing = _MockElement();
       subtext = _MockElement();
+      form = _MockElement();
     });
 
     DetailFatItemParser createSubject() {
@@ -53,7 +55,8 @@ void main() {
     group('parse', () {
       final athingSelector = () => fatItem.querySelector('.athing');
       final subtextSelector = () => fatItem.querySelector('.subtext');
-
+      final formSelector = () =>
+          fatItem.querySelector('form[action="comment"]');
       final parseTitleRow = () => titleRowParser.parse(athing);
       final parseSubtitleRow = () => subtitleRowParser.parse(subtext);
       final parseHtmlText = () => htmlTextParser.parse(fatItem);
@@ -63,6 +66,7 @@ void main() {
           'when data is non-null', () {
         when(athingSelector).thenReturn(athing);
         when(subtextSelector).thenReturn(subtext);
+        when(formSelector).thenReturn(form);
         when(parseTitleRow).thenReturn(titleRowData);
         when(parseSubtitleRow).thenReturn(subtitleRowData);
         when(parseHtmlText).thenReturn(htmlText);
@@ -79,6 +83,7 @@ void main() {
         );
         verify(athingSelector).called(1);
         verify(subtextSelector).called(1);
+        verify(formSelector).called(1);
         verify(parseTitleRow).called(1);
         verify(parseSubtitleRow).called(1);
         verify(parseHtmlText).called(1);
@@ -95,7 +100,7 @@ void main() {
             titleRowData: DetailTitleRowData.empty,
             subtitleRowData: DetailSubtitleRowData.empty,
             htmlText: null,
-            commentFormData: commentFormData,
+            commentFormData: null,
           ),
         );
       });

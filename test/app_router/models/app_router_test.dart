@@ -161,33 +161,29 @@ void main() {
 
     group('go', () {
       test('calls navigationModel.go', () {
-        const extra = 'extra';
         final route = _MockAppAbsoluteRoute();
         final go = () => navigationModel.go(
           goRouter: goRouter,
           route: route,
-          extra: extra,
         );
         final appRouter = createSubject();
-        appRouter.go(route, extra: extra);
+        appRouter.go(route);
         verify(go).called(1);
       });
     });
 
     group('push', () {
       test('calls navigationModel.push', () {
-        const extra = 'extra';
         final route = _MockAppAbsoluteRoute();
         const result = 'result';
         final push = () => navigationModel.push<String>(
           goRouter: goRouter,
           route: route,
-          extra: extra,
         );
         when(push).thenAnswer((_) async => result);
         final appRouter = createSubject();
         expect(
-          appRouter.push<String>(route, extra: extra),
+          appRouter.push<String>(route),
           completion(result),
         );
         verify(push).called(1);
@@ -196,33 +192,29 @@ void main() {
 
     group('goRelative', () {
       test('calls navigationModel.go', () {
-        const extra = 'extra';
         final route = _MockAppRelativeRoute();
         final go = () => navigationModel.go(
           goRouter: goRouter,
           route: route,
-          extra: extra,
         );
         final appRouter = createSubject();
-        appRouter.goRelative(route, extra: extra);
+        appRouter.goRelative(route);
         verify(go).called(1);
       });
     });
 
     group('pushRelative', () {
       test('calls navigationModel.push', () {
-        const extra = 'extra';
         final route = _MockAppRelativeRoute();
         const result = 'result';
         final push = () => navigationModel.push<String>(
           goRouter: goRouter,
           route: route,
-          extra: extra,
         );
         when(push).thenAnswer((_) async => result);
         final appRouter = createSubject();
         expect(
-          appRouter.pushRelative<String>(route, extra: extra),
+          appRouter.pushRelative<String>(route),
           completion(result),
         );
         verify(push).called(1);
