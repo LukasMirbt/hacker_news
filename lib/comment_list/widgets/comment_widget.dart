@@ -32,7 +32,7 @@ class CommentWidget extends StatelessWidget {
         onMorePressed: () {
           CommentOptionsSheet.show(
             context: context,
-            comment: item.comment,
+            comment: item.toRepository(),
           );
         },
         onLinkPressed: (url) {

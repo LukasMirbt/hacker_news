@@ -42,7 +42,7 @@ class ReplyParent extends StatelessWidget {
         htmlText: htmlText,
         onHeaderPressed: () {
           context.read<ReplyBloc>().add(
-            const ReplyParentHeaderPressed(),
+            const ReplyParentExpansionToggled(),
           );
         },
         onMorePressed: () {},

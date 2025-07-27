@@ -21,10 +21,10 @@ class ReplyParentModel extends Equatable {
   final bool isExpanded;
 
   String get id => _parent.id;
-  String get htmlText => _parent.htmlText;
-  String get user => _parent.hnuser.id;
   String get upvoteUrl => _parent.upvoteUrl;
   bool get hasBeenUpvoted => _parent.hasBeenUpvoted;
+  String get user => _parent.hnuser.id;
+  String get htmlText => _parent.htmlText;
 
   String age(
     AppLocalizations appL10n,

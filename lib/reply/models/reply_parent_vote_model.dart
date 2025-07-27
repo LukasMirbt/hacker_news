@@ -1,8 +1,8 @@
 import 'package:hacker_client/reply/reply.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class ReplyParentVoteVoteModel {
-  const ReplyParentVoteVoteModel();
+class ReplyParentVoteModel {
+  const ReplyParentVoteModel();
 
   ReplyParentModel updateParent({
     required Vote vote,

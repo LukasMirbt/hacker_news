@@ -10,12 +10,12 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
     required SavedReplyModel savedReplyModel,
-    ReplyParentVoteVoteModel? voteModel,
+    ReplyParentVoteModel? voteModel,
     LinkLauncher? linkLauncher,
   }) : _replyRepository = replyRepository,
        _voteRepository = voteRepository,
        _savedReplyModel = savedReplyModel,
-       _voteModel = voteModel ?? const ReplyParentVoteVoteModel(),
+       _voteModel = voteModel ?? const ReplyParentVoteModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          ReplyState.initial(url: url),
@@ -25,7 +25,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
     on<ReplyStarted>(_onStarted);
     on<ReplyTextChanged>(_onTextChanged);
-    on<ReplyParentHeaderPressed>(_onParentHeaderPressed);
+    on<ReplyParentExpansionToggled>(_onParentExpansionToggled);
     on<ReplyParentVotePressed>(_onParentVotePressed);
     on<ReplyLinkPressed>(_onLinkPressed);
     on<ReplySubmitted>(_onSubmitted);
@@ -34,7 +34,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   final ReplyRepository _replyRepository;
   final VoteRepository _voteRepository;
   final SavedReplyModel _savedReplyModel;
-  final ReplyParentVoteVoteModel _voteModel;
+  final ReplyParentVoteModel _voteModel;
   final LinkLauncher _linkLauncher;
 
   Future<void> _onVoteSubscriptionRequested(
@@ -117,8 +117,8 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
   }
 
-  void _onParentHeaderPressed(
-    ReplyParentHeaderPressed event,
+  void _onParentExpansionToggled(
+    ReplyParentExpansionToggled event,
     Emitter<ReplyState> emit,
   ) {
     emit(

@@ -24,8 +24,8 @@ final class ReplyTextChanged extends ReplyEvent {
   List<Object> get props => [text];
 }
 
-final class ReplyParentHeaderPressed extends ReplyEvent {
-  const ReplyParentHeaderPressed();
+final class ReplyParentExpansionToggled extends ReplyEvent {
+  const ReplyParentExpansionToggled();
 }
 
 final class ReplyParentVotePressed extends ReplyEvent {

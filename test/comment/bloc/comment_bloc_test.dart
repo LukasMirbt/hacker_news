@@ -183,8 +183,8 @@ void main() {
 
     group(CommentSubmitted, () {
       final form = CommentFormModel(
-        text: 'text',
         form: CommentFormPlaceholder(),
+        text: 'text',
       );
 
       final state = initialState.copyWith(form: form);

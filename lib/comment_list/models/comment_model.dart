@@ -7,14 +7,15 @@ import 'package:vote_repository/vote_repository.dart';
 
 class CommentModel extends Equatable implements Collapsible<CommentModel> {
   const CommentModel({
-    required this.comment,
+    required Comment comment,
     this.isExpanded = true,
     this.isParentExpanded = true,
     DateFormatter formatter = const DateFormatter(),
-  }) : _formatter = formatter;
+  }) : _comment = comment,
+       _formatter = formatter;
 
   final DateFormatter _formatter;
-  final Comment comment;
+  final Comment _comment;
 
   @override
   final bool isExpanded;
@@ -23,25 +24,25 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
   final bool isParentExpanded;
 
   @override
-  String get id => comment.id;
+  String get id => _comment.id;
 
   @override
-  int get indent => comment.indent;
+  int get indent => _comment.indent;
 
-  String get upvoteUrl => comment.upvoteUrl;
-  bool get hasBeenUpvoted => comment.hasBeenUpvoted;
-  String get user => comment.hnuser.id;
-  String get htmlText => comment.htmlText;
+  String get upvoteUrl => _comment.upvoteUrl;
+  bool get hasBeenUpvoted => _comment.hasBeenUpvoted;
+  String get user => _comment.hnuser.id;
+  String get htmlText => _comment.htmlText;
 
-  bool get isTopLevel => comment.indent == 0;
+  bool get isTopLevel => _comment.indent == 0;
 
-  Comment toRepository() => comment;
+  Comment toRepository() => _comment;
 
   String age(
     AppLocalizations appL10n,
     DateFormatterLocalizations formatterL10n,
   ) {
-    final formattedAge = _formatter.format(formatterL10n, comment.age);
+    final formattedAge = _formatter.format(formatterL10n, _comment.age);
     final ageString = appL10n.commentList_age(age: formattedAge);
     return ageString;
   }
@@ -49,8 +50,8 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
   CommentModel vote(VoteType type) {
     return copyWith(
       comment: switch (type) {
-        VoteType.upvote => comment.upvote(),
-        VoteType.unvote => comment.unvote(),
+        VoteType.upvote => _comment.upvote(),
+        VoteType.unvote => _comment.unvote(),
       },
     );
   }
@@ -62,8 +63,8 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
     bool? isParentExpanded,
   }) {
     return CommentModel(
+      comment: comment ?? _comment,
       formatter: _formatter,
-      comment: comment ?? this.comment,
       isExpanded: isExpanded ?? this.isExpanded,
       isParentExpanded: isParentExpanded ?? this.isParentExpanded,
     );
@@ -71,8 +72,8 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
 
   @override
   List<Object> get props => [
+    _comment,
     _formatter,
-    comment,
     isExpanded,
     isParentExpanded,
   ];
