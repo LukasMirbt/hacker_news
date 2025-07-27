@@ -1,7 +1,7 @@
 import 'package:reply_parser/reply_parser.dart';
 
-class ReplyFormDataParser {
-  const ReplyFormDataParser({
+class ReplyFormParser {
+  const ReplyFormParser({
     ParentParser? parentParser,
     GotoParser? gotoParser,
     HmacParser? hmacParser,

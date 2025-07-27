@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentForm {
 
- String get parent; String get goto; String get hmac; String get text;
+ String get parentId; String get goto; String get hmac; String get text;
 /// Create a copy of CommentForm
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CommentFormCopyWith<CommentForm> get copyWith => _$CommentFormCopyWithImpl<Comm
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentForm&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.goto, goto) || other.goto == goto)&&(identical(other.hmac, hmac) || other.hmac == hmac)&&(identical(other.text, text) || other.text == text));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentForm&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.goto, goto) || other.goto == goto)&&(identical(other.hmac, hmac) || other.hmac == hmac)&&(identical(other.text, text) || other.text == text));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,parent,goto,hmac,text);
+int get hashCode => Object.hash(runtimeType,parentId,goto,hmac,text);
 
 @override
 String toString() {
-  return 'CommentForm(parent: $parent, goto: $goto, hmac: $hmac, text: $text)';
+  return 'CommentForm(parentId: $parentId, goto: $goto, hmac: $hmac, text: $text)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CommentFormCopyWith<$Res>  {
   factory $CommentFormCopyWith(CommentForm value, $Res Function(CommentForm) _then) = _$CommentFormCopyWithImpl;
 @useResult
 $Res call({
- String parent, String goto, String hmac, String text
+ String parentId, String goto, String hmac, String text
 });
 
 
@@ -63,9 +63,9 @@ class _$CommentFormCopyWithImpl<$Res>
 
 /// Create a copy of CommentForm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? parent = null,Object? goto = null,Object? hmac = null,Object? text = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? parentId = null,Object? goto = null,Object? hmac = null,Object? text = null,}) {
   return _then(CommentForm(
-parent: null == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
+parentId: null == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
 as String,goto: null == goto ? _self.goto : goto // ignore: cast_nullable_to_non_nullable
 as String,hmac: null == hmac ? _self.hmac : hmac // ignore: cast_nullable_to_non_nullable
 as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable

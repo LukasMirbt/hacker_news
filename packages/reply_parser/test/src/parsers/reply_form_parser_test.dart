@@ -17,7 +17,7 @@ void main() {
   const goto = 'goto';
   const hmac = 'hmac';
 
-  group(ReplyFormDataParser, () {
+  group(ReplyFormParser, () {
     late ParentParser parentParser;
     late GotoParser gotoParser;
     late HmacParser hmacParser;
@@ -30,8 +30,8 @@ void main() {
       fatItem = _MockElement();
     });
 
-    ReplyFormDataParser createSubject() {
-      return ReplyFormDataParser(
+    ReplyFormParser createSubject() {
+      return ReplyFormParser(
         parentParser: parentParser,
         gotoParser: gotoParser,
         hmacParser: hmacParser,

@@ -83,30 +83,29 @@ class PostRepository extends Cubit<PostRepositoryState> {
     }
   }
 
-  String? readComment({required String postId}) {
+  String? readComment({required String parentId}) {
     final user = _authenticationApi.state.user;
-
-    final text = _commentStorage.read(
-      CommentKey(
-        postId: postId,
-        userId: user.id,
-      ),
+    final storageKey = CommentStorageKey(
+      parentId: parentId,
+      userId: user.id,
     );
-
-    return text;
+    final savedComment = _commentStorage.read(storageKey);
+    return savedComment;
   }
 
   Future<void> saveComment({
-    required String postId,
+    required String parentId,
     required String text,
   }) async {
     final user = _authenticationApi.state.user;
 
+    final storageKey = CommentStorageKey(
+      parentId: parentId,
+      userId: user.id,
+    );
+
     await _commentStorage.save(
-      key: CommentKey(
-        postId: postId,
-        userId: user.id,
-      ),
+      storageKey: storageKey,
       text: text,
     );
   }
@@ -118,18 +117,18 @@ class PostRepository extends Cubit<PostRepositoryState> {
 
     try {
       final data = await _postApi.fetchPost(
-        id: form.parent,
+        id: form.parentId,
         cancelToken: cancelToken,
       );
 
       final userId = _authenticationApi.state.user.id;
 
-      await _commentStorage.clear(
-        CommentKey(
-          postId: form.parent,
-          userId: userId,
-        ),
+      final storageKey = CommentStorageKey(
+        parentId: form.parentId,
+        userId: userId,
       );
+
+      await _commentStorage.clear(storageKey);
 
       emit(
         state.copyWith(

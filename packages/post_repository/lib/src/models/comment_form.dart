@@ -9,7 +9,7 @@ part 'comment_form.freezed.dart';
 @freezed
 class CommentForm with _$CommentForm {
   const CommentForm({
-    required this.parent,
+    required this.parentId,
     required this.goto,
     required this.hmac,
     this.text = '',
@@ -17,7 +17,7 @@ class CommentForm with _$CommentForm {
 
   factory CommentForm.from(DetailCommentFormData data) {
     return CommentForm(
-      parent: data.parent,
+      parentId: data.parent,
       goto: data.goto,
       hmac: data.hmac,
     );
@@ -25,7 +25,7 @@ class CommentForm with _$CommentForm {
 
   api.CommentForm toApi() {
     return api.CommentForm(
-      parent: parent,
+      parent: parentId,
       goto: goto,
       hmac: hmac,
       text: text,
@@ -33,12 +33,12 @@ class CommentForm with _$CommentForm {
   }
 
   static const empty = CommentForm(
-    parent: '',
+    parentId: '',
     goto: '',
     hmac: '',
   );
 
-  final String parent;
+  final String parentId;
   final String goto;
   final String hmac;
   final String text;

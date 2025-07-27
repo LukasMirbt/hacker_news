@@ -9,7 +9,7 @@ class ThreadFeedReplyModel {
     required PaginatedThreadFeedModel feed,
   }) {
     final form = update.form;
-    final parent = feed.findById(form.parent);
+    final parent = feed.findById(form.parentId);
     if (parent == null) return feed;
 
     final newItem = ThreadFeedItemModel(

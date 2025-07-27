@@ -2,24 +2,23 @@ import 'package:feed_parser/feed_parser.dart';
 
 class FeedItemParser {
   const FeedItemParser({
-    TitleRowDataParser? titleRowDataParser,
-    SubtitleRowDataParser? subtitleRowDataParser,
-  }) : _titleRowDataParser = titleRowDataParser ?? const TitleRowDataParser(),
-       _subtitleRowDataParser =
-           subtitleRowDataParser ?? const SubtitleRowDataParser();
+    TitleRowParser? titleRowParser,
+    SubtitleRowParser? subtitleRowParser,
+  }) : _titleRowParser = titleRowParser ?? const TitleRowParser(),
+       _subtitleRowParser = subtitleRowParser ?? const SubtitleRowParser();
 
-  final TitleRowDataParser _titleRowDataParser;
-  final SubtitleRowDataParser _subtitleRowDataParser;
+  final TitleRowParser _titleRowParser;
+  final SubtitleRowParser _subtitleRowParser;
 
   FeedItemData parse(Element athing) {
-    final titleRowData = _titleRowDataParser.parse(athing);
+    final titleRowData = _titleRowParser.parse(athing);
 
     final subtitleRow = athing.nextElementSibling;
 
     var subtitleRowData = SubtitleRowData.empty;
 
     if (subtitleRow != null) {
-      subtitleRowData = _subtitleRowDataParser.parse(subtitleRow);
+      subtitleRowData = _subtitleRowParser.parse(subtitleRow);
     }
 
     return FeedItemData(

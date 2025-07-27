@@ -57,12 +57,12 @@ void main() {
 
       test('returns savedComment when !fetchStatus.isLoading '
           'and form is non-null', () {
-        const postId = 'postId';
+        const parentId = 'parentId';
         const savedComment = 'savedComment';
-        final readComment = () => repository.readComment(postId: postId);
+        final readComment = () => repository.readComment(parentId: parentId);
         when(() => state.fetchStatus).thenReturn(FetchStatus.success);
         when(() => header.commentForm).thenReturn(form);
-        when(() => form.parent).thenReturn(postId);
+        when(() => form.parentId).thenReturn(parentId);
         when(readComment).thenReturn(savedComment);
         final model = createSubject();
         expect(model.load(), savedComment);
@@ -72,10 +72,10 @@ void main() {
 
     group('save', () {
       const text = 'text';
-      const postId = 'postId';
+      const parentId = 'parentId';
 
       final saveComment = () => repository.saveComment(
-        postId: postId,
+        parentId: parentId,
         text: text,
       );
 
@@ -84,7 +84,7 @@ void main() {
         model.save(text: text);
         verifyNever(
           () => repository.saveComment(
-            postId: any(named: 'postId'),
+            parentId: any(named: 'parentId'),
             text: any(named: 'text'),
           ),
         );
@@ -92,7 +92,7 @@ void main() {
 
       test('saves comment when form is non-null', () {
         when(() => header.commentForm).thenReturn(form);
-        when(() => form.parent).thenReturn(postId);
+        when(() => form.parentId).thenReturn(parentId);
         when(saveComment).thenAnswer((_) async {});
         final model = createSubject();
         model.save(text: text);

@@ -2,24 +2,30 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:reply_parser/reply_parser.dart';
 
 void main() {
-  group(ReplyCommentData, () {
+  group(ReplyParentData, () {
     group('fromParsed', () {
-      test('returns $ReplyCommentData with correct values '
+      test('returns $ReplyParentData with correct values '
           'when data is non-null', () {
         const id = 'id';
+        const upvoteUrl = 'upvoteUrl';
+        const hasBeenUpvoted = true;
         const hnuser = HnuserPlaceholder();
         final age = DateTime(1);
         const htmlText = 'htmlText';
 
         expect(
-          ReplyCommentData.fromParsed(
+          ReplyParentData.fromParsed(
             id: id,
+            upvoteUrl: upvoteUrl,
+            hasBeenUpvoted: hasBeenUpvoted,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
           ),
-          ReplyCommentData(
+          ReplyParentData(
             id: id,
+            upvoteUrl: upvoteUrl,
+            hasBeenUpvoted: hasBeenUpvoted,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
@@ -27,17 +33,21 @@ void main() {
         );
       });
 
-      test('returns $ReplyCommentData with correct values '
+      test('returns $ReplyParentData with correct values '
           'when data is null', () {
         expect(
-          ReplyCommentData.fromParsed(
+          ReplyParentData.fromParsed(
             id: null,
+            upvoteUrl: null,
+            hasBeenUpvoted: null,
             age: null,
             hnuser: null,
             htmlText: null,
           ),
-          ReplyCommentData(
+          ReplyParentData(
             id: '',
+            upvoteUrl: '',
+            hasBeenUpvoted: false,
             hnuser: Hnuser.empty,
             age: DateTime(0),
             htmlText: '',
@@ -47,10 +57,10 @@ void main() {
     });
 
     group('empty', () {
-      test('returns $ReplyCommentData', () {
+      test('returns $ReplyParentData', () {
         expect(
-          ReplyCommentData.empty,
-          isA<ReplyCommentData>(),
+          ReplyParentData.empty,
+          isA<ReplyParentData>(),
         );
       });
     });

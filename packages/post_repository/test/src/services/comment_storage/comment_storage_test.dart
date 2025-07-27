@@ -11,8 +11,8 @@ class _MockHiveInterface extends Mock implements HiveInterface {}
 class _MockBox extends Mock implements Box<String> {}
 
 void main() {
-  final key = CommentKey(
-    postId: 'postId',
+  final storageKey = CommentStorageKey(
+    parentId: 'parentId',
     userId: 'userId',
   );
 
@@ -30,7 +30,7 @@ void main() {
     }
 
     group('init', () {
-      final openBox = () => hive.openBox<String>(CommentStorage.boxName);
+      final openBox = () => hive.openBox<String>('commentStorage');
 
       test('calls openBox and returns $CommentStorage', () {
         when(openBox).thenAnswer((_) async => box);
@@ -46,34 +46,37 @@ void main() {
 
     group('save', () {
       const text = 'text';
-      final put = () => box.put(key.value, text);
+      final put = () => box.put(storageKey.key, text);
 
       test('calls box.put', () async {
         when(put).thenAnswer((_) async {});
         final storage = createSubject();
-        await storage.save(key: key, text: text);
+        await storage.save(
+          storageKey: storageKey,
+          text: text,
+        );
         verify(put).called(1);
       });
     });
 
     group('read', () {
-      final get = () => box.get(key.value);
+      final get = () => box.get(storageKey.key);
 
       test('calls box.get and returns value', () {
         when(get).thenReturn('text');
         final storage = createSubject();
-        expect(storage.read(key), 'text');
+        expect(storage.read(storageKey), 'text');
         verify(get).called(1);
       });
     });
 
     group('clear', () {
-      final delete = () => box.delete(key.value);
+      final delete = () => box.delete(storageKey.key);
 
       test('calls box.delete', () async {
         when(delete).thenAnswer((_) async {});
         final storage = createSubject();
-        await storage.clear(key);
+        await storage.clear(storageKey);
         verify(delete).called(1);
       });
     });

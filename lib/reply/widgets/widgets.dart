@@ -1,5 +1,7 @@
-export 'reply_button.dart';
+export 'reply_app_bar.dart';
 export 'reply_failure_listener.dart';
 export 'reply_html.dart';
+export 'reply_parent.dart';
+export 'reply_submit_button.dart';
 export 'reply_success_listener.dart';
 export 'reply_text_field.dart';

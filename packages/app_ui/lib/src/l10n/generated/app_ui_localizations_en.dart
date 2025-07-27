@@ -12,5 +12,5 @@ class AppUiLocalizationsEn extends AppUiLocalizations {
   String get error => 'Something went wrong.';
 
   @override
-  String get separator => '·';
+  String get middleDot => '·';
 }

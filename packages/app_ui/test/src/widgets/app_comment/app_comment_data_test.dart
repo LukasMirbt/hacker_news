@@ -19,7 +19,6 @@ void main() {
     AppCommentData createSubject({bool? hasBeenUpvoted}) {
       return AppCommentData(
         isExpanded: false,
-        indent: 0,
         onHeaderPressed: () {},
         user: '',
         age: '',

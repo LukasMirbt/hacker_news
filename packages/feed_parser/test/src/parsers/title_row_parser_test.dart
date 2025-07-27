@@ -29,7 +29,7 @@ void main() {
   const upvoteUrl = 'upvoteUrl';
   const hasBeenUpvoted = true;
 
-  group(TitleRowDataParser, () {
+  group(TitleRowParser, () {
     late IdParser idParser;
     late RankParser rankParser;
     late TitleParser titleParser;
@@ -50,8 +50,8 @@ void main() {
       athing = _MockElement();
     });
 
-    TitleRowDataParser createSubject() {
-      return TitleRowDataParser(
+    TitleRowParser createSubject() {
+      return TitleRowParser(
         idParser: idParser,
         rankParser: rankParser,
         titleParser: titleParser,

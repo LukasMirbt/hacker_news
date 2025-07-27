@@ -20,7 +20,7 @@ void main() {
   const hnuser = HnuserPlaceholder();
   const commentCount = 1;
 
-  group(SubtitleRowDataParser, () {
+  group(SubtitleRowParser, () {
     late AgeParser ageParser;
     late ScoreParser scoreParser;
     late HnuserParser hnuserParser;
@@ -35,8 +35,8 @@ void main() {
       subtitleRow = _MockElement();
     });
 
-    SubtitleRowDataParser createSubject() {
-      return SubtitleRowDataParser(
+    SubtitleRowParser createSubject() {
+      return SubtitleRowParser(
         ageParser: ageParser,
         scoreParser: scoreParser,
         hnuserParser: hnuserParser,

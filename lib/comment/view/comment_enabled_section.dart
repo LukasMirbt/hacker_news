@@ -21,7 +21,9 @@ class CommentEnabledSection extends StatelessWidget {
           padding: EdgeInsets.only(bottom: AppSpacing.lg),
           child: Divider(height: 1),
         ),
-        CommentTextField(),
+        Expanded(
+          child: CommentTextField(),
+        ),
       ],
     );
   }

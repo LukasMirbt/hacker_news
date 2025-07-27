@@ -6,43 +6,43 @@ import 'package:reply_parser/reply_parser.dart';
 
 class _MockHtmlParser extends Mock implements HtmlParser {}
 
-class _MockReplyDataParser extends Mock implements ReplyDataParser {}
+class _MockReplyPageParser extends Mock implements ReplyPageParser {}
 
 class _MockDocument extends Mock implements Document {}
 
 class _MockElement extends Mock implements Element {}
 
-class _MockReplyData extends Mock implements ReplyData {}
+class _MockReplyPageData extends Mock implements ReplyPageData {}
 
 void main() {
   group(ReplyParser, () {
     late HtmlParser htmlParser;
-    late ReplyDataParser dataParser;
+    late ReplyPageParser pageParser;
     late Document document;
 
     setUp(() {
       htmlParser = _MockHtmlParser();
-      dataParser = _MockReplyDataParser();
+      pageParser = _MockReplyPageParser();
       document = _MockDocument();
     });
 
     ReplyParser createSubject() {
       return ReplyParser(
         htmlParser: htmlParser,
-        replyDataParser: dataParser,
+        replyPageParser: pageParser,
       );
     }
 
     group('parse', () {
       const html = 'html';
       final fatItem = _MockElement();
-      final data = _MockReplyData();
+      final data = _MockReplyPageData();
 
       final parseHtml = () => htmlParser.parse(html);
       final fatItemSelector = () => document.querySelector('.fatitem');
-      final parseData = () => dataParser.parse(fatItem);
+      final parseData = () => pageParser.parse(fatItem);
 
-      test('returns $ReplyData when fatItem is non-null', () {
+      test('returns $ReplyPageData when fatItem is non-null', () {
         when(parseHtml).thenReturn(document);
         when(fatItemSelector).thenReturn(fatItem);
         when(parseData).thenReturn(data);
@@ -53,12 +53,12 @@ void main() {
         verify(parseData).called(1);
       });
 
-      test('returns empty $ReplyData when fatItem is null', () {
+      test('returns empty $ReplyPageData when fatItem is null', () {
         when(parseHtml).thenReturn(document);
         final parser = createSubject();
         expect(
           parser.parse(html),
-          ReplyData.empty,
+          ReplyPageData.empty,
         );
         verify(parseHtml).called(1);
       });

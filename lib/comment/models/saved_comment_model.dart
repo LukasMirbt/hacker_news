@@ -17,7 +17,7 @@ class SavedCommentModel {
     if (form == null) return null;
 
     final savedComment = _repository.readComment(
-      postId: form.parent,
+      parentId: form.parentId,
     );
     return savedComment;
   }
@@ -29,7 +29,7 @@ class SavedCommentModel {
     if (form == null) return;
 
     _repository.saveComment(
-      postId: form.parent,
+      parentId: form.parentId,
       text: text,
     );
   }

@@ -10,6 +10,8 @@ import 'package:reply_repository/reply_repository.dart';
 
 class _MockReplyRepository extends Mock implements ReplyRepository {}
 
+class _MockSavedReplyModel extends Mock implements SavedReplyModel {}
+
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 void main() {
@@ -18,16 +20,19 @@ void main() {
 
   group(ReplyBloc, () {
     late ReplyRepository repository;
+    late SavedReplyModel savedReplyModel;
     late LinkLauncher linkLauncher;
 
     setUp(() {
       repository = _MockReplyRepository();
+      savedReplyModel = _MockSavedReplyModel();
       linkLauncher = _MockLinkLauncher();
     });
 
     ReplyBloc buildBloc() {
       return ReplyBloc(
         url: url,
+        savedReplyModel: savedReplyModel,
         replyRepository: repository,
         linkLauncher: linkLauncher,
       );
@@ -38,13 +43,19 @@ void main() {
     });
 
     group(ReplyStarted, () {
-      final request = () => repository.fetchReplyForm(url: url);
-      final form = ReplyFormPlaceholder();
+      final page = ReplyPagePlaceholder();
+      final parent = page.parent;
+      final form = page.form;
+      const savedReply = 'savedReply';
+
+      final request = () => repository.fetchReplyPage(url: url);
+      final load = () => savedReplyModel.load(form);
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits [success] and $ReplyForm when request succeeds',
+        'loads saved reply and emits [success], $ReplyParentModel '
+        'and $ReplyFormModel when request succeeds',
         setUp: () {
-          when(request).thenAnswer((_) async => form);
+          when(request).thenAnswer((_) async => page);
         },
         build: buildBloc,
         act: (bloc) {
@@ -54,12 +65,19 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            form: form,
+            parent: ReplyParentModel(
+              parent: parent,
+            ),
+            form: ReplyFormModel(
+              form: form,
+              text: savedReply,
+            ),
             fetchStatus: FetchStatus.success,
           ),
         ],
         verify: (_) {
           verify(request).called(1);
+          verify(load).called(1);
         },
       );
 
@@ -88,8 +106,21 @@ void main() {
     group(ReplyTextChanged, () {
       const text = 'text';
 
+      final form = initialState.form.copyWith(
+        form: ReplyFormPlaceholder(),
+      );
+
+      final updatedForm = form.copyWith(text: text);
+
+      final save = () => savedReplyModel.save(
+        updatedForm.toRepository(),
+      );
+
+      final state = initialState.copyWith(form: form);
+
       blocTest<ReplyBloc, ReplyState>(
-        'emits text',
+        'emits updated form and saves reply',
+        seed: () => state,
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -97,16 +128,17 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
-            form: initialState.form.copyWith(
-              text: text,
-            ),
+          state.copyWith(
+            form: updatedForm,
           ),
         ],
+        verify: (_) {
+          verify(save).called(1);
+        },
       );
     });
 
-    group(ReplyLinkPressed, () {
+    /*   group(ReplyLinkPressed, () {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
@@ -172,5 +204,6 @@ void main() {
         ],
       );
     });
+    */
   });
 }

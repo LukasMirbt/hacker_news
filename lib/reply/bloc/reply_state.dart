@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:reply_repository/reply_repository.dart';
+import 'package:hacker_client/reply/reply.dart';
 
 part 'reply_state.freezed.dart';
 
@@ -10,26 +10,16 @@ enum FetchStatus {
 
   bool get isLoading => this == loading;
   bool get isFailure => this == failure;
-}
-
-enum SubmissionStatus {
-  initial,
-  loading,
-  success,
-  failure;
-
-  bool get isLoading => this == loading;
   bool get isSuccess => this == success;
-  bool get isFailure => this == failure;
 }
 
 @freezed
 abstract class ReplyState with _$ReplyState {
   const factory ReplyState({
     required String url,
-    required ReplyForm form,
+    required ReplyParentModel parent,
+    @Default(ReplyFormModel.empty) ReplyFormModel form,
     @Default(FetchStatus.loading) FetchStatus fetchStatus,
-    @Default(SubmissionStatus.initial) SubmissionStatus submissionStatus,
   }) = _ReplyState;
 
   factory ReplyState.initial({
@@ -37,12 +27,12 @@ abstract class ReplyState with _$ReplyState {
   }) {
     return ReplyState(
       url: url,
-      form: ReplyForm.empty,
+      parent: ReplyParentModel.empty,
     );
   }
 
   const ReplyState._();
 
-  bool get isSubmissionLoading =>
-      submissionStatus.isLoading || submissionStatus.isSuccess;
+  bool get isSubmittingEnabled =>
+      fetchStatus.isSuccess && form.isReplyingEnabled;
 }

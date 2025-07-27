@@ -100,11 +100,11 @@ abstract class AppUiLocalizations {
   /// **'Something went wrong.'**
   String get error;
 
-  /// No description provided for @separator.
+  /// No description provided for @middleDot.
   ///
   /// In en, this message translates to:
   /// **'·'**
-  String get separator;
+  String get middleDot;
 }
 
 class _AppUiLocalizationsDelegate

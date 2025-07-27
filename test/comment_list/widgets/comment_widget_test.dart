@@ -88,12 +88,6 @@ void main() {
       expect(widget.data.isExpanded, isExpanded);
     });
 
-    testWidgets('has correct indent', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.indent, indent);
-    });
-
     testWidgets('has correct user', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);

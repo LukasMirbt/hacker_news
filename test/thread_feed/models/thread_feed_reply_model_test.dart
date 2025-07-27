@@ -47,7 +47,7 @@ void main() {
       });
 
       test('returns updated feed when findById returns parent', () {
-        final findById = () => feed.findById(form.parent);
+        final findById = () => feed.findById(form.parentId);
         final insertAfter = () => feed.insertAfter(
           afterItem: afterItem,
           newItem: newItem,

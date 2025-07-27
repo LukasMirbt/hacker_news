@@ -193,10 +193,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get replyForm_title => 'Reply';
+  String get reply_title => 'Reply';
 
   @override
-  String get replyForm_submitAction => 'Reply';
+  String reply_age({required Object age}) {
+    return '$age ago';
+  }
+
+  @override
+  String get reply_submitAction => 'Reply';
 
   @override
   String get settings_logout => 'Logout';

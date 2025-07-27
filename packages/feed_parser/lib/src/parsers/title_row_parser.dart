@@ -1,7 +1,7 @@
 import 'package:feed_parser/feed_parser.dart';
 
-class TitleRowDataParser {
-  const TitleRowDataParser({
+class TitleRowParser {
+  const TitleRowParser({
     IdParser? idParser,
     RankParser? rankParser,
     TitleParser? titleParser,

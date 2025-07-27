@@ -4,52 +4,51 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:reply_parser/reply_parser.dart';
 
-class _MockReplyCommentDataParser extends Mock
-    implements ReplyCommentDataParser {}
+class _MockReplyCommentDataParser extends Mock implements ReplyParentParser {}
 
-class _MockReplyFormDataParser extends Mock implements ReplyFormDataParser {}
+class _MockReplyFormDataParser extends Mock implements ReplyFormParser {}
 
 class _MockElement extends Mock implements Element {}
 
 void main() {
-  final commentData = ReplyCommentDataPlaceholder();
+  final parentData = ReplyParentDataPlaceholder();
   const formData = ReplyFormDataPlaceholder();
 
-  group(ReplyDataParser, () {
-    late ReplyCommentDataParser commentDataParser;
-    late ReplyFormDataParser formDataParser;
+  group(ReplyPageParser, () {
+    late ReplyParentParser parentParser;
+    late ReplyFormParser formParser;
     late Element fatItem;
     late Element athing;
 
     setUp(() {
-      commentDataParser = _MockReplyCommentDataParser();
-      formDataParser = _MockReplyFormDataParser();
+      parentParser = _MockReplyCommentDataParser();
+      formParser = _MockReplyFormDataParser();
       fatItem = _MockElement();
       athing = _MockElement();
     });
 
-    ReplyDataParser createSubject() {
-      return ReplyDataParser(
-        replyCommentDataParser: commentDataParser,
-        replyFormDataParser: formDataParser,
+    ReplyPageParser createSubject() {
+      return ReplyPageParser(
+        replyParentParser: parentParser,
+        replyFormParser: formParser,
       );
     }
 
     group('parse', () {
       final athingSelector = () => fatItem.querySelector('.athing');
-      final parseCommentData = () => commentDataParser.parse(athing);
-      final parseFormData = () => formDataParser.parse(fatItem);
+      final parseCommentData = () => parentParser.parse(athing);
+      final parseFormData = () => formParser.parse(fatItem);
 
-      test('returns $ReplyData with correct values '
+      test('returns $ReplyPageData with correct values '
           'when data is non-null', () {
         when(athingSelector).thenReturn(athing);
-        when(parseCommentData).thenReturn(commentData);
+        when(parseCommentData).thenReturn(parentData);
         when(parseFormData).thenReturn(formData);
         final parser = createSubject();
         expect(
           parser.parse(fatItem),
-          ReplyData(
-            commentData: commentData,
+          ReplyPageData(
+            parentData: parentData,
             formData: formData,
           ),
         );
@@ -58,14 +57,14 @@ void main() {
         verify(parseFormData).called(1);
       });
 
-      test('returns $ReplyData with correct values '
+      test('returns $ReplyPageData with correct values '
           'when data is null', () {
         when(parseFormData).thenReturn(formData);
         final parser = createSubject();
         expect(
           parser.parse(fatItem),
-          ReplyData(
-            commentData: ReplyCommentData.empty,
+          ReplyPageData(
+            parentData: ReplyParentData.empty,
             formData: formData,
           ),
         );

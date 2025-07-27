@@ -436,17 +436,23 @@ abstract class AppLocalizations {
   /// **'{title} {url}'**
   String postHeader_shareText({required Object title, required Object url});
 
-  /// No description provided for @replyForm_title.
+  /// No description provided for @reply_title.
   ///
   /// In en, this message translates to:
   /// **'Reply'**
-  String get replyForm_title;
+  String get reply_title;
 
-  /// No description provided for @replyForm_submitAction.
+  /// No description provided for @reply_age.
+  ///
+  /// In en, this message translates to:
+  /// **'{age} ago'**
+  String reply_age({required Object age});
+
+  /// No description provided for @reply_submitAction.
   ///
   /// In en, this message translates to:
   /// **'Reply'**
-  String get replyForm_submitAction;
+  String get reply_submitAction;
 
   /// No description provided for @settings_logout.
   ///

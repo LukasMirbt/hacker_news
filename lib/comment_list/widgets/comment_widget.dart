@@ -20,7 +20,6 @@ class CommentWidget extends StatelessWidget {
     return AppComment(
       data: AppCommentData(
         isExpanded: item.isExpanded,
-        indent: item.indent,
         user: item.user,
         age: item.age(appL10n, formatterL10n),
         hasBeenUpvoted: item.hasBeenUpvoted,
