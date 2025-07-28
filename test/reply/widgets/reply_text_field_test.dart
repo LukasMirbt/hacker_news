@@ -145,7 +145,7 @@ void main() async {
         expect(
           widget.decoration,
           InputDecoration.collapsed(
-            hintText: l10n.comment_textFieldHintText,
+            hintText: l10n.reply_textFieldHintText,
           ),
         );
       });
