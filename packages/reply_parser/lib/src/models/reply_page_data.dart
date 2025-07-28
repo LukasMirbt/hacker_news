@@ -13,7 +13,7 @@ class ReplyPageData extends Equatable {
   );
 
   final ReplyParentData parentData;
-  final ReplyFormData formData;
+  final ReplyFormData? formData;
 
   @override
   List<Object?> get props => [

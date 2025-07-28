@@ -7,7 +7,8 @@ class SavedReplyModel {
 
   final ReplyRepository _repository;
 
-  String? load(ReplyForm form) {
+  String? load(ReplyForm? form) {
+    if (form == null) return null;
     final savedReply = _repository.readReply(
       parentId: form.parentId,
     );

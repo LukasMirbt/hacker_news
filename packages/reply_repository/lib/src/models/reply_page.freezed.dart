@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ReplyPage {
 
- ReplyParent get parent; ReplyForm get form;
+ ReplyParent get parent; ReplyForm? get form;
 /// Create a copy of ReplyPage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $ReplyPageCopyWith<$Res>  {
   factory $ReplyPageCopyWith(ReplyPage value, $Res Function(ReplyPage) _then) = _$ReplyPageCopyWithImpl;
 @useResult
 $Res call({
- ReplyParent parent, ReplyForm form
+ ReplyParent parent, ReplyForm? form
 });
 
 
@@ -63,11 +63,11 @@ class _$ReplyPageCopyWithImpl<$Res>
 
 /// Create a copy of ReplyPage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? parent = null,Object? form = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? parent = null,Object? form = freezed,}) {
   return _then(ReplyPage(
 parent: null == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
-as ReplyParent,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
-as ReplyForm,
+as ReplyParent,form: freezed == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as ReplyForm?,
   ));
 }
 

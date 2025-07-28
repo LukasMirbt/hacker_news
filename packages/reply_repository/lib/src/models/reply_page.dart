@@ -16,9 +16,15 @@ class ReplyPage with _$ReplyPage {
     final parentData = data.parentData;
     final formData = data.formData;
 
+    ReplyForm? form;
+
+    if (formData != null) {
+      form = ReplyForm.from(formData);
+    }
+
     return ReplyPage(
       parent: ReplyParent.from(parentData),
-      form: ReplyForm.from(formData),
+      form: form,
     );
   }
 
@@ -28,5 +34,5 @@ class ReplyPage with _$ReplyPage {
   );
 
   final ReplyParent parent;
-  final ReplyForm form;
+  final ReplyForm? form;
 }

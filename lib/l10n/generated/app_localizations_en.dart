@@ -196,6 +196,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reply_title => 'Reply';
 
   @override
+  String get reply_disabledExplanationTitle => 'Closed for replies';
+
+  @override
+  String get reply_disabledExplanationSubtitle =>
+      'Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.';
+
+  @override
   String reply_age({required Object age}) {
     return '$age ago';
   }
