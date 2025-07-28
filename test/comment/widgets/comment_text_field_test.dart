@@ -121,6 +121,12 @@ void main() async {
         );
       });
 
+      testWidgets('expands is true', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.expands, true);
+      });
+
       testWidgets('autofocus is true', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);

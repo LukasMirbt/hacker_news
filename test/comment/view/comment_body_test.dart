@@ -46,9 +46,18 @@ void main() {
       );
     }
 
-    testWidgets('renders $SingleChildScrollView', (tester) async {
+    testWidgets('renders $CustomScrollView '
+        'and $SliverFillRemaining', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(SingleChildScrollView), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(CustomScrollView),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is SliverFillRemaining && !widget.hasScrollBody,
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders $CommentEnabledSection '

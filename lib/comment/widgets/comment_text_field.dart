@@ -43,6 +43,7 @@ class _CommentTextFieldState extends State<CommentTextField> {
       child: TextField(
         controller: _controller,
         autofocus: true,
+        expands: true,
         maxLines: null,
         decoration: InputDecoration.collapsed(
           hintText: l10n.comment_textFieldHintText,
