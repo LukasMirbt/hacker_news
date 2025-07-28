@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:hacker_client/home/models/feed_type_extension.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
-class HomeTabBar extends StatelessWidget {
+class HomeTabBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeTabBar({super.key});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(46);
 
   @override
   Widget build(BuildContext context) {
