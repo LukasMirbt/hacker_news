@@ -13,12 +13,17 @@ class CommentModel extends Equatable {
   final Comment _comment;
   final WebLinks _links;
 
+  String? get replyUrl => _comment.replyUrl;
+
   WebRedirect get webRedirect {
     final url = _links.commentUrl(_comment.id);
     return WebRedirect(url: url);
   }
 
-  String? get replyUrl => _comment.replyUrl;
+  String get shareText {
+    final url = _links.commentUrl(_comment.id);
+    return url.toString();
+  }
 
   @override
   List<Object?> get props => [

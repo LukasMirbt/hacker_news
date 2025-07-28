@@ -190,6 +190,12 @@ abstract class AppLocalizations {
   /// **'Reply'**
   String get commentOptions_reply;
 
+  /// No description provided for @commentOptions_share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get commentOptions_share;
+
   /// No description provided for @commentOptions_openOnWeb.
   ///
   /// In en, this message translates to:

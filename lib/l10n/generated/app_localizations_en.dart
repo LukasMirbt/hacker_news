@@ -61,6 +61,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_reply => 'Reply';
 
   @override
+  String get commentOptions_share => 'Share';
+
+  @override
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
