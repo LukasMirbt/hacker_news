@@ -5,18 +5,8 @@ extension on TextStyle {
   static const _weightFactor = 0.85;
 
   TextStyle withReducedWeight() {
-    final weightAxis = const FontVariation.weight(400).axis;
-    final variations = fontVariations ?? [];
-    return copyWith(
-      fontVariations: [
-        for (final variation in variations)
-          if (variation.axis == weightAxis)
-            FontVariation.weight(
-              (variation.value * _weightFactor).clamp(100, 1000),
-            )
-          else
-            variation,
-      ],
+    return copyWithWeight(
+      (weight) => (weight * _weightFactor).clamp(100, 1000),
     );
   }
 }

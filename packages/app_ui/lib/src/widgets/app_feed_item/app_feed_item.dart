@@ -37,7 +37,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: AppSpacing.lg),
+      padding: EdgeInsets.only(top: AppSpacing.md),
       child: Column(
         children: [
           _ContentRow(),
