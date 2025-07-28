@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyOptionsBloc extends MockBloc<void, ReplyOptionsState>
+class _MockReplyOptionsBloc
+    extends MockBloc<ReplyOptionsEvent, ReplyOptionsState>
     implements ReplyOptionsBloc {}
 
 class _MockAppRouter extends Mock implements AppRouter {}

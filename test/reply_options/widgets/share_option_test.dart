@@ -4,37 +4,37 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/reply_options/reply_options.dart';
 import 'package:mockingjay/mockingjay.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockCommentOptionsBloc
-    extends MockBloc<CommentOptionsEvent, CommentOptionsState>
-    implements CommentOptionsBloc {}
+class _MockReplyOptionsBloc
+    extends MockBloc<ReplyOptionsEvent, ReplyOptionsState>
+    implements ReplyOptionsBloc {}
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockReplyParentModel extends Mock implements ReplyParentModel {}
 
-class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
+class _MockReplyOptionsState extends Mock implements ReplyOptionsState {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
   group(ShareOption, () {
-    late CommentOptionsBloc bloc;
-    late CommentOptionsState state;
-    late CommentModel comment;
+    late ReplyOptionsBloc bloc;
+    late ReplyOptionsState state;
+    late ReplyParentModel parent;
     late MockNavigator navigator;
 
     setUp(() {
-      bloc = _MockCommentOptionsBloc();
-      state = _MockCommentOptionsState();
-      comment = _MockCommentModel();
+      bloc = _MockReplyOptionsBloc();
+      state = _MockReplyOptionsState();
+      parent = _MockReplyParentModel();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
       when(() => bloc.state).thenReturn(state);
-      when(() => state.comment).thenReturn(comment);
+      when(() => state.parent).thenReturn(parent);
     });
 
     Widget buildSubject() {
@@ -60,18 +60,18 @@ void main() async {
     testWidgets('renders correct title', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.text(l10n.commentOptions_share),
+        find.text(l10n.replyOptions_share),
         findsOneWidget,
       );
     });
 
-    testWidgets('pops and adds $CommentOptionsSharePressed '
+    testWidgets('pops and adds $ReplyOptionsSharePressed '
         'when $ListTile is tapped', (tester) async {
       await tester.pumpApp(buildSubject());
       await tester.tap(find.byType(ListTile));
       verify(navigator.pop).called(1);
       verify(
-        () => bloc.add(CommentOptionsSharePressed()),
+        () => bloc.add(ReplyOptionsSharePressed()),
       ).called(1);
     });
   });
