@@ -54,4 +54,28 @@ class AppFeedItemData {
           color: color,
         );
   }
+
+  TextStyle? rankStyle(
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    final style = textTheme.titleMedium;
+    if (style == null) return null;
+
+    double weightFactor;
+
+    if (hasBeenVisited) {
+      weightFactor = 0.9;
+    } else {
+      weightFactor = 1.0;
+    }
+
+    return style
+        .copyWithWeight(
+          (weight) => weight * weightFactor,
+        )
+        .copyWith(
+          color: colorScheme.onSurfaceVariant,
+        );
+  }
 }

@@ -16,14 +16,9 @@ void main() {
       );
     }
 
-    testWidgets('renders rank', (tester) async {
-      const rank = 'rank';
-      await tester.pumpApp(
-        buildSubject(
-          data: AppFeedItemDataPlaceholder(rank: rank),
-        ),
-      );
-      expect(find.text(rank), findsOneWidget);
+    testWidgets('renders $FeedItemRank', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(FeedItemRank), findsOneWidget);
     });
 
     testWidgets('calls onPressed when $InkWell is tapped', (tester) async {

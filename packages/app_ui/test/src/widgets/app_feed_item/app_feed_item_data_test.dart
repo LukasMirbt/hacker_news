@@ -86,5 +86,57 @@ void main() {
         );
       });
     });
+
+    group('rankStyle', () {
+      const onSurfaceVariant = Colors.blue;
+
+      const style = TextStyle(
+        color: onSurfaceVariant,
+        fontVariations: [
+          FontVariation.weight(700),
+        ],
+      );
+
+      setUp(() {
+        when(
+          () => textTheme.titleMedium,
+        ).thenReturn(style);
+        when(
+          () => colorScheme.onSurfaceVariant,
+        ).thenReturn(onSurfaceVariant);
+      });
+
+      const visitedStyle = TextStyle(
+        color: onSurfaceVariant,
+        fontVariations: [
+          FontVariation.weight(630),
+        ],
+      );
+
+      const unvisitedStyle = TextStyle(
+        color: onSurfaceVariant,
+        fontVariations: [
+          FontVariation.weight(700),
+        ],
+      );
+
+      test('returns correct style when hasBeenVisited', () {
+        final data = createSubject(
+          hasBeenVisited: true,
+        );
+        expect(
+          data.rankStyle(colorScheme, textTheme),
+          visitedStyle,
+        );
+      });
+
+      test('returns correct style when !hasBeenVisited', () {
+        final data = createSubject();
+        expect(
+          data.rankStyle(colorScheme, textTheme),
+          unvisitedStyle,
+        );
+      });
+    });
   });
 }
