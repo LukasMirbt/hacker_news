@@ -31,7 +31,13 @@ void main() {
         parentId: form.parentId,
       );
 
-      test('calls readReply and returns result', () {
+      test('returns null when form is null', () {
+        final model = createSubject();
+        expect(model.load(null), null);
+      });
+
+      test('calls readReply and returns result '
+          'when form is non-null', () {
         when(readReply).thenReturn(savedReply);
         final model = createSubject();
         expect(model.load(form), savedReply);
