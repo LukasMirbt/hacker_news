@@ -59,6 +59,7 @@
   "postHeader_shareText": "{title} {url}",
   "reply_title": "Reply",
   "reply_age": "{age} ago",
+  "reply_textFieldHintText": "Your reply",
   "reply_submitAction": "Reply",
   "settings_logout": "Logout",
   "settings_themeSectionTitle": "Theme",
