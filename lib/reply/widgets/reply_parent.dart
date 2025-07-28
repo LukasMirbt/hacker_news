@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/reply_options/reply_options.dart';
 
 class ReplyParent extends StatelessWidget {
   const ReplyParent({super.key});
@@ -46,7 +47,11 @@ class ReplyParent extends StatelessWidget {
           );
         },
         onMorePressed: () {
-          // TODO(LukasMirbt): Implement ReplyOptionsSheet
+          final state = context.read<ReplyBloc>().state;
+          ReplyOptionsSheet.show(
+            context: context,
+            parent: state.parent.toRepository(),
+          );
         },
         onLinkPressed: (url) {
           context.read<ReplyBloc>().add(

@@ -26,6 +26,8 @@ class ReplyParentModel extends Equatable {
   String get user => _parent.hnuser.id;
   String get htmlText => _parent.htmlText;
 
+  ReplyParent toRepository() => _parent;
+
   String age(
     AppLocalizations appL10n,
     DateFormatterLocalizations formatterL10n,

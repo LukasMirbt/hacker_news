@@ -8,7 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/reply_options/reply_options.dart'
+    hide ReplyParentModel;
 import 'package:mocktail/mocktail.dart';
+import 'package:reply_repository/reply_repository.dart' hide ReplyParent;
 
 import '../../app/pump_app.dart';
 
@@ -104,16 +107,13 @@ void main() {
       );
     });
 
-    /*     testWidgets(
+    testWidgets(
       'shows $ReplyOptionsSheet onMorePressed',
       (tester) async {
-        await tester.pumpApp(
-          buildSubject(
-            CommentModel(
-              comment: CommentPlaceholder(),
-            ),
-          ),
+        when(parent.toRepository).thenReturn(
+          ReplyParentPlaceholder(),
         );
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.data.onMorePressed();
         await tester.pump();
@@ -122,7 +122,7 @@ void main() {
           findsOneWidget,
         );
       },
-    ); */
+    );
 
     testWidgets(
       'adds $ReplyLinkPressed onLinkPressed',

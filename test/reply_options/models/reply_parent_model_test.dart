@@ -2,41 +2,41 @@
 
 import 'package:app_client/app_client.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_options/comment_options.dart';
+import 'package:hacker_client/reply_options/reply_options.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:reply_repository/reply_repository.dart';
 import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
-class _MockComment extends Mock implements Comment {}
+class _MockReplyParent extends Mock implements ReplyParent {}
 
 void main() {
   final url = Uri.parse('https://example.com');
   const id = 'id';
 
-  group(CommentModel, () {
-    late Comment comment;
+  group(ReplyParentModel, () {
+    late ReplyParent parent;
     late WebLinks webLinks;
 
     setUp(() {
-      comment = _MockComment();
+      parent = _MockReplyParent();
       webLinks = _MockWebLinks();
-      when(() => comment.id).thenReturn(id);
+      when(() => parent.id).thenReturn(id);
     });
 
-    CommentModel createSubject() {
-      return CommentModel(
-        comment,
+    ReplyParentModel createSubject() {
+      return ReplyParentModel(
+        parent,
         webLinks: webLinks,
       );
     }
 
     group('webRedirect', () {
-      final getCommentUrl = () => webLinks.commentUrl(id);
+      final getReplyParentUrl = () => webLinks.commentUrl(id);
 
       test('returns $WebRedirect with correct url', () {
-        when(getCommentUrl).thenReturn(url);
+        when(getReplyParentUrl).thenReturn(url);
         final model = createSubject();
         final redirect = model.webRedirect;
         expect(
@@ -47,7 +47,7 @@ void main() {
             url,
           ),
         );
-        verify(getCommentUrl).called(1);
+        verify(getReplyParentUrl).called(1);
       });
     });
   });
