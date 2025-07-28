@@ -16,6 +16,7 @@
   "comment_submitAction": "Submit",
   "commentList_age": "{age} ago",
   "commentOptions_reply": "Reply",
+  "commentOptions_share": "Share",
   "commentOptions_openOnWeb": "Open on web",
   "createAccount_title": "Create account",
   "createAccount_explanation": "Creates a Hacker News account that can also be used on the Hacker News website",

@@ -11,7 +11,8 @@ import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockCommentOptionsBloc extends MockBloc<void, CommentOptionsState>
+class _MockCommentOptionsBloc
+    extends MockBloc<CommentOptionsEvent, CommentOptionsState>
     implements CommentOptionsBloc {}
 
 void main() {
@@ -57,6 +58,11 @@ void main() {
     testWidgets('renders $ReplyOption', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(ReplyOption), findsOneWidget);
+    });
+
+    testWidgets('renders $ShareOption', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ShareOption), findsOneWidget);
     });
 
     testWidgets('renders $OpenOnWebOption', (tester) async {

@@ -26,6 +26,7 @@ class CommentOptionsSheet extends StatelessWidget {
     return const AppBottomSheet(
       children: [
         ReplyOption(),
+        ShareOption(),
         OpenOnWebOption(),
       ],
     );

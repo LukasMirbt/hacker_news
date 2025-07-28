@@ -33,10 +33,10 @@ void main() {
     }
 
     group('webRedirect', () {
-      final getReplyParentUrl = () => webLinks.commentUrl(id);
+      final getCommentUrl = () => webLinks.commentUrl(id);
 
       test('returns $WebRedirect with correct url', () {
-        when(getReplyParentUrl).thenReturn(url);
+        when(getCommentUrl).thenReturn(url);
         final model = createSubject();
         final redirect = model.webRedirect;
         expect(
@@ -47,7 +47,7 @@ void main() {
             url,
           ),
         );
-        verify(getReplyParentUrl).called(1);
+        verify(getCommentUrl).called(1);
       });
     });
   });

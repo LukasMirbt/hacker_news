@@ -9,7 +9,8 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockCommentOptionsBloc extends MockBloc<void, CommentOptionsState>
+class _MockCommentOptionsBloc
+    extends MockBloc<CommentOptionsEvent, CommentOptionsState>
     implements CommentOptionsBloc {}
 
 class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
