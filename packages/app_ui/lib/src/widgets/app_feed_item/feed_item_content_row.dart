@@ -12,14 +12,7 @@ class FeedItemContentRow extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(left: 6),
-          child: SizedBox(
-            width: 42,
-            child: Center(
-              child: FittedBox(
-                child: _Rank(),
-              ),
-            ),
-          ),
+          child: FeedItemRank(),
         ),
         Flexible(
           child: Padding(
@@ -28,24 +21,6 @@ class FeedItemContentRow extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _Rank extends StatelessWidget {
-  const _Rank();
-
-  @override
-  Widget build(BuildContext context) {
-    final rank = context.select(
-      (AppFeedItemData data) => data.rank,
-    );
-
-    final textTheme = TextTheme.of(context);
-
-    return Text(
-      rank,
-      style: textTheme.titleMedium,
     );
   }
 }

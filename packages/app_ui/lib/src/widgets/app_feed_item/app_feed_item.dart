@@ -9,6 +9,7 @@ export 'feed_item_button_placeholder.dart';
 export 'feed_item_comment_count_button.dart';
 export 'feed_item_content_row.dart';
 export 'feed_item_more_button.dart';
+export 'feed_item_rank.dart';
 export 'feed_item_share_button.dart';
 export 'feed_item_subtitle.dart';
 export 'feed_item_title.dart';
