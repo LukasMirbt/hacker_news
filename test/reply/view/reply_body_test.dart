@@ -30,24 +30,33 @@ void main() {
       );
     }
 
-    testWidgets('renders $SingleChildScrollView', (tester) async {
+    testWidgets('renders $CustomScrollView '
+        'and $SliverFillRemaining', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(SingleChildScrollView), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(CustomScrollView),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is SliverFillRemaining && !widget.hasScrollBody,
+          ),
+        ),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('renders $ReplyHtml', (tester) async {
+    testWidgets('renders $ReplyParent', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyHtml), findsOneWidget);
+      expect(find.byType(ReplyParent), findsOneWidget);
+    });
+
+    testWidgets('renders $ReplyDivider', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ReplyDivider), findsOneWidget);
     });
 
     testWidgets('renders $ReplyTextField', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(ReplyTextField), findsOneWidget);
-    });
-
-    testWidgets('renders $ReplyButton', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyButton), findsOneWidget);
     });
   });
 }

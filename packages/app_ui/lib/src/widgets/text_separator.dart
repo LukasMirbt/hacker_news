@@ -13,7 +13,7 @@ class MiddleDotSpan extends TextSpan {
              ),
            ),
            TextSpan(
-             text: l10n.separator,
+             text: l10n.middleDot,
              style: style,
            ),
            const WidgetSpan(

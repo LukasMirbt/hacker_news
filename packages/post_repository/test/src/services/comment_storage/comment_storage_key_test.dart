@@ -4,21 +4,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:post_repository/post_repository.dart';
 
 void main() {
-  const postId = 'postId';
+  const parentId = 'parentId';
   const userId = 'userId';
 
-  group(CommentKey, () {
-    CommentKey createSubject() {
-      return CommentKey(
-        postId: postId,
+  group(CommentStorageKey, () {
+    CommentStorageKey createSubject() {
+      return CommentStorageKey(
+        parentId: parentId,
         userId: userId,
       );
     }
 
     group('value', () {
       test('returns correct value', () {
-        final key = createSubject();
-        expect(key.value, '$postId:$userId');
+        final storageKey = createSubject();
+        expect(storageKey.key, '$parentId:$userId');
       });
     });
   });

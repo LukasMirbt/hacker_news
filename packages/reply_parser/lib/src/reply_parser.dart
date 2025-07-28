@@ -3,21 +3,21 @@ import 'package:reply_parser/reply_parser.dart';
 class ReplyParser {
   const ReplyParser({
     HtmlParser? htmlParser,
-    ReplyDataParser? replyDataParser,
+    ReplyPageParser? replyPageParser,
   }) : _htmlParser = htmlParser ?? const HtmlParser(),
-       _dataParser = replyDataParser ?? const ReplyDataParser();
+       _pageParser = replyPageParser ?? const ReplyPageParser();
 
   final HtmlParser _htmlParser;
-  final ReplyDataParser _dataParser;
+  final ReplyPageParser _pageParser;
 
-  ReplyData parse(String html) {
+  ReplyPageData parse(String html) {
     final document = _htmlParser.parse(html);
     final fatItem = document.querySelector('.fatitem');
 
-    var data = ReplyData.empty;
+    var data = ReplyPageData.empty;
 
     if (fatItem != null) {
-      data = _dataParser.parse(fatItem);
+      data = _pageParser.parse(fatItem);
     }
 
     return data;

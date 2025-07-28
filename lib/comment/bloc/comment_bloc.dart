@@ -59,10 +59,12 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     CommentPostLoaded event,
     Emitter<CommentState> emit,
   ) {
+    final savedComment = _savedCommentModel.load();
+
     emit(
       state.copyWith(
         form: state.form.copyWith(
-          text: _savedCommentModel.load(),
+          text: savedComment,
         ),
       ),
     );

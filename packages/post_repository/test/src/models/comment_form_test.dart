@@ -11,7 +11,7 @@ void main() {
         expect(
           CommentForm.from(data),
           CommentForm(
-            parent: data.parent,
+            parentId: data.parent,
             goto: data.goto,
             hmac: data.hmac,
           ),
@@ -26,7 +26,7 @@ void main() {
         expect(
           form.toApi(),
           api.CommentForm(
-            parent: form.parent,
+            parent: form.parentId,
             goto: form.goto,
             hmac: form.hmac,
             text: form.text,

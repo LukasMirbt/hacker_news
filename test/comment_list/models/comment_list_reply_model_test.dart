@@ -50,7 +50,7 @@ void main() {
       });
 
       test('returns updated commentList when findById returns parent', () {
-        final findById = () => commentList.findById(form.parent);
+        final findById = () => commentList.findById(form.parentId);
         final insertAfter = () => commentList.insertAfter(
           afterItem: afterItem,
           newItem: newItem,

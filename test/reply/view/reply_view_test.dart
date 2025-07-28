@@ -41,29 +41,19 @@ void main() {
       expect(find.byType(ReplyFailureListener), findsOneWidget);
     });
 
-    testWidgets('renders $AppBar', (tester) async {
+    testWidgets('renders $ReplyAppBar', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppBar), findsOneWidget);
+      expect(find.byType(ReplyAppBar), findsOneWidget);
     });
 
-    testWidgets('renders $ErrorText when isFailure', (tester) async {
-      when(() => bloc.state).thenReturn(
-        initialState.copyWith(
-          fetchStatus: FetchStatus.failure,
-        ),
-      );
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(ErrorText), findsOneWidget);
-    });
-
-    testWidgets('renders $Spinner when !isFailure '
-        'and isLoading', (tester) async {
+    testWidgets('renders $Spinner when fetchStatus is '
+        '${FetchStatus.loading}', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(Spinner), findsOneWidget);
     });
 
-    testWidgets('renders $ReplyBody when !isFailure '
-        'and !isLoading', (tester) async {
+    testWidgets('renders $ReplyBody when fetchStatus is '
+        '${FetchStatus.success}', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           fetchStatus: FetchStatus.success,
@@ -71,6 +61,17 @@ void main() {
       );
       await tester.pumpApp(buildSubject());
       expect(find.byType(ReplyBody), findsOneWidget);
+    });
+
+    testWidgets('renders $ErrorText when fetchStatus is '
+        '${FetchStatus.failure}', (tester) async {
+      when(() => bloc.state).thenReturn(
+        initialState.copyWith(
+          fetchStatus: FetchStatus.failure,
+        ),
+      );
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ErrorText), findsOneWidget);
     });
   });
 }

@@ -9,7 +9,7 @@ class ReplyHtml extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final htmlText = context.select(
-      (ReplyBloc bloc) => bloc.state.form.htmlText,
+      (ReplyBloc bloc) => bloc.state.parent.htmlText,
     );
 
     return AppHtmlWidget(

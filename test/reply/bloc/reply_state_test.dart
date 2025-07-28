@@ -1,16 +1,28 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/reply/reply.dart';
-import 'package:reply_repository/reply_repository.dart';
+import 'package:mocktail/mocktail.dart';
+
+class _MockReplyFormModel extends Mock implements ReplyFormModel {}
 
 void main() {
   const url = 'url';
 
   group(ReplyState, () {
-    ReplyState createSubject(SubmissionStatus submissionStatus) {
+    late ReplyFormModel form;
+
+    setUp(() {
+      form = _MockReplyFormModel();
+      when(() => form.isReplyingEnabled).thenReturn(false);
+    });
+
+    ReplyState createSubject({
+      required FetchStatus fetchStatus,
+    }) {
       return ReplyState(
         url: url,
-        form: ReplyForm.empty,
-        submissionStatus: submissionStatus,
+        form: form,
+        fetchStatus: fetchStatus,
+        parent: ReplyParentModel.empty,
       );
     }
 
@@ -20,35 +32,35 @@ void main() {
           ReplyState.initial(url: url),
           ReplyState(
             url: url,
-            form: ReplyForm.empty,
+            parent: ReplyParentModel.empty,
           ),
         );
       });
     });
 
-    group('isSubmissionLoading', () {
-      test('returns false when submissionStatus '
-          'is ${SubmissionStatus.initial}', () {
-        final state = createSubject(SubmissionStatus.initial);
-        expect(state.isSubmissionLoading, false);
+    group('isSubmittingEnabled', () {
+      test('returns false when !fetchStatus.isSuccess', () {
+        final state = createSubject(
+          fetchStatus: FetchStatus.loading,
+        );
+        expect(state.isSubmittingEnabled, false);
       });
 
-      test('returns true when submissionStatus '
-          'is ${SubmissionStatus.loading}', () {
-        final state = createSubject(SubmissionStatus.loading);
-        expect(state.isSubmissionLoading, true);
+      test('returns false when fetchStatus.isSuccess '
+          'and !form.isReplyingEnabled', () {
+        final state = createSubject(
+          fetchStatus: FetchStatus.success,
+        );
+        expect(state.isSubmittingEnabled, false);
       });
 
-      test('returns true when submissionStatus '
-          'is ${SubmissionStatus.success}', () {
-        final state = createSubject(SubmissionStatus.success);
-        expect(state.isSubmissionLoading, true);
-      });
-
-      test('returns false when submissionStatus '
-          'is ${SubmissionStatus.failure}', () {
-        final state = createSubject(SubmissionStatus.failure);
-        expect(state.isSubmissionLoading, false);
+      test('returns true when fetchStatus.isSuccess '
+          'and form.isReplyingEnabled', () {
+        when(() => form.isReplyingEnabled).thenReturn(true);
+        final state = createSubject(
+          fetchStatus: FetchStatus.success,
+        );
+        expect(state.isSubmittingEnabled, true);
       });
     });
   });

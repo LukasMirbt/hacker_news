@@ -6,19 +6,14 @@ void main() {
   group(ReplyForm, () {
     group('from', () {
       test('returns $ReplyForm', () {
-        final data = ReplyDataPlaceholder();
-        final commentData = ReplyCommentDataPlaceholder();
-        const formData = ReplyFormDataPlaceholder();
+        const data = ReplyFormDataPlaceholder();
 
         expect(
           ReplyForm.from(data),
           ReplyForm(
-            hnuser: commentData.hnuser,
-            age: commentData.age,
-            htmlText: commentData.htmlText,
-            parent: formData.parent,
-            goto: formData.goto,
-            hmac: formData.hmac,
+            parentId: data.parent,
+            goto: data.goto,
+            hmac: data.hmac,
           ),
         );
       });
@@ -31,7 +26,7 @@ void main() {
         expect(
           form.toApi(),
           api.ReplyForm(
-            parent: form.parent,
+            parent: form.parentId,
             goto: form.goto,
             hmac: form.hmac,
             text: form.text,

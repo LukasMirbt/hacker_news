@@ -2,58 +2,43 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:reply_api/reply_api.dart' as api;
-import 'package:reply_api/reply_api.dart' hide ReplyForm;
+import 'package:reply_repository/reply_repository.dart';
 
 part 'reply_form.freezed.dart';
 
 @freezed
 class ReplyForm with _$ReplyForm {
   const ReplyForm({
-    required this.hnuser,
-    required this.age,
-    required this.htmlText,
-    required this.parent,
+    required this.parentId,
     required this.goto,
     required this.hmac,
     this.text = '',
   });
 
-  factory ReplyForm.from(api.ReplyData data) {
-    final commentData = data.commentData;
-    final formData = data.formData;
-
+  factory ReplyForm.from(ReplyFormData data) {
     return ReplyForm(
-      hnuser: commentData.hnuser,
-      age: commentData.age,
-      htmlText: commentData.htmlText,
-      parent: formData.parent,
-      goto: formData.goto,
-      hmac: formData.hmac,
+      parentId: data.parent,
+      goto: data.goto,
+      hmac: data.hmac,
     );
   }
 
   api.ReplyForm toApi() {
     return api.ReplyForm(
-      parent: parent,
+      parent: parentId,
       goto: goto,
       hmac: hmac,
       text: text,
     );
   }
 
-  static final empty = ReplyForm(
-    hnuser: Hnuser.empty,
-    age: DateTime(0),
-    htmlText: '',
-    parent: '',
+  static const empty = ReplyForm(
+    parentId: '',
     goto: '',
     hmac: '',
   );
 
-  final Hnuser hnuser;
-  final DateTime age;
-  final String htmlText;
-  final String parent;
+  final String parentId;
   final String goto;
   final String hmac;
   final String text;

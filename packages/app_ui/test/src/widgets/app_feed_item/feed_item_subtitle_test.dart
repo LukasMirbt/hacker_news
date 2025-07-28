@@ -50,7 +50,7 @@ void main() async {
         findsOneWidget,
       );
       expect(
-        find.textRange.ofSubstring(l10n.separator),
+        find.textRange.ofSubstring(l10n.middleDot),
         findsNWidgets(2),
       );
     });
@@ -72,7 +72,7 @@ void main() async {
         findsOneWidget,
       );
       expect(
-        find.textRange.ofSubstring(l10n.separator),
+        find.textRange.ofSubstring(l10n.middleDot),
         findsOneWidget,
       );
     });
@@ -94,7 +94,7 @@ void main() async {
         findsOneWidget,
       );
       expect(
-        find.textRange.ofSubstring(l10n.separator),
+        find.textRange.ofSubstring(l10n.middleDot),
         findsOneWidget,
       );
     });
@@ -115,7 +115,7 @@ void main() async {
         findsOneWidget,
       );
       expect(
-        find.textRange.ofSubstring(l10n.separator),
+        find.textRange.ofSubstring(l10n.middleDot),
         findsNothing,
       );
     });

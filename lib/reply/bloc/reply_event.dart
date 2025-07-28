@@ -7,6 +7,10 @@ sealed class ReplyEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class ReplyVoteSubscriptionRequested extends ReplyEvent {
+  const ReplyVoteSubscriptionRequested();
+}
+
 final class ReplyStarted extends ReplyEvent {
   const ReplyStarted();
 }
@@ -18,6 +22,14 @@ final class ReplyTextChanged extends ReplyEvent {
 
   @override
   List<Object> get props => [text];
+}
+
+final class ReplyParentExpansionToggled extends ReplyEvent {
+  const ReplyParentExpansionToggled();
+}
+
+final class ReplyParentVotePressed extends ReplyEvent {
+  const ReplyParentVotePressed();
 }
 
 final class ReplyLinkPressed extends ReplyEvent {

@@ -15,6 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^3.0.0
+  hive_ce: ^2.11.3
   reply_api:
     path: ../reply_api
 

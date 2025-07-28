@@ -36,10 +36,10 @@ void main() {
       );
     }
 
-    group('fetchReplyForm', () {
+    group('fetchReplyPage', () {
       const url = 'url';
       const html = 'html';
-      final data = ReplyDataPlaceholder();
+      final data = ReplyPageDataPlaceholder();
 
       final response = Response(
         requestOptions: RequestOptions(),
@@ -49,12 +49,12 @@ void main() {
       final request = () => http.get<String>(url);
       final parse = () => replyParser.parse(html);
 
-      test('parses and returns $ReplyForm', () async {
+      test('parses and returns $ReplyPageData', () async {
         when(request).thenAnswer((_) async => response);
         when(parse).thenReturn(data);
         final api = createSubject();
         await expectLater(
-          api.fetchReplyForm(url: url),
+          api.fetchReplyPage(url: url),
           completion(data),
         );
         verify(request).called(1);

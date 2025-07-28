@@ -1,4 +1,3 @@
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
@@ -16,18 +15,10 @@ class CommentAppBar extends StatelessWidget implements PreferredSizeWidget {
       (CommentBloc bloc) => bloc.state.isSubmittingEnabled,
     );
 
-    final colorScheme = ColorScheme.of(context);
     final l10n = AppLocalizations.of(context);
 
     return AppBar(
       title: Text(l10n.comment_title),
-      centerTitle: false,
-      shape: Border(
-        bottom: BorderSide(
-          color: colorScheme.outlineVariant,
-        ),
-      ),
-      actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
         if (isSubmittingEnabled) const CommentSubmitButton(),
       ],

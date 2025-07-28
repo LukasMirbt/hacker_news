@@ -3,7 +3,6 @@ import 'package:app_ui/app_ui.dart';
 class AppCommentDataPlaceholder extends AppCommentData {
   AppCommentDataPlaceholder({
     bool? isExpanded,
-    int? indent,
     String? user,
     String? age,
     bool? hasBeenUpvoted,
@@ -14,7 +13,6 @@ class AppCommentDataPlaceholder extends AppCommentData {
     void Function()? onVotePressed,
   }) : super(
          isExpanded: isExpanded ?? false,
-         indent: indent ?? 1,
          user: user ?? 'user',
          age: age ?? 'age',
          hasBeenUpvoted: hasBeenUpvoted ?? false,

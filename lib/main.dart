@@ -39,6 +39,7 @@ void main() async {
   await Hive.initFlutter();
 
   final commentStorage = await CommentStorage.init(Hive);
+  final replyStorage = await ReplyStorage.init(Hive);
 
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -96,6 +97,8 @@ void main() async {
 
   final replyRepository = ReplyRepository(
     replyApi: replyApi,
+    authenticationApi: authenticationApi,
+    replyStorage: replyStorage,
     userReplyService: UserReplyService(
       authenticationApi: authenticationApi,
     ),

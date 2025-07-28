@@ -2,12 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:reply_parser/reply_parser.dart';
 
 void main() {
-  group(ReplyData, () {
+  group(ReplyPageData, () {
     group('empty', () {
-      test('returns $ReplyData', () {
+      test('returns $ReplyPageData', () {
         expect(
-          ReplyData.empty,
-          isA<ReplyData>(),
+          ReplyPageData.empty,
+          isA<ReplyPageData>(),
         );
       });
     });

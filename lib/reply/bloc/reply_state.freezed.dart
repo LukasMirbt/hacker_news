@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ReplyState {
 
- String get url; ReplyForm get form; FetchStatus get fetchStatus; SubmissionStatus get submissionStatus;
+ String get url; ReplyParentModel get parent; ReplyFormModel get form; FetchStatus get fetchStatus;
 /// Create a copy of ReplyState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ReplyStateCopyWith<ReplyState> get copyWith => _$ReplyStateCopyWithImpl<ReplySt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReplyState&&(identical(other.url, url) || other.url == url)&&(identical(other.form, form) || other.form == form)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReplyState&&(identical(other.url, url) || other.url == url)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.form, form) || other.form == form)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,url,form,fetchStatus,submissionStatus);
+int get hashCode => Object.hash(runtimeType,url,parent,form,fetchStatus);
 
 @override
 String toString() {
-  return 'ReplyState(url: $url, form: $form, fetchStatus: $fetchStatus, submissionStatus: $submissionStatus)';
+  return 'ReplyState(url: $url, parent: $parent, form: $form, fetchStatus: $fetchStatus)';
 }
 
 
@@ -46,11 +46,11 @@ abstract mixin class $ReplyStateCopyWith<$Res>  {
   factory $ReplyStateCopyWith(ReplyState value, $Res Function(ReplyState) _then) = _$ReplyStateCopyWithImpl;
 @useResult
 $Res call({
- String url, ReplyForm form, FetchStatus fetchStatus, SubmissionStatus submissionStatus
+ String url, ReplyParentModel parent, ReplyFormModel form, FetchStatus fetchStatus
 });
 
 
-$ReplyFormCopyWith<$Res> get form;
+
 
 }
 /// @nodoc
@@ -63,25 +63,16 @@ class _$ReplyStateCopyWithImpl<$Res>
 
 /// Create a copy of ReplyState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? form = null,Object? fetchStatus = null,Object? submissionStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? parent = null,Object? form = null,Object? fetchStatus = null,}) {
   return _then(_self.copyWith(
 url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
-as ReplyForm,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
-as FetchStatus,submissionStatus: null == submissionStatus ? _self.submissionStatus : submissionStatus // ignore: cast_nullable_to_non_nullable
-as SubmissionStatus,
+as String,parent: null == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
+as ReplyParentModel,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as ReplyFormModel,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
+as FetchStatus,
   ));
 }
-/// Create a copy of ReplyState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ReplyFormCopyWith<$Res> get form {
-  
-  return $ReplyFormCopyWith<$Res>(_self.form, (value) {
-    return _then(_self.copyWith(form: value));
-  });
-}
+
 }
 
 
@@ -89,13 +80,13 @@ $ReplyFormCopyWith<$Res> get form {
 
 
 class _ReplyState extends ReplyState {
-  const _ReplyState({required this.url, required this.form, this.fetchStatus = FetchStatus.loading, this.submissionStatus = SubmissionStatus.initial}): super._();
+  const _ReplyState({required this.url, required this.parent, this.form = ReplyFormModel.empty, this.fetchStatus = FetchStatus.loading}): super._();
   
 
 @override final  String url;
-@override final  ReplyForm form;
+@override final  ReplyParentModel parent;
+@override@JsonKey() final  ReplyFormModel form;
 @override@JsonKey() final  FetchStatus fetchStatus;
-@override@JsonKey() final  SubmissionStatus submissionStatus;
 
 /// Create a copy of ReplyState
 /// with the given fields replaced by the non-null parameter values.
@@ -107,16 +98,16 @@ _$ReplyStateCopyWith<_ReplyState> get copyWith => __$ReplyStateCopyWithImpl<_Rep
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReplyState&&(identical(other.url, url) || other.url == url)&&(identical(other.form, form) || other.form == form)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.submissionStatus, submissionStatus) || other.submissionStatus == submissionStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReplyState&&(identical(other.url, url) || other.url == url)&&(identical(other.parent, parent) || other.parent == parent)&&(identical(other.form, form) || other.form == form)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,url,form,fetchStatus,submissionStatus);
+int get hashCode => Object.hash(runtimeType,url,parent,form,fetchStatus);
 
 @override
 String toString() {
-  return 'ReplyState(url: $url, form: $form, fetchStatus: $fetchStatus, submissionStatus: $submissionStatus)';
+  return 'ReplyState(url: $url, parent: $parent, form: $form, fetchStatus: $fetchStatus)';
 }
 
 
@@ -127,11 +118,11 @@ abstract mixin class _$ReplyStateCopyWith<$Res> implements $ReplyStateCopyWith<$
   factory _$ReplyStateCopyWith(_ReplyState value, $Res Function(_ReplyState) _then) = __$ReplyStateCopyWithImpl;
 @override @useResult
 $Res call({
- String url, ReplyForm form, FetchStatus fetchStatus, SubmissionStatus submissionStatus
+ String url, ReplyParentModel parent, ReplyFormModel form, FetchStatus fetchStatus
 });
 
 
-@override $ReplyFormCopyWith<$Res> get form;
+
 
 }
 /// @nodoc
@@ -144,26 +135,17 @@ class __$ReplyStateCopyWithImpl<$Res>
 
 /// Create a copy of ReplyState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? url = null,Object? form = null,Object? fetchStatus = null,Object? submissionStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? url = null,Object? parent = null,Object? form = null,Object? fetchStatus = null,}) {
   return _then(_ReplyState(
 url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
-as ReplyForm,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
-as FetchStatus,submissionStatus: null == submissionStatus ? _self.submissionStatus : submissionStatus // ignore: cast_nullable_to_non_nullable
-as SubmissionStatus,
+as String,parent: null == parent ? _self.parent : parent // ignore: cast_nullable_to_non_nullable
+as ReplyParentModel,form: null == form ? _self.form : form // ignore: cast_nullable_to_non_nullable
+as ReplyFormModel,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
+as FetchStatus,
   ));
 }
 
-/// Create a copy of ReplyState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ReplyFormCopyWith<$Res> get form {
-  
-  return $ReplyFormCopyWith<$Res>(_self.form, (value) {
-    return _then(_self.copyWith(form: value));
-  });
-}
+
 }
 
 // dart format on

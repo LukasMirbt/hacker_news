@@ -2,11 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:reply_parser/reply_parser.dart';
 
 void main() {
-  group(ReplyDataPlaceholder, () {
-    test('returns $ReplyData', () {
+  group(ReplyPageDataPlaceholder, () {
+    test('returns $ReplyPageData', () {
       expect(
-        ReplyDataPlaceholder(),
-        isA<ReplyData>(),
+        ReplyPageDataPlaceholder(),
+        isA<ReplyPageData>(),
       );
     });
   });

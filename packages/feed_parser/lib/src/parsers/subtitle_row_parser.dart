@@ -1,7 +1,7 @@
 import 'package:feed_parser/feed_parser.dart';
 
-class SubtitleRowDataParser {
-  const SubtitleRowDataParser({
+class SubtitleRowParser {
+  const SubtitleRowParser({
     ScoreParser? scoreParser,
     HnuserParser? hnuserParser,
     AgeParser? ageParser,

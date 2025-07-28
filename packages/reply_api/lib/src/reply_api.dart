@@ -14,7 +14,7 @@ class ReplyApi {
   final ReplyParser _replyParser;
   final PostParser _postParser;
 
-  Future<ReplyData> fetchReplyForm({required String url}) async {
+  Future<ReplyPageData> fetchReplyPage({required String url}) async {
     final response = await _client.http.get<String>(url);
     final html = response.data!;
     final data = _replyParser.parse(html);

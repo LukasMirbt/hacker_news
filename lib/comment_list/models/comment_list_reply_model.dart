@@ -10,7 +10,7 @@ class CommentListReplyModel {
     required CommentListModel commentList,
   }) {
     final form = update.form;
-    final afterItem = commentList.findById(form.parent);
+    final afterItem = commentList.findById(form.parentId);
     if (afterItem == null) return commentList;
 
     final newItem = CommentModel(

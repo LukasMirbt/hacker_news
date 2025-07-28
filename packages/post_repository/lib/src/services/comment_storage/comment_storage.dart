@@ -1,4 +1,3 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -9,28 +8,25 @@ class CommentStorage {
     required Box<String> box,
   }) : _box = box;
 
-  @visibleForTesting
-  static const String boxName = 'commentStorage';
-
   final Box<String> _box;
 
   static Future<CommentStorage> init(HiveInterface hive) async {
-    final box = await hive.openBox<String>(boxName);
+    final box = await hive.openBox<String>('commentStorage');
     return CommentStorage(box: box);
   }
 
   Future<void> save({
-    required CommentKey key,
+    required CommentStorageKey storageKey,
     required String text,
   }) async {
-    await _box.put(key.value, text);
+    await _box.put(storageKey.key, text);
   }
 
-  String? read(CommentKey key) {
-    return _box.get(key.value);
+  String? read(CommentStorageKey storageKey) {
+    return _box.get(storageKey.key);
   }
 
-  Future<void> clear(CommentKey key) async {
-    await _box.delete(key.value);
+  Future<void> clear(CommentStorageKey storageKey) async {
+    await _box.delete(storageKey.key);
   }
 }

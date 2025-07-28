@@ -4,10 +4,9 @@ import 'package:feed_parser/feed_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockTitleRowDataParser extends Mock implements TitleRowDataParser {}
+class _MockTitleRowParser extends Mock implements TitleRowParser {}
 
-class _MockSubtitleRowDataParser extends Mock
-    implements SubtitleRowDataParser {}
+class _MockSubtitleRowParser extends Mock implements SubtitleRowParser {}
 
 class _MockElement extends Mock implements Element {}
 
@@ -16,29 +15,28 @@ void main() {
   final subtitleRowData = SubtitleRowDataPlaceholder();
 
   group(FeedItemParser, () {
-    late TitleRowDataParser titleRowDataParser;
-    late SubtitleRowDataParser subtitleRowDataParser;
+    late TitleRowParser titleRowParser;
+    late SubtitleRowParser subtitleRowParser;
     late Element athing;
     late Element subtitleRow;
 
     setUp(() {
-      titleRowDataParser = _MockTitleRowDataParser();
-      subtitleRowDataParser = _MockSubtitleRowDataParser();
+      titleRowParser = _MockTitleRowParser();
+      subtitleRowParser = _MockSubtitleRowParser();
       athing = _MockElement();
       subtitleRow = _MockElement();
     });
 
     FeedItemParser createSubject() {
       return FeedItemParser(
-        titleRowDataParser: titleRowDataParser,
-        subtitleRowDataParser: subtitleRowDataParser,
+        titleRowParser: titleRowParser,
+        subtitleRowParser: subtitleRowParser,
       );
     }
 
     group('parse', () {
-      final parseTitleRowData = () => titleRowDataParser.parse(athing);
-      final parseSubtitleRowData = () =>
-          subtitleRowDataParser.parse(subtitleRow);
+      final parseTitleRowData = () => titleRowParser.parse(athing);
+      final parseSubtitleRowData = () => subtitleRowParser.parse(subtitleRow);
 
       test('returns $FeedItemData with correct values '
           'when data is non-null', () {

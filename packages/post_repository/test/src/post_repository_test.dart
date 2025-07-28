@@ -23,10 +23,15 @@ void main() {
   final initialState = PostRepositoryState.initial();
   final exception = Exception('oops');
 
-  const postId = 'postId';
+  const parentId = 'parentId';
   const userId = 'userId';
   const text = 'text';
   final user = UserPlaceholder(id: userId);
+
+  final storageKey = CommentStorageKey(
+    parentId: parentId,
+    userId: userId,
+  );
 
   group(PostRepository, () {
     late PostApi postApi;
@@ -198,18 +203,13 @@ void main() {
     });
 
     group('readComment', () {
-      final read = () => commentStorage.read(
-        CommentKey(
-          postId: postId,
-          userId: userId,
-        ),
-      );
+      final read = () => commentStorage.read(storageKey);
 
       test('calls read and returns text', () {
         when(read).thenReturn(text);
         final repository = buildCubit();
         expect(
-          repository.readComment(postId: postId),
+          repository.readComment(parentId: parentId),
           text,
         );
         verify(read).called(1);
@@ -218,10 +218,7 @@ void main() {
 
     group('saveComment', () {
       final save = () => commentStorage.save(
-        key: CommentKey(
-          postId: postId,
-          userId: userId,
-        ),
+        storageKey: storageKey,
         text: text,
       );
 
@@ -229,7 +226,7 @@ void main() {
         when(save).thenAnswer((_) async {});
         final repository = buildCubit();
         await repository.saveComment(
-          postId: postId,
+          parentId: parentId,
           text: text,
         );
         verify(save).called(1);
@@ -237,7 +234,9 @@ void main() {
     });
 
     group('comment', () {
-      const form = CommentFormPlaceholder();
+      const form = CommentFormPlaceholder(
+        parentId: parentId,
+      );
       final data = PostDataPlaceholder();
 
       const userId = 'userId';
@@ -245,15 +244,12 @@ void main() {
 
       final comment = () => postApi.comment(form.toApi());
 
-      final fetchPost = () =>
-          postApi.fetchPost(id: form.parent, cancelToken: cancelToken);
-
-      final clear = () => commentStorage.clear(
-        CommentKey(
-          postId: form.parent,
-          userId: userId,
-        ),
+      final fetchPost = () => postApi.fetchPost(
+        id: form.parentId,
+        cancelToken: cancelToken,
       );
+
+      final clear = () => commentStorage.clear(storageKey);
 
       blocTest<PostRepository, PostRepositoryState>(
         'emits [success], $Post and clears storage '
