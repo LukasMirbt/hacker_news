@@ -1,3 +1,4 @@
+import 'package:app_ui/src/typography/text_style_extension.dart';
 import 'package:flutter/material.dart';
 
 class AppFeedItemData {
@@ -27,8 +28,30 @@ class AppFeedItemData {
   final Widget? voteButton;
   final Widget? commentCountButton;
 
-  Color titleColor(ColorScheme colorScheme) {
-    if (hasBeenVisited) return colorScheme.onSurfaceVariant;
-    return colorScheme.onSurface;
+  TextStyle? titleStyle(
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    final style = textTheme.titleMedium;
+    if (style == null) return null;
+
+    Color color;
+    double weightFactor;
+
+    if (hasBeenVisited) {
+      color = colorScheme.onSurfaceVariant;
+      weightFactor = 0.9;
+    } else {
+      color = colorScheme.onSurface;
+      weightFactor = 1.0;
+    }
+
+    return style
+        .copyWithWeight(
+          (weight) => weight * weightFactor,
+        )
+        .copyWith(
+          color: color,
+        );
   }
 }

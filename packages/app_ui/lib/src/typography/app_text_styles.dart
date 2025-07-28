@@ -72,7 +72,7 @@ abstract class AppTextStyles {
       height: 1.5,
       letterSpacing: 0.15,
       fontVariations: [
-        FontVariation.weight(500),
+        FontVariation.weight(550),
       ],
     ),
   );

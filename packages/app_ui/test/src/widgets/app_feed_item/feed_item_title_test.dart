@@ -15,9 +15,14 @@ class _MockColorScheme extends Mock
     with Diagnosticable
     implements ColorScheme {}
 
+class _MockTextTheme extends Mock with Diagnosticable implements TextTheme {}
+
 void main() {
   const title = 'title';
-  const color = Colors.red;
+
+  const style = TextStyle(
+    color: Colors.red,
+  );
 
   group(FeedItemTitle, () {
     late AppFeedItemData data;
@@ -25,8 +30,11 @@ void main() {
     setUp(() {
       data = _MockAppFeedItemData();
       registerFallbackValue(_MockColorScheme());
+      registerFallbackValue(_MockTextTheme());
       when(() => data.title).thenReturn(title);
-      when(() => data.titleColor(any())).thenReturn(color);
+      when(
+        () => data.titleStyle(any(), any()),
+      ).thenReturn(style);
     });
 
     Widget buildSubject() {
@@ -41,13 +49,13 @@ void main() {
       expect(find.text(title), findsOneWidget);
     });
 
-    testWidgets('has correct color', (tester) async {
+    testWidgets('has correct style', (tester) async {
       when(() => data.hasBeenVisited).thenReturn(true);
       await tester.pumpApp(buildSubject());
       final text = tester.widget<Text>(
         find.text(title),
       );
-      expect(text.style?.color, color);
+      expect(text.style, style);
     });
   });
 }
