@@ -12,18 +12,15 @@ class FeedItemTitle extends StatelessWidget {
     );
 
     final colorScheme = ColorScheme.of(context);
-
-    final color = context.select(
-      (AppFeedItemData data) => data.titleColor(colorScheme),
-    );
-
     final textTheme = TextTheme.of(context);
+
+    final style = context.select(
+      (AppFeedItemData data) => data.titleStyle(colorScheme, textTheme),
+    );
 
     return Text(
       title,
-      style: textTheme.titleMedium?.copyWith(
-        color: color,
-      ),
+      style: style,
     );
   }
 }

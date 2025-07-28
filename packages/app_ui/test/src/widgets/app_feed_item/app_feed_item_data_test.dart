@@ -8,12 +8,16 @@ class _MockColorScheme extends Mock
     with Diagnosticable
     implements ColorScheme {}
 
+class _MockTextTheme extends Mock with Diagnosticable implements TextTheme {}
+
 void main() {
   group(AppFeedItemData, () {
     late ColorScheme colorScheme;
+    late TextTheme textTheme;
 
     setUp(() {
       colorScheme = _MockColorScheme();
+      textTheme = _MockTextTheme();
     });
 
     AppFeedItemData createSubject({bool? hasBeenVisited}) {
@@ -32,21 +36,54 @@ void main() {
       );
     }
 
-    group('titleColor', () {
-      test('returns correct value when hasBeenVisited', () {
-        const color = Colors.red;
-        when(() => colorScheme.onSurfaceVariant).thenReturn(color);
+    group('titleStyle', () {
+      const style = TextStyle(
+        fontVariations: [
+          FontVariation.weight(700),
+        ],
+      );
+
+      setUp(() {
+        when(() => textTheme.titleMedium).thenReturn(style);
+      });
+
+      const onSurfaceVariant = Colors.red;
+      const onSurface = Colors.blue;
+
+      const visitedStyle = TextStyle(
+        color: onSurfaceVariant,
+        fontVariations: [
+          FontVariation.weight(630),
+        ],
+      );
+
+      const unvisitedStyle = TextStyle(
+        color: onSurface,
+        fontVariations: [
+          FontVariation.weight(700),
+        ],
+      );
+
+      test('returns correct style when hasBeenVisited', () {
+        when(() => colorScheme.onSurfaceVariant).thenReturn(
+          onSurfaceVariant,
+        );
         final data = createSubject(
           hasBeenVisited: true,
         );
-        expect(data.titleColor(colorScheme), color);
+        expect(
+          data.titleStyle(colorScheme, textTheme),
+          visitedStyle,
+        );
       });
 
-      test('returns correct value when !hasBeenVisited', () {
-        const color = Colors.blue;
-        when(() => colorScheme.onSurface).thenReturn(color);
+      test('returns correct style when !hasBeenVisited', () {
+        when(() => colorScheme.onSurface).thenReturn(onSurface);
         final data = createSubject();
-        expect(data.titleColor(colorScheme), color);
+        expect(
+          data.titleStyle(colorScheme, textTheme),
+          unvisitedStyle,
+        );
       });
     });
   });

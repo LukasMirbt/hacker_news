@@ -12,12 +12,15 @@ class FeedItemActionRow extends StatelessWidget {
       data: theme.copyWith(
         iconButtonTheme: IconButtonThemeData(
           style: IconButton.styleFrom(
+            minimumSize: const Size(44, 44),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             foregroundColor: theme.colorScheme.onSurfaceVariant,
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            minimumSize: const Size(64, 48),
+            minimumSize: const Size(64, 44),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             alignment: Alignment.centerLeft,
             foregroundColor: theme.colorScheme.onSurfaceVariant,

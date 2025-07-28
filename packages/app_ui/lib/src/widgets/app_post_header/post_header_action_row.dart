@@ -12,13 +12,16 @@ class PostHeaderActionRow extends StatelessWidget {
       data: theme.copyWith(
         iconButtonTheme: IconButtonThemeData(
           style: IconButton.styleFrom(
+            minimumSize: const Size(44, 44),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             foregroundColor: theme.colorScheme.onSurfaceVariant,
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-            alignment: Alignment.centerLeft,
+            minimumSize: const Size(64, 44),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             foregroundColor: theme.colorScheme.onSurfaceVariant,
             textStyle: theme.textTheme.bodySmall,
           ),
@@ -35,7 +38,10 @@ class _Row extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(left: 14, right: 16),
+      padding: EdgeInsets.only(
+        left: AppSpacing.md,
+        right: AppSpacing.lg,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
