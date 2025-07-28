@@ -8,21 +8,14 @@ class CommentBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            vertical: AppSpacing.lg,
-            horizontal: AppSpacing.xlg,
-          ),
-          sliver: SliverFillRemaining(
-            hasScrollBody: false,
-            child: SafeArea(
-              child: _Section(),
-            ),
-          ),
-        ),
-      ],
+    return const SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        vertical: AppSpacing.lg,
+        horizontal: AppSpacing.xlg,
+      ),
+      child: SafeArea(
+        child: _Section(),
+      ),
     );
   }
 }

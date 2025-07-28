@@ -34,7 +34,15 @@ abstract class AppTheme {
     return AppBarTheme(
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
-      centerTitle: true,
+      centerTitle: false,
+      shape: Border(
+        bottom: BorderSide(
+          color: colors.outlineVariant,
+        ),
+      ),
+      actionsPadding: const EdgeInsets.only(
+        right: AppSpacing.sm,
+      ),
     );
   }
 

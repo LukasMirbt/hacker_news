@@ -45,7 +45,9 @@ class ReplyParent extends StatelessWidget {
             const ReplyParentExpansionToggled(),
           );
         },
-        onMorePressed: () {},
+        onMorePressed: () {
+          // TODO(LukasMirbt): Implement ReplyOptionsSheet
+        },
         onLinkPressed: (url) {
           context.read<ReplyBloc>().add(
             ReplyLinkPressed(url),

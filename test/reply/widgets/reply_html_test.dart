@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/reply/reply.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:reply_repository/reply_repository.dart';
 
 import '../../app/pump_app.dart';
 
@@ -16,7 +15,7 @@ class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
 
 class _MockReplyState extends Mock implements ReplyState {}
 
-class _MockReplyForm extends Mock implements ReplyForm {}
+class _MockReplyParentModel extends Mock implements ReplyParentModel {}
 
 void main() {
   const htmlText = 'htmlText';
@@ -24,15 +23,15 @@ void main() {
   group(ReplyHtml, () {
     late ReplyBloc bloc;
     late ReplyState state;
-    late ReplyForm form;
+    late ReplyParentModel parent;
 
     setUp(() {
       bloc = _MockReplyBloc();
       state = _MockReplyState();
-      form = _MockReplyForm();
+      parent = _MockReplyParentModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.form).thenReturn(form);
-      when(() => form.htmlText).thenReturn(htmlText);
+      when(() => state.parent).thenReturn(parent);
+      when(() => parent.htmlText).thenReturn(htmlText);
     });
 
     Widget buildSubject() {

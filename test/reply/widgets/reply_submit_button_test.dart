@@ -15,22 +15,28 @@ class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
 
 class _MockReplyState extends Mock implements ReplyState {}
 
+class _MockReplyFormModel extends Mock implements ReplyFormModel {}
+
 void main() {
-  group(ReplyButton, () {
+  group(ReplySubmitButton, () {
     late ReplyBloc bloc;
     late ReplyState state;
+    late ReplyFormModel form;
 
     setUp(() {
       bloc = _MockReplyBloc();
       state = _MockReplyState();
+      form = _MockReplyFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.isSubmissionLoading).thenReturn(false);
+      when(() => state.form).thenReturn(form);
+      when(() => form.isSubmissionLoading).thenReturn(false);
+      when(() => form.isValid).thenReturn(false);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ReplyButton(),
+        child: ReplySubmitButton(),
       );
     }
 
@@ -42,25 +48,36 @@ void main() {
       }
 
       group('isLoading', () {
-        testWidgets('is true when state.isSubmissionLoading', (tester) async {
-          when(() => state.isSubmissionLoading).thenReturn(true);
+        testWidgets('is true when form.isSubmissionLoading', (tester) async {
+          when(() => form.isSubmissionLoading).thenReturn(true);
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           expect(widget.isLoading, true);
         });
 
-        testWidgets('is false when !state.isSubmissionLoading', (tester) async {
+        testWidgets('is false when !form.isSubmissionLoading', (tester) async {
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           expect(widget.isLoading, false);
         });
       });
 
-      testWidgets('adds $ReplySubmitted onPressed', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.onPressed?.call();
-        verify(() => bloc.add(ReplySubmitted()));
+      group('onPressed', () {
+        testWidgets('adds $ReplySubmitted when isValid', (tester) async {
+          when(() => form.isValid).thenReturn(true);
+          await tester.pumpApp(buildSubject());
+          final widget = findWidget(tester);
+          widget.onPressed?.call();
+          verify(() => bloc.add(ReplySubmitted()));
+        });
+
+        testWidgets('does not add $ReplySubmitted '
+            'when !isValid', (tester) async {
+          await tester.pumpApp(buildSubject());
+          final widget = findWidget(tester);
+          widget.onPressed?.call();
+          verifyNever(() => bloc.add(ReplySubmitted()));
+        });
       });
     });
   });

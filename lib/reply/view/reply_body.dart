@@ -15,17 +15,18 @@ class ReplyBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: AppSpacing.xs),
                 ReplyParent(),
-                Divider(height: 1),
+                ReplyDivider(),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSpacing.xlg,
-                      vertical: AppSpacing.lg,
                     ),
                     child: ReplyTextField(),
                   ),
                 ),
+                SizedBox(height: AppSpacing.lg),
               ],
             ),
           ),

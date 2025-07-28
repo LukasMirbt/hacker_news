@@ -126,11 +126,29 @@ void main() async {
         expect(widget.shape, null);
       });
 
-      testWidgets('shape is $Border when !isHome', (tester) async {
+      testWidgets('shape is correct when !isHome', (tester) async {
         when(() => shell.currentIndex).thenReturn(1);
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.shape, isA<Border>());
+        final context = tester.element(
+          find.byWidget(widget),
+        );
+        final colorScheme = ColorScheme.of(context);
+        expect(
+          widget.shape,
+          Border(
+            bottom: BorderSide(
+              color: colorScheme.outlineVariant,
+            ),
+          ),
+        );
+      });
+
+      testWidgets('shape is correct when isHome', (tester) async {
+        when(() => shell.currentIndex).thenReturn(0);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.shape, Border());
       });
 
       testWidgets('actions contains $LoginButton '

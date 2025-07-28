@@ -46,7 +46,9 @@ void main() {
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            submissionStatus: SubmissionStatus.success,
+            form: initialState.form.copyWith(
+              submissionStatus: SubmissionStatus.success,
+            ),
           ),
         ),
       );

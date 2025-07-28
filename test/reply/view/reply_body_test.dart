@@ -49,6 +49,11 @@ void main() {
       expect(find.byType(ReplyParent), findsOneWidget);
     });
 
+    testWidgets('renders $ReplyDivider', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ReplyDivider), findsOneWidget);
+    });
+
     testWidgets('renders $ReplyTextField', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(ReplyTextField), findsOneWidget);

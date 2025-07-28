@@ -27,7 +27,7 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final isHome = currentIndex == 0;
 
-    ShapeBorder? shape;
+    ShapeBorder shape;
 
     if (!isHome) {
       shape = Border(
@@ -35,6 +35,8 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: colorScheme.outlineVariant,
         ),
       );
+    } else {
+      shape = const Border();
     }
 
     return AppBar(

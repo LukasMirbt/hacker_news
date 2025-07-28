@@ -1,4 +1,5 @@
 export 'reply_app_bar.dart';
+export 'reply_divider.dart';
 export 'reply_failure_listener.dart';
 export 'reply_html.dart';
 export 'reply_parent.dart';
