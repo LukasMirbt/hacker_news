@@ -66,12 +66,12 @@ void main() {
       );
     });
 
-    Widget buildSubject([CommentModel? commentModel]) {
+    Widget buildSubject() {
       return BlocProvider.value(
         value: commentListBloc,
         child: BlocProvider.value(
           value: postHeaderBloc,
-          child: CommentWidget(commentModel ?? item),
+          child: CommentWidget(item),
         ),
       );
     }
@@ -127,13 +127,10 @@ void main() {
     testWidgets(
       'shows $CommentOptionsSheet onMorePressed',
       (tester) async {
-        await tester.pumpApp(
-          buildSubject(
-            CommentModel(
-              comment: CommentPlaceholder(),
-            ),
-          ),
+        when(item.toRepository).thenReturn(
+          CommentPlaceholder(),
         );
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.data.onMorePressed();
         await tester.pump();

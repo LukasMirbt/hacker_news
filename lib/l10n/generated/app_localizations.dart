@@ -472,6 +472,12 @@ abstract class AppLocalizations {
   /// **'Reply'**
   String get reply_submitAction;
 
+  /// No description provided for @replyOptions_openOnWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on web'**
+  String get replyOptions_openOnWeb;
+
   /// No description provided for @settings_logout.
   ///
   /// In en, this message translates to:

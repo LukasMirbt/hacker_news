@@ -82,6 +82,13 @@ void main() async {
       });
     });
 
+    group('toRepository', () {
+      test('returns parent', () {
+        final model = createSubject();
+        expect(model.toRepository(), parent);
+      });
+    });
+
     group('age', () {
       test('returns correct string', () {
         final age = DateTime(1);

@@ -214,6 +214,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reply_submitAction => 'Reply';
 
   @override
+  String get replyOptions_openOnWeb => 'Open on web';
+
+  @override
   String get settings_logout => 'Logout';
 
   @override
