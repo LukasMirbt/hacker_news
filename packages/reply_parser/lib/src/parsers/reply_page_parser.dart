@@ -12,6 +12,7 @@ class ReplyPageParser {
 
   ReplyPageData parse(Element fatItem) {
     var parentData = ReplyParentData.empty;
+    ReplyFormData? formData;
 
     final athing = fatItem.querySelector('.athing');
 
@@ -19,7 +20,11 @@ class ReplyPageParser {
       parentData = _parentParser.parse(athing);
     }
 
-    final formData = _formParser.parse(fatItem);
+    final form = fatItem.querySelector('form[action="comment"]');
+
+    if (form != null) {
+      formData = _formParser.parse(fatItem);
+    }
 
     return ReplyPageData(
       parentData: parentData,

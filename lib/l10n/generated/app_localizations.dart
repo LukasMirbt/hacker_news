@@ -442,6 +442,18 @@ abstract class AppLocalizations {
   /// **'Reply'**
   String get reply_title;
 
+  /// No description provided for @reply_disabledExplanationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed for replies'**
+  String get reply_disabledExplanationTitle;
+
+  /// No description provided for @reply_disabledExplanationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.'**
+  String get reply_disabledExplanationSubtitle;
+
   /// No description provided for @reply_age.
   ///
   /// In en, this message translates to:

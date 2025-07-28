@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/reply/reply.dart';
 
 class ReplyBody extends StatelessWidget {
@@ -23,7 +24,7 @@ class ReplyBody extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSpacing.xlg,
                     ),
-                    child: ReplyTextField(),
+                    child: _Body(),
                   ),
                 ),
                 SizedBox(height: AppSpacing.lg),
@@ -33,5 +34,20 @@ class ReplyBody extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    final isReplyingEnabled = context.select(
+      (ReplyBloc bloc) => bloc.state.form.isReplyingEnabled,
+    );
+
+    if (isReplyingEnabled) return const ReplyTextField();
+
+    return const ReplyDisabledExplanation();
   }
 }

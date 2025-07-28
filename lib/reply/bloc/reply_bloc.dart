@@ -63,15 +63,12 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     Emitter<ReplyState> emit,
   ) async {
     try {
-      // TODO(LukasMirbt): Handle replying being disabled
-
       final page = await _replyRepository.fetchReplyPage(
         url: state.url,
       );
 
       final parent = page.parent;
       final form = page.form;
-
       final savedReply = _savedReplyModel.load(form);
 
       emit(
