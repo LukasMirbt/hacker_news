@@ -18,6 +18,11 @@ class ReplyParentModel extends Equatable {
     return WebRedirect(url: url);
   }
 
+  String get shareText {
+    final url = _links.commentUrl(_parent.id);
+    return url.toString();
+  }
+
   @override
   List<Object?> get props => [
     _parent,

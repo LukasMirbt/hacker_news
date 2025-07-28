@@ -11,7 +11,8 @@ import 'package:reply_repository/reply_repository.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockReplyOptionsBloc extends MockBloc<void, ReplyOptionsState>
+class _MockReplyOptionsBloc
+    extends MockBloc<ReplyOptionsEvent, ReplyOptionsState>
     implements ReplyOptionsBloc {}
 
 void main() {
@@ -52,6 +53,11 @@ void main() {
     testWidgets('renders $AppBottomSheet', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppBottomSheet), findsOneWidget);
+    });
+
+    testWidgets('renders $ShareOption', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ShareOption), findsOneWidget);
     });
 
     testWidgets('renders $OpenOnWebOption', (tester) async {

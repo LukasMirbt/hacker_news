@@ -64,6 +64,7 @@
   "reply_age": "{age} ago",
   "reply_textFieldHintText": "Your reply",
   "reply_submitAction": "Reply",
+  "replyOptions_share": "Share",
   "replyOptions_openOnWeb": "Open on web",
   "settings_logout": "Logout",
   "settings_themeSectionTitle": "Theme",

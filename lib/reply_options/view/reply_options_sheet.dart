@@ -26,6 +26,7 @@ class ReplyOptionsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return const AppBottomSheet(
       children: [
+        ShareOption(),
         OpenOnWebOption(),
       ],
     );

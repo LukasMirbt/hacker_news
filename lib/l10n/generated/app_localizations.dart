@@ -478,6 +478,12 @@ abstract class AppLocalizations {
   /// **'Reply'**
   String get reply_submitAction;
 
+  /// No description provided for @replyOptions_share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get replyOptions_share;
+
   /// No description provided for @replyOptions_openOnWeb.
   ///
   /// In en, this message translates to:
