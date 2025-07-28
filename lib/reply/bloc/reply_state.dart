@@ -8,8 +8,6 @@ enum FetchStatus {
   success,
   failure;
 
-  bool get isLoading => this == loading;
-  bool get isFailure => this == failure;
   bool get isSuccess => this == success;
 }
 

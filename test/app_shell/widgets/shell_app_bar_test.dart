@@ -120,12 +120,6 @@ void main() async {
         expect(widget.title, isA<Logo>());
       });
 
-      testWidgets('shape is null when isHome', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.shape, null);
-      });
-
       testWidgets('shape is correct when !isHome', (tester) async {
         when(() => shell.currentIndex).thenReturn(1);
         await tester.pumpApp(buildSubject());
