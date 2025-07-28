@@ -201,6 +201,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reply_textFieldHintText => 'Your reply';
+
+  @override
   String get reply_submitAction => 'Reply';
 
   @override

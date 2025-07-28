@@ -46,7 +46,7 @@ class _ReplyTextFieldState extends State<ReplyTextField> {
         expands: true,
         maxLines: null,
         decoration: InputDecoration.collapsed(
-          hintText: l10n.comment_textFieldHintText,
+          hintText: l10n.reply_textFieldHintText,
         ),
         onChanged: (value) {
           context.read<ReplyBloc>().add(

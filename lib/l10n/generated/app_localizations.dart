@@ -448,6 +448,12 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String reply_age({required Object age});
 
+  /// No description provided for @reply_textFieldHintText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reply'**
+  String get reply_textFieldHintText;
+
   /// No description provided for @reply_submitAction.
   ///
   /// In en, this message translates to:
