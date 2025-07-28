@@ -23,7 +23,7 @@ class ReplyPageParser {
     final form = fatItem.querySelector('form[action="comment"]');
 
     if (form != null) {
-      formData = _formParser.parse(fatItem);
+      formData = _formParser.parse(form);
     }
 
     return ReplyPageData(
