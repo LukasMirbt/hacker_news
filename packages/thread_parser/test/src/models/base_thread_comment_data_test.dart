@@ -2,90 +2,75 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:thread_parser/thread_parser.dart';
 
 void main() {
-  group(ThreadFeedItemData, () {
+  group(BaseThreadCommentData, () {
     group('fromParsed', () {
-      test('returns $ThreadFeedItemData with correct values '
+      test('returns $BaseThreadCommentData with correct values '
           'when data is non-null', () {
         const id = 'id';
+        const indent = 1;
         const hnuser = HnuserPlaceholder();
         final age = DateTime(1);
         const htmlText = 'htmlText';
-        const indent = 1;
-        const score = 1;
-        const hasBeenUpvoted = true;
-        const upvoteUrl = 'upvoteUrl';
+        const replyUrl = 'replyUrl';
         const parentUrl = 'parentUrl';
         const contextUrl = 'contextUrl';
         const onUrl = 'onUrl';
         const onTitle = 'onTitle';
-        const replyUrl = 'replyUrl';
 
         expect(
-          ThreadFeedItemData.fromParsed(
+          BaseThreadCommentData.fromParsed(
             id: id,
+            indent: indent,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
-            indent: indent,
-            score: score,
-            hasBeenUpvoted: hasBeenUpvoted,
-            upvoteUrl: upvoteUrl,
+            replyUrl: replyUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
             onUrl: onUrl,
             onTitle: onTitle,
-            replyUrl: replyUrl,
           ),
-          ThreadFeedItemData(
+          BaseThreadCommentData(
             id: id,
+            indent: indent,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
-            indent: indent,
-            score: score,
-            hasBeenUpvoted: hasBeenUpvoted,
-            upvoteUrl: upvoteUrl,
+            replyUrl: replyUrl,
             parentUrl: parentUrl,
             contextUrl: contextUrl,
             onUrl: onUrl,
             onTitle: onTitle,
-            replyUrl: replyUrl,
           ),
         );
       });
 
-      test('returns $ThreadFeedItemData with correct values '
+      test('returns $BaseThreadCommentData with correct values '
           'when data is null', () {
         expect(
-          ThreadFeedItemData.fromParsed(
+          BaseThreadCommentData.fromParsed(
             id: null,
+            indent: null,
             hnuser: null,
             age: null,
             htmlText: null,
-            indent: null,
-            score: null,
-            hasBeenUpvoted: null,
-            upvoteUrl: null,
+            replyUrl: null,
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
             onTitle: null,
-            replyUrl: null,
           ),
-          ThreadFeedItemData(
+          BaseThreadCommentData(
             id: '',
+            indent: 0,
             hnuser: Hnuser.empty,
             age: DateTime(0),
             htmlText: '',
-            indent: 0,
-            score: null,
-            hasBeenUpvoted: null,
-            upvoteUrl: null,
+            replyUrl: null,
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
             onTitle: null,
-            replyUrl: null,
           ),
         );
       });

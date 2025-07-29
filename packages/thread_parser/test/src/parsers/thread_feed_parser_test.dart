@@ -4,17 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:thread_parser/thread_parser.dart';
 
-class _MockThreadCommentParser extends Mock implements ThreadFeedItemParser {}
+class _MockThreadCommentParser extends Mock implements ThreadCommentParser {}
 
 class _MockDocument extends Mock implements Document {}
 
 class _MockElement extends Mock implements Element {}
 
-class _MockThreadCommentData extends Mock implements ThreadFeedItemData {}
+class _MockOtherUserThreadCommentData extends Mock
+    implements OtherUserThreadCommentData {}
 
 void main() {
   group(ThreadFeedParser, () {
-    late ThreadFeedItemParser commentParser;
+    late ThreadCommentParser commentParser;
     late Document document;
 
     setUp(() {
@@ -32,7 +33,7 @@ void main() {
       final commentElement = _MockElement();
       final commentElements = [commentElement];
 
-      final comment = _MockThreadCommentData();
+      final comment = _MockOtherUserThreadCommentData();
       final commentList = [comment];
 
       final querySelectorAll = () => document.querySelectorAll('.athing.comtr');
@@ -40,7 +41,7 @@ void main() {
       final parseComment = () => commentParser.parse(commentElement);
 
       test('calls querySelectorAll, parses each element '
-          'and returns ${ThreadFeedItemData}s', () {
+          'and returns ${ThreadCommentData}s', () {
         when(querySelectorAll).thenReturn(commentElements);
         when(parseComment).thenReturn(comment);
         final parser = createSubject();

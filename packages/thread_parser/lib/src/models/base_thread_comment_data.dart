@@ -1,83 +1,68 @@
 import 'package:equatable/equatable.dart';
 import 'package:thread_parser/thread_parser.dart';
 
-class ThreadFeedItemData extends Equatable {
-  const ThreadFeedItemData({
+class BaseThreadCommentData extends Equatable {
+  const BaseThreadCommentData({
     required this.id,
+    required this.indent,
     required this.hnuser,
     required this.age,
     required this.htmlText,
-    required this.indent,
-    required this.score,
-    required this.hasBeenUpvoted,
-    required this.upvoteUrl,
+    required this.replyUrl,
     required this.parentUrl,
     required this.contextUrl,
     required this.onUrl,
     required this.onTitle,
-    required this.replyUrl,
   });
 
-  factory ThreadFeedItemData.fromParsed({
+  factory BaseThreadCommentData.fromParsed({
     required String? id,
+    required int? indent,
     required Hnuser? hnuser,
     required DateTime? age,
     required String? htmlText,
-    required int? indent,
-    required int? score,
-    required bool? hasBeenUpvoted,
-    required String? upvoteUrl,
+    required String? replyUrl,
     required String? parentUrl,
     required String? contextUrl,
     required String? onUrl,
     required String? onTitle,
-    required String? replyUrl,
   }) {
-    return ThreadFeedItemData(
+    return BaseThreadCommentData(
       id: id ?? '',
+      indent: indent ?? 0,
       hnuser: hnuser ?? Hnuser.empty,
       age: age ?? DateTime(0),
       htmlText: htmlText ?? '',
-      indent: indent ?? 0,
-      score: score,
-      hasBeenUpvoted: hasBeenUpvoted,
-      upvoteUrl: upvoteUrl,
+      replyUrl: replyUrl,
       parentUrl: parentUrl,
       contextUrl: contextUrl,
       onUrl: onUrl,
       onTitle: onTitle,
-      replyUrl: replyUrl,
     );
   }
 
   final String id;
+  final int indent;
   final Hnuser hnuser;
   final DateTime age;
   final String htmlText;
-  final int indent;
-  final int? score;
-  final bool? hasBeenUpvoted;
-  final String? upvoteUrl;
+  final String? replyUrl;
   final String? parentUrl;
   final String? contextUrl;
   final String? onUrl;
   final String? onTitle;
-  final String? replyUrl;
 
   @override
   List<Object?> get props => [
     id,
+    indent,
     hnuser,
     age,
     htmlText,
-    indent,
-    score,
-    hasBeenUpvoted,
-    upvoteUrl,
+    replyUrl,
     parentUrl,
     contextUrl,
     onUrl,
     onTitle,
-    replyUrl,
   ];
 }
