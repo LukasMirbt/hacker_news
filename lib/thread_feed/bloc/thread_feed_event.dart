@@ -28,26 +28,26 @@ final class ThreadFeedRefreshTriggered extends ThreadFeedEvent {
   const ThreadFeedRefreshTriggered();
 }
 
-final class ThreadFeedItemExpansionToggled extends ThreadFeedEvent {
-  const ThreadFeedItemExpansionToggled(this.item);
+final class ThreadFeedExpansionToggled extends ThreadFeedEvent {
+  const ThreadFeedExpansionToggled(this.comment);
 
-  final ThreadFeedItemModel item;
-
-  @override
-  List<Object> get props => [item];
-}
-
-final class ThreadFeedItemVotePressed extends ThreadFeedEvent {
-  const ThreadFeedItemVotePressed(this.item);
-
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel comment;
 
   @override
-  List<Object> get props => [item];
+  List<Object> get props => [comment];
 }
 
-final class ThreadFeedItemLinkPressed extends ThreadFeedEvent {
-  const ThreadFeedItemLinkPressed(this.url);
+final class ThreadFeedVotePressed extends ThreadFeedEvent {
+  const ThreadFeedVotePressed(this.comment);
+
+  final OtherUserThreadCommentModel comment;
+
+  @override
+  List<Object> get props => [comment];
+}
+
+final class ThreadFeedLinkPressed extends ThreadFeedEvent {
+  const ThreadFeedLinkPressed(this.url);
 
   final String url;
 

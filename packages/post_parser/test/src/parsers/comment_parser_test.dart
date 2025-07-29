@@ -21,14 +21,14 @@ void main() {
   const hasBeenUpvoted = true;
 
   group(CommentParser, () {
-    late BaseCommentParser baseCommentParser;
+    late BaseCommentParser baseParser;
     late ScoreParser scoreParser;
     late UpvoteUrlParser upvoteUrlParser;
     late HasBeenUpvotedParser hasBeenUpvotedParser;
     late Element element;
 
     setUp(() {
-      baseCommentParser = _MockBaseCommentParser();
+      baseParser = _MockBaseCommentParser();
       scoreParser = _MockScoreParser();
       upvoteUrlParser = _MockUpvoteUrlParser();
       hasBeenUpvotedParser = _MockHasBeenUpvotedParser();
@@ -38,7 +38,7 @@ void main() {
 
     CommentParser createSubject() {
       return CommentParser(
-        baseCommentParser: baseCommentParser,
+        baseCommentParser: baseParser,
         upvoteUrlParser: upvoteUrlParser,
         hasBeenUpvotedParser: hasBeenUpvotedParser,
         scoreParser: scoreParser,
@@ -46,7 +46,7 @@ void main() {
     }
 
     group('parse', () {
-      final parseBase = () => baseCommentParser.parse(element);
+      final parseBase = () => baseParser.parse(element);
       final parseScore = () => scoreParser.parse(element);
       final parseUpvoteUrl = () => upvoteUrlParser.parse(element);
       final parseHasBeenUpvoted = () => hasBeenUpvotedParser.parse(element);

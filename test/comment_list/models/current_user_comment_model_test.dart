@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';

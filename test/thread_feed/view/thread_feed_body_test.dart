@@ -32,8 +32,8 @@ void main() {
   const padding = EdgeInsets.zero;
 
   final visibleItems = [
-    ThreadFeedItemModel(
-      item: ThreadFeedItemPlaceholder(),
+    OtherUserThreadCommentModel(
+      comment: OtherUserThreadCommentPlaceholder(),
     ),
   ];
 

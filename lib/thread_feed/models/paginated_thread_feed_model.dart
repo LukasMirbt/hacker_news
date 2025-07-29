@@ -9,7 +9,7 @@ class PaginatedThreadFeedModel extends Equatable {
   PaginatedThreadFeedModel({
     required this.feed,
     required this.items,
-    CollapseHandler<ThreadFeedItemModel>? collapseHandler,
+    CollapseHandler<ThreadCommentModel>? collapseHandler,
   }) : _collapseHandler = collapseHandler ?? const CollapseHandler(),
        visibleItems = [
          for (final item in items)
@@ -22,19 +22,19 @@ class PaginatedThreadFeedModel extends Equatable {
     return PaginatedThreadFeedModel(
       feed: feed,
       items: [
-        for (final item in feed.items) ThreadFeedItemModel(item: item),
+        for (final item in feed.items) ThreadCommentModel.from(item),
       ],
     );
   }
 
-  final CollapseHandler<ThreadFeedItemModel> _collapseHandler;
+  final CollapseHandler<ThreadCommentModel> _collapseHandler;
 
   @visibleForTesting
   final PaginatedThreadFeed feed;
 
-  final List<ThreadFeedItemModel> items;
+  final List<ThreadCommentModel> items;
 
-  final List<ThreadFeedItemModel> visibleItems;
+  final List<ThreadCommentModel> visibleItems;
 
   bool get isPlaceholder => false;
   bool get hasReachedMax => feed.hasReachedMax;
@@ -42,13 +42,13 @@ class PaginatedThreadFeedModel extends Equatable {
 
   PaginatedThreadFeed toRepository() => feed;
 
-  ThreadFeedItemModel? findById(String id) {
+  ThreadCommentModel? findById(String id) {
     return items.firstWhereOrNull(
       (item) => item.id == id,
     );
   }
 
-  PaginatedThreadFeedModel update(ThreadFeedItemModel updatedItem) {
+  PaginatedThreadFeedModel update(ThreadCommentModel updatedItem) {
     final updatedList = [
       for (final item in items)
         if (item.id == updatedItem.id) updatedItem else item,
@@ -61,8 +61,8 @@ class PaginatedThreadFeedModel extends Equatable {
   }
 
   PaginatedThreadFeedModel insertAfter({
-    required ThreadFeedItemModel afterItem,
-    required ThreadFeedItemModel newItem,
+    required ThreadCommentModel afterItem,
+    required ThreadCommentModel newItem,
   }) {
     final index = items.indexOf(afterItem);
     if (index == -1) return this;
@@ -79,7 +79,7 @@ class PaginatedThreadFeedModel extends Equatable {
     final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,
       newItems: [
-        for (final item in feed.items) ThreadFeedItemModel(item: item),
+        for (final item in feed.items) ThreadCommentModel.from(item),
       ],
     );
 
@@ -90,11 +90,11 @@ class PaginatedThreadFeedModel extends Equatable {
   }
 
   PaginatedThreadFeedModel toggleExpansion({
-    required ThreadFeedItemModel item,
+    required ThreadCommentModel comment,
   }) {
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
-      itemToToggle: item,
+      itemToToggle: comment,
     );
     return PaginatedThreadFeedModel(
       feed: feed,

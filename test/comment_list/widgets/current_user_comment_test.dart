@@ -30,14 +30,11 @@ class _MockDateFormatterLocalizations extends Mock
     implements DateFormatterLocalizations {}
 
 void main() {
-  const id = 'id';
   const isExpanded = true;
   const user = 'user';
   const age = 'age';
   const htmlText = 'htmlText';
   const score = 'score';
-
-  const postId = 'postId';
 
   group(CurrentUserComment, () {
     late CommentListBloc commentListBloc;
@@ -48,17 +45,16 @@ void main() {
       commentListBloc = _MockCommentListBloc();
       postHeaderBloc = _MockPostHeaderBloc();
       item = _MockCurrentUserCommentModel();
-      when(() => item.id).thenReturn(id);
-      when(() => item.isExpanded).thenReturn(isExpanded);
-      when(() => item.user).thenReturn(user);
       registerFallbackValue(_MockAppLocalizations());
       registerFallbackValue(_MockDateFormatterLocalizations());
+      when(() => item.isExpanded).thenReturn(isExpanded);
+      when(() => item.user).thenReturn(user);
       when(() => item.age(any(), any())).thenReturn(age);
       when(() => item.htmlText).thenReturn(htmlText);
       when(() => item.score(any())).thenReturn(score);
       when(() => postHeaderBloc.state).thenReturn(
         PostHeaderState.initial(
-          id: postId,
+          id: 'id',
           visitedPosts: {},
         ),
       );

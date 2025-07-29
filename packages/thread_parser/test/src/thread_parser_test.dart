@@ -12,7 +12,8 @@ class _MockMoreLinkParser extends Mock implements MoreLinkParser {}
 
 class _MockDocument extends Mock implements Document {}
 
-class _MockThreadCommentData extends Mock implements ThreadFeedItemData {}
+class _MockOtherUserThreadCommentData extends Mock
+    implements OtherUserThreadCommentData {}
 
 void main() {
   group(ThreadParser, () {
@@ -38,7 +39,7 @@ void main() {
 
     group('parse', () {
       const html = 'html';
-      final comments = [_MockThreadCommentData()];
+      final comments = [_MockOtherUserThreadCommentData()];
       const moreLink = 'moreLink';
 
       final parseHtml = () => htmlParser.parse(html);

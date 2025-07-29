@@ -1,7 +1,15 @@
+import 'package:equatable/equatable.dart';
 import 'package:hacker_client/comment_list/comment_list.dart'
     hide Comment, CurrentUserComment;
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
+
+class CommentListReplyFailure with EquatableMixin implements Exception {
+  const CommentListReplyFailure();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class CommentListReplyModel {
   const CommentListReplyModel();
@@ -12,7 +20,10 @@ class CommentListReplyModel {
   }) {
     final form = update.form;
     final afterItem = commentList.findById(form.parentId);
-    if (afterItem == null) return commentList;
+
+    if (afterItem == null) {
+      throw const CommentListReplyFailure();
+    }
 
     final newItem = CurrentUserCommentModel(
       comment: CurrentUserComment.from(update.comment),

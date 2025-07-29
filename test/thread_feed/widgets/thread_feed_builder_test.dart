@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:thread_repository/thread_repository.dart' hide ThreadFeedItem;
+import 'package:thread_repository/thread_repository.dart' hide ThreadComment;
 
 import '../../app/pump_app.dart';
 
@@ -20,8 +20,8 @@ class _MockPaginatedThreadFeedModel extends Mock
 void main() {
   final initialState = ThreadFeedState.initial();
 
-  final item = ThreadFeedItemModel(
-    item: ThreadFeedItemPlaceholder(),
+  final comment = OtherUserThreadCommentModel(
+    comment: OtherUserThreadCommentPlaceholder(),
   );
 
   group(ThreadFeedBuilder, () {
@@ -66,8 +66,8 @@ void main() {
     });
 
     group('itemBuilder', () {
-      testWidgets('renders $ThreadFeedItem', (tester) async {
-        final visibleItems = [item];
+      testWidgets('renders $ThreadComment', (tester) async {
+        final visibleItems = [comment];
         when(() => feed.visibleItems).thenReturn(visibleItems);
         final builder = createSubject();
 
@@ -77,12 +77,12 @@ void main() {
           ),
         );
 
-        expect(find.byType(ThreadFeedItem), findsOneWidget);
+        expect(find.byType(ThreadComment), findsOneWidget);
       });
 
       testWidgets('does not render $ThreadFeedFooter '
           'when !isLast', (tester) async {
-        final visibleItems = [item, item];
+        final visibleItems = [comment, comment];
         when(() => feed.visibleItems).thenReturn(visibleItems);
         final builder = createSubject();
 
@@ -96,7 +96,7 @@ void main() {
       });
 
       testWidgets('renders $ThreadFeedFooter when isLast', (tester) async {
-        final visibleItems = [item, item];
+        final visibleItems = [comment, comment];
         when(() => feed.visibleItems).thenReturn(visibleItems);
         final builder = createSubject();
 
@@ -113,13 +113,13 @@ void main() {
     group('separatorBuilder', () {
       testWidgets('renders $ThreadFeedTopLevelDivider '
           'when nextComment.isTopLevel', (tester) async {
-        final firstComment = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(
+        final firstComment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(
+        final secondComment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 0,
           ),
         );
@@ -139,14 +139,14 @@ void main() {
 
       testWidgets('returns $SizedBox.shrink when !nextComment.isTopLevel '
           'and !item.isExpanded', (tester) async {
-        final firstComment = ThreadFeedItemModel(
+        final firstComment = OtherUserThreadCommentModel(
           isExpanded: false,
-          item: ThreadFeedItemPlaceholder(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(
+        final secondComment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 1,
           ),
         );
@@ -170,13 +170,13 @@ void main() {
       testWidgets('returns $SizedBox with correct height '
           'when !nextComment.isTopLevel '
           'and item.isExpanded', (tester) async {
-        final firstComment = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(
+        final firstComment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(
+        final secondComment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
             indent: 1,
           ),
         );

@@ -20,7 +20,7 @@ class CurrentUserCommentData extends CommentData {
 
   @override
   List<Object?> get props => [
-    score,
     ...super.props,
+    score,
   ];
 }

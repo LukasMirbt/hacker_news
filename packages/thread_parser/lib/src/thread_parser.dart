@@ -17,6 +17,7 @@ class ThreadParser {
     final document = _htmlParser.parse(html);
     final comments = _commentListParser.parse(document);
     final moreLink = _moreLinkParser.parse(document);
+
     return ThreadFeedPageData(
       comments: comments,
       moreLink: moreLink,

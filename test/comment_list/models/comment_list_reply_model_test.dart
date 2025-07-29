@@ -40,14 +40,17 @@ void main() {
     CommentListReplyModel createSubject() => CommentListReplyModel();
 
     group('updateCommentList', () {
-      test('returns commentList when findById returns null', () {
+      test('throws $CommentListReplyFailure when findById '
+          'returns null', () {
         final model = createSubject();
         expect(
-          model.updateCommentList(
+          () => model.updateCommentList(
             update: update,
             commentList: commentList,
           ),
-          commentList,
+          throwsA(
+            CommentListReplyFailure(),
+          ),
         );
       });
 

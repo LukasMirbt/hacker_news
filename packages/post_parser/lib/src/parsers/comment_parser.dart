@@ -6,19 +6,19 @@ class CommentParser {
     UpvoteUrlParser? upvoteUrlParser,
     HasBeenUpvotedParser? hasBeenUpvotedParser,
     ScoreParser? scoreParser,
-  }) : _baseCommentParser = baseCommentParser ?? const BaseCommentParser(),
+  }) : _baseParser = baseCommentParser ?? const BaseCommentParser(),
        _upvoteUrlParser = upvoteUrlParser ?? const UpvoteUrlParser(),
        _hasBeenUpvotedParser =
            hasBeenUpvotedParser ?? const HasBeenUpvotedParser(),
        _scoreParser = scoreParser ?? const ScoreParser();
 
-  final BaseCommentParser _baseCommentParser;
+  final BaseCommentParser _baseParser;
   final UpvoteUrlParser _upvoteUrlParser;
   final HasBeenUpvotedParser _hasBeenUpvotedParser;
   final ScoreParser _scoreParser;
 
   CommentData parse(Element element) {
-    final base = _baseCommentParser.parse(element);
+    final base = _baseParser.parse(element);
     final score = _scoreParser.parse(element);
 
     if (score != null) {

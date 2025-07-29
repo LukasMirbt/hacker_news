@@ -8,18 +8,19 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockThreadFeedItemModel extends Mock implements ThreadFeedItemModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 void main() {
   group(ThreadFeedTopLevelDivider, () {
-    late ThreadFeedItemModel item;
+    late ThreadCommentModel comment;
 
     setUp(() {
-      item = _MockThreadFeedItemModel();
-      when(() => item.isExpanded).thenReturn(true);
+      comment = _MockOtherUserThreadCommentModel();
+      when(() => comment.isExpanded).thenReturn(true);
     });
 
-    Widget buildSubject() => ThreadFeedTopLevelDivider(item);
+    Widget buildSubject() => ThreadFeedTopLevelDivider(comment);
 
     Padding findPadding(WidgetTester tester) {
       return tester.widget<Padding>(
@@ -48,7 +49,7 @@ void main() {
     });
 
     testWidgets('has correct padding when !item.isExpanded', (tester) async {
-      when(() => item.isExpanded).thenReturn(false);
+      when(() => comment.isExpanded).thenReturn(false);
       await tester.pumpApp(buildSubject());
       final padding = findPadding(tester);
       expect(

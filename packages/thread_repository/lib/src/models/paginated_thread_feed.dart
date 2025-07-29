@@ -28,7 +28,7 @@ class PaginatedThreadFeed extends Equatable {
 
   final String? _next;
   final User user;
-  final List<ThreadFeedItem> items;
+  final List<ThreadComment> items;
   final bool isInitial;
 
   bool get isEmpty => !isInitial && items.isEmpty;
@@ -49,7 +49,7 @@ class PaginatedThreadFeed extends Equatable {
       next: nextPage.moreLink,
       items: [
         ...items,
-        for (final item in nextPage.comments) ThreadFeedItem.from(item),
+        for (final item in nextPage.comments) ThreadComment.from(item),
       ],
     );
   }

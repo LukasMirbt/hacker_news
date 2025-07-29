@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 
 class ThreadFeedTopLevelDivider extends StatelessWidget {
-  const ThreadFeedTopLevelDivider(this.item, {super.key});
+  const ThreadFeedTopLevelDivider(this.comment, {super.key});
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel comment;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: item.isExpanded ? AppSpacing.lg : AppSpacing.xs,
+        top: comment.isExpanded ? AppSpacing.lg : AppSpacing.xs,
         bottom: AppSpacing.xs,
       ),
       child: const Divider(height: 1),

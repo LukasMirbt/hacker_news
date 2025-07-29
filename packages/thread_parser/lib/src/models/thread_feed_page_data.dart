@@ -7,7 +7,7 @@ class ThreadFeedPageData extends Equatable {
     required this.moreLink,
   });
 
-  final List<ThreadFeedItemData> comments;
+  final List<ThreadCommentData> comments;
   final String? moreLink;
 
   @override

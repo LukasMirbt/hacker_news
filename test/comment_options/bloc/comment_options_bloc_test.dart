@@ -12,7 +12,7 @@ class _MockShareLauncher extends Mock implements ShareLauncher {}
 
 void main() {
   final comment = OtherUserCommentPlaceholder();
-  final initialState = CommentOptionsState.from(comment: comment);
+  final initialState = CommentOptionsState.from(comment);
 
   group(CommentOptionsBloc, () {
     late ShareLauncher shareLauncher;
@@ -29,10 +29,7 @@ void main() {
     }
 
     test('initial state is $CommentOptionsState', () {
-      expect(
-        buildBloc().state,
-        CommentOptionsState.from(comment: comment),
-      );
+      expect(buildBloc().state, initialState);
     });
 
     group(CommentOptionsSharePressed, () {

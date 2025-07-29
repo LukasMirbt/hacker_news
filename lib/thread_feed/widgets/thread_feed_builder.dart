@@ -15,18 +15,18 @@ class ThreadFeedBuilder {
   Widget itemBuilder(BuildContext context, int index) {
     final state = context.read<ThreadFeedBloc>().state;
     final items = state.feed.visibleItems;
-    final item = items[index];
+    final comment = items[index];
     final isLast = index == items.length - 1;
 
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.only(
-            left: item.indent * AppSpacing.md,
+            left: comment.indent * AppSpacing.md,
           ),
-          child: ThreadFeedItem(item: item),
+          child: ThreadComment(comment),
         ),
-        if (isLast) ThreadFeedFooter(item),
+        if (isLast) ThreadFeedFooter(comment),
       ],
     );
   }

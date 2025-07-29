@@ -10,7 +10,7 @@ void main() {
   final user = UserPlaceholder();
 
   final items = [
-    ThreadFeedItemPlaceholder(),
+    OtherUserThreadCommentPlaceholder(),
   ];
 
   const isInitial = false;
@@ -145,7 +145,7 @@ void main() {
       final nextPage = ThreadFeedPageDataPlaceholder(
         moreLink: 'moreLink',
         comments: [
-          ThreadFeedItemDataPlaceholder(),
+          OtherUserThreadCommentDataPlaceholder(),
         ],
       );
 
@@ -157,7 +157,7 @@ void main() {
             next: nextPage.moreLink,
             items: [
               ...feed.items,
-              for (final item in nextPage.comments) ThreadFeedItem.from(item),
+              for (final item in nextPage.comments) ThreadComment.from(item),
             ],
           ),
         );
