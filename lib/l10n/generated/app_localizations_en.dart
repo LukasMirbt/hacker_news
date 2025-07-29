@@ -263,11 +263,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String threadFeed_score({required Object score}) {
-    return '${score}p';
-  }
-
-  @override
   String get threadItemOptions_reply => 'Reply';
 
   @override

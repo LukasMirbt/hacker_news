@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
-import 'package:hacker_client/comment_options/comment_options.dart'
-    hide CommentModel;
+import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/post_header/post_header.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:post_repository/post_repository.dart' hide OtherUserComment;
 
 import '../../app/pump_app.dart';
 
@@ -22,7 +21,8 @@ class _MockCommentListBloc extends MockBloc<CommentListEvent, CommentListState>
 class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
     implements PostHeaderBloc {}
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockOtherUserCommentModel extends Mock
+    implements OtherUserCommentModel {}
 
 class _MockAppLocalizations extends Mock implements AppLocalizations {}
 
@@ -32,26 +32,24 @@ class _MockDateFormatterLocalizations extends Mock
 void main() {
   const id = 'id';
   const isExpanded = true;
-  const indent = 1;
   const user = 'user';
   const age = 'age';
-  const hasBeenUpvoted = true;
   const htmlText = 'htmlText';
+  const hasBeenUpvoted = true;
 
   const postId = 'postId';
 
-  group(CommentWidget, () {
+  group(OtherUserComment, () {
     late CommentListBloc commentListBloc;
     late PostHeaderBloc postHeaderBloc;
-    late CommentModel item;
+    late OtherUserCommentModel item;
 
     setUp(() {
       commentListBloc = _MockCommentListBloc();
       postHeaderBloc = _MockPostHeaderBloc();
-      item = _MockCommentModel();
+      item = _MockOtherUserCommentModel();
       when(() => item.id).thenReturn(id);
       when(() => item.isExpanded).thenReturn(isExpanded);
-      when(() => item.indent).thenReturn(indent);
       when(() => item.user).thenReturn(user);
       registerFallbackValue(_MockAppLocalizations());
       registerFallbackValue(_MockDateFormatterLocalizations());
@@ -71,14 +69,14 @@ void main() {
         value: commentListBloc,
         child: BlocProvider.value(
           value: postHeaderBloc,
-          child: CommentWidget(item),
+          child: OtherUserComment(item),
         ),
       );
     }
 
-    AppComment findWidget(WidgetTester tester) {
-      return tester.widget<AppComment>(
-        find.byType(AppComment),
+    AppOtherUserComment findWidget(WidgetTester tester) {
+      return tester.widget<AppOtherUserComment>(
+        find.byType(AppOtherUserComment),
       );
     }
 
@@ -100,16 +98,16 @@ void main() {
       expect(widget.data.age, age);
     });
 
-    testWidgets('has correct hasBeenUpvoted', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.data.hasBeenUpvoted, hasBeenUpvoted);
-    });
-
     testWidgets('has correct htmlText', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       expect(widget.data.htmlText, htmlText);
+    });
+
+    testWidgets('has correct hasBeenUpvoted', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.data.hasBeenUpvoted, hasBeenUpvoted);
     });
 
     testWidgets('adds $CommentListExpansionToggled '
@@ -128,7 +126,7 @@ void main() {
       'shows $CommentOptionsSheet onMorePressed',
       (tester) async {
         when(item.toRepository).thenReturn(
-          CommentPlaceholder(),
+          OtherUserCommentPlaceholder(),
         );
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);

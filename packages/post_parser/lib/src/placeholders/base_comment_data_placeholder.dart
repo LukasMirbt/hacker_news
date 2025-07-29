@@ -1,7 +1,7 @@
 import 'package:post_parser/post_parser.dart';
 
-class CommentDataPlaceholder extends BaseCommentData {
-  CommentDataPlaceholder({
+class BaseCommentDataPlaceholder extends BaseCommentData {
+  BaseCommentDataPlaceholder({
     String? id,
     int? indent,
     Hnuser? hnuser,

@@ -127,7 +127,7 @@ void main() {
 
       final update = ReplyUpdate(
         form: ReplyFormPlaceholder(),
-        comment: CommentDataPlaceholder(),
+        comment: CurrentUserCommentDataPlaceholder(),
       );
 
       final state = initialState.copyWith(

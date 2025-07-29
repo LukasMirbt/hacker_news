@@ -61,9 +61,9 @@ void main() {
       );
     }
 
-    AppComment findWidget(WidgetTester tester) {
-      return tester.widget<AppComment>(
-        find.byType(AppComment),
+    AppOtherUserComment findWidget(WidgetTester tester) {
+      return tester.widget<AppOtherUserComment>(
+        find.byType(AppOtherUserComment),
       );
     }
 

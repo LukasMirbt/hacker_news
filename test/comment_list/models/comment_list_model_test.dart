@@ -12,14 +12,14 @@ class _MockCollapseHandler extends Mock
 void main() {
   final repositoryItems = List.generate(
     10,
-    (index) => CommentPlaceholder(
+    (index) => OtherUserCommentPlaceholder(
       id: index.toString(),
     ),
   );
 
   final items = [
     for (final item in repositoryItems)
-      CommentModel(
+      OtherUserCommentModel(
         comment: item,
       ),
   ];
@@ -41,12 +41,12 @@ void main() {
     group('constructor', () {
       test('returns $CommentListModel with correct visibleItems', () {
         final items = [
-          CommentModel(
-            comment: CommentPlaceholder(),
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
           ),
-          CommentModel(
+          OtherUserCommentModel(
             isParentExpanded: false,
-            comment: CommentPlaceholder(),
+            comment: OtherUserCommentPlaceholder(),
           ),
         ];
 
@@ -99,8 +99,8 @@ void main() {
     });
 
     group('insertAfter', () {
-      final newItem = CommentModel(
-        comment: CommentPlaceholder(),
+      final newItem = OtherUserCommentModel(
+        comment: OtherUserCommentPlaceholder(),
       );
 
       test('returns updated $CommentListModel when afterItem index '
@@ -124,8 +124,8 @@ void main() {
       test('returns same $CommentListModel when afterItem index '
           'is not found', () {
         final model = createSubject();
-        final afterItem = CommentModel(
-          comment: CommentPlaceholder(id: 'non-existent'),
+        final afterItem = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(id: 'non-existent'),
         );
         final updatedModel = model.insertAfter(
           afterItem: afterItem,
@@ -137,20 +137,20 @@ void main() {
 
     group('rebuildWith', () {
       final comments = [
-        CommentPlaceholder(id: '0'),
-        CommentPlaceholder(id: '1'),
+        OtherUserCommentPlaceholder(id: '0'),
+        OtherUserCommentPlaceholder(id: '1'),
       ];
 
       final updatedItems = [
-        CommentModel(
-          comment: CommentPlaceholder(),
+        OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(),
         ),
       ];
 
       final rebuildWith = () => collapseHandler.rebuildWith(
         oldItems: items,
         newItems: [
-          for (final comment in comments) CommentModel(comment: comment),
+          for (final comment in comments) CommentModel.from(comment),
         ],
       );
 
@@ -169,8 +169,8 @@ void main() {
       final comment = items.first;
 
       final updatedItems = [
-        CommentModel(
-          comment: CommentPlaceholder(),
+        OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(),
         ),
       ];
 

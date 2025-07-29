@@ -562,12 +562,6 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String threadFeed_age({required Object age});
 
-  /// No description provided for @threadFeed_score.
-  ///
-  /// In en, this message translates to:
-  /// **'{score}p'**
-  String threadFeed_score({required Object score});
-
   /// No description provided for @threadItemOptions_reply.
   ///
   /// In en, this message translates to:

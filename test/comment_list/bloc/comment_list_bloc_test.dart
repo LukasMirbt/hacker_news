@@ -31,8 +31,8 @@ void main() {
   const id = 'id';
   final initialState = CommentListState.initial(id: id);
 
-  final comment = CommentModel(
-    comment: CommentPlaceholder(),
+  final comment = OtherUserCommentModel(
+    comment: OtherUserCommentPlaceholder(),
   );
 
   group(CommentListBloc, () {
@@ -76,7 +76,7 @@ void main() {
 
       final updatedPost = PostPlaceholder(
         comments: [
-          CommentPlaceholder(),
+          OtherUserCommentPlaceholder(),
         ],
       );
 
@@ -156,7 +156,7 @@ void main() {
     group(CommentListReplySubscriptionRequested, () {
       final update = ReplyUpdate(
         form: ReplyFormPlaceholder(),
-        comment: CommentDataPlaceholder(),
+        comment: CurrentUserCommentDataPlaceholder(),
       );
 
       final state = initialState.copyWith(

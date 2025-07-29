@@ -12,7 +12,7 @@ sealed class CommentData extends Equatable {
   List<Object?> get props => [base];
 }
 
-final class CurrentUserCommentData extends CommentData {
+class CurrentUserCommentData extends CommentData {
   const CurrentUserCommentData({
     required super.base,
     required this.score,
@@ -37,7 +37,7 @@ final class CurrentUserCommentData extends CommentData {
   ];
 }
 
-final class OtherUserCommentData extends CommentData {
+class OtherUserCommentData extends CommentData {
   const OtherUserCommentData({
     required super.base,
     required this.upvoteUrl,

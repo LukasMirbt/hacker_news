@@ -13,7 +13,7 @@ class _MockThreadFeedItemModel extends Mock implements ThreadFeedItemModel {}
 
 void main() {
   final form = ReplyFormPlaceholder();
-  final comment = CommentDataPlaceholder();
+  final comment = CurrentUserCommentDataPlaceholder();
 
   final update = ReplyUpdate(
     form: form,

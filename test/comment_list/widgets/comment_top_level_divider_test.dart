@@ -8,14 +8,15 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockOtherUserCommentModel extends Mock
+    implements OtherUserCommentModel {}
 
 void main() {
   group(CommentTopLevelDivider, () {
-    late CommentModel comment;
+    late OtherUserCommentModel comment;
 
     setUp(() {
-      comment = _MockCommentModel();
+      comment = _MockOtherUserCommentModel();
       when(() => comment.isExpanded).thenReturn(true);
     });
 

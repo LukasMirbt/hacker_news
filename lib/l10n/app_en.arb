@@ -78,7 +78,6 @@
   "theme_light": "Light",
   "theme_dark": "Dark",
   "threadFeed_age": "{age} ago",
-  "threadFeed_score": "{score}p",
   "threadItemOptions_reply": "Reply",
   "threadItemOptions_viewPost": "View post",
   "threadItemOptions_openOnWeb": "Open on web",

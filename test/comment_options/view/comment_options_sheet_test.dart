@@ -16,7 +16,7 @@ class _MockCommentOptionsBloc
     implements CommentOptionsBloc {}
 
 void main() {
-  final comment = CommentPlaceholder();
+  final comment = OtherUserCommentPlaceholder();
 
   group(CommentOptionsSheet, () {
     late CommentOptionsBloc bloc;

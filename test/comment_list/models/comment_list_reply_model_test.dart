@@ -2,26 +2,28 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/comment_list/comment_list.dart'
+    hide Comment, CurrentUserComment;
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class _MockCommentListModel extends Mock implements CommentListModel {}
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockOtherUserCommentModel extends Mock
+    implements OtherUserCommentModel {}
 
 void main() {
   final form = ReplyFormPlaceholder();
-  final comment = CommentDataPlaceholder();
+  final comment = CurrentUserCommentDataPlaceholder();
 
   final update = ReplyUpdate(
     form: form,
     comment: comment,
   );
 
-  final newItem = CommentModel(
-    comment: Comment.from(comment),
+  final newItem = CurrentUserCommentModel(
+    comment: CurrentUserComment.from(comment),
   );
 
   group(CommentListReplyModel, () {
@@ -31,7 +33,7 @@ void main() {
 
     setUp(() {
       commentList = _MockCommentListModel();
-      afterItem = _MockCommentModel();
+      afterItem = _MockOtherUserCommentModel();
       updatedCommentList = _MockCommentListModel();
     });
 

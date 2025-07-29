@@ -22,8 +22,8 @@ class OtherUserComment extends StatelessWidget {
         isExpanded: item.isExpanded,
         user: item.user,
         age: item.age(appL10n, formatterL10n),
-        hasBeenUpvoted: item.hasBeenUpvoted,
         htmlText: item.htmlText,
+        hasBeenUpvoted: item.hasBeenUpvoted,
         onHeaderPressed: () {
           context.read<CommentListBloc>().add(
             CommentListExpansionToggled(item),
