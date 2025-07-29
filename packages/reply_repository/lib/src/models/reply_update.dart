@@ -7,5 +7,5 @@ class ReplyUpdate {
   });
 
   final ReplyForm form;
-  final CommentData comment;
+  final CurrentUserCommentData comment;
 }

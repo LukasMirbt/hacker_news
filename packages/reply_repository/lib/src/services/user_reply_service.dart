@@ -16,7 +16,7 @@ class UserReplyService {
 
   final AuthenticationApi _authenticationApi;
 
-  CommentData newestComment(List<CommentData> commentThread) {
+  CurrentUserCommentData newestComment(List<CommentData> commentThread) {
     final user = _authenticationApi.state.user;
 
     final userComments =
@@ -32,6 +32,11 @@ class UserReplyService {
     if (userComments.isEmpty) throw const FindUserReplyFailure();
 
     final newUserComment = userComments.first;
+
+    if (newUserComment is! CurrentUserCommentData) {
+      throw const FindUserReplyFailure();
+    }
+
     return newUserComment;
   }
 }
