@@ -99,9 +99,6 @@ void main() async {
     replyApi: replyApi,
     authenticationApi: authenticationApi,
     replyStorage: replyStorage,
-    userReplyService: UserReplyService(
-      authenticationApi: authenticationApi,
-    ),
   );
 
   final versionRepository = VersionRepository();
