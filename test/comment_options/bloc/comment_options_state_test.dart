@@ -8,7 +8,7 @@ void main() {
       test('returns $CommentOptionsState', () {
         final comment = OtherUserCommentPlaceholder();
         expect(
-          CommentOptionsState.from(comment: comment),
+          CommentOptionsState.from(comment),
           CommentOptionsState(
             comment: CommentModel(comment),
           ),

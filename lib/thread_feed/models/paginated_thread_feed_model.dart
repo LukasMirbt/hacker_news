@@ -22,7 +22,7 @@ class PaginatedThreadFeedModel extends Equatable {
     return PaginatedThreadFeedModel(
       feed: feed,
       items: [
-        for (final item in feed.items) ThreadCommentModel(item: item),
+        for (final item in feed.items) ThreadCommentModel.from(item),
       ],
     );
   }
@@ -79,7 +79,7 @@ class PaginatedThreadFeedModel extends Equatable {
     final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,
       newItems: [
-        for (final item in feed.items) ThreadCommentModel(item: item),
+        for (final item in feed.items) ThreadCommentModel.from(item),
       ],
     );
 
@@ -90,11 +90,11 @@ class PaginatedThreadFeedModel extends Equatable {
   }
 
   PaginatedThreadFeedModel toggleExpansion({
-    required ThreadCommentModel item,
+    required ThreadCommentModel comment,
   }) {
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
-      itemToToggle: item,
+      itemToToggle: comment,
     );
     return PaginatedThreadFeedModel(
       feed: feed,

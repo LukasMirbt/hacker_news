@@ -8,8 +8,8 @@ class PaginatedThreadFeedModelPlaceholder extends PaginatedThreadFeedModel {
         feed: PaginatedThreadFeed.initial(User.empty),
         items: List.generate(
           10,
-          (index) => ThreadCommentModel(
-            item: OtherUserThreadCommentPlaceholder(
+          (index) => OtherUserThreadCommentModel(
+            comment: OtherUserThreadCommentPlaceholder(
               indent: index % 3,
               age: DateTime(1),
               hnuser: const HnuserPlaceholder(),

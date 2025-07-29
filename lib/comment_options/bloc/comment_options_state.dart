@@ -10,9 +10,7 @@ abstract class CommentOptionsState with _$CommentOptionsState {
     required CommentModel comment,
   }) = _CommentOptionsState;
 
-  factory CommentOptionsState.from({
-    required Comment comment,
-  }) {
+  factory CommentOptionsState.from(Comment comment) {
     return CommentOptionsState(
       comment: CommentModel(comment),
     );

@@ -9,32 +9,39 @@ import 'package:vote_repository/vote_repository.dart';
 class _MockPaginatedFeedModel extends Mock
     implements PaginatedThreadFeedModel {}
 
-class _MockThreadFeedItemModel extends Mock implements ThreadFeedItemModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 void main() {
   final vote = VotePlaceholder();
 
   group(ThreadFeedVoteModel, () {
     late PaginatedThreadFeedModel feed;
-    late ThreadFeedItemModel item;
-    late ThreadFeedItemModel updatedItem;
+    late OtherUserThreadCommentModel item;
+    late OtherUserThreadCommentModel updatedItem;
     late PaginatedThreadFeedModel updatedFeed;
 
     setUp(() {
       feed = _MockPaginatedFeedModel();
-      item = _MockThreadFeedItemModel();
-      updatedItem = _MockThreadFeedItemModel();
+      item = _MockOtherUserThreadCommentModel();
+      updatedItem = _MockOtherUserThreadCommentModel();
       updatedFeed = _MockPaginatedFeedModel();
     });
 
     ThreadFeedVoteModel createSubject() => ThreadFeedVoteModel();
 
     group('updateFeed', () {
-      test('returns feed when findById returns null', () {
+      test('throws $ThreadFeedVoteFailure when findById '
+          'does not return $OtherUserThreadCommentModel', () {
         final model = createSubject();
         expect(
-          model.updateFeed(vote: vote, feed: feed),
-          feed,
+          () => model.updateFeed(
+            vote: vote,
+            feed: feed,
+          ),
+          throwsA(
+            ThreadFeedVoteFailure(),
+          ),
         );
       });
 

@@ -24,7 +24,7 @@ void main() {
     setUp(() {
       bloc = _MockCommentOptionsBloc();
       when(() => bloc.state).thenReturn(
-        CommentOptionsState.from(comment: comment),
+        CommentOptionsState.from(comment),
       );
     });
 

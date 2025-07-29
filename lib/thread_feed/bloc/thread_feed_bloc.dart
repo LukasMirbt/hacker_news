@@ -34,9 +34,9 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
     on<ThreadFeedStarted>(_onStarted);
     on<ThreadFeedDataFetched>(_onDataFetched);
     on<ThreadFeedRefreshTriggered>(_onRefreshTriggered);
-    on<ThreadFeedItemExpansionToggled>(_onItemExpansionToggled);
-    on<ThreadFeedItemVotePressed>(_onItemVotePressed);
-    on<ThreadFeedItemLinkPressed>(_onItemLinkPressed);
+    on<ThreadFeedExpansionToggled>(_onItemExpansionToggled);
+    on<ThreadFeedVotePressed>(_onItemVotePressed);
+    on<ThreadFeedLinkPressed>(_onItemLinkPressed);
   }
 
   final ThreadRepository _threadRepository;
@@ -180,32 +180,32 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
   }
 
   void _onItemExpansionToggled(
-    ThreadFeedItemExpansionToggled event,
+    ThreadFeedExpansionToggled event,
     Emitter<ThreadFeedState> emit,
   ) {
     emit(
       state.copyWith(
         feed: state.feed.toggleExpansion(
-          item: event.item,
+          comment: event.comment,
         ),
       ),
     );
   }
 
   void _onItemVotePressed(
-    ThreadFeedItemVotePressed event,
+    ThreadFeedVotePressed event,
     Emitter<ThreadFeedState> emit,
   ) {
-    final item = event.item;
+    final comment = event.comment;
 
     _voteRepository.vote(
-      upvoteUrl: item.upvoteUrl,
-      hasBeenUpvoted: item.hasBeenUpvoted,
+      upvoteUrl: comment.upvoteUrl,
+      hasBeenUpvoted: comment.hasBeenUpvoted,
     );
   }
 
   void _onItemLinkPressed(
-    ThreadFeedItemLinkPressed event,
+    ThreadFeedLinkPressed event,
     Emitter<ThreadFeedState> emit,
   ) {
     _linkLauncher.launch(event.url);

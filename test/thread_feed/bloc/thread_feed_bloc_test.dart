@@ -33,8 +33,8 @@ class _MockThreadFeedModel extends Mock implements PaginatedThreadFeedModel {}
 void main() {
   final initialState = ThreadFeedState.initial();
 
-  final item = ThreadFeedItemModel(
-    item: ThreadFeedItemPlaceholder(),
+  final comment = OtherUserThreadCommentModel(
+    comment: OtherUserThreadCommentPlaceholder(),
   );
 
   final user = UserPlaceholder();
@@ -175,7 +175,7 @@ void main() {
 
       final feed = PaginatedThreadFeedPlaceholder(
         items: [
-          ThreadFeedItemPlaceholder(),
+          OtherUserThreadCommentPlaceholder(),
         ],
       );
 
@@ -229,14 +229,14 @@ void main() {
 
       final initialRepositoryList = PaginatedThreadFeedPlaceholder(
         items: [
-          ThreadFeedItemPlaceholder(),
+          OtherUserThreadCommentPlaceholder(),
         ],
       );
 
       final extendedRepositoryList = PaginatedThreadFeedPlaceholder(
         items: [
-          ThreadFeedItemPlaceholder(),
-          ThreadFeedItemPlaceholder(),
+          OtherUserThreadCommentPlaceholder(),
+          OtherUserThreadCommentPlaceholder(),
         ],
       );
 
@@ -318,7 +318,7 @@ void main() {
 
       final repositoryList = PaginatedThreadFeedPlaceholder(
         items: [
-          ThreadFeedItemPlaceholder(),
+          OtherUserThreadCommentPlaceholder(),
         ],
       );
 
@@ -386,13 +386,13 @@ void main() {
       );
     });
 
-    group(ThreadFeedItemExpansionToggled, () {
+    group(ThreadFeedExpansionToggled, () {
       final feed = _MockThreadFeedModel();
       final extendedList = _MockThreadFeedModel();
 
       final state = initialState.copyWith(feed: feed);
 
-      final toggleExpansion = () => feed.toggleExpansion(item: item);
+      final toggleExpansion = () => feed.toggleExpansion(comment: comment);
 
       blocTest<ThreadFeedBloc, ThreadFeedState>(
         'emits updated feed',
@@ -403,7 +403,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ThreadFeedItemExpansionToggled(item),
+            ThreadFeedExpansionToggled(comment),
           );
         },
         expect: () => [
@@ -417,10 +417,10 @@ void main() {
       );
     });
 
-    group(ThreadFeedItemVotePressed, () {
+    group(ThreadFeedVotePressed, () {
       final vote = () => voteRepository.vote(
-        upvoteUrl: item.upvoteUrl,
-        hasBeenUpvoted: item.hasBeenUpvoted,
+        upvoteUrl: comment.upvoteUrl,
+        hasBeenUpvoted: comment.hasBeenUpvoted,
       );
 
       blocTest<ThreadFeedBloc, ThreadFeedState>(
@@ -431,7 +431,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ThreadFeedItemVotePressed(item),
+            ThreadFeedVotePressed(comment),
           );
         },
         verify: (_) {
@@ -440,7 +440,7 @@ void main() {
       );
     });
 
-    group(ThreadFeedItemLinkPressed, () {
+    group(ThreadFeedLinkPressed, () {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
@@ -452,7 +452,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ThreadFeedItemLinkPressed(url),
+            ThreadFeedLinkPressed(url),
           );
         },
         verify: (_) {

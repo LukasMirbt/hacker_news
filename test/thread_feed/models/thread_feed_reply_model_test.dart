@@ -2,14 +2,15 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadFeedItem;
+import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadComment;
 import 'package:mocktail/mocktail.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class _MockPaginatedThreadFeedModel extends Mock
     implements PaginatedThreadFeedModel {}
 
-class _MockThreadFeedItemModel extends Mock implements ThreadFeedItemModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 void main() {
   final form = ReplyFormPlaceholder();
@@ -20,29 +21,32 @@ void main() {
     comment: comment,
   );
 
-  final newItem = ThreadFeedItemModel(
-    item: comment.toThreadFeedItem(),
+  final newItem = CurrentUserThreadCommentModel(
+    comment: comment.toThread(),
   );
 
   group(ThreadFeedReplyModel, () {
     late PaginatedThreadFeedModel feed;
-    late ThreadFeedItemModel afterItem;
+    late ThreadCommentModel afterItem;
     late PaginatedThreadFeedModel updatedFeed;
 
     setUp(() {
       feed = _MockPaginatedThreadFeedModel();
-      afterItem = _MockThreadFeedItemModel();
+      afterItem = _MockOtherUserThreadCommentModel();
       updatedFeed = _MockPaginatedThreadFeedModel();
     });
 
     ThreadFeedReplyModel createSubject() => ThreadFeedReplyModel();
 
     group('updateFeed', () {
-      test('returns feed when findById returns null', () {
+      test('throws $ThreadFeedReplyFailure when findById '
+          'returns null', () {
         final model = createSubject();
         expect(
-          model.updateFeed(update: update, feed: feed),
-          feed,
+          () => model.updateFeed(update: update, feed: feed),
+          throwsA(
+            ThreadFeedReplyFailure(),
+          ),
         );
       });
 

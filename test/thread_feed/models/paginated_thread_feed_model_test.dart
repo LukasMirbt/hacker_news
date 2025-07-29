@@ -9,23 +9,24 @@ import 'package:thread_repository/thread_repository.dart';
 class _MockPaginatedFeed extends Mock implements PaginatedThreadFeed {}
 
 class _MockCollapseHandler extends Mock
-    implements CollapseHandler<ThreadFeedItemModel> {}
+    implements CollapseHandler<ThreadCommentModel> {}
 
 void main() {
   final repositoryItems = List.generate(
     10,
-    (index) => ThreadFeedItemPlaceholder(
+    (index) => OtherUserThreadCommentPlaceholder(
       id: index.toString(),
     ),
   );
 
   final items = [
-    for (final item in repositoryItems) ThreadFeedItemModel(item: item),
+    for (final item in repositoryItems)
+      OtherUserThreadCommentModel(comment: item),
   ];
 
   group(PaginatedThreadFeedModel, () {
     late PaginatedThreadFeed feed;
-    late CollapseHandler<ThreadFeedItemModel> collapseHandler;
+    late CollapseHandler<ThreadCommentModel> collapseHandler;
 
     setUp(() {
       feed = _MockPaginatedFeed();
@@ -48,8 +49,7 @@ void main() {
           PaginatedThreadFeedModel(
             feed: feed,
             items: [
-              for (final item in repositoryItems)
-                ThreadFeedItemModel(item: item),
+              for (final item in repositoryItems) ThreadCommentModel.from(item),
             ],
           ),
         );
@@ -92,7 +92,7 @@ void main() {
     });
 
     group('findById', () {
-      test('returns $ThreadFeedItemModel when items contains id', () {
+      test('returns $ThreadCommentModel when items contains id', () {
         final model = createSubject();
         final item = items.first;
         expect(model.findById(item.id), item);
@@ -120,8 +120,8 @@ void main() {
     });
 
     group('insertAfter', () {
-      final newItem = ThreadFeedItemModel(
-        item: ThreadFeedItemPlaceholder(),
+      final newItem = OtherUserThreadCommentModel(
+        comment: OtherUserThreadCommentPlaceholder(),
       );
 
       test('returns updated $PaginatedThreadFeedModel '
@@ -145,8 +145,8 @@ void main() {
       test('returns same $PaginatedThreadFeedModel '
           'when afterItem index is not found', () {
         final feed = createSubject();
-        final afterItem = ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(id: 'non-existent'),
+        final afterItem = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(id: 'non-existent'),
         );
         final updatedFeed = feed.insertAfter(
           afterItem: afterItem,
@@ -159,21 +159,21 @@ void main() {
     group('rebuildWith', () {
       final feed = PaginatedThreadFeedPlaceholder(
         items: [
-          ThreadFeedItemPlaceholder(id: '0'),
-          ThreadFeedItemPlaceholder(id: '1'),
+          OtherUserThreadCommentPlaceholder(id: '0'),
+          OtherUserThreadCommentPlaceholder(id: '1'),
         ],
       );
 
       final updatedItems = [
-        ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(),
+        OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(),
         ),
       ];
 
       final rebuildWith = () => collapseHandler.rebuildWith(
         oldItems: items,
         newItems: [
-          for (final item in feed.items) ThreadFeedItemModel(item: item),
+          for (final item in feed.items) ThreadCommentModel.from(item),
         ],
       );
 
@@ -192,24 +192,24 @@ void main() {
     });
 
     group('toggleExpansion', () {
-      final item = items.first;
+      final comment = items.first;
 
       final updatedItems = [
-        ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(),
+        OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(),
         ),
       ];
 
       final toggleExpansion = () => collapseHandler.toggleExpansion(
         items: items,
-        itemToToggle: item,
+        itemToToggle: comment,
       );
 
       test('returns updated $PaginatedThreadFeedModel', () {
         when(toggleExpansion).thenReturn(updatedItems);
         final model = createSubject();
         expect(
-          model.toggleExpansion(item: item),
+          model.toggleExpansion(comment: comment),
           PaginatedThreadFeedModel(
             feed: feed,
             items: updatedItems,

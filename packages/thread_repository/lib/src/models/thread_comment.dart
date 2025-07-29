@@ -29,4 +29,14 @@ sealed class ThreadComment {
   String? get contextUrl;
   String? get onUrl;
   String? get onTitle;
+
+  String? get postId {
+    final onUrl = this.onUrl;
+    if (onUrl == null) return null;
+
+    final url = Uri.tryParse(onUrl);
+    if (url == null) return null;
+
+    return url.queryParameters['id'];
+  }
 }

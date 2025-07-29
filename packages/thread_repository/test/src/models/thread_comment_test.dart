@@ -22,5 +22,26 @@ void main() {
         );
       });
     });
+
+    group('postId', () {
+      final comment = OtherUserThreadCommentPlaceholder();
+
+      test('returns null when onUrl is null', () {
+        final c = comment.copyWith(onUrl: null);
+        expect(c.postId, null);
+      });
+
+      test('returns null when onUrl is invalid', () {
+        final c = comment.copyWith(onUrl: ':url');
+        expect(c.postId, null);
+      });
+
+      test('returns correct value parsed url is non-null', () {
+        const id = 'id';
+        const onUrl = 'https://www.example.com?id=$id';
+        final c = comment.copyWith(onUrl: onUrl);
+        expect(c.postId, id);
+      });
+    });
   });
 }

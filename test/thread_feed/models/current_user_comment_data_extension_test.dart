@@ -1,30 +1,29 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadFeedItem;
+import 'package:hacker_client/thread_feed/thread_feed.dart'
+    hide CurrentUserThreadComment;
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_repository/thread_repository.dart';
 
 void main() {
   group('CurrentUserCommentDataExtension', () {
-    group('toThreadFeedItem', () {
-      test('returns $ThreadFeedItem', () {
+    group('toThread', () {
+      test('returns $CurrentUserThreadComment', () {
         final data = CurrentUserCommentDataPlaceholder();
         final base = data.base;
         expect(
-          data.toThreadFeedItem(),
-          ThreadFeedItem(
-            upvoteUrl: null,
-            hasBeenUpvoted: null,
+          data.toThread(),
+          CurrentUserThreadComment(
             id: base.id,
             indent: base.indent,
-            score: data.score,
             hnuser: base.hnuser,
             age: base.age,
             htmlText: base.htmlText,
+            replyUrl: base.replyUrl,
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
             onTitle: null,
-            replyUrl: base.replyUrl,
+            score: data.score,
           ),
         );
       });

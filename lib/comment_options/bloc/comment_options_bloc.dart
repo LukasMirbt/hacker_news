@@ -10,7 +10,7 @@ class CommentOptionsBloc
     ShareLauncher? shareLauncher,
   }) : _shareLauncher = shareLauncher ?? ShareLauncher(),
        super(
-         CommentOptionsState.from(comment: comment),
+         CommentOptionsState.from(comment),
        ) {
     on<CommentOptionsSharePressed>(_onSharePressed);
   }

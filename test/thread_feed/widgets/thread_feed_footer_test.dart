@@ -9,8 +9,8 @@ void main() {
   group(ThreadFeedFooter, () {
     Widget buildSubject() {
       return ThreadFeedFooter(
-        ThreadFeedItemModel(
-          item: ThreadFeedItemPlaceholder(),
+        OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(),
         ),
       );
     }
