@@ -14,7 +14,7 @@ class CurrentUserCommentModel extends CommentModel {
   CurrentUserComment toRepository() => _comment;
 
   String score(AppLocalizations l10n) {
-    return l10n.threadFeed_score(
+    return l10n.commentList_score(
       score: _comment.score.toString(),
     );
   }
