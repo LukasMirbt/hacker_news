@@ -2,37 +2,38 @@
 
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_list/comment_list.dart'
-    hide OtherUserComment;
+import 'package:hacker_client/thread_feed/thread_feed.dart'
+    hide OtherUserThreadComment;
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:thread_repository/thread_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class _MockOtherUserComment extends Mock implements OtherUserComment {}
+class _MockOtherUserThreadComment extends Mock
+    implements OtherUserThreadComment {}
 
 class _MockDateFormatter extends Mock implements DateFormatter {}
 
 void main() {
-  group(OtherUserCommentModel, () {
-    late OtherUserComment comment;
+  group(OtherUserThreadCommentModel, () {
+    late OtherUserThreadComment comment;
     late DateFormatter formatter;
 
     setUp(() {
-      comment = _MockOtherUserComment();
+      comment = _MockOtherUserThreadComment();
       formatter = _MockDateFormatter();
     });
 
-    OtherUserCommentModel createSubject() {
-      return OtherUserCommentModel(
+    OtherUserThreadCommentModel createSubject() {
+      return OtherUserThreadCommentModel(
         comment: comment,
         formatter: formatter,
       );
     }
 
-    test('is a $CommentModel', () {
+    test('is a $ThreadCommentModel', () {
       expect(
         createSubject(),
-        isA<CommentModel>(),
+        isA<ThreadCommentModel>(),
       );
     });
 
@@ -67,7 +68,7 @@ void main() {
 
       test('returns upvoted item when type '
           'is ${VoteType.upvote}', () {
-        final updatedItem = _MockOtherUserComment();
+        final updatedItem = _MockOtherUserThreadComment();
         when(upvote).thenReturn(updatedItem);
         final model = createSubject();
         expect(
@@ -79,7 +80,7 @@ void main() {
 
       test('returns unvoted item when type '
           'is ${VoteType.unvote}', () {
-        final updatedItem = _MockOtherUserComment();
+        final updatedItem = _MockOtherUserThreadComment();
         when(unvote).thenReturn(updatedItem);
         final model = createSubject();
         expect(
@@ -91,28 +92,28 @@ void main() {
     });
 
     group('copyWith', () {
-      test('returns $OtherUserCommentModel with updated fields '
+      test('returns $OtherUserThreadCommentModel with updated fields '
           'when values are non-null', () {
-        final updatedComment = _MockOtherUserComment();
+        final updatedThreadComment = _MockOtherUserThreadComment();
         const updatedIsExpanded = false;
         const updatedIsParentExpanded = false;
         final model = createSubject();
         expect(
           model.copyWith(
-            comment: updatedComment,
+            comment: updatedThreadComment,
             isExpanded: updatedIsExpanded,
             isParentExpanded: updatedIsParentExpanded,
           ),
-          OtherUserCommentModel(
+          OtherUserThreadCommentModel(
             formatter: formatter,
-            comment: updatedComment,
+            comment: updatedThreadComment,
             isExpanded: updatedIsExpanded,
             isParentExpanded: updatedIsParentExpanded,
           ),
         );
       });
 
-      test('returns $OtherUserCommentModel with previous fields '
+      test('returns $OtherUserThreadCommentModel with previous fields '
           'when values are null', () {
         final model = createSubject();
         expect(model.copyWith(), model);

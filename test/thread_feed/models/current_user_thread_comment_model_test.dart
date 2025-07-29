@@ -3,39 +3,40 @@
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_list/comment_list.dart'
-    hide CurrentUserComment;
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/thread_feed/thread_feed.dart'
+    hide CurrentUserThreadComment;
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:thread_repository/thread_repository.dart';
 
-class _MockCurrentUserComment extends Mock implements CurrentUserComment {}
+class _MockCurrentUserThreadComment extends Mock
+    implements CurrentUserThreadComment {}
 
 class _MockDateFormatter extends Mock implements DateFormatter {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
-  group(CurrentUserCommentModel, () {
-    late CurrentUserComment comment;
+  group(CurrentUserThreadCommentModel, () {
+    late CurrentUserThreadComment comment;
     late DateFormatter formatter;
 
     setUp(() {
-      comment = _MockCurrentUserComment();
+      comment = _MockCurrentUserThreadComment();
       formatter = _MockDateFormatter();
     });
 
-    CurrentUserCommentModel createSubject() {
-      return CurrentUserCommentModel(
+    CurrentUserThreadCommentModel createSubject() {
+      return CurrentUserThreadCommentModel(
         comment: comment,
         formatter: formatter,
       );
     }
 
-    test('is a $CommentModel', () {
+    test('is a $ThreadCommentModel', () {
       expect(
         createSubject(),
-        isA<CommentModel>(),
+        isA<ThreadCommentModel>(),
       );
     });
 
@@ -59,28 +60,28 @@ void main() async {
     });
 
     group('copyWith', () {
-      test('returns $CurrentUserCommentModel with updated fields '
+      test('returns $CurrentUserThreadCommentModel with updated fields '
           'when values are non-null', () {
-        final updatedComment = _MockCurrentUserComment();
+        final updatedThreadComment = _MockCurrentUserThreadComment();
         const updatedIsExpanded = false;
         const updatedIsParentExpanded = false;
         final model = createSubject();
         expect(
           model.copyWith(
-            comment: updatedComment,
+            comment: updatedThreadComment,
             isExpanded: updatedIsExpanded,
             isParentExpanded: updatedIsParentExpanded,
           ),
-          CurrentUserCommentModel(
+          CurrentUserThreadCommentModel(
             formatter: formatter,
-            comment: updatedComment,
+            comment: updatedThreadComment,
             isExpanded: updatedIsExpanded,
             isParentExpanded: updatedIsParentExpanded,
           ),
         );
       });
 
-      test('returns $CurrentUserCommentModel with previous fields '
+      test('returns $CurrentUserThreadCommentModel with previous fields '
           'when values are null', () {
         final model = createSubject();
         expect(model.copyWith(), model);
