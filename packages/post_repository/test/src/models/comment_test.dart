@@ -4,45 +4,21 @@ import 'package:post_repository/post_repository.dart';
 void main() {
   group(Comment, () {
     group('from', () {
-      test('returns $Comment', () {
-        final data = CommentDataPlaceholder();
+      test('returns $CurrentUserComment when data '
+          'is $CurrentUserCommentData', () {
+        final data = CurrentUserCommentDataPlaceholder();
         expect(
           Comment.from(data),
-          Comment(
-            id: data.id,
-            indent: data.indent,
-            upvoteUrl: data.upvoteUrl,
-            hasBeenUpvoted: data.hasBeenUpvoted,
-            score: data.score,
-            hnuser: data.hnuser,
-            age: data.age,
-            htmlText: data.htmlText,
-            replyUrl: data.replyUrl,
-          ),
+          CurrentUserComment.from(data),
         );
       });
-    });
 
-    group('upvote', () {
-      test('returns updated $Comment', () {
-        final comment = CommentPlaceholder(
-          hasBeenUpvoted: false,
-        );
+      test('returns $OtherUserComment when data '
+          'is $OtherUserCommentData', () {
+        final data = OtherUserCommentDataPlaceholder();
         expect(
-          comment.upvote(),
-          comment.copyWith(hasBeenUpvoted: true),
-        );
-      });
-    });
-
-    group('unvote', () {
-      test('returns updated $Comment', () {
-        final comment = CommentPlaceholder(
-          hasBeenUpvoted: true,
-        );
-        expect(
-          comment.unvote(),
-          comment.copyWith(hasBeenUpvoted: false),
+          Comment.from(data),
+          OtherUserComment.from(data),
         );
       });
     });

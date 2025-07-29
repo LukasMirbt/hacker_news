@@ -2,11 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:post_repository/post_repository.dart';
 
 void main() {
-  group(CommentPlaceholder, () {
-    test('returns $Comment', () {
+  group(OtherUserCommentPlaceholder, () {
+    test('returns $OtherUserComment', () {
       expect(
-        CommentPlaceholder(),
-        isA<Comment>(),
+        OtherUserCommentPlaceholder(),
+        isA<OtherUserComment>(),
       );
     });
   });

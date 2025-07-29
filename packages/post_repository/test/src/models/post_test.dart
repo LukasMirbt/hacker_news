@@ -6,7 +6,7 @@ void main() {
     group('from', () {
       test('returns $Post', () {
         final comments = [
-          CommentDataPlaceholder(),
+          OtherUserCommentDataPlaceholder(),
         ];
 
         final data = PostDataPlaceholder(
