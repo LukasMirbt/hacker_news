@@ -24,6 +24,10 @@ class HeaderText extends StatelessWidget {
     final extendedTextTheme = ExtendedTextTheme.of(context);
     final l10n = AppUiLocalizations.of(context);
 
+    final ageStyle = textTheme.labelMedium?.copyWith(
+      color: colorScheme.onSurfaceVariant,
+    );
+
     final scoreStyle = textTheme.labelMedium?.copyWith(
       color: colorScheme.onSurface,
     );
@@ -32,12 +36,8 @@ class HeaderText extends StatelessWidget {
       color: colorScheme.primary,
     );
 
-    final regularStyle = textTheme.labelMedium?.copyWith(
-      color: colorScheme.onSurfaceVariant,
-    );
-
     return Text.rich(
-      style: regularStyle,
+      style: ageStyle,
       TextSpan(
         children: [
           TextSpan(
@@ -50,9 +50,7 @@ class HeaderText extends StatelessWidget {
             style: prominentStyle,
           ),
           MiddleDotSpan(l10n: l10n),
-          TextSpan(
-            text: age,
-          ),
+          TextSpan(text: age),
         ],
       ),
     );

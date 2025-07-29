@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 class MiddleDotSpan extends TextSpan {
   MiddleDotSpan({
     required AppUiLocalizations l10n,
-    TextStyle? style,
   }) : super(
          children: [
            const WidgetSpan(
@@ -14,7 +13,6 @@ class MiddleDotSpan extends TextSpan {
            ),
            TextSpan(
              text: l10n.middleDot,
-             style: style,
            ),
            const WidgetSpan(
              child: SizedBox(

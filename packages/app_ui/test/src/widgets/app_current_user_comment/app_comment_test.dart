@@ -1,0 +1,31 @@
+import 'package:app_ui/src/widgets/app_current_user_comment/app_current_user_comment.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/helpers.dart';
+
+void main() {
+  group(AppCurrentUserComment, () {
+    Widget buildSubject({bool? isExpanded}) {
+      return AppCurrentUserComment(
+        data: AppCurrentUserCommentDataPlaceholder(
+          isExpanded: isExpanded ?? false,
+        ),
+      );
+    }
+
+    testWidgets('renders $ExpandedBody '
+        'when isExpanded', (tester) async {
+      await tester.pumpApp(
+        buildSubject(isExpanded: true),
+      );
+      expect(find.byType(ExpandedBody), findsOneWidget);
+    });
+
+    testWidgets('renders $CollapsedBody '
+        'when !isExpanded', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(CollapsedBody), findsOneWidget);
+    });
+  });
+}

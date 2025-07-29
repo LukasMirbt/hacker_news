@@ -1,31 +1,31 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/helpers.dart';
 
 void main() {
-  group(AppComment, () {
+  group(AppOtherUserComment, () {
     Widget buildSubject({bool? isExpanded}) {
-      return AppComment(
-        data: AppCommentDataPlaceholder(
+      return AppOtherUserComment(
+        data: AppOtherUserCommentDataPlaceholder(
           isExpanded: isExpanded ?? false,
         ),
       );
     }
 
-    testWidgets('renders $ExpandedCommentBody '
+    testWidgets('renders $ExpandedBody '
         'when isExpanded', (tester) async {
       await tester.pumpApp(
         buildSubject(isExpanded: true),
       );
-      expect(find.byType(ExpandedCommentBody), findsOneWidget);
+      expect(find.byType(ExpandedBody), findsOneWidget);
     });
 
-    testWidgets('renders $CollapsedCommentBody '
+    testWidgets('renders $CollapsedBody '
         'when !isExpanded', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CollapsedCommentBody), findsOneWidget);
+      expect(find.byType(CollapsedBody), findsOneWidget);
     });
   });
 }

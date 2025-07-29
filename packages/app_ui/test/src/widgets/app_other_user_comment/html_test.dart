@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -8,16 +9,17 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/pump_app.dart';
 
-class _MockAppCommentData extends Mock implements AppCommentData {}
+class _MockAppOtherUserCommentData extends Mock
+    implements AppOtherUserCommentData {}
 
 void main() {
   const htmlText = 'htmlText';
 
-  group(CommentHtml, () {
-    late AppCommentData data;
+  group(Html, () {
+    late AppOtherUserCommentData data;
 
     setUp(() {
-      data = _MockAppCommentData();
+      data = _MockAppOtherUserCommentData();
       when(() => data.htmlText).thenReturn(htmlText);
       when(() => data.onLinkPressed).thenReturn((_) {});
     });
@@ -25,7 +27,7 @@ void main() {
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: CommentHtml(),
+        child: Html(),
       );
     }
 

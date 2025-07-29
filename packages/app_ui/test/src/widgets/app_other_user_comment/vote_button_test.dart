@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/pump_app.dart';
 
-class _MockAppCommentData extends Mock implements AppCommentData {}
+class _MockAppOtherUserCommentData extends Mock
+    implements AppOtherUserCommentData {}
 
 class _MockColorScheme extends Mock
     with Diagnosticable
@@ -19,11 +20,11 @@ void main() {
   const size = 24.0;
   const color = Colors.red;
 
-  group(CommentVoteButton, () {
-    late AppCommentData data;
+  group(VoteButton, () {
+    late AppOtherUserCommentData data;
 
     setUp(() {
-      data = _MockAppCommentData();
+      data = _MockAppOtherUserCommentData();
       registerFallbackValue(_MockColorScheme());
       when(() => data.onVotePressed).thenReturn(() {});
       when(() => data.voteIconSize).thenReturn(size);
@@ -33,7 +34,7 @@ void main() {
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: CommentVoteButton(),
+        child: VoteButton(),
       );
     }
 

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_current_user_comment/app_current_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import '../../helpers/pump_app.dart';
 
 void main() {
-  group(CommentHeaderRow, () {
-    Widget buildSubject({AppCommentData? data}) {
+  group(HeaderRow, () {
+    Widget buildSubject({AppCurrentUserCommentData? data}) {
       return Provider.value(
-        value: data ?? AppCommentDataPlaceholder(),
-        child: CommentHeaderRow(),
+        value: data ?? AppCurrentUserCommentDataPlaceholder(),
+        child: HeaderRow(),
       );
     }
 
@@ -26,7 +26,7 @@ void main() {
 
       await tester.pumpApp(
         buildSubject(
-          data: AppCommentDataPlaceholder(
+          data: AppCurrentUserCommentDataPlaceholder(
             onHeaderPressed: onHeaderPressed,
           ),
         ),
@@ -37,19 +37,14 @@ void main() {
       expect(count, 1);
     });
 
-    testWidgets('renders $CommentVoteButton', (tester) async {
+    testWidgets('renders $HeaderText', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentVoteButton), findsOneWidget);
+      expect(find.byType(HeaderText), findsOneWidget);
     });
 
-    testWidgets('renders $CommentUserAndAge', (tester) async {
+    testWidgets('renders $MoreButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentUserAndAge), findsOneWidget);
-    });
-
-    testWidgets('renders $CommentMoreButton', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentMoreButton), findsOneWidget);
+      expect(find.byType(MoreButton), findsOneWidget);
     });
   });
 }

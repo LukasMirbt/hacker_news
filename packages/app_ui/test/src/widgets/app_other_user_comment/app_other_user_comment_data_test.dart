@@ -9,15 +9,15 @@ class _MockColorScheme extends Mock
     implements ColorScheme {}
 
 void main() {
-  group(AppCommentData, () {
+  group(AppOtherUserCommentData, () {
     late ColorScheme colorScheme;
 
     setUp(() {
       colorScheme = _MockColorScheme();
     });
 
-    AppCommentData createSubject({bool? hasBeenUpvoted}) {
-      return AppCommentData(
+    AppOtherUserCommentData createSubject({bool? hasBeenUpvoted}) {
+      return AppOtherUserCommentData(
         isExpanded: false,
         onHeaderPressed: () {},
         user: '',

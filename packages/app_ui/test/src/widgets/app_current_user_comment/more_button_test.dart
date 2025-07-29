@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_current_user_comment/app_current_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -8,21 +8,22 @@ import 'package:provider/provider.dart';
 
 import '../../helpers/pump_app.dart';
 
-class _MockAppCommentData extends Mock implements AppCommentData {}
+class _MockAppCurrentUserCommentData extends Mock
+    implements AppCurrentUserCommentData {}
 
 void main() {
-  group(CommentMoreButton, () {
-    late AppCommentData data;
+  group(MoreButton, () {
+    late AppCurrentUserCommentData data;
 
     setUp(() {
-      data = _MockAppCommentData();
+      data = _MockAppCurrentUserCommentData();
       when(() => data.onMorePressed).thenReturn(() {});
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: data,
-        child: CommentMoreButton(),
+        child: MoreButton(),
       );
     }
 

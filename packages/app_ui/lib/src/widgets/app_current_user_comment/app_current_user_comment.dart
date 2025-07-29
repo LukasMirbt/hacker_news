@@ -10,7 +10,6 @@ export 'header_row.dart';
 export 'header_text.dart';
 export 'html.dart';
 export 'more_button.dart';
-export 'user_and_age.dart';
 
 class AppCurrentUserComment extends StatelessWidget {
   const AppCurrentUserComment({
