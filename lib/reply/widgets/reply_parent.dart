@@ -34,8 +34,8 @@ class ReplyParent extends StatelessWidget {
       (ReplyBloc bloc) => bloc.state.parent.htmlText,
     );
 
-    return AppComment(
-      data: AppCommentData(
+    return AppOtherUserComment(
+      data: AppOtherUserCommentData(
         isExpanded: isExpanded,
         user: user,
         age: age,

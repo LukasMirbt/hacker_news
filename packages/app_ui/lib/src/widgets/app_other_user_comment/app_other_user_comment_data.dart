@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AppCommentData {
-  const AppCommentData({
+class AppOtherUserCommentData {
+  const AppOtherUserCommentData({
     required this.isExpanded,
     required this.user,
     required this.age,

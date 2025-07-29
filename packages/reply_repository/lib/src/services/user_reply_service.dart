@@ -22,11 +22,11 @@ class UserReplyService {
     final userComments =
         commentThread
             .where(
-              (comment) => comment.hnuser.id == user.id,
+              (comment) => comment.base.hnuser.id == user.id,
             )
             .toList()
           ..sort(
-            (a, b) => b.age.compareTo(a.age),
+            (a, b) => b.base.age.compareTo(a.base.age),
           );
 
     if (userComments.isEmpty) throw const FindUserReplyFailure();

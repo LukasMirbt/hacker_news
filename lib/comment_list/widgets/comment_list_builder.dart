@@ -18,7 +18,7 @@ class CommentListBuilder {
           padding: EdgeInsets.only(
             left: comment.indent * AppSpacing.md,
           ),
-          child: CommentWidget(comment),
+          child: Comment(comment),
         ),
         if (isLast) CommentListFooter(comment),
       ],

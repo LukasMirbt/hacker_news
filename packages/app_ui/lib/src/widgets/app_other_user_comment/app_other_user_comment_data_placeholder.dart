@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 
-class AppThreadFeedItemDataPlaceholder extends AppThreadFeedItemData {
-  AppThreadFeedItemDataPlaceholder({
+class AppOtherUserCommentDataPlaceholder extends AppOtherUserCommentData {
+  AppOtherUserCommentDataPlaceholder({
     bool? isExpanded,
     String? user,
     String? age,

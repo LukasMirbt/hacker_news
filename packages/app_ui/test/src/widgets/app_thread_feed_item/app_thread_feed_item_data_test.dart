@@ -19,7 +19,6 @@ void main() {
     AppThreadFeedItemData createSubject({bool? hasBeenUpvoted}) {
       return AppThreadFeedItemData(
         isExpanded: false,
-        indent: 0,
         onHeaderPressed: () {},
         user: '',
         age: '',

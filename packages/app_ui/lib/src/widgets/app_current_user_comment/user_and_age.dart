@@ -2,17 +2,17 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CommentUserAndAge extends StatelessWidget {
-  const CommentUserAndAge({super.key});
+class UserAndAge extends StatelessWidget {
+  const UserAndAge({super.key});
 
   @override
   Widget build(BuildContext context) {
     final age = context.select(
-      (AppCommentData data) => data.age,
+      (AppCurrentUserCommentData data) => data.age,
     );
 
     final user = context.select(
-      (AppCommentData data) => data.user,
+      (AppCurrentUserCommentData data) => data.user,
     );
 
     final colorScheme = ColorScheme.of(context);

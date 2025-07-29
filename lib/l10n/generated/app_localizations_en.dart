@@ -58,6 +58,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String commentList_score({required Object score}) {
+    return '${score}p';
+  }
+
+  @override
   String get commentOptions_reply => 'Reply';
 
   @override
@@ -255,6 +260,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String threadFeed_age({required Object age}) {
     return '$age ago';
+  }
+
+  @override
+  String threadFeed_score({required Object score}) {
+    return '${score}p';
   }
 
   @override

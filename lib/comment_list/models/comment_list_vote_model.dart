@@ -10,6 +10,7 @@ class CommentListVoteModel {
   }) {
     final item = commentList.findById(vote.id);
     if (item == null) return commentList;
+    if (item is! OtherUserCommentModel) return commentList;
     final updatedItem = item.vote(vote.type);
     final updatedList = commentList.update(updatedItem);
     return updatedList;

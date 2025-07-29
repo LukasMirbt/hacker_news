@@ -7,18 +7,18 @@ import 'package:hacker_client/comment_options/comment_options.dart'
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
-class CommentWidget extends StatelessWidget {
-  const CommentWidget(this.item, {super.key});
+class OtherUserComment extends StatelessWidget {
+  const OtherUserComment(this.item, {super.key});
 
-  final CommentModel item;
+  final OtherUserCommentModel item;
 
   @override
   Widget build(BuildContext context) {
     final formatterL10n = DateFormatterLocalizations.of(context);
     final appL10n = AppLocalizations.of(context);
 
-    return AppComment(
-      data: AppCommentData(
+    return AppOtherUserComment(
+      data: AppOtherUserCommentData(
         isExpanded: item.isExpanded,
         user: item.user,
         age: item.age(appL10n, formatterL10n),

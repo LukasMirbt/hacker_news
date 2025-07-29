@@ -1,25 +1,23 @@
 import 'package:app_ui/app_ui.dart';
 
-class AppCommentDataPlaceholder extends AppCommentData {
-  AppCommentDataPlaceholder({
+class AppCurrentUserCommentDataPlaceholder extends AppCurrentUserCommentData {
+  AppCurrentUserCommentDataPlaceholder({
     bool? isExpanded,
     String? user,
     String? age,
-    bool? hasBeenUpvoted,
     String? htmlText,
+    String? score,
     void Function()? onHeaderPressed,
     void Function()? onMorePressed,
     void Function(String)? onLinkPressed,
-    void Function()? onVotePressed,
   }) : super(
          isExpanded: isExpanded ?? false,
          user: user ?? 'user',
          age: age ?? 'age',
-         hasBeenUpvoted: hasBeenUpvoted ?? false,
          htmlText: htmlText ?? 'htmlText',
+         score: score ?? 'score',
          onHeaderPressed: onHeaderPressed ?? () {},
          onMorePressed: onMorePressed ?? () {},
          onLinkPressed: onLinkPressed ?? (_) {},
-         onVotePressed: onVotePressed ?? () {},
        );
 }

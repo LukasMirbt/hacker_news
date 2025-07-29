@@ -1,24 +1,24 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CommentVoteButton extends StatelessWidget {
-  const CommentVoteButton({super.key});
+class VoteButton extends StatelessWidget {
+  const VoteButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     final onVotePressed = context.select(
-      (AppCommentData data) => data.onVotePressed,
+      (AppOtherUserCommentData data) => data.onVotePressed,
     );
 
     final size = context.select(
-      (AppCommentData data) => data.voteIconSize,
+      (AppOtherUserCommentData data) => data.voteIconSize,
     );
 
     final colorScheme = ColorScheme.of(context);
 
     final color = context.select(
-      (AppCommentData data) => data.voteIconColor(colorScheme),
+      (AppOtherUserCommentData data) => data.voteIconColor(colorScheme),
     );
 
     return IconButton(

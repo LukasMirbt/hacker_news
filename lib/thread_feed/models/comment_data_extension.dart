@@ -3,20 +3,22 @@ import 'package:thread_repository/thread_repository.dart';
 
 extension CommentDataExtension on CommentData {
   ThreadFeedItem toThreadFeedItem() {
+    final comment = this;
+
     return ThreadFeedItem(
-      id: id,
-      indent: indent,
-      hasBeenUpvoted: hasBeenUpvoted,
-      score: score,
-      hnuser: hnuser,
-      age: age,
-      htmlText: htmlText,
-      upvoteUrl: null,
+      id: base.id,
+      indent: base.indent,
+      hasBeenUpvoted: comment is OtherUserCommentData && comment.hasBeenUpvoted,
+      score: comment is CurrentUserCommentData ? comment.score : 0,
+      hnuser: base.hnuser,
+      age: base.age,
+      htmlText: base.htmlText,
+      upvoteUrl: comment is OtherUserCommentData ? comment.upvoteUrl : null,
       parentUrl: null,
       contextUrl: null,
       onUrl: null,
       onTitle: null,
-      replyUrl: replyUrl,
+      replyUrl: base.replyUrl,
     );
   }
 }

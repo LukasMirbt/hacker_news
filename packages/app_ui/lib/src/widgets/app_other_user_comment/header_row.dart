@@ -1,9 +1,9 @@
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CommentHeaderRow extends StatelessWidget {
-  const CommentHeaderRow({super.key});
+class HeaderRow extends StatelessWidget {
+  const HeaderRow({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _Row extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final onHeaderPressed = context.select(
-      (AppCommentData data) => data.onHeaderPressed,
+      (AppOtherUserCommentData data) => data.onHeaderPressed,
     );
 
     return InkWell(
@@ -39,11 +39,11 @@ class _Row extends StatelessWidget {
         padding: EdgeInsets.only(left: 6, right: 4),
         child: Row(
           children: [
-            CommentVoteButton(),
+            VoteButton(),
             Expanded(
-              child: CommentUserAndAge(),
+              child: UserAndAge(),
             ),
-            CommentMoreButton(),
+            MoreButton(),
           ],
         ),
       ),

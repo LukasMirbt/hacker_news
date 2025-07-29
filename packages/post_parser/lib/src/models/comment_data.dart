@@ -1,63 +1,68 @@
 import 'package:equatable/equatable.dart';
 import 'package:post_parser/post_parser.dart';
 
-class CommentData extends Equatable {
+sealed class CommentData extends Equatable {
   const CommentData({
-    required this.id,
-    required this.indent,
-    required this.upvoteUrl,
-    required this.hasBeenUpvoted,
-    required this.score,
-    required this.hnuser,
-    required this.age,
-    required this.htmlText,
-    required this.replyUrl,
+    required this.base,
   });
 
-  factory CommentData.fromParsed({
-    required String? id,
-    required int? indent,
-    required String? upvoteUrl,
-    required bool? hasBeenUpvoted,
+  final BaseCommentData base;
+
+  @override
+  List<Object?> get props => [base];
+}
+
+final class CurrentUserCommentData extends CommentData {
+  const CurrentUserCommentData({
+    required super.base,
+    required this.score,
+  });
+
+  factory CurrentUserCommentData.fromParsed({
+    required BaseCommentData base,
     required int? score,
-    required Hnuser? hnuser,
-    required DateTime? age,
-    required String? htmlText,
-    required String? replyUrl,
   }) {
-    return CommentData(
-      id: id ?? '',
-      indent: indent ?? 0,
-      upvoteUrl: upvoteUrl ?? '',
-      hasBeenUpvoted: hasBeenUpvoted ?? false,
-      score: score,
-      hnuser: hnuser ?? Hnuser.empty,
-      age: age ?? DateTime(0),
-      htmlText: htmlText ?? '',
-      replyUrl: replyUrl,
+    return CurrentUserCommentData(
+      base: base,
+      score: score ?? 0,
     );
   }
 
-  final String id;
-  final int indent;
-  final String upvoteUrl;
-  final bool hasBeenUpvoted;
-  final int? score;
-  final Hnuser hnuser;
-  final DateTime age;
-  final String htmlText;
-  final String? replyUrl;
+  final int score;
 
   @override
   List<Object?> get props => [
-    id,
-    indent,
+    score,
+    ...super.props,
+  ];
+}
+
+final class OtherUserCommentData extends CommentData {
+  const OtherUserCommentData({
+    required super.base,
+    required this.upvoteUrl,
+    required this.hasBeenUpvoted,
+  });
+
+  factory OtherUserCommentData.fromParsed({
+    required BaseCommentData base,
+    required String? upvoteUrl,
+    required bool? hasBeenUpvoted,
+  }) {
+    return OtherUserCommentData(
+      base: base,
+      upvoteUrl: upvoteUrl ?? '',
+      hasBeenUpvoted: hasBeenUpvoted ?? false,
+    );
+  }
+
+  final String upvoteUrl;
+  final bool hasBeenUpvoted;
+
+  @override
+  List<Object?> get props => [
+    ...super.props,
     upvoteUrl,
     hasBeenUpvoted,
-    score,
-    hnuser,
-    age,
-    htmlText,
-    replyUrl,
   ];
 }

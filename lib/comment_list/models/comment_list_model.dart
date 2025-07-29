@@ -2,7 +2,7 @@ import 'package:collapse_handler/collapse_handler.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/comment_list/comment_list.dart' hide Comment;
 import 'package:post_repository/post_repository.dart';
 
 class CommentListModel extends Equatable {
@@ -18,7 +18,7 @@ class CommentListModel extends Equatable {
   factory CommentListModel.from(List<Comment> items) {
     return CommentListModel(
       items: [
-        for (final item in items) CommentModel(comment: item),
+        for (final item in items) CommentModel.from(item),
       ],
     );
   }
@@ -58,7 +58,7 @@ class CommentListModel extends Equatable {
     final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,
       newItems: [
-        for (final comment in comments) CommentModel(comment: comment),
+        for (final comment in comments) CommentModel.from(comment),
       ],
     );
 

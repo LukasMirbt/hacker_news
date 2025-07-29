@@ -5,17 +5,27 @@ import 'package:hacker_client/l10n/l10n.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class CommentModel extends Equatable implements Collapsible<CommentModel> {
+part 'current_user_comment_model.dart';
+part 'other_user_comment_model.dart';
+
+sealed class CommentModel extends Equatable
+    implements Collapsible<CommentModel> {
   const CommentModel({
-    required Comment comment,
     this.isExpanded = true,
     this.isParentExpanded = true,
     DateFormatter formatter = const DateFormatter(),
-  }) : _comment = comment,
-       _formatter = formatter;
+  }) : _formatter = formatter;
+
+  factory CommentModel.from(Comment comment) {
+    return switch (comment) {
+      OtherUserComment() => OtherUserCommentModel(comment: comment),
+      CurrentUserComment() => CurrentUserCommentModel(comment: comment),
+    };
+  }
 
   final DateFormatter _formatter;
-  final Comment _comment;
+
+  Comment get _comment;
 
   @override
   final bool isExpanded;
@@ -29,14 +39,9 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
   @override
   int get indent => _comment.indent;
 
-  String get upvoteUrl => _comment.upvoteUrl;
-  bool get hasBeenUpvoted => _comment.hasBeenUpvoted;
   String get user => _comment.hnuser.id;
   String get htmlText => _comment.htmlText;
-
   bool get isTopLevel => _comment.indent == 0;
-
-  Comment toRepository() => _comment;
 
   String age(
     AppLocalizations appL10n,
@@ -47,32 +52,8 @@ class CommentModel extends Equatable implements Collapsible<CommentModel> {
     return ageString;
   }
 
-  CommentModel vote(VoteType type) {
-    return copyWith(
-      comment: switch (type) {
-        VoteType.upvote => _comment.upvote(),
-        VoteType.unvote => _comment.unvote(),
-      },
-    );
-  }
-
-  @override
-  CommentModel copyWith({
-    Comment? comment,
-    bool? isExpanded,
-    bool? isParentExpanded,
-  }) {
-    return CommentModel(
-      comment: comment ?? _comment,
-      formatter: _formatter,
-      isExpanded: isExpanded ?? this.isExpanded,
-      isParentExpanded: isParentExpanded ?? this.isParentExpanded,
-    );
-  }
-
   @override
   List<Object> get props => [
-    _comment,
     _formatter,
     isExpanded,
     isParentExpanded,
