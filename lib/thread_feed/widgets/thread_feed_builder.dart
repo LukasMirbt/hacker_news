@@ -24,7 +24,7 @@ class ThreadFeedBuilder {
           padding: EdgeInsets.only(
             left: item.indent * AppSpacing.md,
           ),
-          child: ThreadFeedItem(item: item),
+          child: ThreadComment(item: item),
         ),
         if (isLast) ThreadFeedFooter(item),
       ],

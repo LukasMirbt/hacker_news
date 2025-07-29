@@ -5,9 +5,9 @@ import 'package:hacker_client/l10n/l10n.dart';
 import 'package:thread_repository/thread_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class ThreadFeedItemModel extends Equatable
-    implements Collapsible<ThreadFeedItemModel> {
-  const ThreadFeedItemModel({
+class ThreadCommentModel extends Equatable
+    implements Collapsible<ThreadCommentModel> {
+  const ThreadCommentModel({
     required this.item,
     this.isExpanded = true,
     this.isParentExpanded = true,
@@ -15,7 +15,7 @@ class ThreadFeedItemModel extends Equatable
   }) : _formatter = formatter ?? const DateFormatter();
 
   final DateFormatter _formatter;
-  final ThreadFeedItem item;
+  final ThreadComment item;
 
   @override
   final bool isExpanded;
@@ -35,7 +35,7 @@ class ThreadFeedItemModel extends Equatable
   String get htmlText => item.htmlText;
   bool get isTopLevel => item.indent == 0;
 
-  ThreadFeedItem toRepository() => item;
+  ThreadComment toRepository() => item;
 
   String age(
     AppLocalizations appL10n,
@@ -46,7 +46,7 @@ class ThreadFeedItemModel extends Equatable
     return ageString;
   }
 
-  ThreadFeedItemModel vote(VoteType type) {
+  ThreadCommentModel vote(VoteType type) {
     return copyWith(
       item: switch (type) {
         VoteType.upvote => item.upvote(),
@@ -56,12 +56,12 @@ class ThreadFeedItemModel extends Equatable
   }
 
   @override
-  ThreadFeedItemModel copyWith({
-    ThreadFeedItem? item,
+  ThreadCommentModel copyWith({
+    ThreadComment? item,
     bool? isExpanded,
     bool? isParentExpanded,
   }) {
-    return ThreadFeedItemModel(
+    return ThreadCommentModel(
       formatter: _formatter,
       item: item ?? this.item,
       isExpanded: isExpanded ?? this.isExpanded,

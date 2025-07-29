@@ -1,4 +1,4 @@
-import 'package:hacker_client/thread_feed/thread_feed.dart' hide ThreadFeedItem;
+import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class ThreadFeedReplyModel {
@@ -12,8 +12,8 @@ class ThreadFeedReplyModel {
     final parent = feed.findById(form.parentId);
     if (parent == null) return feed;
 
-    final newItem = ThreadFeedItemModel(
-      item: update.comment.toThreadFeedItem(),
+    final newItem = ThreadCommentModel(
+      item: update.comment.toThread(),
     );
 
     final updatedFeed = feed.insertAfter(

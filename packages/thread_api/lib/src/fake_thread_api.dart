@@ -37,14 +37,16 @@ final data = List.generate(1000, (index) {
   final randomHtmlText =
       _sampleHtmlTexts[_random.nextInt(_sampleHtmlTexts.length)];
 
-  return ThreadFeedItemDataPlaceholder(
-    id: index.toString(),
-    hnuser: HnuserPlaceholder(
-      id: 'user_$index',
+  return OtherUserThreadCommentDataPlaceholder(
+    base: BaseThreadCommentDataPlaceholder(
+      id: index.toString(),
+      hnuser: HnuserPlaceholder(
+        id: 'user_$index',
+      ),
+      indent: currentIndent,
+      age: randomAge,
+      htmlText: randomHtmlText,
     ),
-    indent: currentIndent,
-    age: randomAge,
-    htmlText: randomHtmlText,
   );
 });
 
@@ -72,7 +74,7 @@ class FakeThreadApi extends ThreadApi {
 
     final commentsForPage = (startIndex < data.length)
         ? data.sublist(startIndex, endIndex)
-        : <ThreadFeedItemData>[];
+        : <ThreadCommentData>[];
 
     final moreLink = (endIndex < data.length)
         ? 'https://fake.api/page/${pageNumber + 1}'

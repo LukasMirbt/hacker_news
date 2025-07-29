@@ -6,13 +6,13 @@ import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:hacker_client/thread_item_options/thread_item_options.dart';
 
-class ThreadFeedItem extends StatelessWidget {
-  const ThreadFeedItem({
+class ThreadComment extends StatelessWidget {
+  const ThreadComment({
     required this.item,
     super.key,
   });
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel item;
 
   @override
   Widget build(BuildContext context) {

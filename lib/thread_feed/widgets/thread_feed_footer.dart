@@ -5,7 +5,7 @@ import 'package:hacker_client/thread_feed/thread_feed.dart';
 class ThreadFeedFooter extends StatelessWidget {
   const ThreadFeedFooter(this.item, {super.key});
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel item;
 
   @override
   Widget build(BuildContext context) {

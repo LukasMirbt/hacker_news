@@ -1,33 +1,29 @@
 import 'package:thread_repository/thread_repository.dart';
 
-class ThreadFeedItemPlaceholder extends ThreadFeedItem {
-  ThreadFeedItemPlaceholder({
+class CurrentUserThreadCommentPlaceholder extends CurrentUserThreadComment {
+  CurrentUserThreadCommentPlaceholder({
     String? id,
+    int? indent,
     Hnuser? hnuser,
     DateTime? age,
     String? htmlText,
-    int? indent,
-    int? score,
-    bool? hasBeenUpvoted,
-    String? upvoteUrl,
+    String? replyUrl,
     String? parentUrl,
     String? contextUrl,
     String? onUrl,
     String? onTitle,
-    String? replyUrl,
+    int? score,
   }) : super(
          id: id ?? 'id',
+         indent: indent ?? 1,
          hnuser: hnuser ?? const HnuserPlaceholder(),
          age: age ?? DateTime(1),
          htmlText: htmlText ?? 'htmlText',
-         indent: indent ?? 1,
          score: score ?? 1,
-         hasBeenUpvoted: hasBeenUpvoted ?? false,
-         upvoteUrl: upvoteUrl ?? 'upvoteUrl',
+         replyUrl: replyUrl ?? 'replyUrl',
          parentUrl: parentUrl ?? 'parentUrl',
          contextUrl: contextUrl ?? 'contextUrl',
          onUrl: onUrl ?? 'onUrl',
          onTitle: onTitle ?? 'onTitle',
-         replyUrl: replyUrl ?? 'replyUrl',
        );
 }

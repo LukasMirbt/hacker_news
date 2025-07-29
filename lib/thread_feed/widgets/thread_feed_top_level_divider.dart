@@ -5,7 +5,7 @@ import 'package:hacker_client/thread_feed/thread_feed.dart';
 class ThreadFeedTopLevelDivider extends StatelessWidget {
   const ThreadFeedTopLevelDivider(this.item, {super.key});
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel item;
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,7 @@ final class ThreadFeedRefreshTriggered extends ThreadFeedEvent {
 final class ThreadFeedItemExpansionToggled extends ThreadFeedEvent {
   const ThreadFeedItemExpansionToggled(this.item);
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel item;
 
   @override
   List<Object> get props => [item];
@@ -40,7 +40,7 @@ final class ThreadFeedItemExpansionToggled extends ThreadFeedEvent {
 final class ThreadFeedItemVotePressed extends ThreadFeedEvent {
   const ThreadFeedItemVotePressed(this.item);
 
-  final ThreadFeedItemModel item;
+  final ThreadCommentModel item;
 
   @override
   List<Object> get props => [item];

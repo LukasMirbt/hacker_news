@@ -4,7 +4,7 @@ import 'package:thread_repository/thread_repository.dart';
 class PaginatedThreadFeedPlaceholder extends PaginatedThreadFeed {
   const PaginatedThreadFeedPlaceholder({
     User? user,
-    List<ThreadFeedItem>? items,
+    List<ThreadComment>? items,
     bool? isInitial,
     String? next,
   }) : super(
