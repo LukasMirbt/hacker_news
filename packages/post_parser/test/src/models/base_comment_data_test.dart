@@ -2,38 +2,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:post_parser/post_parser.dart';
 
 void main() {
-  group(CommentData, () {
+  group(BaseCommentData, () {
     group('fromParsed', () {
-      test('returns $CommentData with correct values '
+      test('returns $BaseCommentData with correct values '
           'when data is non-null', () {
         const id = 'id';
         const indent = 1;
-        const upvoteUrl = 'upvoteUrl';
-        const hasBeenUpvoted = true;
-        const score = 2;
         const hnuser = HnuserPlaceholder();
         final age = DateTime(1);
         const htmlText = 'htmlText';
         const replyUrl = 'replyUrl';
 
         expect(
-          CommentData.fromParsed(
+          BaseCommentData.fromParsed(
             id: id,
             indent: indent,
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
-            score: score,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
             replyUrl: replyUrl,
           ),
-          CommentData(
+          BaseCommentData(
             id: id,
             indent: indent,
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
-            score: score,
             hnuser: hnuser,
             age: age,
             htmlText: htmlText,
@@ -42,26 +33,20 @@ void main() {
         );
       });
 
-      test('returns $CommentData with correct values '
+      test('returns $BaseCommentData with correct values '
           'when data is null', () {
         expect(
-          CommentData.fromParsed(
+          BaseCommentData.fromParsed(
             id: null,
             indent: null,
-            upvoteUrl: null,
-            hasBeenUpvoted: null,
-            score: null,
             hnuser: null,
             age: null,
             htmlText: null,
             replyUrl: null,
           ),
-          CommentData(
+          BaseCommentData(
             id: '',
             indent: 0,
-            upvoteUrl: '',
-            hasBeenUpvoted: false,
-            score: null,
             hnuser: Hnuser.empty,
             age: DateTime(0),
             htmlText: '',

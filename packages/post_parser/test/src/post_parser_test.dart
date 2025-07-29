@@ -15,7 +15,7 @@ class _MockDocument extends Mock implements Document {}
 
 class _MockElement extends Mock implements Element {}
 
-class _MockCommentData extends Mock implements CommentData {}
+class _MockOtherUserCommentData extends Mock implements OtherUserCommentData {}
 
 void main() {
   group(PostParser, () {
@@ -46,7 +46,7 @@ void main() {
       final commentTreeElement = _MockElement();
 
       final fatItemData = DetailFatItemDataPlaceholder();
-      final comments = [_MockCommentData()];
+      final comments = [_MockOtherUserCommentData()];
 
       final parseHtml = () => htmlParser.parse(html);
 
