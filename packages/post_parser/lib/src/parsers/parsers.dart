@@ -1,3 +1,4 @@
+export 'base_comment_parser.dart';
 export 'comment_list_parser.dart';
 export 'comment_parser.dart';
 export 'detail_comment_form_parser.dart';

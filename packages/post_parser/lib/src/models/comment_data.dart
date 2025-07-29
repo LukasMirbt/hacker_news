@@ -1,63 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:post_parser/post_parser.dart';
 
-class CommentData extends Equatable {
+part 'current_user_comment_data.dart';
+part 'other_user_comment_data.dart';
+
+sealed class CommentData extends Equatable {
   const CommentData({
-    required this.id,
-    required this.indent,
-    required this.upvoteUrl,
-    required this.hasBeenUpvoted,
-    required this.score,
-    required this.hnuser,
-    required this.age,
-    required this.htmlText,
-    required this.replyUrl,
+    required this.base,
   });
 
-  factory CommentData.fromParsed({
-    required String? id,
-    required int? indent,
-    required String? upvoteUrl,
-    required bool? hasBeenUpvoted,
-    required int? score,
-    required Hnuser? hnuser,
-    required DateTime? age,
-    required String? htmlText,
-    required String? replyUrl,
-  }) {
-    return CommentData(
-      id: id ?? '',
-      indent: indent ?? 0,
-      upvoteUrl: upvoteUrl ?? '',
-      hasBeenUpvoted: hasBeenUpvoted ?? false,
-      score: score,
-      hnuser: hnuser ?? Hnuser.empty,
-      age: age ?? DateTime(0),
-      htmlText: htmlText ?? '',
-      replyUrl: replyUrl,
-    );
-  }
-
-  final String id;
-  final int indent;
-  final String upvoteUrl;
-  final bool hasBeenUpvoted;
-  final int? score;
-  final Hnuser hnuser;
-  final DateTime age;
-  final String htmlText;
-  final String? replyUrl;
+  final BaseCommentData base;
 
   @override
-  List<Object?> get props => [
-    id,
-    indent,
-    upvoteUrl,
-    hasBeenUpvoted,
-    score,
-    hnuser,
-    age,
-    htmlText,
-    replyUrl,
-  ];
+  List<Object?> get props => [base];
 }

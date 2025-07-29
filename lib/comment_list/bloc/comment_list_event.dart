@@ -31,7 +31,7 @@ final class CommentListVotePressed extends CommentListEvent
     with EquatableMixin {
   const CommentListVotePressed(this.comment);
 
-  final CommentModel comment;
+  final OtherUserCommentModel comment;
 
   @override
   List<Object> get props => [comment];

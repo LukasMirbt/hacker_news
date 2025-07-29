@@ -184,6 +184,12 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String commentList_age({required Object age});
 
+  /// No description provided for @commentList_score.
+  ///
+  /// In en, this message translates to:
+  /// **'{score}p'**
+  String commentList_score({required Object score});
+
   /// No description provided for @commentOptions_reply.
   ///
   /// In en, this message translates to:

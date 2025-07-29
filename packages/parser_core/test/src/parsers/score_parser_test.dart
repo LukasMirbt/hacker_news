@@ -39,12 +39,14 @@ void main() {
       const twoDigitText = '13 points';
       const threeDigitText = '187 points';
       const fourDigitText = '6015 points';
+      const negativeScoreText = '-1 points';
 
       const onePointScore = 1;
       const singleDigitScore = 4;
       const twoDigitScore = 13;
       const threeDigitScore = 187;
       const fourDigitScore = 6015;
+      const negativeScore = -1;
 
       test('returns null when string is empty', () {
         final parser = createSubject();
@@ -79,6 +81,12 @@ void main() {
           'a four-digit score', () {
         final parser = createSubject();
         expect(parser.parseText(fourDigitText), fourDigitScore);
+      });
+
+      test('returns correct value when text contains '
+          'a negative score', () {
+        final parser = createSubject();
+        expect(parser.parseText(negativeScoreText), negativeScore);
       });
     });
   });

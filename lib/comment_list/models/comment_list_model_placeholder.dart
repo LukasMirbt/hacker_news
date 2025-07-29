@@ -6,8 +6,8 @@ class CommentListModelPlaceholder extends CommentListModel {
     : super(
         items: List.filled(
           10,
-          CommentModel(
-            comment: repository.CommentPlaceholder(
+          OtherUserCommentModel(
+            comment: repository.OtherUserCommentPlaceholder(
               htmlText:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
                   'Praesent vel urna vitae sapien ullamcorper facilisis. '

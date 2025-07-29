@@ -1,4 +1,4 @@
-import 'package:app_ui/app_ui.dart' hide CommentHtml;
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/comment/comment.dart';
 

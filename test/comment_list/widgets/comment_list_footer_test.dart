@@ -9,8 +9,8 @@ void main() {
   group(CommentListFooter, () {
     Widget buildSubject() {
       return CommentListFooter(
-        CommentModel(
-          comment: CommentPlaceholder(),
+        OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(),
         ),
       );
     }

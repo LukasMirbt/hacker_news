@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
+import 'package:post_repository/post_repository.dart' hide Comment;
 
 import '../../app/pump_app.dart';
 
@@ -19,8 +19,8 @@ class _MockCommentListState extends Mock implements CommentListState {}
 class _MockCommentListModel extends Mock implements CommentListModel {}
 
 void main() {
-  final comment = CommentModel(
-    comment: CommentPlaceholder(),
+  final comment = OtherUserCommentModel(
+    comment: OtherUserCommentPlaceholder(),
   );
 
   group(CommentListBuilder, () {
@@ -48,7 +48,7 @@ void main() {
     }
 
     group('itemBuilder', () {
-      testWidgets('renders $CommentWidget', (tester) async {
+      testWidgets('renders $Comment', (tester) async {
         final visibleItems = [comment];
         when(() => commentList.visibleItems).thenReturn(visibleItems);
         final builder = createSubject();
@@ -59,7 +59,7 @@ void main() {
           ),
         );
 
-        expect(find.byType(CommentWidget), findsOneWidget);
+        expect(find.byType(Comment), findsOneWidget);
       });
 
       testWidgets('does not render $CommentListFooter '
@@ -95,13 +95,13 @@ void main() {
     group('separatorBuilder', () {
       testWidgets('renders $CommentTopLevelDivider '
           'when nextComment.isTopLevel', (tester) async {
-        final firstComment = CommentModel(
-          comment: CommentPlaceholder(
+        final firstComment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = CommentModel(
-          comment: CommentPlaceholder(
+        final secondComment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
             indent: 0,
           ),
         );
@@ -121,14 +121,14 @@ void main() {
 
       testWidgets('returns $SizedBox.shrink when !nextComment.isTopLevel '
           'and !comment.isExpanded', (tester) async {
-        final firstComment = CommentModel(
+        final firstComment = OtherUserCommentModel(
           isExpanded: false,
-          comment: CommentPlaceholder(
+          comment: OtherUserCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = CommentModel(
-          comment: CommentPlaceholder(
+        final secondComment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
             indent: 1,
           ),
         );
@@ -152,13 +152,13 @@ void main() {
       testWidgets('returns $SizedBox with correct height '
           'when !nextComment.isTopLevel '
           'and comment.isExpanded', (tester) async {
-        final firstComment = CommentModel(
-          comment: CommentPlaceholder(
+        final firstComment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
             indent: 1,
           ),
         );
-        final secondComment = CommentModel(
-          comment: CommentPlaceholder(
+        final secondComment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
             indent: 1,
           ),
         );

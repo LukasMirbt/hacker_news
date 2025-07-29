@@ -13,40 +13,41 @@ part of 'comment.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$Comment {
+mixin _$CurrentUserComment {
 
- String get id; int get indent; String get upvoteUrl; bool get hasBeenUpvoted; int? get score; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl;
-/// Create a copy of Comment
+// Declare all fields, overriding the ones from the base class.
+ String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; int get score;
+/// Create a copy of CurrentUserComment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$CommentCopyWith<Comment> get copyWith => _$CommentCopyWithImpl<Comment>(this as Comment, _$identity);
+$CurrentUserCommentCopyWith<CurrentUserComment> get copyWith => _$CurrentUserCommentCopyWithImpl<CurrentUserComment>(this as CurrentUserComment, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Comment&&(identical(other.id, id) || other.id == id)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted)&&(identical(other.score, score) || other.score == score)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrentUserComment&&(identical(other.id, id) || other.id == id)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.score, score) || other.score == score));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,indent,upvoteUrl,hasBeenUpvoted,score,hnuser,age,htmlText,replyUrl);
+int get hashCode => Object.hash(runtimeType,id,indent,hnuser,age,htmlText,replyUrl,score);
 
 @override
 String toString() {
-  return 'Comment(id: $id, indent: $indent, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted, score: $score, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl)';
+  return 'CurrentUserComment(id: $id, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, score: $score)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $CommentCopyWith<$Res>  {
-  factory $CommentCopyWith(Comment value, $Res Function(Comment) _then) = _$CommentCopyWithImpl;
+abstract mixin class $CurrentUserCommentCopyWith<$Res>  {
+  factory $CurrentUserCommentCopyWith(CurrentUserComment value, $Res Function(CurrentUserComment) _then) = _$CurrentUserCommentCopyWithImpl;
 @useResult
 $Res call({
- String id, int indent, String upvoteUrl, bool hasBeenUpvoted, int? score, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl
+ String id, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, int score
 });
 
 
@@ -54,27 +55,94 @@ $Res call({
 
 }
 /// @nodoc
-class _$CommentCopyWithImpl<$Res>
-    implements $CommentCopyWith<$Res> {
-  _$CommentCopyWithImpl(this._self, this._then);
+class _$CurrentUserCommentCopyWithImpl<$Res>
+    implements $CurrentUserCommentCopyWith<$Res> {
+  _$CurrentUserCommentCopyWithImpl(this._self, this._then);
 
-  final Comment _self;
-  final $Res Function(Comment) _then;
+  final CurrentUserComment _self;
+  final $Res Function(CurrentUserComment) _then;
 
-/// Create a copy of Comment
+/// Create a copy of CurrentUserComment
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indent = null,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,Object? score = freezed,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,}) {
-  return _then(Comment(
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? score = null,}) {
+  return _then(CurrentUserComment(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,indent: null == indent ? _self.indent : indent // ignore: cast_nullable_to_non_nullable
-as int,upvoteUrl: null == upvoteUrl ? _self.upvoteUrl : upvoteUrl // ignore: cast_nullable_to_non_nullable
-as String,hasBeenUpvoted: null == hasBeenUpvoted ? _self.hasBeenUpvoted : hasBeenUpvoted // ignore: cast_nullable_to_non_nullable
-as bool,score: freezed == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
-as int?,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
+as int,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
 as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as DateTime,htmlText: null == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
 as String,replyUrl: freezed == replyUrl ? _self.replyUrl : replyUrl // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// @nodoc
+mixin _$OtherUserComment {
+
+// Declare all fields, overriding the ones from the base class.
+ String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; String get upvoteUrl; bool get hasBeenUpvoted;
+/// Create a copy of OtherUserComment
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OtherUserCommentCopyWith<OtherUserComment> get copyWith => _$OtherUserCommentCopyWithImpl<OtherUserComment>(this as OtherUserComment, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OtherUserComment&&(identical(other.id, id) || other.id == id)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id,indent,hnuser,age,htmlText,replyUrl,upvoteUrl,hasBeenUpvoted);
+
+@override
+String toString() {
+  return 'OtherUserComment(id: $id, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $OtherUserCommentCopyWith<$Res>  {
+  factory $OtherUserCommentCopyWith(OtherUserComment value, $Res Function(OtherUserComment) _then) = _$OtherUserCommentCopyWithImpl;
+@useResult
+$Res call({
+ String id, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, String upvoteUrl, bool hasBeenUpvoted
+});
+
+
+
+
+}
+/// @nodoc
+class _$OtherUserCommentCopyWithImpl<$Res>
+    implements $OtherUserCommentCopyWith<$Res> {
+  _$OtherUserCommentCopyWithImpl(this._self, this._then);
+
+  final OtherUserComment _self;
+  final $Res Function(OtherUserComment) _then;
+
+/// Create a copy of OtherUserComment
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,}) {
+  return _then(OtherUserComment(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,indent: null == indent ? _self.indent : indent // ignore: cast_nullable_to_non_nullable
+as int,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
+as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as DateTime,htmlText: null == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
+as String,replyUrl: freezed == replyUrl ? _self.replyUrl : replyUrl // ignore: cast_nullable_to_non_nullable
+as String?,upvoteUrl: null == upvoteUrl ? _self.upvoteUrl : upvoteUrl // ignore: cast_nullable_to_non_nullable
+as String,hasBeenUpvoted: null == hasBeenUpvoted ? _self.hasBeenUpvoted : hasBeenUpvoted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

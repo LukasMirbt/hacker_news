@@ -6,7 +6,7 @@ void main() {
     ReplyUpdate createSubject() {
       return ReplyUpdate(
         form: ReplyFormPlaceholder(),
-        comment: CommentDataPlaceholder(),
+        comment: CurrentUserCommentDataPlaceholder(),
       );
     }
 

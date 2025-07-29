@@ -8,7 +8,7 @@ class _MockCommentParser extends Mock implements CommentParser {}
 
 class _MockElement extends Mock implements Element {}
 
-class _MockCommentData extends Mock implements CommentData {}
+class _MockOtherUserCommentData extends Mock implements OtherUserCommentData {}
 
 void main() {
   group(CommentListParser, () {
@@ -30,7 +30,7 @@ void main() {
       final commentElement = _MockElement();
       final commentElements = [commentElement];
 
-      final comment = _MockCommentData();
+      final comment = _MockOtherUserCommentData();
       final commentList = [comment];
 
       final querySelectorAll = () => element.querySelectorAll('.athing.comtr');

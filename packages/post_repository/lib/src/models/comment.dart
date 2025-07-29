@@ -1,49 +1,24 @@
-// ignore_for_file: annotate_overrides
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
 
 part 'comment.freezed.dart';
+part 'current_user_comment.dart';
+part 'other_user_comment.dart';
 
-@freezed
-class Comment with _$Comment {
-  const Comment({
-    required this.id,
-    required this.indent,
-    required this.upvoteUrl,
-    required this.hasBeenUpvoted,
-    required this.score,
-    required this.hnuser,
-    required this.age,
-    required this.htmlText,
-    required this.replyUrl,
-  });
+sealed class Comment {
+  const Comment();
 
   factory Comment.from(CommentData data) {
-    return Comment(
-      id: data.id,
-      indent: data.indent,
-      upvoteUrl: data.upvoteUrl,
-      hasBeenUpvoted: data.hasBeenUpvoted,
-      score: data.score,
-      hnuser: data.hnuser,
-      age: data.age,
-      htmlText: data.htmlText,
-      replyUrl: data.replyUrl,
-    );
+    return switch (data) {
+      final CurrentUserCommentData data => CurrentUserComment.from(data),
+      final OtherUserCommentData data => OtherUserComment.from(data),
+    };
   }
 
-  final String id;
-  final int indent;
-  final String upvoteUrl;
-  final bool hasBeenUpvoted;
-  final int? score;
-  final Hnuser hnuser;
-  final DateTime age;
-  final String htmlText;
-  final String? replyUrl;
-
-  Comment upvote() => copyWith(hasBeenUpvoted: true);
-
-  Comment unvote() => copyWith(hasBeenUpvoted: false);
+  String get id;
+  int get indent;
+  Hnuser get hnuser;
+  DateTime get age;
+  String get htmlText;
+  String? get replyUrl;
 }

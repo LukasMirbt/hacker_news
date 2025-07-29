@@ -11,7 +11,7 @@ import 'package:share_launcher/share_launcher.dart';
 class _MockShareLauncher extends Mock implements ShareLauncher {}
 
 void main() {
-  final comment = CommentPlaceholder();
+  final comment = OtherUserCommentPlaceholder();
   final initialState = CommentOptionsState.from(comment: comment);
 
   group(CommentOptionsBloc, () {

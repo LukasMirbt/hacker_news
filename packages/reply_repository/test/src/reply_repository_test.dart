@@ -105,7 +105,7 @@ void main() {
 
     group('reply', () {
       final form = ReplyFormPlaceholder();
-      final comment = CommentDataPlaceholder();
+      final comment = CurrentUserCommentDataPlaceholder();
       final commentThread = [comment];
 
       final reply = () => replyApi.reply(form.toApi());

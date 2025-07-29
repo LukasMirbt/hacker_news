@@ -8,11 +8,11 @@ class ReplyRepository {
     required ReplyApi replyApi,
     required AuthenticationApi authenticationApi,
     required ReplyStorage replyStorage,
-    required UserReplyService userReplyService,
+    UserReplyService? userReplyService,
   }) : _replyApi = replyApi,
        _authenticationApi = authenticationApi,
        _replyStorage = replyStorage,
-       _userReplyService = userReplyService;
+       _userReplyService = userReplyService ?? const UserReplyService();
 
   final ReplyApi _replyApi;
   final AuthenticationApi _authenticationApi;

@@ -6,7 +6,7 @@ void main() {
   group(CommentOptionsState, () {
     group('from', () {
       test('returns $CommentOptionsState', () {
-        final comment = CommentPlaceholder();
+        final comment = OtherUserCommentPlaceholder();
         expect(
           CommentOptionsState.from(comment: comment),
           CommentOptionsState(

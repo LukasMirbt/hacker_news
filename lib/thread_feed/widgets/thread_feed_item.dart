@@ -22,7 +22,6 @@ class ThreadFeedItem extends StatelessWidget {
     return AppThreadFeedItem(
       data: AppThreadFeedItemData(
         isExpanded: item.isExpanded,
-        indent: item.indent,
         user: item.user,
         age: item.age(appL10n, formatterL10n),
         hasBeenUpvoted: item.hasBeenUpvoted,

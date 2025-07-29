@@ -1,17 +1,18 @@
 // ignore_for_file: prefer_const_constructors
-// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:collapse_handler/collapse_handler.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_list/comment_list.dart';
+import 'package:hacker_client/comment_list/comment_list.dart'
+    hide Comment, CurrentUserComment, OtherUserComment;
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:vote_repository/vote_repository.dart';
 
-class _MockComment extends Mock implements Comment {}
+class _MockCurrentUserComment extends Mock implements CurrentUserComment {}
+
+class _MockOtherUserComment extends Mock implements OtherUserComment {}
 
 class _MockDateFormatter extends Mock implements DateFormatter {}
 
@@ -21,26 +22,46 @@ void main() async {
   final appL10n = await AppLocalizations.delegate.load(Locale('en'));
 
   group(CommentModel, () {
-    late Comment comment;
+    late CurrentUserComment comment;
     late DateFormatter formatter;
 
     setUp(() {
-      comment = _MockComment();
+      comment = _MockCurrentUserComment();
       formatter = _MockDateFormatter();
     });
 
     CommentModel createSubject() {
-      return CommentModel(
+      return CurrentUserCommentModel(
         comment: comment,
         formatter: formatter,
       );
     }
 
-    test('is ${Collapsible<CommentModel>}', () {
+    test('is a ${Collapsible<CommentModel>}', () {
       expect(
         createSubject(),
         isA<Collapsible<CommentModel>>(),
       );
+    });
+
+    group('from', () {
+      test('returns $OtherUserCommentModel when comment '
+          'is $OtherUserComment', () {
+        final comment = _MockOtherUserComment();
+        expect(
+          CommentModel.from(comment),
+          isA<OtherUserCommentModel>(),
+        );
+      });
+
+      test('returns $CurrentUserCommentModel when comment '
+          'is $CurrentUserComment', () {
+        final comment = _MockCurrentUserComment();
+        expect(
+          CommentModel.from(comment),
+          isA<CurrentUserCommentModel>(),
+        );
+      });
     });
 
     group('id', () {
@@ -58,24 +79,6 @@ void main() async {
         when(() => comment.indent).thenReturn(indent);
         final model = createSubject();
         expect(model.indent, indent);
-      });
-    });
-
-    group('upvoteUrl', () {
-      test('returns comment.upvoteUrl', () {
-        const upvoteUrl = 'upvoteUrl';
-        when(() => comment.upvoteUrl).thenReturn(upvoteUrl);
-        final model = createSubject();
-        expect(model.upvoteUrl, upvoteUrl);
-      });
-    });
-
-    group('hasBeenUpvoted', () {
-      test('returns comment.hasBeenUpvoted', () {
-        const hasBeenUpvoted = true;
-        when(() => comment.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
-        final model = createSubject();
-        expect(model.hasBeenUpvoted, hasBeenUpvoted);
       });
     });
 
@@ -113,13 +116,6 @@ void main() async {
       });
     });
 
-    group('toRepository', () {
-      test('returns comment', () {
-        final model = createSubject();
-        expect(model.toRepository(), comment);
-      });
-    });
-
     group('age', () {
       test('returns correct string', () {
         final age = DateTime(1);
@@ -133,64 +129,6 @@ void main() async {
           model.age(appL10n, formatterL10n),
           appL10n.commentList_age(age: formattedAge),
         );
-      });
-    });
-
-    group('vote', () {
-      final upvote = () => comment.upvote();
-      final unvote = () => comment.unvote();
-
-      test('returns upvoted item when type '
-          'is ${VoteType.upvote}', () {
-        final updatedItem = _MockComment();
-        when(upvote).thenReturn(updatedItem);
-        final model = createSubject();
-        expect(
-          model.vote(VoteType.upvote),
-          model.copyWith(comment: updatedItem),
-        );
-        verify(upvote).called(1);
-      });
-
-      test('returns unvoted item when type '
-          'is ${VoteType.unvote}', () {
-        final updatedItem = _MockComment();
-        when(unvote).thenReturn(updatedItem);
-        final model = createSubject();
-        expect(
-          model.vote(VoteType.unvote),
-          model.copyWith(comment: updatedItem),
-        );
-        verify(unvote).called(1);
-      });
-    });
-
-    group('copyWith', () {
-      test('returns $CommentModel with updated fields '
-          'when values are non-null', () {
-        final updatedComment = _MockComment();
-        const updatedIsExpanded = false;
-        const updatedIsParentExpanded = false;
-        final model = createSubject();
-        expect(
-          model.copyWith(
-            comment: updatedComment,
-            isExpanded: updatedIsExpanded,
-            isParentExpanded: updatedIsParentExpanded,
-          ),
-          CommentModel(
-            formatter: formatter,
-            comment: updatedComment,
-            isExpanded: updatedIsExpanded,
-            isParentExpanded: updatedIsParentExpanded,
-          ),
-        );
-      });
-
-      test('returns $CommentModel with previous fields '
-          'when values are null', () {
-        final model = createSubject();
-        expect(model.copyWith(), model);
       });
     });
   });

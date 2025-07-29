@@ -22,8 +22,8 @@ class _MockBuildContext extends Mock implements BuildContext {}
 void main() {
   final visibleItems = List.filled(
     10,
-    CommentModel(
-      comment: CommentPlaceholder(),
+    OtherUserCommentModel(
+      comment: OtherUserCommentPlaceholder(),
     ),
   );
 

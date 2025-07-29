@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class AppThreadFeedItemData {
   const AppThreadFeedItemData({
     required this.isExpanded,
-    required this.indent,
     required this.user,
     required this.age,
     required this.hasBeenUpvoted,
@@ -15,7 +14,6 @@ class AppThreadFeedItemData {
   });
 
   final bool isExpanded;
-  final int indent;
   final String user;
   final String age;
   final bool hasBeenUpvoted;

@@ -1,4 +1,3 @@
-import 'package:authentication_api/authentication_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:reply_repository/reply_repository.dart';
 
@@ -10,28 +9,23 @@ class FindUserReplyFailure with EquatableMixin implements Exception {
 }
 
 class UserReplyService {
-  UserReplyService({
-    required AuthenticationApi authenticationApi,
-  }) : _authenticationApi = authenticationApi;
+  const UserReplyService();
 
-  final AuthenticationApi _authenticationApi;
-
-  CommentData newestComment(List<CommentData> commentThread) {
-    final user = _authenticationApi.state.user;
-
+  CurrentUserCommentData newestComment(List<CommentData> commentThread) {
     final userComments =
-        commentThread
-            .where(
-              (comment) => comment.hnuser.id == user.id,
-            )
-            .toList()
-          ..sort(
-            (a, b) => b.age.compareTo(a.age),
-          );
+        [
+          for (final comment in commentThread)
+            if (comment is CurrentUserCommentData) comment,
+        ]..sort(
+          (a, b) => b.base.age.compareTo(a.base.age),
+        );
 
-    if (userComments.isEmpty) throw const FindUserReplyFailure();
+    final newUserComment = userComments.firstOrNull;
 
-    final newUserComment = userComments.first;
+    if (newUserComment is! CurrentUserCommentData) {
+      throw const FindUserReplyFailure();
+    }
+
     return newUserComment;
   }
 }

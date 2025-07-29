@@ -12,7 +12,7 @@ class ScoreParser extends ParserTemplate<int> {
 
   @override
   int? parseText(String text) {
-    final match = RegExp(r'(\d+)').firstMatch(text);
+    final match = RegExp(r'(-?\d+)').firstMatch(text);
     if (match == null) return null;
 
     final scoreString = match.group(1);
