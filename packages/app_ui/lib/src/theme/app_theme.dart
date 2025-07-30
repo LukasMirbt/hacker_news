@@ -1,6 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 abstract class AppTheme {
@@ -13,6 +14,7 @@ abstract class AppTheme {
   ThemeData get themeData {
     return ThemeData(
       appBarTheme: _appBarTheme,
+      actionIconTheme: _actionIconTheme,
       bottomSheetTheme: _bottomSheetTheme,
       colorScheme: _colorScheme,
       filledButtonTheme: _filledButtonTheme,
@@ -44,6 +46,21 @@ abstract class AppTheme {
       actionsPadding: const EdgeInsets.only(
         right: AppSpacing.sm,
       ),
+    );
+  }
+
+  ActionIconThemeData get _actionIconTheme {
+    return ActionIconThemeData(
+      closeButtonIconBuilder: (_) => const Icon(Symbols.close),
+      drawerButtonIconBuilder: (_) => const Icon(Symbols.menu),
+      backButtonIconBuilder: (context) {
+        final platform = Theme.of(context).platform;
+        return Icon(
+          platform == TargetPlatform.iOS
+              ? Symbols.arrow_back_ios_new_rounded
+              : Symbols.arrow_back,
+        );
+      },
     );
   }
 
