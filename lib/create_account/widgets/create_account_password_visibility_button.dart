@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/create_account/create_account.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class CreateAccountPasswordVisibilityButton extends StatelessWidget {
   const CreateAccountPasswordVisibilityButton({super.key});
@@ -18,9 +19,7 @@ class CreateAccountPasswordVisibilityButton extends StatelessWidget {
         );
       },
       icon: Icon(
-        obscurePassword
-            ? Icons.visibility_outlined
-            : Icons.visibility_off_outlined,
+        obscurePassword ? Symbols.visibility : Symbols.visibility_off,
       ),
     );
   }

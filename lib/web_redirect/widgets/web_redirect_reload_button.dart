@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class WebRedirectReloadButton extends StatelessWidget {
   const WebRedirectReloadButton({super.key});
@@ -8,7 +9,7 @@ class WebRedirectReloadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.refresh),
+      icon: const Icon(Symbols.refresh),
       onPressed: () {
         context.read<WebRedirectBloc>().add(
           const WebRedirectReloadPressed(),

@@ -17,7 +17,10 @@ class ReplyOptionBody extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return ListTile(
-      leading: const Icon(Symbols.reply),
+      leading: const Icon(
+        Symbols.reply,
+        opticalSize: 24,
+      ),
       title: Text(l10n.threadCommentOptions_reply),
       onTap: () {
         Navigator.of(context).pop();

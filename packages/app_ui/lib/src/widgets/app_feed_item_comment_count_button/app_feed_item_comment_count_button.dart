@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 export 'app_feed_item_comment_count_button_data.dart';
@@ -34,7 +35,7 @@ class _Body extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: const Row(
-        spacing: AppSpacing.xs,
+        spacing: 4,
         children: [
           _Icon(),
           _Text(),
@@ -50,8 +51,10 @@ class _Icon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Icon(
-      Icons.mode_comment_outlined,
+      Symbols.mode_comment,
       size: 16,
+      opticalSize: 20,
+      grade: -25,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 class FeedItemShareButton extends StatelessWidget {
@@ -14,8 +15,10 @@ class FeedItemShareButton extends StatelessWidget {
     return IconButton(
       onPressed: onSharePressed,
       icon: const Icon(
-        Icons.share_outlined,
+        Symbols.share,
         size: 16,
+        weight: 350,
+        opticalSize: 20,
       ),
     );
   }

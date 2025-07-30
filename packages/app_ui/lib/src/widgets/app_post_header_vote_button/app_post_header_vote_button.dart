@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 export 'app_post_header_vote_button_data.dart';
@@ -34,7 +35,7 @@ class _Body extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       child: const Row(
-        spacing: AppSpacing.xs,
+        spacing: 1,
         children: [
           _Icon(),
           _Text(),
@@ -55,10 +56,16 @@ class _Icon extends StatelessWidget {
       (AppPostHeaderVoteButtonData data) => data.color(colorScheme),
     );
 
+    final hasBeenUpvoted = context.select(
+      (AppPostHeaderVoteButtonData data) => data.hasBeenUpvoted,
+    );
+
     return Icon(
-      Icons.arrow_upward,
-      size: 18,
+      Symbols.arrow_upward,
+      size: 20,
+      opticalSize: 20,
       color: color,
+      grade: hasBeenUpvoted ? 200 : 0,
     );
   }
 }

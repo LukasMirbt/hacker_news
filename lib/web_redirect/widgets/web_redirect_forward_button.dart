@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class WebRedirectForwardButton extends StatelessWidget {
   const WebRedirectForwardButton({super.key});
@@ -12,7 +13,7 @@ class WebRedirectForwardButton extends StatelessWidget {
     );
 
     return IconButton(
-      icon: const Icon(Icons.arrow_forward),
+      icon: const Icon(Symbols.arrow_forward),
       onPressed: !canGoForward
           ? null
           : () {

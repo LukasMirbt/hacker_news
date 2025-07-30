@@ -6,6 +6,8 @@ class WebRedirectActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Fix dark mode icon colors
+    // TODO: Use BottomAppBar?
     return const SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),

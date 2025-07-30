@@ -44,8 +44,14 @@ class AppNavigationDrawer extends StatelessWidget {
         const SizedBox(height: AppSpacing.xlg),
         for (final destination in AppDestination.values)
           NavigationDrawerDestination(
-            icon: Icon(destination.icon),
-            selectedIcon: Icon(destination.selectedIcon),
+            icon: Icon(
+              destination.icon,
+              fill: 0,
+            ),
+            selectedIcon: Icon(
+              destination.icon,
+              fill: 1,
+            ),
             label: Text(
               destination.label(l10n),
             ),

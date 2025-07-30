@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/login/login.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class LoginUsernameTextField extends StatelessWidget {
   const LoginUsernameTextField({super.key});
@@ -22,7 +23,7 @@ class LoginUsernameTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: l10n.login_usernameLabel,
         errorText: errorText,
-        suffixIcon: errorText != null ? const Icon(Icons.error) : null,
+        suffixIcon: errorText != null ? const Icon(Symbols.error) : null,
       ),
       onChanged: (value) {
         context.read<LoginBloc>().add(

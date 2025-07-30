@@ -16,6 +16,7 @@ abstract class AppTheme {
       bottomSheetTheme: _bottomSheetTheme,
       colorScheme: _colorScheme,
       filledButtonTheme: _filledButtonTheme,
+      iconTheme: _iconTheme,
       inputDecorationTheme: _inputDecorationTheme,
       listTileTheme: _listTileTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
@@ -89,6 +90,17 @@ abstract class AppTheme {
         maximumSize: const WidgetStatePropertyAll(Size.infinite),
         fixedSize: const WidgetStatePropertyAll(Size.fromHeight(40)),
       ),
+    );
+  }
+
+  IconThemeData get _iconTheme {
+    return IconThemeData(
+      size: 24,
+      opticalSize: 24,
+      grade: switch (colors.brightness) {
+        Brightness.light => 0,
+        Brightness.dark => -25,
+      },
     );
   }
 

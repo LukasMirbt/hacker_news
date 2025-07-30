@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/create_account/create_account.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class CreateAccountPasswordTextField extends StatelessWidget {
   const CreateAccountPasswordTextField({super.key});
@@ -27,7 +28,7 @@ class CreateAccountPasswordTextField extends StatelessWidget {
         labelText: l10n.createAccount_passwordLabel,
         errorText: errorText,
         suffixIcon: errorText != null
-            ? const Icon(Icons.error)
+            ? const Icon(Symbols.error)
             : const CreateAccountPasswordVisibilityButton(),
       ),
       onChanged: (value) {

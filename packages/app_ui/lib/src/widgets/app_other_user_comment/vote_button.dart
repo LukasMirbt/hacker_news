@@ -1,5 +1,6 @@
 import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 class VoteButton extends StatelessWidget {
@@ -24,7 +25,7 @@ class VoteButton extends StatelessWidget {
     return IconButton(
       onPressed: onVotePressed,
       icon: Icon(
-        Icons.arrow_upward,
+        Symbols.arrow_upward,
         size: size,
         color: color,
       ),

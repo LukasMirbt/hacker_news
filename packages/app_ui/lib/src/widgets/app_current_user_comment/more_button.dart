@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 class MoreButton extends StatelessWidget {
@@ -14,8 +15,9 @@ class MoreButton extends StatelessWidget {
     return IconButton(
       onPressed: onMorePressed,
       icon: const Icon(
-        Icons.more_vert,
+        Symbols.more_vert,
         size: 16,
+        opticalSize: 20,
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/login/login.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class LoginPasswordTextField extends StatelessWidget {
   const LoginPasswordTextField({super.key});
@@ -27,7 +28,7 @@ class LoginPasswordTextField extends StatelessWidget {
         labelText: l10n.login_passwordLabel,
         errorText: errorText,
         suffixIcon: errorText != null
-            ? const Icon(Icons.error)
+            ? const Icon(Symbols.error)
             : const LoginPasswordVisibilityButton(),
       ),
       onChanged: (value) {

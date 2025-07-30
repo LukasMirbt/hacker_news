@@ -40,7 +40,7 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.only(
-        left: AppSpacing.xxlg,
+        left: 38,
         right: AppSpacing.lg,
       ),
       child: Row(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/create_account/create_account.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 class CreateAccountUsernameTextField extends StatelessWidget {
   const CreateAccountUsernameTextField({super.key});
@@ -22,7 +23,7 @@ class CreateAccountUsernameTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: l10n.createAccount_usernameLabel,
         errorText: errorText,
-        suffixIcon: errorText != null ? const Icon(Icons.error) : null,
+        suffixIcon: errorText != null ? const Icon(Symbols.error) : null,
       ),
       onChanged: (value) {
         context.read<CreateAccountBloc>().add(
