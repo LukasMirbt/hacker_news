@@ -23,6 +23,11 @@ class ThreadCommentModel extends Equatable {
     return WebRedirect(url: url);
   }
 
+  String get shareText {
+    final url = _links.commentUrl(_comment.id);
+    return url.toString();
+  }
+
   @override
   List<Object> get props => [
     _comment,

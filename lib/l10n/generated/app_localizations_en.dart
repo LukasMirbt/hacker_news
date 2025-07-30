@@ -263,13 +263,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get threadItemOptions_reply => 'Reply';
+  String get threadCommentOptions_reply => 'Reply';
 
   @override
-  String get threadItemOptions_viewPost => 'View post';
+  String get threadCommentOptions_viewPost => 'View post';
 
   @override
-  String get threadItemOptions_openOnWeb => 'Open on web';
+  String get threadCommentOptions_share => 'Share';
+
+  @override
+  String get threadCommentOptions_openOnWeb => 'Open on web';
 
   @override
   String get voteFailure_invalidUrl =>

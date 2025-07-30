@@ -17,7 +17,7 @@ import '../../app/pump_app.dart';
 class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockThreadCommentOptionsBloc
-    extends MockBloc<void, ThreadCommentOptionsState>
+    extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
     implements ThreadCommentOptionsBloc {}
 
 class _MockThreadCommentOptionsState extends Mock
@@ -89,7 +89,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'data',
-            l10n.threadItemOptions_viewPost,
+            l10n.threadCommentOptions_viewPost,
           ),
         );
       });

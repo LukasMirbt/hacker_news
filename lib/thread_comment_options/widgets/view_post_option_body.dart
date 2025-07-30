@@ -24,7 +24,7 @@ class ViewPostOptionBody extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Symbols.article_shortcut),
-      title: Text(l10n.threadItemOptions_viewPost),
+      title: Text(l10n.threadCommentOptions_viewPost),
       subtitle: onTitle != null
           ? Text(
               onTitle,

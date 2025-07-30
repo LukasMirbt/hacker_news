@@ -101,5 +101,16 @@ void main() {
         verify(getCommentUrl).called(1);
       });
     });
+
+    group('shareText', () {
+      final getCommentUrl = () => webLinks.commentUrl(id);
+
+      test('returns correct value', () {
+        when(getCommentUrl).thenReturn(url);
+        final model = createSubject();
+        expect(model.shareText, url.toString());
+        verify(getCommentUrl).called(1);
+      });
+    });
   });
 }

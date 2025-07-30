@@ -10,7 +10,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../app/pump_app.dart';
 
 class _MockThreadCommentOptionsBloc
-    extends MockBloc<void, ThreadCommentOptionsState>
+    extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
     implements ThreadCommentOptionsBloc {}
 
 class _MockThreadCommentOptionsState extends Mock
