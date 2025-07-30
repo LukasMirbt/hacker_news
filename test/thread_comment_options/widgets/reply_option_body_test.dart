@@ -51,7 +51,7 @@ void main() async {
     testWidgets('renders correct title', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.text(l10n.threadItemOptions_reply),
+        find.text(l10n.threadCommentOptions_reply),
         findsOneWidget,
       );
     });

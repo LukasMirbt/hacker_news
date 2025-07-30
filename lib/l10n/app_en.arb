@@ -78,8 +78,9 @@
   "theme_light": "Light",
   "theme_dark": "Dark",
   "threadFeed_age": "{age} ago",
-  "threadItemOptions_reply": "Reply",
-  "threadItemOptions_viewPost": "View post",
-  "threadItemOptions_openOnWeb": "Open on web",
+  "threadCommentOptions_reply": "Reply",
+  "threadCommentOptions_viewPost": "View post",
+  "threadCommentOptions_share": "Share",
+  "threadCommentOptions_openOnWeb": "Open on web",
   "voteFailure_invalidUrl": "Something went wrong. Try refreshing the page."
 }

@@ -28,6 +28,7 @@ class ThreadCommentOptionsSheet extends StatelessWidget {
       children: [
         ReplyOption(),
         ViewPostOption(),
+        ShareOption(),
         OpenOnWebOption(),
       ],
     );

@@ -562,23 +562,29 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String threadFeed_age({required Object age});
 
-  /// No description provided for @threadItemOptions_reply.
+  /// No description provided for @threadCommentOptions_reply.
   ///
   /// In en, this message translates to:
   /// **'Reply'**
-  String get threadItemOptions_reply;
+  String get threadCommentOptions_reply;
 
-  /// No description provided for @threadItemOptions_viewPost.
+  /// No description provided for @threadCommentOptions_viewPost.
   ///
   /// In en, this message translates to:
   /// **'View post'**
-  String get threadItemOptions_viewPost;
+  String get threadCommentOptions_viewPost;
 
-  /// No description provided for @threadItemOptions_openOnWeb.
+  /// No description provided for @threadCommentOptions_share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get threadCommentOptions_share;
+
+  /// No description provided for @threadCommentOptions_openOnWeb.
   ///
   /// In en, this message translates to:
   /// **'Open on web'**
-  String get threadItemOptions_openOnWeb;
+  String get threadCommentOptions_openOnWeb;
 
   /// No description provided for @voteFailure_invalidUrl.
   ///

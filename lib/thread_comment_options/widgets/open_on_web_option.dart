@@ -15,7 +15,7 @@ class OpenOnWebOption extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Symbols.open_in_browser),
-      title: Text(l10n.threadItemOptions_openOnWeb),
+      title: Text(l10n.threadCommentOptions_openOnWeb),
       onTap: () {
         final state = context.read<ThreadCommentOptionsBloc>().state;
         final url = state.comment.webRedirect.urlString;

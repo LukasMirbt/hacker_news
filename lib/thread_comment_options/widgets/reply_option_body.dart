@@ -18,7 +18,7 @@ class ReplyOptionBody extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Symbols.reply),
-      title: Text(l10n.threadItemOptions_reply),
+      title: Text(l10n.threadCommentOptions_reply),
       onTap: () {
         Navigator.of(context).pop();
         AppRouter.of(context).goRelative(

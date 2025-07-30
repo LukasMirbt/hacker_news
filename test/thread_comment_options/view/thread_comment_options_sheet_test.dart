@@ -12,7 +12,7 @@ import 'package:thread_repository/thread_repository.dart';
 import '../../app/pump_app.dart';
 
 class _MockThreadCommentOptionsBloc
-    extends MockBloc<void, ThreadCommentOptionsState>
+    extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
     implements ThreadCommentOptionsBloc {}
 
 void main() {
@@ -63,6 +63,11 @@ void main() {
     testWidgets('renders $ViewPostOption', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(ViewPostOption), findsOneWidget);
+    });
+
+    testWidgets('renders $ShareOption', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ShareOption), findsOneWidget);
     });
 
     testWidgets('renders $OpenOnWebOption', (tester) async {
