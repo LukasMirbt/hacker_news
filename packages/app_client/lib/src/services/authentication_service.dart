@@ -21,7 +21,7 @@ class AuthenticationService {
 
     switch (status) {
       case Authenticated(:final user):
-        _client.authenticate(user);
+        _client.authenticate(user.id);
       case Unauthenticated():
         _client.unauthenticate();
       case Unknown():

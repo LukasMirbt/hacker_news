@@ -114,6 +114,8 @@ dependencies:
     path: packages/reply_repository
   secure_cookie_storage:
     path: packages/secure_cookie_storage
+  secure_storage:
+    path: packages/storage/secure_storage
   share_launcher:
     path: packages/share_launcher
   shared_preferences: ^2.5.3

@@ -16,7 +16,7 @@ class UserParser {
   final KarmaParser _karmaParser;
   final LogoutUrlParser _logoutUrlParser;
 
-  User? parse(Document document) {
+  UserData? parse(Document document) {
     final id = _userIdParser.parse(document);
     if (id == null) return null;
 
@@ -24,7 +24,7 @@ class UserParser {
     final karma = _karmaParser.parse(document);
     final logoutUrl = _logoutUrlParser.parse(document);
 
-    return User.fromParsed(
+    return UserData.fromParsed(
       id: id,
       karma: karma,
       profileUrl: profileUrl,

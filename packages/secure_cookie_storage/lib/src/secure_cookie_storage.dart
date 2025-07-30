@@ -12,8 +12,9 @@ class SecureCookieStorageException with EquatableMixin implements Exception {
 }
 
 class SecureCookieStorage implements Storage {
-  const SecureCookieStorage({FlutterSecureStorage? secureStorage})
-    : _secureStorage = secureStorage ?? const FlutterSecureStorage();
+  const SecureCookieStorage({
+    required FlutterSecureStorage flutterSecureStorage,
+  }) : _secureStorage = flutterSecureStorage;
 
   final FlutterSecureStorage _secureStorage;
 

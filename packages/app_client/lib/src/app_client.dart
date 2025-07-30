@@ -8,9 +8,11 @@ class AppClient extends Cubit<AuthenticationState> {
   AppClient({
     required Uri baseUrl,
     required CookieJar cookieJar,
+    required UserStorage userStorage,
     required void Function(Dio, CookieJar) addPlatformConfiguration,
     void Function(String?)? debugPrint,
   }) : _cookieJar = cookieJar,
+       _userStorage = userStorage,
        http = SequentialDio(),
        super(
          AuthenticationState(baseUrl: baseUrl),
@@ -54,22 +56,28 @@ class AppClient extends Cubit<AuthenticationState> {
   Future<void> start() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);
 
-    final isAuthenticated = cookies.any(
+    final hasUserCookie = cookies.any(
       (cookie) => cookie.name == 'user',
     );
 
-    final status = isAuthenticated
+    final userId = await _userStorage.readUserId();
+
+    final status = hasUserCookie && userId != null
         ? AuthenticationStatus.authenticated
         : AuthenticationStatus.unauthenticated;
 
     emit(
       state.copyWith(
+        user: state.user.copyWith(
+          id: userId ?? state.user.id,
+        ),
         status: status,
       ),
     );
   }
 
   final CookieJar _cookieJar;
+  final UserStorage _userStorage;
   final Dio http;
 
   void redirectToLogin() {
@@ -99,11 +107,13 @@ class AppClient extends Cubit<AuthenticationState> {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
-  void authenticate(User user) {
+  void authenticate(String userId) {
     emit(
       state.copyWith(
-        user: user,
         status: AuthenticationStatus.authenticated,
+        user: state.user.copyWith(
+          id: userId,
+        ),
       ),
     );
   }

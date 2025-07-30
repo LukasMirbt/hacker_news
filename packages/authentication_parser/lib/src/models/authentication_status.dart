@@ -19,7 +19,7 @@ final class Unauthenticated extends AuthenticationStatus {
 final class Authenticated extends AuthenticationStatus {
   const Authenticated(this.user);
 
-  final User user;
+  final UserData user;
 
   @override
   List<Object> get props => [user];

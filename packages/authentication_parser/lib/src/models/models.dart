@@ -1,2 +1,2 @@
 export 'authentication_status.dart';
-export 'user.dart';
+export 'user_data.dart';

@@ -1,4 +1,4 @@
-import 'package:authentication_parser/authentication_parser.dart';
+import 'package:app_client/app_client.dart';
 
 class UserPlaceholder extends User {
   const UserPlaceholder({

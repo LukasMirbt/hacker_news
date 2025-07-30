@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
@@ -21,7 +20,7 @@ void main() {
 
     SecureCookieStorage createSubject() {
       return SecureCookieStorage(
-        secureStorage: secureStorage,
+        flutterSecureStorage: secureStorage,
       );
     }
 
