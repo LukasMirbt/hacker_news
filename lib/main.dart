@@ -1,6 +1,7 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:encryption_manager/encryption_manager.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -15,7 +16,6 @@ import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
-import 'package:secure_storage/secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
@@ -26,7 +26,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final sharedPreferences = SharedPreferencesAsync();
-  const flutterSecureStorage = FlutterSecureStorage();
 
   await Hive.initFlutter();
 
@@ -40,27 +39,20 @@ void main() async {
     sharedPreferences: sharedPreferences,
   );
 
-  const secureStorage = SecureStorage(
-    flutterSecureStorage: flutterSecureStorage,
-  );
+  final encryptionCipher = await EncryptionManager().cipher();
 
-  const secureCookieStorage = SecureCookieStorage(
-    flutterSecureStorage: flutterSecureStorage,
-  );
+  final cookieStorage = await CookieStorage.open(Hive, encryptionCipher);
+  final userStorage = await UserStorage.open(Hive, encryptionCipher);
 
-  const userStorage = UserStorage(
-    storage: secureStorage,
+  final commentStorage = await CommentStorage.open(Hive);
+  final replyStorage = await ReplyStorage.open(Hive);
+
+  final cookieJar = PersistCookieJar(
+    storage: cookieStorage,
   );
 
   final analyticsConsentStorage = AnalyticsConsentStorage(
     storage: persistentStorage,
-  );
-
-  final commentStorage = await CommentStorage.init(Hive);
-  final replyStorage = await ReplyStorage.init(Hive);
-
-  final cookieJar = PersistCookieJar(
-    storage: secureCookieStorage,
   );
 
   final firebaseApp = await Firebase.initializeApp(

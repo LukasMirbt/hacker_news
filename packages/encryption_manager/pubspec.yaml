@@ -1,4 +1,4 @@
-name: secure_cookie_storage
+name: encryption_manager
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -9,10 +9,9 @@ environment:
 resolution: workspace
 
 dependencies:
-  cookie_jar: ^4.0.8
-  equatable: ^2.0.7
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^10.0.0-beta.4
   hive_ce: ^2.11.3
 
 dev_dependencies:
@@ -20,6 +19,3 @@ dev_dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
-
-flutter:
-  uses-material-design: true

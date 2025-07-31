@@ -41,7 +41,9 @@ class AuthenticationApi {
       },
     );
 
-    _client.authenticate(username);
+    await _client.authenticate(
+      User.empty.copyWith(id: username),
+    );
   }
 
   Future<void> createAccount({
@@ -61,11 +63,13 @@ class AuthenticationApi {
       },
     );
 
-    _client.authenticate(username);
+    await _client.authenticate(
+      User.empty.copyWith(id: username),
+    );
   }
 
   Future<void> logout() async {
-    await _client.http.get<void>('');
+    await _client.http.get<void>(state.user.logoutUrl);
     await _client.unauthenticate();
   }
 }

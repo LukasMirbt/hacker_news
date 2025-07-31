@@ -8,12 +8,12 @@ class CommentStorage {
     required Box<String> box,
   }) : _box = box;
 
-  final Box<String> _box;
-
-  static Future<CommentStorage> init(HiveInterface hive) async {
+  static Future<CommentStorage> open(HiveInterface hive) async {
     final box = await hive.openBox<String>('commentStorage');
     return CommentStorage(box: box);
   }
+
+  final Box<String> _box;
 
   Future<void> save({
     required CommentStorageKey storageKey,

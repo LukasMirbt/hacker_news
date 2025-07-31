@@ -4,8 +4,10 @@ import 'package:authentication_parser/authentication_parser.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
+part 'user.g.dart';
 
 @freezed
+@JsonSerializable()
 class User with _$User {
   const User({
     required this.id,
@@ -14,7 +16,7 @@ class User with _$User {
     required this.logoutUrl,
   });
 
-  factory User.from(UserData data) {
+  factory User.fromData(UserData data) {
     return User(
       id: data.id,
       karma: data.karma,
@@ -22,6 +24,8 @@ class User with _$User {
       logoutUrl: data.logoutUrl,
     );
   }
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   static const empty = User(
     id: '',
@@ -34,4 +38,6 @@ class User with _$User {
   final int karma;
   final String profileUrl;
   final String logoutUrl;
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

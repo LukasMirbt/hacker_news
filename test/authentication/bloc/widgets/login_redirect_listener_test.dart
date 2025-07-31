@@ -109,8 +109,26 @@ void main() {
       verifyNever(pushAnyRoute);
     });
 
+    testWidgets('returns when matchedLocation '
+        'contains $LoginRoute path', (tester) async {
+      when(() => router.matchedLocation).thenReturn(
+        '${LoginRoute.config.path}/create-account',
+      );
+      whenListen(
+        authenticationBloc,
+        initialState: unauthenticatedState,
+        Stream.value(
+          unauthenticatedState.copyWith(
+            redirect: LoginRedirect(),
+          ),
+        ),
+      );
+      await tester.pumpApp(buildSubject());
+      verifyNever(pushAnyRoute);
+    });
+
     testWidgets('pushes $LoginRoute when redirect is $LoginRedirect '
-        'and !isAuthenticated and matchedLocation is not '
+        'and !isAuthenticated and matchedLocation does not contain '
         '$LoginRoute path', (tester) async {
       const matchedLocation = 'matchedLocation';
       final pushLoginRoute = () => router.push(

@@ -16,6 +16,7 @@ workspace:
   - packages/authentication_repository
   - packages/collapse_handler
   - packages/date_formatter
+  - packages/encryption_manager
   - packages/feed_api
   - packages/feed_parser
   - packages/feed_repository
@@ -60,6 +61,8 @@ dependencies:
   collection: ^1.19.1
   date_formatter:
     path: packages/date_formatter
+  encryption_manager:
+    path: packages/encryption_manager
   equatable: ^2.0.7
   feed_api:
     path: packages/feed_api

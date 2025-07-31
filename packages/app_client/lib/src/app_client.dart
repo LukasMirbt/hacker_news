@@ -60,20 +60,22 @@ class AppClient extends Cubit<AuthenticationState> {
       (cookie) => cookie.name == 'user',
     );
 
-    final userId = await _userStorage.readUserId();
+    final user = await _userStorage.read();
 
-    final status = hasUserCookie && userId != null
-        ? AuthenticationStatus.authenticated
-        : AuthenticationStatus.unauthenticated;
-
-    emit(
-      state.copyWith(
-        user: state.user.copyWith(
-          id: userId ?? state.user.id,
+    if (hasUserCookie && user != null) {
+      emit(
+        state.copyWith(
+          status: AuthenticationStatus.authenticated,
+          user: user,
         ),
-        status: status,
-      ),
-    );
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: AuthenticationStatus.unauthenticated,
+        ),
+      );
+    }
   }
 
   final CookieJar _cookieJar;
@@ -107,19 +109,22 @@ class AppClient extends Cubit<AuthenticationState> {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
-  void authenticate(String userId) {
+  Future<void> authenticate(User user) async {
+    if (user != state.user) {
+      await _userStorage.save(user);
+    }
+
     emit(
       state.copyWith(
         status: AuthenticationStatus.authenticated,
-        user: state.user.copyWith(
-          id: userId,
-        ),
+        user: user,
       ),
     );
   }
 
   Future<void> unauthenticate() async {
     await _cookieJar.deleteAll();
+    await _userStorage.clear();
 
     emit(
       state.copyWith(
