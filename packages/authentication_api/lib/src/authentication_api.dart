@@ -13,6 +13,10 @@ class AuthenticationApi {
   Stream<AuthenticationState> get stream => _client.stream;
   AuthenticationState get state => _client.state;
 
+  Future<void> start() async {
+    await _client.start();
+  }
+
   void redirectToLogin() {
     _client.redirectToLogin();
   }

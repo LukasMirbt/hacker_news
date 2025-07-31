@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/analytics_consent/analytics_consent.dart';
 import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/app_router/app_router.dart';
+import 'package:hacker_client/authentication/authentication.dart';
+import 'package:hacker_client/network_error/network_error.dart';
 
 class AppRedirect {
   const AppRedirect();
@@ -14,23 +16,37 @@ class AppRedirect {
     BuildContext context,
     GoRouterState state,
   ) {
-    final bloc = context.read<AppBloc>();
-    final status = bloc.state.status;
+    final authenticationBloc = context.read<AuthenticationBloc>();
+    final authenticationStatus = authenticationBloc.state.status;
+
+    final url = state.uri.toString();
+    final networkErrorRoute = NetworkErrorRoute(from: url);
+    final networkErrorLocation = networkErrorRoute.location;
+
+    print('status: $authenticationStatus');
+    print('redirect: $url');
+
+    if (authenticationStatus.isNetworkError) {
+      if (url.startsWith('/network-error')) return null;
+      return networkErrorLocation;
+    }
+
+    final appBloc = context.read<AppBloc>();
+    final appStatus = appBloc.state.status;
 
     final analyticsConsentLocation = const AnalyticsConsentRoute().location;
 
-    if (status == AppStatus.analyticsConsent) {
+    if (appStatus == AppStatus.analyticsConsent) {
       return analyticsConsentLocation;
     }
 
     final initialLocation = AppRouter.initialLocation;
-    final matchedLocation = state.matchedLocation;
 
-    if (matchedLocation == analyticsConsentLocation) {
+    if (url.startsWith(analyticsConsentLocation)) {
       return initialLocation;
     }
 
-    if (matchedLocation == '/') {
+    if (url == '/') {
       return initialLocation;
     }
 

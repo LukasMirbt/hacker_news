@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_client/app_client.dart';
 import 'package:bloc/bloc.dart';
+import 'package:http/http.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class AppClient extends Cubit<AuthenticationState> {
@@ -51,22 +52,48 @@ class AppClient extends Cubit<AuthenticationState> {
       ..interceptors.add(redirectValidationInterceptor);
   }
 
+  static bool isConnectionError(Object error) {
+    if (error is! DioException) return false;
+
+    switch (error.type) {
+      case DioExceptionType.connectionError:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.receiveTimeout:
+      case DioExceptionType.sendTimeout:
+        return true;
+      case DioExceptionType.unknown:
+        return error.error is ClientException;
+      case DioExceptionType.badCertificate:
+      case DioExceptionType.badResponse:
+      case DioExceptionType.cancel:
+        return false;
+    }
+  }
+
   Future<void> start() async {
-    final cookies = await _cookieJar.loadForRequest(state.baseUrl);
+    try {
+      print('start fetching initial data');
+      await http.get<void>('news');
+      print('initial data fetched successfully');
+    } catch (e) {
+      if (isConnectionError(e)) {
+        print('Network error occurred: $e');
+        emit(
+          state.copyWith(
+            status: AuthenticationStatus.networkError,
+          ),
+        );
+      } else {
+        print('An error occurred: $e');
+        await _cookieJar.deleteAll();
 
-    final isAuthenticated = cookies.any(
-      (cookie) => cookie.name == 'user',
-    );
-
-    final status = isAuthenticated
-        ? AuthenticationStatus.authenticated
-        : AuthenticationStatus.unauthenticated;
-
-    emit(
-      state.copyWith(
-        status: status,
-      ),
-    );
+        emit(
+          state.copyWith(
+            status: AuthenticationStatus.unauthenticated,
+          ),
+        );
+      }
+    }
   }
 
   final CookieJar _cookieJar;
@@ -100,6 +127,8 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   void authenticate(User user) {
+    print('Authenticating user: $user');
+
     emit(
       state.copyWith(
         user: user,
@@ -109,7 +138,12 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   Future<void> unauthenticate() async {
-    await _cookieJar.deleteAll();
+    print('Unauthenticating user: ${state.user.id}');
+
+    if (!state.status.isUnauthenticated) {
+      print('delete cookies');
+      await _cookieJar.deleteAll();
+    }
 
     emit(
       state.copyWith(

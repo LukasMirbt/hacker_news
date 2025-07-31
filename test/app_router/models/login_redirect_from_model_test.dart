@@ -30,12 +30,13 @@ void main() {
       test('returns correct value when route is $AppRelativeRoute', () {
         final route = _MockAppRelativeRoute();
         const location = 'location';
+        final uri = Uri.parse('/post/123?id=456#789');
         when(() => route.location).thenReturn(location);
-        when(() => state.matchedLocation).thenReturn('/post/123');
+        when(() => state.uri).thenReturn(uri);
         final fromModel = createSubject();
         expect(
           fromModel.from(route: route, goRouter: goRouter),
-          '/post/123/location',
+          '/post/123/location?id=456#789',
         );
       });
 

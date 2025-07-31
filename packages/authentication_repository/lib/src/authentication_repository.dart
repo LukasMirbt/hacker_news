@@ -1,14 +1,20 @@
 import 'package:authentication_api/authentication_api.dart';
 
 class AuthenticationRepository {
-  const AuthenticationRepository({
+  AuthenticationRepository({
     required AuthenticationApi authenticationApi,
-  }) : _api = authenticationApi;
+  }) : _api = authenticationApi {
+    _api.start();
+  }
 
   final AuthenticationApi _api;
 
   Stream<AuthenticationState> get stream => _api.stream;
   AuthenticationState get state => _api.state;
+
+  Future<void> start() async {
+    await _api.start();
+  }
 
   Future<List<Cookie>> cookies() async {
     final cookies = await _api.cookies();

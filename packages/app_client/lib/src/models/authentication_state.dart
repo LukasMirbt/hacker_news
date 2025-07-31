@@ -11,7 +11,7 @@ class AuthenticationState with _$AuthenticationState {
     required this.baseUrl,
     this.user = User.empty,
     this.redirect = LoginRedirect.initial,
-    this.status = AuthenticationStatus.unauthenticated,
+    this.status = AuthenticationStatus.initial,
   });
 
   final Uri baseUrl;

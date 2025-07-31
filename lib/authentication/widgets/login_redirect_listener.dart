@@ -23,7 +23,7 @@ class LoginRedirectListener
           if (matchedLocation == LoginRoute.config.path) return;
 
           appRouter.push(
-            LoginRoute(from: matchedLocation),
+            LoginRoute(from: appRouter.from),
           );
         },
       );

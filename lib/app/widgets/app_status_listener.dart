@@ -7,6 +7,7 @@ class AppStatusListener extends BlocListener<AppBloc, AppState> {
     : super(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
+          print('refresh');
           GoRouter.of(context).refresh();
         },
       );

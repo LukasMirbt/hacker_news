@@ -7,11 +7,14 @@ import 'package:hacker_client/login_loading/login_loading.dart'
     as login_loading;
 import 'package:hacker_client/logout_loading/logout_loading.dart'
     as logout_loading;
+import 'package:hacker_client/network_error/network_error.dart'
+    as network_error;
 import 'package:hacker_client/web_redirect/web_redirect.dart' as web_redirect;
 
 class AppRouteList {
   AppRouteList()
     : routes = [
+        ...network_error.$appRoutes,
         ...analytics_consent.$appRoutes,
         ...app_shell.$appRoutes,
         ...login.$appRoutes,
