@@ -9,13 +9,11 @@ part 'authentication_state.freezed.dart';
 class AuthenticationState with _$AuthenticationState {
   const AuthenticationState({
     required this.baseUrl,
-    this.user = User.empty,
     this.redirect = LoginRedirect.initial,
-    this.status = AuthenticationStatus.unauthenticated,
+    this.status = AuthenticationStatus.initial,
   });
 
   final Uri baseUrl;
-  final User user;
   final Redirect redirect;
   final AuthenticationStatus status;
 }

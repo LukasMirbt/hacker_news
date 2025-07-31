@@ -1,4 +1,4 @@
-name: authentication_repository
+name: user_repository
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -11,14 +11,14 @@ resolution: workspace
 dependencies:
   authentication_api:
     path: ../authentication_api
-  feed_api:
-    path: ../feed_api
+  bloc: ^9.0.0
   flutter:
     sdk: flutter
   user_api:
     path: ../user_api
 
 dev_dependencies:
+  bloc_test: ^10.0.0
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4

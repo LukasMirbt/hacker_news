@@ -51,31 +51,12 @@ class AppClient extends Cubit<AuthenticationState> {
       ..interceptors.add(redirectValidationInterceptor);
   }
 
-  Future<void> start() async {
-    final cookies = await _cookieJar.loadForRequest(state.baseUrl);
-
-    final isAuthenticated = cookies.any(
-      (cookie) => cookie.name == 'user',
-    );
-
-    final status = isAuthenticated
-        ? AuthenticationStatus.authenticated
-        : AuthenticationStatus.unauthenticated;
-
-    emit(
-      state.copyWith(
-        status: status,
-      ),
-    );
-  }
-
   final CookieJar _cookieJar;
   final Dio http;
 
   void redirectToLogin() {
     emit(
       state.copyWith(
-        user: User.empty,
         status: AuthenticationStatus.unauthenticated,
         redirect: LoginRedirect(),
       ),
@@ -99,10 +80,9 @@ class AppClient extends Cubit<AuthenticationState> {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
-  void authenticate(User user) {
+  void authenticate() {
     emit(
       state.copyWith(
-        user: user,
         status: AuthenticationStatus.authenticated,
       ),
     );
@@ -113,8 +93,15 @@ class AppClient extends Cubit<AuthenticationState> {
 
     emit(
       state.copyWith(
-        user: User.empty,
         status: AuthenticationStatus.unauthenticated,
+      ),
+    );
+  }
+
+  void initialNetworkError() {
+    emit(
+      state.copyWith(
+        status: AuthenticationStatus.initialNetworkError,
       ),
     );
   }

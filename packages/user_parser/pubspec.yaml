@@ -1,4 +1,4 @@
-name: authentication_repository
+name: authentication_parser
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -9,14 +9,13 @@ environment:
 resolution: workspace
 
 dependencies:
-  authentication_api:
-    path: ../authentication_api
-  feed_api:
-    path: ../feed_api
+  collection: ^1.19.1
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
-  user_api:
-    path: ../user_api
+  html: ^0.15.5
+  parser_core:
+    path: ../parser_core
 
 dev_dependencies:
   flutter_test:

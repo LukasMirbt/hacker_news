@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:app_client/app_client.dart';
 
@@ -12,6 +11,18 @@ class AuthenticationApi {
 
   Stream<AuthenticationState> get stream => _client.stream;
   AuthenticationState get state => _client.state;
+
+  void authenticate() {
+    _client.authenticate();
+  }
+
+  Future<void> unauthenticate() async {
+    await _client.unauthenticate();
+  }
+
+  void initialNetworkError() {
+    _client.initialNetworkError();
+  }
 
   void redirectToLogin() {
     _client.redirectToLogin();
@@ -30,7 +41,7 @@ class AuthenticationApi {
     required String username,
     required String password,
   }) async {
-    final response = await _client.http.post<String>(
+    await _client.http.post<String>(
       'login',
       options: RedirectValidationOptions(
         contentType: Headers.formUrlEncodedContentType,
@@ -42,15 +53,14 @@ class AuthenticationApi {
       },
     );
 
-    final redirect = response.headers.value(HttpHeaders.locationHeader)!;
-    await _client.http.get<void>(redirect);
+    _client.authenticate();
   }
 
   Future<void> createAccount({
     required String username,
     required String password,
   }) async {
-    final response = await _client.http.post<String>(
+    await _client.http.post<String>(
       'login',
       options: RedirectValidationOptions(
         contentType: Headers.formUrlEncodedContentType,
@@ -63,12 +73,6 @@ class AuthenticationApi {
       },
     );
 
-    final redirect = response.headers.value(HttpHeaders.locationHeader)!;
-    await _client.http.get<void>(redirect);
-  }
-
-  Future<void> logout() async {
-    await _client.http.get<void>(state.user.logoutUrl);
-    await _client.unauthenticate();
+    _client.authenticate();
   }
 }

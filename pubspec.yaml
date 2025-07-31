@@ -35,6 +35,8 @@ workspace:
   - packages/thread_api
   - packages/thread_parser
   - packages/thread_repository
+  - packages/user_api
+  - packages/user_repository
   - packages/version_repository
   - packages/visited_post_repository
   - packages/vote_api

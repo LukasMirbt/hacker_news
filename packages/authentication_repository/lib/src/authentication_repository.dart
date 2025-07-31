@@ -1,29 +1,49 @@
 import 'package:authentication_api/authentication_api.dart';
+import 'package:feed_api/feed_api.dart';
 
 class AuthenticationRepository {
   const AuthenticationRepository({
     required AuthenticationApi authenticationApi,
-  }) : _api = authenticationApi;
+    required UserApi userApi,
+  }) : _authenticationApi = authenticationApi;
 
-  final AuthenticationApi _api;
+  final AuthenticationApi _authenticationApi;
 
-  Stream<AuthenticationState> get stream => _api.stream;
-  AuthenticationState get state => _api.state;
+  Stream<AuthenticationState> get stream => _authenticationApi.stream;
+  AuthenticationState get state => _authenticationApi.state;
+
+  Future<void> start() async {
+    final hasUserCookie = await _authenticationApi.hasUserCookie();
+
+    if (hasUserCookie) {
+      _authenticationApi.authenticate();
+    } else {
+      await _authenticationApi.unauthenticate();
+    }
+
+    try {
+      final firstPage = await _feedApi.fetchFeedPage(
+        const InitialPageUrl(FeedType.top),
+      );
+
+      _authenticationApi.authenticate(firstPage.user);
+    } catch (_) {}
+  }
 
   Future<List<Cookie>> cookies() async {
-    final cookies = await _api.cookies();
+    final cookies = await _authenticationApi.cookies();
     return cookies;
   }
 
   Future<void> saveCookies(List<Cookie> cookies) async {
-    await _api.saveCookies(cookies);
+    await _authenticationApi.saveCookies(cookies);
   }
 
   Future<void> login({
     required String username,
     required String password,
   }) async {
-    await _api.login(
+    await _authenticationApi.login(
       username: username,
       password: password,
     );
@@ -33,13 +53,13 @@ class AuthenticationRepository {
     required String username,
     required String password,
   }) async {
-    await _api.createAccount(
+    await _authenticationApi.createAccount(
       username: username,
       password: password,
     );
   }
 
   Future<void> logout() async {
-    await _api.logout();
+    await _authenticationApi.logout();
   }
 }
