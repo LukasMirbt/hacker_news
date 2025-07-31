@@ -110,6 +110,11 @@ void main() {
       });
     });
 
+    testWidgets('renders $NetworkErrorListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(NetworkErrorListener), findsOneWidget);
+    });
+
     testWidgets('renders $LoginRedirectListener', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(LoginRedirectListener), findsOneWidget);

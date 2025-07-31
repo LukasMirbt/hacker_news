@@ -13,8 +13,9 @@ class LoginButton extends StatelessWidget {
     return TextButton(
       onPressed: () {
         final appRouter = AppRouter.of(context);
+        final from = appRouter.uri.toString();
         appRouter.push(
-          LoginRoute(from: appRouter.from),
+          LoginRoute(from: from),
         );
       },
       child: Text(l10n.appShell_login),

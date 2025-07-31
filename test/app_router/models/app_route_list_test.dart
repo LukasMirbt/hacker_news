@@ -11,6 +11,8 @@ import 'package:hacker_client/login_loading/login_loading.dart'
     as login_loading;
 import 'package:hacker_client/logout_loading/logout_loading.dart'
     as logout_loading;
+import 'package:hacker_client/network_error/network_error.dart'
+    as network_error;
 import 'package:hacker_client/web_redirect/web_redirect.dart' as web_redirect;
 
 void main() {
@@ -40,6 +42,14 @@ void main() {
     setUp(() {
       final routeList = createSubject();
       allPaths = routeList.routes.expand(paths).toList();
+    });
+
+    test('contains network_error routes', () {
+      final networkErrorPaths = network_error.$appRoutes.expand(paths);
+      expect(
+        allPaths,
+        containsAll(networkErrorPaths),
+      );
     });
 
     test('contains analytics_consent routes', () {

@@ -19,26 +19,24 @@ class AppRedirect {
     final authenticationBloc = context.read<AuthenticationBloc>();
     final authenticationStatus = authenticationBloc.state.status;
 
-    final url = state.uri;
-    final path = url.path;
+    final uri = state.uri;
+    final path = uri.path;
 
     final networkErrorRoute = NetworkErrorRoute(
-      from: url.toString(),
+      from: uri.toString(),
     );
 
     final networkErrorUrl = Uri.parse(networkErrorRoute.location);
     final networkErrorPath = networkErrorUrl.path;
 
     if (authenticationStatus.isNetworkError) {
-      if (path == networkErrorPath) {
-        return null;
-      }
+      if (path == networkErrorPath) return null;
       return networkErrorUrl.toString();
     }
 
     if (path == networkErrorPath) {
-      final from = url.queryParameters['from'];
-      return from ?? AppRouter.initialLocation;
+      final from = uri.queryParameters['from']!;
+      return from;
     }
 
     final appBloc = context.read<AppBloc>();
@@ -58,7 +56,7 @@ class AppRedirect {
       return initialLocation;
     }
 
-    if (url.toString() == '/') {
+    if (uri.toString() == '/') {
       return initialLocation;
     }
 

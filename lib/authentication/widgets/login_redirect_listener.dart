@@ -19,11 +19,15 @@ class LoginRedirectListener
           if (isAuthenticated) return;
 
           final appRouter = AppRouter.of(context);
-          final matchedLocation = appRouter.matchedLocation;
-          if (matchedLocation == LoginRoute.config.path) return;
+          final uri = appRouter.uri;
+          final path = uri.path;
+
+          if (path == LoginRoute.config.path) return;
+
+          final from = uri.toString();
 
           appRouter.push(
-            LoginRoute(from: appRouter.from),
+            LoginRoute(from: from),
           );
         },
       );
