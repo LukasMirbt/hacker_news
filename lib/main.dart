@@ -21,8 +21,6 @@ import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-// TODO: Figure out what paths are navigated to when go_router is state restored.
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
