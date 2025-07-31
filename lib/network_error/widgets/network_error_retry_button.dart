@@ -8,12 +8,12 @@ class NetworkErrorRetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.select(
-      (NetworkErrorBloc bloc) => bloc.state.isLoading,
+    final isLoadingOrSuccess = context.select(
+      (NetworkErrorBloc bloc) => bloc.state.isLoadingOrSuccess,
     );
 
     return AppFilledButton.expand(
-      isLoading: isLoading,
+      isLoading: isLoadingOrSuccess,
       onPressed: () {
         context.read<NetworkErrorBloc>().add(
           const NetworkErrorRetryPressed(),

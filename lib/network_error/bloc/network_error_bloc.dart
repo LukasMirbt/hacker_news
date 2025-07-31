@@ -4,11 +4,10 @@ import 'package:hacker_client/network_error/network_error.dart';
 
 class NetworkErrorBloc extends Bloc<NetworkErrorEvent, NetworkErrorState> {
   NetworkErrorBloc({
-    required String from,
     required AuthenticationRepository authenticationRepository,
   }) : _repository = authenticationRepository,
        super(
-         NetworkErrorState(from: from),
+         const NetworkErrorState(),
        ) {
     on<NetworkErrorRetryPressed>(_onRetryPressed);
   }
@@ -25,21 +24,16 @@ class NetworkErrorBloc extends Bloc<NetworkErrorEvent, NetworkErrorState> {
       ),
     );
 
-    try {
-      await _repository.start();
+    await _repository.start();
 
-      emit(
-        state.copyWith(
-          status: NetworkErrorStatus.success,
-        ),
-      );
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
-          status: NetworkErrorStatus.failure,
-        ),
-      );
-    }
+    final isNetworkError = _repository.state.status.isNetworkError;
+
+    emit(
+      state.copyWith(
+        status: isNetworkError
+            ? NetworkErrorStatus.failure
+            : NetworkErrorStatus.success,
+      ),
+    );
   }
 }

@@ -14,13 +14,12 @@ enum NetworkErrorStatus {
 @freezed
 abstract class NetworkErrorState with _$NetworkErrorState {
   const factory NetworkErrorState({
-    required String from,
     @Default(NetworkErrorStatus.initial) NetworkErrorStatus status,
   }) = _NetworkErrorState;
 
   const NetworkErrorState._();
 
-  bool get isLoading =>
+  bool get isLoadingOrSuccess =>
       status == NetworkErrorStatus.loading ||
       status == NetworkErrorStatus.success;
 }

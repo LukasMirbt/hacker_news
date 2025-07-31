@@ -3,9 +3,7 @@ import 'package:authentication_api/authentication_api.dart';
 class AuthenticationRepository {
   AuthenticationRepository({
     required AuthenticationApi authenticationApi,
-  }) : _api = authenticationApi {
-    _api.start();
-  }
+  }) : _api = authenticationApi;
 
   final AuthenticationApi _api;
 

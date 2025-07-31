@@ -22,9 +22,9 @@ class NetworkErrorRoute extends GoRouteData
     BuildContext context,
     GoRouterState state,
   ) {
-    return MaterialPage(
+    return const MaterialPage(
       fullscreenDialog: true,
-      child: NetworkErrorPage(from: from),
+      child: NetworkErrorPage(),
     );
   }
 

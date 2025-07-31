@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NetworkErrorState {
 
- String get from; NetworkErrorStatus get status;
+ NetworkErrorStatus get status;
 /// Create a copy of NetworkErrorState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $NetworkErrorStateCopyWith<NetworkErrorState> get copyWith => _$NetworkErrorStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NetworkErrorState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NetworkErrorState&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status);
+int get hashCode => Object.hash(runtimeType,status);
 
 @override
 String toString() {
-  return 'NetworkErrorState(from: $from, status: $status)';
+  return 'NetworkErrorState(status: $status)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $NetworkErrorStateCopyWith<$Res>  {
   factory $NetworkErrorStateCopyWith(NetworkErrorState value, $Res Function(NetworkErrorState) _then) = _$NetworkErrorStateCopyWithImpl;
 @useResult
 $Res call({
- String from, NetworkErrorStatus status
+ NetworkErrorStatus status
 });
 
 
@@ -63,10 +63,9 @@ class _$NetworkErrorStateCopyWithImpl<$Res>
 
 /// Create a copy of NetworkErrorState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,}) {
   return _then(_self.copyWith(
-from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as NetworkErrorStatus,
   ));
 }
@@ -78,10 +77,9 @@ as NetworkErrorStatus,
 
 
 class _NetworkErrorState extends NetworkErrorState {
-  const _NetworkErrorState({required this.from, this.status = NetworkErrorStatus.initial}): super._();
+  const _NetworkErrorState({this.status = NetworkErrorStatus.initial}): super._();
   
 
-@override final  String from;
 @override@JsonKey() final  NetworkErrorStatus status;
 
 /// Create a copy of NetworkErrorState
@@ -94,16 +92,16 @@ _$NetworkErrorStateCopyWith<_NetworkErrorState> get copyWith => __$NetworkErrorS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NetworkErrorState&&(identical(other.from, from) || other.from == from)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NetworkErrorState&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,from,status);
+int get hashCode => Object.hash(runtimeType,status);
 
 @override
 String toString() {
-  return 'NetworkErrorState(from: $from, status: $status)';
+  return 'NetworkErrorState(status: $status)';
 }
 
 
@@ -114,7 +112,7 @@ abstract mixin class _$NetworkErrorStateCopyWith<$Res> implements $NetworkErrorS
   factory _$NetworkErrorStateCopyWith(_NetworkErrorState value, $Res Function(_NetworkErrorState) _then) = __$NetworkErrorStateCopyWithImpl;
 @override @useResult
 $Res call({
- String from, NetworkErrorStatus status
+ NetworkErrorStatus status
 });
 
 
@@ -131,10 +129,9 @@ class __$NetworkErrorStateCopyWithImpl<$Res>
 
 /// Create a copy of NetworkErrorState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,}) {
   return _then(_NetworkErrorState(
-from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as NetworkErrorStatus,
   ));
 }

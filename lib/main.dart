@@ -109,7 +109,7 @@ void main() async {
     voteApi: voteApi,
   );
 
-  await authenticationRepository.stream.first;
+  await authenticationRepository.start();
 
   runApp(
     App(

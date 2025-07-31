@@ -19,34 +19,46 @@ class AppRedirect {
     final authenticationBloc = context.read<AuthenticationBloc>();
     final authenticationStatus = authenticationBloc.state.status;
 
-    final url = state.uri.toString();
-    final networkErrorRoute = NetworkErrorRoute(from: url);
-    final networkErrorLocation = networkErrorRoute.location;
+    final url = state.uri;
+    final path = url.path;
 
-    print('status: $authenticationStatus');
-    print('redirect: $url');
+    final networkErrorRoute = NetworkErrorRoute(
+      from: url.toString(),
+    );
+
+    final networkErrorUrl = Uri.parse(networkErrorRoute.location);
+    final networkErrorPath = networkErrorUrl.path;
 
     if (authenticationStatus.isNetworkError) {
-      if (url.startsWith('/network-error')) return null;
-      return networkErrorLocation;
+      if (path == networkErrorPath) {
+        return null;
+      }
+      return networkErrorUrl.toString();
+    }
+
+    if (path == networkErrorPath) {
+      final from = url.queryParameters['from'];
+      return from ?? AppRouter.initialLocation;
     }
 
     final appBloc = context.read<AppBloc>();
     final appStatus = appBloc.state.status;
 
-    final analyticsConsentLocation = const AnalyticsConsentRoute().location;
+    const analyticsConsentRoute = AnalyticsConsentRoute();
+    final analyticsConsentUrl = Uri.parse(analyticsConsentRoute.location);
+    final analyticsConsentPath = analyticsConsentUrl.path;
 
     if (appStatus == AppStatus.analyticsConsent) {
-      return analyticsConsentLocation;
+      return analyticsConsentUrl.toString();
     }
 
     final initialLocation = AppRouter.initialLocation;
 
-    if (url.startsWith(analyticsConsentLocation)) {
+    if (path == analyticsConsentPath) {
       return initialLocation;
     }
 
-    if (url == '/') {
+    if (url.toString() == '/') {
       return initialLocation;
     }
 
