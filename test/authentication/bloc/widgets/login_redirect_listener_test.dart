@@ -131,10 +131,12 @@ void main() {
         'and !isAuthenticated and matchedLocation does not contain '
         '$LoginRoute path', (tester) async {
       const matchedLocation = 'matchedLocation';
-      final pushLoginRoute = () => router.push(
-        LoginRoute(from: matchedLocation),
-      );
+      const from = 'from';
+      when(() => router.from).thenReturn(from);
       when(() => router.matchedLocation).thenReturn(matchedLocation);
+      final pushLoginRoute = () => router.push(
+        LoginRoute(from: from),
+      );
       when(pushLoginRoute).thenAnswer((_) async => null);
       whenListen(
         authenticationBloc,

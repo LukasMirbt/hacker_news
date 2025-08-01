@@ -22,9 +22,9 @@ class LoginRedirectListener
           final matchedLocation = appRouter.matchedLocation;
           final loginPath = LoginRoute.config.path;
           if (matchedLocation.contains(loginPath)) return;
-          // TODO: Take logic from other branch
+
           appRouter.push(
-            LoginRoute(from: matchedLocation),
+            LoginRoute(from: appRouter.from),
           );
         },
       );

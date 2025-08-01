@@ -16,14 +16,14 @@ class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
-  const matchedLocation = 'matchedLocation';
+  const from = 'from';
 
   group(LoginButton, () {
     late AppRouter router;
 
     setUp(() {
       router = _MockAppRouter();
-      when(() => router.matchedLocation).thenReturn(matchedLocation);
+      when(() => router.from).thenReturn(from);
     });
 
     Widget buildSubject() {
@@ -41,7 +41,7 @@ void main() async {
     testWidgets('pushes $LoginRoute when $TextButton '
         'is pressed', (tester) async {
       final pushLoginRoute = () => router.push(
-        LoginRoute(from: matchedLocation),
+        LoginRoute(from: from),
       );
       when(pushLoginRoute).thenAnswer((_) async => null);
       await tester.pumpApp(buildSubject());

@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
-import 'package:path/path.dart';
 
 class LoginRedirectFromModel {
   const LoginRedirectFromModel();
@@ -9,14 +8,14 @@ class LoginRedirectFromModel {
     required AppRoute route,
     required GoRouter goRouter,
   }) {
-    // TODO: Take logic from other branch
-
-    final currentLocation = goRouter.state.matchedLocation;
+    final from = goRouter.state.uri;
 
     if (route is AppRelativeRoute) {
-      return join(currentLocation, route.location);
+      final newPath = '${from.path}/${route.location}';
+      final newUri = from.replace(path: newPath);
+      return newUri.toString();
     }
 
-    return currentLocation;
+    return from.toString();
   }
 }
