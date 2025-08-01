@@ -14,6 +14,8 @@ class _MockGoRouter extends Mock implements GoRouter {}
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
+  final uri = Uri.parse('/post/123?id=456#789');
+
   group(LoginRedirectFromModel, () {
     late GoRouter goRouter;
     late GoRouterState state;
@@ -22,6 +24,7 @@ void main() {
       goRouter = _MockGoRouter();
       state = _MockGoRouterState();
       when(() => goRouter.state).thenReturn(state);
+      when(() => state.uri).thenReturn(uri);
     });
 
     LoginRedirectFromModel createSubject() => LoginRedirectFromModel();
@@ -30,9 +33,7 @@ void main() {
       test('returns correct value when route is $AppRelativeRoute', () {
         final route = _MockAppRelativeRoute();
         const location = 'location';
-        final uri = Uri.parse('/post/123?id=456#789');
         when(() => route.location).thenReturn(location);
-        when(() => state.uri).thenReturn(uri);
         final fromModel = createSubject();
         expect(
           fromModel.from(route: route, goRouter: goRouter),
@@ -42,12 +43,10 @@ void main() {
 
       test('returns correct value when route is not $AppRelativeRoute', () {
         final route = _MockAppAbsoluteRoute();
-        const matchedLocation = 'matchedLocation';
-        when(() => state.matchedLocation).thenReturn(matchedLocation);
         final fromModel = createSubject();
         expect(
           fromModel.from(route: route, goRouter: goRouter),
-          matchedLocation,
+          uri.toString(),
         );
       });
     });
