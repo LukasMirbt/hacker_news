@@ -12,7 +12,6 @@ part of 'user.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$User {
 
@@ -30,7 +29,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.karma, karma) || other.karma == karma)&&(identical(other.profileUrl, profileUrl) || other.profileUrl == profileUrl)&&(identical(other.logoutUrl, logoutUrl) || other.logoutUrl == logoutUrl));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,karma,profileUrl,logoutUrl);
 
