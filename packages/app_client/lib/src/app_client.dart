@@ -3,14 +3,17 @@ import 'dart:async';
 import 'package:app_client/app_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class AppClient extends Cubit<AuthenticationState> {
   AppClient({
     required Uri baseUrl,
     required CookieJar cookieJar,
+    required SecureUserIdStorage userIdStorage,
     required void Function(Dio, CookieJar) addPlatformConfiguration,
     void Function(String?)? debugPrint,
   }) : _cookieJar = cookieJar,
+       _userIdStorage = userIdStorage,
        http = SequentialDio(),
        super(
          AuthenticationState(baseUrl: baseUrl),
@@ -54,22 +57,30 @@ class AppClient extends Cubit<AuthenticationState> {
   Future<void> start() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);
 
-    final isAuthenticated = cookies.any(
+    final hasUserCookie = cookies.any(
       (cookie) => cookie.name == 'user',
     );
 
-    final status = isAuthenticated
-        ? AuthenticationStatus.authenticated
-        : AuthenticationStatus.unauthenticated;
+    final userId = _userIdStorage.read();
 
-    emit(
-      state.copyWith(
-        status: status,
-      ),
-    );
+    if (hasUserCookie && userId != null) {
+      emit(
+        state.copyWith(
+          status: AuthenticationStatus.authenticated,
+          user: User.initial(userId),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: AuthenticationStatus.unauthenticated,
+        ),
+      );
+    }
   }
 
   final CookieJar _cookieJar;
+  final SecureUserIdStorage _userIdStorage;
   final Dio http;
 
   void redirectToLogin() {
@@ -99,17 +110,20 @@ class AppClient extends Cubit<AuthenticationState> {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
-  void authenticate(User user) {
+  Future<void> authenticate(User user) async {
+    await _userIdStorage.write(user.id);
+
     emit(
       state.copyWith(
-        user: user,
         status: AuthenticationStatus.authenticated,
+        user: user,
       ),
     );
   }
 
   Future<void> unauthenticate() async {
     await _cookieJar.deleteAll();
+    await _userIdStorage.delete();
 
     emit(
       state.copyWith(

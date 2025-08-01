@@ -6,10 +6,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class _MockCookieJar extends Mock implements CookieJar {}
 
-class _MockUser extends Mock implements User {}
+class _MockSecureUserIdStorage extends Mock implements SecureUserIdStorage {}
 
 void main() {
   final baseUrl = Uri.parse('https://example.com');
@@ -20,9 +21,11 @@ void main() {
 
   group(AppClient, () {
     late CookieJar cookieJar;
+    late SecureUserIdStorage userIdStorage;
 
     setUp(() {
       cookieJar = _MockCookieJar();
+      userIdStorage = _MockSecureUserIdStorage();
     });
 
     AppClient createSubject({
@@ -33,6 +36,7 @@ void main() {
       return AppClient(
         baseUrl: baseUrl,
         cookieJar: cookieJar,
+        userIdStorage: userIdStorage,
         addPlatformConfiguration: addPlatformConfiguration ?? (_, __) {},
         debugPrint: debugPrint,
       );
@@ -44,33 +48,42 @@ void main() {
     });
 
     group('start', () {
-      final loadForRequest = () => cookieJar.loadForRequest(baseUrl);
-
       final cookies = [
         Cookie('user', 'value'),
       ];
 
+      const userId = 'userId';
+
+      final loadForRequest = () => cookieJar.loadForRequest(baseUrl);
+      final readUserId = () => userIdStorage.read();
+
       blocTest<AppClient, AuthenticationState>(
-        'emits [authenticated] when cookieJar '
-        'contains user cookie',
+        'emits correct state when hasUserCookie '
+        'and userId is non-null',
         setUp: () {
           when(loadForRequest).thenAnswer((_) async => cookies);
+          when(readUserId).thenReturn(userId);
         },
         build: createSubject,
         act: (client) => client.start(),
         expect: () => [
           initialState.copyWith(
             status: AuthenticationStatus.authenticated,
+            user: User.initial(userId),
           ),
         ],
-        verify: (_) => verify(loadForRequest).called(1),
+        verify: (_) {
+          verify(loadForRequest).called(1);
+          verify(readUserId).called(1);
+        },
       );
 
       blocTest<AppClient, AuthenticationState>(
-        'emits [unauthenticated] when cookieJar '
-        'does not contain user cookie',
+        'emits correct state when !hasUserCookie '
+        'and userId is non-null',
         setUp: () {
-          when(loadForRequest).thenAnswer((_) async => []);
+          when(loadForRequest).thenAnswer((_) async => <Cookie>[]);
+          when(readUserId).thenReturn(userId);
         },
         build: createSubject,
         act: (client) => client.start(),
@@ -79,7 +92,29 @@ void main() {
             status: AuthenticationStatus.unauthenticated,
           ),
         ],
-        verify: (_) => verify(loadForRequest).called(1),
+        verify: (_) {
+          verify(loadForRequest).called(1);
+          verify(readUserId).called(1);
+        },
+      );
+
+      blocTest<AppClient, AuthenticationState>(
+        'emits correct state when hasUserCookie '
+        'and userId is null',
+        setUp: () {
+          when(loadForRequest).thenAnswer((_) async => cookies);
+        },
+        build: createSubject,
+        act: (client) => client.start(),
+        expect: () => [
+          initialState.copyWith(
+            status: AuthenticationStatus.unauthenticated,
+          ),
+        ],
+        verify: (_) {
+          verify(loadForRequest).called(1);
+          verify(readUserId).called(1);
+        },
       );
     });
 
@@ -276,29 +311,41 @@ void main() {
     });
 
     group('authenticate', () {
-      final user = _MockUser();
+      final user = UserPlaceholder();
+      final write = () => userIdStorage.write(user.id);
 
       blocTest<AppClient, AuthenticationState>(
-        'emits user and ${AuthenticationStatus.authenticated}',
+        'calls write and emits updated state',
+        setUp: () {
+          when(write).thenAnswer((_) async {
+            return;
+          });
+        },
         build: createSubject,
         act: (client) => client.authenticate(user),
         expect: () => [
           initialState.copyWith(
-            user: user,
             status: AuthenticationStatus.authenticated,
+            user: user,
           ),
         ],
+        verify: (_) {
+          verify(write).called(1);
+        },
       );
     });
 
     group('unauthenticate', () {
       final deleteAll = () => cookieJar.deleteAll();
+      final deleteUser = () => userIdStorage.delete();
 
       blocTest<AppClient, AuthenticationState>(
-        'calls cookieJar.deleteAll, emits empty user '
-        'and ${AuthenticationStatus.unauthenticated}',
+        'deletes persisted data and emits updated state',
         setUp: () {
           when(deleteAll).thenAnswer((_) async {});
+          when(deleteUser).thenAnswer((_) async {
+            return;
+          });
         },
         build: createSubject,
         act: (client) => client.unauthenticate(),
@@ -308,7 +355,10 @@ void main() {
             status: AuthenticationStatus.unauthenticated,
           ),
         ],
-        verify: (_) => verify(deleteAll).called(1),
+        verify: (_) {
+          verify(deleteAll).called(1);
+          verify(deleteUser).called(1);
+        },
       );
     });
   });

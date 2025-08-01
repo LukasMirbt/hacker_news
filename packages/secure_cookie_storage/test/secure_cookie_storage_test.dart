@@ -1,11 +1,11 @@
+// ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 
-class _MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
+class _MockCookieStorageService extends Mock implements CookieStorageService {}
 
 void main() {
   const key = 'key';
@@ -13,15 +13,15 @@ void main() {
   final exception = Exception('oops');
 
   group(SecureCookieStorage, () {
-    late FlutterSecureStorage secureStorage;
+    late CookieStorageService storageService;
 
     setUp(() {
-      secureStorage = _MockFlutterSecureStorage();
+      storageService = _MockCookieStorageService();
     });
 
     SecureCookieStorage createSubject() {
       return SecureCookieStorage(
-        secureStorage: secureStorage,
+        storageService: storageService,
       );
     }
 
@@ -36,12 +36,12 @@ void main() {
     });
 
     group('read', () {
-      final read = () => secureStorage.read(key: key);
+      final read = () => storageService.read(key);
 
-      test('returns value when secureStorage.read succeeds', () async {
-        when(read).thenAnswer((_) async => value);
+      test('returns value when storageService.read succeeds', () async {
+        when(read).thenReturn(value);
         final storage = createSubject();
-        expect(
+        await expectLater(
           storage.read(key),
           completion(value),
         );
@@ -49,7 +49,7 @@ void main() {
       });
 
       test('throws $SecureCookieStorageException '
-          'when secureStorage.read throws $Exception', () async {
+          'when storageService.read fails', () async {
         when(read).thenThrow(exception);
         final storage = createSubject();
         expect(
@@ -63,20 +63,21 @@ void main() {
     });
 
     group('write', () {
-      final write = () => secureStorage.write(key: key, value: value);
+      final write = () => storageService.update(captureAny());
 
-      test('completes when secureStorage.write succeeds', () async {
+      test('completes when storageService.update succeeds', () async {
         when(write).thenAnswer((_) async {});
         final storage = createSubject();
-        expect(
-          storage.write(key, value),
-          completes,
-        );
-        verify(write).called(1);
+        await storage.write(key, value);
+        final update =
+            verify(write).captured.single as void Function(Map<String, String>);
+        final cookies = {key: 'previousValue'};
+        update(cookies);
+        expect(cookies, {key: value});
       });
 
       test('throws $SecureCookieStorageException '
-          'when secureStorage.write throws $Exception', () async {
+          'when storageService.update fails', () async {
         when(write).thenThrow(exception);
         final storage = createSubject();
         expect(
@@ -90,19 +91,22 @@ void main() {
     });
 
     group('delete', () {
-      final delete = () => secureStorage.delete(key: key);
+      final delete = () => storageService.update(captureAny());
 
-      test('completes when secureStorage.delete succeeds', () async {
+      test('completes when storageService.update succeeds', () async {
         when(delete).thenAnswer((_) async {});
-        expect(
-          secureStorage.delete(key: key),
-          completes,
-        );
-        verify(delete).called(1);
+        final storage = createSubject();
+        await storage.delete(key);
+        final update =
+            verify(delete).captured.single
+                as void Function(Map<String, String>);
+        final cookies = {key: value};
+        update(cookies);
+        expect(cookies, <String, String>{});
       });
 
       test('throws $SecureCookieStorageException '
-          'when secureStorage.delete throws $Exception', () async {
+          'when storageService.update fails', () async {
         when(delete).thenThrow(exception);
         final storage = createSubject();
         expect(
@@ -115,35 +119,51 @@ void main() {
       });
     });
 
-    group('clear', () {
-      final keys = ['first', 'second'];
+    group('deleteAll', () {
+      final deleteAll = () => storageService.update(captureAny());
 
-      final delete = (String key) =>
-          () => secureStorage.delete(key: key);
+      test('completes when storageService.update succeeds', () async {
+        final entries = [
+          MapEntry('firstKey', 'firstValue'),
+          MapEntry('secondKey', 'secondValue'),
+          MapEntry('thirdKey', 'thirdValue'),
+        ];
 
-      test('completes when secureStorage.delete succeeds '
-          'for each key', () async {
-        for (final key in keys) {
-          when(delete(key)).thenAnswer((_) async {});
-        }
+        final keysToDelete = [
+          entries[1].key,
+          entries[2].key,
+        ];
+
+        when(deleteAll).thenAnswer((_) async {});
         final storage = createSubject();
-        await storage.deleteAll(keys);
-        for (final key in keys) {
-          verify(delete(key)).called(1);
-        }
+
+        await storage.deleteAll(keysToDelete);
+
+        final update =
+            verify(deleteAll).captured.single
+                as void Function(Map<String, String>);
+
+        final cookies = Map.fromEntries(entries);
+
+        update(cookies);
+
+        expect(
+          cookies,
+          Map.fromEntries([entries[0]]),
+        );
       });
 
       test('throws $SecureCookieStorageException '
-          'when secureStorage.delete throws $Exception', () async {
-        when(delete(keys.first)).thenThrow(exception);
+          'when storageService.update fails', () async {
+        when(deleteAll).thenThrow(exception);
         final storage = createSubject();
         expect(
-          storage.deleteAll(keys),
+          storage.deleteAll([key]),
           throwsA(
             SecureCookieStorageException(exception),
           ),
         );
-        verify(delete(keys.first)).called(1);
+        verify(deleteAll).called(1);
       });
     });
   });

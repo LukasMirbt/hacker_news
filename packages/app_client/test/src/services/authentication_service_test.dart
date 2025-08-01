@@ -16,22 +16,21 @@ class _MockAuthenticationStatusParser extends Mock
 
 class _MockDocument extends Mock implements Document {}
 
-class _MockUser extends Mock implements User {}
-
 void main() {
+  final data = UserDataPlaceholder();
+  final user = User.fromData(data);
+
   group(AuthenticationService, () {
     late AppClient client;
     late HtmlParser htmlParser;
     late AuthenticationStatusParser statusParser;
     late Document document;
-    late User user;
 
     setUp(() {
       client = _MockAppClient();
       htmlParser = _MockHtmlParser();
       statusParser = _MockAuthenticationStatusParser();
       document = _MockDocument();
-      user = _MockUser();
     });
 
     AuthenticationService createSubject() {
@@ -48,12 +47,14 @@ void main() {
       final parseStatus = () => statusParser.parse(document);
 
       final authenticate = () => client.authenticate(user);
+
       final unauthenticate = () => client.unauthenticate();
 
       test('parses html, status and calls authenticate '
           'when status is $Authenticated', () {
         when(parseHtml).thenReturn(document);
-        when(parseStatus).thenReturn(Authenticated(user));
+        when(parseStatus).thenReturn(Authenticated(data));
+        when(authenticate).thenAnswer((_) async {});
         final service = createSubject();
         service.update(html);
         verify(parseHtml).called(1);

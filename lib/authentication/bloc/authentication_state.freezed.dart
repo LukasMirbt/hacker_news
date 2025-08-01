@@ -50,7 +50,7 @@ $Res call({
 });
 
 
-
+$UserCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -72,7 +72,16 @@ as AuthenticationStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus 
 as LogoutStatus,
   ));
 }
-
+/// Create a copy of AuthenticationState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get user {
+  
+  return $UserCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
 }
 
 
@@ -122,7 +131,7 @@ $Res call({
 });
 
 
-
+@override $UserCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -145,7 +154,16 @@ as LogoutStatus,
   ));
 }
 
-
+/// Create a copy of AuthenticationState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get user {
+  
+  return $UserCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
 }
 
 // dart format on

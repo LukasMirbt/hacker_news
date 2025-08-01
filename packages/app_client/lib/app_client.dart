@@ -2,7 +2,7 @@
 library app_client;
 
 export 'package:authentication_parser/authentication_parser.dart'
-    show User, UserPlaceholder;
+    show UserData, UserDataPlaceholder;
 export 'package:cookie_jar/cookie_jar.dart';
 export 'package:dio/dio.dart';
 

@@ -4,11 +4,11 @@ import 'package:authentication_parser/authentication_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group(UserPlaceholder, () {
-    test('returns $User', () {
+  group(UserDataPlaceholder, () {
+    test('returns $UserData', () {
       expect(
-        UserPlaceholder(),
-        isA<User>(),
+        UserDataPlaceholder(),
+        isA<UserData>(),
       );
     });
   });

@@ -1,6 +1,6 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 
 class SecureCookieStorageException with EquatableMixin implements Exception {
   const SecureCookieStorageException(this.error);
@@ -12,10 +12,11 @@ class SecureCookieStorageException with EquatableMixin implements Exception {
 }
 
 class SecureCookieStorage implements Storage {
-  const SecureCookieStorage({FlutterSecureStorage? secureStorage})
-    : _secureStorage = secureStorage ?? const FlutterSecureStorage();
+  SecureCookieStorage({
+    required CookieStorageService storageService,
+  }) : _storageService = storageService;
 
-  final FlutterSecureStorage _secureStorage;
+  final CookieStorageService _storageService;
 
   @override
   Future<void> init(bool persistSession, bool ignoreExpires) async {}
@@ -23,9 +24,9 @@ class SecureCookieStorage implements Storage {
   @override
   Future<String?> read(String key) async {
     try {
-      final value = await _secureStorage.read(key: key);
+      final value = _storageService.read(key);
       return value;
-    } on Exception catch (error, stackTrace) {
+    } catch (error, stackTrace) {
       Error.throwWithStackTrace(
         SecureCookieStorageException(error),
         stackTrace,
@@ -36,8 +37,12 @@ class SecureCookieStorage implements Storage {
   @override
   Future<void> write(String key, String value) async {
     try {
-      await _secureStorage.write(key: key, value: value);
-    } on Exception catch (error, stackTrace) {
+      await _storageService.update(
+        (cookies) {
+          cookies[key] = value;
+        },
+      );
+    } catch (error, stackTrace) {
       Error.throwWithStackTrace(
         SecureCookieStorageException(error),
         stackTrace,
@@ -48,8 +53,12 @@ class SecureCookieStorage implements Storage {
   @override
   Future<void> delete(String key) async {
     try {
-      await _secureStorage.delete(key: key);
-    } on Exception catch (error, stackTrace) {
+      await _storageService.update(
+        (cookies) {
+          cookies.remove(key);
+        },
+      );
+    } catch (error, stackTrace) {
       Error.throwWithStackTrace(
         SecureCookieStorageException(error),
         stackTrace,
@@ -60,10 +69,14 @@ class SecureCookieStorage implements Storage {
   @override
   Future<void> deleteAll(List<String> keys) async {
     try {
-      for (final key in keys) {
-        await _secureStorage.delete(key: key);
-      }
-    } on Exception catch (error, stackTrace) {
+      await _storageService.update(
+        (cookies) {
+          for (final key in keys) {
+            cookies.remove(key);
+          }
+        },
+      );
+    } catch (error, stackTrace) {
       Error.throwWithStackTrace(
         SecureCookieStorageException(error),
         stackTrace,

@@ -20,10 +20,11 @@ class LoginRedirectListener
 
           final appRouter = AppRouter.of(context);
           final matchedLocation = appRouter.matchedLocation;
-          if (matchedLocation == LoginRoute.config.path) return;
+          final loginPath = LoginRoute.config.path;
+          if (matchedLocation.contains(loginPath)) return;
 
           appRouter.push(
-            LoginRoute(from: matchedLocation),
+            LoginRoute(from: appRouter.from),
           );
         },
       );

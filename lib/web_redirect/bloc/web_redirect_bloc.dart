@@ -82,6 +82,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     final baseUrl = _repository.state.baseUrl;
     final cookies = await _cookieManager.cookies(baseUrl);
 
+    // TODO(LukasMirbt): Save cookies more efficiently
     await _repository.saveCookies(cookies);
 
     final canGoBack = await _actionModel.canGoBack();

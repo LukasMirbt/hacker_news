@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
-  const User({
+class UserData extends Equatable {
+  const UserData({
     required this.id,
     required this.karma,
     required this.profileUrl,
     required this.logoutUrl,
   });
 
-  factory User.fromParsed({
+  factory UserData.fromParsed({
     required String id,
     required int? karma,
     required String? profileUrl,
     required String? logoutUrl,
   }) {
-    return User(
+    return UserData(
       id: id,
       karma: karma ?? 0,
       profileUrl: profileUrl ?? '',
@@ -22,7 +22,7 @@ class User extends Equatable {
     );
   }
 
-  static const empty = User(
+  static const empty = UserData(
     id: '',
     karma: 0,
     profileUrl: '',

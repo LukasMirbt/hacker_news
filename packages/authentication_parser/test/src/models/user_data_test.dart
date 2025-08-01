@@ -4,9 +4,9 @@ import 'package:authentication_parser/authentication_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group(User, () {
+  group(UserData, () {
     group('fromParsed', () {
-      test('returns $User with correct values '
+      test('returns $UserData with correct values '
           'when data is non-null', () {
         const id = 'id';
         const karma = 1;
@@ -14,13 +14,13 @@ void main() {
         const logoutUrl = 'logoutUrl';
 
         expect(
-          User.fromParsed(
+          UserData.fromParsed(
             id: id,
             karma: karma,
             profileUrl: profileUrl,
             logoutUrl: logoutUrl,
           ),
-          User(
+          UserData(
             id: id,
             karma: karma,
             profileUrl: profileUrl,
@@ -29,18 +29,18 @@ void main() {
         );
       });
 
-      test('returns $User with correct values '
+      test('returns $UserData with correct values '
           'when data is null', () {
         const id = 'id';
 
         expect(
-          User.fromParsed(
+          UserData.fromParsed(
             id: id,
             karma: null,
             profileUrl: null,
             logoutUrl: null,
           ),
-          User(
+          UserData(
             id: id,
             karma: 0,
             profileUrl: '',
@@ -51,8 +51,8 @@ void main() {
     });
 
     group('empty', () {
-      test('returns $User', () {
-        expect(User.empty, isA<User>());
+      test('returns $UserData', () {
+        expect(UserData.empty, isA<UserData>());
       });
     });
   });
