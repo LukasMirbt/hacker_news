@@ -9,6 +9,8 @@ class LoginRedirectFromModel {
     required AppRoute route,
     required GoRouter goRouter,
   }) {
+    // TODO: Take logic from other branch
+
     final currentLocation = goRouter.state.matchedLocation;
 
     if (route is AppRelativeRoute) {

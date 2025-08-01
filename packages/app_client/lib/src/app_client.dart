@@ -110,9 +110,7 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   Future<void> authenticate(User user) async {
-    if (user != state.user) {
-      await _userStorage.save(user);
-    }
+    await _userStorage.write(user);
 
     emit(
       state.copyWith(

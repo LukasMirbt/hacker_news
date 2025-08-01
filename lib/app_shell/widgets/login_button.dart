@@ -14,6 +14,7 @@ class LoginButton extends StatelessWidget {
       onPressed: () {
         final appRouter = AppRouter.of(context);
         final matchedLocation = appRouter.matchedLocation;
+        // TODO: Take logic from other branch
         appRouter.push(
           LoginRoute(from: matchedLocation),
         );

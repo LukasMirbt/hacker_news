@@ -1,41 +1,33 @@
-import 'dart:convert';
-
 import 'package:app_client/app_client.dart' hide Storage;
-import 'package:hive_ce/hive.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserStorage {
-  const UserStorage({
-    required Box<String> box,
-  }) : _box = box;
+  UserStorage({
+    required User? user,
+    required FlutterSecureStorage secureStorage,
+  }) : _user = user,
+       _secureStorage = secureStorage;
 
   static const _key = 'user';
 
-  static Future<UserStorage> open(
-    HiveInterface hive,
-    HiveCipher encryptionCipher,
-  ) async {
-    final box = await hive.openBox<String>(
-      'userStorage',
-      encryptionCipher: encryptionCipher,
+  static Future<UserStorage> open({
+    FlutterSecureStorage secureStorage = const FlutterSecureStorage(),
+  }) async {
+    /*     final user = await secureStorage.read(key: _key); */
+    return UserStorage(
+      user: User.empty,
+      secureStorage: secureStorage,
     );
-    return UserStorage(box: box);
   }
 
-  final Box<String> _box;
-
-  Future<void> save(User user) async {
-    final stopwatch = Stopwatch()..start();
-    final json = jsonEncode(user.toJson());
-    await _box.put(_key, json);
-    stopwatch.stop();
-    print('UserStorage save: ${stopwatch.elapsedMilliseconds}');
-  }
+  final FlutterSecureStorage _secureStorage;
+  final User? _user;
 
   Future<User?> read() async {
-    final stopwatch = Stopwatch()..start();
+    return null;
+    /*    if (_user != null) return _user;
+
     final value = _box.get(_key);
-    stopwatch.stop();
-    print('UserStorage read: ${stopwatch.elapsedMilliseconds}');
     if (value == null) return null;
 
     try {
@@ -43,13 +35,18 @@ class UserStorage {
       return User.fromJson(json);
     } catch (_) {
       return null;
-    }
+    } */
+  }
+
+  Future<void> write(User user) async {
+    /*     if (user == _user) return;
+    _user = user;
+    final json = jsonEncode(user.toJson());
+    await _box.put(_key, json); */
   }
 
   Future<void> clear() async {
-    final stopwatch = Stopwatch()..start();
-    await _box.delete(_key);
-    stopwatch.stop();
-    print('UserStorage clear: ${stopwatch.elapsedMilliseconds}');
+    /*   _user = null;
+    await _box.delete(_key); */
   }
 }

@@ -1,7 +1,6 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:encryption_manager/encryption_manager.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -27,7 +26,9 @@ void main() async {
 
   final sharedPreferences = SharedPreferencesAsync();
 
-  await Hive.initFlutter();
+  final persistentStorage = PersistentStorage(
+    sharedPreferences: sharedPreferences,
+  );
 
   final directory = await getApplicationDocumentsDirectory();
 
@@ -35,25 +36,10 @@ void main() async {
     storageDirectory: HydratedStorageDirectory(directory.path),
   );
 
-  final persistentStorage = PersistentStorage(
-    sharedPreferences: sharedPreferences,
-  );
+  await Hive.initFlutter();
 
-  final encryptionCipher = await EncryptionManager().cipher();
-
-  final cookieStorage = await CookieStorage.open(Hive, encryptionCipher);
-  final userStorage = await UserStorage.open(Hive, encryptionCipher);
-
-  final commentStorage = await CommentStorage.open(Hive);
-  final replyStorage = await ReplyStorage.open(Hive);
-
-  final cookieJar = PersistCookieJar(
-    storage: cookieStorage,
-  );
-
-  final analyticsConsentStorage = AnalyticsConsentStorage(
-    storage: persistentStorage,
-  );
+  final commentStorage = await CommentStorage.init(Hive);
+  final replyStorage = await ReplyStorage.init(Hive);
 
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -75,13 +61,29 @@ void main() async {
   final analyticsRepository = AnalyticsRepository(
     firebaseApp,
     firebaseAnalytics: FirebaseAnalytics.instance,
-    consentStorage: analyticsConsentStorage,
+    consentStorage: AnalyticsConsentStorage(
+      storage: persistentStorage,
+    ),
   );
 
   Bloc.observer = AppBlocObserver(
     analyticsRepository: analyticsRepository,
     logger: logger,
   );
+
+  final cookieStorageService = await CookieStorageService.open(
+    logger: logger,
+  );
+
+  final secureCookieStorage = SecureCookieStorage(
+    storageService: cookieStorageService,
+  );
+
+  final cookieJar = PersistCookieJar(
+    storage: secureCookieStorage,
+  );
+
+  final userStorage = await UserStorage.open();
 
   final appClient = AppClient(
     baseUrl: Uri.parse('https://news.ycombinator.com/'),

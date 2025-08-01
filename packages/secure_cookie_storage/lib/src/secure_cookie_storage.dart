@@ -1,59 +1,86 @@
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:hive_ce/hive.dart';
+import 'package:equatable/equatable.dart';
+import 'package:secure_cookie_storage/secure_cookie_storage.dart';
 
-class CookieStorage implements Storage {
-  const CookieStorage({
-    required Box<String> box,
-  }) : _box = box;
+class SecureCookieStorageException with EquatableMixin implements Exception {
+  const SecureCookieStorageException(this.error);
 
-  static Future<CookieStorage> open(
-    HiveInterface hive,
-    HiveCipher encryptionCipher,
-  ) async {
-    final box = await hive.openBox<String>(
-      'cookieStorage',
-      encryptionCipher: encryptionCipher,
-    );
-    return CookieStorage(box: box);
-  }
+  final Object error;
 
-  final Box<String> _box;
+  @override
+  List<Object> get props => [error];
+}
+
+class SecureCookieStorage implements Storage {
+  SecureCookieStorage({
+    required CookieStorageService storageService,
+  }) : _storageService = storageService;
+
+  final CookieStorageService _storageService;
 
   @override
   Future<void> init(bool persistSession, bool ignoreExpires) async {}
 
   @override
   Future<String?> read(String key) async {
-    final stopwatch = Stopwatch()..start();
-    final value = _box.get(key);
-    stopwatch.stop();
-    print('CookieStorage read: ${stopwatch.elapsedMilliseconds}');
-    return value;
+    try {
+      final value = _storageService.read(key);
+      return value;
+    } catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        SecureCookieStorageException(error),
+        stackTrace,
+      );
+    }
   }
 
   @override
   Future<void> write(String key, String value) async {
-    final stopwatch = Stopwatch()..start();
-    await _box.put(key, value);
-    stopwatch.stop();
-    print('CookieStorage write: ${stopwatch.elapsedMilliseconds}');
+    try {
+      await _storageService.update(
+        (cookies) {
+          cookies[key] = value;
+        },
+      );
+    } catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        SecureCookieStorageException(error),
+        stackTrace,
+      );
+    }
   }
 
   @override
   Future<void> delete(String key) async {
-    final stopwatch = Stopwatch()..start();
-    await _box.delete(key);
-    stopwatch.stop();
-    print('CookieStorage delete: ${stopwatch.elapsedMilliseconds}');
+    try {
+      await _storageService.update(
+        (cookies) {
+          cookies.remove(key);
+        },
+      );
+    } catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        SecureCookieStorageException(error),
+        stackTrace,
+      );
+    }
   }
 
   @override
   Future<void> deleteAll(List<String> keys) async {
-    final stopwatch = Stopwatch()..start();
-    for (final key in keys) {
-      await _box.delete(key);
+    try {
+      await _storageService.update(
+        (cookies) {
+          for (final key in keys) {
+            cookies.remove(key);
+          }
+        },
+      );
+    } catch (error, stackTrace) {
+      Error.throwWithStackTrace(
+        SecureCookieStorageException(error),
+        stackTrace,
+      );
     }
-    stopwatch.stop();
-    print('CookieStorage deleteAll: ${stopwatch.elapsedMilliseconds}');
   }
 }
