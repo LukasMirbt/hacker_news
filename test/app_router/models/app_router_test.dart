@@ -105,11 +105,21 @@ void main() {
     });
 
     group('matchedLocation', () {
-      test('returns goRouter.state.matchedLocation', () {
+      test('returns correct value', () {
         const matchedLocation = 'matchedLocation';
         when(() => state.matchedLocation).thenReturn(matchedLocation);
         final appRouter = createSubject();
         expect(appRouter.matchedLocation, matchedLocation);
+      });
+    });
+
+    group('from', () {
+      test('returns correct value', () {
+        const from = '/home?id=123';
+        final uri = Uri.parse(from);
+        when(() => state.uri).thenReturn(uri);
+        final appRouter = createSubject();
+        expect(appRouter.from, from);
       });
     });
 
