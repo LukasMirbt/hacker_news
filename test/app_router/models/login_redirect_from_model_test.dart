@@ -44,10 +44,12 @@ void main() {
 
       test('returns correct value when route is not $AppRelativeRoute', () {
         final route = _MockAppAbsoluteRoute();
+        const location = 'location';
+        when(() => route.location).thenReturn(location);
         final fromModel = createSubject();
         expect(
           fromModel.from(route: route, goRouter: goRouter),
-          uri.toString(),
+          location,
         );
       });
     });
