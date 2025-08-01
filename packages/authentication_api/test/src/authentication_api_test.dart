@@ -2,8 +2,6 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 // ignore_for_file: cascade_invocations
 
-import 'dart:io';
-
 import 'package:authentication_api/authentication_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -101,33 +99,24 @@ void main() {
         },
       );
 
-      const redirect = 'redirect';
+      final authenticate = () => client.authenticate(
+        User.initial(username),
+      );
 
-      final headers = Headers.fromMap({
-        HttpHeaders.locationHeader: [redirect],
-      });
-
-      final redirectRequest = () => http.get<void>(redirect);
-
-      test('makes login request and follows redirect', () async {
+      test('makes login request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
           (_) async => Response<String>(
             requestOptions: RequestOptions(),
-            headers: headers,
           ),
         );
-        when(redirectRequest).thenAnswer(
-          (_) async => Response<void>(
-            requestOptions: RequestOptions(),
-          ),
-        );
+        when(authenticate).thenAnswer((_) async {});
         final api = createSubject();
         await api.login(
           username: username,
           password: password,
         );
         verify(loginRequest).called(1);
-        verify(redirectRequest).called(1);
+        verify(authenticate).called(1);
       });
     });
 
@@ -153,33 +142,24 @@ void main() {
         },
       );
 
-      const redirect = 'redirect';
+      final authenticate = () => client.authenticate(
+        User.initial(username),
+      );
 
-      final headers = Headers.fromMap({
-        HttpHeaders.locationHeader: [redirect],
-      });
-
-      final redirectRequest = () => http.get<void>(redirect);
-
-      test('makes create account request and follows redirect', () async {
+      test('makes create account request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
           (_) async => Response<String>(
             requestOptions: RequestOptions(),
-            headers: headers,
           ),
         );
-        when(redirectRequest).thenAnswer(
-          (_) async => Response<void>(
-            requestOptions: RequestOptions(),
-          ),
-        );
+        when(authenticate).thenAnswer((_) async {});
         final api = createSubject();
         await api.createAccount(
           username: username,
           password: password,
         );
         verify(loginRequest).called(1);
-        verify(redirectRequest).called(1);
+        verify(authenticate).called(1);
       });
     });
 
