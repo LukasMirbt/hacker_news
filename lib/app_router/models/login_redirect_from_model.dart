@@ -8,14 +8,15 @@ class LoginRedirectFromModel {
     required AppRoute route,
     required GoRouter goRouter,
   }) {
-    final from = goRouter.state.uri;
+    final uri = goRouter.state.uri;
 
     if (route is AppRelativeRoute) {
-      final newPath = '${from.path}/${route.location}';
-      final newUri = from.replace(path: newPath);
+      final routeUri = Uri.parse(route.location);
+      final baseUri = uri.replace(path: '${uri.path}/');
+      final newUri = baseUri.resolveUri(routeUri);
       return newUri.toString();
     }
 
-    return from.toString();
+    return uri.toString();
   }
 }
