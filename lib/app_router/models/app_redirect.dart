@@ -20,7 +20,7 @@ class AppRedirect {
     final authenticationStatus = authenticationBloc.state.status;
 
     final uri = state.uri;
-    final path = uri.path;
+    final matchedLocation = state.matchedLocation;
 
     final networkErrorRoute = NetworkErrorRoute(
       from: uri.toString(),
@@ -30,11 +30,11 @@ class AppRedirect {
     final networkErrorPath = networkErrorUrl.path;
 
     if (authenticationStatus.isNetworkError) {
-      if (path == networkErrorPath) return null;
+      if (matchedLocation == networkErrorPath) return null;
       return networkErrorUrl.toString();
     }
 
-    if (path == networkErrorPath) {
+    if (matchedLocation == networkErrorPath) {
       final from = uri.queryParameters['from']!;
       return from;
     }
@@ -43,20 +43,21 @@ class AppRedirect {
     final appStatus = appBloc.state.status;
 
     const analyticsConsentRoute = AnalyticsConsentRoute();
-    final analyticsConsentUrl = Uri.parse(analyticsConsentRoute.location);
-    final analyticsConsentPath = analyticsConsentUrl.path;
+    final analyticsConsentUri = Uri.parse(analyticsConsentRoute.location);
+    final analyticsConsentPath = analyticsConsentUri.path;
 
     if (appStatus == AppStatus.analyticsConsent) {
-      return analyticsConsentUrl.toString();
+      if (matchedLocation == analyticsConsentPath) return null;
+      return analyticsConsentUri.toString();
     }
 
     final initialLocation = AppRouter.initialLocation;
 
-    if (path == analyticsConsentPath) {
+    if (matchedLocation == analyticsConsentPath) {
       return initialLocation;
     }
 
-    if (uri.toString() == '/') {
+    if (matchedLocation == '/') {
       return initialLocation;
     }
 

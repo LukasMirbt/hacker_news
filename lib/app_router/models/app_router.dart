@@ -31,7 +31,8 @@ class AppRouter {
   final AppNavigationModel _navigationModel;
   final GoRouter goRouter;
 
-  Uri get uri => goRouter.state.uri;
+  String get matchedLocation => goRouter.state.matchedLocation;
+  String get from => goRouter.state.uri.toString();
 
   void go(AppAbsoluteRoute route) {
     return _navigationModel.go(

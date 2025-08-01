@@ -30,15 +30,16 @@ class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
   final uri = Uri.parse('/home?from=%2Fthreads%3Fid%3Duser');
+  const matchedLocation = '/home';
 
   final networkErrorRoute = NetworkErrorRoute(
     from: uri.toString(),
   );
 
-  final networkErrorUrl = Uri.parse(networkErrorRoute.location);
+  final networkErrorUri = Uri.parse(networkErrorRoute.location);
 
   final analyticsConsentRoute = AnalyticsConsentRoute();
-  final analyticsConsentUrl = Uri.parse(analyticsConsentRoute.location);
+  final analyticsConsentUri = Uri.parse(analyticsConsentRoute.location);
 
   final initialLocation = AppRouter.initialLocation;
 
@@ -60,6 +61,7 @@ void main() {
         AuthenticationStatus.authenticated,
       );
       when(() => goRouterState.uri).thenReturn(uri);
+      when(() => goRouterState.matchedLocation).thenReturn(matchedLocation);
       when(() => appBloc.state).thenReturn(appState);
       when(() => appState.status).thenReturn(AppStatus.home);
     });
@@ -86,64 +88,81 @@ void main() {
         return appRedirect.redirect(context, goRouterState);
       }
 
-      testWidgets('returns null when isNetworkError and path '
-          'is networkErrorPath ', (tester) async {
+      testWidgets('returns null when isNetworkError '
+          'and matchedLocation is networkErrorPath ', (tester) async {
         when(
           () => authenticationState.status,
         ).thenReturn(AuthenticationStatus.networkError);
-        when(() => goRouterState.uri).thenReturn(networkErrorUrl);
+        when(
+          () => goRouterState.matchedLocation,
+        ).thenReturn(networkErrorUri.path);
         final location = await redirect(tester);
         expect(location, null);
       });
 
-      testWidgets('returns networkErrorUrl when isNetworkError '
-          'and path is not networkErrorPath ', (tester) async {
+      testWidgets('returns networkErrorUri when isNetworkError '
+          'and matchedLocation is not networkErrorPath ', (tester) async {
         when(
           () => authenticationState.status,
         ).thenReturn(AuthenticationStatus.networkError);
         final location = await redirect(tester);
-        expect(location, networkErrorUrl.toString());
+        expect(location, networkErrorUri.toString());
       });
 
       testWidgets('returns from when !isNetworkError '
-          'and path is networkErrorPath ', (tester) async {
-        when(() => goRouterState.uri).thenReturn(networkErrorUrl);
+          'and matchedLocation is networkErrorPath ', (tester) async {
+        when(() => goRouterState.uri).thenReturn(networkErrorUri);
+        when(
+          () => goRouterState.matchedLocation,
+        ).thenReturn(networkErrorUri.path);
         final location = await redirect(tester);
-        expect(location, networkErrorUrl.queryParameters['from']);
+        expect(location, networkErrorUri.queryParameters['from']);
       });
 
-      testWidgets('returns analyticsConsentUrl when !isNetworkError '
-          'and path is not networkErrorPath and appStatus '
+      testWidgets('returns analyticsConsentUri when !isNetworkError '
+          'and matchedLocation is not networkErrorPath and appStatus '
           'is ${AppStatus.analyticsConsent}', (tester) async {
         when(() => appState.status).thenReturn(AppStatus.analyticsConsent);
         final location = await redirect(tester);
-        expect(location, analyticsConsentUrl.toString());
+        expect(location, analyticsConsentUri.toString());
+      });
+
+      testWidgets('returns null when !isNetworkError '
+          'and matchedLocation is analyticsConsentPath and appStatus '
+          'is ${AppStatus.analyticsConsent}', (tester) async {
+        when(
+          () => goRouterState.matchedLocation,
+        ).thenReturn(analyticsConsentUri.path);
+        when(() => appState.status).thenReturn(AppStatus.analyticsConsent);
+        final location = await redirect(tester);
+        expect(location, null);
       });
 
       testWidgets(
-        'returns initialLocation when !isNetworkError and path '
-        'is not networkErrorPath and appStatus is not '
-        '${AppStatus.analyticsConsent} and path is analyticsConsentPath',
+        'returns initialLocation when !isNetworkError and appStatus '
+        'is not ${AppStatus.analyticsConsent} and matchedLocation '
+        'is analyticsConsentPath',
         (tester) async {
-          when(() => goRouterState.uri).thenReturn(analyticsConsentUrl);
+          when(() => goRouterState.uri).thenReturn(analyticsConsentUri);
+          when(
+            () => goRouterState.matchedLocation,
+          ).thenReturn(analyticsConsentUri.path);
           final location = await redirect(tester);
           expect(location, initialLocation);
         },
       );
 
       testWidgets('returns initialLocation when !isNetworkError '
-          'and path is not networkErrorPath and appStatus is not '
-          '${AppStatus.analyticsConsent} and uri is "/"', (tester) async {
-        when(() => goRouterState.uri).thenReturn(
-          Uri.parse('/'),
-        );
+          'and appStatus is not ${AppStatus.analyticsConsent} '
+          'and matchedLoaction is "/"', (tester) async {
+        when(() => goRouterState.matchedLocation).thenReturn('/');
         final location = await redirect(tester);
         expect(location, initialLocation);
       });
 
-      testWidgets('returns null when !isNetworkError and path '
-          'is not networkErrorPath and appStatus is not '
-          '${AppStatus.analyticsConsent} and uri is not "/"', (tester) async {
+      testWidgets('returns null when !isNetworkError '
+          'and appStatus is not ${AppStatus.analyticsConsent} '
+          'and matchedLocation is not "/"', (tester) async {
         final location = await redirect(tester);
         expect(location, null);
       });

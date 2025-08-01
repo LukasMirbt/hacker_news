@@ -16,9 +16,8 @@ class WebRedirectListener
           if (redirect is! WebRedirect) return;
 
           final appRouter = AppRouter.of(context);
-          final path = appRouter.uri.path;
-
-          if (path == WebRedirectRoute.config.path) return;
+          final matchedLocation = appRouter.matchedLocation;
+          if (matchedLocation == WebRedirectRoute.config.path) return;
 
           appRouter.push(
             WebRedirectRoute(url: redirect.urlString),
