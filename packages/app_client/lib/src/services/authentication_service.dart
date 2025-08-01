@@ -20,10 +20,9 @@ class AuthenticationService {
     final status = _statusParser.parse(document);
 
     switch (status) {
-      case Authenticated(:final user):
-        _client.authenticate(
-          User.fromData(user),
-        );
+      case Authenticated(:final data):
+        final user = User.fromData(data);
+        _client.authenticate(user);
       case Unauthenticated():
         _client.unauthenticate();
       case Unknown():

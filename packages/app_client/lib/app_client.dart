@@ -11,4 +11,3 @@ export 'src/interceptors/interceptors.dart';
 export 'src/models/models.dart';
 export 'src/placeholders/placeholders.dart';
 export 'src/services/services.dart';
-export 'src/user_storage.dart';

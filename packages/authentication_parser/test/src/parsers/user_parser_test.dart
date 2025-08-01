@@ -56,7 +56,7 @@ void main() {
         verify(parseId).called(1);
       });
 
-      test('calls parsers and returns $User '
+      test('calls parsers and returns $UserData '
           'when id is non-null', () {
         when(parseId).thenReturn(id);
         when(parseProfileUrl).thenReturn(profileUrl);
@@ -65,7 +65,7 @@ void main() {
         final parser = createSubject();
         expect(
           parser.parse(document),
-          User.fromParsed(
+          UserData.fromParsed(
             id: id,
             profileUrl: profileUrl,
             karma: karma,

@@ -17,10 +17,10 @@ final class Unauthenticated extends AuthenticationStatus {
 }
 
 final class Authenticated extends AuthenticationStatus {
-  const Authenticated(this.user);
+  const Authenticated(this.data);
 
-  final UserData user;
+  final UserData data;
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [data];
 }

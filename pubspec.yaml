@@ -28,6 +28,7 @@ workspace:
   - packages/reply_parser
   - packages/reply_repository
   - packages/secure_cookie_storage
+  - packages/secure_user_id_storage
   - packages/share_launcher
   - packages/storage/persistent_storage
   - packages/storage/secure_storage
@@ -114,6 +115,8 @@ dependencies:
     path: packages/reply_repository
   secure_cookie_storage:
     path: packages/secure_cookie_storage
+  secure_user_id_storage:
+    path: packages/secure_user_id_storage
   secure_storage:
     path: packages/storage/secure_storage
   share_launcher:

@@ -6,10 +6,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class _MockCookieJar extends Mock implements CookieJar {}
 
-class _MockUserStorage extends Mock implements UserStorage {}
+class _MockSecureUserIdStorage extends Mock implements SecureUserIdStorage {}
 
 void main() {
   final baseUrl = Uri.parse('https://example.com');
@@ -20,11 +21,11 @@ void main() {
 
   group(AppClient, () {
     late CookieJar cookieJar;
-    late UserStorage userStorage;
+    late SecureUserIdStorage userIdStorage;
 
     setUp(() {
       cookieJar = _MockCookieJar();
-      userStorage = _MockUserStorage();
+      userIdStorage = _MockSecureUserIdStorage();
     });
 
     AppClient createSubject({
@@ -35,7 +36,7 @@ void main() {
       return AppClient(
         baseUrl: baseUrl,
         cookieJar: cookieJar,
-        userStorage: userStorage,
+        userIdStorage: userIdStorage,
         addPlatformConfiguration: addPlatformConfiguration ?? (_, __) {},
         debugPrint: debugPrint,
       );
@@ -54,21 +55,21 @@ void main() {
       const userId = 'userId';
 
       final loadForRequest = () => cookieJar.loadForRequest(baseUrl);
-      final readUserId = () => userStorage.readUserId();
+      final readUserId = () => userIdStorage.read();
 
       blocTest<AppClient, AuthenticationState>(
         'emits correct state when hasUserCookie '
         'and userId is non-null',
         setUp: () {
           when(loadForRequest).thenAnswer((_) async => cookies);
-          when(readUserId).thenAnswer((_) async => userId);
+          when(readUserId).thenReturn(userId);
         },
         build: createSubject,
         act: (client) => client.start(),
         expect: () => [
           initialState.copyWith(
             status: AuthenticationStatus.authenticated,
-            user: initialState.user.copyWith(id: userId),
+            user: User.initial(userId),
           ),
         ],
         verify: (_) {
@@ -78,10 +79,11 @@ void main() {
       );
 
       blocTest<AppClient, AuthenticationState>(
-        'emits correct state when !hasUserCookie',
+        'emits correct state when !hasUserCookie '
+        'and userId is non-null',
         setUp: () {
           when(loadForRequest).thenAnswer((_) async => <Cookie>[]);
-          when(readUserId).thenAnswer((_) async => userId);
+          when(readUserId).thenReturn(userId);
         },
         build: createSubject,
         act: (client) => client.start(),
@@ -97,10 +99,10 @@ void main() {
       );
 
       blocTest<AppClient, AuthenticationState>(
-        'emits correct state when userId is null',
+        'emits correct state when hasUserCookie '
+        'and userId is null',
         setUp: () {
           when(loadForRequest).thenAnswer((_) async => cookies);
-          when(readUserId).thenAnswer((_) async => null);
         },
         build: createSubject,
         act: (client) => client.start(),
@@ -309,37 +311,41 @@ void main() {
     });
 
     group('authenticate', () {
-      const userId = 'userId';
-      final writeUserId = () => userStorage.writeUserId(userId);
+      final user = UserPlaceholder();
+      final write = () => userIdStorage.write(user.id);
 
       blocTest<AppClient, AuthenticationState>(
-        'calls writeUserId and emits updated state',
+        'calls write and emits updated state',
         setUp: () {
-          when(writeUserId).thenAnswer((_) async {});
+          when(write).thenAnswer((_) async {
+            return;
+          });
         },
         build: createSubject,
-        act: (client) => client.authenticate(userId),
+        act: (client) => client.authenticate(user),
         expect: () => [
           initialState.copyWith(
             status: AuthenticationStatus.authenticated,
-            user: initialState.user.copyWith(id: userId),
+            user: user,
           ),
         ],
         verify: (_) {
-          verify(writeUserId).called(1);
+          verify(write).called(1);
         },
       );
     });
 
     group('unauthenticate', () {
       final deleteAll = () => cookieJar.deleteAll();
-      final deleteUserId = () => userStorage.deleteUserId();
+      final deleteUser = () => userIdStorage.delete();
 
       blocTest<AppClient, AuthenticationState>(
-        'deletes persisted data emits updated state',
+        'deletes persisted data and emits updated state',
         setUp: () {
           when(deleteAll).thenAnswer((_) async {});
-          when(deleteUserId).thenAnswer((_) async {});
+          when(deleteUser).thenAnswer((_) async {
+            return;
+          });
         },
         build: createSubject,
         act: (client) => client.unauthenticate(),
@@ -351,7 +357,7 @@ void main() {
         ],
         verify: (_) {
           verify(deleteAll).called(1);
-          verify(deleteUserId).called(1);
+          verify(deleteUser).called(1);
         },
       );
     });

@@ -16,6 +16,15 @@ class User with _$User {
     required this.logoutUrl,
   });
 
+  factory User.initial(String userId) {
+    return User(
+      id: userId,
+      karma: 0,
+      profileUrl: '',
+      logoutUrl: '',
+    );
+  }
+
   factory User.fromData(UserData data) {
     return User(
       id: data.id,

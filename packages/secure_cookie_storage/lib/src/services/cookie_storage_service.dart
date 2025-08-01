@@ -61,12 +61,16 @@ class CookieStorageService {
 
       update(updatedCookies);
 
-      if (mapEquals(_cookies, updatedCookies)) return;
+      if (mapEquals(updatedCookies, _cookies)) return;
 
       _cookies = updatedCookies;
 
-      final value = _serializer.serialize(updatedCookies);
-      await _secureStorage.write(key: _key, value: value);
+      final serializedCookies = _serializer.serialize(updatedCookies);
+
+      await _secureStorage.write(
+        key: _key,
+        value: serializedCookies,
+      );
     });
   }
 }

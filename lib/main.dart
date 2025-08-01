@@ -15,6 +15,7 @@ import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
+import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
@@ -83,12 +84,18 @@ void main() async {
     storage: secureCookieStorage,
   );
 
-  final userStorage = await UserStorage.open();
+  final userIdStorageService = await UserIdStorageService.open(
+    logger: logger,
+  );
+
+  final userIdStorage = SecureUserIdStorage(
+    storageService: userIdStorageService,
+  );
 
   final appClient = AppClient(
     baseUrl: Uri.parse('https://news.ycombinator.com/'),
     cookieJar: cookieJar,
-    userStorage: userStorage,
+    userIdStorage: userIdStorage,
     addPlatformConfiguration: addPlatformConfiguration,
     debugPrint: debugPrint,
   );

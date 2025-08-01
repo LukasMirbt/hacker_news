@@ -42,7 +42,7 @@ class AuthenticationApi {
     );
 
     await _client.authenticate(
-      User.empty.copyWith(id: username),
+      User.initial(username),
     );
   }
 
@@ -64,11 +64,12 @@ class AuthenticationApi {
     );
 
     await _client.authenticate(
-      User.empty.copyWith(id: username),
+      User.initial(username),
     );
   }
 
   Future<void> logout() async {
+    // TODO(LukasMirbt): Handle network errors
     await _client.http.get<void>(state.user.logoutUrl);
     await _client.unauthenticate();
   }

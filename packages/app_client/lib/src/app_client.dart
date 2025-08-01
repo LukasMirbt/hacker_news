@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:app_client/app_client.dart';
 import 'package:bloc/bloc.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class AppClient extends Cubit<AuthenticationState> {
   AppClient({
     required Uri baseUrl,
     required CookieJar cookieJar,
-    required UserStorage userStorage,
+    required SecureUserIdStorage userIdStorage,
     required void Function(Dio, CookieJar) addPlatformConfiguration,
     void Function(String?)? debugPrint,
   }) : _cookieJar = cookieJar,
-       _userStorage = userStorage,
+       _userIdStorage = userIdStorage,
        http = SequentialDio(),
        super(
          AuthenticationState(baseUrl: baseUrl),
@@ -60,13 +61,13 @@ class AppClient extends Cubit<AuthenticationState> {
       (cookie) => cookie.name == 'user',
     );
 
-    final user = await _userStorage.read();
+    final userId = _userIdStorage.read();
 
-    if (hasUserCookie && user != null) {
+    if (hasUserCookie && userId != null) {
       emit(
         state.copyWith(
           status: AuthenticationStatus.authenticated,
-          user: user,
+          user: User.initial(userId),
         ),
       );
     } else {
@@ -79,7 +80,7 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   final CookieJar _cookieJar;
-  final UserStorage _userStorage;
+  final SecureUserIdStorage _userIdStorage;
   final Dio http;
 
   void redirectToLogin() {
@@ -110,7 +111,7 @@ class AppClient extends Cubit<AuthenticationState> {
   }
 
   Future<void> authenticate(User user) async {
-    await _userStorage.write(user);
+    await _userIdStorage.write(user.id);
 
     emit(
       state.copyWith(
@@ -122,7 +123,7 @@ class AppClient extends Cubit<AuthenticationState> {
 
   Future<void> unauthenticate() async {
     await _cookieJar.deleteAll();
-    await _userStorage.clear();
+    await _userIdStorage.delete();
 
     emit(
       state.copyWith(
