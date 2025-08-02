@@ -4,7 +4,7 @@ class ReplyRoute extends GoRouteData
     with _$ReplyRoute, AppRelativeRoute, AuthenticatedRoute, EquatableMixin {
   const ReplyRoute({
     required this.url,
-    this.$extra,
+    required this.$extra,
   });
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;
@@ -14,7 +14,7 @@ class ReplyRoute extends GoRouteData
   );
 
   final String url;
-  final Comment? $extra;
+  final ReplyParent? $extra;
 
   @override
   Page<void> buildPage(

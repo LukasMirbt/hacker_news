@@ -472,6 +472,12 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String reply_age({required Object age});
 
+  /// No description provided for @reply_score.
+  ///
+  /// In en, this message translates to:
+  /// **'{score}p'**
+  String reply_score({required Object score});
+
   /// No description provided for @reply_textFieldHintText.
   ///
   /// In en, this message translates to:

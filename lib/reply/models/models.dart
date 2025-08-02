@@ -1,3 +1,6 @@
+export 'current_user_comment_extension.dart';
+export 'other_user_comment_extension.dart';
+export 'other_user_reply_parent_model_placeholder.dart';
 export 'reply_form_model.dart';
 export 'reply_parent_model.dart';
 export 'reply_parent_vote_model.dart';

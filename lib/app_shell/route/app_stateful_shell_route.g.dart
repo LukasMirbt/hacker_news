@@ -183,7 +183,7 @@ mixin _$CommentRoute on GoRouteData {
 mixin _$ReplyRoute on GoRouteData {
   static ReplyRoute _fromState(GoRouterState state) => ReplyRoute(
     url: state.uri.queryParameters['url']!,
-    $extra: state.extra as Comment?,
+    $extra: state.extra as ReplyParent?,
   );
 
   ReplyRoute get _self => this as ReplyRoute;

@@ -28,6 +28,8 @@ class ThreadCommentModel extends Equatable {
     return url.toString();
   }
 
+  ThreadComment toRepository() => _comment;
+
   @override
   List<Object> get props => [
     _comment,

@@ -51,10 +51,14 @@ class _Parent extends StatelessWidget {
       (ReplyBloc bloc) => bloc.state.fetchStatus.isLoading,
     );
 
+    final isPlaceholder = context.select(
+      (ReplyBloc bloc) => bloc.state.isPlaceholder,
+    );
+
     if (isFailure) return const ErrorText();
 
     return Skeletonizer(
-      enabled: isLoading,
+      enabled: isLoading && isPlaceholder,
       child: const ReplyParent(),
     );
   }

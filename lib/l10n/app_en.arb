@@ -63,6 +63,7 @@
   "reply_disabledExplanationTitle": "Closed for replies",
   "reply_disabledExplanationSubtitle": "Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.",
   "reply_age": "{age} ago",
+  "reply_score": "{score}p",
   "reply_textFieldHintText": "Your reply",
   "reply_submitAction": "Reply",
   "replyOptions_share": "Share",

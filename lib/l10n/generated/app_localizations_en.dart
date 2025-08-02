@@ -216,6 +216,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String reply_score({required Object score}) {
+    return '${score}p';
+  }
+
+  @override
   String get reply_textFieldHintText => 'Your reply';
 
   @override

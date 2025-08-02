@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacker_client/reply/reply.dart' hide ReplyPage;
+import 'package:hacker_client/reply/reply.dart' hide ReplyPage, ReplyParent;
 import 'package:link_launcher/link_launcher.dart';
-import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -10,7 +9,7 @@ import 'package:vote_repository/vote_repository.dart';
 class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   ReplyBloc({
     required String url,
-    required Comment? parent,
+    required ReplyParent? parent,
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
     required SavedReplyModel savedReplyModel,
@@ -84,19 +83,13 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     try {
-      /*       await Future.delayed(
-        const Duration(seconds: 5),
-      );
- */
       final page = await _replyRepository.fetchReplyPage(
         url: state.url,
       );
 
       emit(
         state.copyWith(
-          parent: state.parent.copyWith(
-            parent: page.parent,
-          ),
+          parent: ReplyParentModel.initial(page.parent),
           form: state.form.copyWith(
             form: page.form,
           ),
@@ -140,9 +133,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   ) {
     emit(
       state.copyWith(
-        parent: state.parent.copyWith(
-          isExpanded: !state.parent.isExpanded,
-        ),
+        parent: state.parent.toggleExpansion(),
       ),
     );
   }
@@ -151,9 +142,11 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     ReplyParentVotePressed event,
     Emitter<ReplyState> emit,
   ) {
+    final parent = event.parent;
+
     _voteRepository.vote(
-      upvoteUrl: state.parent.upvoteUrl,
-      hasBeenUpvoted: state.parent.hasBeenUpvoted,
+      upvoteUrl: parent.upvoteUrl,
+      hasBeenUpvoted: parent.hasBeenUpvoted,
     );
   }
 
