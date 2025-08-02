@@ -30,5 +30,8 @@ class ReplyRoute extends GoRouteData
   }
 
   @override
-  List<Object> get props => [url];
+  List<Object?> get props => [
+    url,
+    $extra,
+  ];
 }
