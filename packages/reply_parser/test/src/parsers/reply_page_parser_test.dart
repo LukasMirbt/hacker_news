@@ -11,7 +11,7 @@ class _MockReplyFormParser extends Mock implements ReplyFormParser {}
 class _MockElement extends Mock implements Element {}
 
 void main() {
-  final parentData = ReplyParentDataPlaceholder();
+  final parentData = OtherUserReplyParentDataPlaceholder();
   const formData = ReplyFormDataPlaceholder();
 
   group(ReplyPageParser, () {
@@ -69,7 +69,7 @@ void main() {
         expect(
           parser.parse(fatItem),
           ReplyPageData(
-            parentData: ReplyParentData.empty,
+            parentData: OtherUserReplyParentData.empty,
             formData: null,
           ),
         );

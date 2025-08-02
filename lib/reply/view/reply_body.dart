@@ -2,6 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/reply/reply.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ReplyBody extends StatelessWidget {
   const ReplyBody({super.key});
@@ -17,7 +18,7 @@ class ReplyBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: AppSpacing.xs),
-                ReplyParent(),
+                _Parent(),
                 ReplyDivider(),
                 Expanded(
                   child: Padding(
@@ -37,17 +38,33 @@ class ReplyBody extends StatelessWidget {
   }
 }
 
+class _Parent extends StatelessWidget {
+  const _Parent();
+
+  @override
+  Widget build(BuildContext context) {
+    final isFailure = context.select(
+      (ReplyBloc bloc) => bloc.state.fetchStatus.isFailure,
+    );
+
+    final isLoading = context.select(
+      (ReplyBloc bloc) => bloc.state.fetchStatus.isLoading,
+    );
+
+    if (isFailure) return const ErrorText();
+
+    return Skeletonizer(
+      enabled: isLoading,
+      child: const ReplyParent(),
+    );
+  }
+}
+
 class _Body extends StatelessWidget {
   const _Body();
 
   @override
   Widget build(BuildContext context) {
-    final isReplyingEnabled = context.select(
-      (ReplyBloc bloc) => bloc.state.form.isReplyingEnabled,
-    );
-
-    if (isReplyingEnabled) return const ReplyTextField();
-
-    return const ReplyDisabledExplanation();
+    return const ReplyTextField();
   }
 }

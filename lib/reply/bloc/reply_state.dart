@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hacker_client/reply/reply.dart';
+import 'package:post_repository/post_repository.dart';
 
 part 'reply_state.freezed.dart';
 
@@ -8,7 +9,9 @@ enum FetchStatus {
   success,
   failure;
 
+  bool get isLoading => this == loading;
   bool get isSuccess => this == success;
+  bool get isFailure => this == failure;
 }
 
 @freezed
@@ -22,10 +25,11 @@ abstract class ReplyState with _$ReplyState {
 
   factory ReplyState.initial({
     required String url,
+    required Comment? parent,
   }) {
     return ReplyState(
       url: url,
-      parent: ReplyParentModel.empty,
+      parent: ReplyParentModel.initial(parent),
     );
   }
 

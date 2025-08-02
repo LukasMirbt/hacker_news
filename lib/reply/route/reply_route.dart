@@ -2,7 +2,10 @@ part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class ReplyRoute extends GoRouteData
     with _$ReplyRoute, AppRelativeRoute, AuthenticatedRoute, EquatableMixin {
-  const ReplyRoute({required this.url});
+  const ReplyRoute({
+    required this.url,
+    this.$extra,
+  });
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;
 
@@ -11,6 +14,7 @@ class ReplyRoute extends GoRouteData
   );
 
   final String url;
+  final Comment? $extra;
 
   @override
   Page<void> buildPage(
@@ -18,8 +22,10 @@ class ReplyRoute extends GoRouteData
     GoRouterState state,
   ) {
     return MaterialPage(
-      fullscreenDialog: true,
-      child: ReplyPage(url: url),
+      child: ReplyPage(
+        url: url,
+        parent: $extra,
+      ),
     );
   }
 

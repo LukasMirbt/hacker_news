@@ -181,8 +181,10 @@ mixin _$CommentRoute on GoRouteData {
 }
 
 mixin _$ReplyRoute on GoRouteData {
-  static ReplyRoute _fromState(GoRouterState state) =>
-      ReplyRoute(url: state.uri.queryParameters['url']!);
+  static ReplyRoute _fromState(GoRouterState state) => ReplyRoute(
+    url: state.uri.queryParameters['url']!,
+    $extra: state.extra as Comment?,
+  );
 
   ReplyRoute get _self => this as ReplyRoute;
 
@@ -191,16 +193,17 @@ mixin _$ReplyRoute on GoRouteData {
 
   String get relativeLocation => './$location';
 
-  void goRelative(BuildContext context) => context.go(relativeLocation);
+  void goRelative(BuildContext context) =>
+      context.go(relativeLocation, extra: _self.$extra);
 
   Future<T?> pushRelative<T>(BuildContext context) =>
-      context.push<T>(relativeLocation);
+      context.push<T>(relativeLocation, extra: _self.$extra);
 
   void pushReplacementRelative(BuildContext context) =>
-      context.pushReplacement(relativeLocation);
+      context.pushReplacement(relativeLocation, extra: _self.$extra);
 
   void replaceRelative(BuildContext context) =>
-      context.replace(relativeLocation);
+      context.replace(relativeLocation, extra: _self.$extra);
 }
 
 extension $ThreadFeedShellRouteExtension on ThreadFeedShellRoute {

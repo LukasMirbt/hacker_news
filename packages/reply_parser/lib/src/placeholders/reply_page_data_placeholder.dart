@@ -5,7 +5,7 @@ class ReplyPageDataPlaceholder extends ReplyPageData {
     ReplyParentData? parentData,
     ReplyFormData? formData,
   }) : super(
-         parentData: parentData ?? ReplyParentDataPlaceholder(),
+         parentData: parentData ?? OtherUserReplyParentDataPlaceholder(),
          formData: formData ?? const ReplyFormDataPlaceholder(),
        );
 }

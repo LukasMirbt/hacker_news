@@ -1,6 +1,7 @@
 import 'package:date_formatter/date_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -12,8 +13,30 @@ class ReplyParentModel extends Equatable {
   }) : _parent = parent,
        _formatter = formatter;
 
-  static final empty = ReplyParentModel(
-    parent: ReplyParent.empty,
+  factory ReplyParentModel.initial(Comment? parent) {
+    if (parent == null) {
+      return ReplyParentModel.placeholder;
+    }
+
+    return ReplyParentModel(
+      parent: ReplyParent(
+        id: comment.id,
+        upvoteUrl: comment.upvoteUrl,
+        hasBeenUpvoted: comment.hasBeenUpvoted,
+        hnuser: comment.hnuser,
+        age: comment.age,
+        htmlText: comment.htmlText,
+      ),
+    );
+  }
+
+  static final placeholder = ReplyParentModel(
+    parent: ReplyParentPlaceholder(
+      htmlText:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+          'Praesent vel urna vitae sapien ullamcorper facilisis. '
+          'Phasellus sit amet sapien non elit tincidunt euismod.',
+    ),
   );
 
   final ReplyParent _parent;
