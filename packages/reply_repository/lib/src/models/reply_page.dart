@@ -29,7 +29,7 @@ class ReplyPage with _$ReplyPage {
   }
 
   static final empty = ReplyPage(
-    parent: ReplyParent.empty,
+    parent: OtherUserReplyParent.empty,
     form: ReplyForm.empty,
   );
 
