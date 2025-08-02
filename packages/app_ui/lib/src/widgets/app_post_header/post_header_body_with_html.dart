@@ -48,6 +48,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: AppSpacing.lg,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const PostHeaderContentRow(),
         PostHeaderHtml(htmlText: htmlText),
