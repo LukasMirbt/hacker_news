@@ -22,7 +22,20 @@ class AppNavigationModel {
       return;
     }
 
-    goRouter.go(route.navigationLocation);
+    Object? extra;
+
+    try {
+      // Attempt to access $extra dynamically
+      extra = (route as dynamic).$extra;
+    } on NoSuchMethodError {
+      // If it doesn't exist, 'extra' remains null
+      extra = null;
+    }
+
+    goRouter.go(
+      route.navigationLocation,
+      extra: extra,
+    );
   }
 
   Future<T?> push<T extends Object?>({

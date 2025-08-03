@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_options/comment_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
@@ -22,11 +23,14 @@ class ReplyOptionBody extends StatelessWidget {
       title: Text(l10n.commentOptions_reply),
       onTap: () {
         final state = context.read<CommentOptionsBloc>().state;
+        final comment = state.comment.toRepository();
         Navigator.of(context).pop();
-        ReplyRoute(
-          url: url,
-          $extra: null /* state.comment.toRepository() */,
-        ).goRelative(context);
+        AppRouter.of(context).goRelative(
+          ReplyRoute(
+            url: url,
+            $extra: comment.toReplyParent(),
+          ),
+        );
       },
     );
   }
