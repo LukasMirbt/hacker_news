@@ -22,11 +22,6 @@ void main() {
 
     CommentRoute createSubject() => CommentRoute();
 
-    test('is a $GoRouteData', () {
-      final route = createSubject();
-      expect(route, isA<GoRouteData>());
-    });
-
     test('is a $RelativeGoRouteData', () {
       final route = createSubject();
       expect(route, isA<RelativeGoRouteData>());
