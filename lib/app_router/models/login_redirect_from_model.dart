@@ -1,14 +1,15 @@
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
 
 class LoginRedirectFromModel {
   const LoginRedirectFromModel();
 
   String from({
-    required AppRoute route,
+    required RouteData route,
     required GoRouter goRouter,
   }) {
-    if (route is AppRelativeRoute) {
+    if (route is GoRouteData) return route.location;
+
+    if (route is RelativeGoRouteData) {
       final uri = goRouter.state.uri;
       final baseUri = uri.replace(path: '${uri.path}/');
       final routeUri = Uri.parse(route.location);
@@ -16,6 +17,6 @@ class LoginRedirectFromModel {
       return newUri.toString();
     }
 
-    return route.location;
+    throw UnsupportedError('Unsupported route type: ${route.runtimeType}');
   }
 }

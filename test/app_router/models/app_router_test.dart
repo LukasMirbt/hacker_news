@@ -16,38 +16,42 @@ class _MockAppRedirect extends Mock implements AppRedirect {}
 
 class _MockAppRouteList extends Mock implements AppRouteList {}
 
-class _MockAppNavigationModel extends Mock implements AppNavigationModel {}
+class _MockLoginRedirectModel extends Mock implements LoginRedirectModel {}
 
 class _MockBuildContext extends Mock implements BuildContext {}
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
-class _MockAppAbsoluteRoute extends Mock implements AppAbsoluteRoute {}
+class _MockGoRouteData extends Mock implements GoRouteData {}
 
-class _MockAppRelativeRoute extends Mock implements AppRelativeRoute {}
+class _MockRelativeGoRouteData extends Mock implements RelativeGoRouteData {}
 
 class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
+  const redirect = 'redirect';
+  const location = 'location';
+  const relativeLocation = 'relativeLocation';
+
   group(AppRouter, () {
     late AppRedirect appRedirect;
     late AppRouteList appRouteList;
-    late AppNavigationModel navigationModel;
+    late LoginRedirectModel redirectModel;
     late GoRouter goRouter;
     late GoRouterState state;
     late BuildContext context;
-    late AppRelativeRoute relativeRoute;
-    late AppAbsoluteRoute absoluteRoute;
+    late RelativeGoRouteData relativeRoute;
+    late GoRouteData absoluteRoute;
 
     setUp(() {
       appRedirect = _MockAppRedirect();
       appRouteList = _MockAppRouteList();
-      navigationModel = _MockAppNavigationModel();
+      redirectModel = _MockLoginRedirectModel();
       goRouter = _MockGoRouter();
       state = _MockGoRouterState();
       context = _MockBuildContext();
-      relativeRoute = _MockAppRelativeRoute();
-      absoluteRoute = _MockAppAbsoluteRoute();
+      relativeRoute = _MockRelativeGoRouteData();
+      absoluteRoute = _MockGoRouteData();
       registerFallbackValue(relativeRoute);
       registerFallbackValue(absoluteRoute);
       when(() => appRouteList.routes).thenReturn([]);
@@ -58,7 +62,7 @@ void main() {
       return AppRouter(
         appRedirect: appRedirect,
         appRouteList: appRouteList,
-        appNavigationModel: navigationModel,
+        loginRedirectModel: redirectModel,
         goRouter: goRouter,
       );
     }
@@ -129,7 +133,7 @@ void main() {
           return AppRouter(
             appRedirect: appRedirect,
             appRouteList: appRouteList,
-            appNavigationModel: navigationModel,
+            loginRedirectModel: redirectModel,
           );
         }
 
@@ -170,30 +174,58 @@ void main() {
     });
 
     group('go', () {
-      test('calls navigationModel.go', () {
-        final route = _MockAppAbsoluteRoute();
-        final go = () => navigationModel.go(
-          goRouter: goRouter,
-          route: route,
-        );
+      final route = _MockGoRouteData();
+
+      final redirectMethod = () => redirectModel.redirect(
+        route: route,
+        goRouter: goRouter,
+      );
+
+      test('pushes redirect and returns when redirect '
+          'is non-null', () {
+        final pushRedirect = () => goRouter.push(redirect);
+        when(redirectMethod).thenReturn(redirect);
+        when(pushRedirect).thenAnswer((_) async => null);
         final appRouter = createSubject();
         appRouter.go(route);
-        verify(go).called(1);
+        verify(pushRedirect).called(1);
+        verifyNever(() => goRouter.go(any()));
+      });
+
+      test('calls go when redirect is null', () {
+        when(() => route.location).thenReturn(location);
+        final appRouter = createSubject();
+        appRouter.go(route);
+        verify(() => goRouter.go(location)).called(1);
       });
     });
 
     group('push', () {
-      test('calls navigationModel.push', () {
-        final route = _MockAppAbsoluteRoute();
+      final route = _MockGoRouteData();
+
+      final redirectMethod = () => redirectModel.redirect(
+        route: route,
+        goRouter: goRouter,
+      );
+
+      test('pushes redirect and returns when non-null', () async {
+        final pushRedirect = () => goRouter.push(redirect);
+        when(redirectMethod).thenReturn(redirect);
+        when(pushRedirect).thenAnswer((_) async => null);
+        final model = createSubject();
+        await model.push(route);
+        verify(pushRedirect).called(1);
+        verifyNever(() => goRouter.push(location));
+      });
+
+      test('calls push when redirect is null', () async {
+        when(() => route.location).thenReturn(location);
+        final push = () => goRouter.push<String>(location);
         const result = 'result';
-        final push = () => navigationModel.push<String>(
-          goRouter: goRouter,
-          route: route,
-        );
         when(push).thenAnswer((_) async => result);
-        final appRouter = createSubject();
-        expect(
-          appRouter.push<String>(route),
+        final model = createSubject();
+        await expectLater(
+          model.push<String>(route),
           completion(result),
         );
         verify(push).called(1);
@@ -201,30 +233,58 @@ void main() {
     });
 
     group('goRelative', () {
-      test('calls navigationModel.go', () {
-        final route = _MockAppRelativeRoute();
-        final go = () => navigationModel.go(
-          goRouter: goRouter,
-          route: route,
-        );
+      final route = _MockRelativeGoRouteData();
+
+      final redirectMethod = () => redirectModel.redirect(
+        route: route,
+        goRouter: goRouter,
+      );
+
+      test('pushes redirect and returns when redirect '
+          'is non-null', () {
+        final pushRedirect = () => goRouter.push(redirect);
+        when(redirectMethod).thenReturn(redirect);
+        when(pushRedirect).thenAnswer((_) async => null);
         final appRouter = createSubject();
         appRouter.goRelative(route);
-        verify(go).called(1);
+        verify(pushRedirect).called(1);
+        verifyNever(() => goRouter.go(any()));
+      });
+
+      test('calls go when redirect is null', () {
+        when(() => route.relativeLocation).thenReturn(relativeLocation);
+        final appRouter = createSubject();
+        appRouter.goRelative(route);
+        verify(() => goRouter.go(relativeLocation)).called(1);
       });
     });
 
     group('pushRelative', () {
-      test('calls navigationModel.push', () {
-        final route = _MockAppRelativeRoute();
+      final route = _MockRelativeGoRouteData();
+
+      final redirectMethod = () => redirectModel.redirect(
+        route: route,
+        goRouter: goRouter,
+      );
+
+      test('pushes redirect and returns when non-null', () async {
+        final pushRedirect = () => goRouter.push(redirect);
+        when(redirectMethod).thenReturn(redirect);
+        when(pushRedirect).thenAnswer((_) async => null);
+        final model = createSubject();
+        await model.pushRelative(route);
+        verify(pushRedirect).called(1);
+        verifyNever(() => goRouter.push(location));
+      });
+
+      test('calls push when redirect is null', () async {
+        when(() => route.relativeLocation).thenReturn(relativeLocation);
+        final push = () => goRouter.push<String>(relativeLocation);
         const result = 'result';
-        final push = () => navigationModel.push<String>(
-          goRouter: goRouter,
-          route: route,
-        );
         when(push).thenAnswer((_) async => result);
-        final appRouter = createSubject();
-        expect(
-          appRouter.pushRelative<String>(route),
+        final model = createSubject();
+        await expectLater(
+          model.pushRelative<String>(route),
           completion(result),
         );
         verify(push).called(1);

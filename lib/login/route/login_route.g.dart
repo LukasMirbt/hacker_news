@@ -27,16 +27,21 @@ mixin _$LoginRoute on GoRouteData {
 
   LoginRoute get _self => this as LoginRoute;
 
+  @override
   String get location =>
       GoRouteData.$location('/login', queryParams: {'from': _self.from});
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
@@ -46,17 +51,22 @@ mixin _$CreateAccountRoute on GoRouteData {
 
   CreateAccountRoute get _self => this as CreateAccountRoute;
 
+  @override
   String get location => GoRouteData.$location(
     '/login/create-account',
     queryParams: {'from': _self.from},
   );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }

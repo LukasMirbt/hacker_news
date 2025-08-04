@@ -26,14 +26,9 @@ void main() {
       return ReplyRoute(url: url);
     }
 
-    test('is a $GoRouteData', () {
+    test('is a $RelativeGoRouteData', () {
       final route = createSubject();
-      expect(route, isA<GoRouteData>());
-    });
-
-    test('is an $AppRelativeRoute', () {
-      final route = createSubject();
-      expect(route, isA<AppRelativeRoute>());
+      expect(route, isA<RelativeGoRouteData>());
     });
 
     test('is an $AuthenticatedRoute', () {
