@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
 
 part 'web_redirect_route.g.dart';
 
 @WebRedirectRoute.config
 class WebRedirectRoute extends GoRouteData
-    with _$WebRedirectRoute, AppAbsoluteRoute, EquatableMixin {
+    with _$WebRedirectRoute, EquatableMixin {
   const WebRedirectRoute({required this.url});
 
   static const config = TypedGoRoute<WebRedirectRoute>(

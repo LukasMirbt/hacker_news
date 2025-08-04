@@ -27,9 +27,9 @@ void main() {
       expect(route, isA<GoRouteData>());
     });
 
-    test('is an $AppRelativeRoute', () {
+    test('is a $RelativeGoRouteData', () {
       final route = createSubject();
-      expect(route, isA<AppRelativeRoute>());
+      expect(route, isA<RelativeGoRouteData>());
     });
 
     test('is an $AuthenticatedRoute', () {

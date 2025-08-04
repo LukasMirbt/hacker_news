@@ -14,8 +14,8 @@ class LoginRedirectModel {
   final LoginRedirectFromModel _fromModel;
 
   String? redirect({
-    required AppRoute route,
     required GoRouter goRouter,
+    required RouteData route,
   }) {
     if (route is! AuthenticatedRoute) return null;
 

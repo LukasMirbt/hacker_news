@@ -667,18 +667,18 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/go_router"
-      ref: HEAD
-      resolved-ref: "20fd5d629a3e98c3c5e490df011ee547895a9ebc"
-      url: "https://github.com/ThangVuNguyenViet/packages.git"
+      ref: relative-routes
+      resolved-ref: "3fb53677f9a9599f2080095605eb051884bb562f"
+      url: "https://github.com/LukasMirbt/packages.git"
     source: git
-    version: "16.0.0"
+    version: "16.0.1"
   go_router_builder:
     dependency: "direct dev"
     description:
       path: "packages/go_router_builder"
-      ref: HEAD
-      resolved-ref: "20fd5d629a3e98c3c5e490df011ee547895a9ebc"
-      url: "https://github.com/ThangVuNguyenViet/packages.git"
+      ref: relative-routes
+      resolved-ref: "3fb53677f9a9599f2080095605eb051884bb562f"
+      url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "3.0.2"
   graphs:

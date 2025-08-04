@@ -1,7 +1,7 @@
 part of '../../login/route/login_route.dart';
 
 class CreateAccountRoute extends GoRouteData
-    with _$CreateAccountRoute, AppAbsoluteRoute, EquatableMixin {
+    with _$CreateAccountRoute, EquatableMixin {
   const CreateAccountRoute({required this.from});
 
   static const config = TypedGoRoute<CreateAccountRoute>(

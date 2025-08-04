@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
@@ -20,35 +19,16 @@ class _MockGoRouterState extends Mock implements GoRouterState {}
 class _MockLoginRedirectFromModel extends Mock
     implements LoginRedirectFromModel {}
 
-class _TestAppRoute implements AppRoute {
-  @override
-  String get location => throw UnimplementedError();
+class _TestRouteData implements RouteData {}
 
-  @override
-  String get navigationLocation => throw UnimplementedError();
-}
-
-class _TestAppAuthenticatedRoute extends GoRouteData
-    with AppAbsoluteRoute, AuthenticatedRoute {
-  _TestAppAuthenticatedRoute();
-
-  @override
-  String get location => throw UnimplementedError();
-
-  @override
-  void go(BuildContext context) => throw UnimplementedError();
-
-  @override
-  Future<T?> push<T>(BuildContext context) => throw UnimplementedError();
-
-  @override
-  void pushReplacement(BuildContext context) => throw UnimplementedError();
-
-  @override
-  void replace(BuildContext context) => throw UnimplementedError();
+class _TestAuthenticatedRouteData extends RouteData with AuthenticatedRoute {
+  _TestAuthenticatedRouteData();
 }
 
 void main() {
+  final route = _TestRouteData();
+  final authenticatedRoute = _TestAuthenticatedRouteData();
+
   group(LoginRedirectModel, () {
     late AuthenticationRepository repository;
     late AuthenticationState authenticationState;
@@ -78,7 +58,6 @@ void main() {
       const loginRoute = LoginRoute(from: from);
 
       test('returns null when route is not $AuthenticatedRoute', () {
-        final route = _TestAppRoute();
         final model = createSubject();
         final redirect = model.redirect(
           route: route,
@@ -88,7 +67,6 @@ void main() {
       });
 
       test('returns null when isAuthenticated', () {
-        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -96,14 +74,13 @@ void main() {
         );
         final model = createSubject();
         final redirect = model.redirect(
-          route: route,
+          route: authenticatedRoute,
           goRouter: goRouter,
         );
         expect(redirect, null);
       });
 
       test('returns null when currentLocation is $LoginRoute path', () {
-        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -114,7 +91,7 @@ void main() {
         ).thenReturn(LoginRoute.config.path);
         final model = createSubject();
         final redirect = model.redirect(
-          route: route,
+          route: authenticatedRoute,
           goRouter: goRouter,
         );
         expect(redirect, null);
@@ -123,7 +100,6 @@ void main() {
       test('returns loginRoute.location when route '
           'is $AuthenticatedRoute and !isAuthenticated '
           'and currentLocation is not $LoginRoute path', () {
-        final route = _TestAppAuthenticatedRoute();
         when(
           () => authenticationState.status,
         ).thenReturn(
@@ -133,13 +109,13 @@ void main() {
           () => goRouterState.matchedLocation,
         ).thenReturn('matchedLocation');
         final fromMethod = () => fromModel.from(
-          route: route,
+          route: authenticatedRoute,
           goRouter: goRouter,
         );
         when(fromMethod).thenReturn(from);
         final model = createSubject();
         final redirect = model.redirect(
-          route: route,
+          route: authenticatedRoute,
           goRouter: goRouter,
         );
         expect(redirect, loginRoute.location);

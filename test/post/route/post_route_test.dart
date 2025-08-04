@@ -3,7 +3,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:mocktail/mocktail.dart';
@@ -26,14 +25,9 @@ void main() {
       return PostRoute(postId: postId);
     }
 
-    test('is a $GoRouteData', () {
+    test('is a $RelativeGoRouteData', () {
       final route = createSubject();
-      expect(route, isA<GoRouteData>());
-    });
-
-    test('is an $AppRelativeRoute', () {
-      final route = createSubject();
-      expect(route, isA<AppRelativeRoute>());
+      expect(route, isA<RelativeGoRouteData>());
     });
 
     group('config', () {
