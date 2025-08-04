@@ -7,6 +7,10 @@ class OtherUserReplyParentModel extends ReplyParentModel {
     super.formatter,
   }) : _parent = parent;
 
+  static final empty = OtherUserReplyParentModel(
+    parent: OtherUserReplyParent.empty,
+  );
+
   @override
   final OtherUserReplyParent _parent;
 

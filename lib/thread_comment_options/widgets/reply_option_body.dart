@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/thread_comment_options/thread_comment_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ReplyOptionBody extends StatelessWidget {
@@ -22,14 +20,9 @@ class ReplyOptionBody extends StatelessWidget {
       leading: const Icon(Symbols.reply),
       title: Text(l10n.threadCommentOptions_reply),
       onTap: () {
-        final state = context.read<ThreadCommentOptionsBloc>().state;
-        final comment = state.comment.toRepository();
         Navigator.of(context).pop();
         AppRouter.of(context).goRelative(
-          ReplyRoute(
-            url: url,
-            $extra: comment.toReplyParent(),
-          ),
+          ReplyRoute(url: url),
         );
       },
     );

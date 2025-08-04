@@ -22,16 +22,30 @@ class ReplyFormModel extends Equatable {
   const ReplyFormModel({
     required ReplyForm? form,
     required String? text,
+    required this.isDraft,
     this.submissionStatus = SubmissionStatus.initial,
   }) : _form = form,
        text = text ?? '';
 
+  factory ReplyFormModel.from({
+    required ReplyForm? form,
+    required String? text,
+  }) {
+    return ReplyFormModel(
+      form: form,
+      isDraft: text != null && text.isNotEmpty,
+      text: text,
+    );
+  }
+
   static const empty = ReplyFormModel(
     form: null,
+    isDraft: false,
     text: '',
   );
 
   final ReplyForm? _form;
+  final bool isDraft;
   final String text;
   final SubmissionStatus submissionStatus;
 
@@ -56,11 +70,13 @@ class ReplyFormModel extends Equatable {
 
   ReplyFormModel copyWith({
     ReplyForm? form,
+    bool? isDraft,
     String? text,
     SubmissionStatus? submissionStatus,
   }) {
     return ReplyFormModel(
       form: form ?? _form,
+      isDraft: isDraft ?? this.isDraft,
       text: text ?? this.text,
       submissionStatus: submissionStatus ?? this.submissionStatus,
     );

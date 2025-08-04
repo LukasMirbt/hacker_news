@@ -60,6 +60,19 @@ class ReplyRepository {
     );
   }
 
+  Future<void> deleteReply({
+    required String parentId,
+  }) async {
+    final user = _authenticationApi.state.user;
+
+    final storageKey = ReplyStorageKey(
+      parentId: parentId,
+      userId: user.id,
+    );
+
+    await _replyStorage.clear(storageKey);
+  }
+
   Future<void> reply(ReplyForm form) async {
     await _replyApi.reply(form.toApi());
 

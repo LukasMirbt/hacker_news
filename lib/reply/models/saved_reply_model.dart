@@ -7,17 +7,21 @@ class SavedReplyModel {
 
   final ReplyRepository _repository;
 
-  String? load(String parentId) {
-    final savedReply = _repository.readReply(
-      parentId: parentId,
-    );
+  Future<String?> load(String parentId) async {
+    final savedReply = _repository.readReply(parentId: parentId);
     return savedReply;
   }
 
-  void save(ReplyForm form) {
-    _repository.saveReply(
+  Future<void> save(ReplyForm form) async {
+    await _repository.saveReply(
       parentId: form.parentId,
       text: form.text,
+    );
+  }
+
+  Future<void> clear(ReplyForm form) async {
+    await _repository.deleteReply(
+      parentId: form.parentId,
     );
   }
 }

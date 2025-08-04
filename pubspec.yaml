@@ -55,6 +55,7 @@ dependencies:
     path: packages/authentication_api
   authentication_repository:
     path: packages/authentication_repository
+  bloc_concurrency: ^0.3.0
   clock: ^1.1.2
   collapse_handler:
     path: packages/collapse_handler
@@ -123,6 +124,7 @@ dependencies:
     path: packages/share_launcher
   shared_preferences: ^2.5.3
   skeletonizer: ^2.0.1
+  stream_transform: ^2.1.1
   super_sliver_list: ^0.4.1
   thread_api:
     path: packages/thread_api

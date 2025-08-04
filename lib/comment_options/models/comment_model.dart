@@ -25,8 +25,6 @@ class CommentModel extends Equatable {
     return url.toString();
   }
 
-  Comment toRepository() => _comment;
-
   @override
   List<Object?> get props => [
     _comment,

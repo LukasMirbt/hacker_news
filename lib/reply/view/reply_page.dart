@@ -7,12 +7,10 @@ import 'package:vote_repository/vote_repository.dart';
 class ReplyPage extends StatelessWidget {
   const ReplyPage({
     required this.url,
-    required this.parent,
     super.key,
   });
 
   final String url;
-  final ReplyParent? parent;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,6 @@ class ReplyPage extends StatelessWidget {
         final replyRepository = context.read<ReplyRepository>();
         return ReplyBloc(
             url: url,
-            parent: parent,
             replyRepository: replyRepository,
             voteRepository: context.read<VoteRepository>(),
             savedReplyModel: SavedReplyModel(

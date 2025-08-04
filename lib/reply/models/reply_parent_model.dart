@@ -1,8 +1,6 @@
 import 'package:date_formatter/date_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/reply/reply.dart'
-    hide CurrentUserReplyParent, OtherUserReplyParent, ReplyParent;
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -15,8 +13,7 @@ sealed class ReplyParentModel extends Equatable {
     DateFormatter formatter = const DateFormatter(),
   }) : _formatter = formatter;
 
-  factory ReplyParentModel.initial(ReplyParent? parent) {
-    if (parent == null) return OtherUserReplyParentModelPlaceholder();
+  factory ReplyParentModel.from(ReplyParent parent) {
     return switch (parent) {
       OtherUserReplyParent() => OtherUserReplyParentModel(parent: parent),
       CurrentUserReplyParent() => CurrentUserReplyParentModel(parent: parent),
