@@ -25,14 +25,6 @@ final class ReplyTextChanged extends ReplyEvent {
   List<Object> get props => [text];
 }
 
-final class ReplyTextSaved extends ReplyEvent {
-  const ReplyTextSaved();
-}
-
-final class ReplyCleared extends ReplyEvent {
-  const ReplyCleared();
-}
-
 final class ReplyParentExpansionToggled extends ReplyEvent {
   const ReplyParentExpansionToggled();
 }

@@ -1,16 +1,8 @@
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacker_client/reply/reply.dart' hide ReplyPage, ReplyParent;
+import 'package:hacker_client/reply/reply.dart' hide ReplyPage;
 import 'package:link_launcher/link_launcher.dart';
 import 'package:reply_repository/reply_repository.dart';
-import 'package:stream_transform/stream_transform.dart';
 import 'package:vote_repository/vote_repository.dart';
-
-EventTransformer<E> _debounceRestartable<E>(Duration duration) {
-  return (events, mapper) {
-    return restartable<E>().call(events.debounce(duration), mapper);
-  };
-}
 
 class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   ReplyBloc({
@@ -33,18 +25,11 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
     on<ReplyStarted>(_onStarted);
     on<ReplyTextChanged>(_onTextChanged);
-    on<ReplyTextSaved>(
-      _onTextSaved,
-      transformer: _debounceRestartable(_debounceDuration),
-    );
-    on<ReplyCleared>(_onCleared);
     on<ReplyParentExpansionToggled>(_onParentExpansionToggled);
     on<ReplyParentVotePressed>(_onParentVotePressed);
     on<ReplyLinkPressed>(_onLinkPressed);
     on<ReplySubmitted>(_onSubmitted);
   }
-
-  static const _debounceDuration = Duration(milliseconds: 300);
 
   final ReplyRepository _replyRepository;
   final VoteRepository _voteRepository;
@@ -84,8 +69,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
 
       final parent = page.parent;
       final form = page.form;
-
-      final savedReply = await _savedReplyModel.load(parent.id);
+      final savedReply = _savedReplyModel.load(form);
 
       emit(
         state.copyWith(
@@ -111,37 +95,20 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     ReplyTextChanged event,
     Emitter<ReplyState> emit,
   ) {
+    final text = event.text;
+
+    final updatedForm = state.form.copyWith(
+      text: text,
+    );
+
     emit(
       state.copyWith(
-        form: state.form.copyWith(
-          text: event.text,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _onTextSaved(
-    ReplyTextSaved event,
-    Emitter<ReplyState> emit,
-  ) async {
-    print('save');
-    await _savedReplyModel.save(
-      state.form.toRepository(),
-    );
-  }
-
-  Future<void> _onCleared(
-    ReplyCleared event,
-    Emitter<ReplyState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        form: state.form.copyWith(text: ''),
+        form: updatedForm,
       ),
     );
 
-    await _savedReplyModel.clear(
-      state.form.toRepository(),
+    _savedReplyModel.save(
+      updatedForm.toRepository(),
     );
   }
 
@@ -151,7 +118,9 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   ) {
     emit(
       state.copyWith(
-        parent: state.parent.toggleExpansion(),
+        parent: state.parent.copyWith(
+          isExpanded: !state.parent.isExpanded,
+        ),
       ),
     );
   }
@@ -189,8 +158,12 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
 
     try {
       final form = state.form.toRepository();
+
       await _replyRepository.reply(form);
-      await _savedReplyModel.clear(form);
+
+      await _replyRepository.deleteReply(
+        parentId: form.parentId,
+      );
 
       emit(
         state.copyWith(
