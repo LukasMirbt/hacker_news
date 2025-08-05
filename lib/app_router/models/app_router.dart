@@ -8,9 +8,9 @@ class AppRouter {
   AppRouter({
     required AppRouteList appRouteList,
     required AppRedirect appRedirect,
-    required AppNavigationModel appNavigationModel,
+    required LoginRedirectModel loginRedirectModel,
     GoRouter? goRouter,
-  }) : _navigationModel = appNavigationModel,
+  }) : _redirectModel = loginRedirectModel,
        goRouter =
            goRouter ??
            GoRouter(
@@ -28,41 +28,65 @@ class AppRouter {
     return context.read<AppRouter>();
   }
 
-  final AppNavigationModel _navigationModel;
   final GoRouter goRouter;
+  final LoginRedirectModel _redirectModel;
 
   String get matchedLocation => goRouter.state.matchedLocation;
   String get from => goRouter.state.uri.toString();
 
-  void go(AppAbsoluteRoute route) {
-    return _navigationModel.go(
+  void go(GoRouteData route) {
+    final redirect = _redirectModel.redirect(
       goRouter: goRouter,
       route: route,
     );
+
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return;
+    }
+
+    goRouter.go(route.location);
   }
 
-  Future<T?> push<T extends Object?>(
-    AppAbsoluteRoute route,
-  ) {
-    return _navigationModel.push(
+  Future<T?> push<T extends Object?>(GoRouteData route) {
+    final redirect = _redirectModel.redirect(
       goRouter: goRouter,
       route: route,
     );
+
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return Future.value();
+    }
+
+    return goRouter.push(route.location);
   }
 
-  void goRelative(AppRelativeRoute route) {
-    return _navigationModel.go(
+  void goRelative(RelativeGoRouteData route) {
+    final redirect = _redirectModel.redirect(
       goRouter: goRouter,
       route: route,
     );
+
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return;
+    }
+
+    goRouter.go(route.relativeLocation);
   }
 
-  Future<T?> pushRelative<T extends Object?>(
-    AppRelativeRoute route,
-  ) {
-    return _navigationModel.push(
+  Future<T?> pushRelative<T extends Object?>(RelativeGoRouteData route) {
+    final redirect = _redirectModel.redirect(
       goRouter: goRouter,
       route: route,
     );
+
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return Future.value();
+    }
+
+    return goRouter.push(route.relativeLocation);
   }
 }

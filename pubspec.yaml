@@ -86,7 +86,8 @@ dependencies:
   freezed_annotation: ^3.0.0
   go_router:
     git:
-      url: https://github.com/ThangVuNguyenViet/packages.git
+      url: https://github.com/LukasMirbt/packages.git
+      ref: relative-routes
       path: packages/go_router
   hive_ce: ^2.11.3
   hive_ce_flutter: ^2.3.1
@@ -152,7 +153,8 @@ dev_dependencies:
   freezed: ^3.0.3
   go_router_builder:
     git:
-      url: https://github.com/ThangVuNguyenViet/packages.git
+      url: https://github.com/LukasMirbt/packages.git
+      ref: relative-routes
       path: packages/go_router_builder
   json_serializable: ^6.9.5
   mockingjay: ^2.0.0

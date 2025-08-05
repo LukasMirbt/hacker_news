@@ -1,7 +1,6 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class PostRoute extends GoRouteData
-    with _$PostRoute, AppRelativeRoute, EquatableMixin {
+class PostRoute extends RelativeGoRouteData with _$PostRoute, EquatableMixin {
   const PostRoute({
     required this.postId,
   });

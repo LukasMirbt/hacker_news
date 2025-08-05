@@ -20,17 +20,22 @@ mixin _$LoginLoadingRoute on GoRouteData {
 
   LoginLoadingRoute get _self => this as LoginLoadingRoute;
 
+  @override
   String get location => GoRouteData.$location(
     '/login-loading',
     queryParams: {'from': _self.from},
   );
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }

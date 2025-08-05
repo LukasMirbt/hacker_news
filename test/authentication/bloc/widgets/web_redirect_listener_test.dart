@@ -6,6 +6,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
@@ -21,7 +22,7 @@ class _MockAuthenticationBloc
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockAppAbsoluteRoute extends Mock implements AppAbsoluteRoute {}
+class _MockGoRouteData extends Mock implements GoRouteData {}
 
 void main() {
   const initialState = AuthenticationState(
@@ -39,7 +40,7 @@ void main() {
     setUp(() {
       authenticationBloc = _MockAuthenticationBloc();
       router = _MockAppRouter();
-      registerFallbackValue(_MockAppAbsoluteRoute());
+      registerFallbackValue(_MockGoRouteData());
       when(() => authenticationBloc.state).thenReturn(initialState);
     });
 

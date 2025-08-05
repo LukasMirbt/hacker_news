@@ -1,7 +1,7 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class ReplyRoute extends GoRouteData
-    with _$ReplyRoute, AppRelativeRoute, AuthenticatedRoute, EquatableMixin {
+class ReplyRoute extends RelativeGoRouteData
+    with _$ReplyRoute, AuthenticatedRoute, EquatableMixin {
   const ReplyRoute({required this.url});
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;

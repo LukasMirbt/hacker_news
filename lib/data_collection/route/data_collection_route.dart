@@ -1,7 +1,7 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
 class DataCollectionRoute extends GoRouteData
-    with _$DataCollectionRoute, AppAbsoluteRoute, EquatableMixin {
+    with _$DataCollectionRoute, EquatableMixin {
   const DataCollectionRoute();
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;

@@ -112,11 +112,9 @@ class App extends StatelessWidget {
             create: (context) => AppRouter(
               appRedirect: const AppRedirect(),
               appRouteList: AppRouteList(),
-              appNavigationModel: AppNavigationModel(
-                loginRedirectModel: LoginRedirectModel(
-                  authenticationRepository: context
-                      .read<AuthenticationRepository>(),
-                ),
+              loginRedirectModel: LoginRedirectModel(
+                authenticationRepository: context
+                    .read<AuthenticationRepository>(),
               ),
             ),
             child: const AppView(),

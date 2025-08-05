@@ -22,18 +22,19 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
               parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
               factory: $PostShellRouteExtension._fromState,
               routes: [
-                GoRouteData.$route(
+                RelativeGoRouteData.$route(
                   path: 'post/:postId',
 
                   factory: _$PostRoute._fromState,
                   routes: [
-                    GoRouteData.$route(
+                    RelativeGoRouteData.$route(
                       path: 'comment',
 
                       factory: _$CommentRoute._fromState,
                     ),
-                    GoRouteData.$route(
+                    RelativeGoRouteData.$route(
                       path: 'reply',
+
                       parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
 
                       factory: _$ReplyRoute._fromState,
@@ -56,8 +57,9 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
 
               factory: _$ThreadFeedRoute._fromState,
               routes: [
-                GoRouteData.$route(
+                RelativeGoRouteData.$route(
                   path: 'reply',
+
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
 
                   factory: _$ReplyRoute._fromState,
@@ -66,18 +68,19 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                   parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
                   factory: $PostShellRouteExtension._fromState,
                   routes: [
-                    GoRouteData.$route(
+                    RelativeGoRouteData.$route(
                       path: 'post/:postId',
 
                       factory: _$PostRoute._fromState,
                       routes: [
-                        GoRouteData.$route(
+                        RelativeGoRouteData.$route(
                           path: 'comment',
 
                           factory: _$CommentRoute._fromState,
                         ),
-                        GoRouteData.$route(
+                        RelativeGoRouteData.$route(
                           path: 'reply',
+
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
 
                           factory: _$ReplyRoute._fromState,
@@ -121,15 +124,20 @@ extension $AppStatefulShellRouteExtension on AppStatefulShellRoute {
 mixin _$HomeRoute on GoRouteData {
   static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
 
+  @override
   String get location => GoRouteData.$location('/home');
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
@@ -138,67 +146,86 @@ extension $PostShellRouteExtension on PostShellRoute {
       const PostShellRoute();
 }
 
-mixin _$PostRoute on GoRouteData {
+mixin _$PostRoute on RelativeGoRouteData {
   static PostRoute _fromState(GoRouterState state) =>
       PostRoute(postId: state.pathParameters['postId']!);
 
   PostRoute get _self => this as PostRoute;
 
-  String get location =>
-      GoRouteData.$location('post/${Uri.encodeComponent(_self.postId)}');
+  @override
+  String get location => RelativeGoRouteData.$location(
+    'post/${Uri.encodeComponent(_self.postId)}',
+  );
 
+  @override
   String get relativeLocation => './$location';
 
+  @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
 
+  @override
   Future<T?> pushRelative<T>(BuildContext context) =>
       context.push<T>(relativeLocation);
 
+  @override
   void pushReplacementRelative(BuildContext context) =>
       context.pushReplacement(relativeLocation);
 
+  @override
   void replaceRelative(BuildContext context) =>
       context.replace(relativeLocation);
 }
 
-mixin _$CommentRoute on GoRouteData {
+mixin _$CommentRoute on RelativeGoRouteData {
   static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
 
-  String get location => GoRouteData.$location('comment');
+  @override
+  String get location => RelativeGoRouteData.$location('comment');
 
+  @override
   String get relativeLocation => './$location';
 
+  @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
 
+  @override
   Future<T?> pushRelative<T>(BuildContext context) =>
       context.push<T>(relativeLocation);
 
+  @override
   void pushReplacementRelative(BuildContext context) =>
       context.pushReplacement(relativeLocation);
 
+  @override
   void replaceRelative(BuildContext context) =>
       context.replace(relativeLocation);
 }
 
-mixin _$ReplyRoute on GoRouteData {
+mixin _$ReplyRoute on RelativeGoRouteData {
   static ReplyRoute _fromState(GoRouterState state) =>
       ReplyRoute(url: state.uri.queryParameters['url']!);
 
   ReplyRoute get _self => this as ReplyRoute;
 
+  @override
   String get location =>
-      GoRouteData.$location('reply', queryParams: {'url': _self.url});
+      RelativeGoRouteData.$location('reply', queryParams: {'url': _self.url});
 
+  @override
   String get relativeLocation => './$location';
 
+  @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
 
+  @override
   Future<T?> pushRelative<T>(BuildContext context) =>
       context.push<T>(relativeLocation);
 
+  @override
   void pushReplacementRelative(BuildContext context) =>
       context.pushReplacement(relativeLocation);
 
+  @override
   void replaceRelative(BuildContext context) =>
       context.replace(relativeLocation);
 }
@@ -212,30 +239,40 @@ mixin _$ThreadFeedRoute on GoRouteData {
   static ThreadFeedRoute _fromState(GoRouterState state) =>
       const ThreadFeedRoute();
 
+  @override
   String get location => GoRouteData.$location('/threads');
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
 mixin _$SettingsRoute on GoRouteData {
   static SettingsRoute _fromState(GoRouterState state) => const SettingsRoute();
 
+  @override
   String get location => GoRouteData.$location('/settings');
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
 
@@ -243,14 +280,19 @@ mixin _$DataCollectionRoute on GoRouteData {
   static DataCollectionRoute _fromState(GoRouterState state) =>
       const DataCollectionRoute();
 
+  @override
   String get location => GoRouteData.$location('/settings/data-collection');
 
+  @override
   void go(BuildContext context) => context.go(location);
 
+  @override
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
+  @override
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
 
+  @override
   void replace(BuildContext context) => context.replace(location);
 }
