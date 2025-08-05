@@ -182,13 +182,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{age} ago'**
-  String commentList_age({required Object age});
+  String commentList_age({required String age});
 
   /// No description provided for @commentList_score.
   ///
   /// In en, this message translates to:
   /// **'{score}p'**
-  String commentList_score({required Object score});
+  String commentList_score({required int score});
 
   /// No description provided for @commentOptions_reply.
   ///
@@ -290,13 +290,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{title} {url}'**
-  String feed_shareText({required Object title, required Object url});
+  String feed_shareText({required String title, required String url});
 
   /// No description provided for @feed_rank.
   ///
   /// In en, this message translates to:
   /// **'{rank}.'**
-  String feed_rank({required Object rank});
+  String feed_rank({required int rank});
 
   /// No description provided for @feedItemOptions_openOnWeb.
   ///
@@ -446,7 +446,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{title} {url}'**
-  String postHeader_shareText({required Object title, required Object url});
+  String postHeader_shareText({required String title, required String url});
 
   /// No description provided for @reply_title.
   ///
@@ -470,13 +470,13 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{age} ago'**
-  String reply_age({required Object age});
+  String reply_age({required String age});
 
   /// No description provided for @reply_score.
   ///
   /// In en, this message translates to:
   /// **'{score}p'**
-  String reply_score({required Object score});
+  String reply_score({required int score});
 
   /// No description provided for @reply_textFieldHintText.
   ///
@@ -566,7 +566,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{age} ago'**
-  String threadFeed_age({required Object age});
+  String threadFeed_age({required String age});
 
   /// No description provided for @threadCommentOptions_reply.
   ///

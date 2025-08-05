@@ -112,12 +112,5 @@ void main() {
         verify(getCommentUrl).called(1);
       });
     });
-
-    group('toRepository', () {
-      test('returns comment', () {
-        final model = createSubject();
-        expect(model.toRepository(), comment);
-      });
-    });
   });
 }

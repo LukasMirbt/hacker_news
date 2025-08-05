@@ -13,7 +13,6 @@ class AppEventFilter {
   static final excludedSuffixes = [
     'SubscriptionRequested',
     'Started',
-    'Loaded',
   ];
 
   bool isAnalytic(String eventName) {

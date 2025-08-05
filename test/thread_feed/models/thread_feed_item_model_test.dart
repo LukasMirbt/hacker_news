@@ -52,7 +52,7 @@ void main() async {
         final comment = _MockOtherUserThreadComment();
         expect(
           ThreadCommentModel.from(comment),
-          isA<OtherUserThreadCommentModel>(),
+          OtherUserThreadCommentModel(comment: comment),
         );
       });
 
@@ -61,7 +61,7 @@ void main() async {
         final comment = _MockCurrentUserThreadComment();
         expect(
           ThreadCommentModel.from(comment),
-          isA<CurrentUserThreadCommentModel>(),
+          CurrentUserThreadCommentModel(comment: comment),
         );
       });
     });

@@ -196,7 +196,7 @@ void main() async {
           model.shareText(appL10n),
           appL10n.postHeader_shareText(
             title: title,
-            url: resolvedUrl,
+            url: resolvedUrl.toString(),
           ),
         );
         verify(resolve).called(1);

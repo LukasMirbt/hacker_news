@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
@@ -11,18 +9,8 @@ import 'package:hacker_client/thread_comment_options/thread_comment_options.dart
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:provider/provider.dart';
-import 'package:thread_repository/thread_repository.dart';
 
 import '../../app/pump_app.dart';
-
-class _MockThreadCommentOptionsBloc
-    extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
-    implements ThreadCommentOptionsBloc {}
-
-class _MockThreadCommentOptionsState extends Mock
-    implements ThreadCommentOptionsState {}
-
-class _MockThreadCommentModel extends Mock implements ThreadCommentModel {}
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
@@ -30,25 +18,14 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
   const url = 'url';
 
-  final repositoryComment = OtherUserThreadCommentPlaceholder();
-
   group(ReplyOptionBody, () {
-    late ThreadCommentOptionsBloc bloc;
-    late ThreadCommentOptionsState state;
-    late ThreadCommentModel comment;
     late AppRouter router;
     late MockNavigator navigator;
 
     setUp(() {
-      bloc = _MockThreadCommentOptionsBloc();
-      state = _MockThreadCommentOptionsState();
-      comment = _MockThreadCommentModel();
       router = _MockAppRouter();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
-      when(() => bloc.state).thenReturn(state);
-      when(() => state.comment).thenReturn(comment);
-      when(comment.toRepository).thenReturn(repositoryComment);
     });
 
     Widget buildSubject() {
@@ -56,10 +33,7 @@ void main() async {
         value: router,
         child: MockNavigatorProvider(
           navigator: navigator,
-          child: BlocProvider.value(
-            value: bloc,
-            child: ReplyOptionBody(url: url),
-          ),
+          child: ReplyOptionBody(url: url),
         ),
       );
     }
@@ -89,10 +63,7 @@ void main() async {
       verify(navigator.pop).called(1);
       verify(
         () => router.goRelative(
-          ReplyRoute(
-            url: url,
-            $extra: repositoryComment.toReplyParent(),
-          ),
+          ReplyRoute(url: url),
         ),
       ).called(1);
     });

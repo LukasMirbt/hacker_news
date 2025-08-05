@@ -11,7 +11,7 @@ import 'package:share_launcher/share_launcher.dart';
 class _MockShareLauncher extends Mock implements ShareLauncher {}
 
 void main() {
-  final parent = ReplyParentPlaceholder();
+  final parent = OtherUserReplyParentPlaceholder();
   final initialState = ReplyOptionsState.from(parent: parent);
 
   group(ReplyOptionsBloc, () {

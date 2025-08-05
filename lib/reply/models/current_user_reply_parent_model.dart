@@ -14,7 +14,7 @@ class CurrentUserReplyParentModel extends ReplyParentModel {
 
   String score(AppLocalizations l10n) {
     return l10n.reply_score(
-      score: _parent.score.toString(),
+      score: _parent.score,
     );
   }
 

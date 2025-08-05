@@ -63,6 +63,25 @@ class ReplyRepository {
   Future<void> reply(ReplyForm form) async {
     await _replyApi.reply(form.toApi());
 
+    // TODO: Investigate issue with replies
+
+    /*     flutter:
+flutter: ╔╣ Request ║ POST
+flutter: ║  https://news.ycombinator.com/comment
+flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
+flutter:
+flutter: ╔╣ Response ║ POST ║ Status: 302 Found  ║ Time: 199 ms
+flutter: ║  https://news.ycombinator.com/comment
+flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
+flutter:
+flutter: ╔╣ Request ║ GET
+flutter: ║  https://news.ycombinator.com/item
+flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
+flutter:
+flutter: ╔╣ DioError ║ DioExceptionType.unknown
+flutter: ║  null
+flutter: ╚═════ */
+
     try {
       final storageKey = ReplyStorageKey(
         parentId: form.parentId,

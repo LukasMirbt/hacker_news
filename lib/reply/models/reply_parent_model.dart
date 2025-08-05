@@ -29,12 +29,6 @@ sealed class ReplyParentModel extends Equatable {
   String get user => _parent.hnuser.id;
   String get htmlText => _parent.htmlText;
 
-  ReplyParentModel toggleExpansion() {
-    return copyWith(
-      isExpanded: !isExpanded,
-    );
-  }
-
   String age(
     AppLocalizations appL10n,
     DateFormatterLocalizations formatterL10n,
@@ -42,6 +36,12 @@ sealed class ReplyParentModel extends Equatable {
     final formattedAge = _formatter.format(formatterL10n, _parent.age);
     final ageString = appL10n.reply_age(age: formattedAge);
     return ageString;
+  }
+
+  ReplyParentModel toggleExpansion() {
+    return copyWith(
+      isExpanded: !isExpanded,
+    );
   }
 
   ReplyParentModel copyWith({

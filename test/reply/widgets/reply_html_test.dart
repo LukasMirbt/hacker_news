@@ -15,7 +15,8 @@ class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
 
 class _MockReplyState extends Mock implements ReplyState {}
 
-class _MockReplyParentModel extends Mock implements ReplyParentModel {}
+class _MockOtherUserReplyParentModel extends Mock
+    implements OtherUserReplyParentModel {}
 
 void main() {
   const htmlText = 'htmlText';
@@ -23,12 +24,12 @@ void main() {
   group(ReplyHtml, () {
     late ReplyBloc bloc;
     late ReplyState state;
-    late ReplyParentModel parent;
+    late OtherUserReplyParentModel parent;
 
     setUp(() {
       bloc = _MockReplyBloc();
       state = _MockReplyState();
-      parent = _MockReplyParentModel();
+      parent = _MockOtherUserReplyParentModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.parent).thenReturn(parent);
       when(() => parent.htmlText).thenReturn(htmlText);

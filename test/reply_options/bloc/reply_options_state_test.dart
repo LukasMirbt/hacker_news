@@ -6,7 +6,7 @@ void main() {
   group(ReplyOptionsState, () {
     group('from', () {
       test('returns $ReplyOptionsState', () {
-        final parent = ReplyParentPlaceholder();
+        final parent = OtherUserReplyParentPlaceholder();
         expect(
           ReplyOptionsState.from(parent: parent),
           ReplyOptionsState(

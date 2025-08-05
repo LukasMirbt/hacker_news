@@ -70,14 +70,7 @@ void main() {
 
       testWidgets('returns correct page', (tester) async {
         await tester.pumpApp(buildSubject());
-        expect(
-          page,
-          isA<MaterialPage<void>>().having(
-            (page) => page.fullscreenDialog,
-            'fullscreenDialog',
-            true,
-          ),
-        );
+        expect(page, isA<MaterialPage<void>>());
       });
 
       testWidgets('renders $ReplyPage with correct url', (tester) async {

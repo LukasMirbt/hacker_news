@@ -16,7 +16,7 @@ class _MockReplyOptionsBloc
     implements ReplyOptionsBloc {}
 
 void main() {
-  final parent = ReplyParentPlaceholder();
+  final parent = OtherUserReplyParentPlaceholder();
 
   group(ReplyOptionsSheet, () {
     late ReplyOptionsBloc bloc;
