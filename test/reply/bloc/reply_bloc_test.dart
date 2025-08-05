@@ -19,7 +19,8 @@ class _MockReplyParentVoteModel extends Mock implements ReplyParentVoteModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
-class _MockReplyParentModel extends Mock implements ReplyParentModel {}
+class _MockOtherUserReplyParentModel extends Mock
+    implements OtherUserReplyParentModel {}
 
 void main() {
   const url = 'url';
@@ -61,10 +62,10 @@ void main() {
       );
 
       final state = initialState.copyWith(
-        parent: _MockReplyParentModel(),
+        parent: _MockOtherUserReplyParentModel(),
       );
 
-      final updatedParent = _MockReplyParentModel();
+      final updatedParent = _MockOtherUserReplyParentModel();
 
       final updateParent = () => voteModel.updateParent(
         vote: repositoryState.vote,
@@ -107,7 +108,7 @@ void main() {
       final load = () => savedReplyModel.load(form);
 
       blocTest<ReplyBloc, ReplyState>(
-        'loads saved reply and emits [success], $ReplyParentModel '
+        'loads saved reply and emits [success], $OtherUserReplyParentModel '
         'and $ReplyFormModel when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async => page);
@@ -121,9 +122,7 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            parent: ReplyParentModel(
-              parent: parent,
-            ),
+            parent: ReplyParentModel.from(parent),
             form: ReplyFormModel(
               form: form,
               text: savedReply,
@@ -223,7 +222,9 @@ void main() {
     });
 
     group(ReplyParentVotePressed, () {
-      final parent = initialState.parent;
+      final parent = OtherUserReplyParentModel(
+        parent: OtherUserReplyParentPlaceholder(),
+      );
 
       final vote = () => voteRepository.vote(
         upvoteUrl: parent.upvoteUrl,
@@ -238,7 +239,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyParentVotePressed(),
+            ReplyParentVotePressed(parent),
           );
         },
         verify: (_) {
@@ -276,14 +277,21 @@ void main() {
 
       final state = initialState.copyWith(form: form);
 
-      final request = () => replyRepository.reply(
-        form.toRepository(),
+      final repositoryForm = form.toRepository();
+
+      final reply = () => replyRepository.reply(repositoryForm);
+
+      final deleteReply = () => replyRepository.deleteReply(
+        parentId: repositoryForm.parentId,
       );
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits [loading, success] when request succeds',
+        'emits [loading, success] when reply and deleteReply succeed',
         setUp: () {
-          when(request).thenAnswer((_) async {});
+          when(reply).thenAnswer((_) async {});
+          when(deleteReply).thenAnswer((_) async {
+            return null;
+          });
         },
         seed: () => state,
         build: buildBloc,
@@ -305,14 +313,15 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(request).called(1);
+          verify(reply).called(1);
+          verify(deleteReply).called(1);
         },
       );
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits [loading, failure] when request throws',
+        'emits [loading, failure] when reply throws',
         setUp: () {
-          when(request).thenThrow(Exception('oops'));
+          when(reply).thenThrow(Exception('oops'));
         },
         seed: () => state,
         build: buildBloc,
@@ -334,7 +343,37 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(request).called(1);
+          verify(reply).called(1);
+        },
+      );
+
+      blocTest<ReplyBloc, ReplyState>(
+        'emits [loading, failure] when deleteReply throws',
+        setUp: () {
+          when(deleteReply).thenThrow(Exception('oops'));
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            ReplySubmitted(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.loading,
+            ),
+          ),
+          state.copyWith(
+            form: state.form.copyWith(
+              submissionStatus: SubmissionStatus.failure,
+            ),
+          ),
+        ],
+        verify: (_) {
+          verify(reply).called(1);
+          verify(deleteReply).called(1);
         },
       );
     });

@@ -27,56 +27,50 @@ class ReplyRepository {
   }) async {
     final data = await _replyApi.fetchReplyPage(url: url);
     final page = ReplyPage.from(data);
-    return page;
+
+    final storageKey = ReplyStorageKey(
+      parentId: page.parent.id,
+      userId: _authenticationApi.state.user.id,
+    );
+
+    final form = page.form;
+    if (form == null) return page;
+
+    final savedReply = _replyStorage.read(storageKey);
+    if (savedReply == null) return page;
+
+    final pageWithDraft = page.copyWith(
+      form: form.copyWith(text: savedReply),
+    );
+
+    return pageWithDraft;
   }
 
-  String? readReply({
-    required String parentId,
-  }) {
+  Future<void> updateReply(ReplyForm form) async {
     final user = _authenticationApi.state.user;
 
     final key = ReplyStorageKey(
-      parentId: parentId,
-      userId: user.id,
-    );
-
-    return _replyStorage.read(key);
-  }
-
-  Future<void> saveReply({
-    required String parentId,
-    required String text,
-  }) async {
-    final user = _authenticationApi.state.user;
-
-    final storageKey = ReplyStorageKey(
-      parentId: parentId,
+      parentId: form.parentId,
       userId: user.id,
     );
 
     await _replyStorage.save(
-      storageKey: storageKey,
-      text: text,
+      storageKey: key,
+      text: form.text,
     );
-  }
-
-  Future<void> deleteReply({
-    required String parentId,
-  }) async {
-    final user = _authenticationApi.state.user;
-
-    final storageKey = ReplyStorageKey(
-      parentId: parentId,
-      userId: user.id,
-    );
-
-    await _replyStorage.clear(storageKey);
   }
 
   Future<void> reply(ReplyForm form) async {
     await _replyApi.reply(form.toApi());
 
     try {
+      final storageKey = ReplyStorageKey(
+        parentId: form.parentId,
+        userId: _authenticationApi.state.user.id,
+      );
+
+      await _replyStorage.clear(storageKey);
+
       final commentThread = await _replyApi.fetchCommentThread(
         id: form.parentId,
       );
@@ -90,8 +84,8 @@ class ReplyRepository {
         ),
       );
     } catch (_) {
-      // Don't throw when reply succeeds but fetchCommentThread fails
-      // so the user doesn't submit a reply twice.
+      // Don't throw when reply succeeds but fetchCommentThread
+      // or replyStorage.clear fails so the user doesn't submit a reply twice.
     }
   }
 }

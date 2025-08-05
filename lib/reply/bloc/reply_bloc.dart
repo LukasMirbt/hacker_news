@@ -9,12 +9,10 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     required String url,
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
-    required SavedReplyModel savedReplyModel,
     ReplyParentVoteModel? voteModel,
     LinkLauncher? linkLauncher,
   }) : _replyRepository = replyRepository,
        _voteRepository = voteRepository,
-       _savedReplyModel = savedReplyModel,
        _voteModel = voteModel ?? const ReplyParentVoteModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
@@ -33,7 +31,6 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
 
   final ReplyRepository _replyRepository;
   final VoteRepository _voteRepository;
-  final SavedReplyModel _savedReplyModel;
   final ReplyParentVoteModel _voteModel;
   final LinkLauncher _linkLauncher;
 
@@ -67,17 +64,10 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
         url: state.url,
       );
 
-      final parent = page.parent;
-      final form = page.form;
-      final savedReply = _savedReplyModel.load(form);
-
       emit(
         state.copyWith(
-          parent: ReplyParentModel.from(parent),
-          form: ReplyFormModel.from(
-            form: form,
-            text: savedReply,
-          ),
+          parent: ReplyParentModel.from(page.parent),
+          form: ReplyFormModel.from(page.form),
           fetchStatus: FetchStatus.success,
         ),
       );
@@ -107,7 +97,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
       ),
     );
 
-    _savedReplyModel.save(
+    _replyRepository.updateReply(
       updatedForm.toRepository(),
     );
   }
@@ -157,12 +147,8 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     try {
-      final form = state.form.toRepository();
-
-      await _replyRepository.reply(form);
-
-      await _replyRepository.deleteReply(
-        parentId: form.parentId,
+      await _replyRepository.reply(
+        state.form.toRepository(),
       );
 
       emit(

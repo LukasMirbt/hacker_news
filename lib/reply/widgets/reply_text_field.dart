@@ -39,6 +39,7 @@ class _ReplyTextFieldState extends State<ReplyTextField> {
       listenWhen: (previous, current) =>
           previous.form.text != current.form.text,
       listener: (context, state) {
+        print('Listener: ${state.form.text}');
         final text = state.form.text;
         if (text != _controller.text) {
           _controller.text = text;
@@ -55,6 +56,7 @@ class _ReplyTextFieldState extends State<ReplyTextField> {
           hintText: l10n.reply_textFieldHintText,
         ),
         onChanged: (value) {
+          print('onChanged: $value');
           context.read<ReplyBloc>().add(
             ReplyTextChanged(value),
           );
