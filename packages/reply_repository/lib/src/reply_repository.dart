@@ -19,8 +19,8 @@ class ReplyRepository {
   final ReplyStorage _replyStorage;
   final UserReplyService _userReplyService;
 
-  final _controller = StreamController<ReplyUpdate>.broadcast();
-  Stream<ReplyUpdate> get stream => _controller.stream;
+  final _controller = StreamController<Reply>.broadcast();
+  Stream<Reply> get stream => _controller.stream;
 
   Future<ReplyPage> fetchReplyPage({
     required String url,
@@ -63,42 +63,23 @@ class ReplyRepository {
   Future<void> reply(ReplyForm form) async {
     await _replyApi.reply(form.toApi());
 
-    // TODO: Investigate issue with replies
-
-    /*     flutter:
-flutter: ╔╣ Request ║ POST
-flutter: ║  https://news.ycombinator.com/comment
-flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
-flutter:
-flutter: ╔╣ Response ║ POST ║ Status: 302 Found  ║ Time: 199 ms
-flutter: ║  https://news.ycombinator.com/comment
-flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
-flutter:
-flutter: ╔╣ Request ║ GET
-flutter: ║  https://news.ycombinator.com/item
-flutter: ╚══════════════════════════════════════════════════════════════════════════════════════════╝
-flutter:
-flutter: ╔╣ DioError ║ DioExceptionType.unknown
-flutter: ║  null
-flutter: ╚═════ */
-
     try {
+      final parentId = form.parentId;
+
       final storageKey = ReplyStorageKey(
-        parentId: form.parentId,
+        parentId: parentId,
         userId: _authenticationApi.state.user.id,
       );
 
       await _replyStorage.clear(storageKey);
 
-      final commentThread = await _replyApi.fetchCommentThread(
-        id: form.parentId,
-      );
+      final commentThread = await _replyApi.fetchCommentThread(id: parentId);
 
       final comment = _userReplyService.newestComment(commentThread);
 
       _controller.add(
-        ReplyUpdate(
-          form: form,
+        Reply.from(
+          parentId: parentId,
           comment: comment,
         ),
       );

@@ -1,15 +1,15 @@
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_repository/thread_repository.dart';
 
-extension CurrentUserCommentDataExtension on CurrentUserCommentData {
+extension ReplyExtension on Reply {
   CurrentUserThreadComment toThread() {
     return CurrentUserThreadComment(
-      id: base.id,
-      indent: base.indent,
-      hnuser: base.hnuser,
-      age: base.age,
-      htmlText: base.htmlText,
-      replyUrl: base.replyUrl,
+      id: id,
+      indent: indent,
+      hnuser: hnuser,
+      age: age,
+      htmlText: htmlText,
+      replyUrl: replyUrl,
       parentUrl: null,
       contextUrl: null,
       onUrl: null,

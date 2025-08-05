@@ -85,11 +85,11 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   ) async {
     return emit.onEach(
       _replyRepository.stream,
-      onData: (update) {
+      onData: (reply) {
         emit(
           state.copyWith(
             commentList: _replyModel.updateCommentList(
-              update: update,
+              reply: reply,
               commentList: state.commentList,
             ),
           ),

@@ -13,18 +13,19 @@ class ThreadFeedReplyModel {
   const ThreadFeedReplyModel();
 
   PaginatedThreadFeedModel updateFeed({
-    required ReplyUpdate update,
+    required Reply reply,
     required PaginatedThreadFeedModel feed,
   }) {
-    final form = update.form;
-    final parent = feed.findById(form.parentId);
+    final parent = feed.findById(reply.parentId);
 
     if (parent == null) {
       throw const ThreadFeedReplyFailure();
     }
 
+    // TODO: Investigate incorrect indent after replying in thread
+
     final newItem = CurrentUserThreadCommentModel(
-      comment: update.comment.toThread(),
+      comment: reply.toThread(),
     );
 
     final updatedFeed = feed.insertAfter(

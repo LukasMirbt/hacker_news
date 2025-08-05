@@ -74,11 +74,11 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
   ) async {
     return emit.onEach(
       _replyRepository.stream,
-      onData: (update) {
+      onData: (reply) {
         emit(
           state.copyWith(
             feed: _replyModel.updateFeed(
-              update: update,
+              reply: reply,
               feed: state.feed,
             ),
           ),
