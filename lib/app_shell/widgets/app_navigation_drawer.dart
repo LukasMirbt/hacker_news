@@ -42,14 +42,12 @@ class AppNavigationDrawer extends StatelessWidget {
       },
       children: [
         const SizedBox(height: AppSpacing.xlg),
-        for (final destination in AppDestination.values)
-          NavigationDrawerDestination(
-            icon: Icon(destination.icon),
-            selectedIcon: Icon(destination.selectedIcon),
-            label: Text(
-              destination.label(l10n),
-            ),
-          ),
+        _Destination(AppDestination.home, l10n),
+        const Divider(),
+        _Destination(AppDestination.threads, l10n),
+        _Destination(AppDestination.drafts, l10n),
+        const Divider(),
+        _Destination(AppDestination.settings, l10n),
         const SizedBox(height: AppSpacing.lg),
         const Center(
           child: CurrentVersion(),
@@ -57,4 +55,17 @@ class AppNavigationDrawer extends StatelessWidget {
       ],
     );
   }
+}
+
+class _Destination extends NavigationDrawerDestination {
+  _Destination(
+    AppDestination value,
+    AppLocalizations l10n,
+  ) : super(
+        icon: Icon(value.icon),
+        selectedIcon: Icon(value.selectedIcon),
+        label: Text(
+          value.label(l10n),
+        ),
+      );
 }

@@ -31,6 +31,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appShell_threads => 'Threads';
 
   @override
+  String get appShell_drafts => 'Drafts';
+
+  @override
   String get appShell_settings => 'Settings';
 
   @override

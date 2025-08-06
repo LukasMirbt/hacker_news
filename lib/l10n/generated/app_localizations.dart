@@ -136,6 +136,12 @@ abstract class AppLocalizations {
   /// **'Threads'**
   String get appShell_threads;
 
+  /// No description provided for @appShell_drafts.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts'**
+  String get appShell_drafts;
+
   /// No description provided for @appShell_settings.
   ///
   /// In en, this message translates to:

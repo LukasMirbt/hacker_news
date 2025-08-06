@@ -97,6 +97,11 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
+        GoRouteData.$route(path: '/drafts', factory: _$DraftRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
         GoRouteData.$route(
           path: '/settings',
 
@@ -241,6 +246,26 @@ mixin _$ThreadFeedRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/threads');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$DraftRoute on GoRouteData {
+  static DraftRoute _fromState(GoRouterState state) => const DraftRoute();
+
+  @override
+  String get location => GoRouteData.$location('/drafts');
 
   @override
   void go(BuildContext context) => context.go(location);

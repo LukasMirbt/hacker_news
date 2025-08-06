@@ -10,12 +10,15 @@ workspace:
   - packages/analytics_repository
   - packages/app_client
   - packages/app_client_platform_configuration
+  - packages/app_database
   - packages/app_ui
   - packages/authentication_api
   - packages/authentication_parser
   - packages/authentication_repository
   - packages/collapse_handler
   - packages/date_formatter
+  - packages/draft_repository
+  - packages/draft_storage
   - packages/feed_api
   - packages/feed_parser
   - packages/feed_repository
@@ -49,6 +52,8 @@ dependencies:
     path: packages/app_client
   app_client_platform_configuration:
     path: packages/app_client_platform_configuration
+  app_database:
+    path: packages/app_database
   app_ui:
     path: packages/app_ui
   authentication_api:
@@ -62,6 +67,10 @@ dependencies:
   collection: ^1.19.1
   date_formatter:
     path: packages/date_formatter
+  draft_repository:
+    path: packages/draft_repository
+  draft_storage:
+    path: packages/draft_storage
   equatable: ^2.0.7
   feed_api:
     path: packages/feed_api

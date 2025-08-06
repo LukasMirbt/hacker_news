@@ -1,0 +1,14 @@
+part of '../../app_shell/route/app_stateful_shell_route.dart';
+
+class DraftRoute extends GoRouteData with _$DraftRoute, AuthenticatedRoute {
+  const DraftRoute();
+
+  static const config = TypedGoRoute<DraftRoute>(
+    path: '/drafts',
+  );
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const DraftPage();
+  }
+}
