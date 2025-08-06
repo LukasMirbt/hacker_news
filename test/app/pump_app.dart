@@ -58,7 +58,7 @@ class _MockAuthenticationRepository extends Mock
 
 class _MockReplyRepository extends Mock implements ReplyRepository {
   @override
-  Stream<ReplyUpdate> get stream => Stream.empty();
+  Stream<Reply> get stream => Stream.empty();
 }
 
 class _MockVersionRepository extends Mock implements VersionRepository {

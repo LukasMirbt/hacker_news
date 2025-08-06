@@ -13,16 +13,10 @@ class _MockOtherUserThreadCommentModel extends Mock
     implements OtherUserThreadCommentModel {}
 
 void main() {
-  final form = ReplyFormPlaceholder();
-  final comment = CurrentUserCommentDataPlaceholder();
-
-  final update = ReplyUpdate(
-    form: form,
-    comment: comment,
-  );
+  final reply = ReplyPlaceholder();
 
   final newItem = CurrentUserThreadCommentModel(
-    comment: comment.toThread(),
+    comment: reply.toThread(),
   );
 
   group(ThreadFeedReplyModel, () {
@@ -43,7 +37,7 @@ void main() {
           'returns null', () {
         final model = createSubject();
         expect(
-          () => model.updateFeed(update: update, feed: feed),
+          () => model.updateFeed(reply: reply, feed: feed),
           throwsA(
             ThreadFeedReplyFailure(),
           ),
@@ -51,7 +45,7 @@ void main() {
       });
 
       test('returns updated feed when findById returns parent', () {
-        final findById = () => feed.findById(form.parentId);
+        final findById = () => feed.findById(reply.parentId);
         final insertAfter = () => feed.insertAfter(
           afterItem: afterItem,
           newItem: newItem,
@@ -60,7 +54,7 @@ void main() {
         when(insertAfter).thenReturn(updatedFeed);
         final model = createSubject();
         expect(
-          model.updateFeed(update: update, feed: feed),
+          model.updateFeed(reply: reply, feed: feed),
           updatedFeed,
         );
         verify(findById).called(1);

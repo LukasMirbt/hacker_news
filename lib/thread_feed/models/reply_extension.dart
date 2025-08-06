@@ -10,11 +10,11 @@ extension ReplyExtension on Reply {
       age: age,
       htmlText: htmlText,
       replyUrl: replyUrl,
+      score: score,
       parentUrl: null,
       contextUrl: null,
       onUrl: null,
       onTitle: null,
-      score: score,
     );
   }
 }

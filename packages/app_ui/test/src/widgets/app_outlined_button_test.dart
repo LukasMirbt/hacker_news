@@ -22,9 +22,9 @@ void main() {
       );
     }
 
-    AppOutlinedButton findWidget(WidgetTester tester) {
-      return tester.widget<AppOutlinedButton>(
-        find.byType(AppOutlinedButton),
+    OutlinedButton findWidget(WidgetTester tester) {
+      return tester.widget<OutlinedButton>(
+        find.byType(OutlinedButton),
       );
     }
 
@@ -66,9 +66,9 @@ void main() {
       });
     });
 
-    testWidgets('renders $AppOutlinedButton ', (tester) async {
+    testWidgets('renders $OutlinedButton ', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppOutlinedButton), findsOneWidget);
+      expect(find.byType(OutlinedButton), findsOneWidget);
     });
 
     testWidgets('renders child', (tester) async {
@@ -85,7 +85,10 @@ void main() {
         buildSubject(size: size),
       );
       final widget = findWidget(tester);
-      expect(widget.size, size);
+      expect(
+        widget.style?.minimumSize,
+        WidgetStatePropertyAll<Size?>(size.value),
+      );
     });
 
     testWidgets('calls onPressed when tapped '
@@ -122,10 +125,50 @@ void main() {
       );
 
       await tester.tap(
-        find.byType(AppOutlinedButton),
+        find.byType(OutlinedButton),
       );
 
       expect(tapped, false);
+    });
+
+    testWidgets('renders $InvisiblePlaceholder with visible: true '
+        'when !isLoading', (tester) async {
+      final child = Container();
+      await tester.pumpApp(
+        buildSubject(
+          child: child,
+          isLoading: false,
+        ),
+      );
+
+      final widget = tester.widget<InvisiblePlaceholder>(
+        find.ancestor(
+          of: find.byWidget(child),
+          matching: find.byType(InvisiblePlaceholder),
+        ),
+      );
+
+      expect(widget.visible, true);
+    });
+
+    testWidgets('renders $InvisiblePlaceholder with visible: false '
+        'when isLoading', (tester) async {
+      final child = Container();
+      await tester.pumpApp(
+        buildSubject(
+          child: child,
+          isLoading: true,
+        ),
+      );
+
+      final widget = tester.widget<InvisiblePlaceholder>(
+        find.ancestor(
+          of: find.byWidget(child),
+          matching: find.byType(InvisiblePlaceholder),
+        ),
+      );
+
+      expect(widget.visible, false);
     });
 
     testWidgets('renders $ButtonSpinner when isLoading', (tester) async {
@@ -133,6 +176,14 @@ void main() {
         buildSubject(isLoading: true),
       );
       expect(find.byType(ButtonSpinner), findsOneWidget);
+    });
+
+    testWidgets('does not render $ButtonSpinner '
+        'when !isLoading', (tester) async {
+      await tester.pumpApp(
+        buildSubject(isLoading: false),
+      );
+      expect(find.byType(ButtonSpinner), findsNothing);
     });
   });
 }

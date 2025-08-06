@@ -154,10 +154,7 @@ void main() {
     });
 
     group(CommentListReplySubscriptionRequested, () {
-      final update = ReplyUpdate(
-        form: ReplyFormPlaceholder(),
-        comment: CurrentUserCommentDataPlaceholder(),
-      );
+      final reply = ReplyPlaceholder();
 
       final state = initialState.copyWith(
         commentList: _MockCommentListModel(),
@@ -166,15 +163,15 @@ void main() {
       final updatedCommentList = _MockCommentListModel();
 
       final updateCommentList = () => replyModel.updateCommentList(
-        update: update,
+        reply: reply,
         commentList: state.commentList,
       );
 
       blocTest<CommentListBloc, CommentListState>(
-        'emits updated commentList when repository emits $ReplyUpdate',
+        'emits updated commentList when repository emits $Reply',
         setUp: () {
           when(() => replyRepository.stream).thenAnswer(
-            (_) => Stream.value(update),
+            (_) => Stream.value(reply),
           );
           when(updateCommentList).thenReturn(updatedCommentList);
         },

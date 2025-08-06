@@ -22,8 +22,6 @@ class ThreadFeedReplyModel {
       throw const ThreadFeedReplyFailure();
     }
 
-    // TODO: Investigate incorrect indent after replying in thread
-
     final newItem = CurrentUserThreadCommentModel(
       comment: reply.toThread(),
     );
