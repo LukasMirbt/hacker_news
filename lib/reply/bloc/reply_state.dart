@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/reply/reply.dart' hide ReplyParent;
 
 part 'reply_state.freezed.dart';
 
@@ -25,7 +25,7 @@ abstract class ReplyState with _$ReplyState {
   }) {
     return ReplyState(
       url: url,
-      parent: ReplyParentModel.empty,
+      parent: OtherUserReplyParentModel.empty,
     );
   }
 

@@ -15,7 +15,7 @@ class CurrentUserCommentModel extends CommentModel {
 
   String score(AppLocalizations l10n) {
     return l10n.commentList_score(
-      score: _comment.score.toString(),
+      score: _comment.score,
     );
   }
 

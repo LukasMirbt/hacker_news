@@ -53,12 +53,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comment_submitAction => 'Submit';
 
   @override
-  String commentList_age({required Object age}) {
+  String commentList_age({required String age}) {
     return '$age ago';
   }
 
   @override
-  String commentList_score({required Object score}) {
+  String commentList_score({required int score}) {
     return '${score}p';
   }
 
@@ -113,12 +113,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataCollection_analytics => 'Analytics';
 
   @override
-  String feed_shareText({required Object title, required Object url}) {
+  String feed_shareText({required String title, required String url}) {
     return '$title $url';
   }
 
   @override
-  String feed_rank({required Object rank}) {
+  String feed_rank({required int rank}) {
     return '$rank.';
   }
 
@@ -196,7 +196,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postOptions_openOnWeb => 'Open on web';
 
   @override
-  String postHeader_shareText({required Object title, required Object url}) {
+  String postHeader_shareText({required String title, required String url}) {
     return '$title $url';
   }
 
@@ -211,8 +211,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.';
 
   @override
-  String reply_age({required Object age}) {
+  String reply_age({required String age}) {
     return '$age ago';
+  }
+
+  @override
+  String reply_score({required int score}) {
+    return '${score}p';
   }
 
   @override
@@ -258,7 +263,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theme_dark => 'Dark';
 
   @override
-  String threadFeed_age({required Object age}) {
+  String threadFeed_age({required String age}) {
     return '$age ago';
   }
 

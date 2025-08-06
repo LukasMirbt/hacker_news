@@ -15,7 +15,21 @@
   "comment_disabledExplanationSubtitle": "Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.",
   "comment_submitAction": "Submit",
   "commentList_age": "{age} ago",
+  "@commentList_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
   "commentList_score": "{score}p",
+  "@commentList_score": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "commentOptions_reply": "Reply",
   "commentOptions_share": "Share",
   "commentOptions_openOnWeb": "Open on web",
@@ -33,7 +47,24 @@
   "dataCollection_title": "Data collection",
   "dataCollection_analytics": "Analytics",
   "feed_shareText": "{title} {url}",
+  "@feed_shareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "feed_rank": "{rank}.",
+  "@feed_rank": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
   "feedItemOptions_openOnWeb": "Open on web",
   "home_topTab": "Top",
   "home_newTab": "New",
@@ -59,10 +90,35 @@
   "post_title": "Post",
   "postOptions_openOnWeb": "Open on web",
   "postHeader_shareText": "{title} {url}",
+  "@postHeader_shareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "reply_title": "Reply",
   "reply_disabledExplanationTitle": "Closed for replies",
   "reply_disabledExplanationSubtitle": "Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.",
   "reply_age": "{age} ago",
+  "@reply_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "reply_score": "{score}p",
+  "@reply_score": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
   "reply_textFieldHintText": "Your reply",
   "reply_submitAction": "Reply",
   "replyOptions_share": "Share",
@@ -78,6 +134,13 @@
   "theme_light": "Light",
   "theme_dark": "Dark",
   "threadFeed_age": "{age} ago",
+  "@threadFeed_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
   "threadCommentOptions_reply": "Reply",
   "threadCommentOptions_viewPost": "View post",
   "threadCommentOptions_share": "Share",

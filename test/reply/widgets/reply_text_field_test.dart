@@ -22,8 +22,8 @@ void main() async {
 
   final initialState = ReplyState(
     url: 'url',
-    parent: ReplyParentModel(
-      parent: ReplyParentPlaceholder(),
+    parent: OtherUserReplyParentModel(
+      parent: OtherUserReplyParentPlaceholder(),
     ),
     form: ReplyFormModel(
       text: text,

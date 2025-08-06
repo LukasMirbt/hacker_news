@@ -29,6 +29,10 @@ class _ReplyTextFieldState extends State<ReplyTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final isReplyingEnabled = context.select(
+      (ReplyBloc bloc) => bloc.state.form.isReplyingEnabled,
+    );
+
     final l10n = AppLocalizations.of(context);
 
     return BlocListener<ReplyBloc, ReplyState>(
@@ -42,6 +46,8 @@ class _ReplyTextFieldState extends State<ReplyTextField> {
       },
       child: TextField(
         controller: _controller,
+        readOnly: !isReplyingEnabled,
+        enableInteractiveSelection: true,
         autofocus: true,
         expands: true,
         maxLines: null,

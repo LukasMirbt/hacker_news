@@ -123,12 +123,7 @@ void main() {
     });
 
     group(ThreadFeedReplySubscriptionRequested, () {
-      final user = UserPlaceholder();
-
-      final update = ReplyUpdate(
-        form: ReplyFormPlaceholder(),
-        comment: CurrentUserCommentDataPlaceholder(),
-      );
+      final reply = ReplyPlaceholder();
 
       final state = initialState.copyWith(
         feed: _MockThreadFeedModel(),
@@ -137,16 +132,15 @@ void main() {
       final updatedThreadFeed = _MockThreadFeedModel();
 
       final updateThreadFeed = () => replyModel.updateFeed(
-        update: update,
+        reply: reply,
         feed: state.feed,
       );
 
       blocTest<ThreadFeedBloc, ThreadFeedState>(
-        'emits updated commentList when repository emits $ReplyUpdate',
+        'emits updated commentList when repository emits $Reply',
         setUp: () {
-          when(() => authenticationState.user).thenReturn(user);
           when(() => replyRepository.stream).thenAnswer(
-            (_) => Stream.value(update),
+            (_) => Stream.value(reply),
           );
           when(updateThreadFeed).thenReturn(updatedThreadFeed);
         },

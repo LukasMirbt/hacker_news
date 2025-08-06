@@ -50,7 +50,7 @@ void main() async {
         final comment = _MockOtherUserComment();
         expect(
           CommentModel.from(comment),
-          isA<OtherUserCommentModel>(),
+          OtherUserCommentModel(comment: comment),
         );
       });
 
@@ -59,7 +59,7 @@ void main() async {
         final comment = _MockCurrentUserComment();
         expect(
           CommentModel.from(comment),
-          isA<CurrentUserCommentModel>(),
+          CurrentUserCommentModel(comment: comment),
         );
       });
     });

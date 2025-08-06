@@ -8,7 +8,7 @@ class ReplyPageData extends Equatable {
   });
 
   static final empty = ReplyPageData(
-    parentData: ReplyParentData.empty,
+    parentData: OtherUserReplyParentData.empty,
     formData: ReplyFormData.empty,
   );
 

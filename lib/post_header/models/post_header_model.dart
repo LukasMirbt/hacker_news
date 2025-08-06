@@ -35,7 +35,7 @@ class PostHeaderModel extends Equatable {
     final resolvedUrl = _webLinks.resolve(_header.url);
     return l10n.postHeader_shareText(
       title: title,
-      url: resolvedUrl,
+      url: resolvedUrl.toString(),
     );
   }
 

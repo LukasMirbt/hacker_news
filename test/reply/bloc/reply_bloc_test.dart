@@ -13,13 +13,12 @@ class _MockReplyRepository extends Mock implements ReplyRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
-class _MockSavedReplyModel extends Mock implements SavedReplyModel {}
-
 class _MockReplyParentVoteModel extends Mock implements ReplyParentVoteModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
-class _MockReplyParentModel extends Mock implements ReplyParentModel {}
+class _MockOtherUserReplyParentModel extends Mock
+    implements OtherUserReplyParentModel {}
 
 void main() {
   const url = 'url';
@@ -28,14 +27,12 @@ void main() {
   group(ReplyBloc, () {
     late ReplyRepository replyRepository;
     late VoteRepository voteRepository;
-    late SavedReplyModel savedReplyModel;
     late ReplyParentVoteModel voteModel;
     late LinkLauncher linkLauncher;
 
     setUp(() {
       replyRepository = _MockReplyRepository();
       voteRepository = _MockVoteRepository();
-      savedReplyModel = _MockSavedReplyModel();
       voteModel = _MockReplyParentVoteModel();
       linkLauncher = _MockLinkLauncher();
     });
@@ -45,7 +42,6 @@ void main() {
         url: url,
         replyRepository: replyRepository,
         voteRepository: voteRepository,
-        savedReplyModel: savedReplyModel,
         voteModel: voteModel,
         linkLauncher: linkLauncher,
       );
@@ -61,10 +57,10 @@ void main() {
       );
 
       final state = initialState.copyWith(
-        parent: _MockReplyParentModel(),
+        parent: _MockOtherUserReplyParentModel(),
       );
 
-      final updatedParent = _MockReplyParentModel();
+      final updatedParent = _MockOtherUserReplyParentModel();
 
       final updateParent = () => voteModel.updateParent(
         vote: repositoryState.vote,
@@ -99,19 +95,13 @@ void main() {
 
     group(ReplyStarted, () {
       final page = ReplyPagePlaceholder();
-      final parent = page.parent;
-      final form = page.form;
-      const savedReply = 'savedReply';
-
       final request = () => replyRepository.fetchReplyPage(url: url);
-      final load = () => savedReplyModel.load(form);
 
       blocTest<ReplyBloc, ReplyState>(
-        'loads saved reply and emits [success], $ReplyParentModel '
-        'and $ReplyFormModel when request succeeds',
+        'emits [success], $ReplyParentModel and $ReplyFormModel '
+        'when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async => page);
-          when(load).thenReturn(savedReply);
         },
         build: buildBloc,
         act: (bloc) {
@@ -121,19 +111,13 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            parent: ReplyParentModel(
-              parent: parent,
-            ),
-            form: ReplyFormModel(
-              form: form,
-              text: savedReply,
-            ),
+            parent: ReplyParentModel.from(page.parent),
+            form: ReplyFormModel.from(page.form),
             fetchStatus: FetchStatus.success,
           ),
         ],
         verify: (_) {
           verify(request).called(1);
-          verify(load).called(1);
         },
       );
 
@@ -168,14 +152,17 @@ void main() {
 
       final updatedForm = form.copyWith(text: text);
 
-      final save = () => savedReplyModel.save(
+      final updateReply = () => replyRepository.updateReply(
         updatedForm.toRepository(),
       );
 
       final state = initialState.copyWith(form: form);
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits updated form and saves reply',
+        'emits updated form and calls updateReply',
+        setUp: () {
+          when(updateReply).thenAnswer((_) async {});
+        },
         seed: () => state,
         build: buildBloc,
         act: (bloc) {
@@ -189,7 +176,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(save).called(1);
+          verify(updateReply).called(1);
         },
       );
     });
@@ -223,7 +210,9 @@ void main() {
     });
 
     group(ReplyParentVotePressed, () {
-      final parent = initialState.parent;
+      final parent = OtherUserReplyParentModel(
+        parent: OtherUserReplyParentPlaceholder(),
+      );
 
       final vote = () => voteRepository.vote(
         upvoteUrl: parent.upvoteUrl,
@@ -238,7 +227,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyParentVotePressed(),
+            ReplyParentVotePressed(parent),
           );
         },
         verify: (_) {
@@ -281,7 +270,7 @@ void main() {
       );
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits [loading, success] when request succeds',
+        'emits [loading, success] when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
         },

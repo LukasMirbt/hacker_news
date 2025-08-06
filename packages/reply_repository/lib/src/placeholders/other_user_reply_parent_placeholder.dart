@@ -1,19 +1,19 @@
 import 'package:reply_repository/reply_repository.dart';
 
-class ReplyParentPlaceholder extends ReplyParent {
-  ReplyParentPlaceholder({
+class OtherUserReplyParentPlaceholder extends OtherUserReplyParent {
+  OtherUserReplyParentPlaceholder({
     String? id,
-    String? upvoteUrl,
-    bool? hasBeenUpvoted,
     Hnuser? hnuser,
     DateTime? age,
     String? htmlText,
+    String? upvoteUrl,
+    bool? hasBeenUpvoted,
   }) : super(
          id: id ?? 'id',
-         upvoteUrl: upvoteUrl ?? 'upvoteUrl',
-         hasBeenUpvoted: hasBeenUpvoted ?? false,
          hnuser: hnuser ?? const HnuserPlaceholder(),
          age: age ?? DateTime(1),
          htmlText: htmlText ?? 'htmlText',
+         upvoteUrl: upvoteUrl ?? 'upvoteUrl',
+         hasBeenUpvoted: hasBeenUpvoted ?? false,
        );
 }

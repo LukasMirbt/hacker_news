@@ -13,40 +13,40 @@ part of 'reply_parent.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ReplyParent {
+mixin _$CurrentUserReplyParent {
 
- String get id; String get upvoteUrl; bool get hasBeenUpvoted; Hnuser get hnuser; DateTime get age; String get htmlText;
-/// Create a copy of ReplyParent
+ String get id; Hnuser get hnuser; DateTime get age; String get htmlText; int get score;
+/// Create a copy of CurrentUserReplyParent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ReplyParentCopyWith<ReplyParent> get copyWith => _$ReplyParentCopyWithImpl<ReplyParent>(this as ReplyParent, _$identity);
+$CurrentUserReplyParentCopyWith<CurrentUserReplyParent> get copyWith => _$CurrentUserReplyParentCopyWithImpl<CurrentUserReplyParent>(this as CurrentUserReplyParent, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReplyParent&&(identical(other.id, id) || other.id == id)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrentUserReplyParent&&(identical(other.id, id) || other.id == id)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.score, score) || other.score == score));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,upvoteUrl,hasBeenUpvoted,hnuser,age,htmlText);
+int get hashCode => Object.hash(runtimeType,id,hnuser,age,htmlText,score);
 
 @override
 String toString() {
-  return 'ReplyParent(id: $id, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted, hnuser: $hnuser, age: $age, htmlText: $htmlText)';
+  return 'CurrentUserReplyParent(id: $id, hnuser: $hnuser, age: $age, htmlText: $htmlText, score: $score)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ReplyParentCopyWith<$Res>  {
-  factory $ReplyParentCopyWith(ReplyParent value, $Res Function(ReplyParent) _then) = _$ReplyParentCopyWithImpl;
+abstract mixin class $CurrentUserReplyParentCopyWith<$Res>  {
+  factory $CurrentUserReplyParentCopyWith(CurrentUserReplyParent value, $Res Function(CurrentUserReplyParent) _then) = _$CurrentUserReplyParentCopyWithImpl;
 @useResult
 $Res call({
- String id, String upvoteUrl, bool hasBeenUpvoted, Hnuser hnuser, DateTime age, String htmlText
+ String id, Hnuser hnuser, DateTime age, String htmlText, int score
 });
 
 
@@ -54,24 +54,89 @@ $Res call({
 
 }
 /// @nodoc
-class _$ReplyParentCopyWithImpl<$Res>
-    implements $ReplyParentCopyWith<$Res> {
-  _$ReplyParentCopyWithImpl(this._self, this._then);
+class _$CurrentUserReplyParentCopyWithImpl<$Res>
+    implements $CurrentUserReplyParentCopyWith<$Res> {
+  _$CurrentUserReplyParentCopyWithImpl(this._self, this._then);
 
-  final ReplyParent _self;
-  final $Res Function(ReplyParent) _then;
+  final CurrentUserReplyParent _self;
+  final $Res Function(CurrentUserReplyParent) _then;
 
-/// Create a copy of ReplyParent
+/// Create a copy of CurrentUserReplyParent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,}) {
-  return _then(ReplyParent(
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? score = null,}) {
+  return _then(CurrentUserReplyParent(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,upvoteUrl: null == upvoteUrl ? _self.upvoteUrl : upvoteUrl // ignore: cast_nullable_to_non_nullable
-as String,hasBeenUpvoted: null == hasBeenUpvoted ? _self.hasBeenUpvoted : hasBeenUpvoted // ignore: cast_nullable_to_non_nullable
-as bool,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
+as String,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
 as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
 as DateTime,htmlText: null == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
-as String,
+as String,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// @nodoc
+mixin _$OtherUserReplyParent {
+
+ String get id; Hnuser get hnuser; DateTime get age; String get htmlText; String get upvoteUrl; bool get hasBeenUpvoted;
+/// Create a copy of OtherUserReplyParent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$OtherUserReplyParentCopyWith<OtherUserReplyParent> get copyWith => _$OtherUserReplyParentCopyWithImpl<OtherUserReplyParent>(this as OtherUserReplyParent, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OtherUserReplyParent&&(identical(other.id, id) || other.id == id)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.upvoteUrl, upvoteUrl) || other.upvoteUrl == upvoteUrl)&&(identical(other.hasBeenUpvoted, hasBeenUpvoted) || other.hasBeenUpvoted == hasBeenUpvoted));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id,hnuser,age,htmlText,upvoteUrl,hasBeenUpvoted);
+
+@override
+String toString() {
+  return 'OtherUserReplyParent(id: $id, hnuser: $hnuser, age: $age, htmlText: $htmlText, upvoteUrl: $upvoteUrl, hasBeenUpvoted: $hasBeenUpvoted)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $OtherUserReplyParentCopyWith<$Res>  {
+  factory $OtherUserReplyParentCopyWith(OtherUserReplyParent value, $Res Function(OtherUserReplyParent) _then) = _$OtherUserReplyParentCopyWithImpl;
+@useResult
+$Res call({
+ String id, Hnuser hnuser, DateTime age, String htmlText, String upvoteUrl, bool hasBeenUpvoted
+});
+
+
+
+
+}
+/// @nodoc
+class _$OtherUserReplyParentCopyWithImpl<$Res>
+    implements $OtherUserReplyParentCopyWith<$Res> {
+  _$OtherUserReplyParentCopyWithImpl(this._self, this._then);
+
+  final OtherUserReplyParent _self;
+  final $Res Function(OtherUserReplyParent) _then;
+
+/// Create a copy of OtherUserReplyParent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? upvoteUrl = null,Object? hasBeenUpvoted = null,}) {
+  return _then(OtherUserReplyParent(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,hnuser: null == hnuser ? _self.hnuser : hnuser // ignore: cast_nullable_to_non_nullable
+as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nullable
+as DateTime,htmlText: null == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
+as String,upvoteUrl: null == upvoteUrl ? _self.upvoteUrl : upvoteUrl // ignore: cast_nullable_to_non_nullable
+as String,hasBeenUpvoted: null == hasBeenUpvoted ? _self.hasBeenUpvoted : hasBeenUpvoted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -8,7 +8,7 @@ void main() {
   group(ReplyPage, () {
     group('from', () {
       const formData = ReplyFormDataPlaceholder();
-      final parentData = ReplyParentDataPlaceholder();
+      final parentData = OtherUserReplyParentDataPlaceholder();
 
       late ReplyPageData data;
 

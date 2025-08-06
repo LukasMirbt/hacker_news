@@ -9,7 +9,7 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
-class _MockReplyParent extends Mock implements ReplyParent {}
+class _MockOtherUserReplyParent extends Mock implements OtherUserReplyParent {}
 
 void main() {
   final url = Uri.parse('https://example.com');
@@ -20,7 +20,7 @@ void main() {
     late WebLinks webLinks;
 
     setUp(() {
-      parent = _MockReplyParent();
+      parent = _MockOtherUserReplyParent();
       webLinks = _MockWebLinks();
       when(() => parent.id).thenReturn(id);
     });

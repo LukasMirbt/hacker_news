@@ -5,25 +5,24 @@ import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_repository/thread_repository.dart';
 
 void main() {
-  group('CurrentUserCommentDataExtension', () {
+  group('ReplyExtension', () {
     group('toThread', () {
       test('returns $CurrentUserThreadComment', () {
-        final data = CurrentUserCommentDataPlaceholder();
-        final base = data.base;
+        final reply = ReplyPlaceholder();
         expect(
-          data.toThread(),
+          reply.toThread(),
           CurrentUserThreadComment(
-            id: base.id,
-            indent: base.indent,
-            hnuser: base.hnuser,
-            age: base.age,
-            htmlText: base.htmlText,
-            replyUrl: base.replyUrl,
+            id: reply.id,
+            indent: reply.indent,
+            hnuser: reply.hnuser,
+            age: reply.age,
+            htmlText: reply.htmlText,
+            replyUrl: reply.replyUrl,
+            score: reply.score,
             parentUrl: null,
             contextUrl: null,
             onUrl: null,
             onTitle: null,
-            score: data.score,
           ),
         );
       });

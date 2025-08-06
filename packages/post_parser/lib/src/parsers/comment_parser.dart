@@ -3,19 +3,19 @@ import 'package:post_parser/post_parser.dart';
 class CommentParser {
   const CommentParser({
     BaseCommentParser? baseCommentParser,
+    ScoreParser? scoreParser,
     UpvoteUrlParser? upvoteUrlParser,
     HasBeenUpvotedParser? hasBeenUpvotedParser,
-    ScoreParser? scoreParser,
   }) : _baseParser = baseCommentParser ?? const BaseCommentParser(),
+       _scoreParser = scoreParser ?? const ScoreParser(),
        _upvoteUrlParser = upvoteUrlParser ?? const UpvoteUrlParser(),
        _hasBeenUpvotedParser =
-           hasBeenUpvotedParser ?? const HasBeenUpvotedParser(),
-       _scoreParser = scoreParser ?? const ScoreParser();
+           hasBeenUpvotedParser ?? const HasBeenUpvotedParser();
 
   final BaseCommentParser _baseParser;
+  final ScoreParser _scoreParser;
   final UpvoteUrlParser _upvoteUrlParser;
   final HasBeenUpvotedParser _hasBeenUpvotedParser;
-  final ScoreParser _scoreParser;
 
   CommentData parse(Element element) {
     final base = _baseParser.parse(element);

@@ -102,7 +102,7 @@ void main() {
 
       final request = () => http.get<String>(
         'item',
-        data: {'id': id},
+        queryParameters: {'id': id},
       );
 
       final parse = () => postParser.parse(html);

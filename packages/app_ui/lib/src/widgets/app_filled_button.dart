@@ -59,7 +59,16 @@ class AppFilledButton extends StatelessWidget {
       style: style?.copyWith(
         minimumSize: WidgetStatePropertyAll(size.value),
       ),
-      child: isLoading ? ButtonSpinner(foregroundColor) : child,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          InvisiblePlaceholder(
+            visible: !isLoading,
+            child: child,
+          ),
+          if (isLoading) ButtonSpinner(foregroundColor),
+        ],
+      ),
     );
   }
 }

@@ -33,7 +33,7 @@ class FeedItemModel extends Equatable {
     final resolvedUrl = _webLinks.resolve(_item.url);
     return l10n.feed_shareText(
       title: title,
-      url: resolvedUrl,
+      url: resolvedUrl.toString(),
     );
   }
 

@@ -34,7 +34,7 @@ class ReplyApi {
   Future<List<CommentData>> fetchCommentThread({required String id}) async {
     final response = await _client.http.get<String>(
       'item',
-      data: {'id': id},
+      queryParameters: {'id': id},
     );
     final html = response.data!;
     final post = _postParser.parse(html);

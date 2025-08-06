@@ -26,6 +26,13 @@ class ReplyFormModel extends Equatable {
   }) : _form = form,
        text = text ?? '';
 
+  factory ReplyFormModel.from(ReplyForm? form) {
+    return ReplyFormModel(
+      form: form,
+      text: form?.text,
+    );
+  }
+
   static const empty = ReplyFormModel(
     form: null,
     text: '',

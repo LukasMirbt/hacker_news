@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hacker_client/reply/reply.dart';
 
 sealed class ReplyEvent extends Equatable {
   const ReplyEvent();
@@ -29,7 +30,12 @@ final class ReplyParentExpansionToggled extends ReplyEvent {
 }
 
 final class ReplyParentVotePressed extends ReplyEvent {
-  const ReplyParentVotePressed();
+  const ReplyParentVotePressed(this.parent);
+
+  final OtherUserReplyParentModel parent;
+
+  @override
+  List<Object> get props => [parent];
 }
 
 final class ReplyLinkPressed extends ReplyEvent {

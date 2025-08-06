@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_list/comment_list.dart'
     hide Comment, CurrentUserComment;
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class _MockCommentListModel extends Mock implements CommentListModel {}
@@ -14,16 +13,10 @@ class _MockOtherUserCommentModel extends Mock
     implements OtherUserCommentModel {}
 
 void main() {
-  final form = ReplyFormPlaceholder();
-  final comment = CurrentUserCommentDataPlaceholder();
-
-  final update = ReplyUpdate(
-    form: form,
-    comment: comment,
-  );
+  final reply = ReplyPlaceholder();
 
   final newItem = CurrentUserCommentModel(
-    comment: CurrentUserComment.from(comment),
+    comment: reply.toComment(),
   );
 
   group(CommentListReplyModel, () {
@@ -45,7 +38,7 @@ void main() {
         final model = createSubject();
         expect(
           () => model.updateCommentList(
-            update: update,
+            reply: reply,
             commentList: commentList,
           ),
           throwsA(
@@ -55,7 +48,7 @@ void main() {
       });
 
       test('returns updated commentList when findById returns parent', () {
-        final findById = () => commentList.findById(form.parentId);
+        final findById = () => commentList.findById(reply.parentId);
         final insertAfter = () => commentList.insertAfter(
           afterItem: afterItem,
           newItem: newItem,
@@ -65,7 +58,7 @@ void main() {
         final model = createSubject();
         expect(
           model.updateCommentList(
-            update: update,
+            reply: reply,
             commentList: commentList,
           ),
           updatedCommentList,

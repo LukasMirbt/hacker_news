@@ -4,42 +4,21 @@ import 'package:reply_repository/reply_repository.dart';
 void main() {
   group(ReplyParent, () {
     group('from', () {
-      test('returns $ReplyParent', () {
-        final data = ReplyParentDataPlaceholder();
+      test('returns $CurrentUserReplyParent when data '
+          'is $CurrentUserReplyParentData', () {
+        final data = CurrentUserReplyParentDataPlaceholder();
         expect(
           ReplyParent.from(data),
-          ReplyParent(
-            id: data.id,
-            upvoteUrl: data.upvoteUrl,
-            hasBeenUpvoted: data.hasBeenUpvoted,
-            hnuser: data.hnuser,
-            age: data.age,
-            htmlText: data.htmlText,
-          ),
+          CurrentUserReplyParent.from(data),
         );
       });
-    });
 
-    group('upvote', () {
-      test('returns updated $ReplyParent', () {
-        final comment = ReplyParentPlaceholder(
-          hasBeenUpvoted: false,
-        );
+      test('returns $OtherUserReplyParent when data '
+          'is $OtherUserReplyParentData', () {
+        final data = OtherUserReplyParentDataPlaceholder();
         expect(
-          comment.upvote(),
-          comment.copyWith(hasBeenUpvoted: true),
-        );
-      });
-    });
-
-    group('unvote', () {
-      test('returns updated $ReplyParent', () {
-        final comment = ReplyParentPlaceholder(
-          hasBeenUpvoted: true,
-        );
-        expect(
-          comment.unvote(),
-          comment.copyWith(hasBeenUpvoted: false),
+          ReplyParent.from(data),
+          OtherUserReplyParent.from(data),
         );
       });
     });

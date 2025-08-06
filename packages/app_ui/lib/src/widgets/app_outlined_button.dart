@@ -60,7 +60,16 @@ class AppOutlinedButton extends StatelessWidget {
         minimumSize: WidgetStatePropertyAll(size.value),
         foregroundColor: WidgetStatePropertyAll(foregroundColor),
       ),
-      child: isLoading ? ButtonSpinner(foregroundColor) : child,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          InvisiblePlaceholder(
+            visible: !isLoading,
+            child: child,
+          ),
+          if (isLoading) ButtonSpinner(foregroundColor),
+        ],
+      ),
     );
   }
 }

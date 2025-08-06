@@ -18,7 +18,6 @@ class ReplyRoute extends RelativeGoRouteData
     GoRouterState state,
   ) {
     return MaterialPage(
-      fullscreenDialog: true,
       child: ReplyPage(url: url),
     );
   }

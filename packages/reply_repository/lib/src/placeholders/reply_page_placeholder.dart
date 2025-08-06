@@ -5,7 +5,7 @@ class ReplyPagePlaceholder extends ReplyPage {
     ReplyParent? parent,
     ReplyForm? form,
   }) : super(
-         parent: parent ?? ReplyParentPlaceholder(),
+         parent: parent ?? OtherUserReplyParentPlaceholder(),
          form: form ?? ReplyFormPlaceholder(),
        );
 }

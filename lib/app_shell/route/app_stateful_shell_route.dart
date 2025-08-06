@@ -9,7 +9,7 @@ import 'package:hacker_client/comment/comment.dart';
 import 'package:hacker_client/data_collection/data_collection.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/post/post.dart';
-import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/reply/reply.dart' hide ReplyParent;
 import 'package:hacker_client/settings/settings.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';

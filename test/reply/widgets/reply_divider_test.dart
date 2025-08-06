@@ -15,18 +15,19 @@ class _MockReplyBloc extends MockBloc<ReplyEvent, ReplyState>
 
 class _MockReplyState extends Mock implements ReplyState {}
 
-class _MockReplyParentModel extends Mock implements ReplyParentModel {}
+class _MockOtheruserReplyParentModel extends Mock
+    implements OtherUserReplyParentModel {}
 
 void main() {
   group(ReplyDivider, () {
     late ReplyBloc bloc;
     late ReplyState state;
-    late ReplyParentModel parent;
+    late OtherUserReplyParentModel parent;
 
     setUp(() {
       bloc = _MockReplyBloc();
       state = _MockReplyState();
-      parent = _MockReplyParentModel();
+      parent = _MockOtheruserReplyParentModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.parent).thenReturn(parent);
       when(() => parent.isExpanded).thenReturn(false);

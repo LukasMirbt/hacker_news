@@ -22,7 +22,7 @@ void main() {
         url: url,
         form: form,
         fetchStatus: fetchStatus,
-        parent: ReplyParentModel.empty,
+        parent: OtherUserReplyParentModel.empty,
       );
     }
 
@@ -32,7 +32,7 @@ void main() {
           ReplyState.initial(url: url),
           ReplyState(
             url: url,
-            parent: ReplyParentModel.empty,
+            parent: OtherUserReplyParentModel.empty,
           ),
         );
       });

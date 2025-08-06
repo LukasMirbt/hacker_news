@@ -19,44 +19,44 @@ class ReplyRepository {
   final ReplyStorage _replyStorage;
   final UserReplyService _userReplyService;
 
-  final _controller = StreamController<ReplyUpdate>.broadcast();
-  Stream<ReplyUpdate> get stream => _controller.stream;
+  final _controller = StreamController<Reply>.broadcast();
+  Stream<Reply> get stream => _controller.stream;
 
   Future<ReplyPage> fetchReplyPage({
     required String url,
   }) async {
     final data = await _replyApi.fetchReplyPage(url: url);
     final page = ReplyPage.from(data);
-    return page;
+
+    final storageKey = ReplyStorageKey(
+      parentId: page.parent.id,
+      userId: _authenticationApi.state.user.id,
+    );
+
+    final form = page.form;
+    if (form == null) return page;
+
+    final savedReply = _replyStorage.read(storageKey);
+    if (savedReply == null) return page;
+
+    final pageWithDraft = page.copyWith(
+      form: form.copyWith(text: savedReply),
+    );
+
+    return pageWithDraft;
   }
 
-  String? readReply({
-    required String parentId,
-  }) {
+  Future<void> updateReply(ReplyForm form) async {
     final user = _authenticationApi.state.user;
 
     final key = ReplyStorageKey(
-      parentId: parentId,
-      userId: user.id,
-    );
-
-    return _replyStorage.read(key);
-  }
-
-  Future<void> saveReply({
-    required String parentId,
-    required String text,
-  }) async {
-    final user = _authenticationApi.state.user;
-
-    final storageKey = ReplyStorageKey(
-      parentId: parentId,
+      parentId: form.parentId,
       userId: user.id,
     );
 
     await _replyStorage.save(
-      storageKey: storageKey,
-      text: text,
+      storageKey: key,
+      text: form.text,
     );
   }
 
@@ -64,21 +64,28 @@ class ReplyRepository {
     await _replyApi.reply(form.toApi());
 
     try {
-      final commentThread = await _replyApi.fetchCommentThread(
-        id: form.parentId,
+      final parentId = form.parentId;
+
+      final storageKey = ReplyStorageKey(
+        parentId: parentId,
+        userId: _authenticationApi.state.user.id,
       );
+
+      await _replyStorage.clear(storageKey);
+
+      final commentThread = await _replyApi.fetchCommentThread(id: parentId);
 
       final comment = _userReplyService.newestComment(commentThread);
 
       _controller.add(
-        ReplyUpdate(
-          form: form,
+        Reply.from(
+          parentId: parentId,
           comment: comment,
         ),
       );
     } catch (_) {
-      // Don't throw when reply succeeds but fetchCommentThread fails
-      // so the user doesn't submit a reply twice.
+      // Don't throw when reply succeeds but fetchCommentThread
+      // or replyStorage.clear fails so the user doesn't submit a reply twice.
     }
   }
 }

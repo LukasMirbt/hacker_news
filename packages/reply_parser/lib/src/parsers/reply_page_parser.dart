@@ -11,7 +11,7 @@ class ReplyPageParser {
   final ReplyFormParser _formParser;
 
   ReplyPageData parse(Element fatItem) {
-    var parentData = ReplyParentData.empty;
+    ReplyParentData parentData = OtherUserReplyParentData.empty;
     ReplyFormData? formData;
 
     final athing = fatItem.querySelector('.athing');

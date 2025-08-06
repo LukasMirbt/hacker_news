@@ -57,36 +57,52 @@ void main() {
     group('fetchReplyPage', () {
       const url = 'url';
       final data = ReplyPageDataPlaceholder();
-      final request = () => replyApi.fetchReplyPage(url: url);
+      final page = ReplyPage.from(data);
 
-      test('returns $ReplyPage', () {
+      final storageKey = ReplyStorageKey(
+        parentId: page.parent.id,
+        userId: user.id,
+      );
+
+      final request = () => replyApi.fetchReplyPage(url: url);
+      final read = () => replyStorage.read(storageKey);
+
+      test('returns $ReplyPage without savedReply when null', () async {
         when(request).thenAnswer((_) async => data);
         final repository = createSubject();
-        expect(
+        await expectLater(
+          repository.fetchReplyPage(url: url),
+          completion(page),
+        );
+        verify(request).called(1);
+        verify(read).called(1);
+      });
+
+      test('returns $ReplyPage with savedReply when non-null', () async {
+        when(request).thenAnswer((_) async => data);
+        when(read).thenReturn(text);
+        final repository = createSubject();
+        await expectLater(
           repository.fetchReplyPage(url: url),
           completion(
-            ReplyPage.from(data),
+            page.copyWith(
+              form: page.form?.copyWith(
+                text: text,
+              ),
+            ),
           ),
         );
         verify(request).called(1);
-      });
-    });
-
-    group('readReply', () {
-      final read = () => replyStorage.read(storageKey);
-
-      test('calls read and returns text', () {
-        when(read).thenReturn(text);
-        final repository = createSubject();
-        expect(
-          repository.readReply(parentId: parentId),
-          text,
-        );
         verify(read).called(1);
       });
     });
 
-    group('saveReply', () {
+    group('updateReply', () {
+      final form = ReplyFormPlaceholder(
+        parentId: parentId,
+        text: text,
+      );
+
       final save = () => replyStorage.save(
         storageKey: storageKey,
         text: text,
@@ -95,10 +111,7 @@ void main() {
       test('calls save', () async {
         when(save).thenAnswer((_) async {});
         final repository = createSubject();
-        await repository.saveReply(
-          parentId: parentId,
-          text: text,
-        );
+        await repository.updateReply(form);
         verify(save).called(1);
       });
     });
@@ -113,11 +126,14 @@ void main() {
       final fetchCommentThread = () =>
           replyApi.fetchCommentThread(id: form.parentId);
 
+      final clear = () => replyStorage.clear(storageKey);
+
       final newestComment = () => userReplyService.newestComment(commentThread);
 
-      test('calls reply, fetchCommentThread, newestComment '
-          'and emits $ReplyUpdate when fetchCommentThread succeeds', () async {
+      test('calls reply, clear, fetchCommentThread, newestComment '
+          'and emits $Reply when fetchCommentThread succeeds', () async {
         when(reply).thenAnswer((_) async {});
+        when(clear).thenAnswer((_) async {});
         when(fetchCommentThread).thenAnswer((_) async => commentThread);
         when(newestComment).thenReturn(comment);
         final repository = createSubject();
@@ -125,43 +141,51 @@ void main() {
           expectLater(
             repository.stream,
             emits(
-              isA<ReplyUpdate>()
-                  .having(
-                    (update) => update.form,
-                    'form',
-                    form,
-                  )
-                  .having(
-                    (update) => update.comment,
-                    'comment',
-                    comment,
-                  ),
+              Reply.from(
+                parentId: parentId,
+                comment: comment,
+              ),
             ),
           ),
         );
         await repository.reply(form);
         verify(reply).called(1);
+        verify(clear).called(1);
         verify(fetchCommentThread).called(1);
         verify(newestComment).called(1);
       });
 
-      test('calls reply and returns when fetchCommentThread throws', () async {
+      test('calls reply and returns when clear throws', () async {
         when(reply).thenAnswer((_) async {});
+        when(clear).thenThrow(Exception('oops'));
+        final repository = createSubject();
+        await repository.reply(form);
+        verify(reply).called(1);
+        verify(clear).called(1);
+      });
+
+      test('calls reply, clear and returns '
+          'when fetchCommentThread throws', () async {
+        when(reply).thenAnswer((_) async {});
+        when(clear).thenAnswer((_) async {});
         when(fetchCommentThread).thenThrow(Exception('oops'));
         final repository = createSubject();
         await repository.reply(form);
         verify(reply).called(1);
+        verify(clear).called(1);
         verify(fetchCommentThread).called(1);
       });
 
-      test('calls reply, fetchCommentThread and returns '
+      test('calls reply, clear, fetchCommentThread and returns '
           'when newestComment throws', () async {
         when(reply).thenAnswer((_) async {});
+        when(clear).thenAnswer((_) async {});
         when(fetchCommentThread).thenAnswer((_) async => commentThread);
         when(newestComment).thenThrow(Exception('oops'));
         final repository = createSubject();
         await repository.reply(form);
         verify(reply).called(1);
+        verify(clear).called(1);
         verify(fetchCommentThread).called(1);
         verify(newestComment).called(1);
       });

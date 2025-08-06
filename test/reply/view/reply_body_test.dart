@@ -30,8 +30,8 @@ void main() {
       when(() => bloc.state).thenReturn(state);
       when(() => state.form).thenReturn(form);
       when(() => state.parent).thenReturn(
-        ReplyParentModel(
-          parent: ReplyParentPlaceholder(),
+        OtherUserReplyParentModel(
+          parent: OtherUserReplyParentPlaceholder(),
         ),
       );
       when(() => form.text).thenReturn('text');
