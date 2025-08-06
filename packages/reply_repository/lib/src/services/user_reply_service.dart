@@ -26,8 +26,6 @@ class UserReplyService {
       throw const FindUserReplyFailure();
     }
 
-    // TODO: comment should have indent + 1
-
     return newUserComment;
   }
 }
