@@ -149,10 +149,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: "0b1b12a0a549605e5f04476031cd0bc91ead1d7c8e830773a18ee54179b3cb62"
+      sha256: ba95c961bafcd8686d1cf63be864eb59447e795e124d98d6a27d91fcd13602fb
       url: "https://pub.dev"
     source: hosted
-    version: "8.11.0"
+    version: "8.11.1"
   chalkdart:
     dependency: transitive
     description:
@@ -676,16 +676,16 @@ packages:
     description:
       path: "packages/go_router"
       ref: relative-routes
-      resolved-ref: a8a757d8aade034f48a6926ac8cc89350d1957ff
+      resolved-ref: "9eb0564202748a44769e88096a1a0b2b021e09ac"
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
-    version: "16.0.1"
+    version: "16.1.1"
   go_router_builder:
     dependency: "direct dev"
     description:
       path: "packages/go_router_builder"
       ref: relative-routes
-      resolved-ref: a8a757d8aade034f48a6926ac8cc89350d1957ff
+      resolved-ref: "9eb0564202748a44769e88096a1a0b2b021e09ac"
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "3.0.2"
@@ -781,10 +781,10 @@ packages:
     dependency: transitive
     description:
       name: image_size_getter
-      sha256: "9a299e3af2ebbcfd1baf21456c3c884037ff524316c97d8e56035ea8fdf35653"
+      sha256: "7c26937e0ae341ca558b7556591fd0cc456fcc454583b7cb665d2f03e93e590f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.1"
   integration_test:
     dependency: transitive
     description: flutter
