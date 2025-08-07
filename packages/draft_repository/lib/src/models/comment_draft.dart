@@ -5,29 +5,26 @@ part of 'draft.dart';
 @freezed
 class CommentDraft extends Draft with _$CommentDraft {
   const CommentDraft({
-    required this.id,
     required this.createdAt,
     required this.draft,
     required this.postId,
-    required this.postUser,
+    required this.postUserId,
     required this.postTitle,
   });
 
-  factory CommentDraft.from(CommentDraft data) {
+  factory CommentDraft.from(CommentDraftData data) {
     return CommentDraft(
-      id: data.id,
       createdAt: data.createdAt,
       draft: data.draft,
       postId: data.postId,
-      postUser: data.postUser,
+      postUserId: data.postUserId,
       postTitle: data.postTitle,
     );
   }
 
-  final String id;
   final DateTime createdAt;
   final String draft;
   final String postId;
-  final String postUser;
+  final String postUserId;
   final String postTitle;
 }

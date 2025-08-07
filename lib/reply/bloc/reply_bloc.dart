@@ -98,7 +98,9 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     _replyRepository.updateReply(
-      updatedForm.toRepository(),
+      url: state.url,
+      form: updatedForm.toRepository(),
+      parent: state.parent.toRepository(),
     );
   }
 

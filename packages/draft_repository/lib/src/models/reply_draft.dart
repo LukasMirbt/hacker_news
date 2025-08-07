@@ -5,29 +5,29 @@ part of 'draft.dart';
 @freezed
 class ReplyDraft extends Draft with _$ReplyDraft {
   const ReplyDraft({
-    required this.id,
     required this.createdAt,
     required this.draft,
+    required this.parentId,
     required this.url,
-    required this.parentUser,
-    required this.parentText,
+    required this.parentUserId,
+    required this.parentHtmlText,
   });
 
-  factory ReplyDraft.from(ReplyDraft data) {
+  factory ReplyDraft.from(ReplyDraftData data) {
     return ReplyDraft(
-      id: data.id,
       createdAt: data.createdAt,
       draft: data.draft,
+      parentId: data.parentId,
       url: data.url,
-      parentUser: data.parentUser,
-      parentText: data.parentText,
+      parentUserId: data.parentUserId,
+      parentHtmlText: data.parentHtmlText,
     );
   }
 
-  final String id;
   final DateTime createdAt;
   final String draft;
+  final String parentId;
   final String url;
-  final String parentUser;
-  final String parentText;
+  final String parentUserId;
+  final String parentHtmlText;
 }

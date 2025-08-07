@@ -3,24 +3,29 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $CommentDraftTableTable extends CommentDraftTable
-    with TableInfo<$CommentDraftTableTable, CommentDraftTableData> {
+class $CommentDraftsTable extends CommentDrafts
+    with TableInfo<$CommentDraftsTable, CommentDraftData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CommentDraftTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  $CommentDraftsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
     aliasedName,
     false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _postIdMeta = const VerificationMeta('postId');
+  @override
+  late final GeneratedColumn<String> postId = GeneratedColumn<String>(
+    'post_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -34,21 +39,12 @@ class $CommentDraftTableTable extends CommentDraftTable
     requiredDuringInsert: false,
     clientDefault: DateTime.now,
   );
-  static const VerificationMeta _postIdMeta = const VerificationMeta('postId');
-  @override
-  late final GeneratedColumn<String> postId = GeneratedColumn<String>(
-    'post_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _postUserMeta = const VerificationMeta(
-    'postUser',
+  static const VerificationMeta _postUserIdMeta = const VerificationMeta(
+    'postUserId',
   );
   @override
-  late final GeneratedColumn<String> postUser = GeneratedColumn<String>(
-    'post_user',
+  late final GeneratedColumn<String> postUserId = GeneratedColumn<String>(
+    'post_user_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -76,10 +72,10 @@ class $CommentDraftTableTable extends CommentDraftTable
   );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    createdAt,
+    userId,
     postId,
-    postUser,
+    createdAt,
+    postUserId,
     postTitle,
     draft,
   ];
@@ -87,22 +83,21 @@ class $CommentDraftTableTable extends CommentDraftTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'comment_draft_table';
+  static const String $name = 'comment_drafts';
   @override
   VerificationContext validateIntegrity(
-    Insertable<CommentDraftTableData> instance, {
+    Insertable<CommentDraftData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created_at')) {
+    if (data.containsKey('user_id')) {
       context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
       );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('post_id')) {
       context.handle(
@@ -112,13 +107,22 @@ class $CommentDraftTableTable extends CommentDraftTable
     } else if (isInserting) {
       context.missing(_postIdMeta);
     }
-    if (data.containsKey('post_user')) {
+    if (data.containsKey('created_at')) {
       context.handle(
-        _postUserMeta,
-        postUser.isAcceptableOrUnknown(data['post_user']!, _postUserMeta),
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('post_user_id')) {
+      context.handle(
+        _postUserIdMeta,
+        postUserId.isAcceptableOrUnknown(
+          data['post_user_id']!,
+          _postUserIdMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_postUserMeta);
+      context.missing(_postUserIdMeta);
     }
     if (data.containsKey('post_title')) {
       context.handle(
@@ -140,26 +144,26 @@ class $CommentDraftTableTable extends CommentDraftTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {userId, postId};
   @override
-  CommentDraftTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  CommentDraftData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CommentDraftTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
+    return CommentDraftData(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
       )!,
       postId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}post_id'],
       )!,
-      postUser: attachedDatabase.typeMapping.read(
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      postUserId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}post_user'],
+        data['${effectivePrefix}post_user_id'],
       )!,
       postTitle: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -173,60 +177,60 @@ class $CommentDraftTableTable extends CommentDraftTable
   }
 
   @override
-  $CommentDraftTableTable createAlias(String alias) {
-    return $CommentDraftTableTable(attachedDatabase, alias);
+  $CommentDraftsTable createAlias(String alias) {
+    return $CommentDraftsTable(attachedDatabase, alias);
   }
 }
 
-class CommentDraftTableData extends DataClass
-    implements Insertable<CommentDraftTableData> {
-  final int id;
-  final DateTime createdAt;
+class CommentDraftData extends DataClass
+    implements Insertable<CommentDraftData> {
+  final String userId;
   final String postId;
-  final String postUser;
+  final DateTime createdAt;
+  final String postUserId;
   final String postTitle;
   final String draft;
-  const CommentDraftTableData({
-    required this.id,
-    required this.createdAt,
+  const CommentDraftData({
+    required this.userId,
     required this.postId,
-    required this.postUser,
+    required this.createdAt,
+    required this.postUserId,
     required this.postTitle,
     required this.draft,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['created_at'] = Variable<DateTime>(createdAt);
+    map['user_id'] = Variable<String>(userId);
     map['post_id'] = Variable<String>(postId);
-    map['post_user'] = Variable<String>(postUser);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['post_user_id'] = Variable<String>(postUserId);
     map['post_title'] = Variable<String>(postTitle);
     map['draft'] = Variable<String>(draft);
     return map;
   }
 
-  CommentDraftTableCompanion toCompanion(bool nullToAbsent) {
-    return CommentDraftTableCompanion(
-      id: Value(id),
-      createdAt: Value(createdAt),
+  CommentDraftsCompanion toCompanion(bool nullToAbsent) {
+    return CommentDraftsCompanion(
+      userId: Value(userId),
       postId: Value(postId),
-      postUser: Value(postUser),
+      createdAt: Value(createdAt),
+      postUserId: Value(postUserId),
       postTitle: Value(postTitle),
       draft: Value(draft),
     );
   }
 
-  factory CommentDraftTableData.fromJson(
+  factory CommentDraftData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return CommentDraftTableData(
-      id: serializer.fromJson<int>(json['id']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    return CommentDraftData(
+      userId: serializer.fromJson<String>(json['userId']),
       postId: serializer.fromJson<String>(json['postId']),
-      postUser: serializer.fromJson<String>(json['postUser']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      postUserId: serializer.fromJson<String>(json['postUserId']),
       postTitle: serializer.fromJson<String>(json['postTitle']),
       draft: serializer.fromJson<String>(json['draft']),
     );
@@ -235,36 +239,38 @@ class CommentDraftTableData extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'userId': serializer.toJson<String>(userId),
       'postId': serializer.toJson<String>(postId),
-      'postUser': serializer.toJson<String>(postUser),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'postUserId': serializer.toJson<String>(postUserId),
       'postTitle': serializer.toJson<String>(postTitle),
       'draft': serializer.toJson<String>(draft),
     };
   }
 
-  CommentDraftTableData copyWith({
-    int? id,
-    DateTime? createdAt,
+  CommentDraftData copyWith({
+    String? userId,
     String? postId,
-    String? postUser,
+    DateTime? createdAt,
+    String? postUserId,
     String? postTitle,
     String? draft,
-  }) => CommentDraftTableData(
-    id: id ?? this.id,
-    createdAt: createdAt ?? this.createdAt,
+  }) => CommentDraftData(
+    userId: userId ?? this.userId,
     postId: postId ?? this.postId,
-    postUser: postUser ?? this.postUser,
+    createdAt: createdAt ?? this.createdAt,
+    postUserId: postUserId ?? this.postUserId,
     postTitle: postTitle ?? this.postTitle,
     draft: draft ?? this.draft,
   );
-  CommentDraftTableData copyWithCompanion(CommentDraftTableCompanion data) {
-    return CommentDraftTableData(
-      id: data.id.present ? data.id.value : this.id,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+  CommentDraftData copyWithCompanion(CommentDraftsCompanion data) {
+    return CommentDraftData(
+      userId: data.userId.present ? data.userId.value : this.userId,
       postId: data.postId.present ? data.postId.value : this.postId,
-      postUser: data.postUser.present ? data.postUser.value : this.postUser,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      postUserId: data.postUserId.present
+          ? data.postUserId.value
+          : this.postUserId,
       postTitle: data.postTitle.present ? data.postTitle.value : this.postTitle,
       draft: data.draft.present ? data.draft.value : this.draft,
     );
@@ -272,11 +278,11 @@ class CommentDraftTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('CommentDraftTableData(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
+    return (StringBuffer('CommentDraftData(')
+          ..write('userId: $userId, ')
           ..write('postId: $postId, ')
-          ..write('postUser: $postUser, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
           ..write('draft: $draft')
           ..write(')'))
@@ -285,96 +291,103 @@ class CommentDraftTableData extends DataClass
 
   @override
   int get hashCode =>
-      Object.hash(id, createdAt, postId, postUser, postTitle, draft);
+      Object.hash(userId, postId, createdAt, postUserId, postTitle, draft);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is CommentDraftTableData &&
-          other.id == this.id &&
-          other.createdAt == this.createdAt &&
+      (other is CommentDraftData &&
+          other.userId == this.userId &&
           other.postId == this.postId &&
-          other.postUser == this.postUser &&
+          other.createdAt == this.createdAt &&
+          other.postUserId == this.postUserId &&
           other.postTitle == this.postTitle &&
           other.draft == this.draft);
 }
 
-class CommentDraftTableCompanion
-    extends UpdateCompanion<CommentDraftTableData> {
-  final Value<int> id;
-  final Value<DateTime> createdAt;
+class CommentDraftsCompanion extends UpdateCompanion<CommentDraftData> {
+  final Value<String> userId;
   final Value<String> postId;
-  final Value<String> postUser;
+  final Value<DateTime> createdAt;
+  final Value<String> postUserId;
   final Value<String> postTitle;
   final Value<String> draft;
-  const CommentDraftTableCompanion({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
+  final Value<int> rowid;
+  const CommentDraftsCompanion({
+    this.userId = const Value.absent(),
     this.postId = const Value.absent(),
-    this.postUser = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.postUserId = const Value.absent(),
     this.postTitle = const Value.absent(),
     this.draft = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
-  CommentDraftTableCompanion.insert({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
+  CommentDraftsCompanion.insert({
+    required String userId,
     required String postId,
-    required String postUser,
+    this.createdAt = const Value.absent(),
+    required String postUserId,
     required String postTitle,
     required String draft,
-  }) : postId = Value(postId),
-       postUser = Value(postUser),
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId),
+       postId = Value(postId),
+       postUserId = Value(postUserId),
        postTitle = Value(postTitle),
        draft = Value(draft);
-  static Insertable<CommentDraftTableData> custom({
-    Expression<int>? id,
-    Expression<DateTime>? createdAt,
+  static Insertable<CommentDraftData> custom({
+    Expression<String>? userId,
     Expression<String>? postId,
-    Expression<String>? postUser,
+    Expression<DateTime>? createdAt,
+    Expression<String>? postUserId,
     Expression<String>? postTitle,
     Expression<String>? draft,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (createdAt != null) 'created_at': createdAt,
+      if (userId != null) 'user_id': userId,
       if (postId != null) 'post_id': postId,
-      if (postUser != null) 'post_user': postUser,
+      if (createdAt != null) 'created_at': createdAt,
+      if (postUserId != null) 'post_user_id': postUserId,
       if (postTitle != null) 'post_title': postTitle,
       if (draft != null) 'draft': draft,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  CommentDraftTableCompanion copyWith({
-    Value<int>? id,
-    Value<DateTime>? createdAt,
+  CommentDraftsCompanion copyWith({
+    Value<String>? userId,
     Value<String>? postId,
-    Value<String>? postUser,
+    Value<DateTime>? createdAt,
+    Value<String>? postUserId,
     Value<String>? postTitle,
     Value<String>? draft,
+    Value<int>? rowid,
   }) {
-    return CommentDraftTableCompanion(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
+    return CommentDraftsCompanion(
+      userId: userId ?? this.userId,
       postId: postId ?? this.postId,
-      postUser: postUser ?? this.postUser,
+      createdAt: createdAt ?? this.createdAt,
+      postUserId: postUserId ?? this.postUserId,
       postTitle: postTitle ?? this.postTitle,
       draft: draft ?? this.draft,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
     }
     if (postId.present) {
       map['post_id'] = Variable<String>(postId.value);
     }
-    if (postUser.present) {
-      map['post_user'] = Variable<String>(postUser.value);
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (postUserId.present) {
+      map['post_user_id'] = Variable<String>(postUserId.value);
     }
     if (postTitle.present) {
       map['post_title'] = Variable<String>(postTitle.value);
@@ -382,41 +395,52 @@ class CommentDraftTableCompanion
     if (draft.present) {
       map['draft'] = Variable<String>(draft.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('CommentDraftTableCompanion(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
+    return (StringBuffer('CommentDraftsCompanion(')
+          ..write('userId: $userId, ')
           ..write('postId: $postId, ')
-          ..write('postUser: $postUser, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
-          ..write('draft: $draft')
+          ..write('draft: $draft, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
 }
 
 class $ReplyDraftsTable extends ReplyDrafts
-    with TableInfo<$ReplyDraftsTable, ReplyDraft> {
+    with TableInfo<$ReplyDraftsTable, ReplyDraftData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ReplyDraftsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
     aliasedName,
     false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentIdMeta = const VerificationMeta(
+    'parentId',
+  );
+  @override
+  late final GeneratedColumn<String> parentId = GeneratedColumn<String>(
+    'parent_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -439,23 +463,23 @@ class $ReplyDraftsTable extends ReplyDrafts
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _parentUserMeta = const VerificationMeta(
-    'parentUser',
+  static const VerificationMeta _parentUserIdMeta = const VerificationMeta(
+    'parentUserId',
   );
   @override
-  late final GeneratedColumn<String> parentUser = GeneratedColumn<String>(
-    'parent_user',
+  late final GeneratedColumn<String> parentUserId = GeneratedColumn<String>(
+    'parent_user_id',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _parentTextMeta = const VerificationMeta(
-    'parentText',
+  static const VerificationMeta _parentHtmlTextMeta = const VerificationMeta(
+    'parentHtmlText',
   );
   @override
-  late final GeneratedColumn<String> parentText = GeneratedColumn<String>(
-    'parent_text',
+  late final GeneratedColumn<String> parentHtmlText = GeneratedColumn<String>(
+    'parent_html_text',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -472,11 +496,12 @@ class $ReplyDraftsTable extends ReplyDrafts
   );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
+    userId,
+    parentId,
     createdAt,
     url,
-    parentUser,
-    parentText,
+    parentUserId,
+    parentHtmlText,
     draft,
   ];
   @override
@@ -486,13 +511,26 @@ class $ReplyDraftsTable extends ReplyDrafts
   static const String $name = 'reply_drafts';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ReplyDraft> instance, {
+    Insertable<ReplyDraftData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(
+        _parentIdMeta,
+        parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_parentIdMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(
@@ -508,21 +546,27 @@ class $ReplyDraftsTable extends ReplyDrafts
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
-    if (data.containsKey('parent_user')) {
+    if (data.containsKey('parent_user_id')) {
       context.handle(
-        _parentUserMeta,
-        parentUser.isAcceptableOrUnknown(data['parent_user']!, _parentUserMeta),
+        _parentUserIdMeta,
+        parentUserId.isAcceptableOrUnknown(
+          data['parent_user_id']!,
+          _parentUserIdMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_parentUserMeta);
+      context.missing(_parentUserIdMeta);
     }
-    if (data.containsKey('parent_text')) {
+    if (data.containsKey('parent_html_text')) {
       context.handle(
-        _parentTextMeta,
-        parentText.isAcceptableOrUnknown(data['parent_text']!, _parentTextMeta),
+        _parentHtmlTextMeta,
+        parentHtmlText.isAcceptableOrUnknown(
+          data['parent_html_text']!,
+          _parentHtmlTextMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_parentTextMeta);
+      context.missing(_parentHtmlTextMeta);
     }
     if (data.containsKey('draft')) {
       context.handle(
@@ -536,14 +580,18 @@ class $ReplyDraftsTable extends ReplyDrafts
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {userId, parentId};
   @override
-  ReplyDraft map(Map<String, dynamic> data, {String? tablePrefix}) {
+  ReplyDraftData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReplyDraft(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
+    return ReplyDraftData(
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      parentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_id'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
@@ -553,13 +601,13 @@ class $ReplyDraftsTable extends ReplyDrafts
         DriftSqlType.string,
         data['${effectivePrefix}url'],
       )!,
-      parentUser: attachedDatabase.typeMapping.read(
+      parentUserId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}parent_user'],
+        data['${effectivePrefix}parent_user_id'],
       )!,
-      parentText: attachedDatabase.typeMapping.read(
+      parentHtmlText: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}parent_text'],
+        data['${effectivePrefix}parent_html_text'],
       )!,
       draft: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -574,55 +622,60 @@ class $ReplyDraftsTable extends ReplyDrafts
   }
 }
 
-class ReplyDraft extends DataClass implements Insertable<ReplyDraft> {
-  final int id;
+class ReplyDraftData extends DataClass implements Insertable<ReplyDraftData> {
+  final String userId;
+  final String parentId;
   final DateTime createdAt;
   final String url;
-  final String parentUser;
-  final String parentText;
+  final String parentUserId;
+  final String parentHtmlText;
   final String draft;
-  const ReplyDraft({
-    required this.id,
+  const ReplyDraftData({
+    required this.userId,
+    required this.parentId,
     required this.createdAt,
     required this.url,
-    required this.parentUser,
-    required this.parentText,
+    required this.parentUserId,
+    required this.parentHtmlText,
     required this.draft,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    map['user_id'] = Variable<String>(userId);
+    map['parent_id'] = Variable<String>(parentId);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['url'] = Variable<String>(url);
-    map['parent_user'] = Variable<String>(parentUser);
-    map['parent_text'] = Variable<String>(parentText);
+    map['parent_user_id'] = Variable<String>(parentUserId);
+    map['parent_html_text'] = Variable<String>(parentHtmlText);
     map['draft'] = Variable<String>(draft);
     return map;
   }
 
   ReplyDraftsCompanion toCompanion(bool nullToAbsent) {
     return ReplyDraftsCompanion(
-      id: Value(id),
+      userId: Value(userId),
+      parentId: Value(parentId),
       createdAt: Value(createdAt),
       url: Value(url),
-      parentUser: Value(parentUser),
-      parentText: Value(parentText),
+      parentUserId: Value(parentUserId),
+      parentHtmlText: Value(parentHtmlText),
       draft: Value(draft),
     );
   }
 
-  factory ReplyDraft.fromJson(
+  factory ReplyDraftData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReplyDraft(
-      id: serializer.fromJson<int>(json['id']),
+    return ReplyDraftData(
+      userId: serializer.fromJson<String>(json['userId']),
+      parentId: serializer.fromJson<String>(json['parentId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       url: serializer.fromJson<String>(json['url']),
-      parentUser: serializer.fromJson<String>(json['parentUser']),
-      parentText: serializer.fromJson<String>(json['parentText']),
+      parentUserId: serializer.fromJson<String>(json['parentUserId']),
+      parentHtmlText: serializer.fromJson<String>(json['parentHtmlText']),
       draft: serializer.fromJson<String>(json['draft']),
     );
   }
@@ -630,140 +683,172 @@ class ReplyDraft extends DataClass implements Insertable<ReplyDraft> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<String>(userId),
+      'parentId': serializer.toJson<String>(parentId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'url': serializer.toJson<String>(url),
-      'parentUser': serializer.toJson<String>(parentUser),
-      'parentText': serializer.toJson<String>(parentText),
+      'parentUserId': serializer.toJson<String>(parentUserId),
+      'parentHtmlText': serializer.toJson<String>(parentHtmlText),
       'draft': serializer.toJson<String>(draft),
     };
   }
 
-  ReplyDraft copyWith({
-    int? id,
+  ReplyDraftData copyWith({
+    String? userId,
+    String? parentId,
     DateTime? createdAt,
     String? url,
-    String? parentUser,
-    String? parentText,
+    String? parentUserId,
+    String? parentHtmlText,
     String? draft,
-  }) => ReplyDraft(
-    id: id ?? this.id,
+  }) => ReplyDraftData(
+    userId: userId ?? this.userId,
+    parentId: parentId ?? this.parentId,
     createdAt: createdAt ?? this.createdAt,
     url: url ?? this.url,
-    parentUser: parentUser ?? this.parentUser,
-    parentText: parentText ?? this.parentText,
+    parentUserId: parentUserId ?? this.parentUserId,
+    parentHtmlText: parentHtmlText ?? this.parentHtmlText,
     draft: draft ?? this.draft,
   );
-  ReplyDraft copyWithCompanion(ReplyDraftsCompanion data) {
-    return ReplyDraft(
-      id: data.id.present ? data.id.value : this.id,
+  ReplyDraftData copyWithCompanion(ReplyDraftsCompanion data) {
+    return ReplyDraftData(
+      userId: data.userId.present ? data.userId.value : this.userId,
+      parentId: data.parentId.present ? data.parentId.value : this.parentId,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       url: data.url.present ? data.url.value : this.url,
-      parentUser: data.parentUser.present
-          ? data.parentUser.value
-          : this.parentUser,
-      parentText: data.parentText.present
-          ? data.parentText.value
-          : this.parentText,
+      parentUserId: data.parentUserId.present
+          ? data.parentUserId.value
+          : this.parentUserId,
+      parentHtmlText: data.parentHtmlText.present
+          ? data.parentHtmlText.value
+          : this.parentHtmlText,
       draft: data.draft.present ? data.draft.value : this.draft,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('ReplyDraft(')
-          ..write('id: $id, ')
+    return (StringBuffer('ReplyDraftData(')
+          ..write('userId: $userId, ')
+          ..write('parentId: $parentId, ')
           ..write('createdAt: $createdAt, ')
           ..write('url: $url, ')
-          ..write('parentUser: $parentUser, ')
-          ..write('parentText: $parentText, ')
+          ..write('parentUserId: $parentUserId, ')
+          ..write('parentHtmlText: $parentHtmlText, ')
           ..write('draft: $draft')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, createdAt, url, parentUser, parentText, draft);
+  int get hashCode => Object.hash(
+    userId,
+    parentId,
+    createdAt,
+    url,
+    parentUserId,
+    parentHtmlText,
+    draft,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ReplyDraft &&
-          other.id == this.id &&
+      (other is ReplyDraftData &&
+          other.userId == this.userId &&
+          other.parentId == this.parentId &&
           other.createdAt == this.createdAt &&
           other.url == this.url &&
-          other.parentUser == this.parentUser &&
-          other.parentText == this.parentText &&
+          other.parentUserId == this.parentUserId &&
+          other.parentHtmlText == this.parentHtmlText &&
           other.draft == this.draft);
 }
 
-class ReplyDraftsCompanion extends UpdateCompanion<ReplyDraft> {
-  final Value<int> id;
+class ReplyDraftsCompanion extends UpdateCompanion<ReplyDraftData> {
+  final Value<String> userId;
+  final Value<String> parentId;
   final Value<DateTime> createdAt;
   final Value<String> url;
-  final Value<String> parentUser;
-  final Value<String> parentText;
+  final Value<String> parentUserId;
+  final Value<String> parentHtmlText;
   final Value<String> draft;
+  final Value<int> rowid;
   const ReplyDraftsCompanion({
-    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.parentId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.url = const Value.absent(),
-    this.parentUser = const Value.absent(),
-    this.parentText = const Value.absent(),
+    this.parentUserId = const Value.absent(),
+    this.parentHtmlText = const Value.absent(),
     this.draft = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ReplyDraftsCompanion.insert({
-    this.id = const Value.absent(),
+    required String userId,
+    required String parentId,
     this.createdAt = const Value.absent(),
     required String url,
-    required String parentUser,
-    required String parentText,
+    required String parentUserId,
+    required String parentHtmlText,
     required String draft,
-  }) : url = Value(url),
-       parentUser = Value(parentUser),
-       parentText = Value(parentText),
+    this.rowid = const Value.absent(),
+  }) : userId = Value(userId),
+       parentId = Value(parentId),
+       url = Value(url),
+       parentUserId = Value(parentUserId),
+       parentHtmlText = Value(parentHtmlText),
        draft = Value(draft);
-  static Insertable<ReplyDraft> custom({
-    Expression<int>? id,
+  static Insertable<ReplyDraftData> custom({
+    Expression<String>? userId,
+    Expression<String>? parentId,
     Expression<DateTime>? createdAt,
     Expression<String>? url,
-    Expression<String>? parentUser,
-    Expression<String>? parentText,
+    Expression<String>? parentUserId,
+    Expression<String>? parentHtmlText,
     Expression<String>? draft,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (parentId != null) 'parent_id': parentId,
       if (createdAt != null) 'created_at': createdAt,
       if (url != null) 'url': url,
-      if (parentUser != null) 'parent_user': parentUser,
-      if (parentText != null) 'parent_text': parentText,
+      if (parentUserId != null) 'parent_user_id': parentUserId,
+      if (parentHtmlText != null) 'parent_html_text': parentHtmlText,
       if (draft != null) 'draft': draft,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ReplyDraftsCompanion copyWith({
-    Value<int>? id,
+    Value<String>? userId,
+    Value<String>? parentId,
     Value<DateTime>? createdAt,
     Value<String>? url,
-    Value<String>? parentUser,
-    Value<String>? parentText,
+    Value<String>? parentUserId,
+    Value<String>? parentHtmlText,
     Value<String>? draft,
+    Value<int>? rowid,
   }) {
     return ReplyDraftsCompanion(
-      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      parentId: parentId ?? this.parentId,
       createdAt: createdAt ?? this.createdAt,
       url: url ?? this.url,
-      parentUser: parentUser ?? this.parentUser,
-      parentText: parentText ?? this.parentText,
+      parentUserId: parentUserId ?? this.parentUserId,
+      parentHtmlText: parentHtmlText ?? this.parentHtmlText,
       draft: draft ?? this.draft,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<String>(parentId.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
@@ -771,14 +856,17 @@ class ReplyDraftsCompanion extends UpdateCompanion<ReplyDraft> {
     if (url.present) {
       map['url'] = Variable<String>(url.value);
     }
-    if (parentUser.present) {
-      map['parent_user'] = Variable<String>(parentUser.value);
+    if (parentUserId.present) {
+      map['parent_user_id'] = Variable<String>(parentUserId.value);
     }
-    if (parentText.present) {
-      map['parent_text'] = Variable<String>(parentText.value);
+    if (parentHtmlText.present) {
+      map['parent_html_text'] = Variable<String>(parentHtmlText.value);
     }
     if (draft.present) {
       map['draft'] = Variable<String>(draft.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
@@ -786,12 +874,14 @@ class ReplyDraftsCompanion extends UpdateCompanion<ReplyDraft> {
   @override
   String toString() {
     return (StringBuffer('ReplyDraftsCompanion(')
-          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('parentId: $parentId, ')
           ..write('createdAt: $createdAt, ')
           ..write('url: $url, ')
-          ..write('parentUser: $parentUser, ')
-          ..write('parentText: $parentText, ')
-          ..write('draft: $draft')
+          ..write('parentUserId: $parentUserId, ')
+          ..write('parentHtmlText: $parentHtmlText, ')
+          ..write('draft: $draft, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -800,54 +890,50 @@ class ReplyDraftsCompanion extends UpdateCompanion<ReplyDraft> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $CommentDraftTableTable commentDraftTable =
-      $CommentDraftTableTable(this);
+  late final $CommentDraftsTable commentDrafts = $CommentDraftsTable(this);
   late final $ReplyDraftsTable replyDrafts = $ReplyDraftsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    commentDraftTable,
+    commentDrafts,
     replyDrafts,
   ];
 }
 
-typedef $$CommentDraftTableTableCreateCompanionBuilder =
-    CommentDraftTableCompanion Function({
-      Value<int> id,
-      Value<DateTime> createdAt,
+typedef $$CommentDraftsTableCreateCompanionBuilder =
+    CommentDraftsCompanion Function({
+      required String userId,
       required String postId,
-      required String postUser,
+      Value<DateTime> createdAt,
+      required String postUserId,
       required String postTitle,
       required String draft,
+      Value<int> rowid,
     });
-typedef $$CommentDraftTableTableUpdateCompanionBuilder =
-    CommentDraftTableCompanion Function({
-      Value<int> id,
-      Value<DateTime> createdAt,
+typedef $$CommentDraftsTableUpdateCompanionBuilder =
+    CommentDraftsCompanion Function({
+      Value<String> userId,
       Value<String> postId,
-      Value<String> postUser,
+      Value<DateTime> createdAt,
+      Value<String> postUserId,
       Value<String> postTitle,
       Value<String> draft,
+      Value<int> rowid,
     });
 
-class $$CommentDraftTableTableFilterComposer
-    extends Composer<_$AppDatabase, $CommentDraftTableTable> {
-  $$CommentDraftTableTableFilterComposer({
+class $$CommentDraftsTableFilterComposer
+    extends Composer<_$AppDatabase, $CommentDraftsTable> {
+  $$CommentDraftsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -856,8 +942,13 @@ class $$CommentDraftTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get postUser => $composableBuilder(
-    column: $table.postUser,
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get postUserId => $composableBuilder(
+    column: $table.postUserId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -872,22 +963,17 @@ class $$CommentDraftTableTableFilterComposer
   );
 }
 
-class $$CommentDraftTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $CommentDraftTableTable> {
-  $$CommentDraftTableTableOrderingComposer({
+class $$CommentDraftsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CommentDraftsTable> {
+  $$CommentDraftsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -896,8 +982,13 @@ class $$CommentDraftTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get postUser => $composableBuilder(
-    column: $table.postUser,
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get postUserId => $composableBuilder(
+    column: $table.postUserId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -912,26 +1003,28 @@ class $$CommentDraftTableTableOrderingComposer
   );
 }
 
-class $$CommentDraftTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CommentDraftTableTable> {
-  $$CommentDraftTableTableAnnotationComposer({
+class $$CommentDraftsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CommentDraftsTable> {
+  $$CommentDraftsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
 
   GeneratedColumn<String> get postId =>
       $composableBuilder(column: $table.postId, builder: (column) => column);
 
-  GeneratedColumn<String> get postUser =>
-      $composableBuilder(column: $table.postUser, builder: (column) => column);
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get postUserId => $composableBuilder(
+    column: $table.postUserId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get postTitle =>
       $composableBuilder(column: $table.postTitle, builder: (column) => column);
@@ -940,75 +1033,74 @@ class $$CommentDraftTableTableAnnotationComposer
       $composableBuilder(column: $table.draft, builder: (column) => column);
 }
 
-class $$CommentDraftTableTableTableManager
+class $$CommentDraftsTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $CommentDraftTableTable,
-          CommentDraftTableData,
-          $$CommentDraftTableTableFilterComposer,
-          $$CommentDraftTableTableOrderingComposer,
-          $$CommentDraftTableTableAnnotationComposer,
-          $$CommentDraftTableTableCreateCompanionBuilder,
-          $$CommentDraftTableTableUpdateCompanionBuilder,
+          $CommentDraftsTable,
+          CommentDraftData,
+          $$CommentDraftsTableFilterComposer,
+          $$CommentDraftsTableOrderingComposer,
+          $$CommentDraftsTableAnnotationComposer,
+          $$CommentDraftsTableCreateCompanionBuilder,
+          $$CommentDraftsTableUpdateCompanionBuilder,
           (
-            CommentDraftTableData,
+            CommentDraftData,
             BaseReferences<
               _$AppDatabase,
-              $CommentDraftTableTable,
-              CommentDraftTableData
+              $CommentDraftsTable,
+              CommentDraftData
             >,
           ),
-          CommentDraftTableData,
+          CommentDraftData,
           PrefetchHooks Function()
         > {
-  $$CommentDraftTableTableTableManager(
-    _$AppDatabase db,
-    $CommentDraftTableTable table,
-  ) : super(
+  $$CommentDraftsTableTableManager(_$AppDatabase db, $CommentDraftsTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$CommentDraftTableTableFilterComposer($db: db, $table: table),
+              $$CommentDraftsTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$CommentDraftTableTableOrderingComposer($db: db, $table: table),
+              $$CommentDraftsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$CommentDraftTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+              $$CommentDraftsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
+                Value<String> userId = const Value.absent(),
                 Value<String> postId = const Value.absent(),
-                Value<String> postUser = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String> postUserId = const Value.absent(),
                 Value<String> postTitle = const Value.absent(),
                 Value<String> draft = const Value.absent(),
-              }) => CommentDraftTableCompanion(
-                id: id,
-                createdAt: createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CommentDraftsCompanion(
+                userId: userId,
                 postId: postId,
-                postUser: postUser,
+                createdAt: createdAt,
+                postUserId: postUserId,
                 postTitle: postTitle,
                 draft: draft,
+                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
+                required String userId,
                 required String postId,
-                required String postUser,
+                Value<DateTime> createdAt = const Value.absent(),
+                required String postUserId,
                 required String postTitle,
                 required String draft,
-              }) => CommentDraftTableCompanion.insert(
-                id: id,
-                createdAt: createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CommentDraftsCompanion.insert(
+                userId: userId,
                 postId: postId,
-                postUser: postUser,
+                createdAt: createdAt,
+                postUserId: postUserId,
                 postTitle: postTitle,
                 draft: draft,
+                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -1018,44 +1110,44 @@ class $$CommentDraftTableTableTableManager
       );
 }
 
-typedef $$CommentDraftTableTableProcessedTableManager =
+typedef $$CommentDraftsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $CommentDraftTableTable,
-      CommentDraftTableData,
-      $$CommentDraftTableTableFilterComposer,
-      $$CommentDraftTableTableOrderingComposer,
-      $$CommentDraftTableTableAnnotationComposer,
-      $$CommentDraftTableTableCreateCompanionBuilder,
-      $$CommentDraftTableTableUpdateCompanionBuilder,
+      $CommentDraftsTable,
+      CommentDraftData,
+      $$CommentDraftsTableFilterComposer,
+      $$CommentDraftsTableOrderingComposer,
+      $$CommentDraftsTableAnnotationComposer,
+      $$CommentDraftsTableCreateCompanionBuilder,
+      $$CommentDraftsTableUpdateCompanionBuilder,
       (
-        CommentDraftTableData,
-        BaseReferences<
-          _$AppDatabase,
-          $CommentDraftTableTable,
-          CommentDraftTableData
-        >,
+        CommentDraftData,
+        BaseReferences<_$AppDatabase, $CommentDraftsTable, CommentDraftData>,
       ),
-      CommentDraftTableData,
+      CommentDraftData,
       PrefetchHooks Function()
     >;
 typedef $$ReplyDraftsTableCreateCompanionBuilder =
     ReplyDraftsCompanion Function({
-      Value<int> id,
+      required String userId,
+      required String parentId,
       Value<DateTime> createdAt,
       required String url,
-      required String parentUser,
-      required String parentText,
+      required String parentUserId,
+      required String parentHtmlText,
       required String draft,
+      Value<int> rowid,
     });
 typedef $$ReplyDraftsTableUpdateCompanionBuilder =
     ReplyDraftsCompanion Function({
-      Value<int> id,
+      Value<String> userId,
+      Value<String> parentId,
       Value<DateTime> createdAt,
       Value<String> url,
-      Value<String> parentUser,
-      Value<String> parentText,
+      Value<String> parentUserId,
+      Value<String> parentHtmlText,
       Value<String> draft,
+      Value<int> rowid,
     });
 
 class $$ReplyDraftsTableFilterComposer
@@ -1067,8 +1159,13 @@ class $$ReplyDraftsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get parentId => $composableBuilder(
+    column: $table.parentId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1082,13 +1179,13 @@ class $$ReplyDraftsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get parentUser => $composableBuilder(
-    column: $table.parentUser,
+  ColumnFilters<String> get parentUserId => $composableBuilder(
+    column: $table.parentUserId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get parentText => $composableBuilder(
-    column: $table.parentText,
+  ColumnFilters<String> get parentHtmlText => $composableBuilder(
+    column: $table.parentHtmlText,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1107,8 +1204,13 @@ class $$ReplyDraftsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get parentId => $composableBuilder(
+    column: $table.parentId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1122,13 +1224,13 @@ class $$ReplyDraftsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get parentUser => $composableBuilder(
-    column: $table.parentUser,
+  ColumnOrderings<String> get parentUserId => $composableBuilder(
+    column: $table.parentUserId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get parentText => $composableBuilder(
-    column: $table.parentText,
+  ColumnOrderings<String> get parentHtmlText => $composableBuilder(
+    column: $table.parentHtmlText,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1147,8 +1249,11 @@ class $$ReplyDraftsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get parentId =>
+      $composableBuilder(column: $table.parentId, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -1156,13 +1261,13 @@ class $$ReplyDraftsTableAnnotationComposer
   GeneratedColumn<String> get url =>
       $composableBuilder(column: $table.url, builder: (column) => column);
 
-  GeneratedColumn<String> get parentUser => $composableBuilder(
-    column: $table.parentUser,
+  GeneratedColumn<String> get parentUserId => $composableBuilder(
+    column: $table.parentUserId,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get parentText => $composableBuilder(
-    column: $table.parentText,
+  GeneratedColumn<String> get parentHtmlText => $composableBuilder(
+    column: $table.parentHtmlText,
     builder: (column) => column,
   );
 
@@ -1175,17 +1280,17 @@ class $$ReplyDraftsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $ReplyDraftsTable,
-          ReplyDraft,
+          ReplyDraftData,
           $$ReplyDraftsTableFilterComposer,
           $$ReplyDraftsTableOrderingComposer,
           $$ReplyDraftsTableAnnotationComposer,
           $$ReplyDraftsTableCreateCompanionBuilder,
           $$ReplyDraftsTableUpdateCompanionBuilder,
           (
-            ReplyDraft,
-            BaseReferences<_$AppDatabase, $ReplyDraftsTable, ReplyDraft>,
+            ReplyDraftData,
+            BaseReferences<_$AppDatabase, $ReplyDraftsTable, ReplyDraftData>,
           ),
-          ReplyDraft,
+          ReplyDraftData,
           PrefetchHooks Function()
         > {
   $$ReplyDraftsTableTableManager(_$AppDatabase db, $ReplyDraftsTable table)
@@ -1201,35 +1306,43 @@ class $$ReplyDraftsTableTableManager
               $$ReplyDraftsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<String> parentId = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String> url = const Value.absent(),
-                Value<String> parentUser = const Value.absent(),
-                Value<String> parentText = const Value.absent(),
+                Value<String> parentUserId = const Value.absent(),
+                Value<String> parentHtmlText = const Value.absent(),
                 Value<String> draft = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
               }) => ReplyDraftsCompanion(
-                id: id,
+                userId: userId,
+                parentId: parentId,
                 createdAt: createdAt,
                 url: url,
-                parentUser: parentUser,
-                parentText: parentText,
+                parentUserId: parentUserId,
+                parentHtmlText: parentHtmlText,
                 draft: draft,
+                rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
+                required String userId,
+                required String parentId,
                 Value<DateTime> createdAt = const Value.absent(),
                 required String url,
-                required String parentUser,
-                required String parentText,
+                required String parentUserId,
+                required String parentHtmlText,
                 required String draft,
+                Value<int> rowid = const Value.absent(),
               }) => ReplyDraftsCompanion.insert(
-                id: id,
+                userId: userId,
+                parentId: parentId,
                 createdAt: createdAt,
                 url: url,
-                parentUser: parentUser,
-                parentText: parentText,
+                parentUserId: parentUserId,
+                parentHtmlText: parentHtmlText,
                 draft: draft,
+                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -1243,25 +1356,25 @@ typedef $$ReplyDraftsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $ReplyDraftsTable,
-      ReplyDraft,
+      ReplyDraftData,
       $$ReplyDraftsTableFilterComposer,
       $$ReplyDraftsTableOrderingComposer,
       $$ReplyDraftsTableAnnotationComposer,
       $$ReplyDraftsTableCreateCompanionBuilder,
       $$ReplyDraftsTableUpdateCompanionBuilder,
       (
-        ReplyDraft,
-        BaseReferences<_$AppDatabase, $ReplyDraftsTable, ReplyDraft>,
+        ReplyDraftData,
+        BaseReferences<_$AppDatabase, $ReplyDraftsTable, ReplyDraftData>,
       ),
-      ReplyDraft,
+      ReplyDraftData,
       PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$CommentDraftTableTableTableManager get commentDraftTable =>
-      $$CommentDraftTableTableTableManager(_db, _db.commentDraftTable);
+  $$CommentDraftsTableTableManager get commentDrafts =>
+      $$CommentDraftsTableTableManager(_db, _db.commentDrafts);
   $$ReplyDraftsTableTableManager get replyDrafts =>
       $$ReplyDraftsTableTableManager(_db, _db.replyDrafts);
 }

@@ -15,7 +15,7 @@ class DraftRepository {
     final drafts =
         [
           for (final draft in commentDrafts) CommentDraft.from(draft),
-          for (final draft in replyDrafts) Draft.from(draft),
+          for (final draft in replyDrafts) ReplyDraft.from(draft),
         ]..sort(
           (a, b) => b.createdAt.compareTo(a.createdAt),
         );

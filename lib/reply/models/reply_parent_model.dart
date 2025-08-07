@@ -38,6 +38,8 @@ sealed class ReplyParentModel extends Equatable {
     return ageString;
   }
 
+  ReplyParent toRepository() => _parent;
+
   ReplyParentModel toggleExpansion() {
     return copyWith(
       isExpanded: !isExpanded,

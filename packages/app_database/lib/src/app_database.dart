@@ -6,7 +6,7 @@ part 'app_database.g.dart';
 
 @DriftDatabase(
   tables: [
-    CommentDraftTable,
+    CommentDrafts,
     ReplyDrafts,
   ],
 )
