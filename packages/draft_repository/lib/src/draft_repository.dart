@@ -1,25 +1,32 @@
 import 'package:draft_repository/draft_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 class DraftRepository {
   const DraftRepository({
-    required DraftStorage storage,
-  }) : _storage = storage;
+    required DraftStorage draftStorage,
+  }) : _storage = draftStorage;
 
   final DraftStorage _storage;
 
-  Future<List<Draft>> loadDrafts() async {
-    final commentDrafts = await _storage.loadCommentDrafts();
-    final replyDrafts = await _storage.loadReplyDrafts();
+  Stream<List<Draft>> get drafts {
+    final commentDraftStream = _storage.watchCommentDrafts();
+    final replyDraftStream = _storage.watchReplyDrafts();
 
-    final drafts =
-        [
-          for (final draft in commentDrafts) CommentDraft.from(draft),
-          for (final draft in replyDrafts) ReplyDraft.from(draft),
-        ]..sort(
-          (a, b) => b.createdAt.compareTo(a.createdAt),
-        );
+    return commentDraftStream.combineLatest(
+      replyDraftStream,
+      (commentDrafts, replyDrafts) {
+        print('Drafts emitted: ${commentDrafts.length + replyDrafts.length}');
+        final drafts =
+            [
+              for (final draft in commentDrafts) CommentDraft.from(draft),
+              for (final draft in replyDrafts) ReplyDraft.from(draft),
+            ]..sort(
+              (a, b) => b.createdAt.compareTo(a.createdAt),
+            );
 
-    return drafts;
+        return drafts;
+      },
+    );
   }
 }

@@ -8,7 +8,9 @@ enum DraftStatus {
   success,
   failure;
 
+  bool get isLoading => this == loading;
   bool get isSuccess => this == success;
+  bool get isFailure => this == failure;
 }
 
 @freezed

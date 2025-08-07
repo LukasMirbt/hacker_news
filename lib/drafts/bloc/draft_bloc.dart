@@ -7,31 +7,27 @@ class DraftBloc extends Bloc<DraftEvent, DraftState> {
     required DraftRepository draftRepository,
   }) : _repository = draftRepository,
        super(const DraftState()) {
-    on<DraftStarted>(_onStarted);
+    on<DraftSubscriptionRequested>(_onSubscriptionRequested);
   }
 
   final DraftRepository _repository;
 
-  Future<void> _onStarted(
-    DraftStarted event,
+  Future<void> _onSubscriptionRequested(
+    DraftSubscriptionRequested event,
     Emitter<DraftState> emit,
-  ) async {
-    try {
-      final drafts = await _repository.loadDrafts();
-
-      emit(
-        state.copyWith(
-          status: DraftStatus.success,
-          drafts: drafts,
-        ),
-      );
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
+  ) {
+    return emit.forEach(
+      _repository.drafts,
+      onData: (drafts) => state.copyWith(
+        drafts: drafts,
+        status: DraftStatus.success,
+      ),
+      onError: (error, stackTrace) {
+        addError(error, stackTrace);
+        return state.copyWith(
           status: DraftStatus.failure,
-        ),
-      );
-    }
+        );
+      },
+    );
   }
 }

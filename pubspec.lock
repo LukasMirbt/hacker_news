@@ -708,7 +708,7 @@ packages:
     description:
       path: "packages/go_router"
       ref: relative-routes
-      resolved-ref: "9eb0564202748a44769e88096a1a0b2b021e09ac"
+      resolved-ref: b66798207828a8f0e0dad8ce947676faa585623c
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "16.1.1"
@@ -717,7 +717,7 @@ packages:
     description:
       path: "packages/go_router_builder"
       ref: relative-routes
-      resolved-ref: "9eb0564202748a44769e88096a1a0b2b021e09ac"
+      resolved-ref: b66798207828a8f0e0dad8ce947676faa585623c
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "3.0.2"

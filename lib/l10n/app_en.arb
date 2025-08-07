@@ -121,7 +121,7 @@
     }
   },
   "reply_textFieldHintText": "Your reply",
-  "reply_submitAction": "Reply",
+  "reply_submitAction": "Submit",
   "replyOptions_share": "Share",
   "replyOptions_openOnWeb": "Open on web",
   "settings_logout": "Logout",

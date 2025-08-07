@@ -6,15 +6,13 @@ import 'package:post_repository/post_repository.dart';
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
     required PostRepository postRepository,
-    required SavedCommentModel savedCommentModel,
     LinkLauncher? linkLauncher,
   }) : _repository = postRepository,
-       _savedCommentModel = savedCommentModel,
+
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          CommentState.from(
            postRepository: postRepository,
-           savedCommentModel: savedCommentModel,
          ),
        ) {
     on<CommentPostSubscriptionRequested>(
@@ -28,7 +26,6 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
 
   final LinkLauncher _linkLauncher;
   final PostRepository _repository;
-  final SavedCommentModel _savedCommentModel;
 
   Future<void> _onPostSubscriptionRequested(
     CommentPostSubscriptionRequested event,
@@ -55,11 +52,17 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     );
   }
 
-  void _onPostLoaded(
+  Future<void> _onPostLoaded(
     CommentPostLoaded event,
     Emitter<CommentState> emit,
-  ) {
-    final savedComment = _savedCommentModel.load();
+  ) async {
+    final post = state.post.toRepository();
+    final form = post.header.commentForm;
+    if (form == null) return;
+
+    final savedComment = await _repository.readComment(
+      postId: form.parentId,
+    );
 
     emit(
       state.copyWith(
@@ -84,7 +87,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ),
     );
 
-    _savedCommentModel.save(text: text);
+    _repository.updateComment(
+      post: state.post.toRepository(),
+      text: text,
+    );
   }
 
   void _onLinkPressed(

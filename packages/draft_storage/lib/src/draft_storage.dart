@@ -1,52 +1,86 @@
-import 'package:app_database/app_database.dart';
+import 'package:draft_storage/draft_storage.dart';
+import 'package:drift/drift.dart';
 
-class DraftStorage {
-  const DraftStorage({
-    required AppDatabase appDatabase,
-  }) : _database = appDatabase;
+@DriftAccessor(tables: DraftStorage.tables)
+class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
+    with $DraftStorageMixin {
+  DraftStorage(super.db);
 
-  final AppDatabase _database;
+  static const tables = [
+    ReplyDrafts,
+    CommentDrafts,
+  ];
 
   Future<ReplyDraftData?> readReplyDraft({
     required String parentId,
     required String userId,
   }) async {
-    final draft = await _database.managers.replyDrafts
-        .filter(
-          (draft) =>
-              draft.parentId.equals(parentId) & draft.userId.equals(userId),
-        )
-        .getSingleOrNull();
+    final draft =
+        await (select(replyDrafts)..where(
+              (draft) =>
+                  draft.parentId.equals(parentId) & draft.userId.equals(userId),
+            ))
+            .getSingleOrNull();
+    return draft;
+  }
+
+  Future<CommentDraftData?> readCommentDraft({
+    required String postId,
+    required String userId,
+  }) async {
+    final draft =
+        await (select(commentDrafts)..where(
+              (draft) =>
+                  draft.postId.equals(postId) & draft.userId.equals(userId),
+            ))
+            .getSingleOrNull();
     return draft;
   }
 
   Future<void> saveReplyDraft(Insertable<ReplyDraftData> draft) async {
-    await _database.managers.replyDrafts.replace(draft);
+    await into(replyDrafts).insertOnConflictUpdate(draft);
+  }
+
+  Future<void> saveCommentDraft(Insertable<CommentDraftData> draft) async {
+    await into(commentDrafts).insertOnConflictUpdate(draft);
   }
 
   Future<void> deleteReplyDraft({
     required String parentId,
     required String userId,
   }) async {
-    await _database.managers.replyDrafts
-        .filter(
+    await (delete(replyDrafts)..where(
           (draft) =>
               draft.parentId.equals(parentId) & draft.userId.equals(userId),
-        )
-        .delete();
+        ))
+        .go();
+  }
+
+  Future<void> deleteCommentDraft({
+    required String postId,
+    required String userId,
+  }) async {
+    await (delete(commentDrafts)..where(
+          (draft) => draft.postId.equals(postId) & draft.userId.equals(userId),
+        ))
+        .go();
   }
 
   Future<List<CommentDraftData>> loadCommentDrafts() async {
-    final drafts = await _database.managers.commentDrafts.get();
+    final drafts = await select(commentDrafts).get();
     return drafts;
   }
 
   Future<List<ReplyDraftData>> loadReplyDrafts() async {
-    final drafts = await _database.managers.replyDrafts.get();
+    final drafts = await select(replyDrafts).get();
     return drafts;
   }
 
-  Future<void> saveCommentDraft(CommentDraftData draft) async {
-    await _database.managers.commentDrafts.replace(draft);
+  Stream<List<CommentDraftData>> watchCommentDrafts() {
+    return select(commentDrafts).watch();
+  }
+
+  Stream<List<ReplyDraftData>> watchReplyDrafts() {
+    return select(replyDrafts).watch();
   }
 }

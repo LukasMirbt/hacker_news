@@ -9,6 +9,8 @@ environment:
 resolution: workspace
 
 dependencies:
+  draft_storage:
+    path: ../draft_storage
   drift: ^2.28.0
   drift_flutter: ^0.2.5
   flutter:

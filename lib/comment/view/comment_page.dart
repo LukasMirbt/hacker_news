@@ -13,9 +13,6 @@ class CommentPage extends StatelessWidget {
         final postRepository = context.read<PostRepository>();
         return CommentBloc(
           postRepository: postRepository,
-          savedCommentModel: SavedCommentModel(
-            postRepository: postRepository,
-          ),
         )..add(
           const CommentPostSubscriptionRequested(),
         );

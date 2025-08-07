@@ -227,7 +227,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reply_textFieldHintText => 'Your reply';
 
   @override
-  String get reply_submitAction => 'Reply';
+  String get reply_submitAction => 'Submit';
 
   @override
   String get replyOptions_share => 'Share';

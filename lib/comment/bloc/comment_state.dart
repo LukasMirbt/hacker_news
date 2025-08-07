@@ -16,7 +16,6 @@ abstract class CommentState with _$CommentState {
 
   factory CommentState.from({
     required PostRepository postRepository,
-    required SavedCommentModel savedCommentModel,
   }) {
     final state = postRepository.state;
     final post = state.post;
@@ -25,7 +24,8 @@ abstract class CommentState with _$CommentState {
       fetchStatus: state.fetchStatus,
       post: CommentPostModel(post),
       form: CommentFormModel(
-        text: savedCommentModel.load(),
+        // TODO: Load comment
+        text: '',
         form: post.header.commentForm,
       ),
     );

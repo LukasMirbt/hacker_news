@@ -1,6 +1,9 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
+import 'package:app_database/app_database.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:draft_repository/draft_repository.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -8,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/firebase_options.dart';
-import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:persistent_storage/persistent_storage.dart';
@@ -36,11 +38,6 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(directory.path),
   );
-
-  await Hive.initFlutter();
-
-  final commentStorage = await CommentStorage.init(Hive);
-  final replyStorage = await ReplyStorage.init(Hive);
 
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -102,6 +99,10 @@ void main() async {
 
   await appClient.start();
 
+  final appDatabase = AppDatabase();
+
+  final draftStorage = DraftStorage(appDatabase);
+
   final authenticationApi = AuthenticationApi(appClient: appClient);
   final feedApi = FeedApi(appClient: appClient);
   final postApi = PostApi(appClient: appClient);
@@ -113,10 +114,14 @@ void main() async {
     authenticationApi: authenticationApi,
   );
 
+  final draftRepository = DraftRepository(
+    draftStorage: draftStorage,
+  );
+
   final replyRepository = ReplyRepository(
     replyApi: replyApi,
     authenticationApi: authenticationApi,
-    replyStorage: replyStorage,
+    draftStorage: draftStorage,
   );
 
   final versionRepository = VersionRepository();
@@ -130,12 +135,13 @@ void main() async {
   runApp(
     App(
       authenticationApi: authenticationApi,
-      commentStorage: commentStorage,
+      draftStorage: draftStorage,
       feedApi: feedApi,
       postApi: postApi,
       threadApi: threadApi,
       analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
+      draftRepository: draftRepository,
       replyRepository: replyRepository,
       versionRepository: versionRepository,
       visitedPostRepository: visitedPostRepository,

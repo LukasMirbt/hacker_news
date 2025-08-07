@@ -9,6 +9,8 @@ class CommentPostModel extends Equatable {
   String get title => _post.header.title;
   String? get htmlText => _post.header.htmlText;
 
+  Post toRepository() => _post;
+
   @override
   List<Object?> get props => [_post];
 }

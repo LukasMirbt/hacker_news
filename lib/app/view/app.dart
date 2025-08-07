@@ -1,5 +1,7 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:draft_repository/draft_repository.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,36 +22,39 @@ import 'package:vote_repository/vote_repository.dart';
 class App extends StatelessWidget {
   const App({
     required AuthenticationApi authenticationApi,
-    required CommentStorage commentStorage,
+    required DraftStorage draftStorage,
     required FeedApi feedApi,
     required PostApi postApi,
     required ThreadApi threadApi,
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
+    required DraftRepository draftRepository,
     required ReplyRepository replyRepository,
     required VersionRepository versionRepository,
     required VisitedPostRepository visitedPostRepository,
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
-       _commentStorage = commentStorage,
+       _draftStorage = draftStorage,
        _feedApi = feedApi,
        _postApi = postApi,
        _threadApi = threadApi,
        _analyticsRepository = analyticsRepository,
        _authenticationRepository = authenticationRepository,
+       _draftRepository = draftRepository,
        _replyRepository = replyRepository,
        _versionRepository = versionRepository,
        _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
-  final CommentStorage _commentStorage;
+  final DraftStorage _draftStorage;
   final PostApi _postApi;
   final FeedApi _feedApi;
   final ThreadApi _threadApi;
   final AnalyticsRepository _analyticsRepository;
   final AuthenticationRepository _authenticationRepository;
+  final DraftRepository _draftRepository;
   final ReplyRepository _replyRepository;
   final VersionRepository _versionRepository;
   final VisitedPostRepository _visitedPostRepository;
@@ -60,7 +65,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider.value(value: _authenticationApi),
-        Provider.value(value: _commentStorage),
+        Provider.value(value: _draftStorage),
         Provider.value(value: _feedApi),
         Provider.value(value: _postApi),
         Provider.value(value: _threadApi),
@@ -69,6 +74,7 @@ class App extends StatelessWidget {
         providers: [
           RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
+          RepositoryProvider.value(value: _draftRepository),
           RepositoryProvider.value(value: _replyRepository),
           RepositoryProvider.value(value: _versionRepository),
           RepositoryProvider.value(value: _visitedPostRepository),

@@ -50,13 +50,23 @@ class ReplyRepository {
     required ReplyForm form,
     required ReplyParent parent,
   }) async {
-    final user = _authenticationApi.state.user;
+    final text = form.text;
+    final parentId = form.parentId;
+    final userId = _authenticationApi.state.user.id;
+
+    if (text.trim().isEmpty) {
+      await _draftStorage.deleteReplyDraft(
+        parentId: parentId,
+        userId: userId,
+      );
+      return;
+    }
 
     await _draftStorage.saveReplyDraft(
       ReplyDraftsCompanion.insert(
-        userId: user.id,
-        parentId: form.parentId,
-        draft: form.text,
+        userId: userId,
+        parentId: parentId,
+        draft: text,
         url: url,
         parentUserId: parent.hnuser.id,
         parentHtmlText: parent.htmlText,

@@ -493,7 +493,7 @@ abstract class AppLocalizations {
   /// No description provided for @reply_submitAction.
   ///
   /// In en, this message translates to:
-  /// **'Reply'**
+  /// **'Submit'**
   String get reply_submitAction;
 
   /// No description provided for @replyOptions_share.
