@@ -29,4 +29,17 @@ class DraftRepository {
       },
     );
   }
+
+  Future<void> deleteDraft(Draft draft) async {
+    switch (draft) {
+      case CommentDraft():
+        await _storage.deleteCommentDraft(
+          CommentDraftById(draft.id),
+        );
+      case ReplyDraft():
+        await _storage.deleteReplyDraft(
+          ReplyDraftById(draft.id),
+        );
+    }
+  }
 }

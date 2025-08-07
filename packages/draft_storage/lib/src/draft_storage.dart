@@ -11,29 +11,15 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
     CommentDrafts,
   ];
 
-  Future<ReplyDraftData?> readReplyDraft({
-    required String parentId,
-    required String userId,
-  }) async {
-    final draft =
-        await (select(replyDrafts)..where(
-              (draft) =>
-                  draft.parentId.equals(parentId) & draft.userId.equals(userId),
-            ))
-            .getSingleOrNull();
+  Future<ReplyDraftData?> readReplyDraft(ReplyDraftKey key) async {
+    final selectStatement = select(replyDrafts)..where(key.filter);
+    final draft = await selectStatement.getSingleOrNull();
     return draft;
   }
 
-  Future<CommentDraftData?> readCommentDraft({
-    required String postId,
-    required String userId,
-  }) async {
-    final draft =
-        await (select(commentDrafts)..where(
-              (draft) =>
-                  draft.postId.equals(postId) & draft.userId.equals(userId),
-            ))
-            .getSingleOrNull();
+  Future<CommentDraftData?> readCommentDraft(CommentDraftKey key) async {
+    final selectStatement = select(commentDrafts)..where(key.filter);
+    final draft = await selectStatement.getSingleOrNull();
     return draft;
   }
 
@@ -45,35 +31,14 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
     await into(commentDrafts).insertOnConflictUpdate(draft);
   }
 
-  Future<void> deleteReplyDraft({
-    required String parentId,
-    required String userId,
-  }) async {
-    await (delete(replyDrafts)..where(
-          (draft) =>
-              draft.parentId.equals(parentId) & draft.userId.equals(userId),
-        ))
-        .go();
+  Future<void> deleteReplyDraft(ReplyDraftKey key) async {
+    final deleteStatement = delete(replyDrafts)..where(key.filter);
+    await deleteStatement.go();
   }
 
-  Future<void> deleteCommentDraft({
-    required String postId,
-    required String userId,
-  }) async {
-    await (delete(commentDrafts)..where(
-          (draft) => draft.postId.equals(postId) & draft.userId.equals(userId),
-        ))
-        .go();
-  }
-
-  Future<List<CommentDraftData>> loadCommentDrafts() async {
-    final drafts = await select(commentDrafts).get();
-    return drafts;
-  }
-
-  Future<List<ReplyDraftData>> loadReplyDrafts() async {
-    final drafts = await select(replyDrafts).get();
-    return drafts;
+  Future<void> deleteCommentDraft(CommentDraftKey key) async {
+    final deleteStatement = delete(commentDrafts)..where(key.filter);
+    await deleteStatement.go();
   }
 
   Stream<List<CommentDraftData>> watchCommentDrafts() {

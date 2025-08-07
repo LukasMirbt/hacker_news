@@ -5,6 +5,7 @@ part of 'draft.dart';
 @freezed
 class ReplyDraft extends Draft with _$ReplyDraft {
   const ReplyDraft({
+    required this.id,
     required this.createdAt,
     required this.draft,
     required this.parentId,
@@ -15,6 +16,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
 
   factory ReplyDraft.from(ReplyDraftData data) {
     return ReplyDraft(
+      id: data.id,
       createdAt: data.createdAt,
       draft: data.draft,
       parentId: data.parentId,
@@ -24,6 +26,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
     );
   }
 
+  final int id;
   final DateTime createdAt;
   final String draft;
   final String parentId;

@@ -47,6 +47,8 @@
   "createAccount_submitAction": "Create account",
   "dataCollection_title": "Data collection",
   "dataCollection_analytics": "Analytics",
+  "draftOptions_viewPost": "View post",
+  "draftOptions_delete": "Delete draft",
   "feed_shareText": "{title} {url}",
   "@feed_shareText": {
     "placeholders": {

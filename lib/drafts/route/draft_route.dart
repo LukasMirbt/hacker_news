@@ -5,6 +5,10 @@ class DraftRoute extends GoRouteData with _$DraftRoute, AuthenticatedRoute {
 
   static const config = TypedGoRoute<DraftRoute>(
     path: '/drafts',
+    routes: [
+      ReplyRoute.config,
+      PostShellRoute.config,
+    ],
   );
 
   @override

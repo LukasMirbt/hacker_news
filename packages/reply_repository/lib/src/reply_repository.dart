@@ -33,8 +33,10 @@ class ReplyRepository {
     if (form == null) return page;
 
     final savedDraft = await _draftStorage.readReplyDraft(
-      parentId: page.parent.id,
-      userId: _authenticationApi.state.user.id,
+      ReplyDraftByUniqueKeys(
+        parentId: page.parent.id,
+        userId: _authenticationApi.state.user.id,
+      ),
     );
     if (savedDraft == null) return page;
 
@@ -56,11 +58,15 @@ class ReplyRepository {
 
     if (text.trim().isEmpty) {
       await _draftStorage.deleteReplyDraft(
-        parentId: parentId,
-        userId: userId,
+        ReplyDraftByUniqueKeys(
+          parentId: parentId,
+          userId: _authenticationApi.state.user.id,
+        ),
       );
       return;
     }
+
+    print('save draft');
 
     await _draftStorage.saveReplyDraft(
       ReplyDraftsCompanion.insert(
@@ -81,8 +87,10 @@ class ReplyRepository {
       final parentId = form.parentId;
 
       await _draftStorage.deleteReplyDraft(
-        parentId: parentId,
-        userId: _authenticationApi.state.user.id,
+        ReplyDraftByUniqueKeys(
+          parentId: parentId,
+          userId: _authenticationApi.state.user.id,
+        ),
       );
 
       final commentThread = await _replyApi.fetchCommentThread(id: parentId);

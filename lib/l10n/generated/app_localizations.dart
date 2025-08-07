@@ -292,6 +292,18 @@ abstract class AppLocalizations {
   /// **'Analytics'**
   String get dataCollection_analytics;
 
+  /// No description provided for @draftOptions_viewPost.
+  ///
+  /// In en, this message translates to:
+  /// **'View post'**
+  String get draftOptions_viewPost;
+
+  /// No description provided for @draftOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get draftOptions_delete;
+
   /// No description provided for @feed_shareText.
   ///
   /// In en, this message translates to:

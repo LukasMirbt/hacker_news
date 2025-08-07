@@ -6,6 +6,7 @@ import 'package:draft_storage/src/tables/reply_drafts.dart' as i2;
 
 typedef $$ReplyDraftsTableCreateCompanionBuilder =
     i1.ReplyDraftsCompanion Function({
+      i0.Value<int> id,
       required String userId,
       required String parentId,
       i0.Value<DateTime> createdAt,
@@ -13,10 +14,10 @@ typedef $$ReplyDraftsTableCreateCompanionBuilder =
       required String parentUserId,
       required String parentHtmlText,
       required String draft,
-      i0.Value<int> rowid,
     });
 typedef $$ReplyDraftsTableUpdateCompanionBuilder =
     i1.ReplyDraftsCompanion Function({
+      i0.Value<int> id,
       i0.Value<String> userId,
       i0.Value<String> parentId,
       i0.Value<DateTime> createdAt,
@@ -24,7 +25,6 @@ typedef $$ReplyDraftsTableUpdateCompanionBuilder =
       i0.Value<String> parentUserId,
       i0.Value<String> parentHtmlText,
       i0.Value<String> draft,
-      i0.Value<int> rowid,
     });
 
 class $$ReplyDraftsTableFilterComposer
@@ -36,6 +36,11 @@ class $$ReplyDraftsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  i0.ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => i0.ColumnFilters(column),
+  );
+
   i0.ColumnFilters<String> get userId => $composableBuilder(
     column: $table.userId,
     builder: (column) => i0.ColumnFilters(column),
@@ -81,6 +86,11 @@ class $$ReplyDraftsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  i0.ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => i0.ColumnOrderings(column),
+  );
+
   i0.ColumnOrderings<String> get userId => $composableBuilder(
     column: $table.userId,
     builder: (column) => i0.ColumnOrderings(column),
@@ -126,6 +136,9 @@ class $$ReplyDraftsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  i0.GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
   i0.GeneratedColumn<String> get userId =>
       $composableBuilder(column: $table.userId, builder: (column) => column);
 
@@ -189,6 +202,7 @@ class $$ReplyDraftsTableTableManager
               i1.$$ReplyDraftsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                i0.Value<int> id = const i0.Value.absent(),
                 i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<String> parentId = const i0.Value.absent(),
                 i0.Value<DateTime> createdAt = const i0.Value.absent(),
@@ -196,8 +210,8 @@ class $$ReplyDraftsTableTableManager
                 i0.Value<String> parentUserId = const i0.Value.absent(),
                 i0.Value<String> parentHtmlText = const i0.Value.absent(),
                 i0.Value<String> draft = const i0.Value.absent(),
-                i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.ReplyDraftsCompanion(
+                id: id,
                 userId: userId,
                 parentId: parentId,
                 createdAt: createdAt,
@@ -205,10 +219,10 @@ class $$ReplyDraftsTableTableManager
                 parentUserId: parentUserId,
                 parentHtmlText: parentHtmlText,
                 draft: draft,
-                rowid: rowid,
               ),
           createCompanionCallback:
               ({
+                i0.Value<int> id = const i0.Value.absent(),
                 required String userId,
                 required String parentId,
                 i0.Value<DateTime> createdAt = const i0.Value.absent(),
@@ -216,8 +230,8 @@ class $$ReplyDraftsTableTableManager
                 required String parentUserId,
                 required String parentHtmlText,
                 required String draft,
-                i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.ReplyDraftsCompanion.insert(
+                id: id,
                 userId: userId,
                 parentId: parentId,
                 createdAt: createdAt,
@@ -225,7 +239,6 @@ class $$ReplyDraftsTableTableManager
                 parentUserId: parentUserId,
                 parentHtmlText: parentHtmlText,
                 draft: draft,
-                rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
@@ -263,6 +276,19 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ReplyDraftsTable(this.attachedDatabase, [this._alias]);
+  static const i0.VerificationMeta _idMeta = const i0.VerificationMeta('id');
+  @override
+  late final i0.GeneratedColumn<int> id = i0.GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: i0.DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: i0.GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
   static const i0.VerificationMeta _userIdMeta = const i0.VerificationMeta(
     'userId',
   );
@@ -342,6 +368,7 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
   );
   @override
   List<i0.GeneratedColumn> get $columns => [
+    id,
     userId,
     parentId,
     createdAt,
@@ -362,6 +389,9 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
   }) {
     final context = i0.VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
     if (data.containsKey('user_id')) {
       context.handle(
         _userIdMeta,
@@ -426,11 +456,19 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
   }
 
   @override
-  Set<i0.GeneratedColumn> get $primaryKey => {userId, parentId};
+  Set<i0.GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<i0.GeneratedColumn>> get uniqueKeys => [
+    {userId, parentId},
+  ];
   @override
   i1.ReplyDraftData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.ReplyDraftData(
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
       userId: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}user_id'],
@@ -470,6 +508,7 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
 
 class ReplyDraftData extends i0.DataClass
     implements i0.Insertable<i1.ReplyDraftData> {
+  final int id;
   final String userId;
   final String parentId;
   final DateTime createdAt;
@@ -478,6 +517,7 @@ class ReplyDraftData extends i0.DataClass
   final String parentHtmlText;
   final String draft;
   const ReplyDraftData({
+    required this.id,
     required this.userId,
     required this.parentId,
     required this.createdAt,
@@ -489,6 +529,7 @@ class ReplyDraftData extends i0.DataClass
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
+    map['id'] = i0.Variable<int>(id);
     map['user_id'] = i0.Variable<String>(userId);
     map['parent_id'] = i0.Variable<String>(parentId);
     map['created_at'] = i0.Variable<DateTime>(createdAt);
@@ -501,6 +542,7 @@ class ReplyDraftData extends i0.DataClass
 
   i1.ReplyDraftsCompanion toCompanion(bool nullToAbsent) {
     return i1.ReplyDraftsCompanion(
+      id: i0.Value(id),
       userId: i0.Value(userId),
       parentId: i0.Value(parentId),
       createdAt: i0.Value(createdAt),
@@ -517,6 +559,7 @@ class ReplyDraftData extends i0.DataClass
   }) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return ReplyDraftData(
+      id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<String>(json['userId']),
       parentId: serializer.fromJson<String>(json['parentId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -530,6 +573,7 @@ class ReplyDraftData extends i0.DataClass
   Map<String, dynamic> toJson({i0.ValueSerializer? serializer}) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
       'userId': serializer.toJson<String>(userId),
       'parentId': serializer.toJson<String>(parentId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -541,6 +585,7 @@ class ReplyDraftData extends i0.DataClass
   }
 
   i1.ReplyDraftData copyWith({
+    int? id,
     String? userId,
     String? parentId,
     DateTime? createdAt,
@@ -549,6 +594,7 @@ class ReplyDraftData extends i0.DataClass
     String? parentHtmlText,
     String? draft,
   }) => i1.ReplyDraftData(
+    id: id ?? this.id,
     userId: userId ?? this.userId,
     parentId: parentId ?? this.parentId,
     createdAt: createdAt ?? this.createdAt,
@@ -559,6 +605,7 @@ class ReplyDraftData extends i0.DataClass
   );
   ReplyDraftData copyWithCompanion(i1.ReplyDraftsCompanion data) {
     return ReplyDraftData(
+      id: data.id.present ? data.id.value : this.id,
       userId: data.userId.present ? data.userId.value : this.userId,
       parentId: data.parentId.present ? data.parentId.value : this.parentId,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
@@ -576,6 +623,7 @@ class ReplyDraftData extends i0.DataClass
   @override
   String toString() {
     return (StringBuffer('ReplyDraftData(')
+          ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('parentId: $parentId, ')
           ..write('createdAt: $createdAt, ')
@@ -589,6 +637,7 @@ class ReplyDraftData extends i0.DataClass
 
   @override
   int get hashCode => Object.hash(
+    id,
     userId,
     parentId,
     createdAt,
@@ -601,6 +650,7 @@ class ReplyDraftData extends i0.DataClass
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is i1.ReplyDraftData &&
+          other.id == this.id &&
           other.userId == this.userId &&
           other.parentId == this.parentId &&
           other.createdAt == this.createdAt &&
@@ -611,6 +661,7 @@ class ReplyDraftData extends i0.DataClass
 }
 
 class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
+  final i0.Value<int> id;
   final i0.Value<String> userId;
   final i0.Value<String> parentId;
   final i0.Value<DateTime> createdAt;
@@ -618,8 +669,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   final i0.Value<String> parentUserId;
   final i0.Value<String> parentHtmlText;
   final i0.Value<String> draft;
-  final i0.Value<int> rowid;
   const ReplyDraftsCompanion({
+    this.id = const i0.Value.absent(),
     this.userId = const i0.Value.absent(),
     this.parentId = const i0.Value.absent(),
     this.createdAt = const i0.Value.absent(),
@@ -627,9 +678,9 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     this.parentUserId = const i0.Value.absent(),
     this.parentHtmlText = const i0.Value.absent(),
     this.draft = const i0.Value.absent(),
-    this.rowid = const i0.Value.absent(),
   });
   ReplyDraftsCompanion.insert({
+    this.id = const i0.Value.absent(),
     required String userId,
     required String parentId,
     this.createdAt = const i0.Value.absent(),
@@ -637,7 +688,6 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     required String parentUserId,
     required String parentHtmlText,
     required String draft,
-    this.rowid = const i0.Value.absent(),
   }) : userId = i0.Value(userId),
        parentId = i0.Value(parentId),
        url = i0.Value(url),
@@ -645,6 +695,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
        parentHtmlText = i0.Value(parentHtmlText),
        draft = i0.Value(draft);
   static i0.Insertable<i1.ReplyDraftData> custom({
+    i0.Expression<int>? id,
     i0.Expression<String>? userId,
     i0.Expression<String>? parentId,
     i0.Expression<DateTime>? createdAt,
@@ -652,9 +703,9 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     i0.Expression<String>? parentUserId,
     i0.Expression<String>? parentHtmlText,
     i0.Expression<String>? draft,
-    i0.Expression<int>? rowid,
   }) {
     return i0.RawValuesInsertable({
+      if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
       if (parentId != null) 'parent_id': parentId,
       if (createdAt != null) 'created_at': createdAt,
@@ -662,11 +713,11 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
       if (parentUserId != null) 'parent_user_id': parentUserId,
       if (parentHtmlText != null) 'parent_html_text': parentHtmlText,
       if (draft != null) 'draft': draft,
-      if (rowid != null) 'rowid': rowid,
     });
   }
 
   i1.ReplyDraftsCompanion copyWith({
+    i0.Value<int>? id,
     i0.Value<String>? userId,
     i0.Value<String>? parentId,
     i0.Value<DateTime>? createdAt,
@@ -674,9 +725,9 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     i0.Value<String>? parentUserId,
     i0.Value<String>? parentHtmlText,
     i0.Value<String>? draft,
-    i0.Value<int>? rowid,
   }) {
     return i1.ReplyDraftsCompanion(
+      id: id ?? this.id,
       userId: userId ?? this.userId,
       parentId: parentId ?? this.parentId,
       createdAt: createdAt ?? this.createdAt,
@@ -684,13 +735,15 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
       parentUserId: parentUserId ?? this.parentUserId,
       parentHtmlText: parentHtmlText ?? this.parentHtmlText,
       draft: draft ?? this.draft,
-      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
+    if (id.present) {
+      map['id'] = i0.Variable<int>(id.value);
+    }
     if (userId.present) {
       map['user_id'] = i0.Variable<String>(userId.value);
     }
@@ -712,23 +765,20 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     if (draft.present) {
       map['draft'] = i0.Variable<String>(draft.value);
     }
-    if (rowid.present) {
-      map['rowid'] = i0.Variable<int>(rowid.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('ReplyDraftsCompanion(')
+          ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('parentId: $parentId, ')
           ..write('createdAt: $createdAt, ')
           ..write('url: $url, ')
           ..write('parentUserId: $parentUserId, ')
           ..write('parentHtmlText: $parentHtmlText, ')
-          ..write('draft: $draft, ')
-          ..write('rowid: $rowid')
+          ..write('draft: $draft')
           ..write(')'))
         .toString();
   }

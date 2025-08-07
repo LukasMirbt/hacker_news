@@ -116,6 +116,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataCollection_analytics => 'Analytics';
 
   @override
+  String get draftOptions_viewPost => 'View post';
+
+  @override
+  String get draftOptions_delete => 'Delete draft';
+
+  @override
   String feed_shareText({required String title, required String url}) {
     return '$title $url';
   }

@@ -97,7 +97,45 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(path: '/drafts', factory: _$DraftRoute._fromState),
+        GoRouteData.$route(
+          path: '/drafts',
+
+          factory: _$DraftRoute._fromState,
+          routes: [
+            RelativeGoRouteData.$route(
+              path: 'reply',
+
+              parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+              factory: _$ReplyRoute._fromState,
+            ),
+            ShellRouteData.$route(
+              parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
+              factory: $PostShellRouteExtension._fromState,
+              routes: [
+                RelativeGoRouteData.$route(
+                  path: 'post/:postId',
+
+                  factory: _$PostRoute._fromState,
+                  routes: [
+                    RelativeGoRouteData.$route(
+                      path: 'comment',
+
+                      factory: _$CommentRoute._fromState,
+                    ),
+                    RelativeGoRouteData.$route(
+                      path: 'reply',
+
+                      parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+                      factory: _$ReplyRoute._fromState,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ],
     ),
     StatefulShellBranchData.$branch(

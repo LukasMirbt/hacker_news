@@ -87,6 +87,8 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ),
     );
 
+    // TODO: Implement debouncing
+
     _repository.updateComment(
       post: state.post.toRepository(),
       text: text,

@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 
 @DataClassName('CommentDraftData')
 class CommentDrafts extends Table {
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get userId => text()();
   TextColumn get postId => text()();
   DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
@@ -10,5 +11,7 @@ class CommentDrafts extends Table {
   TextColumn get draft => text()();
 
   @override
-  Set<Column> get primaryKey => {userId, postId};
+  List<Set<Column>> get uniqueKeys => [
+    {userId, postId},
+  ];
 }

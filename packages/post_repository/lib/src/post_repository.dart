@@ -90,8 +90,10 @@ class PostRepository extends Cubit<PostRepositoryState> {
     final user = _authenticationApi.state.user;
 
     final draft = await _draftStorage.readCommentDraft(
-      postId: postId,
-      userId: user.id,
+      CommentDraftByUniqueKeys(
+        postId: postId,
+        userId: user.id,
+      ),
     );
     if (draft == null) return null;
 
@@ -104,8 +106,10 @@ class PostRepository extends Cubit<PostRepositoryState> {
   }) async {
     if (text.trim().isEmpty) {
       await _draftStorage.deleteCommentDraft(
-        postId: post.header.id,
-        userId: _authenticationApi.state.user.id,
+        CommentDraftByUniqueKeys(
+          postId: post.header.id,
+          userId: _authenticationApi.state.user.id,
+        ),
       );
       return;
     }
@@ -139,8 +143,10 @@ class PostRepository extends Cubit<PostRepositoryState> {
       final userId = _authenticationApi.state.user.id;
 
       await _draftStorage.deleteCommentDraft(
-        postId: parentId,
-        userId: userId,
+        CommentDraftByUniqueKeys(
+          postId: parentId,
+          userId: userId,
+        ),
       );
 
       emit(

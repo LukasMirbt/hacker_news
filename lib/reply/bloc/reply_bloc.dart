@@ -9,10 +9,12 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     required String url,
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
+    required DebouncedDraftSaver debouncedDraftSaver,
     ReplyParentVoteModel? voteModel,
     LinkLauncher? linkLauncher,
   }) : _replyRepository = replyRepository,
        _voteRepository = voteRepository,
+       _debouncedDraftSaver = debouncedDraftSaver,
        _voteModel = voteModel ?? const ReplyParentVoteModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
@@ -26,13 +28,22 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     on<ReplyParentExpansionToggled>(_onParentExpansionToggled);
     on<ReplyParentVotePressed>(_onParentVotePressed);
     on<ReplyLinkPressed>(_onLinkPressed);
+    on<ReplyAppInactive>(_onAppInactive);
     on<ReplySubmitted>(_onSubmitted);
   }
 
   final ReplyRepository _replyRepository;
   final VoteRepository _voteRepository;
+  final DebouncedDraftSaver _debouncedDraftSaver;
   final ReplyParentVoteModel _voteModel;
   final LinkLauncher _linkLauncher;
+
+  @override
+  Future<void> close() async {
+    await _debouncedDraftSaver.flush();
+    _debouncedDraftSaver.dispose();
+    return super.close();
+  }
 
   Future<void> _onVoteSubscriptionRequested(
     ReplyVoteSubscriptionRequested event,
@@ -97,7 +108,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
       ),
     );
 
-    _replyRepository.updateReply(
+    _debouncedDraftSaver.update(
       url: state.url,
       form: updatedForm.toRepository(),
       parent: state.parent.toRepository(),
@@ -136,6 +147,13 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     _linkLauncher.launch(event.url);
   }
 
+  void _onAppInactive(
+    ReplyAppInactive event,
+    Emitter<ReplyState> emit,
+  ) {
+    _debouncedDraftSaver.flush();
+  }
+
   Future<void> _onSubmitted(
     ReplySubmitted event,
     Emitter<ReplyState> emit,
@@ -149,6 +167,8 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     try {
+      await _debouncedDraftSaver.flush();
+
       await _replyRepository.reply(
         state.form.toRepository(),
       );

@@ -8,6 +8,7 @@ part 'reply_draft.dart';
 sealed class Draft {
   const Draft();
 
+  int get id;
   DateTime get createdAt;
   String get draft;
 }
