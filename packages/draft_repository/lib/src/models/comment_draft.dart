@@ -7,7 +7,7 @@ class CommentDraft extends Draft with _$CommentDraft {
   const CommentDraft({
     required this.id,
     required this.createdAt,
-    required this.draft,
+    required this.content,
     required this.postId,
     required this.postUserId,
     required this.postTitle,
@@ -17,7 +17,7 @@ class CommentDraft extends Draft with _$CommentDraft {
     return CommentDraft(
       id: data.id,
       createdAt: data.createdAt,
-      draft: data.draft,
+      content: data.content,
       postId: data.postId,
       postUserId: data.postUserId,
       postTitle: data.postTitle,
@@ -26,7 +26,7 @@ class CommentDraft extends Draft with _$CommentDraft {
 
   final int id;
   final DateTime createdAt;
-  final String draft;
+  final String content;
   final String postId;
   final String postUserId;
   final String postTitle;

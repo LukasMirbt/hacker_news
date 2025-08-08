@@ -19,7 +19,9 @@ class DraftBloc extends Bloc<DraftEvent, DraftState> {
     return emit.forEach(
       _repository.drafts,
       onData: (drafts) => state.copyWith(
-        drafts: drafts,
+        drafts: [
+          for (final draft in drafts) DraftModel.from(draft),
+        ],
         status: DraftStatus.success,
       ),
       onError: (error, stackTrace) {

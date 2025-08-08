@@ -41,7 +41,7 @@ class ReplyRepository {
     if (savedDraft == null) return page;
 
     final pageWithDraft = page.copyWith(
-      form: form.copyWith(text: savedDraft.draft),
+      form: form.copyWith(text: savedDraft.content),
     );
 
     return pageWithDraft;
@@ -72,7 +72,7 @@ class ReplyRepository {
       ReplyDraftsCompanion.insert(
         userId: userId,
         parentId: parentId,
-        draft: text,
+        content: text,
         url: url,
         parentUserId: parent.hnuser.id,
         parentHtmlText: parent.htmlText,

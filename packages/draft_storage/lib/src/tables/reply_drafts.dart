@@ -9,7 +9,7 @@ class ReplyDrafts extends Table {
   TextColumn get url => text()();
   TextColumn get parentUserId => text()();
   TextColumn get parentHtmlText => text()();
-  TextColumn get draft => text()();
+  TextColumn get content => text()();
 
   @override
   List<Set<Column>> get uniqueKeys => [

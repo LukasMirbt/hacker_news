@@ -97,7 +97,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
     );
     if (draft == null) return null;
 
-    return draft.draft;
+    return draft.content;
   }
 
   Future<void> updateComment({
@@ -120,7 +120,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
       CommentDraftsCompanion.insert(
         userId: user.id,
         postId: post.header.id,
-        draft: text,
+        content: text,
         postUserId: post.header.hnuser?.id ?? '',
         postTitle: post.header.title,
       ),

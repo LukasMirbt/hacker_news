@@ -7,7 +7,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
   const ReplyDraft({
     required this.id,
     required this.createdAt,
-    required this.draft,
+    required this.content,
     required this.parentId,
     required this.url,
     required this.parentUserId,
@@ -18,7 +18,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
     return ReplyDraft(
       id: data.id,
       createdAt: data.createdAt,
-      draft: data.draft,
+      content: data.content,
       parentId: data.parentId,
       url: data.url,
       parentUserId: data.parentUserId,
@@ -28,7 +28,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
 
   final int id;
   final DateTime createdAt;
-  final String draft;
+  final String content;
   final String parentId;
   final String url;
   final String parentUserId;

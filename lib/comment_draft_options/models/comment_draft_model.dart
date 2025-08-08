@@ -11,7 +11,7 @@ class CommentDraftModel extends Equatable {
   String get postId => _draft.postId;
   String get postTitle => _draft.postTitle;
 
-  CommentDraft toRepository() => _draft;
+  Draft toRepository() => _draft;
 
   @override
   List<Object> get props => [_draft];

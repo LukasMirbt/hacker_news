@@ -10,5 +10,5 @@ sealed class Draft {
 
   int get id;
   DateTime get createdAt;
-  String get draft;
+  String get content;
 }

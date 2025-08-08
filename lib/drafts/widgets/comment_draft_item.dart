@@ -1,23 +1,24 @@
-import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
+import 'package:hacker_client/comment_draft_options/comment_draft_options.dart'
+    hide CommentDraftModel;
+import 'package:hacker_client/drafts/drafts.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class CommentDraftItem extends StatelessWidget {
   const CommentDraftItem(this.draft, {super.key});
 
-  final CommentDraft draft;
+  final CommentDraftModel draft;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        draft.draft,
+        draft.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
-        draft.postTitle,
+        draft.subtitle,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -31,7 +32,7 @@ class CommentDraftItem extends StatelessWidget {
         onPressed: () {
           CommentDraftOptionsSheet.show(
             context: context,
-            draft: draft,
+            draft: draft.toRepository(),
           );
         },
       ),

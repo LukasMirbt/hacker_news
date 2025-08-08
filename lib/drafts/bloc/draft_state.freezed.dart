@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DraftState {
 
- List<Draft> get drafts; DraftStatus get status;
+ List<DraftModel> get drafts; DraftStatus get status;
 /// Create a copy of DraftState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $DraftStateCopyWith<$Res>  {
   factory $DraftStateCopyWith(DraftState value, $Res Function(DraftState) _then) = _$DraftStateCopyWithImpl;
 @useResult
 $Res call({
- List<Draft> drafts, DraftStatus status
+ List<DraftModel> drafts, DraftStatus status
 });
 
 
@@ -66,7 +66,7 @@ class _$DraftStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? drafts = null,Object? status = null,}) {
   return _then(_self.copyWith(
 drafts: null == drafts ? _self.drafts : drafts // ignore: cast_nullable_to_non_nullable
-as List<Draft>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as List<DraftModel>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DraftStatus,
   ));
 }
@@ -78,11 +78,11 @@ as DraftStatus,
 
 
 class _DraftState implements DraftState {
-  const _DraftState({final  List<Draft> drafts = const [], this.status = DraftStatus.loading}): _drafts = drafts;
+  const _DraftState({final  List<DraftModel> drafts = const [], this.status = DraftStatus.loading}): _drafts = drafts;
   
 
- final  List<Draft> _drafts;
-@override@JsonKey() List<Draft> get drafts {
+ final  List<DraftModel> _drafts;
+@override@JsonKey() List<DraftModel> get drafts {
   if (_drafts is EqualUnmodifiableListView) return _drafts;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_drafts);
@@ -120,7 +120,7 @@ abstract mixin class _$DraftStateCopyWith<$Res> implements $DraftStateCopyWith<$
   factory _$DraftStateCopyWith(_DraftState value, $Res Function(_DraftState) _then) = __$DraftStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Draft> drafts, DraftStatus status
+ List<DraftModel> drafts, DraftStatus status
 });
 
 
@@ -140,7 +140,7 @@ class __$DraftStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? drafts = null,Object? status = null,}) {
   return _then(_DraftState(
 drafts: null == drafts ? _self._drafts : drafts // ignore: cast_nullable_to_non_nullable
-as List<Draft>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as List<DraftModel>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DraftStatus,
   ));
 }

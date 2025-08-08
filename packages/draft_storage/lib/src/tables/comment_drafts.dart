@@ -8,7 +8,7 @@ class CommentDrafts extends Table {
   DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
   TextColumn get postUserId => text()();
   TextColumn get postTitle => text()();
-  TextColumn get draft => text()();
+  TextColumn get content => text()();
 
   @override
   List<Set<Column>> get uniqueKeys => [

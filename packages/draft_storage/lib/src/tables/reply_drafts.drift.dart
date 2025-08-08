@@ -13,7 +13,7 @@ typedef $$ReplyDraftsTableCreateCompanionBuilder =
       required String url,
       required String parentUserId,
       required String parentHtmlText,
-      required String draft,
+      required String content,
     });
 typedef $$ReplyDraftsTableUpdateCompanionBuilder =
     i1.ReplyDraftsCompanion Function({
@@ -24,7 +24,7 @@ typedef $$ReplyDraftsTableUpdateCompanionBuilder =
       i0.Value<String> url,
       i0.Value<String> parentUserId,
       i0.Value<String> parentHtmlText,
-      i0.Value<String> draft,
+      i0.Value<String> content,
     });
 
 class $$ReplyDraftsTableFilterComposer
@@ -71,8 +71,8 @@ class $$ReplyDraftsTableFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get draft => $composableBuilder(
-    column: $table.draft,
+  i0.ColumnFilters<String> get content => $composableBuilder(
+    column: $table.content,
     builder: (column) => i0.ColumnFilters(column),
   );
 }
@@ -121,8 +121,8 @@ class $$ReplyDraftsTableOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get draft => $composableBuilder(
-    column: $table.draft,
+  i0.ColumnOrderings<String> get content => $composableBuilder(
+    column: $table.content,
     builder: (column) => i0.ColumnOrderings(column),
   );
 }
@@ -161,8 +161,8 @@ class $$ReplyDraftsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  i0.GeneratedColumn<String> get draft =>
-      $composableBuilder(column: $table.draft, builder: (column) => column);
+  i0.GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
 }
 
 class $$ReplyDraftsTableTableManager
@@ -209,7 +209,7 @@ class $$ReplyDraftsTableTableManager
                 i0.Value<String> url = const i0.Value.absent(),
                 i0.Value<String> parentUserId = const i0.Value.absent(),
                 i0.Value<String> parentHtmlText = const i0.Value.absent(),
-                i0.Value<String> draft = const i0.Value.absent(),
+                i0.Value<String> content = const i0.Value.absent(),
               }) => i1.ReplyDraftsCompanion(
                 id: id,
                 userId: userId,
@@ -218,7 +218,7 @@ class $$ReplyDraftsTableTableManager
                 url: url,
                 parentUserId: parentUserId,
                 parentHtmlText: parentHtmlText,
-                draft: draft,
+                content: content,
               ),
           createCompanionCallback:
               ({
@@ -229,7 +229,7 @@ class $$ReplyDraftsTableTableManager
                 required String url,
                 required String parentUserId,
                 required String parentHtmlText,
-                required String draft,
+                required String content,
               }) => i1.ReplyDraftsCompanion.insert(
                 id: id,
                 userId: userId,
@@ -238,7 +238,7 @@ class $$ReplyDraftsTableTableManager
                 url: url,
                 parentUserId: parentUserId,
                 parentHtmlText: parentHtmlText,
-                draft: draft,
+                content: content,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
@@ -355,12 +355,12 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
         type: i0.DriftSqlType.string,
         requiredDuringInsert: true,
       );
-  static const i0.VerificationMeta _draftMeta = const i0.VerificationMeta(
-    'draft',
+  static const i0.VerificationMeta _contentMeta = const i0.VerificationMeta(
+    'content',
   );
   @override
-  late final i0.GeneratedColumn<String> draft = i0.GeneratedColumn<String>(
-    'draft',
+  late final i0.GeneratedColumn<String> content = i0.GeneratedColumn<String>(
+    'content',
     aliasedName,
     false,
     type: i0.DriftSqlType.string,
@@ -375,7 +375,7 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
     url,
     parentUserId,
     parentHtmlText,
-    draft,
+    content,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -444,13 +444,13 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
     } else if (isInserting) {
       context.missing(_parentHtmlTextMeta);
     }
-    if (data.containsKey('draft')) {
+    if (data.containsKey('content')) {
       context.handle(
-        _draftMeta,
-        draft.isAcceptableOrUnknown(data['draft']!, _draftMeta),
+        _contentMeta,
+        content.isAcceptableOrUnknown(data['content']!, _contentMeta),
       );
     } else if (isInserting) {
-      context.missing(_draftMeta);
+      context.missing(_contentMeta);
     }
     return context;
   }
@@ -493,9 +493,9 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
         i0.DriftSqlType.string,
         data['${effectivePrefix}parent_html_text'],
       )!,
-      draft: attachedDatabase.typeMapping.read(
+      content: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
-        data['${effectivePrefix}draft'],
+        data['${effectivePrefix}content'],
       )!,
     );
   }
@@ -515,7 +515,7 @@ class ReplyDraftData extends i0.DataClass
   final String url;
   final String parentUserId;
   final String parentHtmlText;
-  final String draft;
+  final String content;
   const ReplyDraftData({
     required this.id,
     required this.userId,
@@ -524,7 +524,7 @@ class ReplyDraftData extends i0.DataClass
     required this.url,
     required this.parentUserId,
     required this.parentHtmlText,
-    required this.draft,
+    required this.content,
   });
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
@@ -536,7 +536,7 @@ class ReplyDraftData extends i0.DataClass
     map['url'] = i0.Variable<String>(url);
     map['parent_user_id'] = i0.Variable<String>(parentUserId);
     map['parent_html_text'] = i0.Variable<String>(parentHtmlText);
-    map['draft'] = i0.Variable<String>(draft);
+    map['content'] = i0.Variable<String>(content);
     return map;
   }
 
@@ -549,7 +549,7 @@ class ReplyDraftData extends i0.DataClass
       url: i0.Value(url),
       parentUserId: i0.Value(parentUserId),
       parentHtmlText: i0.Value(parentHtmlText),
-      draft: i0.Value(draft),
+      content: i0.Value(content),
     );
   }
 
@@ -566,7 +566,7 @@ class ReplyDraftData extends i0.DataClass
       url: serializer.fromJson<String>(json['url']),
       parentUserId: serializer.fromJson<String>(json['parentUserId']),
       parentHtmlText: serializer.fromJson<String>(json['parentHtmlText']),
-      draft: serializer.fromJson<String>(json['draft']),
+      content: serializer.fromJson<String>(json['content']),
     );
   }
   @override
@@ -580,7 +580,7 @@ class ReplyDraftData extends i0.DataClass
       'url': serializer.toJson<String>(url),
       'parentUserId': serializer.toJson<String>(parentUserId),
       'parentHtmlText': serializer.toJson<String>(parentHtmlText),
-      'draft': serializer.toJson<String>(draft),
+      'content': serializer.toJson<String>(content),
     };
   }
 
@@ -592,7 +592,7 @@ class ReplyDraftData extends i0.DataClass
     String? url,
     String? parentUserId,
     String? parentHtmlText,
-    String? draft,
+    String? content,
   }) => i1.ReplyDraftData(
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -601,7 +601,7 @@ class ReplyDraftData extends i0.DataClass
     url: url ?? this.url,
     parentUserId: parentUserId ?? this.parentUserId,
     parentHtmlText: parentHtmlText ?? this.parentHtmlText,
-    draft: draft ?? this.draft,
+    content: content ?? this.content,
   );
   ReplyDraftData copyWithCompanion(i1.ReplyDraftsCompanion data) {
     return ReplyDraftData(
@@ -616,7 +616,7 @@ class ReplyDraftData extends i0.DataClass
       parentHtmlText: data.parentHtmlText.present
           ? data.parentHtmlText.value
           : this.parentHtmlText,
-      draft: data.draft.present ? data.draft.value : this.draft,
+      content: data.content.present ? data.content.value : this.content,
     );
   }
 
@@ -630,7 +630,7 @@ class ReplyDraftData extends i0.DataClass
           ..write('url: $url, ')
           ..write('parentUserId: $parentUserId, ')
           ..write('parentHtmlText: $parentHtmlText, ')
-          ..write('draft: $draft')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
@@ -644,7 +644,7 @@ class ReplyDraftData extends i0.DataClass
     url,
     parentUserId,
     parentHtmlText,
-    draft,
+    content,
   );
   @override
   bool operator ==(Object other) =>
@@ -657,7 +657,7 @@ class ReplyDraftData extends i0.DataClass
           other.url == this.url &&
           other.parentUserId == this.parentUserId &&
           other.parentHtmlText == this.parentHtmlText &&
-          other.draft == this.draft);
+          other.content == this.content);
 }
 
 class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
@@ -668,7 +668,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   final i0.Value<String> url;
   final i0.Value<String> parentUserId;
   final i0.Value<String> parentHtmlText;
-  final i0.Value<String> draft;
+  final i0.Value<String> content;
   const ReplyDraftsCompanion({
     this.id = const i0.Value.absent(),
     this.userId = const i0.Value.absent(),
@@ -677,7 +677,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     this.url = const i0.Value.absent(),
     this.parentUserId = const i0.Value.absent(),
     this.parentHtmlText = const i0.Value.absent(),
-    this.draft = const i0.Value.absent(),
+    this.content = const i0.Value.absent(),
   });
   ReplyDraftsCompanion.insert({
     this.id = const i0.Value.absent(),
@@ -687,13 +687,13 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     required String url,
     required String parentUserId,
     required String parentHtmlText,
-    required String draft,
+    required String content,
   }) : userId = i0.Value(userId),
        parentId = i0.Value(parentId),
        url = i0.Value(url),
        parentUserId = i0.Value(parentUserId),
        parentHtmlText = i0.Value(parentHtmlText),
-       draft = i0.Value(draft);
+       content = i0.Value(content);
   static i0.Insertable<i1.ReplyDraftData> custom({
     i0.Expression<int>? id,
     i0.Expression<String>? userId,
@@ -702,7 +702,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     i0.Expression<String>? url,
     i0.Expression<String>? parentUserId,
     i0.Expression<String>? parentHtmlText,
-    i0.Expression<String>? draft,
+    i0.Expression<String>? content,
   }) {
     return i0.RawValuesInsertable({
       if (id != null) 'id': id,
@@ -712,7 +712,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
       if (url != null) 'url': url,
       if (parentUserId != null) 'parent_user_id': parentUserId,
       if (parentHtmlText != null) 'parent_html_text': parentHtmlText,
-      if (draft != null) 'draft': draft,
+      if (content != null) 'content': content,
     });
   }
 
@@ -724,7 +724,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     i0.Value<String>? url,
     i0.Value<String>? parentUserId,
     i0.Value<String>? parentHtmlText,
-    i0.Value<String>? draft,
+    i0.Value<String>? content,
   }) {
     return i1.ReplyDraftsCompanion(
       id: id ?? this.id,
@@ -734,7 +734,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
       url: url ?? this.url,
       parentUserId: parentUserId ?? this.parentUserId,
       parentHtmlText: parentHtmlText ?? this.parentHtmlText,
-      draft: draft ?? this.draft,
+      content: content ?? this.content,
     );
   }
 
@@ -762,8 +762,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     if (parentHtmlText.present) {
       map['parent_html_text'] = i0.Variable<String>(parentHtmlText.value);
     }
-    if (draft.present) {
-      map['draft'] = i0.Variable<String>(draft.value);
+    if (content.present) {
+      map['content'] = i0.Variable<String>(content.value);
     }
     return map;
   }
@@ -778,7 +778,7 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
           ..write('url: $url, ')
           ..write('parentUserId: $parentUserId, ')
           ..write('parentHtmlText: $parentHtmlText, ')
-          ..write('draft: $draft')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }

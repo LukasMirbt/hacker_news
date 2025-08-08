@@ -1,8 +1,6 @@
-import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/drafts/drafts.dart';
-import 'package:hacker_client/drafts/widgets/reply_draft_item.dart';
 
 class DraftBody extends StatelessWidget {
   const DraftBody({super.key});
@@ -17,8 +15,8 @@ class DraftBody extends StatelessWidget {
       children: [
         for (final draft in drafts)
           switch (draft) {
-            final CommentDraft draft => CommentDraftItem(draft),
-            final ReplyDraft draft => ReplyDraftItem(draft),
+            final CommentDraftModel draft => CommentDraftItem(draft),
+            final ReplyDraftModel draft => ReplyDraftItem(draft),
           },
       ],
     );
