@@ -94,6 +94,12 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @generalServerError.
   ///
   /// In en, this message translates to:
@@ -291,6 +297,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analytics'**
   String get dataCollection_analytics;
+
+  /// No description provided for @deleteDraft_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get deleteDraft_title;
+
+  /// No description provided for @deleteDraft_content.
+  ///
+  /// In en, this message translates to:
+  /// **'The draft will be permanently deleted'**
+  String get deleteDraft_content;
+
+  /// No description provided for @deleteDraft_confirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteDraft_confirmAction;
 
   /// No description provided for @draftOptions_viewPost.
   ///

@@ -9,6 +9,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get cancel => 'Cancel';
+
+  @override
   String get generalServerError => 'Something went wrong';
 
   @override
@@ -114,6 +117,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataCollection_analytics => 'Analytics';
+
+  @override
+  String get deleteDraft_title => 'Delete draft';
+
+  @override
+  String get deleteDraft_content => 'The draft will be permanently deleted';
+
+  @override
+  String get deleteDraft_confirmAction => 'Delete';
 
   @override
   String get draftOptions_viewPost => 'View post';

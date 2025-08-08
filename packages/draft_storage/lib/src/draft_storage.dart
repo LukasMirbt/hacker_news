@@ -24,11 +24,29 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
   }
 
   Future<void> saveReplyDraft(Insertable<ReplyDraftData> draft) async {
-    await into(replyDrafts).insertOnConflictUpdate(draft);
+    await into(replyDrafts).insert(
+      draft,
+      onConflict: DoUpdate(
+        (_) => draft,
+        target: [
+          replyDrafts.userId,
+          replyDrafts.parentId,
+        ],
+      ),
+    );
   }
 
   Future<void> saveCommentDraft(Insertable<CommentDraftData> draft) async {
-    await into(commentDrafts).insertOnConflictUpdate(draft);
+    await into(commentDrafts).insert(
+      draft,
+      onConflict: DoUpdate(
+        (_) => draft,
+        target: [
+          commentDrafts.userId,
+          commentDrafts.postId,
+        ],
+      ),
+    );
   }
 
   Future<void> deleteReplyDraft(ReplyDraftKey key) async {

@@ -23,6 +23,7 @@ class AppNavigationDrawer extends StatelessWidget {
     return NavigationDrawer(
       selectedIndex: selectedIndex,
       onDestinationSelected: (index) {
+        // TODO: Make drafts tab authenticated
         if (index == 1) {
           final state = context.read<AuthenticationBloc>().state;
           final isAuthenticated = state.status.isAuthenticated;
