@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/draft_options/draft_options.dart';
+import 'package:hacker_client/reply_draft_options/reply_draft_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class ReplyDraftItem extends StatelessWidget {
@@ -36,7 +36,7 @@ class ReplyDraftItem extends StatelessWidget {
           opticalSize: 20,
         ),
         onPressed: () {
-          DraftOptionsSheet.show(
+          ReplyDraftOptionsSheet.show(
             context: context,
             draft: draft,
           );

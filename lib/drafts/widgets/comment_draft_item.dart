@@ -1,6 +1,6 @@
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:hacker_client/draft_options/draft_options.dart';
+import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class CommentDraftItem extends StatelessWidget {
@@ -29,7 +29,7 @@ class CommentDraftItem extends StatelessWidget {
           opticalSize: 20,
         ),
         onPressed: () {
-          DraftOptionsSheet.show(
+          CommentDraftOptionsSheet.show(
             context: context,
             draft: draft,
           );

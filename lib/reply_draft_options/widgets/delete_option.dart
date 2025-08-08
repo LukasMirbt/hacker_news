@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
-import 'package:hacker_client/draft_options/draft_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/reply_draft_options/reply_draft_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 class DeleteOption extends StatelessWidget {
@@ -19,7 +19,7 @@ class DeleteOption extends StatelessWidget {
       leading: const Icon(Symbols.delete),
       title: Text(l10n.draftOptions_delete),
       onTap: () {
-        final state = context.read<DraftOptionsBloc>().state;
+        final state = context.read<ReplyDraftOptionsBloc>().state;
         Navigator.of(context).pop();
         DeleteDraftDialog.show(
           context: context,
