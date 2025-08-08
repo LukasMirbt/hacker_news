@@ -1,38 +1,36 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:reply_repository/reply_repository.dart';
+import 'package:post_repository/post_repository.dart';
 
 class DisposedError extends StateError with EquatableMixin {
-  DisposedError() : super('$ReplyDraftSaver has been disposed');
+  DisposedError() : super('$CommentDraftSaver has been disposed');
 
   @override
   List<Object> get props => [];
 }
 
-class ReplyDraftSaver {
-  ReplyDraftSaver({
-    required ReplyRepository replyRepository,
-  }) : _repository = replyRepository;
+class CommentDraftSaver {
+  CommentDraftSaver({
+    required PostRepository postRepository,
+  }) : _repository = postRepository;
 
-  final ReplyRepository _repository;
+  final PostRepository _repository;
 
   Timer? _debounceTimer;
   Future<void> Function()? _pendingAction;
   bool _isDisposed = false;
 
   void update({
-    required String url,
-    required ReplyForm form,
-    required ReplyParent parent,
+    required Post post,
+    required String text,
   }) {
     if (_isDisposed) throw DisposedError();
 
     _pendingAction = () async {
-      await _repository.updateReply(
-        url: url,
-        form: form,
-        parent: parent,
+      await _repository.updateComment(
+        post: post,
+        text: text,
       );
     };
 
@@ -49,8 +47,6 @@ class ReplyDraftSaver {
 
   Future<void> flush() async {
     if (_isDisposed) throw DisposedError();
-
-    print('flush');
 
     _debounceTimer?.cancel();
     final action = _pendingAction;

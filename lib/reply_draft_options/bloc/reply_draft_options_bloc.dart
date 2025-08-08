@@ -6,22 +6,7 @@ class ReplyDraftOptionsBloc
     extends Bloc<ReplyDraftOptionsEvent, ReplyDraftOptionsState> {
   ReplyDraftOptionsBloc({
     required ReplyDraft draft,
-    required DraftRepository draftRepository,
-  }) : _repository = draftRepository,
-       super(
+  }) : super(
          ReplyDraftOptionsState.from(draft),
-       ) {
-    on<ReplyDraftOptionsDeleteConfirmed>(_onDeleteConfirmed);
-  }
-
-  final DraftRepository _repository;
-
-  void _onDeleteConfirmed(
-    ReplyDraftOptionsDeleteConfirmed event,
-    Emitter<ReplyDraftOptionsState> emit,
-  ) {
-    _repository.deleteDraft(
-      state.draft.toRepository(),
-    );
-  }
+       );
 }

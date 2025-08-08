@@ -10,17 +10,18 @@ class ReplyDraftOptionsSheet extends StatelessWidget {
   static void show({
     required BuildContext context,
     required ReplyDraft draft,
+    required DraftRepository draftRepository,
   }) {
     showModalBottomSheet<void>(
       context: context,
       useRootNavigator: true,
       showDragHandle: true,
-      builder: (_) => BlocProvider(
-        create: (context) => ReplyDraftOptionsBloc(
-          draft: draft,
-          draftRepository: context.read<DraftRepository>(),
+      builder: (_) => RepositoryProvider.value(
+        value: draftRepository,
+        child: BlocProvider(
+          create: (_) => ReplyDraftOptionsBloc(draft: draft),
+          child: const ReplyDraftOptionsSheet(),
         ),
-        child: const ReplyDraftOptionsSheet(),
       ),
     );
   }

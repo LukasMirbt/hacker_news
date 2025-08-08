@@ -24,8 +24,7 @@ abstract class CommentState with _$CommentState {
       fetchStatus: state.fetchStatus,
       post: CommentPostModel(post),
       form: CommentFormModel(
-        // TODO: Load comment
-        text: '',
+        text: post.header.commentForm?.text,
         form: post.header.commentForm,
       ),
     );

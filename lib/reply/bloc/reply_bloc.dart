@@ -9,12 +9,12 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     required String url,
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
-    required DebouncedDraftSaver debouncedDraftSaver,
+    required ReplyDraftSaver replyDraftSaver,
     ReplyParentVoteModel? voteModel,
     LinkLauncher? linkLauncher,
   }) : _replyRepository = replyRepository,
        _voteRepository = voteRepository,
-       _debouncedDraftSaver = debouncedDraftSaver,
+       _draftSaver = replyDraftSaver,
        _voteModel = voteModel ?? const ReplyParentVoteModel(),
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
@@ -34,14 +34,14 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
 
   final ReplyRepository _replyRepository;
   final VoteRepository _voteRepository;
-  final DebouncedDraftSaver _debouncedDraftSaver;
+  final ReplyDraftSaver _draftSaver;
   final ReplyParentVoteModel _voteModel;
   final LinkLauncher _linkLauncher;
 
   @override
   Future<void> close() async {
-    await _debouncedDraftSaver.flush();
-    _debouncedDraftSaver.dispose();
+    await _draftSaver.flush();
+    _draftSaver.dispose();
     return super.close();
   }
 
@@ -108,7 +108,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
       ),
     );
 
-    _debouncedDraftSaver.update(
+    _draftSaver.update(
       url: state.url,
       form: updatedForm.toRepository(),
       parent: state.parent.toRepository(),
@@ -151,7 +151,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     ReplyAppInactive event,
     Emitter<ReplyState> emit,
   ) {
-    _debouncedDraftSaver.flush();
+    _draftSaver.flush();
   }
 
   Future<void> _onSubmitted(
@@ -167,7 +167,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     );
 
     try {
-      await _debouncedDraftSaver.flush();
+      await _draftSaver.flush();
 
       await _replyRepository.reply(
         state.form.toRepository(),

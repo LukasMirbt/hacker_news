@@ -2,6 +2,8 @@
 
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:draft_repository/draft_repository.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +27,7 @@ import '../init_mock_hydrated_storage.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
-class _MockCommentStorage extends Mock implements CommentStorage {}
+class _MockDraftStorage extends Mock implements DraftStorage {}
 
 class _MockFeedApi extends Mock implements FeedApi {}
 
@@ -64,7 +66,7 @@ void main() {
 
   group(App, () {
     late AuthenticationApi authenticationApi;
-    late CommentStorage commentStorage;
+    late DraftStorage draftStorage;
     late FeedApi feedApi;
     late PostApi postApi;
     late ThreadApi threadApi;
@@ -77,7 +79,7 @@ void main() {
 
     setUp(() {
       authenticationApi = _MockAuthenticationApi();
-      commentStorage = _MockCommentStorage();
+      draftStorage = _MockDraftStorage();
       feedApi = _MockFeedApi();
       postApi = _MockPostApi();
       threadApi = _MockThreadApi();
@@ -92,7 +94,7 @@ void main() {
     Widget buildSubject() {
       return App(
         authenticationApi: authenticationApi,
-        commentStorage: commentStorage,
+        draftStorage: draftStorage,
         feedApi: feedApi,
         postApi: postApi,
         threadApi: threadApi,
@@ -115,10 +117,10 @@ void main() {
       expect(context.read<AuthenticationApi>(), isNotNull);
     });
 
-    testWidgets('provides $CommentStorage', (tester) async {
+    testWidgets('provides $DraftStorage', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
-      expect(context.read<CommentStorage>(), isNotNull);
+      expect(context.read<DraftStorage>(), isNotNull);
     });
 
     testWidgets('provides $FeedApi', (tester) async {
@@ -149,6 +151,12 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<AuthenticationRepository>(), isNotNull);
+    });
+
+    testWidgets('provides $DraftRepository', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<DraftRepository>(), isNotNull);
     });
 
     testWidgets('provides $ReplyRepository', (tester) async {

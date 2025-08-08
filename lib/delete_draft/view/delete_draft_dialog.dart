@@ -11,13 +11,14 @@ class DeleteDraftDialog extends StatelessWidget {
   static void show({
     required BuildContext context,
     required Draft draft,
+    required DraftRepository draftRepository,
   }) {
     showDialog<void>(
       context: context,
       builder: (_) => BlocProvider(
-        create: (context) => DeleteDraftBloc(
+        create: (_) => DeleteDraftBloc(
           draft: draft,
-          draftRepository: context.read<DraftRepository>(),
+          draftRepository: draftRepository,
         ),
         child: const DeleteDraftDialog(),
       ),

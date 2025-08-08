@@ -22,7 +22,10 @@ class PostHeader with _$PostHeader {
     required this.commentForm,
   });
 
-  factory PostHeader.from(DetailFatItemData data) {
+  factory PostHeader.from({
+    required DetailFatItemData data,
+    required String? savedComment,
+  }) {
     final titleRowData = data.titleRowData;
     final subtitleRowData = data.subtitleRowData;
     final commentFormData = data.commentFormData;
@@ -30,7 +33,10 @@ class PostHeader with _$PostHeader {
     CommentForm? commentForm;
 
     if (commentFormData != null) {
-      commentForm = CommentForm.from(commentFormData);
+      commentForm = CommentForm.from(
+        data: commentFormData,
+        savedComment: savedComment,
+      );
     }
 
     return PostHeader(

@@ -15,7 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CurrentUserComment {
 
-// Declare all fields, overriding the ones from the base class.
  String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; int get score;
 /// Create a copy of CurrentUserComment
 /// with the given fields replaced by the non-null parameter values.
@@ -83,7 +82,6 @@ as int,
 /// @nodoc
 mixin _$OtherUserComment {
 
-// Declare all fields, overriding the ones from the base class.
  String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; String get upvoteUrl; bool get hasBeenUpvoted;
 /// Create a copy of OtherUserComment
 /// with the given fields replaced by the non-null parameter values.

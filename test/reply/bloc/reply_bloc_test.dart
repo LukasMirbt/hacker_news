@@ -13,6 +13,8 @@ class _MockReplyRepository extends Mock implements ReplyRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
+class _MockDebouncedDraftSaver extends Mock implements ReplyDraftSaver {}
+
 class _MockReplyParentVoteModel extends Mock implements ReplyParentVoteModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
@@ -27,14 +29,19 @@ void main() {
   group(ReplyBloc, () {
     late ReplyRepository replyRepository;
     late VoteRepository voteRepository;
+    late ReplyDraftSaver draftSaver;
     late ReplyParentVoteModel voteModel;
     late LinkLauncher linkLauncher;
+    late Future<void> Function() flush;
 
     setUp(() {
       replyRepository = _MockReplyRepository();
       voteRepository = _MockVoteRepository();
+      draftSaver = _MockDebouncedDraftSaver();
       voteModel = _MockReplyParentVoteModel();
       linkLauncher = _MockLinkLauncher();
+      flush = () => draftSaver.flush();
+      when(flush).thenAnswer((_) async {});
     });
 
     ReplyBloc buildBloc() {
@@ -42,6 +49,7 @@ void main() {
         url: url,
         replyRepository: replyRepository,
         voteRepository: voteRepository,
+        replyDraftSaver: draftSaver,
         voteModel: voteModel,
         linkLauncher: linkLauncher,
       );
@@ -49,6 +57,22 @@ void main() {
 
     test('initial state is $ReplyState', () {
       expect(buildBloc().state, initialState);
+    });
+
+    group('close', () {
+      final dispose = () => draftSaver.dispose();
+
+      blocTest<ReplyBloc, ReplyState>(
+        'calls flush and dispose',
+        setUp: () {
+          when(flush).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        verify: (_) {
+          verify(flush).called(1);
+          verify(dispose).called(1);
+        },
+      );
     });
 
     group(ReplyVoteSubscriptionRequested, () {
@@ -152,17 +176,16 @@ void main() {
 
       final updatedForm = form.copyWith(text: text);
 
-      final updateReply = () => replyRepository.updateReply(
-        updatedForm.toRepository(),
+      final update = () => draftSaver.update(
+        url: initialState.url,
+        form: updatedForm.toRepository(),
+        parent: initialState.parent.toRepository(),
       );
 
       final state = initialState.copyWith(form: form);
 
       blocTest<ReplyBloc, ReplyState>(
-        'emits updated form and calls updateReply',
-        setUp: () {
-          when(updateReply).thenAnswer((_) async {});
-        },
+        'emits updated form and calls draftSaver.update',
         seed: () => state,
         build: buildBloc,
         act: (bloc) {
@@ -176,7 +199,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(updateReply).called(1);
+          verify(update).called(1);
         },
       );
     });
@@ -257,6 +280,24 @@ void main() {
       );
     });
 
+    group(ReplyAppInactive, () {
+      blocTest<ReplyBloc, ReplyState>(
+        'calls flush',
+        setUp: () {
+          when(flush).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            ReplyAppInactive(),
+          );
+        },
+        verify: (_) {
+          verify(flush).called(2);
+        },
+      );
+    });
+
     group(ReplySubmitted, () {
       final form = ReplyFormModel(
         form: ReplyFormPlaceholder(),
@@ -272,6 +313,7 @@ void main() {
       blocTest<ReplyBloc, ReplyState>(
         'emits [loading, success] when request succeeds',
         setUp: () {
+          when(flush).thenAnswer((_) async {});
           when(request).thenAnswer((_) async {});
         },
         seed: () => state,
@@ -294,6 +336,7 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );
@@ -301,6 +344,7 @@ void main() {
       blocTest<ReplyBloc, ReplyState>(
         'emits [loading, failure] when request throws',
         setUp: () {
+          when(flush).thenAnswer((_) async {});
           when(request).thenThrow(Exception('oops'));
         },
         seed: () => state,
@@ -323,6 +367,7 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );

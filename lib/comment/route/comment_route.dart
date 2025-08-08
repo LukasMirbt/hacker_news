@@ -9,14 +9,11 @@ class CommentRoute extends RelativeGoRouteData
   );
 
   @override
-  Page<void> buildPage(
+  Widget build(
     BuildContext context,
     GoRouterState state,
   ) {
-    return const MaterialPage(
-      fullscreenDialog: true,
-      child: CommentPage(),
-    );
+    return const CommentPage();
   }
 
   @override

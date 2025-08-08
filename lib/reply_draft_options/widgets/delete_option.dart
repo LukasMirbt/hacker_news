@@ -1,3 +1,4 @@
+import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
@@ -24,6 +25,7 @@ class DeleteOption extends StatelessWidget {
         DeleteDraftDialog.show(
           context: context,
           draft: state.draft.toRepository(),
+          draftRepository: context.read<DraftRepository>(),
         );
       },
     );

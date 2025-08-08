@@ -1,5 +1,6 @@
 import 'package:draft_repository/draft_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:html/parser.dart';
 
 part 'comment_draft_model.dart';
 part 'reply_draft_model.dart';

@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:hacker_client/comment/comment.dart';
 
 class AppEventFilter {
   const AppEventFilter();
 
   @visibleForTesting
-  static final excludedEvents = [
-    CommentPostLoaded,
-  ];
+  static final excludedEvents = [];
 
   @visibleForTesting
   static final excludedSuffixes = [

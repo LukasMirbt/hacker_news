@@ -97,38 +97,43 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(
-          path: '/drafts',
-
-          factory: _$DraftRoute._fromState,
+        ShellRouteData.$route(
+          factory: $DraftShellRouteExtension._fromState,
           routes: [
-            RelativeGoRouteData.$route(
-              path: 'reply',
+            GoRouteData.$route(
+              path: '/drafts',
 
-              parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
-              factory: _$ReplyRoute._fromState,
-            ),
-            ShellRouteData.$route(
-              parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
-              factory: $PostShellRouteExtension._fromState,
+              factory: _$DraftRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
-                  path: 'post/:postId',
+                  path: 'reply',
 
-                  factory: _$PostRoute._fromState,
+                  parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+                  factory: _$ReplyRoute._fromState,
+                ),
+                ShellRouteData.$route(
+                  parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
+                  factory: $PostShellRouteExtension._fromState,
                   routes: [
                     RelativeGoRouteData.$route(
-                      path: 'comment',
+                      path: 'post/:postId',
 
-                      factory: _$CommentRoute._fromState,
-                    ),
-                    RelativeGoRouteData.$route(
-                      path: 'reply',
+                      factory: _$PostRoute._fromState,
+                      routes: [
+                        RelativeGoRouteData.$route(
+                          path: 'comment',
 
-                      parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+                          factory: _$CommentRoute._fromState,
+                        ),
+                        RelativeGoRouteData.$route(
+                          path: 'reply',
 
-                      factory: _$ReplyRoute._fromState,
+                          parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+                          factory: _$ReplyRoute._fromState,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -297,6 +302,11 @@ mixin _$ThreadFeedRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $DraftShellRouteExtension on DraftShellRoute {
+  static DraftShellRoute _fromState(GoRouterState state) =>
+      const DraftShellRoute();
 }
 
 mixin _$DraftRoute on GoRouteData {

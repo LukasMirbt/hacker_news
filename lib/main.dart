@@ -2,7 +2,6 @@ import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
 import 'package:app_database/app_database.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:draft_repository/draft_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -114,10 +113,6 @@ void main() async {
     authenticationApi: authenticationApi,
   );
 
-  final draftRepository = DraftRepository(
-    draftStorage: draftStorage,
-  );
-
   final replyRepository = ReplyRepository(
     replyApi: replyApi,
     authenticationApi: authenticationApi,
@@ -141,7 +136,6 @@ void main() async {
       threadApi: threadApi,
       analyticsRepository: analyticsRepository,
       authenticationRepository: authenticationRepository,
-      draftRepository: draftRepository,
       replyRepository: replyRepository,
       versionRepository: versionRepository,
       visitedPostRepository: visitedPostRepository,

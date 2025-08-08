@@ -34,9 +34,25 @@ class PostRepository extends Cubit<PostRepositoryState> {
       );
 
       await for (final data in stream) {
+        CommentDraftData? savedDraft;
+
+        if (state.fetchStatus.isLoading) {
+          savedDraft = await _draftStorage.readCommentDraft(
+            CommentDraftByUniqueKeys(
+              postId: id,
+              userId: _authenticationApi.state.user.id,
+            ),
+          );
+        }
+
+        final post = Post.from(
+          data,
+          savedComment: savedDraft?.content,
+        );
+
         emit(
           state.copyWith(
-            post: Post.from(data),
+            post: post,
             fetchStatus: FetchStatus.success,
           ),
         );
@@ -114,6 +130,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
       return;
     }
 
+    print('save comment');
     final user = _authenticationApi.state.user;
 
     await _draftStorage.saveCommentDraft(

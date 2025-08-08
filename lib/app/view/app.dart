@@ -1,6 +1,5 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:draft_repository/draft_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class App extends StatelessWidget {
     required ThreadApi threadApi,
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
-    required DraftRepository draftRepository,
     required ReplyRepository replyRepository,
     required VersionRepository versionRepository,
     required VisitedPostRepository visitedPostRepository,
@@ -41,7 +39,6 @@ class App extends StatelessWidget {
        _threadApi = threadApi,
        _analyticsRepository = analyticsRepository,
        _authenticationRepository = authenticationRepository,
-       _draftRepository = draftRepository,
        _replyRepository = replyRepository,
        _versionRepository = versionRepository,
        _visitedPostRepository = visitedPostRepository,
@@ -54,7 +51,6 @@ class App extends StatelessWidget {
   final ThreadApi _threadApi;
   final AnalyticsRepository _analyticsRepository;
   final AuthenticationRepository _authenticationRepository;
-  final DraftRepository _draftRepository;
   final ReplyRepository _replyRepository;
   final VersionRepository _versionRepository;
   final VisitedPostRepository _visitedPostRepository;
@@ -74,7 +70,6 @@ class App extends StatelessWidget {
         providers: [
           RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
-          RepositoryProvider.value(value: _draftRepository),
           RepositoryProvider.value(value: _replyRepository),
           RepositoryProvider.value(value: _versionRepository),
           RepositoryProvider.value(value: _visitedPostRepository),

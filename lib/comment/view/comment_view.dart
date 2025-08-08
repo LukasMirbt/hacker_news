@@ -9,13 +9,11 @@ class CommentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CommentPostLoadListener(
-      child: CommentSuccessListener(
-        child: CommentFailureListener(
-          child: Scaffold(
-            appBar: CommentAppBar(),
-            body: _Body(),
-          ),
+    return const CommentSuccessListener(
+      child: CommentFailureListener(
+        child: Scaffold(
+          appBar: CommentAppBar(),
+          body: _Body(),
         ),
       ),
     );

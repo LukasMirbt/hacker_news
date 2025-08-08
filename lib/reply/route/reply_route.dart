@@ -13,13 +13,11 @@ class ReplyRoute extends RelativeGoRouteData
   final String url;
 
   @override
-  Page<void> buildPage(
+  Widget build(
     BuildContext context,
     GoRouterState state,
   ) {
-    return MaterialPage(
-      child: ReplyPage(url: url),
-    );
+    return ReplyPage(url: url);
   }
 
   @override

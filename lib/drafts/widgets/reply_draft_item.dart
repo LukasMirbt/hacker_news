@@ -1,3 +1,4 @@
+import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
@@ -40,6 +41,7 @@ class ReplyDraftItem extends StatelessWidget {
           ReplyDraftOptionsSheet.show(
             context: context,
             draft: draft.toRepository(),
+            draftRepository: context.read<DraftRepository>(),
           );
         },
       ),

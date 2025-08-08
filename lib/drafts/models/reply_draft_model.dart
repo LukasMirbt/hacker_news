@@ -8,7 +8,25 @@ class ReplyDraftModel extends DraftModel {
   final ReplyDraft _draft;
 
   String get title => _draft.content;
-  String get subtitle => 'subtitle';
+
+  String get subtitle {
+    final document = parse(_draft.parentHtmlText);
+    final buffer = StringBuffer();
+
+    final textNodes = document.body?.nodes;
+
+    if (textNodes != null) {
+      for (final node in textNodes) {
+        if (buffer.isNotEmpty) {
+          buffer.write(' ');
+        }
+        buffer.write(node.text?.trim());
+      }
+    }
+
+    return buffer.toString().trim();
+  }
+
   String get url => _draft.url;
 
   ReplyDraft toRepository() => _draft;

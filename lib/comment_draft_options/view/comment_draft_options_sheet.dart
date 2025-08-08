@@ -10,14 +10,18 @@ class CommentDraftOptionsSheet extends StatelessWidget {
   static void show({
     required BuildContext context,
     required CommentDraft draft,
+    required DraftRepository draftRepository,
   }) {
     showModalBottomSheet<void>(
       context: context,
       useRootNavigator: true,
       showDragHandle: true,
-      builder: (_) => BlocProvider(
-        create: (_) => CommentDraftOptionsBloc(draft: draft),
-        child: const CommentDraftOptionsSheet(),
+      builder: (_) => RepositoryProvider.value(
+        value: draftRepository,
+        child: BlocProvider(
+          create: (_) => CommentDraftOptionsBloc(draft: draft),
+          child: const CommentDraftOptionsSheet(),
+        ),
       ),
     );
   }

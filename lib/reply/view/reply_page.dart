@@ -21,7 +21,7 @@ class ReplyPage extends StatelessWidget {
             url: url,
             replyRepository: replyRepository,
             voteRepository: context.read<VoteRepository>(),
-            debouncedDraftSaver: DebouncedDraftSaver(
+            replyDraftSaver: ReplyDraftSaver(
               replyRepository: replyRepository,
             ),
           )
