@@ -117,29 +117,28 @@ class PostRepository extends Cubit<PostRepositoryState> {
   }
 
   Future<void> updateComment({
-    required Post post,
+    required PostHeader header,
     required String text,
   }) async {
     if (text.trim().isEmpty) {
       await _draftStorage.deleteCommentDraft(
         CommentDraftByUniqueKeys(
-          postId: post.header.id,
+          postId: header.id,
           userId: _authenticationApi.state.user.id,
         ),
       );
       return;
     }
 
-    print('save comment');
     final user = _authenticationApi.state.user;
 
     await _draftStorage.saveCommentDraft(
       CommentDraftsCompanion.insert(
         userId: user.id,
-        postId: post.header.id,
+        postId: header.id,
         content: text,
-        postUserId: post.header.hnuser?.id ?? '',
-        postTitle: post.header.title,
+        postUserId: header.hnuser?.id ?? '',
+        postTitle: header.title,
       ),
     );
   }

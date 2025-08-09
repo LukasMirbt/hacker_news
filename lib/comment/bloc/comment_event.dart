@@ -24,10 +24,6 @@ final class CommentTextChanged extends CommentEvent {
   List<Object> get props => [text];
 }
 
-final class CommentSubmitted extends CommentEvent {
-  const CommentSubmitted();
-}
-
 final class CommentLinkPressed extends CommentEvent {
   const CommentLinkPressed(this.url);
 
@@ -35,4 +31,12 @@ final class CommentLinkPressed extends CommentEvent {
 
   @override
   List<Object> get props => [url];
+}
+
+final class CommentAppInactivated extends CommentEvent {
+  const CommentAppInactivated();
+}
+
+final class CommentSubmitted extends CommentEvent {
+  const CommentSubmitted();
 }

@@ -62,7 +62,7 @@ void main() {
     group('close', () {
       final dispose = () => draftSaver.dispose();
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'calls flush and dispose',
         setUp: () {
           when(flush).thenAnswer((_) async {});
@@ -91,7 +91,7 @@ void main() {
         parent: state.parent,
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits updated parent when repository emits $VoteSuccess',
         setUp: () {
           when(() => voteRepository.stream).thenAnswer(
@@ -121,7 +121,7 @@ void main() {
       final page = ReplyPagePlaceholder();
       final request = () => replyRepository.fetchReplyPage(url: url);
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [success], $ReplyParentModel and $ReplyFormModel '
         'when request succeeds',
         setUp: () {
@@ -145,7 +145,7 @@ void main() {
         },
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -184,7 +184,7 @@ void main() {
 
       final state = initialState.copyWith(form: form);
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits updated form and calls draftSaver.update',
         seed: () => state,
         build: buildBloc,
@@ -205,7 +205,7 @@ void main() {
     });
 
     group(ReplyParentExpansionToggled, () {
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits toggled isExpanded',
         build: buildBloc,
         act: (bloc) {
@@ -242,7 +242,7 @@ void main() {
         hasBeenUpvoted: parent.hasBeenUpvoted,
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'calls vote',
         setUp: () {
           when(vote).thenAnswer((_) async {});
@@ -263,7 +263,7 @@ void main() {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -280,8 +280,8 @@ void main() {
       );
     });
 
-    group(ReplyAppInactive, () {
-      blocTest<ReplyBloc, ReplyState>(
+    group(ReplyAppInactivated, () {
+      blocTest(
         'calls flush',
         setUp: () {
           when(flush).thenAnswer((_) async {});
@@ -289,7 +289,7 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            ReplyAppInactive(),
+            ReplyAppInactivated(),
           );
         },
         verify: (_) {
@@ -310,10 +310,9 @@ void main() {
         form.toRepository(),
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [loading, success] when request succeeds',
         setUp: () {
-          when(flush).thenAnswer((_) async {});
           when(request).thenAnswer((_) async {});
         },
         seed: () => state,
@@ -341,7 +340,7 @@ void main() {
         },
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(flush).thenAnswer((_) async {});

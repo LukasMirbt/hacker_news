@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hacker_client/reply/reply.dart';
+import 'package:hacker_client/comment/comment.dart';
 
-class ReplyAppObserver extends StatefulWidget {
-  const ReplyAppObserver({
+class CommentAppObserver extends StatefulWidget {
+  const CommentAppObserver({
     required this.child,
     super.key,
   });
@@ -11,10 +11,10 @@ class ReplyAppObserver extends StatefulWidget {
   final Widget child;
 
   @override
-  State<ReplyAppObserver> createState() => ReplyAppObserverState();
+  State<CommentAppObserver> createState() => CommentAppObserverState();
 }
 
-class ReplyAppObserverState extends State<ReplyAppObserver>
+class CommentAppObserverState extends State<CommentAppObserver>
     with WidgetsBindingObserver {
   AppLifecycleState _previousState = AppLifecycleState.resumed;
 
@@ -28,8 +28,8 @@ class ReplyAppObserverState extends State<ReplyAppObserver>
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (_previousState == AppLifecycleState.resumed &&
         state == AppLifecycleState.inactive) {
-      context.read<ReplyBloc>().add(
-        const ReplyAppInactivated(),
+      context.read<CommentBloc>().add(
+        const CommentAppInactivated(),
       );
     }
 

@@ -12,48 +12,53 @@ class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
 
-class _MockSavedCommentForm extends Mock implements SavedCommentModel {}
+class _MockCommentDraftSaver extends Mock implements CommentDraftSaver {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
+
+class _MockCommentFormModel extends Mock implements CommentFormModel {}
 
 void main() {
   const fetchStatus = FetchStatus.loading;
   final post = PostPlaceholder();
+  final header = post.header;
 
   const text = 'text';
 
   final form = CommentFormModel(
     text: text,
-    form: post.header.commentForm,
+    form: header.commentForm,
   );
 
   final initialState = CommentState(
     fetchStatus: fetchStatus,
-    post: CommentPostModel(post),
+    header: CommentPostHeaderModel(header),
     form: form,
   );
 
   group(CommentBloc, () {
     late PostRepository repository;
     late PostRepositoryState repositoryState;
-    late SavedCommentModel savedCommentModel;
+    late CommentDraftSaver draftSaver;
     late LinkLauncher linkLauncher;
+    late Future<void> Function() flush;
 
     setUp(() {
       repository = _MockPostRepository();
       repositoryState = _MockPostRepositoryState();
-      savedCommentModel = _MockSavedCommentForm();
+      draftSaver = _MockCommentDraftSaver();
       linkLauncher = _MockLinkLauncher();
+      flush = () => draftSaver.flush();
       when(() => repository.state).thenReturn(repositoryState);
       when(() => repositoryState.fetchStatus).thenReturn(fetchStatus);
       when(() => repositoryState.post).thenReturn(post);
-      when(savedCommentModel.load).thenReturn(text);
+      when(flush).thenAnswer((_) async {});
     });
 
     CommentBloc buildBloc() {
       return CommentBloc(
         postRepository: repository,
-        savedCommentModel: savedCommentModel,
+        commentDraftSaver: draftSaver,
         linkLauncher: linkLauncher,
       );
     }
@@ -65,22 +70,18 @@ void main() {
     group(CommentPostSubscriptionRequested, () {
       final updatedRepositoryState = _MockPostRepositoryState();
       const updatedFetchStatus = FetchStatus.success;
+      final updatedPost = PostPlaceholder();
+      final updatedHeader = updatedPost.header;
 
-      final updatedRepositoryForm = CommentFormPlaceholder();
+      final form = _MockCommentFormModel();
+      final updatedForm = _MockCommentFormModel();
+      final state = initialState.copyWith(form: form);
 
-      final updatedPost = PostPlaceholder(
-        header: PostHeaderPlaceholder(
-          title: 'updatedTitle',
-          commentForm: updatedRepositoryForm,
-        ),
-      );
+      final updateWith = () => form.updateWith(updatedHeader.commentForm);
 
-      final updatedForm = initialState.form.copyWith(
-        form: updatedRepositoryForm,
-      );
-
-      blocTest<CommentBloc, CommentState>(
-        'emits updated state when stream emits new value',
+      blocTest(
+        'emits correct state when stream emits new value '
+        'and form.text is non-null',
         setUp: () {
           when(() => repository.stream).thenAnswer(
             (_) => Stream.value(updatedRepositoryState),
@@ -91,7 +92,9 @@ void main() {
           when(
             () => updatedRepositoryState.post,
           ).thenReturn(updatedPost);
+          when(updateWith).thenReturn(updatedForm);
         },
+        seed: () => state,
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -99,39 +102,85 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          state.copyWith(
             fetchStatus: updatedFetchStatus,
-            post: CommentPostModel(updatedPost),
+            header: CommentPostHeaderModel(updatedHeader),
             form: updatedForm,
           ),
         ],
+        verify: (_) {
+          verify(updateWith).called(1);
+        },
       );
     });
 
-    group(CommentPostLoaded, () {
+    group(CommentStarted, () {
       const savedComment = 'savedComment';
-      final load = () => savedCommentModel.load();
+      final form = _MockCommentFormModel();
+      final updatedForm = _MockCommentFormModel();
 
-      blocTest<CommentBloc, CommentState>(
-        'emits form with saved comment',
-        setUp: () {
-          when(load).thenReturn(savedComment);
-        },
+      final state = initialState.copyWith(
+        fetchStatus: FetchStatus.success,
+        form: form,
+      );
+
+      final readComment = () => repository.readComment(
+        postId: header.id,
+      );
+
+      final copyWith = () => form.copyWith(
+        text: savedComment,
+      );
+
+      blocTest(
+        'returns when fetchStatus.isLoading',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            CommentPostLoaded(),
+            CommentStarted(),
+          );
+        },
+        expect: () => <CommentState>[],
+      );
+
+      blocTest(
+        'returns when !isCommentingEnabled',
+        setUp: () {
+          when(() => form.isCommentingEnabled).thenReturn(false);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentStarted(),
+          );
+        },
+        expect: () => <CommentState>[],
+      );
+
+      blocTest(
+        'emits form with saved comment when !fetchStatus.isLoading '
+        'and form is non-null',
+        setUp: () {
+          when(() => form.isCommentingEnabled).thenReturn(true);
+          when(readComment).thenAnswer((_) async => savedComment);
+          when(copyWith).thenReturn(updatedForm);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentStarted(),
           );
         },
         expect: () => [
-          initialState.copyWith(
-            form: initialState.form.copyWith(
-              text: savedComment,
-            ),
+          state.copyWith(
+            form: updatedForm,
           ),
         ],
         verify: (_) {
-          verify(load).called(2);
+          verify(readComment).called(1);
+          verify(copyWith).called(1);
         },
       );
     });
@@ -139,7 +188,11 @@ void main() {
     group(CommentTextChanged, () {
       const text = 'updatedText';
       final updatedForm = form.copyWith(text: text);
-      final save = () => savedCommentModel.save(text: text);
+
+      final update = () => draftSaver.update(
+        header: initialState.header.toRepository(),
+        text: text,
+      );
 
       blocTest<CommentBloc, CommentState>(
         'emits updated form and saves comment',
@@ -155,7 +208,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(save).called(1);
+          verify(update).called(1);
         },
       );
     });
@@ -164,7 +217,7 @@ void main() {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
-      blocTest<CommentBloc, CommentState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -193,7 +246,7 @@ void main() {
         form.toRepository(),
       );
 
-      blocTest<CommentBloc, CommentState>(
+      blocTest(
         'emits [loading, success] when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
@@ -218,11 +271,12 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );
 
-      blocTest<CommentBloc, CommentState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -247,6 +301,7 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );

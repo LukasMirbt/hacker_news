@@ -8,25 +8,21 @@ part 'comment_state.freezed.dart';
 abstract class CommentState with _$CommentState {
   const factory CommentState({
     required FetchStatus fetchStatus,
-    required CommentPostModel post,
+    required CommentPostHeaderModel header,
     required CommentFormModel form,
   }) = _CommentState;
 
   const CommentState._();
 
-  factory CommentState.from({
-    required PostRepository postRepository,
-  }) {
-    final state = postRepository.state;
-    final post = state.post;
+  factory CommentState.from(PostRepository repository) {
+    final state = repository.state;
+    final header = state.post.header;
+    final form = header.commentForm;
 
     return CommentState(
       fetchStatus: state.fetchStatus,
-      post: CommentPostModel(post),
-      form: CommentFormModel(
-        text: post.header.commentForm?.text,
-        form: post.header.commentForm,
-      ),
+      header: CommentPostHeaderModel(header),
+      form: CommentFormModel(form: form),
     );
   }
 

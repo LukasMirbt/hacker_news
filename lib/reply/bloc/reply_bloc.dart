@@ -28,7 +28,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     on<ReplyParentExpansionToggled>(_onParentExpansionToggled);
     on<ReplyParentVotePressed>(_onParentVotePressed);
     on<ReplyLinkPressed>(_onLinkPressed);
-    on<ReplyAppInactive>(_onAppInactive);
+    on<ReplyAppInactivated>(_onAppInactive);
     on<ReplySubmitted>(_onSubmitted);
   }
 
@@ -148,7 +148,7 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
   }
 
   void _onAppInactive(
-    ReplyAppInactive event,
+    ReplyAppInactivated event,
     Emitter<ReplyState> emit,
   ) {
     _draftSaver.flush();

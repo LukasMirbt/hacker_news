@@ -50,8 +50,6 @@ class ReplyDraftSaver {
   Future<void> flush() async {
     if (_isDisposed) throw DisposedError();
 
-    print('flush');
-
     _debounceTimer?.cancel();
     final action = _pendingAction;
     _pendingAction = null;

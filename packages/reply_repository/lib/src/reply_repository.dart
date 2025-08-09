@@ -66,8 +66,6 @@ class ReplyRepository {
       return;
     }
 
-    print('save draft');
-
     await _draftStorage.saveReplyDraft(
       ReplyDraftsCompanion.insert(
         userId: userId,

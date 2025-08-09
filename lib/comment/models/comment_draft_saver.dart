@@ -22,14 +22,14 @@ class CommentDraftSaver {
   bool _isDisposed = false;
 
   void update({
-    required Post post,
+    required PostHeader header,
     required String text,
   }) {
     if (_isDisposed) throw DisposedError();
 
     _pendingAction = () async {
       await _repository.updateComment(
-        post: post,
+        header: header,
         text: text,
       );
     };

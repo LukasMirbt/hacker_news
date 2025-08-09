@@ -16,7 +16,6 @@ class DraftRepository {
     return commentDraftStream.combineLatest(
       replyDraftStream,
       (commentDrafts, replyDrafts) {
-        print('Drafts emitted: ${commentDrafts.length + replyDrafts.length}');
         final drafts =
             [
               for (final draft in commentDrafts) CommentDraft.from(draft),

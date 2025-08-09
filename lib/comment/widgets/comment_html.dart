@@ -13,7 +13,7 @@ class CommentHtml extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final htmlText = context.select(
-      (CommentBloc bloc) => bloc.state.post.htmlText,
+      (CommentBloc bloc) => bloc.state.header.htmlText,
     );
 
     if (htmlText == null) return const SizedBox.shrink();
