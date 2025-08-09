@@ -2,7 +2,6 @@ import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
-import 'package:hacker_client/delete_draft/widgets/widgets.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
 class DeleteDraftDialog extends StatelessWidget {
@@ -16,6 +15,7 @@ class DeleteDraftDialog extends StatelessWidget {
     showDialog<void>(
       context: context,
       builder: (_) => BlocProvider(
+        lazy: false,
         create: (_) => DeleteDraftBloc(
           draft: draft,
           draftRepository: draftRepository,
