@@ -9,7 +9,29 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
   group(AppDestination, () {
-    group('toDrawer', () {
+    group('route', () {
+      test('returns correct route for ${AppDestination.home}', () {
+        const destination = AppDestination.home;
+        expect(destination.route, HomeRoute());
+      });
+
+      test('returns correct route for ${AppDestination.threads}', () {
+        const destination = AppDestination.threads;
+        expect(destination.route, ThreadFeedRoute());
+      });
+
+      test('returns correct route for ${AppDestination.drafts}', () {
+        const destination = AppDestination.drafts;
+        expect(destination.route, DraftRoute());
+      });
+
+      test('returns correct route for ${AppDestination.settings}', () {
+        const destination = AppDestination.settings;
+        expect(destination.route, SettingsRoute());
+      });
+    });
+
+    group('data', () {
       test('returns correct $DestinationData '
           'for ${AppDestination.home}', () {
         const destination = AppDestination.home;

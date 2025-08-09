@@ -228,6 +228,24 @@ void main() {
       );
     });
 
+    group(CommentAppInactivated, () {
+      blocTest(
+        'calls flush',
+        setUp: () {
+          when(flush).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentAppInactivated(),
+          );
+        },
+        verify: (_) {
+          verify(flush).called(2);
+        },
+      );
+    });
+
     group(CommentSubmitted, () {
       final form = CommentFormModel(
         form: CommentFormPlaceholder(),
