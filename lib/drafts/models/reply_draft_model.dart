@@ -7,6 +7,7 @@ class ReplyDraftModel extends DraftModel {
 
   final ReplyDraft _draft;
 
+  String get url => _draft.url;
   String get title => _draft.content;
 
   String get subtitle {
@@ -26,8 +27,6 @@ class ReplyDraftModel extends DraftModel {
 
     return buffer.toString().trim();
   }
-
-  String get url => _draft.url;
 
   ReplyDraft toRepository() => _draft;
 
