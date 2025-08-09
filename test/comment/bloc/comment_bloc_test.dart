@@ -22,18 +22,12 @@ void main() {
   const fetchStatus = FetchStatus.loading;
   final post = PostPlaceholder();
   final header = post.header;
-
-  const text = 'text';
-
-  final form = CommentFormModel(
-    text: text,
-    form: header.commentForm,
-  );
+  final form = header.commentForm;
 
   final initialState = CommentState(
     fetchStatus: fetchStatus,
     header: CommentPostHeaderModel(header),
-    form: form,
+    form: CommentFormModel(form: form),
   );
 
   group(CommentBloc, () {
@@ -187,7 +181,7 @@ void main() {
 
     group(CommentTextChanged, () {
       const text = 'updatedText';
-      final updatedForm = form.copyWith(text: text);
+      final updatedForm = initialState.form.copyWith(text: text);
 
       final update = () => draftSaver.update(
         header: initialState.header.toRepository(),

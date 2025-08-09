@@ -6,7 +6,7 @@ part of 'draft.dart';
 class CommentDraft extends Draft with _$CommentDraft {
   const CommentDraft({
     required this.id,
-    required this.createdAt,
+    required this.updatedAt,
     required this.content,
     required this.postId,
     required this.postUserId,
@@ -16,7 +16,7 @@ class CommentDraft extends Draft with _$CommentDraft {
   factory CommentDraft.from(CommentDraftData data) {
     return CommentDraft(
       id: data.id,
-      createdAt: data.createdAt,
+      updatedAt: data.updatedAt.toLocal(),
       content: data.content,
       postId: data.postId,
       postUserId: data.postUserId,
@@ -25,7 +25,7 @@ class CommentDraft extends Draft with _$CommentDraft {
   }
 
   final int id;
-  final DateTime createdAt;
+  final DateTime updatedAt;
   final String content;
   final String postId;
   final String postUserId;

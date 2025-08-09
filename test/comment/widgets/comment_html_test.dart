@@ -14,20 +14,20 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 
 class _MockCommentState extends Mock implements CommentState {}
 
-class _MockCommentPostModel extends Mock implements CommentPostModel {}
+class _MockCommentPostModel extends Mock implements CommentPostHeaderModel {}
 
 void main() {
   group(CommentHtml, () {
     late CommentBloc bloc;
     late CommentState state;
-    late CommentPostModel post;
+    late CommentPostHeaderModel header;
 
     setUp(() {
       bloc = _MockCommentBloc();
       state = _MockCommentState();
-      post = _MockCommentPostModel();
+      header = _MockCommentPostModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.post).thenReturn(post);
+      when(() => state.header).thenReturn(header);
     });
 
     Widget buildSubject() {
@@ -41,7 +41,7 @@ void main() {
 
     testWidgets('renders $CommentHtmlBody when htmlText '
         'is non-null', (tester) async {
-      when(() => post.htmlText).thenReturn('htmlText');
+      when(() => header.htmlText).thenReturn('htmlText');
       await tester.pumpApp(buildSubject());
       expect(find.byType(CommentHtmlBody), findsOneWidget);
     });

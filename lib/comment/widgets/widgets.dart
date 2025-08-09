@@ -1,4 +1,5 @@
 export 'comment_app_bar.dart';
+export 'comment_app_observer.dart';
 export 'comment_failure_listener.dart';
 export 'comment_html.dart';
 export 'comment_html_body.dart';

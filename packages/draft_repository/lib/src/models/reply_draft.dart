@@ -6,7 +6,7 @@ part of 'draft.dart';
 class ReplyDraft extends Draft with _$ReplyDraft {
   const ReplyDraft({
     required this.id,
-    required this.createdAt,
+    required this.updatedAt,
     required this.content,
     required this.parentId,
     required this.url,
@@ -17,7 +17,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
   factory ReplyDraft.from(ReplyDraftData data) {
     return ReplyDraft(
       id: data.id,
-      createdAt: data.createdAt,
+      updatedAt: data.updatedAt.toLocal(),
       content: data.content,
       parentId: data.parentId,
       url: data.url,
@@ -27,7 +27,7 @@ class ReplyDraft extends Draft with _$ReplyDraft {
   }
 
   final int id;
-  final DateTime createdAt;
+  final DateTime updatedAt;
   final String content;
   final String parentId;
   final String url;

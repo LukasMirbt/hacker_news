@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
+import 'package:hacker_client/drafts/drafts.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/settings/settings.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
@@ -38,6 +39,7 @@ void main() {
           [
             HomeBranch.config,
             ThreadFeedBranch.config,
+            DraftBranch.config,
             SettingsBranch.config,
           ],
         );

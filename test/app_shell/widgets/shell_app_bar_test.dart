@@ -108,13 +108,27 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
+            l10n.appShell_drafts,
+          ),
+        );
+      });
+
+      testWidgets('has correct title when currentIndex is 3', (tester) async {
+        when(() => shell.currentIndex).thenReturn(3);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.title,
+          isA<Text>().having(
+            (text) => text.data,
+            'text',
             l10n.appShell_settings,
           ),
         );
       });
 
       testWidgets('has correct title when currentIndex '
-          'is not 1 or 2', (tester) async {
+          'is not 1, 2 or 3', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.title, isA<Logo>());

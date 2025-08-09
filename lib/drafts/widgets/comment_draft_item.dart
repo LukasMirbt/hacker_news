@@ -1,6 +1,8 @@
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/app_router/app_router.dart';
+import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart'
     hide CommentDraftModel;
 import 'package:hacker_client/drafts/drafts.dart';
@@ -24,7 +26,17 @@ class CommentDraftItem extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      onTap: () {},
+      onTap: () {
+        AppRouter.of(context)
+          ..goRelative(
+            PostRoute(
+              postId: draft.postId,
+            ),
+          )
+          ..goRelative(
+            const CommentRoute(),
+          );
+      },
       trailing: IconButton(
         icon: const Icon(
           Symbols.more_vert,

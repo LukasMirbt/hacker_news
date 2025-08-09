@@ -52,7 +52,7 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
   const selectedIndex = 0;
 
-  group(AppNavigationDrawer, () {
+  group(ShellDrawer, () {
     late AuthenticationBloc authenticationBloc;
     late AuthenticationState authenticationState;
     late AppRouter router;
@@ -80,7 +80,7 @@ void main() async {
           child: Provider.value(
             value: shell,
             child: _MockScaffold(
-              body: AppNavigationDrawer(),
+              body: ShellDrawer(),
             ),
           ),
         ),
@@ -103,35 +103,13 @@ void main() async {
       await tester.pumpApp(buildSubject());
 
       for (final destination in AppDestination.values) {
-        final widget = tester.widget<NavigationDrawerDestination>(
-          find.byType(NavigationDrawerDestination).at(destination.index),
+        final widget = tester.widget<ShellDrawerDestination>(
+          find.bySubtype<NavigationDrawerDestination>().at(destination.index),
         );
 
         expect(
-          widget.label,
-          isA<Text>().having(
-            (text) => text.data,
-            'label',
-            destination.label(l10n),
-          ),
-        );
-
-        expect(
-          widget.icon,
-          isA<Icon>().having(
-            (icon) => icon.icon,
-            'icon',
-            destination.icon,
-          ),
-        );
-
-        expect(
-          widget.selectedIcon,
-          isA<Icon>().having(
-            (icon) => icon.icon,
-            'selectedIcon',
-            destination.selectedIcon,
-          ),
+          widget.data,
+          destination.data(l10n),
         );
       }
     });

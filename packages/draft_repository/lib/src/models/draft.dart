@@ -9,6 +9,6 @@ sealed class Draft {
   const Draft();
 
   int get id;
-  DateTime get createdAt;
+  DateTime get updatedAt;
   String get content;
 }

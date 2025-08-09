@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:drift/drift.dart';
 
@@ -23,11 +24,13 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
     return draft;
   }
 
-  Future<void> saveReplyDraft(Insertable<ReplyDraftData> draft) async {
+  Future<void> saveReplyDraft(ReplyDraftsCompanion draft) async {
     await into(replyDrafts).insert(
       draft,
       onConflict: DoUpdate(
-        (_) => draft,
+        (_) => draft.copyWith(
+          updatedAt: Value(clock.now().toUtc()),
+        ),
         target: [
           replyDrafts.userId,
           replyDrafts.parentId,
@@ -36,11 +39,13 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
     );
   }
 
-  Future<void> saveCommentDraft(Insertable<CommentDraftData> draft) async {
+  Future<void> saveCommentDraft(CommentDraftsCompanion draft) async {
     await into(commentDrafts).insert(
       draft,
       onConflict: DoUpdate(
-        (_) => draft,
+        (_) => draft.copyWith(
+          updatedAt: Value(clock.now().toUtc()),
+        ),
         target: [
           commentDrafts.userId,
           commentDrafts.postId,

@@ -18,11 +18,10 @@ void main() {
 
   final initialState = CommentState(
     fetchStatus: FetchStatus.loading,
-    post: CommentPostModel(
-      PostPlaceholder(),
+    header: CommentPostHeaderModel(
+      PostHeaderPlaceholder(),
     ),
     form: CommentFormModel(
-      text: '',
       form: CommentFormPlaceholder(),
     ),
   );

@@ -2,7 +2,6 @@
 
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:draft_repository/draft_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
@@ -151,12 +150,6 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<AuthenticationRepository>(), isNotNull);
-    });
-
-    testWidgets('provides $DraftRepository', (tester) async {
-      await tester.pumpWidget(buildSubject());
-      final context = childContext(tester);
-      expect(context.read<DraftRepository>(), isNotNull);
     });
 
     testWidgets('provides $ReplyRepository', (tester) async {

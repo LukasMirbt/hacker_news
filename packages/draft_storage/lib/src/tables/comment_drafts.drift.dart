@@ -3,13 +3,14 @@
 import 'package:drift/drift.dart' as i0;
 import 'package:draft_storage/src/tables/comment_drafts.drift.dart' as i1;
 import 'package:draft_storage/src/tables/comment_drafts.dart' as i2;
+import 'package:clock/src/default.dart' as i3;
 
 typedef $$CommentDraftsTableCreateCompanionBuilder =
     i1.CommentDraftsCompanion Function({
       i0.Value<int> id,
       required String userId,
       required String postId,
-      i0.Value<DateTime> createdAt,
+      i0.Value<DateTime> updatedAt,
       required String postUserId,
       required String postTitle,
       required String content,
@@ -19,7 +20,7 @@ typedef $$CommentDraftsTableUpdateCompanionBuilder =
       i0.Value<int> id,
       i0.Value<String> userId,
       i0.Value<String> postId,
-      i0.Value<DateTime> createdAt,
+      i0.Value<DateTime> updatedAt,
       i0.Value<String> postUserId,
       i0.Value<String> postTitle,
       i0.Value<String> content,
@@ -49,8 +50,8 @@ class $$CommentDraftsTableFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  i0.ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => i0.ColumnFilters(column),
   );
 
@@ -94,8 +95,8 @@ class $$CommentDraftsTableOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  i0.ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -133,8 +134,8 @@ class $$CommentDraftsTableAnnotationComposer
   i0.GeneratedColumn<String> get postId =>
       $composableBuilder(column: $table.postId, builder: (column) => column);
 
-  i0.GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  i0.GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   i0.GeneratedColumn<String> get postUserId => $composableBuilder(
     column: $table.postUserId,
@@ -188,7 +189,7 @@ class $$CommentDraftsTableTableManager
                 i0.Value<int> id = const i0.Value.absent(),
                 i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<String> postId = const i0.Value.absent(),
-                i0.Value<DateTime> createdAt = const i0.Value.absent(),
+                i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 i0.Value<String> postUserId = const i0.Value.absent(),
                 i0.Value<String> postTitle = const i0.Value.absent(),
                 i0.Value<String> content = const i0.Value.absent(),
@@ -196,7 +197,7 @@ class $$CommentDraftsTableTableManager
                 id: id,
                 userId: userId,
                 postId: postId,
-                createdAt: createdAt,
+                updatedAt: updatedAt,
                 postUserId: postUserId,
                 postTitle: postTitle,
                 content: content,
@@ -206,7 +207,7 @@ class $$CommentDraftsTableTableManager
                 i0.Value<int> id = const i0.Value.absent(),
                 required String userId,
                 required String postId,
-                i0.Value<DateTime> createdAt = const i0.Value.absent(),
+                i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 required String postUserId,
                 required String postTitle,
                 required String content,
@@ -214,7 +215,7 @@ class $$CommentDraftsTableTableManager
                 id: id,
                 userId: userId,
                 postId: postId,
-                createdAt: createdAt,
+                updatedAt: updatedAt,
                 postUserId: postUserId,
                 postTitle: postTitle,
                 content: content,
@@ -290,18 +291,18 @@ class $CommentDraftsTable extends i2.CommentDrafts
     type: i0.DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const i0.VerificationMeta _createdAtMeta = const i0.VerificationMeta(
-    'createdAt',
+  static const i0.VerificationMeta _updatedAtMeta = const i0.VerificationMeta(
+    'updatedAt',
   );
   @override
-  late final i0.GeneratedColumn<DateTime> createdAt =
+  late final i0.GeneratedColumn<DateTime> updatedAt =
       i0.GeneratedColumn<DateTime>(
-        'created_at',
+        'updated_at',
         aliasedName,
         false,
         type: i0.DriftSqlType.dateTime,
         requiredDuringInsert: false,
-        clientDefault: DateTime.now,
+        clientDefault: () => i3.clock.now().toUtc(),
       );
   static const i0.VerificationMeta _postUserIdMeta = const i0.VerificationMeta(
     'postUserId',
@@ -341,7 +342,7 @@ class $CommentDraftsTable extends i2.CommentDrafts
     id,
     userId,
     postId,
-    createdAt,
+    updatedAt,
     postUserId,
     postTitle,
     content,
@@ -377,10 +378,10 @@ class $CommentDraftsTable extends i2.CommentDrafts
     } else if (isInserting) {
       context.missing(_postIdMeta);
     }
-    if (data.containsKey('created_at')) {
+    if (data.containsKey('updated_at')) {
       context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
       );
     }
     if (data.containsKey('post_user_id')) {
@@ -435,9 +436,9 @@ class $CommentDraftsTable extends i2.CommentDrafts
         i0.DriftSqlType.string,
         data['${effectivePrefix}post_id'],
       )!,
-      createdAt: attachedDatabase.typeMapping.read(
+      updatedAt: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
+        data['${effectivePrefix}updated_at'],
       )!,
       postUserId: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
@@ -465,7 +466,7 @@ class CommentDraftData extends i0.DataClass
   final int id;
   final String userId;
   final String postId;
-  final DateTime createdAt;
+  final DateTime updatedAt;
   final String postUserId;
   final String postTitle;
   final String content;
@@ -473,7 +474,7 @@ class CommentDraftData extends i0.DataClass
     required this.id,
     required this.userId,
     required this.postId,
-    required this.createdAt,
+    required this.updatedAt,
     required this.postUserId,
     required this.postTitle,
     required this.content,
@@ -484,7 +485,7 @@ class CommentDraftData extends i0.DataClass
     map['id'] = i0.Variable<int>(id);
     map['user_id'] = i0.Variable<String>(userId);
     map['post_id'] = i0.Variable<String>(postId);
-    map['created_at'] = i0.Variable<DateTime>(createdAt);
+    map['updated_at'] = i0.Variable<DateTime>(updatedAt);
     map['post_user_id'] = i0.Variable<String>(postUserId);
     map['post_title'] = i0.Variable<String>(postTitle);
     map['content'] = i0.Variable<String>(content);
@@ -496,7 +497,7 @@ class CommentDraftData extends i0.DataClass
       id: i0.Value(id),
       userId: i0.Value(userId),
       postId: i0.Value(postId),
-      createdAt: i0.Value(createdAt),
+      updatedAt: i0.Value(updatedAt),
       postUserId: i0.Value(postUserId),
       postTitle: i0.Value(postTitle),
       content: i0.Value(content),
@@ -512,7 +513,7 @@ class CommentDraftData extends i0.DataClass
       id: serializer.fromJson<int>(json['id']),
       userId: serializer.fromJson<String>(json['userId']),
       postId: serializer.fromJson<String>(json['postId']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       postUserId: serializer.fromJson<String>(json['postUserId']),
       postTitle: serializer.fromJson<String>(json['postTitle']),
       content: serializer.fromJson<String>(json['content']),
@@ -525,7 +526,7 @@ class CommentDraftData extends i0.DataClass
       'id': serializer.toJson<int>(id),
       'userId': serializer.toJson<String>(userId),
       'postId': serializer.toJson<String>(postId),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'postUserId': serializer.toJson<String>(postUserId),
       'postTitle': serializer.toJson<String>(postTitle),
       'content': serializer.toJson<String>(content),
@@ -536,7 +537,7 @@ class CommentDraftData extends i0.DataClass
     int? id,
     String? userId,
     String? postId,
-    DateTime? createdAt,
+    DateTime? updatedAt,
     String? postUserId,
     String? postTitle,
     String? content,
@@ -544,7 +545,7 @@ class CommentDraftData extends i0.DataClass
     id: id ?? this.id,
     userId: userId ?? this.userId,
     postId: postId ?? this.postId,
-    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
     postUserId: postUserId ?? this.postUserId,
     postTitle: postTitle ?? this.postTitle,
     content: content ?? this.content,
@@ -554,7 +555,7 @@ class CommentDraftData extends i0.DataClass
       id: data.id.present ? data.id.value : this.id,
       userId: data.userId.present ? data.userId.value : this.userId,
       postId: data.postId.present ? data.postId.value : this.postId,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       postUserId: data.postUserId.present
           ? data.postUserId.value
           : this.postUserId,
@@ -569,7 +570,7 @@ class CommentDraftData extends i0.DataClass
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('postId: $postId, ')
-          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
           ..write('content: $content')
@@ -582,7 +583,7 @@ class CommentDraftData extends i0.DataClass
     id,
     userId,
     postId,
-    createdAt,
+    updatedAt,
     postUserId,
     postTitle,
     content,
@@ -594,7 +595,7 @@ class CommentDraftData extends i0.DataClass
           other.id == this.id &&
           other.userId == this.userId &&
           other.postId == this.postId &&
-          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
           other.postUserId == this.postUserId &&
           other.postTitle == this.postTitle &&
           other.content == this.content);
@@ -604,7 +605,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   final i0.Value<int> id;
   final i0.Value<String> userId;
   final i0.Value<String> postId;
-  final i0.Value<DateTime> createdAt;
+  final i0.Value<DateTime> updatedAt;
   final i0.Value<String> postUserId;
   final i0.Value<String> postTitle;
   final i0.Value<String> content;
@@ -612,7 +613,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     this.id = const i0.Value.absent(),
     this.userId = const i0.Value.absent(),
     this.postId = const i0.Value.absent(),
-    this.createdAt = const i0.Value.absent(),
+    this.updatedAt = const i0.Value.absent(),
     this.postUserId = const i0.Value.absent(),
     this.postTitle = const i0.Value.absent(),
     this.content = const i0.Value.absent(),
@@ -621,7 +622,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     this.id = const i0.Value.absent(),
     required String userId,
     required String postId,
-    this.createdAt = const i0.Value.absent(),
+    this.updatedAt = const i0.Value.absent(),
     required String postUserId,
     required String postTitle,
     required String content,
@@ -634,7 +635,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     i0.Expression<int>? id,
     i0.Expression<String>? userId,
     i0.Expression<String>? postId,
-    i0.Expression<DateTime>? createdAt,
+    i0.Expression<DateTime>? updatedAt,
     i0.Expression<String>? postUserId,
     i0.Expression<String>? postTitle,
     i0.Expression<String>? content,
@@ -643,7 +644,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
       if (id != null) 'id': id,
       if (userId != null) 'user_id': userId,
       if (postId != null) 'post_id': postId,
-      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (postUserId != null) 'post_user_id': postUserId,
       if (postTitle != null) 'post_title': postTitle,
       if (content != null) 'content': content,
@@ -654,7 +655,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     i0.Value<int>? id,
     i0.Value<String>? userId,
     i0.Value<String>? postId,
-    i0.Value<DateTime>? createdAt,
+    i0.Value<DateTime>? updatedAt,
     i0.Value<String>? postUserId,
     i0.Value<String>? postTitle,
     i0.Value<String>? content,
@@ -663,7 +664,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
       id: id ?? this.id,
       userId: userId ?? this.userId,
       postId: postId ?? this.postId,
-      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       postUserId: postUserId ?? this.postUserId,
       postTitle: postTitle ?? this.postTitle,
       content: content ?? this.content,
@@ -682,8 +683,8 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     if (postId.present) {
       map['post_id'] = i0.Variable<String>(postId.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = i0.Variable<DateTime>(createdAt.value);
+    if (updatedAt.present) {
+      map['updated_at'] = i0.Variable<DateTime>(updatedAt.value);
     }
     if (postUserId.present) {
       map['post_user_id'] = i0.Variable<String>(postUserId.value);
@@ -703,7 +704,7 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
           ..write('id: $id, ')
           ..write('userId: $userId, ')
           ..write('postId: $postId, ')
-          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
           ..write('content: $content')

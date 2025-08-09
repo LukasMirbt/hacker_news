@@ -2,7 +2,6 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
-import 'package:hacker_client/comment/widgets/comment_app_observer.dart';
 import 'package:post_repository/post_repository.dart';
 
 class CommentView extends StatelessWidget {

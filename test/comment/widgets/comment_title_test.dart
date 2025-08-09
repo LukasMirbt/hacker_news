@@ -14,7 +14,8 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 
 class _MockCommentState extends Mock implements CommentState {}
 
-class _MockCommentPostModel extends Mock implements CommentPostModel {}
+class _MockCommentPostHeaderModel extends Mock
+    implements CommentPostHeaderModel {}
 
 void main() {
   const title = 'title';
@@ -22,15 +23,15 @@ void main() {
   group(CommentTitle, () {
     late CommentBloc bloc;
     late CommentState state;
-    late CommentPostModel post;
+    late CommentPostHeaderModel header;
 
     setUp(() {
       bloc = _MockCommentBloc();
       state = _MockCommentState();
-      post = _MockCommentPostModel();
+      header = _MockCommentPostHeaderModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.post).thenReturn(post);
-      when(() => post.title).thenReturn(title);
+      when(() => state.header).thenReturn(header);
+      when(() => header.title).thenReturn(title);
     });
 
     Widget buildSubject() {

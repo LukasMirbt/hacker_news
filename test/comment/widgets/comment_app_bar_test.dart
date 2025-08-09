@@ -29,7 +29,6 @@ void main() {
       when(() => state.form).thenReturn(
         CommentFormModel(
           form: CommentFormPlaceholder(),
-          text: '',
         ),
       );
     });

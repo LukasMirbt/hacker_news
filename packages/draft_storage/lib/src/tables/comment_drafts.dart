@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 
 @DataClassName('CommentDraftData')
@@ -5,7 +6,8 @@ class CommentDrafts extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get userId => text()();
   TextColumn get postId => text()();
-  DateTimeColumn get createdAt => dateTime().clientDefault(DateTime.now)();
+  DateTimeColumn get updatedAt =>
+      dateTime().clientDefault(() => clock.now().toUtc())();
   TextColumn get postUserId => text()();
   TextColumn get postTitle => text()();
   TextColumn get content => text()();

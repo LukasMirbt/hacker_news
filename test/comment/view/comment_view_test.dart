@@ -17,11 +17,10 @@ class _MockCommentBloc extends MockBloc<CommentEvent, CommentState>
 void main() {
   final initialState = CommentState(
     fetchStatus: FetchStatus.loading,
-    post: CommentPostModel(
-      PostPlaceholder(),
+    header: CommentPostHeaderModel(
+      PostHeaderPlaceholder(),
     ),
     form: CommentFormModel(
-      text: '',
       form: CommentFormPlaceholder(),
     ),
   );
@@ -41,9 +40,9 @@ void main() {
       );
     }
 
-    testWidgets('renders $CommentPostLoadListener', (tester) async {
+    testWidgets('renders $CommentAppObserver', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentPostLoadListener), findsOneWidget);
+      expect(find.byType(CommentAppObserver), findsOneWidget);
     });
 
     testWidgets('renders $CommentSuccessListener', (tester) async {
