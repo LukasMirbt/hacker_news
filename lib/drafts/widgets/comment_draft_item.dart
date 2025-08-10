@@ -1,12 +1,7 @@
-import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/comment_draft_options/comment_draft_options.dart'
-    hide CommentDraftModel;
 import 'package:hacker_client/drafts/drafts.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class CommentDraftItem extends StatelessWidget {
   const CommentDraftItem(this.draft, {super.key});
@@ -16,16 +11,9 @@ class CommentDraftItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(
-        draft.title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text(
-        draft.subtitle,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
+      title: _SingleLineText(draft.title),
+      subtitle: _SingleLineText(draft.subtitle),
+      trailing: CommentDraftMoreButton(draft),
       onTap: () {
         AppRouter.of(context)
           ..goRelative(
@@ -37,20 +25,14 @@ class CommentDraftItem extends StatelessWidget {
             const CommentRoute(),
           );
       },
-      trailing: IconButton(
-        icon: const Icon(
-          Symbols.more_vert,
-          size: 20,
-          opticalSize: 20,
-        ),
-        onPressed: () {
-          CommentDraftOptionsSheet.show(
-            context: context,
-            draft: draft.toRepository(),
-            draftRepository: context.read<DraftRepository>(),
-          );
-        },
-      ),
     );
   }
+}
+
+class _SingleLineText extends Text {
+  const _SingleLineText(super.data)
+    : super(
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      );
 }
