@@ -17,6 +17,7 @@ class OtherUserReplyParentModel extends ReplyParentModel {
   String get upvoteUrl => _parent.upvoteUrl;
   bool get hasBeenUpvoted => _parent.hasBeenUpvoted;
 
+  @override
   OtherUserReplyParent toRepository() => _parent;
 
   OtherUserReplyParentModel vote(VoteType type) {

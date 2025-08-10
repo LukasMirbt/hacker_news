@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/reply/reply.dart';
 
@@ -11,34 +12,34 @@ class ReplyAppObserver extends StatefulWidget {
   final Widget child;
 
   @override
-  State<ReplyAppObserver> createState() => ReplyAppObserverState();
+  State<ReplyAppObserver> createState() => _ReplyAppObserverState();
 }
 
-class ReplyAppObserverState extends State<ReplyAppObserver>
-    with WidgetsBindingObserver {
-  AppLifecycleState _previousState = AppLifecycleState.resumed;
+class _ReplyAppObserverState extends State<ReplyAppObserver> {
+  late final AppLifecycleListener _listener;
+  AppLifecycleState? _previousState = AppLifecycleState.resumed;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
+    _previousState = SchedulerBinding.instance.lifecycleState;
+    _listener = AppLifecycleListener(
+      onStateChange: (state) {
+        if (_previousState == AppLifecycleState.resumed &&
+            state == AppLifecycleState.inactive) {
+          context.read<ReplyBloc>().add(
+            const ReplyAppInactivated(),
+          );
+        }
 
-  @override
-  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (_previousState == AppLifecycleState.resumed &&
-        state == AppLifecycleState.inactive) {
-      context.read<ReplyBloc>().add(
-        const ReplyAppInactivated(),
-      );
-    }
-
-    _previousState = state;
+        _previousState = state;
+      },
+    );
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    _listener.dispose();
     super.dispose();
   }
 
