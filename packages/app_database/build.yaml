@@ -12,6 +12,8 @@ targets:
         options:
           &options # Drift build options, as per https://drift.simonbinder.eu/docs/advanced-features/builder_options/
           store_date_time_values_as_text: true
+          databases:
+            app_database: lib/src/app_database.dart
 
       drift_dev:modular:
         enabled: true
