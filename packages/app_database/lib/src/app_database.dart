@@ -8,7 +8,7 @@ import 'package:drift_flutter/drift_flutter.dart';
   ],
 )
 class AppDatabase extends $AppDatabase {
-  AppDatabase({QueryExecutor? executor})
+  AppDatabase([QueryExecutor? executor])
     : super(
         executor ?? _openConnection(),
       );
