@@ -5,9 +5,9 @@ import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/reply_draft_options/reply_draft_options.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 
@@ -15,32 +15,31 @@ import '../../app/pump_app.dart';
 
 class _MockDraftRepository extends Mock implements DraftRepository {}
 
-class _MockCommentDraftOptionsBloc
-    extends MockBloc<void, CommentDraftOptionsState>
-    implements CommentDraftOptionsBloc {}
+class _MockReplyDraftOptionsBloc extends MockBloc<void, ReplyDraftOptionsState>
+    implements ReplyDraftOptionsBloc {}
 
-class _MockCommentDraftOptionsState extends Mock
-    implements CommentDraftOptionsState {}
+class _MockReplyDraftOptionsState extends Mock
+    implements ReplyDraftOptionsState {}
 
 void main() async {
-  final draft = CommentDraftPlaceholder();
+  final draft = ReplyDraftPlaceholder();
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
   group(DeleteOption, () {
     late DraftRepository repository;
-    late CommentDraftOptionsBloc bloc;
-    late CommentDraftOptionsState state;
+    late ReplyDraftOptionsBloc bloc;
+    late ReplyDraftOptionsState state;
     late MockNavigator navigator;
 
     setUp(() {
       repository = _MockDraftRepository();
-      bloc = _MockCommentDraftOptionsBloc();
-      state = _MockCommentDraftOptionsState();
+      bloc = _MockReplyDraftOptionsBloc();
+      state = _MockReplyDraftOptionsState();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
       when(() => bloc.state).thenReturn(state);
       when(() => state.draft).thenReturn(
-        CommentDraftModel(draft: draft),
+        ReplyDraftModel(draft: draft),
       );
     });
 
@@ -106,7 +105,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'data',
-            l10n.commentDraftOptions_delete,
+            l10n.replyDraftOptions_delete,
           ),
         );
       });

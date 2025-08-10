@@ -18,7 +18,7 @@ class DeleteOption extends StatelessWidget {
       textColor: colorScheme.error,
       iconColor: colorScheme.error,
       leading: const Icon(Symbols.delete),
-      title: Text(l10n.draftOptions_delete),
+      title: Text(l10n.commentDraftOptions_delete),
       onTap: () {
         final state = context.read<CommentDraftOptionsBloc>().state;
         Navigator.of(context).pop();

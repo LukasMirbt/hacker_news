@@ -91,7 +91,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'data',
-            l10n.draftOptions_viewPost,
+            l10n.commentDraftOptions_viewPost,
           ),
         );
       });

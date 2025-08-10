@@ -19,12 +19,8 @@ class ViewPostOption extends StatelessWidget {
 
     return ListTile(
       leading: const Icon(Symbols.article_shortcut),
-      title: Text(l10n.draftOptions_viewPost),
-      subtitle: Text(
-        postTitle,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
+      title: Text(l10n.commentDraftOptions_viewPost),
+      subtitle: _SingleLineText(postTitle),
       onTap: () {
         final state = context.read<CommentDraftOptionsBloc>().state;
         final postId = state.draft.postId;
@@ -35,4 +31,12 @@ class ViewPostOption extends StatelessWidget {
       },
     );
   }
+}
+
+class _SingleLineText extends Text {
+  const _SingleLineText(super.data)
+    : super(
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      );
 }

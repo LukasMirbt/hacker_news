@@ -113,6 +113,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAccount_submitAction => 'Create account';
 
   @override
+  String get commentDraftOptions_viewPost => 'View post';
+
+  @override
+  String get commentDraftOptions_delete => 'Delete draft';
+
+  @override
   String get dataCollection_title => 'Data collection';
 
   @override
@@ -126,12 +132,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteDraft_confirmAction => 'Delete';
-
-  @override
-  String get draftOptions_viewPost => 'View post';
-
-  @override
-  String get draftOptions_delete => 'Delete draft';
 
   @override
   String feed_shareText({required String title, required String url}) {
@@ -246,6 +246,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reply_submitAction => 'Submit';
+
+  @override
+  String get replyDraftOptions_delete => 'Delete draft';
 
   @override
   String get replyOptions_share => 'Share';

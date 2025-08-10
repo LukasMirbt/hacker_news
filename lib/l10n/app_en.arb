@@ -46,13 +46,13 @@
   "createAccount_policyLinksPart3": " and ",
   "createAccount_privacyPolicy": "privacy policy",
   "createAccount_submitAction": "Create account",
+  "commentDraftOptions_viewPost": "View post",
+  "commentDraftOptions_delete": "Delete draft",
   "dataCollection_title": "Data collection",
   "dataCollection_analytics": "Analytics",
   "deleteDraft_title": "Delete draft",
   "deleteDraft_content": "The draft will be permanently deleted",
   "deleteDraft_confirmAction": "Delete",
-  "draftOptions_viewPost": "View post",
-  "draftOptions_delete": "Delete draft",
   "feed_shareText": "{title} {url}",
   "@feed_shareText": {
     "placeholders": {
@@ -128,6 +128,7 @@
   },
   "reply_textFieldHintText": "Your reply",
   "reply_submitAction": "Submit",
+  "replyDraftOptions_delete": "Delete draft",
   "replyOptions_share": "Share",
   "replyOptions_openOnWeb": "Open on web",
   "settings_logout": "Logout",

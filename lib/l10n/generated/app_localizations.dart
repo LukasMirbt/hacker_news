@@ -286,6 +286,18 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get createAccount_submitAction;
 
+  /// No description provided for @commentDraftOptions_viewPost.
+  ///
+  /// In en, this message translates to:
+  /// **'View post'**
+  String get commentDraftOptions_viewPost;
+
+  /// No description provided for @commentDraftOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get commentDraftOptions_delete;
+
   /// No description provided for @dataCollection_title.
   ///
   /// In en, this message translates to:
@@ -315,18 +327,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get deleteDraft_confirmAction;
-
-  /// No description provided for @draftOptions_viewPost.
-  ///
-  /// In en, this message translates to:
-  /// **'View post'**
-  String get draftOptions_viewPost;
-
-  /// No description provided for @draftOptions_delete.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete draft'**
-  String get draftOptions_delete;
 
   /// No description provided for @feed_shareText.
   ///
@@ -531,6 +531,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit'**
   String get reply_submitAction;
+
+  /// No description provided for @replyDraftOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get replyDraftOptions_delete;
 
   /// No description provided for @replyOptions_share.
   ///

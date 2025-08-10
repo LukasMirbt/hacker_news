@@ -19,6 +19,7 @@ class ReplyDraftOptionsSheet extends StatelessWidget {
       builder: (_) => RepositoryProvider.value(
         value: draftRepository,
         child: BlocProvider(
+          lazy: false,
           create: (_) => ReplyDraftOptionsBloc(draft: draft),
           child: const ReplyDraftOptionsSheet(),
         ),
