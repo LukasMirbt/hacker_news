@@ -7,7 +7,7 @@ sealed class ReplyDraftKey {
   Expression<bool> Function($ReplyDraftsTable) get filter;
 }
 
-final class ReplyDraftById extends ReplyDraftKey {
+class ReplyDraftById extends ReplyDraftKey {
   const ReplyDraftById(this.id);
 
   final int id;
@@ -17,7 +17,7 @@ final class ReplyDraftById extends ReplyDraftKey {
       (draft) => draft.id.equals(id);
 }
 
-final class ReplyDraftByUniqueKeys extends ReplyDraftKey {
+class ReplyDraftByUniqueKeys extends ReplyDraftKey {
   const ReplyDraftByUniqueKeys({
     required this.parentId,
     required this.userId,

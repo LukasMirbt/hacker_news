@@ -8,8 +8,8 @@ import 'package:clock/src/default.dart' as i3;
 typedef $$ReplyDraftsTableCreateCompanionBuilder =
     i1.ReplyDraftsCompanion Function({
       i0.Value<int> id,
-      required String userId,
       required String parentId,
+      required String userId,
       i0.Value<DateTime> updatedAt,
       required String url,
       required String parentUserId,
@@ -19,8 +19,8 @@ typedef $$ReplyDraftsTableCreateCompanionBuilder =
 typedef $$ReplyDraftsTableUpdateCompanionBuilder =
     i1.ReplyDraftsCompanion Function({
       i0.Value<int> id,
-      i0.Value<String> userId,
       i0.Value<String> parentId,
+      i0.Value<String> userId,
       i0.Value<DateTime> updatedAt,
       i0.Value<String> url,
       i0.Value<String> parentUserId,
@@ -42,13 +42,13 @@ class $$ReplyDraftsTableFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get userId => $composableBuilder(
-    column: $table.userId,
+  i0.ColumnFilters<String> get parentId => $composableBuilder(
+    column: $table.parentId,
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get parentId => $composableBuilder(
-    column: $table.parentId,
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => i0.ColumnFilters(column),
   );
 
@@ -92,13 +92,13 @@ class $$ReplyDraftsTableOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get userId => $composableBuilder(
-    column: $table.userId,
+  i0.ColumnOrderings<String> get parentId => $composableBuilder(
+    column: $table.parentId,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get parentId => $composableBuilder(
-    column: $table.parentId,
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -140,11 +140,11 @@ class $$ReplyDraftsTableAnnotationComposer
   i0.GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  i0.GeneratedColumn<String> get userId =>
-      $composableBuilder(column: $table.userId, builder: (column) => column);
-
   i0.GeneratedColumn<String> get parentId =>
       $composableBuilder(column: $table.parentId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
 
   i0.GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
@@ -204,8 +204,8 @@ class $$ReplyDraftsTableTableManager
           updateCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<String> parentId = const i0.Value.absent(),
+                i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 i0.Value<String> url = const i0.Value.absent(),
                 i0.Value<String> parentUserId = const i0.Value.absent(),
@@ -213,8 +213,8 @@ class $$ReplyDraftsTableTableManager
                 i0.Value<String> content = const i0.Value.absent(),
               }) => i1.ReplyDraftsCompanion(
                 id: id,
-                userId: userId,
                 parentId: parentId,
+                userId: userId,
                 updatedAt: updatedAt,
                 url: url,
                 parentUserId: parentUserId,
@@ -224,8 +224,8 @@ class $$ReplyDraftsTableTableManager
           createCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                required String userId,
                 required String parentId,
+                required String userId,
                 i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 required String url,
                 required String parentUserId,
@@ -233,8 +233,8 @@ class $$ReplyDraftsTableTableManager
                 required String content,
               }) => i1.ReplyDraftsCompanion.insert(
                 id: id,
-                userId: userId,
                 parentId: parentId,
+                userId: userId,
                 updatedAt: updatedAt,
                 url: url,
                 parentUserId: parentUserId,
@@ -290,23 +290,23 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const i0.VerificationMeta _userIdMeta = const i0.VerificationMeta(
-    'userId',
-  );
-  @override
-  late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
-    'user_id',
-    aliasedName,
-    false,
-    type: i0.DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
   static const i0.VerificationMeta _parentIdMeta = const i0.VerificationMeta(
     'parentId',
   );
   @override
   late final i0.GeneratedColumn<String> parentId = i0.GeneratedColumn<String>(
     'parent_id',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const i0.VerificationMeta _userIdMeta = const i0.VerificationMeta(
+    'userId',
+  );
+  @override
+  late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
+    'user_id',
     aliasedName,
     false,
     type: i0.DriftSqlType.string,
@@ -370,8 +370,8 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
   @override
   List<i0.GeneratedColumn> get $columns => [
     id,
-    userId,
     parentId,
+    userId,
     updatedAt,
     url,
     parentUserId,
@@ -393,14 +393,6 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('user_id')) {
-      context.handle(
-        _userIdMeta,
-        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_userIdMeta);
-    }
     if (data.containsKey('parent_id')) {
       context.handle(
         _parentIdMeta,
@@ -408,6 +400,14 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
       );
     } else if (isInserting) {
       context.missing(_parentIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(
@@ -470,13 +470,13 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
         i0.DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      userId: attachedDatabase.typeMapping.read(
-        i0.DriftSqlType.string,
-        data['${effectivePrefix}user_id'],
-      )!,
       parentId: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}parent_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
       )!,
       updatedAt: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
@@ -510,8 +510,8 @@ class $ReplyDraftsTable extends i2.ReplyDrafts
 class ReplyDraftData extends i0.DataClass
     implements i0.Insertable<i1.ReplyDraftData> {
   final int id;
-  final String userId;
   final String parentId;
+  final String userId;
   final DateTime updatedAt;
   final String url;
   final String parentUserId;
@@ -519,8 +519,8 @@ class ReplyDraftData extends i0.DataClass
   final String content;
   const ReplyDraftData({
     required this.id,
-    required this.userId,
     required this.parentId,
+    required this.userId,
     required this.updatedAt,
     required this.url,
     required this.parentUserId,
@@ -531,8 +531,8 @@ class ReplyDraftData extends i0.DataClass
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['id'] = i0.Variable<int>(id);
-    map['user_id'] = i0.Variable<String>(userId);
     map['parent_id'] = i0.Variable<String>(parentId);
+    map['user_id'] = i0.Variable<String>(userId);
     map['updated_at'] = i0.Variable<DateTime>(updatedAt);
     map['url'] = i0.Variable<String>(url);
     map['parent_user_id'] = i0.Variable<String>(parentUserId);
@@ -544,8 +544,8 @@ class ReplyDraftData extends i0.DataClass
   i1.ReplyDraftsCompanion toCompanion(bool nullToAbsent) {
     return i1.ReplyDraftsCompanion(
       id: i0.Value(id),
-      userId: i0.Value(userId),
       parentId: i0.Value(parentId),
+      userId: i0.Value(userId),
       updatedAt: i0.Value(updatedAt),
       url: i0.Value(url),
       parentUserId: i0.Value(parentUserId),
@@ -561,8 +561,8 @@ class ReplyDraftData extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return ReplyDraftData(
       id: serializer.fromJson<int>(json['id']),
-      userId: serializer.fromJson<String>(json['userId']),
       parentId: serializer.fromJson<String>(json['parentId']),
+      userId: serializer.fromJson<String>(json['userId']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       url: serializer.fromJson<String>(json['url']),
       parentUserId: serializer.fromJson<String>(json['parentUserId']),
@@ -575,8 +575,8 @@ class ReplyDraftData extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'userId': serializer.toJson<String>(userId),
       'parentId': serializer.toJson<String>(parentId),
+      'userId': serializer.toJson<String>(userId),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'url': serializer.toJson<String>(url),
       'parentUserId': serializer.toJson<String>(parentUserId),
@@ -587,8 +587,8 @@ class ReplyDraftData extends i0.DataClass
 
   i1.ReplyDraftData copyWith({
     int? id,
-    String? userId,
     String? parentId,
+    String? userId,
     DateTime? updatedAt,
     String? url,
     String? parentUserId,
@@ -596,8 +596,8 @@ class ReplyDraftData extends i0.DataClass
     String? content,
   }) => i1.ReplyDraftData(
     id: id ?? this.id,
-    userId: userId ?? this.userId,
     parentId: parentId ?? this.parentId,
+    userId: userId ?? this.userId,
     updatedAt: updatedAt ?? this.updatedAt,
     url: url ?? this.url,
     parentUserId: parentUserId ?? this.parentUserId,
@@ -607,8 +607,8 @@ class ReplyDraftData extends i0.DataClass
   ReplyDraftData copyWithCompanion(i1.ReplyDraftsCompanion data) {
     return ReplyDraftData(
       id: data.id.present ? data.id.value : this.id,
-      userId: data.userId.present ? data.userId.value : this.userId,
       parentId: data.parentId.present ? data.parentId.value : this.parentId,
+      userId: data.userId.present ? data.userId.value : this.userId,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       url: data.url.present ? data.url.value : this.url,
       parentUserId: data.parentUserId.present
@@ -625,8 +625,8 @@ class ReplyDraftData extends i0.DataClass
   String toString() {
     return (StringBuffer('ReplyDraftData(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
           ..write('parentId: $parentId, ')
+          ..write('userId: $userId, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('url: $url, ')
           ..write('parentUserId: $parentUserId, ')
@@ -639,8 +639,8 @@ class ReplyDraftData extends i0.DataClass
   @override
   int get hashCode => Object.hash(
     id,
-    userId,
     parentId,
+    userId,
     updatedAt,
     url,
     parentUserId,
@@ -652,8 +652,8 @@ class ReplyDraftData extends i0.DataClass
       identical(this, other) ||
       (other is i1.ReplyDraftData &&
           other.id == this.id &&
-          other.userId == this.userId &&
           other.parentId == this.parentId &&
+          other.userId == this.userId &&
           other.updatedAt == this.updatedAt &&
           other.url == this.url &&
           other.parentUserId == this.parentUserId &&
@@ -663,8 +663,8 @@ class ReplyDraftData extends i0.DataClass
 
 class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   final i0.Value<int> id;
-  final i0.Value<String> userId;
   final i0.Value<String> parentId;
+  final i0.Value<String> userId;
   final i0.Value<DateTime> updatedAt;
   final i0.Value<String> url;
   final i0.Value<String> parentUserId;
@@ -672,8 +672,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   final i0.Value<String> content;
   const ReplyDraftsCompanion({
     this.id = const i0.Value.absent(),
-    this.userId = const i0.Value.absent(),
     this.parentId = const i0.Value.absent(),
+    this.userId = const i0.Value.absent(),
     this.updatedAt = const i0.Value.absent(),
     this.url = const i0.Value.absent(),
     this.parentUserId = const i0.Value.absent(),
@@ -682,23 +682,23 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   });
   ReplyDraftsCompanion.insert({
     this.id = const i0.Value.absent(),
-    required String userId,
     required String parentId,
+    required String userId,
     this.updatedAt = const i0.Value.absent(),
     required String url,
     required String parentUserId,
     required String parentHtmlText,
     required String content,
-  }) : userId = i0.Value(userId),
-       parentId = i0.Value(parentId),
+  }) : parentId = i0.Value(parentId),
+       userId = i0.Value(userId),
        url = i0.Value(url),
        parentUserId = i0.Value(parentUserId),
        parentHtmlText = i0.Value(parentHtmlText),
        content = i0.Value(content);
   static i0.Insertable<i1.ReplyDraftData> custom({
     i0.Expression<int>? id,
-    i0.Expression<String>? userId,
     i0.Expression<String>? parentId,
+    i0.Expression<String>? userId,
     i0.Expression<DateTime>? updatedAt,
     i0.Expression<String>? url,
     i0.Expression<String>? parentUserId,
@@ -707,8 +707,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   }) {
     return i0.RawValuesInsertable({
       if (id != null) 'id': id,
-      if (userId != null) 'user_id': userId,
       if (parentId != null) 'parent_id': parentId,
+      if (userId != null) 'user_id': userId,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (url != null) 'url': url,
       if (parentUserId != null) 'parent_user_id': parentUserId,
@@ -719,8 +719,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
 
   i1.ReplyDraftsCompanion copyWith({
     i0.Value<int>? id,
-    i0.Value<String>? userId,
     i0.Value<String>? parentId,
+    i0.Value<String>? userId,
     i0.Value<DateTime>? updatedAt,
     i0.Value<String>? url,
     i0.Value<String>? parentUserId,
@@ -729,8 +729,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   }) {
     return i1.ReplyDraftsCompanion(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       parentId: parentId ?? this.parentId,
+      userId: userId ?? this.userId,
       updatedAt: updatedAt ?? this.updatedAt,
       url: url ?? this.url,
       parentUserId: parentUserId ?? this.parentUserId,
@@ -745,11 +745,11 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
     if (id.present) {
       map['id'] = i0.Variable<int>(id.value);
     }
-    if (userId.present) {
-      map['user_id'] = i0.Variable<String>(userId.value);
-    }
     if (parentId.present) {
       map['parent_id'] = i0.Variable<String>(parentId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = i0.Variable<String>(userId.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = i0.Variable<DateTime>(updatedAt.value);
@@ -773,8 +773,8 @@ class ReplyDraftsCompanion extends i0.UpdateCompanion<i1.ReplyDraftData> {
   String toString() {
     return (StringBuffer('ReplyDraftsCompanion(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
           ..write('parentId: $parentId, ')
+          ..write('userId: $userId, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('url: $url, ')
           ..write('parentUserId: $parentUserId, ')

@@ -64,11 +64,11 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
     await deleteStatement.go();
   }
 
-  Stream<List<CommentDraftData>> watchCommentDrafts() {
-    return select(commentDrafts).watch();
-  }
-
   Stream<List<ReplyDraftData>> watchReplyDrafts() {
     return select(replyDrafts).watch();
+  }
+
+  Stream<List<CommentDraftData>> watchCommentDrafts() {
+    return select(commentDrafts).watch();
   }
 }

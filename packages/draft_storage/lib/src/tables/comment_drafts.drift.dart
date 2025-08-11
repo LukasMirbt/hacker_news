@@ -8,8 +8,8 @@ import 'package:clock/src/default.dart' as i3;
 typedef $$CommentDraftsTableCreateCompanionBuilder =
     i1.CommentDraftsCompanion Function({
       i0.Value<int> id,
-      required String userId,
       required String postId,
+      required String userId,
       i0.Value<DateTime> updatedAt,
       required String postUserId,
       required String postTitle,
@@ -18,8 +18,8 @@ typedef $$CommentDraftsTableCreateCompanionBuilder =
 typedef $$CommentDraftsTableUpdateCompanionBuilder =
     i1.CommentDraftsCompanion Function({
       i0.Value<int> id,
-      i0.Value<String> userId,
       i0.Value<String> postId,
+      i0.Value<String> userId,
       i0.Value<DateTime> updatedAt,
       i0.Value<String> postUserId,
       i0.Value<String> postTitle,
@@ -40,13 +40,13 @@ class $$CommentDraftsTableFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get userId => $composableBuilder(
-    column: $table.userId,
+  i0.ColumnFilters<String> get postId => $composableBuilder(
+    column: $table.postId,
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get postId => $composableBuilder(
-    column: $table.postId,
+  i0.ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => i0.ColumnFilters(column),
   );
 
@@ -85,13 +85,13 @@ class $$CommentDraftsTableOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get userId => $composableBuilder(
-    column: $table.userId,
+  i0.ColumnOrderings<String> get postId => $composableBuilder(
+    column: $table.postId,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get postId => $composableBuilder(
-    column: $table.postId,
+  i0.ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
@@ -128,11 +128,11 @@ class $$CommentDraftsTableAnnotationComposer
   i0.GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  i0.GeneratedColumn<String> get userId =>
-      $composableBuilder(column: $table.userId, builder: (column) => column);
-
   i0.GeneratedColumn<String> get postId =>
       $composableBuilder(column: $table.postId, builder: (column) => column);
+
+  i0.GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
 
   i0.GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
@@ -187,16 +187,16 @@ class $$CommentDraftsTableTableManager
           updateCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<String> postId = const i0.Value.absent(),
+                i0.Value<String> userId = const i0.Value.absent(),
                 i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 i0.Value<String> postUserId = const i0.Value.absent(),
                 i0.Value<String> postTitle = const i0.Value.absent(),
                 i0.Value<String> content = const i0.Value.absent(),
               }) => i1.CommentDraftsCompanion(
                 id: id,
-                userId: userId,
                 postId: postId,
+                userId: userId,
                 updatedAt: updatedAt,
                 postUserId: postUserId,
                 postTitle: postTitle,
@@ -205,16 +205,16 @@ class $$CommentDraftsTableTableManager
           createCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                required String userId,
                 required String postId,
+                required String userId,
                 i0.Value<DateTime> updatedAt = const i0.Value.absent(),
                 required String postUserId,
                 required String postTitle,
                 required String content,
               }) => i1.CommentDraftsCompanion.insert(
                 id: id,
-                userId: userId,
                 postId: postId,
+                userId: userId,
                 updatedAt: updatedAt,
                 postUserId: postUserId,
                 postTitle: postTitle,
@@ -269,23 +269,23 @@ class $CommentDraftsTable extends i2.CommentDrafts
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const i0.VerificationMeta _userIdMeta = const i0.VerificationMeta(
-    'userId',
-  );
-  @override
-  late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
-    'user_id',
-    aliasedName,
-    false,
-    type: i0.DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
   static const i0.VerificationMeta _postIdMeta = const i0.VerificationMeta(
     'postId',
   );
   @override
   late final i0.GeneratedColumn<String> postId = i0.GeneratedColumn<String>(
     'post_id',
+    aliasedName,
+    false,
+    type: i0.DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const i0.VerificationMeta _userIdMeta = const i0.VerificationMeta(
+    'userId',
+  );
+  @override
+  late final i0.GeneratedColumn<String> userId = i0.GeneratedColumn<String>(
+    'user_id',
     aliasedName,
     false,
     type: i0.DriftSqlType.string,
@@ -340,8 +340,8 @@ class $CommentDraftsTable extends i2.CommentDrafts
   @override
   List<i0.GeneratedColumn> get $columns => [
     id,
-    userId,
     postId,
+    userId,
     updatedAt,
     postUserId,
     postTitle,
@@ -362,14 +362,6 @@ class $CommentDraftsTable extends i2.CommentDrafts
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('user_id')) {
-      context.handle(
-        _userIdMeta,
-        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_userIdMeta);
-    }
     if (data.containsKey('post_id')) {
       context.handle(
         _postIdMeta,
@@ -377,6 +369,14 @@ class $CommentDraftsTable extends i2.CommentDrafts
       );
     } else if (isInserting) {
       context.missing(_postIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(
@@ -428,13 +428,13 @@ class $CommentDraftsTable extends i2.CommentDrafts
         i0.DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      userId: attachedDatabase.typeMapping.read(
-        i0.DriftSqlType.string,
-        data['${effectivePrefix}user_id'],
-      )!,
       postId: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}post_id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
       )!,
       updatedAt: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.dateTime,
@@ -464,16 +464,16 @@ class $CommentDraftsTable extends i2.CommentDrafts
 class CommentDraftData extends i0.DataClass
     implements i0.Insertable<i1.CommentDraftData> {
   final int id;
-  final String userId;
   final String postId;
+  final String userId;
   final DateTime updatedAt;
   final String postUserId;
   final String postTitle;
   final String content;
   const CommentDraftData({
     required this.id,
-    required this.userId,
     required this.postId,
+    required this.userId,
     required this.updatedAt,
     required this.postUserId,
     required this.postTitle,
@@ -483,8 +483,8 @@ class CommentDraftData extends i0.DataClass
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['id'] = i0.Variable<int>(id);
-    map['user_id'] = i0.Variable<String>(userId);
     map['post_id'] = i0.Variable<String>(postId);
+    map['user_id'] = i0.Variable<String>(userId);
     map['updated_at'] = i0.Variable<DateTime>(updatedAt);
     map['post_user_id'] = i0.Variable<String>(postUserId);
     map['post_title'] = i0.Variable<String>(postTitle);
@@ -495,8 +495,8 @@ class CommentDraftData extends i0.DataClass
   i1.CommentDraftsCompanion toCompanion(bool nullToAbsent) {
     return i1.CommentDraftsCompanion(
       id: i0.Value(id),
-      userId: i0.Value(userId),
       postId: i0.Value(postId),
+      userId: i0.Value(userId),
       updatedAt: i0.Value(updatedAt),
       postUserId: i0.Value(postUserId),
       postTitle: i0.Value(postTitle),
@@ -511,8 +511,8 @@ class CommentDraftData extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return CommentDraftData(
       id: serializer.fromJson<int>(json['id']),
-      userId: serializer.fromJson<String>(json['userId']),
       postId: serializer.fromJson<String>(json['postId']),
+      userId: serializer.fromJson<String>(json['userId']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       postUserId: serializer.fromJson<String>(json['postUserId']),
       postTitle: serializer.fromJson<String>(json['postTitle']),
@@ -524,8 +524,8 @@ class CommentDraftData extends i0.DataClass
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'userId': serializer.toJson<String>(userId),
       'postId': serializer.toJson<String>(postId),
+      'userId': serializer.toJson<String>(userId),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'postUserId': serializer.toJson<String>(postUserId),
       'postTitle': serializer.toJson<String>(postTitle),
@@ -535,16 +535,16 @@ class CommentDraftData extends i0.DataClass
 
   i1.CommentDraftData copyWith({
     int? id,
-    String? userId,
     String? postId,
+    String? userId,
     DateTime? updatedAt,
     String? postUserId,
     String? postTitle,
     String? content,
   }) => i1.CommentDraftData(
     id: id ?? this.id,
-    userId: userId ?? this.userId,
     postId: postId ?? this.postId,
+    userId: userId ?? this.userId,
     updatedAt: updatedAt ?? this.updatedAt,
     postUserId: postUserId ?? this.postUserId,
     postTitle: postTitle ?? this.postTitle,
@@ -553,8 +553,8 @@ class CommentDraftData extends i0.DataClass
   CommentDraftData copyWithCompanion(i1.CommentDraftsCompanion data) {
     return CommentDraftData(
       id: data.id.present ? data.id.value : this.id,
-      userId: data.userId.present ? data.userId.value : this.userId,
       postId: data.postId.present ? data.postId.value : this.postId,
+      userId: data.userId.present ? data.userId.value : this.userId,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       postUserId: data.postUserId.present
           ? data.postUserId.value
@@ -568,8 +568,8 @@ class CommentDraftData extends i0.DataClass
   String toString() {
     return (StringBuffer('CommentDraftData(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
           ..write('postId: $postId, ')
+          ..write('userId: $userId, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
@@ -581,8 +581,8 @@ class CommentDraftData extends i0.DataClass
   @override
   int get hashCode => Object.hash(
     id,
-    userId,
     postId,
+    userId,
     updatedAt,
     postUserId,
     postTitle,
@@ -593,8 +593,8 @@ class CommentDraftData extends i0.DataClass
       identical(this, other) ||
       (other is i1.CommentDraftData &&
           other.id == this.id &&
-          other.userId == this.userId &&
           other.postId == this.postId &&
+          other.userId == this.userId &&
           other.updatedAt == this.updatedAt &&
           other.postUserId == this.postUserId &&
           other.postTitle == this.postTitle &&
@@ -603,16 +603,16 @@ class CommentDraftData extends i0.DataClass
 
 class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   final i0.Value<int> id;
-  final i0.Value<String> userId;
   final i0.Value<String> postId;
+  final i0.Value<String> userId;
   final i0.Value<DateTime> updatedAt;
   final i0.Value<String> postUserId;
   final i0.Value<String> postTitle;
   final i0.Value<String> content;
   const CommentDraftsCompanion({
     this.id = const i0.Value.absent(),
-    this.userId = const i0.Value.absent(),
     this.postId = const i0.Value.absent(),
+    this.userId = const i0.Value.absent(),
     this.updatedAt = const i0.Value.absent(),
     this.postUserId = const i0.Value.absent(),
     this.postTitle = const i0.Value.absent(),
@@ -620,21 +620,21 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   });
   CommentDraftsCompanion.insert({
     this.id = const i0.Value.absent(),
-    required String userId,
     required String postId,
+    required String userId,
     this.updatedAt = const i0.Value.absent(),
     required String postUserId,
     required String postTitle,
     required String content,
-  }) : userId = i0.Value(userId),
-       postId = i0.Value(postId),
+  }) : postId = i0.Value(postId),
+       userId = i0.Value(userId),
        postUserId = i0.Value(postUserId),
        postTitle = i0.Value(postTitle),
        content = i0.Value(content);
   static i0.Insertable<i1.CommentDraftData> custom({
     i0.Expression<int>? id,
-    i0.Expression<String>? userId,
     i0.Expression<String>? postId,
+    i0.Expression<String>? userId,
     i0.Expression<DateTime>? updatedAt,
     i0.Expression<String>? postUserId,
     i0.Expression<String>? postTitle,
@@ -642,8 +642,8 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   }) {
     return i0.RawValuesInsertable({
       if (id != null) 'id': id,
-      if (userId != null) 'user_id': userId,
       if (postId != null) 'post_id': postId,
+      if (userId != null) 'user_id': userId,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (postUserId != null) 'post_user_id': postUserId,
       if (postTitle != null) 'post_title': postTitle,
@@ -653,8 +653,8 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
 
   i1.CommentDraftsCompanion copyWith({
     i0.Value<int>? id,
-    i0.Value<String>? userId,
     i0.Value<String>? postId,
+    i0.Value<String>? userId,
     i0.Value<DateTime>? updatedAt,
     i0.Value<String>? postUserId,
     i0.Value<String>? postTitle,
@@ -662,8 +662,8 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   }) {
     return i1.CommentDraftsCompanion(
       id: id ?? this.id,
-      userId: userId ?? this.userId,
       postId: postId ?? this.postId,
+      userId: userId ?? this.userId,
       updatedAt: updatedAt ?? this.updatedAt,
       postUserId: postUserId ?? this.postUserId,
       postTitle: postTitle ?? this.postTitle,
@@ -677,11 +677,11 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
     if (id.present) {
       map['id'] = i0.Variable<int>(id.value);
     }
-    if (userId.present) {
-      map['user_id'] = i0.Variable<String>(userId.value);
-    }
     if (postId.present) {
       map['post_id'] = i0.Variable<String>(postId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = i0.Variable<String>(userId.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = i0.Variable<DateTime>(updatedAt.value);
@@ -702,8 +702,8 @@ class CommentDraftsCompanion extends i0.UpdateCompanion<i1.CommentDraftData> {
   String toString() {
     return (StringBuffer('CommentDraftsCompanion(')
           ..write('id: $id, ')
-          ..write('userId: $userId, ')
           ..write('postId: $postId, ')
+          ..write('userId: $userId, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('postUserId: $postUserId, ')
           ..write('postTitle: $postTitle, ')
