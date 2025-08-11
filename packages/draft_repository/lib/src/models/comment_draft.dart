@@ -8,8 +8,7 @@ class CommentDraft extends Draft with _$CommentDraft {
     required this.id,
     required this.updatedAt,
     required this.content,
-    required this.postId,
-    required this.postUserId,
+    required this.parentId,
     required this.postTitle,
   });
 
@@ -18,8 +17,7 @@ class CommentDraft extends Draft with _$CommentDraft {
       id: data.id,
       updatedAt: data.updatedAt.toLocal(),
       content: data.content,
-      postId: data.postId,
-      postUserId: data.postUserId,
+      parentId: data.parentId,
       postTitle: data.postTitle,
     );
   }
@@ -27,7 +25,6 @@ class CommentDraft extends Draft with _$CommentDraft {
   final int id;
   final DateTime updatedAt;
   final String content;
-  final String postId;
-  final String postUserId;
+  final String parentId;
   final String postTitle;
 }

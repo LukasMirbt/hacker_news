@@ -18,8 +18,7 @@ void main() {
             id: data.id,
             updatedAt: updatedAt.toLocal(),
             content: data.content,
-            postId: data.postId,
-            postUserId: data.postUserId,
+            parentId: data.parentId,
             postTitle: data.postTitle,
           ),
         );

@@ -5,15 +5,13 @@ class CommentDraftPlaceholder extends CommentDraft {
     int? id,
     DateTime? updatedAt,
     String? content,
-    String? postId,
-    String? postUserId,
+    String? parentId,
     String? postTitle,
   }) : super(
          id: id ?? 1,
          updatedAt: updatedAt ?? DateTime(1),
          content: content ?? 'content',
-         postId: postId ?? 'postId',
-         postUserId: postUserId ?? 'postUserId',
+         parentId: parentId ?? 'parentId',
          postTitle: postTitle ?? 'postTitle',
        );
 }

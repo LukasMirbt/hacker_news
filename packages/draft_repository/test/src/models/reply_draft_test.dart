@@ -20,7 +20,6 @@ void main() {
             content: data.content,
             parentId: data.parentId,
             url: data.url,
-            parentUserId: data.parentUserId,
             parentHtmlText: data.parentHtmlText,
           ),
         );

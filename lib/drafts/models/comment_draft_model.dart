@@ -7,7 +7,7 @@ class CommentDraftModel extends DraftModel {
 
   final CommentDraft _draft;
 
-  String get postId => _draft.postId;
+  String get postId => _draft.parentId;
   String get title => _draft.content;
   String get subtitle => _draft.postTitle;
 

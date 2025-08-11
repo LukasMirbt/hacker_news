@@ -9,7 +9,6 @@ class ReplyDrafts extends Table {
   DateTimeColumn get updatedAt =>
       dateTime().clientDefault(() => clock.now().toUtc())();
   TextColumn get url => text()();
-  TextColumn get parentUserId => text()();
   TextColumn get parentHtmlText => text()();
   TextColumn get content => text()();
 

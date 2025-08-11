@@ -3,6 +3,7 @@
 
 import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
@@ -13,7 +14,7 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
 class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
-class _MockCommentStorage extends Mock implements CommentStorage {}
+class _MockDraftStorage extends Mock implements DraftStorage {}
 
 class _MockCancelTokenService extends Mock implements CancelTokenService {}
 
@@ -25,10 +26,9 @@ void main() {
 
   const parentId = 'parentId';
   const userId = 'userId';
-  const text = 'text';
   final user = UserPlaceholder(id: userId);
 
-  final storageKey = CommentStorageKey(
+  final draftStorageKey = CommentDraftByUniqueKeys(
     parentId: parentId,
     userId: userId,
   );
@@ -37,7 +37,7 @@ void main() {
     late PostApi postApi;
     late AuthenticationApi authenticationApi;
     late AuthenticationState authenticationState;
-    late CommentStorage commentStorage;
+    late DraftStorage draftStorage;
     late CancelTokenService cancelTokenService;
     late CancelToken cancelToken;
 
@@ -45,7 +45,7 @@ void main() {
       postApi = _MockPostApi();
       authenticationApi = _MockAuthenticationApi();
       authenticationState = _MockAuthenticationState();
-      commentStorage = _MockCommentStorage();
+      draftStorage = _MockDraftStorage();
       cancelTokenService = _MockCancelTokenService();
       cancelToken = _MockCancelToken();
       when(() => authenticationApi.state).thenReturn(authenticationState);
@@ -56,7 +56,7 @@ void main() {
       return PostRepository(
         postApi: postApi,
         authenticationApi: authenticationApi,
-        commentStorage: commentStorage,
+        draftStorage: draftStorage,
         cancelTokenService: cancelTokenService,
       );
     }
@@ -69,7 +69,7 @@ void main() {
           () => PostRepository(
             postApi: postApi,
             authenticationApi: authenticationApi,
-            commentStorage: commentStorage,
+            draftStorage: draftStorage,
           ),
           returnsNormally,
         );
@@ -78,6 +78,10 @@ void main() {
 
     group('fetchPostStream', () {
       const id = 'id';
+
+      final savedDraft = CommentDraftDataPlaceholder(
+        content: 'savedComment',
+      );
 
       final values = List<PostData>.generate(
         10,
@@ -95,6 +99,13 @@ void main() {
         cancelToken: cancelToken,
       );
 
+      final readCommentDraft = () => draftStorage.readCommentDraft(
+        CommentDraftByUniqueKeys(
+          parentId: id,
+          userId: userId,
+        ),
+      );
+
       blocTest<PostRepository, PostRepositoryState>(
         'emits [success] and $Post for each stream value '
         'when stream succeeds',
@@ -103,11 +114,21 @@ void main() {
           when(fetchPostStream).thenAnswer(
             (_) => Stream.fromIterable(values),
           );
+          when(readCommentDraft).thenAnswer(
+            (_) async => savedDraft,
+          );
         },
         build: buildCubit,
         act: (cubit) => cubit.fetchPostStream(id: id),
         expect: () => [
-          for (final data in values)
+          initialState.copyWith(
+            post: Post.from(
+              values.first,
+              savedComment: savedDraft.content,
+            ),
+            fetchStatus: FetchStatus.success,
+          ),
+          for (final data in values.skip(1))
             initialState.copyWith(
               post: Post.from(data),
               fetchStatus: FetchStatus.success,
@@ -203,40 +224,71 @@ void main() {
     });
 
     group('readComment', () {
-      final read = () => commentStorage.read(storageKey);
+      final read = () => draftStorage.readCommentDraft(draftStorageKey);
 
-      test('calls read and returns text', () {
-        when(read).thenReturn(text);
+      test('returns null when draft is null', () {
+        when(read).thenAnswer((_) async => null);
         final repository = buildCubit();
         expect(
           repository.readComment(parentId: parentId),
-          text,
+          completion(null),
+        );
+        verify(read).called(1);
+      });
+
+      test('returns content when draft is non-null', () {
+        final draft = CommentDraftDataPlaceholder();
+        when(read).thenAnswer((_) async => draft);
+        final repository = buildCubit();
+        expect(
+          repository.readComment(parentId: parentId),
+          completion(draft.content),
         );
         verify(read).called(1);
       });
     });
 
-    group('saveComment', () {
-      final save = () => commentStorage.save(
-        storageKey: storageKey,
-        text: text,
+    group('updateComment', () {
+      final header = PostHeaderPlaceholder(id: parentId);
+      const text = 'text';
+
+      final deleteCommentDraft = () =>
+          draftStorage.deleteCommentDraft(draftStorageKey);
+
+      final saveCommentDraft = () => draftStorage.saveCommentDraft(
+        CommentDraftsCompanion.insert(
+          parentId: header.id,
+          userId: userId,
+          postTitle: header.title,
+          content: text,
+        ),
       );
 
-      test('calls save', () async {
-        when(save).thenAnswer((_) async {});
+      test('calls deleteCommentDraft when trimmed text '
+          'is empty', () async {
+        when(deleteCommentDraft).thenAnswer((_) async {});
         final repository = buildCubit();
-        await repository.saveComment(
-          parentId: parentId,
+        await repository.updateComment(
+          header: header,
+          text: ' ',
+        );
+        verify(deleteCommentDraft).called(1);
+      });
+
+      test('calls saveCommentDraft when trimmed text '
+          'is not empty', () async {
+        when(saveCommentDraft).thenAnswer((_) async {});
+        final repository = buildCubit();
+        await repository.updateComment(
+          header: header,
           text: text,
         );
-        verify(save).called(1);
+        verify(saveCommentDraft).called(1);
       });
     });
 
     group('comment', () {
-      const form = CommentFormPlaceholder(
-        parentId: parentId,
-      );
+      const form = CommentFormPlaceholder(parentId: parentId);
       final data = PostDataPlaceholder();
 
       const userId = 'userId';
@@ -249,16 +301,17 @@ void main() {
         cancelToken: cancelToken,
       );
 
-      final clear = () => commentStorage.clear(storageKey);
+      final deleteCommentDraft = () =>
+          draftStorage.deleteCommentDraft(draftStorageKey);
 
       blocTest<PostRepository, PostRepositoryState>(
-        'emits [success], $Post and clears storage '
+        'emits [success], $Post and calls deleteCommentDraft '
         'when fetchPost succeeds',
         setUp: () {
           when(comment).thenAnswer((_) async {});
           when(generate).thenReturn(cancelToken);
           when(fetchPost).thenAnswer((_) async => data);
-          when(clear).thenAnswer((_) async {});
+          when(deleteCommentDraft).thenAnswer((_) async {});
           when(() => authenticationState.user).thenReturn(user);
         },
         build: buildCubit,
@@ -273,7 +326,7 @@ void main() {
           verify(comment).called(1);
           verify(generate).called(1);
           verify(fetchPost).called(1);
-          verify(clear).called(1);
+          verify(deleteCommentDraft).called(1);
         },
       );
 
@@ -300,7 +353,7 @@ void main() {
       );
 
       blocTest<PostRepository, PostRepositoryState>(
-        'throws when comment throws',
+        'throws when postApi.comment throws',
         setUp: () {
           when(comment).thenThrow(exception);
         },

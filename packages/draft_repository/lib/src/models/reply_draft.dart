@@ -10,7 +10,6 @@ class ReplyDraft extends Draft with _$ReplyDraft {
     required this.content,
     required this.parentId,
     required this.url,
-    required this.parentUserId,
     required this.parentHtmlText,
   });
 
@@ -21,7 +20,6 @@ class ReplyDraft extends Draft with _$ReplyDraft {
       content: data.content,
       parentId: data.parentId,
       url: data.url,
-      parentUserId: data.parentUserId,
       parentHtmlText: data.parentHtmlText,
     );
   }
@@ -31,6 +29,5 @@ class ReplyDraft extends Draft with _$ReplyDraft {
   final String content;
   final String parentId;
   final String url;
-  final String parentUserId;
   final String parentHtmlText;
 }

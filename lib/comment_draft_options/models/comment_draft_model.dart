@@ -8,7 +8,7 @@ class CommentDraftModel extends Equatable {
 
   final CommentDraft _draft;
 
-  String get postId => _draft.postId;
+  String get postId => _draft.parentId;
   String get postTitle => _draft.postTitle;
 
   Draft toRepository() => _draft;

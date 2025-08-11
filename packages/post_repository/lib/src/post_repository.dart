@@ -39,7 +39,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
         if (state.fetchStatus.isLoading) {
           savedDraft = await _draftStorage.readCommentDraft(
             CommentDraftByUniqueKeys(
-              postId: id,
+              parentId: id,
               userId: _authenticationApi.state.user.id,
             ),
           );
@@ -101,13 +101,13 @@ class PostRepository extends Cubit<PostRepositoryState> {
   }
 
   Future<String?> readComment({
-    required String postId,
+    required String parentId,
   }) async {
     final user = _authenticationApi.state.user;
 
     final draft = await _draftStorage.readCommentDraft(
       CommentDraftByUniqueKeys(
-        postId: postId,
+        parentId: parentId,
         userId: user.id,
       ),
     );
@@ -123,7 +123,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
     if (text.trim().isEmpty) {
       await _draftStorage.deleteCommentDraft(
         CommentDraftByUniqueKeys(
-          postId: header.id,
+          parentId: header.id,
           userId: _authenticationApi.state.user.id,
         ),
       );
@@ -134,11 +134,10 @@ class PostRepository extends Cubit<PostRepositoryState> {
 
     await _draftStorage.saveCommentDraft(
       CommentDraftsCompanion.insert(
+        parentId: header.id,
         userId: user.id,
-        postId: header.id,
-        content: text,
-        postUserId: header.hnuser?.id ?? '',
         postTitle: header.title,
+        content: text,
       ),
     );
   }
@@ -160,7 +159,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
 
       await _draftStorage.deleteCommentDraft(
         CommentDraftByUniqueKeys(
-          postId: parentId,
+          parentId: parentId,
           userId: userId,
         ),
       );

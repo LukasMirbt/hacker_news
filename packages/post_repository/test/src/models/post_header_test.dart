@@ -26,9 +26,13 @@ void main() {
           'when data is non-null', () {
         when(() => data.htmlText).thenReturn(htmlText);
         when(() => data.commentFormData).thenReturn(commentFormData);
+        const savedComment = 'savedComment';
 
         expect(
-          PostHeader.from(data),
+          PostHeader.from(
+            data: data,
+            savedComment: savedComment,
+          ),
           PostHeader(
             id: titleRowData.id,
             title: titleRowData.title,
@@ -41,7 +45,10 @@ void main() {
             age: subtitleRowData.age,
             commentCount: subtitleRowData.commentCount,
             htmlText: data.htmlText,
-            commentForm: CommentForm.from(commentFormData),
+            commentForm: CommentForm.from(
+              data: commentFormData,
+              savedComment: savedComment,
+            ),
           ),
         );
       });
@@ -49,7 +56,10 @@ void main() {
       test('returns $PostHeader with correct values '
           'when data is null', () {
         expect(
-          PostHeader.from(data),
+          PostHeader.from(
+            data: data,
+            savedComment: null,
+          ),
           PostHeader(
             id: titleRowData.id,
             title: titleRowData.title,

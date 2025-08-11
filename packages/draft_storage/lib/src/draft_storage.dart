@@ -32,8 +32,8 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
           updatedAt: Value(clock.now().toUtc()),
         ),
         target: [
-          replyDrafts.userId,
           replyDrafts.parentId,
+          replyDrafts.userId,
         ],
       ),
     );
@@ -47,8 +47,8 @@ class DraftStorage extends DatabaseAccessor<GeneratedDatabase>
           updatedAt: Value(clock.now().toUtc()),
         ),
         target: [
+          commentDrafts.parentId,
           commentDrafts.userId,
-          commentDrafts.postId,
         ],
       ),
     );

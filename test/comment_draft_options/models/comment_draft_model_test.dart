@@ -18,11 +18,11 @@ void main() {
     }
 
     group('postId', () {
-      test('returns draft.postId', () {
-        const postId = 'postId';
-        when(() => draft.postId).thenReturn(postId);
+      test('returns draft.parentId', () {
+        const parentId = 'parentId';
+        when(() => draft.parentId).thenReturn(parentId);
         final model = buildSubject();
-        expect(model.postId, postId);
+        expect(model.postId, parentId);
       });
     });
 

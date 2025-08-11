@@ -1,13 +1,17 @@
 // ignore_for_file: annotate_overrides
 
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_api/post_api.dart' as api;
 import 'package:post_repository/post_repository.dart';
 
 part 'comment_form.freezed.dart';
 
-class NullCommentFormTextException implements Exception {
+class NullCommentFormTextException with EquatableMixin implements Exception {
   const NullCommentFormTextException();
+
+  @override
+  List<Object> get props => [];
 }
 
 @freezed

@@ -55,40 +55,40 @@ void main() {
     });
 
     group(CommentDraftByUniqueKeys, () {
-      late GeneratedColumn<String> postIdColumn;
+      late GeneratedColumn<String> parentIdColumn;
       late GeneratedColumn<String> userIdColumn;
 
       setUp(() {
-        postIdColumn = _MockGeneratedStringColumn();
+        parentIdColumn = _MockGeneratedStringColumn();
         userIdColumn = _MockGeneratedStringColumn();
       });
 
-      const postId = 'postId';
+      const parentId = 'parentId';
       const userId = 'userId';
 
       CommentDraftByUniqueKeys createSubject() {
         return CommentDraftByUniqueKeys(
-          postId: postId,
+          parentId: parentId,
           userId: userId,
         );
       }
 
       group('filter', () {
         test('returns correct expression', () {
-          final equalsPostIdExpression = _MockBoolExpression();
+          final equalsparentIdExpression = _MockBoolExpression();
           final equalsUserIdExpression = _MockBoolExpression();
-          final equalsPostId = () => postIdColumn.equals(postId);
+          final equalsparentId = () => parentIdColumn.equals(parentId);
           final equalsUserId = () => userIdColumn.equals(userId);
-          when(() => table.postId).thenReturn(postIdColumn);
+          when(() => table.parentId).thenReturn(parentIdColumn);
           when(() => table.userId).thenReturn(userIdColumn);
-          when(equalsPostId).thenReturn(equalsPostIdExpression);
+          when(equalsparentId).thenReturn(equalsparentIdExpression);
           when(equalsUserId).thenReturn(equalsUserIdExpression);
           final key = createSubject();
           expect(
             key.filter(table),
-            equalsPostIdExpression & equalsUserIdExpression,
+            equalsparentIdExpression & equalsUserIdExpression,
           );
-          verify(equalsPostId).called(1);
+          verify(equalsparentId).called(1);
           verify(equalsUserId).called(1);
         });
       });

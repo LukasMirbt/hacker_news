@@ -119,7 +119,7 @@ void main() {
       );
 
       final readComment = () => repository.readComment(
-        postId: header.id,
+        parentId: header.id,
       );
 
       final copyWith = () => form.copyWith(

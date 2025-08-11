@@ -63,7 +63,7 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     if (!isCommentingEnabled) return;
 
     final savedComment = await _postRepository.readComment(
-      postId: state.header.id,
+      parentId: state.header.id,
     );
 
     emit(

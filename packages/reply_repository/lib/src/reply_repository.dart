@@ -72,7 +72,6 @@ class ReplyRepository {
         parentId: parentId,
         content: text,
         url: url,
-        parentUserId: parent.hnuser.id,
         parentHtmlText: parent.htmlText,
       ),
     );

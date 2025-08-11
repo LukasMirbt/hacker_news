@@ -7,7 +7,6 @@ class ReplyDraftPlaceholder extends ReplyDraft {
     String? content,
     String? parentId,
     String? url,
-    String? parentUserId,
     String? parentHtmlText,
   }) : super(
          id: id ?? 1,
@@ -15,7 +14,6 @@ class ReplyDraftPlaceholder extends ReplyDraft {
          content: content ?? 'content',
          parentId: parentId ?? 'parentId',
          url: url ?? 'url',
-         parentUserId: parentUserId ?? 'parentUserId',
          parentHtmlText: parentHtmlText ?? 'parentHtmlText',
        );
 }

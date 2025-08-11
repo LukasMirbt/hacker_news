@@ -89,7 +89,6 @@ void main() {
       const parentId = 'parentId';
       const userId = 'userId';
       const url = 'url';
-      const parentUserId = 'parentUserId';
       const parentHtmlText = 'parentHtmlText';
       const content = 'content';
 
@@ -102,7 +101,6 @@ void main() {
               parentId: parentId,
               userId: userId,
               url: url,
-              parentUserId: parentUserId,
               parentHtmlText: parentHtmlText,
               content: content,
             ),
@@ -126,7 +124,6 @@ void main() {
               userId: userId,
               updatedAt: now.toUtc(),
               url: url,
-              parentUserId: parentUserId,
               parentHtmlText: parentHtmlText,
               content: content,
             ),
@@ -143,7 +140,6 @@ void main() {
                   parentId: parentId,
                   userId: userId,
                   url: url,
-                  parentUserId: parentUserId,
                   parentHtmlText: parentHtmlText,
                   content: content,
                   updatedAt: Value(DateTime(2024)),
@@ -154,7 +150,6 @@ void main() {
 
           const updatedContent = 'updatedContent';
           const updatedUrl = 'updatedUrl';
-          const updatedParentUserId = 'updatedParentUserId';
           const updatedParentHtmlText = 'updatedParentHtmlText';
 
           await storage.saveReplyDraft(
@@ -162,7 +157,6 @@ void main() {
               parentId: parentId,
               userId: userId,
               url: updatedUrl,
-              parentUserId: updatedParentUserId,
               parentHtmlText: updatedParentHtmlText,
               content: updatedContent,
             ),
@@ -186,7 +180,6 @@ void main() {
               userId: userId,
               updatedAt: now.toUtc(),
               url: updatedUrl,
-              parentUserId: updatedParentUserId,
               parentHtmlText: updatedParentHtmlText,
               content: updatedContent,
             ),
@@ -196,9 +189,8 @@ void main() {
     });
 
     group('saveCommentDraft', () {
-      const postId = 'postId';
+      const parentId = 'parentId';
       const userId = 'userId';
-      const postUserId = 'postUserId';
       const postTitle = 'postTitle';
       const content = 'content';
 
@@ -208,16 +200,15 @@ void main() {
 
           await storage.saveCommentDraft(
             CommentDraftsCompanion.insert(
-              postId: postId,
+              parentId: parentId,
               userId: userId,
-              postUserId: postUserId,
               postTitle: postTitle,
               content: content,
             ),
           );
 
           final key = CommentDraftByUniqueKeys(
-            postId: postId,
+            parentId: parentId,
             userId: userId,
           );
 
@@ -231,9 +222,8 @@ void main() {
             CommentDraftData(
               id: 1,
               userId: userId,
-              postId: postId,
+              parentId: parentId,
               updatedAt: now.toUtc(),
-              postUserId: postUserId,
               postTitle: postTitle,
               content: content,
             ),
@@ -247,9 +237,8 @@ void main() {
               .into(database.commentDrafts)
               .insert(
                 CommentDraftsCompanion.insert(
-                  postId: postId,
+                  parentId: parentId,
                   userId: userId,
-                  postUserId: postUserId,
                   postTitle: postTitle,
                   content: content,
                   updatedAt: Value(DateTime(2024)),
@@ -259,21 +248,19 @@ void main() {
           final storage = createSubject();
 
           const updatedContent = 'updatedContent';
-          const updatedPostUserId = 'updatedPostUserId';
           const updatedPostTitle = 'updatedPostTitle';
 
           await storage.saveCommentDraft(
             CommentDraftsCompanion.insert(
-              postId: postId,
+              parentId: parentId,
               userId: userId,
-              postUserId: updatedPostUserId,
               postTitle: updatedPostTitle,
               content: updatedContent,
             ),
           );
 
           final key = CommentDraftByUniqueKeys(
-            postId: postId,
+            parentId: parentId,
             userId: userId,
           );
 
@@ -286,10 +273,9 @@ void main() {
             draft,
             CommentDraftData(
               id: 1,
-              postId: postId,
+              parentId: parentId,
               userId: userId,
               updatedAt: now.toUtc(),
-              postUserId: updatedPostUserId,
               postTitle: updatedPostTitle,
               content: updatedContent,
             ),

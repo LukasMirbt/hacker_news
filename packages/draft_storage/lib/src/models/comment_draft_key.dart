@@ -23,20 +23,20 @@ final class CommentDraftById extends CommentDraftKey {
 
 final class CommentDraftByUniqueKeys extends CommentDraftKey {
   const CommentDraftByUniqueKeys({
-    required this.postId,
+    required this.parentId,
     required this.userId,
   });
 
-  final String postId;
+  final String parentId;
   final String userId;
 
   @override
   Expression<bool> Function($CommentDraftsTable) get filter =>
-      (draft) => draft.postId.equals(postId) & draft.userId.equals(userId);
+      (draft) => draft.parentId.equals(parentId) & draft.userId.equals(userId);
 
   @override
   List<Object> get props => [
-    postId,
+    parentId,
     userId,
   ];
 }
