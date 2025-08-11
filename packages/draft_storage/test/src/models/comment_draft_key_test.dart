@@ -31,17 +31,26 @@ void main() {
         idColumn = _MockGeneratedIntColumn();
       });
 
+      const id = 1;
+
+      CommentDraftById createSubject() => CommentDraftById(id);
+
       group('filter', () {
         test('returns correct expression', () {
-          const id = 1;
-          final key = CommentDraftById(id);
           final expression = _MockBoolExpression();
           final equalsId = () => idColumn.equals(id);
           when(() => table.id).thenReturn(idColumn);
           when(equalsId).thenReturn(expression);
+          final key = createSubject();
           expect(key.filter(table), expression);
           verify(equalsId).called(1);
         });
+      });
+
+      test('is equatable', () {
+        final first = createSubject();
+        final second = createSubject();
+        expect(first == second, true);
       });
     });
 
@@ -54,14 +63,18 @@ void main() {
         userIdColumn = _MockGeneratedStringColumn();
       });
 
+      const postId = 'postId';
+      const userId = 'userId';
+
+      CommentDraftByUniqueKeys createSubject() {
+        return CommentDraftByUniqueKeys(
+          postId: postId,
+          userId: userId,
+        );
+      }
+
       group('filter', () {
         test('returns correct expression', () {
-          const postId = 'postId';
-          const userId = 'userId';
-          final key = CommentDraftByUniqueKeys(
-            postId: postId,
-            userId: userId,
-          );
           final equalsPostIdExpression = _MockBoolExpression();
           final equalsUserIdExpression = _MockBoolExpression();
           final equalsPostId = () => postIdColumn.equals(postId);
@@ -70,6 +83,7 @@ void main() {
           when(() => table.userId).thenReturn(userIdColumn);
           when(equalsPostId).thenReturn(equalsPostIdExpression);
           when(equalsUserId).thenReturn(equalsUserIdExpression);
+          final key = createSubject();
           expect(
             key.filter(table),
             equalsPostIdExpression & equalsUserIdExpression,
@@ -77,6 +91,12 @@ void main() {
           verify(equalsPostId).called(1);
           verify(equalsUserId).called(1);
         });
+      });
+
+      test('is equatable', () {
+        final first = createSubject();
+        final second = createSubject();
+        expect(first == second, true);
       });
     });
   });

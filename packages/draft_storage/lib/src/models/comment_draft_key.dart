@@ -1,7 +1,8 @@
 import 'package:draft_storage/draft_storage.dart';
 import 'package:drift/drift.dart';
+import 'package:equatable/equatable.dart';
 
-sealed class CommentDraftKey {
+sealed class CommentDraftKey extends Equatable {
   const CommentDraftKey();
 
   Expression<bool> Function($CommentDraftsTable) get filter;
@@ -15,6 +16,9 @@ final class CommentDraftById extends CommentDraftKey {
   @override
   Expression<bool> Function($CommentDraftsTable) get filter =>
       (draft) => draft.id.equals(id);
+
+  @override
+  List<Object> get props => [id];
 }
 
 final class CommentDraftByUniqueKeys extends CommentDraftKey {
@@ -29,4 +33,10 @@ final class CommentDraftByUniqueKeys extends CommentDraftKey {
   @override
   Expression<bool> Function($CommentDraftsTable) get filter =>
       (draft) => draft.postId.equals(postId) & draft.userId.equals(userId);
+
+  @override
+  List<Object> get props => [
+    postId,
+    userId,
+  ];
 }

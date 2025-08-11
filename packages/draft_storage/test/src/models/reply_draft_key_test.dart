@@ -31,17 +31,26 @@ void main() {
         idColumn = _MockGeneratedIntColumn();
       });
 
+      const id = 1;
+
+      ReplyDraftById createSubject() => ReplyDraftById(id);
+
       group('filter', () {
         test('returns correct expression', () {
-          const id = 1;
-          final key = ReplyDraftById(id);
           final expression = _MockBoolExpression();
           final equalsId = () => idColumn.equals(id);
           when(() => table.id).thenReturn(idColumn);
           when(equalsId).thenReturn(expression);
+          final key = createSubject();
           expect(key.filter(table), expression);
           verify(equalsId).called(1);
         });
+      });
+
+      test('is equatable', () {
+        final first = createSubject();
+        final second = createSubject();
+        expect(first == second, true);
       });
     });
 
@@ -54,14 +63,18 @@ void main() {
         userIdColumn = _MockGeneratedStringColumn();
       });
 
+      const parentId = 'parentId';
+      const userId = 'userId';
+
+      ReplyDraftByUniqueKeys createSubject() {
+        return ReplyDraftByUniqueKeys(
+          parentId: parentId,
+          userId: userId,
+        );
+      }
+
       group('filter', () {
         test('returns correct expression', () {
-          const parentId = 'parentId';
-          const userId = 'userId';
-          final key = ReplyDraftByUniqueKeys(
-            parentId: parentId,
-            userId: userId,
-          );
           final equalsParentIdExpression = _MockBoolExpression();
           final equalsUserIdExpression = _MockBoolExpression();
           final equalsParentId = () => parentIdColumn.equals(parentId);
@@ -70,6 +83,7 @@ void main() {
           when(() => table.userId).thenReturn(userIdColumn);
           when(equalsParentId).thenReturn(equalsParentIdExpression);
           when(equalsUserId).thenReturn(equalsUserIdExpression);
+          final key = createSubject();
           expect(
             key.filter(table),
             equalsParentIdExpression & equalsUserIdExpression,
@@ -77,6 +91,12 @@ void main() {
           verify(equalsParentId).called(1);
           verify(equalsUserId).called(1);
         });
+      });
+
+      test('is equatable', () {
+        final first = createSubject();
+        final second = createSubject();
+        expect(first == second, true);
       });
     });
   });
