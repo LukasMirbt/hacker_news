@@ -13,9 +13,9 @@ class FeedItemMoreButton extends StatelessWidget {
 
     return IconButton(
       onPressed: onMorePressed,
-      icon: const Icon(
-        Icons.more_vert,
-        size: 16,
+      icon: const AppIcon(
+        Symbols.more_vert_rounded,
+        size: 18,
       ),
     );
   }

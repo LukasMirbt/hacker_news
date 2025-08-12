@@ -8,6 +8,7 @@ export 'app_feed_item_comment_count_button/app_feed_item_comment_count_button.da
 export 'app_feed_item_vote_button/app_feed_item_vote_button.dart';
 export 'app_filled_button.dart';
 export 'app_html_widget/app_html_widget.dart';
+export 'app_icon.dart';
 export 'app_other_user_comment/app_other_user_comment.dart'
     show AppOtherUserComment, AppOtherUserCommentData;
 export 'app_outlined_button.dart';

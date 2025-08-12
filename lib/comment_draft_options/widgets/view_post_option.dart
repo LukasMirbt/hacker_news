@@ -1,10 +1,10 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class ViewPostOption extends StatelessWidget {
   const ViewPostOption({super.key});
@@ -18,7 +18,7 @@ class ViewPostOption extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return ListTile(
-      leading: const Icon(Symbols.article_shortcut),
+      leading: const AppIcon(Symbols.article_shortcut_rounded),
       title: Text(l10n.commentDraftOptions_viewPost),
       subtitle: _SingleLineText(postTitle),
       onTap: () {

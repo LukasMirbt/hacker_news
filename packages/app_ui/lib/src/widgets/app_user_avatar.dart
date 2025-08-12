@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class AppUserAvatar extends StatelessWidget {
@@ -11,7 +12,10 @@ class AppUserAvatar extends StatelessWidget {
       foregroundColor: colorScheme.onSecondaryContainer,
       backgroundColor: colorScheme.secondaryContainer,
       radius: 14,
-      child: const Icon(Icons.person, size: 14),
+      child: const AppIcon.filled(
+        Symbols.person_rounded,
+        size: 16,
+      ),
     );
   }
 }

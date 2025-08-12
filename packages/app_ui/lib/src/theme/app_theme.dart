@@ -12,10 +12,12 @@ abstract class AppTheme {
 
   ThemeData get themeData {
     return ThemeData(
+      actionIconTheme: _actionIconTheme,
       appBarTheme: _appBarTheme,
       bottomSheetTheme: _bottomSheetTheme,
       colorScheme: _colorScheme,
       filledButtonTheme: _filledButtonTheme,
+      iconTheme: _iconTheme,
       inputDecorationTheme: _inputDecorationTheme,
       listTileTheme: _listTileTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
@@ -27,6 +29,21 @@ abstract class AppTheme {
         _extendedTextTheme,
         _skeletonizerConfig,
       ],
+    );
+  }
+
+  ActionIconThemeData get _actionIconTheme {
+    return ActionIconThemeData(
+      closeButtonIconBuilder: (_) => const AppIcon(Symbols.close_rounded),
+      drawerButtonIconBuilder: (_) => const AppIcon(Symbols.menu_rounded),
+      backButtonIconBuilder: (context) {
+        final platform = Theme.of(context).platform;
+        return AppIcon(
+          platform == TargetPlatform.iOS
+              ? Symbols.arrow_back_ios_new_rounded
+              : Symbols.arrow_back_rounded,
+        );
+      },
     );
   }
 
@@ -89,6 +106,18 @@ abstract class AppTheme {
         maximumSize: const WidgetStatePropertyAll(Size.infinite),
         fixedSize: const WidgetStatePropertyAll(Size.fromHeight(40)),
       ),
+    );
+  }
+
+  IconThemeData get _iconTheme {
+    return IconThemeData(
+      size: 24,
+      opticalSize: 24,
+      fill: 0,
+      grade: switch (colors.brightness) {
+        Brightness.light => 0,
+        Brightness.dark => -25,
+      },
     );
   }
 

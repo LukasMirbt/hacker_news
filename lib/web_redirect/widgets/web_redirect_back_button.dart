@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
@@ -12,7 +13,7 @@ class WebRedirectBackButton extends StatelessWidget {
     );
 
     return IconButton(
-      icon: const Icon(Icons.arrow_back),
+      icon: const AppIcon(Symbols.arrow_back_rounded),
       onPressed: !canGoBack
           ? null
           : () {

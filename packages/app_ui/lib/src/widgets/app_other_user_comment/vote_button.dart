@@ -1,4 +1,4 @@
-import 'package:app_ui/src/widgets/app_other_user_comment/app_other_user_comment.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +23,8 @@ class VoteButton extends StatelessWidget {
 
     return IconButton(
       onPressed: onVotePressed,
-      icon: Icon(
-        Icons.arrow_upward,
+      icon: AppIcon(
+        Symbols.arrow_upward_rounded,
         size: size,
         color: color,
       ),

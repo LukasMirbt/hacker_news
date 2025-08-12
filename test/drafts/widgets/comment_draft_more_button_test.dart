@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart'
     hide CommentDraftModel;
 import 'package:hacker_client/drafts/drafts.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
@@ -38,7 +38,10 @@ void main() {
 
     testWidgets('renders correct icon', (tester) async {
       await tester.pumpApp(createSubject());
-      expect(find.byIcon(Symbols.more_vert), findsOneWidget);
+      expect(
+        find.byIcon(Symbols.more_vert_rounded),
+        findsOneWidget,
+      );
     });
 
     testWidgets('shows $CommentDraftOptionsSheet '

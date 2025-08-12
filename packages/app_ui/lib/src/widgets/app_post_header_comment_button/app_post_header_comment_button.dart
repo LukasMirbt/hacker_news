@@ -1,6 +1,5 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 
 export 'app_post_header_comment_button_data.dart';
@@ -50,9 +49,9 @@ class _Icon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Icon(
-      Symbols.chat_add_on,
-      size: 16,
+    return const AppIcon(
+      Symbols.chat_add_on_rounded,
+      size: 18,
     );
   }
 }

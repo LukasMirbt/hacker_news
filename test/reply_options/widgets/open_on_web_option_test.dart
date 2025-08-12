@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:app_ui/app_ui.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,10 @@ void main() async {
 
     testWidgets('renders correct icon', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byIcon(Icons.open_in_browser), findsOneWidget);
+      expect(
+        find.byIcon(Symbols.open_in_browser_rounded),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders correct title', (tester) async {

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:app_ui/app_ui.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/thread_comment_options/thread_comment_options.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +69,10 @@ void main() async {
 
     testWidgets('renders correct icon', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byIcon(Symbols.open_in_browser), findsOneWidget);
+      expect(
+        find.byIcon(Symbols.open_in_browser_rounded),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders correct title', (tester) async {

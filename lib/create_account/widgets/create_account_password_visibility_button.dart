@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/create_account/create_account.dart';
@@ -17,10 +18,10 @@ class CreateAccountPasswordVisibilityButton extends StatelessWidget {
           const CreateAccountPasswordVisibilityToggled(),
         );
       },
-      icon: Icon(
+      icon: AppIcon(
         obscurePassword
-            ? Icons.visibility_outlined
-            : Icons.visibility_off_outlined,
+            ? Symbols.visibility_rounded
+            : Symbols.visibility_off_rounded,
       ),
     );
   }

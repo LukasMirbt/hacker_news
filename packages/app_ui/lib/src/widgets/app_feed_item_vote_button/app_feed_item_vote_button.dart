@@ -55,8 +55,8 @@ class _Icon extends StatelessWidget {
       (AppFeedItemVoteButtonData data) => data.color(colorScheme),
     );
 
-    return Icon(
-      Icons.arrow_upward,
+    return AppIcon(
+      Symbols.arrow_upward_rounded,
       size: 18,
       color: color,
     );

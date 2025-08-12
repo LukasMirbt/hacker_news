@@ -1,10 +1,10 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart'
     hide CommentDraftModel;
 import 'package:hacker_client/drafts/drafts.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class CommentDraftMoreButton extends StatelessWidget {
   const CommentDraftMoreButton(this.draft, {super.key});
@@ -14,10 +14,9 @@ class CommentDraftMoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(
-        Symbols.more_vert,
+      icon: const AppIcon(
+        Symbols.more_vert_rounded,
         size: 20,
-        opticalSize: 20,
       ),
       onPressed: () {
         CommentDraftOptionsSheet.show(
