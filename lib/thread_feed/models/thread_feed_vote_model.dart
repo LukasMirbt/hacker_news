@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class ThreadFeedVoteFailure with EquatableMixin implements Exception {
-  const ThreadFeedVoteFailure();
+class CurrentUserVoteError extends Error with EquatableMixin {
+  CurrentUserVoteError();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class ThreadFeedVoteModel {
@@ -18,12 +18,15 @@ class ThreadFeedVoteModel {
   }) {
     final item = feed.findById(vote.id);
 
-    if (item is! OtherUserThreadCommentModel) {
-      throw const ThreadFeedVoteFailure();
+    switch (item) {
+      case null:
+        return feed;
+      case final OtherUserThreadCommentModel item:
+        final updatedItem = item.vote(vote.type);
+        final updatedFeed = feed.update(updatedItem);
+        return updatedFeed;
+      case CurrentUserThreadCommentModel():
+        throw CurrentUserVoteError();
     }
-
-    final updatedItem = item.vote(vote.type);
-    final updatedFeed = feed.update(updatedItem);
-    return updatedFeed;
   }
 }

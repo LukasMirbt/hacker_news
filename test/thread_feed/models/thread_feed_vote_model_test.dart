@@ -12,6 +12,9 @@ class _MockPaginatedFeedModel extends Mock
 class _MockOtherUserThreadCommentModel extends Mock
     implements OtherUserThreadCommentModel {}
 
+class _MockCurrentUserThreadCommentModel extends Mock
+    implements CurrentUserThreadCommentModel {}
+
 void main() {
   final vote = VotePlaceholder();
 
@@ -31,22 +34,18 @@ void main() {
     ThreadFeedVoteModel createSubject() => ThreadFeedVoteModel();
 
     group('updateFeed', () {
-      test('throws $ThreadFeedVoteFailure when findById '
-          'does not return $OtherUserThreadCommentModel', () {
+      final findById = () => feed.findById(vote.id);
+
+      test('returns feed when findById returns null', () {
         final model = createSubject();
         expect(
-          () => model.updateFeed(
-            vote: vote,
-            feed: feed,
-          ),
-          throwsA(
-            ThreadFeedVoteFailure(),
-          ),
+          model.updateFeed(vote: vote, feed: feed),
+          feed,
         );
+        verify(findById).called(1);
       });
 
       test('returns updated feed when findById returns item', () {
-        final findById = () => feed.findById(vote.id);
         final voteMethod = () => item.vote(vote.type);
         final update = () => feed.update(updatedItem);
         when(findById).thenReturn(item);
@@ -60,6 +59,22 @@ void main() {
         verify(findById).called(1);
         verify(voteMethod).called(1);
         verify(update).called(1);
+      });
+
+      test('throws $CurrentUserVoteError when findById '
+          'returns $CurrentUserThreadCommentModel', () {
+        when(findById).thenReturn(_MockCurrentUserThreadCommentModel());
+        final model = createSubject();
+        expect(
+          () => model.updateFeed(
+            vote: vote,
+            feed: feed,
+          ),
+          throwsA(
+            CurrentUserVoteError(),
+          ),
+        );
+        verify(findById).called(1);
       });
     });
   });
