@@ -29,19 +29,6 @@ void main() {
         );
       });
 
-      test('throws $ReplyParentVoteFailure when parent '
-          'is not $OtherUserReplyParentModel', () {
-        final parent = _MockCurrentUserReplyParentModel();
-        when(() => parent.id).thenReturn(vote.id);
-        final model = createSubject();
-        expect(
-          () => model.updateParent(vote: vote, parent: parent),
-          throwsA(
-            ReplyParentVoteFailure(),
-          ),
-        );
-      });
-
       test('returns updated parent when id matches', () {
         final parent = _MockOtherUserReplyParentModel();
         final updatedHeader = _MockOtherUserReplyParentModel();
@@ -54,6 +41,19 @@ void main() {
           updatedHeader,
         );
         verify(voteMethod).called(1);
+      });
+
+      test('throws $CurrentUserVoteError when parent '
+          'is $CurrentUserReplyParentModel', () {
+        final parent = _MockCurrentUserReplyParentModel();
+        when(() => parent.id).thenReturn(vote.id);
+        final model = createSubject();
+        expect(
+          () => model.updateParent(vote: vote, parent: parent),
+          throwsA(
+            CurrentUserVoteError(),
+          ),
+        );
       });
     });
   });

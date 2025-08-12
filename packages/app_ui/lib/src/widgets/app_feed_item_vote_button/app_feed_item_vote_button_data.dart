@@ -16,6 +16,7 @@ class AppFeedItemVoteButtonData {
     return colorScheme.onSurfaceVariant;
   }
 
+  // TODO: Use grade instead
   double get weight {
     if (hasBeenUpvoted) return 700;
     return 500;

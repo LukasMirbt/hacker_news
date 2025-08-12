@@ -12,6 +12,9 @@ class _MockCommentListModel extends Mock implements CommentListModel {}
 class _MockOtherUserCommentModel extends Mock
     implements OtherUserCommentModel {}
 
+class _MockCurrentUserCommentModel extends Mock
+    implements CurrentUserCommentModel {}
+
 void main() {
   final vote = VotePlaceholder();
 
@@ -33,18 +36,16 @@ void main() {
     group('updateCommentList', () {
       final findById = () => commentList.findById(vote.id);
 
-      test('throws $CommentListVoteFailure when findById '
-          'does not return $OtherUserCommentModel', () {
+      test('returns commentList when findById returns null', () {
         final model = createSubject();
         expect(
-          () => model.updateCommentList(
+          model.updateCommentList(
             vote: vote,
             commentList: commentList,
           ),
-          throwsA(
-            CommentListVoteFailure(),
-          ),
+          commentList,
         );
+        verify(findById).called(1);
       });
 
       test('returns updated commentList when findById returns item', () {
@@ -64,6 +65,22 @@ void main() {
         verify(findById).called(1);
         verify(voteMethod).called(1);
         verify(update).called(1);
+      });
+
+      test('throws $CurrentUserVoteError when findById '
+          'returns $CurrentUserCommentModel', () {
+        when(findById).thenReturn(_MockCurrentUserCommentModel());
+        final model = createSubject();
+        expect(
+          () => model.updateCommentList(
+            vote: vote,
+            commentList: commentList,
+          ),
+          throwsA(
+            CurrentUserVoteError(),
+          ),
+        );
+        verify(findById).called(1);
       });
     });
   });
