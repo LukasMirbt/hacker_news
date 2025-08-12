@@ -22,11 +22,10 @@ void main() {
       when(() => bloc.state).thenReturn(
         CommentState(
           fetchStatus: FetchStatus.loading,
-          post: CommentPostModel(
-            PostPlaceholder(),
+          header: CommentPostHeaderModel(
+            PostHeaderPlaceholder(),
           ),
           form: CommentFormModel(
-            text: '',
             form: CommentFormPlaceholder(),
           ),
         ),

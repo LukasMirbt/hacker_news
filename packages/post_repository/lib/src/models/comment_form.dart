@@ -1,10 +1,18 @@
 // ignore_for_file: annotate_overrides
 
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_api/post_api.dart' as api;
 import 'package:post_repository/post_repository.dart';
 
 part 'comment_form.freezed.dart';
+
+class NullCommentFormTextException with EquatableMixin implements Exception {
+  const NullCommentFormTextException();
+
+  @override
+  List<Object> get props => [];
+}
 
 @freezed
 class CommentForm with _$CommentForm {
@@ -12,18 +20,28 @@ class CommentForm with _$CommentForm {
     required this.parentId,
     required this.goto,
     required this.hmac,
-    this.text = '',
+    this.text,
   });
 
-  factory CommentForm.from(DetailCommentFormData data) {
+  factory CommentForm.from({
+    required DetailCommentFormData data,
+    required String? savedComment,
+  }) {
     return CommentForm(
       parentId: data.parent,
       goto: data.goto,
       hmac: data.hmac,
+      text: savedComment,
     );
   }
 
   api.CommentForm toApi() {
+    final text = this.text;
+
+    if (text == null) {
+      throw const NullCommentFormTextException();
+    }
+
     return api.CommentForm(
       parent: parentId,
       goto: goto,
@@ -41,5 +59,5 @@ class CommentForm with _$CommentForm {
   final String parentId;
   final String goto;
   final String hmac;
-  final String text;
+  final String? text;
 }

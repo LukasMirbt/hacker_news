@@ -10,6 +10,7 @@ class CurrentUserReplyParentModel extends ReplyParentModel {
   @override
   final CurrentUserReplyParent _parent;
 
+  @override
   CurrentUserReplyParent toRepository() => _parent;
 
   String score(AppLocalizations l10n) {

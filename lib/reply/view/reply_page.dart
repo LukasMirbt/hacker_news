@@ -21,6 +21,9 @@ class ReplyPage extends StatelessWidget {
             url: url,
             replyRepository: replyRepository,
             voteRepository: context.read<VoteRepository>(),
+            replyDraftSaver: ReplyDraftSaver(
+              replyRepository: replyRepository,
+            ),
           )
           ..add(
             const ReplyVoteSubscriptionRequested(),

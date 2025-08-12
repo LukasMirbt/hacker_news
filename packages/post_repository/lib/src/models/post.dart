@@ -12,12 +12,18 @@ class Post with _$Post {
     required this.comments,
   });
 
-  factory Post.from(PostData data) {
+  factory Post.from(
+    PostData data, {
+    String? savedComment,
+  }) {
     final fatItemData = data.fatItemData;
     final comments = data.comments;
 
     return Post(
-      header: PostHeader.from(fatItemData),
+      header: PostHeader.from(
+        data: fatItemData,
+        savedComment: savedComment,
+      ),
       comments: [
         for (final item in comments) Comment.from(item),
       ],

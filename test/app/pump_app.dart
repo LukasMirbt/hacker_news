@@ -5,6 +5,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:date_formatter/date_formatter.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,7 @@ import 'package:vote_repository/vote_repository.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
-class _MockCommentStorage extends Mock implements CommentStorage {}
+class _MockDraftStorage extends Mock implements DraftStorage {}
 
 class _MockFeedApi extends Mock implements FeedApi {}
 
@@ -137,8 +138,8 @@ extension PumpAppExtension on WidgetTester {
           Provider<AuthenticationApi>(
             create: (_) => _MockAuthenticationApi(),
           ),
-          Provider<CommentStorage>(
-            create: (_) => _MockCommentStorage(),
+          Provider<DraftStorage>(
+            create: (_) => _MockDraftStorage(),
           ),
           Provider<FeedApi>(
             create: (_) => _MockFeedApi(),

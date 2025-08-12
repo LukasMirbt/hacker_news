@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "cancel": "Cancel",
   "generalServerError": "Something went wrong",
   "analyticsConsent_title": "Help us improve the app?",
   "analyticsConsent_explanation": "We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.",
@@ -7,6 +8,7 @@
   "analyticsConsent_skip": "Skip",
   "appShell_home": "Home",
   "appShell_threads": "Threads",
+  "appShell_drafts": "Drafts",
   "appShell_settings": "Settings",
   "appShell_login": "Login",
   "comment_title": "Comment",
@@ -44,8 +46,13 @@
   "createAccount_policyLinksPart3": " and ",
   "createAccount_privacyPolicy": "privacy policy",
   "createAccount_submitAction": "Create account",
+  "commentDraftOptions_viewPost": "View post",
+  "commentDraftOptions_delete": "Delete draft",
   "dataCollection_title": "Data collection",
   "dataCollection_analytics": "Analytics",
+  "deleteDraft_title": "Delete draft",
+  "deleteDraft_content": "The draft will be permanently deleted",
+  "deleteDraft_confirmAction": "Delete",
   "feed_shareText": "{title} {url}",
   "@feed_shareText": {
     "placeholders": {
@@ -120,7 +127,8 @@
     }
   },
   "reply_textFieldHintText": "Your reply",
-  "reply_submitAction": "Reply",
+  "reply_submitAction": "Submit",
+  "replyDraftOptions_delete": "Delete draft",
   "replyOptions_share": "Share",
   "replyOptions_openOnWeb": "Open on web",
   "settings_logout": "Logout",

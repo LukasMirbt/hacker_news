@@ -19,6 +19,6 @@ export 'button_spinner.dart';
 export 'error_text.dart';
 export 'invisible_placeholder.dart';
 export 'logo.dart';
+export 'middle_dot_span.dart';
 export 'pagination_spinner.dart';
 export 'spinner.dart';
-export 'text_separator.dart';

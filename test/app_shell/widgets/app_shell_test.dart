@@ -45,10 +45,10 @@ void main() {
         );
       }
 
-      testWidgets('drawer is $AppNavigationDrawer', (tester) async {
+      testWidgets('drawer is $ShellDrawer', (tester) async {
         await tester.pumpAppWithRouter(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.drawer, isA<AppNavigationDrawer>());
+        expect(widget.drawer, isA<ShellDrawer>());
       });
 
       testWidgets('appBar is $ShellAppBar', (tester) async {

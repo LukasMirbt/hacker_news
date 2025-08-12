@@ -55,33 +55,13 @@ void main() {
       });
     });
 
-    group('buildPage', () {
-      late Page<void> page;
-
+    group('build', () {
       Widget buildSubject() {
         final route = createSubject();
         return Builder(
-          builder: (context) {
-            page = route.buildPage(context, state);
-            return Navigator(
-              onDidRemovePage: (_) {},
-              pages: [page],
-            );
-          },
+          builder: (context) => route.build(context, state),
         );
       }
-
-      testWidgets('returns correct page', (tester) async {
-        await tester.pumpPost(buildSubject());
-        expect(
-          page,
-          isA<MaterialPage<void>>().having(
-            (page) => page.fullscreenDialog,
-            'fullscreenDialog',
-            true,
-          ),
-        );
-      });
 
       testWidgets('renders $CommentPage', (tester) async {
         await tester.pumpPost(buildSubject());

@@ -28,9 +28,9 @@ void main() {
       state = _MockCommentState();
       form = _MockCommentFormModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.post).thenReturn(
-        CommentPostModel(
-          PostPlaceholder(),
+      when(() => state.header).thenReturn(
+        CommentPostHeaderModel(
+          PostHeaderPlaceholder(),
         ),
       );
       when(() => state.form).thenReturn(form);

@@ -22,8 +22,8 @@ void main() async {
 
   final initialState = CommentState(
     fetchStatus: FetchStatus.loading,
-    post: CommentPostModel(
-      PostPlaceholder(),
+    header: CommentPostHeaderModel(
+      PostHeaderPlaceholder(),
     ),
     form: CommentFormModel(
       text: text,

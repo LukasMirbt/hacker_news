@@ -9,13 +9,9 @@ class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
 
-class _MockSavedCommentModel extends Mock implements SavedCommentModel {}
-
 class _MockCommentFormModel extends Mock implements CommentFormModel {}
 
 void main() {
-  final post = PostPlaceholder();
-
   group(CommentState, () {
     late CommentFormModel form;
 
@@ -28,49 +24,40 @@ void main() {
       required FetchStatus fetchStatus,
     }) {
       return CommentState(
-        post: CommentPostModel(post),
-        form: form,
         fetchStatus: fetchStatus,
+        form: form,
+        header: CommentPostHeaderModel(
+          PostHeaderPlaceholder(),
+        ),
       );
     }
 
     group('from', () {
       late PostRepository postRepository;
       late PostRepositoryState state;
-      late SavedCommentModel savedCommentModel;
 
       setUp(() {
         postRepository = _MockPostRepository();
         state = _MockPostRepositoryState();
-        savedCommentModel = _MockSavedCommentModel();
         when(() => postRepository.state).thenReturn(state);
       });
 
-      const savedComment = 'savedComment';
       const fetchStatus = FetchStatus.loading;
       final post = PostPlaceholder();
-
-      final load = () => savedCommentModel.load();
+      final header = post.header;
+      final form = header.commentForm;
 
       test('returns $CommentState', () {
         when(() => state.post).thenReturn(post);
         when(() => state.fetchStatus).thenReturn(fetchStatus);
-        when(load).thenReturn(savedComment);
         expect(
-          CommentState.from(
-            postRepository: postRepository,
-            savedCommentModel: savedCommentModel,
-          ),
+          CommentState.from(postRepository),
           CommentState(
             fetchStatus: state.fetchStatus,
-            post: CommentPostModel(post),
-            form: CommentFormModel(
-              text: savedComment,
-              form: post.header.commentForm,
-            ),
+            header: CommentPostHeaderModel(header),
+            form: CommentFormModel(form: form),
           ),
         );
-        verify(load).called(1);
       });
     });
 

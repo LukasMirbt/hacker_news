@@ -9,6 +9,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get cancel => 'Cancel';
+
+  @override
   String get generalServerError => 'Something went wrong';
 
   @override
@@ -29,6 +32,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appShell_threads => 'Threads';
+
+  @override
+  String get appShell_drafts => 'Drafts';
 
   @override
   String get appShell_settings => 'Settings';
@@ -107,10 +113,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAccount_submitAction => 'Create account';
 
   @override
+  String get commentDraftOptions_viewPost => 'View post';
+
+  @override
+  String get commentDraftOptions_delete => 'Delete draft';
+
+  @override
   String get dataCollection_title => 'Data collection';
 
   @override
   String get dataCollection_analytics => 'Analytics';
+
+  @override
+  String get deleteDraft_title => 'Delete draft';
+
+  @override
+  String get deleteDraft_content => 'The draft will be permanently deleted';
+
+  @override
+  String get deleteDraft_confirmAction => 'Delete';
 
   @override
   String feed_shareText({required String title, required String url}) {
@@ -224,7 +245,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reply_textFieldHintText => 'Your reply';
 
   @override
-  String get reply_submitAction => 'Reply';
+  String get reply_submitAction => 'Submit';
+
+  @override
+  String get replyDraftOptions_delete => 'Delete draft';
 
   @override
   String get replyOptions_share => 'Share';

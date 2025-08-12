@@ -94,6 +94,12 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @generalServerError.
   ///
   /// In en, this message translates to:
@@ -135,6 +141,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Threads'**
   String get appShell_threads;
+
+  /// No description provided for @appShell_drafts.
+  ///
+  /// In en, this message translates to:
+  /// **'Drafts'**
+  String get appShell_drafts;
 
   /// No description provided for @appShell_settings.
   ///
@@ -274,6 +286,18 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get createAccount_submitAction;
 
+  /// No description provided for @commentDraftOptions_viewPost.
+  ///
+  /// In en, this message translates to:
+  /// **'View post'**
+  String get commentDraftOptions_viewPost;
+
+  /// No description provided for @commentDraftOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get commentDraftOptions_delete;
+
   /// No description provided for @dataCollection_title.
   ///
   /// In en, this message translates to:
@@ -285,6 +309,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Analytics'**
   String get dataCollection_analytics;
+
+  /// No description provided for @deleteDraft_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get deleteDraft_title;
+
+  /// No description provided for @deleteDraft_content.
+  ///
+  /// In en, this message translates to:
+  /// **'The draft will be permanently deleted'**
+  String get deleteDraft_content;
+
+  /// No description provided for @deleteDraft_confirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteDraft_confirmAction;
 
   /// No description provided for @feed_shareText.
   ///
@@ -487,8 +529,14 @@ abstract class AppLocalizations {
   /// No description provided for @reply_submitAction.
   ///
   /// In en, this message translates to:
-  /// **'Reply'**
+  /// **'Submit'**
   String get reply_submitAction;
+
+  /// No description provided for @replyDraftOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete draft'**
+  String get replyDraftOptions_delete;
 
   /// No description provided for @replyOptions_share.
   ///

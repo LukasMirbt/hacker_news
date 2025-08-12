@@ -97,6 +97,54 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
+        ShellRouteData.$route(
+          factory: $DraftShellRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: '/drafts',
+
+              factory: _$DraftRoute._fromState,
+              routes: [
+                RelativeGoRouteData.$route(
+                  path: 'reply',
+
+                  parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+                  factory: _$ReplyRoute._fromState,
+                ),
+                ShellRouteData.$route(
+                  parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
+                  factory: $PostShellRouteExtension._fromState,
+                  routes: [
+                    RelativeGoRouteData.$route(
+                      path: 'post/:postId',
+
+                      factory: _$PostRoute._fromState,
+                      routes: [
+                        RelativeGoRouteData.$route(
+                          path: 'comment',
+
+                          factory: _$CommentRoute._fromState,
+                        ),
+                        RelativeGoRouteData.$route(
+                          path: 'reply',
+
+                          parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
+
+                          factory: _$ReplyRoute._fromState,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
         GoRouteData.$route(
           path: '/settings',
 
@@ -153,12 +201,12 @@ mixin _$PostRoute on RelativeGoRouteData {
   PostRoute get _self => this as PostRoute;
 
   @override
-  String get location => RelativeGoRouteData.$location(
+  String get subpath => RelativeGoRouteData.$location(
     'post/${Uri.encodeComponent(_self.postId)}',
   );
 
   @override
-  String get relativeLocation => './$location';
+  String get relativeLocation => './$subpath';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
@@ -180,10 +228,10 @@ mixin _$CommentRoute on RelativeGoRouteData {
   static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
 
   @override
-  String get location => RelativeGoRouteData.$location('comment');
+  String get subpath => RelativeGoRouteData.$location('comment');
 
   @override
-  String get relativeLocation => './$location';
+  String get relativeLocation => './$subpath';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
@@ -208,11 +256,11 @@ mixin _$ReplyRoute on RelativeGoRouteData {
   ReplyRoute get _self => this as ReplyRoute;
 
   @override
-  String get location =>
+  String get subpath =>
       RelativeGoRouteData.$location('reply', queryParams: {'url': _self.url});
 
   @override
-  String get relativeLocation => './$location';
+  String get relativeLocation => './$subpath';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
@@ -241,6 +289,31 @@ mixin _$ThreadFeedRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/threads');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $DraftShellRouteExtension on DraftShellRoute {
+  static DraftShellRoute _fromState(GoRouterState state) =>
+      const DraftShellRoute();
+}
+
+mixin _$DraftRoute on GoRouteData {
+  static DraftRoute _fromState(GoRouterState state) => const DraftRoute();
+
+  @override
+  String get location => GoRouteData.$location('/drafts');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -89,4 +89,23 @@ class AppRouter {
 
     return goRouter.push(route.relativeLocation);
   }
+
+  void goBranch(
+    StatefulNavigationShell shell,
+    int index,
+  ) {
+    final destination = AppDestination.values[index];
+
+    final redirect = _redirectModel.redirect(
+      goRouter: goRouter,
+      route: destination.route,
+    );
+
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return;
+    }
+
+    shell.goBranch(index);
+  }
 }

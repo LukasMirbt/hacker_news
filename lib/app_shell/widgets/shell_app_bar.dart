@@ -44,7 +44,8 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: switch (currentIndex) {
         1 => Text(l10n.appShell_threads),
-        2 => Text(l10n.appShell_settings),
+        2 => Text(l10n.appShell_drafts),
+        3 => Text(l10n.appShell_settings),
         _ => const Logo(),
       },
       shape: shape,

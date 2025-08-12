@@ -47,6 +47,10 @@ final class ReplyLinkPressed extends ReplyEvent {
   List<Object> get props => [url];
 }
 
+final class ReplyAppInactivated extends ReplyEvent {
+  const ReplyAppInactivated();
+}
+
 final class ReplySubmitted extends ReplyEvent {
   const ReplySubmitted();
 }

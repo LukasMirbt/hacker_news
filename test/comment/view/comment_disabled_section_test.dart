@@ -27,9 +27,9 @@ void main() async {
       bloc = _MockCommentBloc();
       state = _MockCommentState();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.post).thenReturn(
-        CommentPostModel(
-          PostPlaceholder(),
+      when(() => state.header).thenReturn(
+        CommentPostHeaderModel(
+          PostHeaderPlaceholder(),
         ),
       );
     });

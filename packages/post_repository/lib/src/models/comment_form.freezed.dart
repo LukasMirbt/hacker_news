@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentForm {
 
- String get parentId; String get goto; String get hmac; String get text;
+ String get parentId; String get goto; String get hmac; String? get text;
 /// Create a copy of CommentForm
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $CommentFormCopyWith<$Res>  {
   factory $CommentFormCopyWith(CommentForm value, $Res Function(CommentForm) _then) = _$CommentFormCopyWithImpl;
 @useResult
 $Res call({
- String parentId, String goto, String hmac, String text
+ String parentId, String goto, String hmac, String? text
 });
 
 
@@ -63,13 +63,13 @@ class _$CommentFormCopyWithImpl<$Res>
 
 /// Create a copy of CommentForm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? parentId = null,Object? goto = null,Object? hmac = null,Object? text = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? parentId = null,Object? goto = null,Object? hmac = null,Object? text = freezed,}) {
   return _then(CommentForm(
 parentId: null == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
 as String,goto: null == goto ? _self.goto : goto // ignore: cast_nullable_to_non_nullable
 as String,hmac: null == hmac ? _self.hmac : hmac // ignore: cast_nullable_to_non_nullable
-as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
-as String,
+as String,text: freezed == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

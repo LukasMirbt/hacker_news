@@ -2,17 +2,18 @@ import 'dart:async';
 
 import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc/bloc.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:post_repository/post_repository.dart';
 
 class PostRepository extends Cubit<PostRepositoryState> {
   PostRepository({
     required PostApi postApi,
     required AuthenticationApi authenticationApi,
-    required CommentStorage commentStorage,
+    required DraftStorage draftStorage,
     CancelTokenService? cancelTokenService,
   }) : _postApi = postApi,
        _authenticationApi = authenticationApi,
-       _commentStorage = commentStorage,
+       _draftStorage = draftStorage,
        _cancelTokenService = cancelTokenService ?? CancelTokenService(),
        super(
          PostRepositoryState.initial(),
@@ -20,7 +21,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
 
   final PostApi _postApi;
   final AuthenticationApi _authenticationApi;
-  final CommentStorage _commentStorage;
+  final DraftStorage _draftStorage;
   final CancelTokenService _cancelTokenService;
 
   Future<void> fetchPostStream({required String id}) async {
@@ -33,9 +34,25 @@ class PostRepository extends Cubit<PostRepositoryState> {
       );
 
       await for (final data in stream) {
+        CommentDraftData? savedDraft;
+
+        if (state.fetchStatus.isLoading) {
+          savedDraft = await _draftStorage.readCommentDraft(
+            CommentDraftByUniqueKeys(
+              parentId: id,
+              userId: _authenticationApi.state.user.id,
+            ),
+          );
+        }
+
+        final post = Post.from(
+          data,
+          savedComment: savedDraft?.content,
+        );
+
         emit(
           state.copyWith(
-            post: Post.from(data),
+            post: post,
             fetchStatus: FetchStatus.success,
           ),
         );
@@ -83,30 +100,45 @@ class PostRepository extends Cubit<PostRepositoryState> {
     }
   }
 
-  String? readComment({required String parentId}) {
-    final user = _authenticationApi.state.user;
-    final storageKey = CommentStorageKey(
-      parentId: parentId,
-      userId: user.id,
-    );
-    final savedComment = _commentStorage.read(storageKey);
-    return savedComment;
-  }
-
-  Future<void> saveComment({
+  Future<String?> readComment({
     required String parentId,
-    required String text,
   }) async {
     final user = _authenticationApi.state.user;
 
-    final storageKey = CommentStorageKey(
-      parentId: parentId,
-      userId: user.id,
+    final draft = await _draftStorage.readCommentDraft(
+      CommentDraftByUniqueKeys(
+        parentId: parentId,
+        userId: user.id,
+      ),
     );
+    if (draft == null) return null;
 
-    await _commentStorage.save(
-      storageKey: storageKey,
-      text: text,
+    return draft.content;
+  }
+
+  Future<void> updateComment({
+    required PostHeader header,
+    required String text,
+  }) async {
+    if (text.trim().isEmpty) {
+      await _draftStorage.deleteCommentDraft(
+        CommentDraftByUniqueKeys(
+          parentId: header.id,
+          userId: _authenticationApi.state.user.id,
+        ),
+      );
+      return;
+    }
+
+    final user = _authenticationApi.state.user;
+
+    await _draftStorage.saveCommentDraft(
+      CommentDraftsCompanion.insert(
+        parentId: header.id,
+        userId: user.id,
+        postTitle: header.title,
+        content: text,
+      ),
     );
   }
 
@@ -116,19 +148,21 @@ class PostRepository extends Cubit<PostRepositoryState> {
     final cancelToken = _cancelTokenService.generate();
 
     try {
+      final parentId = form.parentId;
+
       final data = await _postApi.fetchPost(
-        id: form.parentId,
+        id: parentId,
         cancelToken: cancelToken,
       );
 
       final userId = _authenticationApi.state.user.id;
 
-      final storageKey = CommentStorageKey(
-        parentId: form.parentId,
-        userId: userId,
+      await _draftStorage.deleteCommentDraft(
+        CommentDraftByUniqueKeys(
+          parentId: parentId,
+          userId: userId,
+        ),
       );
-
-      await _commentStorage.clear(storageKey);
 
       emit(
         state.copyWith(

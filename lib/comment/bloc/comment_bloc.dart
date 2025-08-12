@@ -6,60 +6,65 @@ import 'package:post_repository/post_repository.dart';
 class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
     required PostRepository postRepository,
-    required SavedCommentModel savedCommentModel,
+    required CommentDraftSaver commentDraftSaver,
     LinkLauncher? linkLauncher,
-  }) : _repository = postRepository,
-       _savedCommentModel = savedCommentModel,
+  }) : _postRepository = postRepository,
+       _draftSaver = commentDraftSaver,
        _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
-         CommentState.from(
-           postRepository: postRepository,
-           savedCommentModel: savedCommentModel,
-         ),
+         CommentState.from(postRepository),
        ) {
     on<CommentPostSubscriptionRequested>(
       _onPostSubscriptionRequested,
     );
-    on<CommentPostLoaded>(_onPostLoaded);
+    on<CommentStarted>(_onStarted);
     on<CommentTextChanged>(_onTextChanged);
-    on<CommentSubmitted>(_onSubmitted);
     on<CommentLinkPressed>(_onLinkPressed);
+    on<CommentAppInactivated>(_onAppInactivated);
+    on<CommentSubmitted>(_onSubmitted);
   }
 
   final LinkLauncher _linkLauncher;
-  final PostRepository _repository;
-  final SavedCommentModel _savedCommentModel;
+  final PostRepository _postRepository;
+  final CommentDraftSaver _draftSaver;
+
+  @override
+  Future<void> close() async {
+    await _draftSaver.flush();
+    _draftSaver.dispose();
+    return super.close();
+  }
 
   Future<void> _onPostSubscriptionRequested(
     CommentPostSubscriptionRequested event,
     Emitter<CommentState> emit,
   ) async {
     return emit.forEach(
-      _repository.stream,
+      _postRepository.stream,
       onData: (repositoryState) {
-        final PostRepositoryState(
-          :fetchStatus,
-          :post,
-        ) = repositoryState;
-
-        final updatedForm = state.form.copyWith(
-          form: post.header.commentForm,
-        );
-
+        final header = repositoryState.post.header;
         return state.copyWith(
-          fetchStatus: fetchStatus,
-          post: CommentPostModel(post),
-          form: updatedForm,
+          fetchStatus: repositoryState.fetchStatus,
+          header: CommentPostHeaderModel(header),
+          form: state.form.updateWith(header.commentForm),
         );
       },
     );
   }
 
-  void _onPostLoaded(
-    CommentPostLoaded event,
+  Future<void> _onStarted(
+    CommentStarted event,
     Emitter<CommentState> emit,
-  ) {
-    final savedComment = _savedCommentModel.load();
+  ) async {
+    final fetchStatus = state.fetchStatus;
+    if (fetchStatus.isLoading) return;
+
+    final isCommentingEnabled = state.form.isCommentingEnabled;
+    if (!isCommentingEnabled) return;
+
+    final savedComment = await _postRepository.readComment(
+      parentId: state.header.id,
+    );
 
     emit(
       state.copyWith(
@@ -84,7 +89,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       ),
     );
 
-    _savedCommentModel.save(text: text);
+    _draftSaver.update(
+      header: state.header.toRepository(),
+      text: text,
+    );
   }
 
   void _onLinkPressed(
@@ -92,6 +100,13 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     Emitter<CommentState> emit,
   ) {
     _linkLauncher.launch(event.url);
+  }
+
+  void _onAppInactivated(
+    CommentAppInactivated event,
+    Emitter<CommentState> emit,
+  ) {
+    _draftSaver.flush();
   }
 
   Future<void> _onSubmitted(
@@ -107,7 +122,9 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
     );
 
     try {
-      await _repository.comment(
+      await _draftSaver.flush();
+
+      await _postRepository.comment(
         state.form.toRepository(),
       );
 

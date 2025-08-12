@@ -11,6 +11,8 @@ resolution: workspace
 dependencies:
   authentication_api:
     path: ../authentication_api
+  draft_storage:
+    path: ../draft_storage
   equatable: ^2.0.7
   flutter:
     sdk: flutter

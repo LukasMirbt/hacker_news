@@ -2,6 +2,7 @@
 // ignore_for_file: cascade_invocations
 // ignore_for_file: prefer_function_declarations_over_variables
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +28,10 @@ class _MockGoRouteData extends Mock implements GoRouteData {}
 class _MockRelativeGoRouteData extends Mock implements RelativeGoRouteData {}
 
 class _MockGoRouter extends Mock implements GoRouter {}
+
+class _MockStatefulNavigationShell extends Mock
+    with Diagnosticable
+    implements StatefulNavigationShell {}
 
 void main() {
   const redirect = 'redirect';
@@ -288,6 +293,40 @@ void main() {
           completion(result),
         );
         verify(push).called(1);
+      });
+    });
+
+    group('goBranch', () {
+      late StatefulNavigationShell shell;
+
+      setUp(() {
+        shell = _MockStatefulNavigationShell();
+      });
+
+      const index = 1;
+      final destination = AppDestination.values[index];
+      final route = destination.route;
+
+      final redirectMethod = () => redirectModel.redirect(
+        route: route,
+        goRouter: goRouter,
+      );
+
+      test('pushes redirect and returns when redirect '
+          'is non-null', () {
+        final pushRedirect = () => goRouter.push(redirect);
+        when(redirectMethod).thenReturn(redirect);
+        when(pushRedirect).thenAnswer((_) async => null);
+        final appRouter = createSubject();
+        appRouter.goBranch(shell, index);
+        verify(pushRedirect).called(1);
+        verifyNever(() => shell.goBranch(any()));
+      });
+
+      test('calls goBranch when redirect is null', () {
+        final appRouter = createSubject();
+        appRouter.goBranch(shell, index);
+        verify(() => shell.goBranch(index)).called(1);
       });
     });
   });

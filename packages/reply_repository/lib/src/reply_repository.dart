@@ -1,22 +1,23 @@
 import 'dart:async';
 
 import 'package:authentication_api/authentication_api.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:reply_repository/reply_repository.dart';
 
 class ReplyRepository {
   ReplyRepository({
     required ReplyApi replyApi,
     required AuthenticationApi authenticationApi,
-    required ReplyStorage replyStorage,
+    required DraftStorage draftStorage,
     UserReplyService? userReplyService,
   }) : _replyApi = replyApi,
        _authenticationApi = authenticationApi,
-       _replyStorage = replyStorage,
+       _draftStorage = draftStorage,
        _userReplyService = userReplyService ?? const UserReplyService();
 
   final ReplyApi _replyApi;
   final AuthenticationApi _authenticationApi;
-  final ReplyStorage _replyStorage;
+  final DraftStorage _draftStorage;
   final UserReplyService _userReplyService;
 
   final _controller = StreamController<Reply>.broadcast();
@@ -28,35 +29,51 @@ class ReplyRepository {
     final data = await _replyApi.fetchReplyPage(url: url);
     final page = ReplyPage.from(data);
 
-    final storageKey = ReplyStorageKey(
-      parentId: page.parent.id,
-      userId: _authenticationApi.state.user.id,
-    );
-
     final form = page.form;
     if (form == null) return page;
 
-    final savedReply = _replyStorage.read(storageKey);
-    if (savedReply == null) return page;
+    final savedDraft = await _draftStorage.readReplyDraft(
+      ReplyDraftByUniqueKeys(
+        parentId: page.parent.id,
+        userId: _authenticationApi.state.user.id,
+      ),
+    );
+    if (savedDraft == null) return page;
 
     final pageWithDraft = page.copyWith(
-      form: form.copyWith(text: savedReply),
+      form: form.copyWith(text: savedDraft.content),
     );
 
     return pageWithDraft;
   }
 
-  Future<void> updateReply(ReplyForm form) async {
-    final user = _authenticationApi.state.user;
+  Future<void> updateReply({
+    required String url,
+    required ReplyForm form,
+    required ReplyParent parent,
+  }) async {
+    final text = form.text;
+    final parentId = form.parentId;
+    final userId = _authenticationApi.state.user.id;
 
-    final key = ReplyStorageKey(
-      parentId: form.parentId,
-      userId: user.id,
-    );
+    if (text.trim().isEmpty) {
+      await _draftStorage.deleteReplyDraft(
+        ReplyDraftByUniqueKeys(
+          parentId: parentId,
+          userId: _authenticationApi.state.user.id,
+        ),
+      );
+      return;
+    }
 
-    await _replyStorage.save(
-      storageKey: key,
-      text: form.text,
+    await _draftStorage.saveReplyDraft(
+      ReplyDraftsCompanion.insert(
+        userId: userId,
+        parentId: parentId,
+        content: text,
+        url: url,
+        parentHtmlText: parent.htmlText,
+      ),
     );
   }
 
@@ -66,12 +83,12 @@ class ReplyRepository {
     try {
       final parentId = form.parentId;
 
-      final storageKey = ReplyStorageKey(
-        parentId: parentId,
-        userId: _authenticationApi.state.user.id,
+      await _draftStorage.deleteReplyDraft(
+        ReplyDraftByUniqueKeys(
+          parentId: parentId,
+          userId: _authenticationApi.state.user.id,
+        ),
       );
-
-      await _replyStorage.clear(storageKey);
 
       final commentThread = await _replyApi.fetchCommentThread(id: parentId);
 

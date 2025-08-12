@@ -46,8 +46,8 @@ void main() {
       test('returns correct value when route is $RelativeGoRouteData', () {
         final route = _MockRelativeGoRouteData();
         final replyUrl = Uri.encodeQueryComponent('reply?id=44758610');
-        final location = 'reply?url=$replyUrl';
-        when(() => route.location).thenReturn(location);
+        final subpath = 'reply?url=$replyUrl';
+        when(() => route.subpath).thenReturn(subpath);
         final fromModel = createSubject();
         expect(
           fromModel.from(route: route, goRouter: goRouter),

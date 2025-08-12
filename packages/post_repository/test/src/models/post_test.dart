@@ -8,17 +8,22 @@ void main() {
         final comments = [
           OtherUserCommentDataPlaceholder(),
         ];
-
         final data = PostDataPlaceholder(
           comments: comments,
         );
-
         final fatItemData = data.fatItemData;
+        const savedComment = 'savedComment';
 
         expect(
-          Post.from(data),
+          Post.from(
+            data,
+            savedComment: savedComment,
+          ),
           Post(
-            header: PostHeader.from(fatItemData),
+            header: PostHeader.from(
+              data: fatItemData,
+              savedComment: savedComment,
+            ),
             comments: [
               for (final item in data.comments) Comment.from(item),
             ],

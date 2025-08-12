@@ -13,6 +13,8 @@ class _MockReplyRepository extends Mock implements ReplyRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
+class _MockDebouncedDraftSaver extends Mock implements ReplyDraftSaver {}
+
 class _MockReplyParentVoteModel extends Mock implements ReplyParentVoteModel {}
 
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
@@ -27,14 +29,19 @@ void main() {
   group(ReplyBloc, () {
     late ReplyRepository replyRepository;
     late VoteRepository voteRepository;
+    late ReplyDraftSaver draftSaver;
     late ReplyParentVoteModel voteModel;
     late LinkLauncher linkLauncher;
+    late Future<void> Function() flush;
 
     setUp(() {
       replyRepository = _MockReplyRepository();
       voteRepository = _MockVoteRepository();
+      draftSaver = _MockDebouncedDraftSaver();
       voteModel = _MockReplyParentVoteModel();
       linkLauncher = _MockLinkLauncher();
+      flush = () => draftSaver.flush();
+      when(flush).thenAnswer((_) async {});
     });
 
     ReplyBloc buildBloc() {
@@ -42,6 +49,7 @@ void main() {
         url: url,
         replyRepository: replyRepository,
         voteRepository: voteRepository,
+        replyDraftSaver: draftSaver,
         voteModel: voteModel,
         linkLauncher: linkLauncher,
       );
@@ -49,6 +57,22 @@ void main() {
 
     test('initial state is $ReplyState', () {
       expect(buildBloc().state, initialState);
+    });
+
+    group('close', () {
+      final dispose = () => draftSaver.dispose();
+
+      blocTest(
+        'calls flush and dispose',
+        setUp: () {
+          when(flush).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        verify: (_) {
+          verify(flush).called(1);
+          verify(dispose).called(1);
+        },
+      );
     });
 
     group(ReplyVoteSubscriptionRequested, () {
@@ -67,7 +91,7 @@ void main() {
         parent: state.parent,
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits updated parent when repository emits $VoteSuccess',
         setUp: () {
           when(() => voteRepository.stream).thenAnswer(
@@ -97,7 +121,7 @@ void main() {
       final page = ReplyPagePlaceholder();
       final request = () => replyRepository.fetchReplyPage(url: url);
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [success], $ReplyParentModel and $ReplyFormModel '
         'when request succeeds',
         setUp: () {
@@ -121,7 +145,7 @@ void main() {
         },
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -152,17 +176,16 @@ void main() {
 
       final updatedForm = form.copyWith(text: text);
 
-      final updateReply = () => replyRepository.updateReply(
-        updatedForm.toRepository(),
+      final update = () => draftSaver.update(
+        url: initialState.url,
+        form: updatedForm.toRepository(),
+        parent: initialState.parent.toRepository(),
       );
 
       final state = initialState.copyWith(form: form);
 
-      blocTest<ReplyBloc, ReplyState>(
-        'emits updated form and calls updateReply',
-        setUp: () {
-          when(updateReply).thenAnswer((_) async {});
-        },
+      blocTest(
+        'emits updated form and calls draftSaver.update',
         seed: () => state,
         build: buildBloc,
         act: (bloc) {
@@ -176,13 +199,13 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(updateReply).called(1);
+          verify(update).called(1);
         },
       );
     });
 
     group(ReplyParentExpansionToggled, () {
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits toggled isExpanded',
         build: buildBloc,
         act: (bloc) {
@@ -219,7 +242,7 @@ void main() {
         hasBeenUpvoted: parent.hasBeenUpvoted,
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'calls vote',
         setUp: () {
           when(vote).thenAnswer((_) async {});
@@ -240,7 +263,7 @@ void main() {
       const url = 'url';
       final launch = () => linkLauncher.launch(url);
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -257,6 +280,24 @@ void main() {
       );
     });
 
+    group(ReplyAppInactivated, () {
+      blocTest(
+        'calls flush',
+        setUp: () {
+          when(flush).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            ReplyAppInactivated(),
+          );
+        },
+        verify: (_) {
+          verify(flush).called(2);
+        },
+      );
+    });
+
     group(ReplySubmitted, () {
       final form = ReplyFormModel(
         form: ReplyFormPlaceholder(),
@@ -269,7 +310,7 @@ void main() {
         form.toRepository(),
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [loading, success] when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
@@ -294,13 +335,15 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );
 
-      blocTest<ReplyBloc, ReplyState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
+          when(flush).thenAnswer((_) async {});
           when(request).thenThrow(Exception('oops'));
         },
         seed: () => state,
@@ -323,6 +366,7 @@ void main() {
           ),
         ],
         verify: (_) {
+          verify(flush).called(2);
           verify(request).called(1);
         },
       );

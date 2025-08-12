@@ -8,7 +8,7 @@ class CommentTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = context.select(
-      (CommentBloc bloc) => bloc.state.post.title,
+      (CommentBloc bloc) => bloc.state.header.title,
     );
 
     final textTheme = TextTheme.of(context);

@@ -21,10 +21,15 @@ class NullCommentFormException with EquatableMixin implements Exception {
 class CommentFormModel extends Equatable {
   const CommentFormModel({
     required CommentForm? form,
-    required String? text,
+    String? text,
     this.submissionStatus = SubmissionStatus.initial,
   }) : _form = form,
        text = text ?? '';
+
+  static const empty = CommentFormModel(
+    form: null,
+    text: '',
+  );
 
   final CommentForm? _form;
   final String text;
@@ -42,6 +47,21 @@ class CommentFormModel extends Equatable {
   bool get isSubmissionLoading =>
       submissionStatus == SubmissionStatus.loading ||
       submissionStatus == SubmissionStatus.success;
+
+  CommentFormModel updateWith(CommentForm? form) {
+    if (form == null) return empty;
+
+    final text = form.text;
+
+    if (text == null) {
+      return copyWith(form: form);
+    }
+
+    return copyWith(
+      form: form,
+      text: text,
+    );
+  }
 
   CommentForm toRepository() {
     final form = _form;

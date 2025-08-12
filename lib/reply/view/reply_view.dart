@@ -8,11 +8,13 @@ class ReplyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ReplySuccessListener(
-      child: ReplyFailureListener(
-        child: Scaffold(
-          appBar: ReplyAppBar(),
-          body: _Body(),
+    return const ReplyAppObserver(
+      child: ReplySuccessListener(
+        child: ReplyFailureListener(
+          child: Scaffold(
+            appBar: ReplyAppBar(),
+            body: _Body(),
+          ),
         ),
       ),
     );

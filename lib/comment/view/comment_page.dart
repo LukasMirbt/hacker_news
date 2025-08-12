@@ -12,13 +12,17 @@ class CommentPage extends StatelessWidget {
       create: (context) {
         final postRepository = context.read<PostRepository>();
         return CommentBloc(
-          postRepository: postRepository,
-          savedCommentModel: SavedCommentModel(
             postRepository: postRepository,
-          ),
-        )..add(
-          const CommentPostSubscriptionRequested(),
-        );
+            commentDraftSaver: CommentDraftSaver(
+              postRepository: postRepository,
+            ),
+          )
+          ..add(
+            const CommentPostSubscriptionRequested(),
+          )
+          ..add(
+            const CommentStarted(),
+          );
       },
       child: const CommentView(),
     );

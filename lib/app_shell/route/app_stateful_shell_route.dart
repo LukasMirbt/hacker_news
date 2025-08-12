@@ -7,6 +7,7 @@ import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment/comment.dart';
 import 'package:hacker_client/data_collection/data_collection.dart';
+import 'package:hacker_client/drafts/drafts.dart';
 import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/reply/reply.dart' hide ReplyParent;
@@ -16,6 +17,7 @@ import 'package:provider/provider.dart';
 
 part '../../comment/route/comment_route.dart';
 part '../../data_collection/route/data_collection_route.dart';
+part '../../drafts/route/draft_route.dart';
 part '../../home/route/home_route.dart';
 part '../../post/route/post_route.dart';
 part '../../reply/route/reply_route.dart';
@@ -31,6 +33,7 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
     branches: [
       HomeBranch.config,
       ThreadFeedBranch.config,
+      DraftBranch.config,
       SettingsBranch.config,
     ],
   );

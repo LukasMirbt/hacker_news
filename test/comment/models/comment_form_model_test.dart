@@ -29,6 +29,15 @@ void main() {
       );
     }
 
+    group('empty', () {
+      test('returns $CommentFormModel', () {
+        expect(
+          CommentFormModel.empty,
+          isA<CommentFormModel>(),
+        );
+      });
+    });
+
     group('isCommentingEnabled', () {
       test('returns true when form is non-null', () {
         final model = createSubject(
@@ -115,6 +124,50 @@ void main() {
           submissionStatus: SubmissionStatus.failure,
         );
         expect(model.isSubmissionLoading, false);
+      });
+    });
+
+    group('updateWith', () {
+      test('returns empty $CommentFormModel when form is null', () {
+        final model = createSubject(
+          text: text,
+          form: form,
+        );
+        expect(
+          model.updateWith(null),
+          CommentFormModel.empty,
+        );
+      });
+
+      test('returns correct $CommentFormModel when form '
+          'is non-null and text is null', () {
+        final updatedForm = _MockCommentForm();
+        final model = createSubject(
+          text: text,
+          form: form,
+        );
+        expect(
+          model.updateWith(updatedForm),
+          model.copyWith(form: updatedForm),
+        );
+      });
+
+      test('returns correct $CommentFormModel when form '
+          'is non-null and text is non-null', () {
+        const updatedText = 'updatedText';
+        final updatedForm = _MockCommentForm();
+        when(() => updatedForm.text).thenReturn(updatedText);
+        final model = createSubject(
+          text: text,
+          form: form,
+        );
+        expect(
+          model.updateWith(updatedForm),
+          model.copyWith(
+            form: updatedForm,
+            text: updatedText,
+          ),
+        );
       });
     });
 

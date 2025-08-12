@@ -1,5 +1,6 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ import 'package:vote_repository/vote_repository.dart';
 class App extends StatelessWidget {
   const App({
     required AuthenticationApi authenticationApi,
-    required CommentStorage commentStorage,
+    required DraftStorage draftStorage,
     required FeedApi feedApi,
     required PostApi postApi,
     required ThreadApi threadApi,
@@ -32,7 +33,7 @@ class App extends StatelessWidget {
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
-       _commentStorage = commentStorage,
+       _draftStorage = draftStorage,
        _feedApi = feedApi,
        _postApi = postApi,
        _threadApi = threadApi,
@@ -44,7 +45,7 @@ class App extends StatelessWidget {
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
-  final CommentStorage _commentStorage;
+  final DraftStorage _draftStorage;
   final PostApi _postApi;
   final FeedApi _feedApi;
   final ThreadApi _threadApi;
@@ -60,7 +61,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider.value(value: _authenticationApi),
-        Provider.value(value: _commentStorage),
+        Provider.value(value: _draftStorage),
         Provider.value(value: _feedApi),
         Provider.value(value: _postApi),
         Provider.value(value: _threadApi),

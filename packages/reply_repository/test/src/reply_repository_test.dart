@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:authentication_api/authentication_api.dart';
+import 'package:draft_storage/draft_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:reply_repository/reply_repository.dart';
@@ -13,7 +14,7 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
 class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
-class _MockReplyStorage extends Mock implements ReplyStorage {}
+class _MockDraftStorage extends Mock implements DraftStorage {}
 
 class _MockUserReplyService extends Mock implements UserReplyService {}
 
@@ -23,7 +24,7 @@ void main() {
   const text = 'text';
   const user = UserPlaceholder(id: userId);
 
-  const storageKey = ReplyStorageKey(
+  const draftStorageKey = ReplyDraftByUniqueKeys(
     parentId: parentId,
     userId: userId,
   );
@@ -32,14 +33,14 @@ void main() {
     late ReplyApi replyApi;
     late AuthenticationApi authenticationApi;
     late AuthenticationState authenticationState;
-    late ReplyStorage replyStorage;
+    late DraftStorage draftStorage;
     late UserReplyService userReplyService;
 
     setUp(() {
       replyApi = _MockReplyApi();
       authenticationApi = _MockAuthenticationApi();
       authenticationState = _MockAuthenticationState();
-      replyStorage = _MockReplyStorage();
+      draftStorage = _MockDraftStorage();
       userReplyService = _MockUserReplyService();
       when(() => authenticationApi.state).thenReturn(authenticationState);
       when(() => authenticationState.user).thenReturn(user);
@@ -49,7 +50,7 @@ void main() {
       return ReplyRepository(
         replyApi: replyApi,
         authenticationApi: authenticationApi,
-        replyStorage: replyStorage,
+        draftStorage: draftStorage,
         userReplyService: userReplyService,
       );
     }
@@ -58,61 +59,98 @@ void main() {
       const url = 'url';
       final data = ReplyPageDataPlaceholder();
       final page = ReplyPage.from(data);
+      const savedReply = 'savedReply';
 
-      final storageKey = ReplyStorageKey(
+      final draft = ReplyDraftDataPlaceholder(
+        content: savedReply,
+      );
+
+      final storageKey = ReplyDraftByUniqueKeys(
         parentId: page.parent.id,
         userId: user.id,
       );
 
       final request = () => replyApi.fetchReplyPage(url: url);
-      final read = () => replyStorage.read(storageKey);
+      final readReplyDraft = () => draftStorage.readReplyDraft(storageKey);
 
-      test('returns $ReplyPage without savedReply when null', () async {
+      test('returns $ReplyPage without saved reply '
+          'when null', () async {
         when(request).thenAnswer((_) async => data);
+        when(readReplyDraft).thenAnswer((_) async => null);
         final repository = createSubject();
         await expectLater(
           repository.fetchReplyPage(url: url),
           completion(page),
         );
         verify(request).called(1);
-        verify(read).called(1);
+        verify(readReplyDraft).called(1);
       });
 
-      test('returns $ReplyPage with savedReply when non-null', () async {
+      test('returns $ReplyPage with saved reply '
+          'when non-null', () async {
         when(request).thenAnswer((_) async => data);
-        when(read).thenReturn(text);
+        when(readReplyDraft).thenAnswer((_) async => draft);
         final repository = createSubject();
         await expectLater(
           repository.fetchReplyPage(url: url),
           completion(
             page.copyWith(
               form: page.form?.copyWith(
-                text: text,
+                text: savedReply,
               ),
             ),
           ),
         );
         verify(request).called(1);
-        verify(read).called(1);
+        verify(readReplyDraft).called(1);
       });
     });
 
     group('updateReply', () {
+      const url = 'url';
+
       final form = ReplyFormPlaceholder(
         parentId: parentId,
         text: text,
       );
 
-      final save = () => replyStorage.save(
-        storageKey: storageKey,
-        text: text,
+      final parent = OtherUserReplyParentPlaceholder();
+
+      final deleteReplyDraft = () =>
+          draftStorage.deleteReplyDraft(draftStorageKey);
+
+      final saveReplyDraft = () => draftStorage.saveReplyDraft(
+        ReplyDraftsCompanion.insert(
+          parentId: parentId,
+          userId: userId,
+          url: url,
+          parentHtmlText: parent.htmlText,
+          content: text,
+        ),
       );
 
-      test('calls save', () async {
-        when(save).thenAnswer((_) async {});
+      test('calls deleteReplyDraft when trimmed text '
+          'is empty', () async {
+        when(deleteReplyDraft).thenAnswer((_) async {});
         final repository = createSubject();
-        await repository.updateReply(form);
-        verify(save).called(1);
+        await repository.updateReply(
+          url: url,
+          form: form.copyWith(text: ' '),
+          parent: parent,
+        );
+        verify(deleteReplyDraft).called(1);
+      });
+
+      test('calls saveReplyDraft when trimmed text '
+          'is not empty', () async {
+        when(saveReplyDraft).thenAnswer((_) async {});
+        final repository = createSubject();
+        await repository.updateReply(
+          url: url,
+          form: form,
+          parent: parent,
+        );
+        verify(saveReplyDraft).called(1);
       });
     });
 
@@ -126,14 +164,15 @@ void main() {
       final fetchCommentThread = () =>
           replyApi.fetchCommentThread(id: form.parentId);
 
-      final clear = () => replyStorage.clear(storageKey);
+      final deleteReplyDraft = () =>
+          draftStorage.deleteReplyDraft(draftStorageKey);
 
       final newestComment = () => userReplyService.newestComment(commentThread);
 
-      test('calls reply, clear, fetchCommentThread, newestComment '
+      test('calls reply, deleteReplyDraft, fetchCommentThread, newestComment '
           'and emits $Reply when fetchCommentThread succeeds', () async {
         when(reply).thenAnswer((_) async {});
-        when(clear).thenAnswer((_) async {});
+        when(deleteReplyDraft).thenAnswer((_) async {});
         when(fetchCommentThread).thenAnswer((_) async => commentThread);
         when(newestComment).thenReturn(comment);
         final repository = createSubject();
@@ -150,42 +189,42 @@ void main() {
         );
         await repository.reply(form);
         verify(reply).called(1);
-        verify(clear).called(1);
+        verify(deleteReplyDraft).called(1);
         verify(fetchCommentThread).called(1);
         verify(newestComment).called(1);
       });
 
-      test('calls reply and returns when clear throws', () async {
+      test('calls reply and returns when deleteReplyDraft throws', () async {
         when(reply).thenAnswer((_) async {});
-        when(clear).thenThrow(Exception('oops'));
+        when(deleteReplyDraft).thenThrow(Exception('oops'));
         final repository = createSubject();
         await repository.reply(form);
         verify(reply).called(1);
-        verify(clear).called(1);
+        verify(deleteReplyDraft).called(1);
       });
 
-      test('calls reply, clear and returns '
+      test('calls reply, deleteReplyDraft and returns '
           'when fetchCommentThread throws', () async {
         when(reply).thenAnswer((_) async {});
-        when(clear).thenAnswer((_) async {});
+        when(deleteReplyDraft).thenAnswer((_) async {});
         when(fetchCommentThread).thenThrow(Exception('oops'));
         final repository = createSubject();
         await repository.reply(form);
         verify(reply).called(1);
-        verify(clear).called(1);
+        verify(deleteReplyDraft).called(1);
         verify(fetchCommentThread).called(1);
       });
 
       test('calls reply, clear, fetchCommentThread and returns '
           'when newestComment throws', () async {
         when(reply).thenAnswer((_) async {});
-        when(clear).thenAnswer((_) async {});
+        when(deleteReplyDraft).thenAnswer((_) async {});
         when(fetchCommentThread).thenAnswer((_) async => commentThread);
         when(newestComment).thenThrow(Exception('oops'));
         final repository = createSubject();
         await repository.reply(form);
         verify(reply).called(1);
-        verify(clear).called(1);
+        verify(deleteReplyDraft).called(1);
         verify(fetchCommentThread).called(1);
         verify(newestComment).called(1);
       });
