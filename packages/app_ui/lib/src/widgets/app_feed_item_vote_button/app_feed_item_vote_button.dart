@@ -49,15 +49,20 @@ class _Icon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final grade = context.select(
+      (AppFeedItemVoteButtonData data) => data.iconGrade,
+    );
+
     final colorScheme = ColorScheme.of(context);
 
     final color = context.select(
-      (AppFeedItemVoteButtonData data) => data.color(colorScheme),
+      (AppFeedItemVoteButtonData data) => data.iconColor(colorScheme),
     );
 
     return AppIcon(
       Symbols.arrow_upward_rounded,
-      size: 18,
+      size: 20,
+      grade: grade,
       color: color,
     );
   }
@@ -72,24 +77,17 @@ class _Text extends StatelessWidget {
       (AppFeedItemVoteButtonData data) => data.score,
     );
 
+    final textTheme = Theme.of(context).textTheme;
     final colorScheme = ColorScheme.of(context);
 
-    final color = context.select(
-      (AppFeedItemVoteButtonData data) => data.color(colorScheme),
-    );
-
-    final weight = context.select(
-      (AppFeedItemVoteButtonData data) => data.weight,
+    final style = context.select(
+      (AppFeedItemVoteButtonData data) =>
+          data.textStyle(colorScheme, textTheme),
     );
 
     return Text(
       score,
-      style: TextStyle(
-        color: color,
-        fontVariations: [
-          FontVariation.weight(weight),
-        ],
-      ),
+      style: style,
     );
   }
 }

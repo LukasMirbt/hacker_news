@@ -57,7 +57,7 @@ class _Icon extends StatelessWidget {
 
     return AppIcon(
       Symbols.arrow_upward_rounded,
-      size: 18,
+      size: 20,
       color: color,
     );
   }

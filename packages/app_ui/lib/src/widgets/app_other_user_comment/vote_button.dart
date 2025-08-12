@@ -11,8 +11,8 @@ class VoteButton extends StatelessWidget {
       (AppOtherUserCommentData data) => data.onVotePressed,
     );
 
-    final size = context.select(
-      (AppOtherUserCommentData data) => data.voteIconSize,
+    final grade = context.select(
+      (AppOtherUserCommentData data) => data.voteIconGrade,
     );
 
     final colorScheme = ColorScheme.of(context);
@@ -25,7 +25,8 @@ class VoteButton extends StatelessWidget {
       onPressed: onVotePressed,
       icon: AppIcon(
         Symbols.arrow_upward_rounded,
-        size: size,
+        size: 20,
+        grade: grade,
         color: color,
       ),
     );

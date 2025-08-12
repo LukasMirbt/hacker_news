@@ -28,9 +28,8 @@ class AppOtherUserCommentData {
     return colorScheme.onSurfaceVariant;
   }
 
-  // TODO: Use grade instead
-  double get voteIconSize {
-    if (hasBeenUpvoted) return 20;
-    return 18;
+  double get voteIconGrade {
+    if (hasBeenUpvoted) return 200;
+    return 0;
   }
 }
