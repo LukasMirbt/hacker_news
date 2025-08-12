@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:mockingjay/mockingjay.dart';
 
 import '../../app/pump_app.dart';
@@ -90,10 +90,10 @@ void main() async {
         final widget = findWidget(tester);
         expect(
           widget.leading,
-          isA<Icon>().having(
+          isA<AppIcon>().having(
             (icon) => icon.icon,
             'icon',
-            Symbols.delete,
+            Symbols.delete_rounded,
           ),
         );
       });

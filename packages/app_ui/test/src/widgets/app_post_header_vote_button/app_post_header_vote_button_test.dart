@@ -57,7 +57,9 @@ void main() {
 
     testWidgets('has correct icon color', (tester) async {
       await tester.pumpApp(buildSubject());
-      final icon = tester.widget<Icon>(find.byType(Icon));
+      final icon = tester.widget<AppIcon>(
+        find.byType(AppIcon),
+      );
       expect(icon.color, color);
     });
 

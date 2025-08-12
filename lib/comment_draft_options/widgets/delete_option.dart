@@ -1,10 +1,10 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment_draft_options/comment_draft_options.dart';
 import 'package:hacker_client/delete_draft/delete_draft.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:material_symbols_icons/symbols.dart';
 
 class DeleteOption extends StatelessWidget {
   const DeleteOption({super.key});
@@ -17,7 +17,7 @@ class DeleteOption extends StatelessWidget {
     return ListTile(
       textColor: colorScheme.error,
       iconColor: colorScheme.error,
-      leading: const Icon(Symbols.delete),
+      leading: const AppIcon(Symbols.delete_rounded),
       title: Text(l10n.commentDraftOptions_delete),
       onTap: () {
         final state = context.read<CommentDraftOptionsBloc>().state;

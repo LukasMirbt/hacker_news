@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +55,10 @@ void main() async {
 
     testWidgets('renders correct icon', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byIcon(Icons.share), findsOneWidget);
+      expect(
+        find.byIcon(Symbols.share_rounded),
+        findsOneWidget,
+      );
     });
 
     testWidgets('renders correct title', (tester) async {

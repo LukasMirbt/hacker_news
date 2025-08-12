@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
@@ -10,7 +11,7 @@ class LicenseListItem extends StatelessWidget {
 
     return ListTile(
       title: Text(l10n.settings_licenses),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: const AppIcon(Symbols.chevron_right_rounded),
       onTap: () {
         showLicensePage(
           useRootNavigator: true,

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
@@ -38,8 +39,7 @@ void main() async {
         expect(
           destination.data(l10n),
           DestinationData(
-            icon: Icons.home_outlined,
-            selectedIcon: Icons.home,
+            icon: Symbols.home_rounded,
             label: l10n.appShell_home,
           ),
         );
@@ -51,8 +51,7 @@ void main() async {
         expect(
           destination.data(l10n),
           DestinationData(
-            icon: Icons.forum_outlined,
-            selectedIcon: Icons.forum,
+            icon: Symbols.forum_rounded,
             label: l10n.appShell_threads,
           ),
         );
@@ -64,8 +63,7 @@ void main() async {
         expect(
           destination.data(l10n),
           DestinationData(
-            icon: Icons.drafts_outlined,
-            selectedIcon: Icons.drafts,
+            icon: Symbols.drafts_rounded,
             label: l10n.appShell_drafts,
           ),
         );
@@ -77,8 +75,7 @@ void main() async {
         expect(
           destination.data(l10n),
           DestinationData(
-            icon: Icons.settings_outlined,
-            selectedIcon: Icons.settings,
+            icon: Symbols.settings_rounded,
             label: l10n.appShell_settings,
           ),
         );

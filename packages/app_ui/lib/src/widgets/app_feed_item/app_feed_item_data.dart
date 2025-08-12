@@ -32,8 +32,7 @@ class AppFeedItemData {
     ColorScheme colorScheme,
     TextTheme textTheme,
   ) {
-    final style = textTheme.titleMedium;
-    if (style == null) return null;
+    final style = textTheme.titleMedium!;
 
     Color color;
     double weightFactor;
@@ -59,8 +58,7 @@ class AppFeedItemData {
     ColorScheme colorScheme,
     TextTheme textTheme,
   ) {
-    final style = textTheme.titleMedium;
-    if (style == null) return null;
+    final style = textTheme.titleMedium!;
 
     double weightFactor;
 

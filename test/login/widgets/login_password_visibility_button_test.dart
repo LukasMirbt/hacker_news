@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +61,7 @@ void main() {
     testWidgets('renders correct icon when obscurePassword', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.byIcon(Icons.visibility_outlined),
+        find.byIcon(Symbols.visibility_rounded),
         findsOneWidget,
       );
     });
@@ -69,7 +70,7 @@ void main() {
       when(() => form.obscurePassword).thenReturn(false);
       await tester.pumpApp(buildSubject());
       expect(
-        find.byIcon(Icons.visibility_off_outlined),
+        find.byIcon(Symbols.visibility_off_rounded),
         findsOneWidget,
       );
     });

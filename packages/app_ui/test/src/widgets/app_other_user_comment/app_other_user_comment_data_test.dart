@@ -54,17 +54,17 @@ void main() {
       });
     });
 
-    group('voteIconSize', () {
+    group('voteIconGrade', () {
       test('returns correct value when hasBeenUpvoted', () {
         final data = createSubject(
           hasBeenUpvoted: true,
         );
-        expect(data.voteIconSize, 20);
+        expect(data.voteIconGrade, 200);
       });
 
       test('returns correct value when !hasBeenUpvoted', () {
         final data = createSubject();
-        expect(data.voteIconSize, 18);
+        expect(data.voteIconGrade, 0);
       });
     });
   });

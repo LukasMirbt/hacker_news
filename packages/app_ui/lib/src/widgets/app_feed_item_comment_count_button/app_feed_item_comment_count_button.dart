@@ -49,8 +49,8 @@ class _Icon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Icon(
-      Icons.mode_comment_outlined,
+    return const AppIcon(
+      Symbols.mode_comment_rounded,
       size: 16,
     );
   }

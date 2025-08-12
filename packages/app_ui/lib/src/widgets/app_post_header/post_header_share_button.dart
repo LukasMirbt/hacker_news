@@ -13,8 +13,8 @@ class PostHeaderShareButton extends StatelessWidget {
 
     return IconButton(
       onPressed: onSharePressed,
-      icon: const Icon(
-        Icons.share_outlined,
+      icon: const AppIcon(
+        Symbols.share_rounded,
         size: 16,
       ),
     );

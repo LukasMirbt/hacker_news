@@ -15,9 +15,12 @@ class _MockColorScheme extends Mock
     with Diagnosticable
     implements ColorScheme {}
 
+class _MockTextTheme extends Mock with Diagnosticable implements TextTheme {}
+
 void main() {
-  const color = Colors.red;
-  const weight = 800.0;
+  const iconGrade = 100.0;
+  final textStyle = TextStyle(color: Colors.blue);
+  const iconColor = Colors.red;
   const score = 'score';
 
   group(AppFeedItemVoteButton, () {
@@ -26,10 +29,12 @@ void main() {
     setUp(() {
       data = _MockAppFeedItemVoteButtonData();
       registerFallbackValue(_MockColorScheme());
+      registerFallbackValue(_MockTextTheme());
       when(() => data.onPressed).thenReturn(() {});
-      when(() => data.color(any())).thenReturn(color);
-      when(() => data.weight).thenReturn(weight);
+      when(() => data.iconGrade).thenReturn(iconGrade);
+      when(() => data.iconColor(any())).thenReturn(iconColor);
       when(() => data.score).thenReturn(score);
+      when(() => data.textStyle(any(), any())).thenReturn(textStyle);
     });
 
     Widget buildSubject() {
@@ -57,8 +62,10 @@ void main() {
 
     testWidgets('has correct icon color', (tester) async {
       await tester.pumpApp(buildSubject());
-      final icon = tester.widget<Icon>(find.byType(Icon));
-      expect(icon.color, color);
+      final icon = tester.widget<AppIcon>(
+        find.byType(AppIcon),
+      );
+      expect(icon.color, iconColor);
     });
 
     testWidgets('renders score', (tester) async {
@@ -66,21 +73,10 @@ void main() {
       expect(find.text(score), findsOneWidget);
     });
 
-    testWidgets('has correct text color', (tester) async {
+    testWidgets('has correct text style', (tester) async {
       await tester.pumpApp(buildSubject());
       final text = tester.widget<Text>(find.byType(Text));
-      expect(text.style?.color, color);
-    });
-
-    testWidgets('has correct weight', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final text = tester.widget<Text>(find.byType(Text));
-      expect(
-        text.style?.fontVariations,
-        contains(
-          FontVariation.weight(weight),
-        ),
-      );
+      expect(text.style, textStyle);
     });
   });
 }
