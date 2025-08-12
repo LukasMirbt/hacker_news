@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:hacker_client/comment_list/comment_list.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class CommentListVoteFailure with EquatableMixin implements Exception {
-  const CommentListVoteFailure();
+class CurrentUserVoteError extends Error with EquatableMixin {
+  CurrentUserVoteError();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class CommentListVoteModel {
@@ -18,12 +18,15 @@ class CommentListVoteModel {
   }) {
     final item = commentList.findById(vote.id);
 
-    if (item is! OtherUserCommentModel) {
-      throw const CommentListVoteFailure();
+    switch (item) {
+      case null:
+        return commentList;
+      case final OtherUserCommentModel item:
+        final updatedItem = item.vote(vote.type);
+        final updatedList = commentList.update(updatedItem);
+        return updatedList;
+      case CurrentUserCommentModel():
+        throw CurrentUserVoteError();
     }
-
-    final updatedItem = item.vote(vote.type);
-    final updatedList = commentList.update(updatedItem);
-    return updatedList;
   }
 }
