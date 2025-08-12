@@ -4,13 +4,12 @@ class AppIcon extends StatelessWidget {
   const AppIcon(
     this.icon, {
     this.size,
-    this.fill,
     this.weight,
     this.grade,
     this.opticalSize,
     this.color,
     super.key,
-  });
+  }) : fill = 0;
 
   const AppIcon.filled(
     this.icon, {
