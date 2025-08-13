@@ -35,6 +35,14 @@ void main() {
       );
     }
 
+    testWidgets('renders $ShellBackButtonListener', (tester) async {
+      await tester.pumpAppWithRouter(buildSubject());
+      expect(
+        find.byType(ShellBackButtonListener),
+        findsOneWidget,
+      );
+    });
+
     group(Scaffold, () {
       Scaffold findWidget(WidgetTester tester) {
         return tester.widget<Scaffold>(
