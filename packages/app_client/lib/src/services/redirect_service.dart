@@ -1,8 +1,8 @@
 import 'package:app_client/app_client.dart' hide AuthenticationStatus;
 import 'package:authentication_parser/authentication_parser.dart';
 
-class RedirectService {
-  const RedirectService({
+class LoginRedirectService {
+  const LoginRedirectService({
     required AppClient appClient,
     HtmlParser? htmlParser,
     IsLoginPageParser? isLoginPageParser,
@@ -20,7 +20,7 @@ class RedirectService {
     return isLoginPage;
   }
 
-  void redirectToLogin() {
+  void redirect() {
     _client.redirectToLogin();
   }
 }

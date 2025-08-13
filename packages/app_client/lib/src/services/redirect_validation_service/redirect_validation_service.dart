@@ -13,6 +13,23 @@ class ValidationException with EquatableMixin implements Exception {
   List<Object> get props => [];
 }
 
+// TODO: Don't log html
+class MissingRedirectException extends ValidationException {
+  const MissingRedirectException({
+    required this.url,
+    required this.html,
+  });
+
+  final Uri url;
+  final String html;
+
+  @override
+  List<Object> get props => [
+    url,
+    html,
+  ];
+}
+
 class UnexpectedRedirectException extends ValidationException {
   const UnexpectedRedirectException(this.url);
 
@@ -35,6 +52,15 @@ class RedirectValidationService {
 
   void validateRedirect(Response<dynamic> response) {
     final statusCode = response.statusCode;
+    final data = response.data;
+
+    if (statusCode == HttpStatus.ok && data is String) {
+      throw MissingRedirectException(
+        url: response.requestOptions.uri,
+        html: data,
+      );
+    }
+
     if (statusCode != HttpStatus.found) throw const ValidationException();
 
     final options = response.requestOptions;

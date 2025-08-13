@@ -54,12 +54,21 @@ class AppRouter {
       route: route,
     );
 
+    Object? extra;
+
+    try {
+      extra = (route as dynamic).$extra;
+    } catch (_) {}
+
     if (redirect != null) {
       goRouter.push(redirect);
       return Future.value();
     }
 
-    return goRouter.push(route.location);
+    return goRouter.push(
+      route.location,
+      extra: extra,
+    );
   }
 
   void goRelative(RelativeGoRouteData route) {

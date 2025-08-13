@@ -8,13 +8,17 @@ part 'web_redirect_route.g.dart';
 @WebRedirectRoute.config
 class WebRedirectRoute extends GoRouteData
     with _$WebRedirectRoute, EquatableMixin {
-  const WebRedirectRoute({required this.url});
+  const WebRedirectRoute({
+    required this.url,
+    this.$extra,
+  });
 
   static const config = TypedGoRoute<WebRedirectRoute>(
     path: '/web-redirect',
   );
 
   final String url;
+  final String? $extra;
 
   @override
   Page<void> buildPage(
@@ -23,7 +27,10 @@ class WebRedirectRoute extends GoRouteData
   ) {
     return MaterialPage(
       fullscreenDialog: true,
-      child: WebRedirectPage(url: url),
+      child: WebRedirectPage(
+        url: url,
+        html: $extra,
+      ),
     );
   }
 

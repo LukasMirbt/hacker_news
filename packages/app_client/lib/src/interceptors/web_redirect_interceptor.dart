@@ -7,8 +7,8 @@ class RedirectException extends DioException {
   });
 }
 
-class RedirectValidationInterceptor extends Interceptor {
-  const RedirectValidationInterceptor({
+class WebRedirectInterceptor extends Interceptor {
+  const WebRedirectInterceptor({
     required AppClient appClient,
     RedirectValidationService? redirectValidationService,
   }) : _client = appClient,
@@ -49,8 +49,17 @@ class RedirectValidationInterceptor extends Interceptor {
       _service.validateRedirect(response);
       handler.next(response);
     } on ValidationException catch (error) {
-      if (error is UnexpectedRedirectException) {
-        await _client.redirectToWeb(error.url);
+      if (error is MissingRedirectException) {
+        await _client.redirectToWeb(
+          WebRedirect(
+            url: error.url,
+            html: error.html,
+          ),
+        );
+      } else if (error is UnexpectedRedirectException) {
+        await _client.redirectToWeb(
+          WebRedirect(url: error.url),
+        );
       }
 
       handler.reject(

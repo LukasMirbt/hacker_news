@@ -15,8 +15,10 @@ RouteBase get $webRedirectRoute => GoRouteData.$route(
 );
 
 mixin _$WebRedirectRoute on GoRouteData {
-  static WebRedirectRoute _fromState(GoRouterState state) =>
-      WebRedirectRoute(url: state.uri.queryParameters['url']!);
+  static WebRedirectRoute _fromState(GoRouterState state) => WebRedirectRoute(
+    url: state.uri.queryParameters['url']!,
+    $extra: state.extra as String?,
+  );
 
   WebRedirectRoute get _self => this as WebRedirectRoute;
 
@@ -25,15 +27,17 @@ mixin _$WebRedirectRoute on GoRouteData {
       GoRouteData.$location('/web-redirect', queryParams: {'url': _self.url});
 
   @override
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: _self.$extra);
 
   @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: _self.$extra);
 
   @override
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+      context.pushReplacement(location, extra: _self.$extra);
 
   @override
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) =>
+      context.replace(location, extra: _self.$extra);
 }

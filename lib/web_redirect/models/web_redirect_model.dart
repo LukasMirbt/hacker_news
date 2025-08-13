@@ -8,10 +8,17 @@ class WebRedirectModel extends Equatable {
   }) : _redirect = redirect,
        initialUrlRequest = URLRequest(
          url: WebUri.uri(redirect.url),
-       );
+       ),
+       initialData = redirect.html != null
+           ? InAppWebViewInitialData(
+               baseUrl: WebUri.uri(redirect.url),
+               data: redirect.html!,
+             )
+           : null;
 
   final WebRedirect _redirect;
   final URLRequest initialUrlRequest;
+  final InAppWebViewInitialData? initialData;
 
   Uri get url => _redirect.url;
 

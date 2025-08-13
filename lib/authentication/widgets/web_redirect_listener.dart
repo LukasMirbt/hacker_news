@@ -20,7 +20,10 @@ class WebRedirectListener
           if (matchedLocation == WebRedirectRoute.config.path) return;
 
           appRouter.push(
-            WebRedirectRoute(url: redirect.urlString),
+            WebRedirectRoute(
+              url: redirect.urlString,
+              $extra: redirect.html,
+            ),
           );
         },
       );

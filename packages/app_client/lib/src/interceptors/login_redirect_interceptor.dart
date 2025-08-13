@@ -1,11 +1,11 @@
 import 'package:app_client/app_client.dart' hide AuthenticationStatus;
 
-class RedirectInterceptor extends Interceptor {
-  const RedirectInterceptor({
-    required RedirectService redirectService,
-  }) : _service = redirectService;
+class LoginRedirectInterceptor extends Interceptor {
+  const LoginRedirectInterceptor({
+    required LoginRedirectService loginRedirectService,
+  }) : _service = loginRedirectService;
 
-  final RedirectService _service;
+  final LoginRedirectService _service;
 
   @override
   void onResponse(
@@ -22,7 +22,7 @@ class RedirectInterceptor extends Interceptor {
     final shouldRedirect = _service.shouldRedirect(data);
 
     if (shouldRedirect) {
-      _service.redirectToLogin();
+      _service.redirect();
     }
 
     handler.next(response);

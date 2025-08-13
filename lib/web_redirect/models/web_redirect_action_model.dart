@@ -3,26 +3,27 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebRedirectActionModel {
-  InAppWebViewController? _controller;
+  late InAppWebViewController _controller;
 
   void initialize(InAppWebViewController controller) {
     _controller = controller;
   }
 
-  Future<bool> canGoBack() => _controller?.canGoBack() ?? Future.value(false);
+  Future<bool> canGoBack() => _controller.canGoBack();
 
-  Future<bool> canGoForward() =>
-      _controller?.canGoForward() ?? Future.value(false);
+  Future<bool> canGoForward() => _controller.canGoForward();
 
   void goBack() {
-    _controller?.goBack();
+    _controller.goBack();
   }
 
   void goForward() {
-    _controller?.goForward();
+    _controller.goForward();
   }
 
   void reload() {
-    _controller?.reload();
+    _controller.reload();
   }
+
+  Future<String?> html() => _controller.getHtml();
 }

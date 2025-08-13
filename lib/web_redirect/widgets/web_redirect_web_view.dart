@@ -9,18 +9,31 @@ class WebRedirectWebView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final initialUrlRequest = context.select(
+    final urlRequest = context.select(
       (WebRedirectBloc bloc) => bloc.state.redirect.initialUrlRequest,
     );
 
+    final initialData = context.select(
+      (WebRedirectBloc bloc) => bloc.state.redirect.initialData,
+    );
+
+    URLRequest? initialUrlRequest;
+
+    if (initialData == null) {
+      initialUrlRequest = urlRequest;
+    }
+
+    // TODO: Parse request HTML so authentication status gets updated
+
     return InAppWebView(
       initialUrlRequest: initialUrlRequest,
+      initialData: initialData,
       onWebViewCreated: (controller) {
         context.read<WebRedirectBloc>().add(
           WebRedirectCreated(controller),
         );
       },
-      onLoadStart: (_, __) {
+      onLoadStart: (_, _) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStarted(),
         );
@@ -30,7 +43,7 @@ class WebRedirectWebView extends StatelessWidget {
           WebRedirectProgressChanged(progress),
         );
       },
-      onLoadStop: (_, __) {
+      onLoadStop: (controller, uri) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStopped(),
         );
@@ -42,7 +55,7 @@ class WebRedirectWebView extends StatelessWidget {
           StackTrace.current,
         );
       },
-      onReceivedHttpError: (_, __, errorResponse) {
+      onReceivedHttpError: (_, _, errorResponse) {
         context.read<Logger>().severe(
           'Http error',
           errorResponse,

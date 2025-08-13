@@ -7,10 +7,12 @@ import 'package:hacker_client/web_redirect/web_redirect.dart';
 class WebRedirectPage extends StatelessWidget {
   const WebRedirectPage({
     required this.url,
+    required this.html,
     super.key,
   });
 
   final String url;
+  final String? html;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class WebRedirectPage extends StatelessWidget {
       create: (context) {
         final cookieManager = CookieManager.instance();
         return WebRedirectBloc(
-          redirect: WebRedirect.from(url),
+          redirect: WebRedirect.from(url, html: html),
           webRedirectCookieManager: WebRedirectCookieManager(
             cookieManager: cookieManager,
             cookieAdapter: WebRedirectCookieAdapter(

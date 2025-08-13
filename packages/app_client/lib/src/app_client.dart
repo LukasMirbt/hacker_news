@@ -32,15 +32,17 @@ class AppClient extends Cubit<AuthenticationState> {
       },
     );
 
-    final redirectInterceptor = RedirectInterceptor(
-      redirectService: RedirectService(appClient: this),
+    final loginRedirectInterceptor = LoginRedirectInterceptor(
+      loginRedirectService: LoginRedirectService(appClient: this),
     );
+
+    _authenticationService = AuthenticationService(appClient: this);
 
     final authenticationInterceptor = AuthenticationInterceptor(
-      authenticationService: AuthenticationService(appClient: this),
+      authenticationService: _authenticationService,
     );
 
-    final redirectValidationInterceptor = RedirectValidationInterceptor(
+    final webRedirectInterceptor = WebRedirectInterceptor(
       appClient: this,
     );
 
@@ -49,9 +51,9 @@ class AppClient extends Cubit<AuthenticationState> {
     http
       ..options = baseOptions
       ..interceptors.add(loggingInterceptor)
-      ..interceptors.add(redirectInterceptor)
+      ..interceptors.add(loginRedirectInterceptor)
       ..interceptors.add(authenticationInterceptor)
-      ..interceptors.add(redirectValidationInterceptor);
+      ..interceptors.add(webRedirectInterceptor);
   }
 
   Future<void> start() async {
@@ -82,6 +84,7 @@ class AppClient extends Cubit<AuthenticationState> {
   final CookieJar _cookieJar;
   final SecureUserIdStorage _userIdStorage;
   final Dio http;
+  late final AuthenticationService _authenticationService;
 
   void redirectToLogin() {
     emit(
@@ -93,10 +96,10 @@ class AppClient extends Cubit<AuthenticationState> {
     );
   }
 
-  Future<void> redirectToWeb(Uri url) async {
+  Future<void> redirectToWeb(WebRedirect redirect) async {
     emit(
       state.copyWith(
-        redirect: WebRedirect(url: url),
+        redirect: redirect,
       ),
     );
   }
@@ -108,6 +111,10 @@ class AppClient extends Cubit<AuthenticationState> {
 
   Future<void> saveCookies(List<Cookie> cookies) async {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
+  }
+
+  void updateAuthenticationFromHtml(String html) {
+    _authenticationService.update(html);
   }
 
   Future<void> authenticate(User user) async {
