@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class AppPostHeaderVoteButtonData {
@@ -11,15 +12,29 @@ class AppPostHeaderVoteButtonData {
   final String score;
   final void Function() onPressed;
 
-  Color color(ColorScheme colorScheme) {
+  Color iconColor(ColorScheme colorScheme) {
     if (hasBeenUpvoted) return colorScheme.onSurface;
     return colorScheme.onSurfaceVariant;
   }
 
-  double get weight {
-    if (hasBeenUpvoted) return 700;
-    return 500;
+  double get iconGrade {
+    if (hasBeenUpvoted) return 200;
+    return 0;
   }
 
-  // TODO(LukasMirbt): Add voteIconGrade
+  TextStyle textStyle(
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    final style = textTheme.bodySmall!;
+    if (!hasBeenUpvoted) return style;
+
+    return style
+        .copyWithWeight(
+          (weight) => weight * 1.75,
+        )
+        .copyWith(
+          color: colorScheme.onSurface,
+        );
+  }
 }
