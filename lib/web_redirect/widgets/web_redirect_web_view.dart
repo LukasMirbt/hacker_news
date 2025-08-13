@@ -43,7 +43,7 @@ class WebRedirectWebView extends StatelessWidget {
           WebRedirectProgressChanged(progress),
         );
       },
-      onLoadStop: (controller, uri) {
+      onLoadStop: (_, _) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStopped(),
         );

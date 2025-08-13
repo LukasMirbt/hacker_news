@@ -22,7 +22,7 @@ class AppFeedItemVoteButtonData {
     return 0;
   }
 
-  TextStyle textStyle(
+  TextStyle? textStyle(
     ColorScheme colorScheme,
     TextTheme textTheme,
   ) {
