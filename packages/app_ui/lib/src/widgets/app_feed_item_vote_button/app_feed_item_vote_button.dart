@@ -77,7 +77,7 @@ class _Text extends StatelessWidget {
       (AppFeedItemVoteButtonData data) => data.score,
     );
 
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
     final colorScheme = ColorScheme.of(context);
 
     final style = context.select(

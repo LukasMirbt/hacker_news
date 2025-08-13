@@ -40,11 +40,9 @@ void main() {
         expect(data.iconColor(colorScheme), color);
       });
 
-      test('returns correct value when !hasBeenUpvoted', () {
-        const color = Colors.blue;
-        when(() => colorScheme.onSurfaceVariant).thenReturn(color);
+      test('returns null when !hasBeenUpvoted', () {
         final data = createSubject();
-        expect(data.iconColor(colorScheme), color);
+        expect(data.iconColor(colorScheme), null);
       });
     });
 
@@ -56,21 +54,21 @@ void main() {
         expect(data.iconGrade, 200);
       });
 
-      test('returns correct value when !hasBeenUpvoted', () {
+      test('returns null when !hasBeenUpvoted', () {
         final data = createSubject();
-        expect(data.iconGrade, 0);
+        expect(data.iconGrade, null);
       });
     });
 
     group('textStyle', () {
-      const style = TextStyle(
+      const bodySmall = TextStyle(
         fontVariations: [
           FontVariation.weight(400),
         ],
       );
 
       setUp(() {
-        when(() => textTheme.bodySmall).thenReturn(style);
+        when(() => textTheme.bodySmall).thenReturn(bodySmall);
       });
 
       const onSurface = Colors.blue;
@@ -93,13 +91,9 @@ void main() {
         );
       });
 
-      test('returns correct style when !hasBeenUpvoted', () {
-        when(() => colorScheme.onSurface).thenReturn(onSurface);
+      test('returns null when !hasBeenUpvoted', () {
         final data = createSubject();
-        expect(
-          data.textStyle(colorScheme, textTheme),
-          style,
-        );
+        expect(data.textStyle(colorScheme, textTheme), null);
       });
     });
   });
