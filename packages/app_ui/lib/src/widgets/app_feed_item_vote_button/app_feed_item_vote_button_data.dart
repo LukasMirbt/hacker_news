@@ -12,24 +12,23 @@ class AppFeedItemVoteButtonData {
   final String score;
   final void Function() onPressed;
 
-  Color iconColor(ColorScheme colorScheme) {
+  Color? iconColor(ColorScheme colorScheme) {
     if (hasBeenUpvoted) return colorScheme.onSurface;
-    return colorScheme.onSurfaceVariant;
+    return null;
   }
 
-  double get iconGrade {
+  double? get iconGrade {
     if (hasBeenUpvoted) return 200;
-    return 0;
+    return null;
   }
 
   TextStyle? textStyle(
     ColorScheme colorScheme,
     TextTheme textTheme,
   ) {
-    final style = textTheme.bodySmall!;
-    if (!hasBeenUpvoted) return style;
+    if (!hasBeenUpvoted) return null;
 
-    return style
+    return textTheme.bodySmall!
         .copyWithWeight(
           (weight) => weight * 1.75,
         )
