@@ -8,10 +8,12 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const ShellDrawer(),
-      appBar: const ShellAppBar(),
-      body: context.watch<StatefulNavigationShell>(),
+    return ShellBackButtonListener(
+      child: Scaffold(
+        drawer: const ShellDrawer(),
+        appBar: const ShellAppBar(),
+        body: context.watch<StatefulNavigationShell>(),
+      ),
     );
   }
 }

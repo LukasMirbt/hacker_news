@@ -20,4 +20,6 @@ class AppPostHeaderVoteButtonData {
     if (hasBeenUpvoted) return 700;
     return 500;
   }
+
+  // TODO(LukasMirbt): Add voteIconGrade
 }
