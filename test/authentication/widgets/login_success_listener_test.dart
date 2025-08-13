@@ -1,55 +1,69 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:authentication_repository/authentication_repository.dart'
+    hide AuthenticationState;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_router/app_router.dart';
-import 'package:hacker_client/login/login.dart';
+import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/login_loading/login_loading.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
-    implements LoginBloc {}
+class _MockAuthenticationBloc
+    extends MockBloc<AuthenticationEvent, AuthenticationState>
+    implements AuthenticationBloc {}
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
-  final child = Container();
+  const initialState = AuthenticationState(
+    user: User.empty,
+    redirect: LoginRedirect.initial,
+    status: AuthenticationStatus.unauthenticated,
+  );
+
   const from = 'from';
-  final initialState = LoginState(from: from);
 
   group(LoginSuccessListener, () {
-    late LoginBloc bloc;
+    late AuthenticationBloc authenticationBloc;
     late AppRouter router;
 
     setUp(() {
-      bloc = _MockLoginBloc();
+      authenticationBloc = _MockAuthenticationBloc();
       router = _MockAppRouter();
-      when(() => bloc.state).thenReturn(initialState);
+      when(() => router.from).thenReturn(from);
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: router,
         child: BlocProvider.value(
-          value: bloc,
-          child: LoginSuccessListener(child: child),
+          value: authenticationBloc,
+          child: Nested(
+            children: [
+              LoginSuccessListener(),
+            ],
+            child: Container(),
+          ),
         ),
       );
     }
 
     testWidgets('navigates to $LoginLoadingRoute when status changes '
-        'to success', (tester) async {
+        'from ${AuthenticationStatus.unauthenticated} '
+        'to ${AuthenticationStatus.authenticated}', (tester) async {
       whenListen(
-        bloc,
+        authenticationBloc,
         initialState: initialState,
         Stream.value(
-          initialState.copyWith.form(
-            status: LoginStatus.success,
+          initialState.copyWith(
+            status: AuthenticationStatus.authenticated,
           ),
         ),
       );
@@ -59,11 +73,6 @@ void main() {
           LoginLoadingRoute(from: from),
         ),
       ).called(1);
-    });
-
-    testWidgets('renders child', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byWidget(child), findsOneWidget);
     });
   });
 }

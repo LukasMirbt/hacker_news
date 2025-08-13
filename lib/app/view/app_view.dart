@@ -46,6 +46,7 @@ class AppView extends StatelessWidget {
           child: Nested(
             children: [
               LoginRedirectListener(),
+              LoginSuccessListener(),
               WebRedirectListener(),
               LogoutListener(),
               VoteFailureListener(),

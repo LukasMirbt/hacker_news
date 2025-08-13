@@ -4,30 +4,30 @@ import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-class WebRedirectWebView extends StatelessWidget {
+class WebRedirectWebView extends StatefulWidget {
   const WebRedirectWebView({super.key});
 
   @override
+  State<WebRedirectWebView> createState() => _WebRedirectWebViewState();
+}
+
+class _WebRedirectWebViewState extends State<WebRedirectWebView> {
+  late final InAppWebViewInitialData? _initialData;
+  late final URLRequest? _initialUrlRequest;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<WebRedirectBloc>().state;
+    _initialData = state.redirect.initialData;
+    _initialUrlRequest = state.redirect.initialUrlRequest;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final urlRequest = context.select(
-      (WebRedirectBloc bloc) => bloc.state.redirect.initialUrlRequest,
-    );
-
-    final initialData = context.select(
-      (WebRedirectBloc bloc) => bloc.state.redirect.initialData,
-    );
-
-    URLRequest? initialUrlRequest;
-
-    if (initialData == null) {
-      initialUrlRequest = urlRequest;
-    }
-
-    // TODO: Parse request HTML so authentication status gets updated
-
     return InAppWebView(
-      initialUrlRequest: initialUrlRequest,
-      initialData: initialData,
+      initialData: _initialData,
+      initialUrlRequest: _initialUrlRequest,
       onWebViewCreated: (controller) {
         context.read<WebRedirectBloc>().add(
           WebRedirectCreated(controller),
@@ -48,7 +48,7 @@ class WebRedirectWebView extends StatelessWidget {
           const WebRedirectLoadStopped(),
         );
       },
-      onReceivedError: (controller, request, error) {
+      onReceivedError: (_, _, error) {
         context.read<Logger>().severe(
           'Error',
           error,

@@ -5,7 +5,7 @@ import 'package:app_client/app_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockRedirectService extends Mock implements RedirectService {}
+class _MockLoginRedirectService extends Mock implements LoginRedirectService {}
 
 class _MockResponseInterceptorHandler extends Mock
     implements ResponseInterceptorHandler {}
@@ -13,16 +13,16 @@ class _MockResponseInterceptorHandler extends Mock
 class _MockResponse extends Mock implements Response<dynamic> {}
 
 void main() {
-  group(RedirectInterceptor, () {
-    late RedirectService service;
+  group(LoginRedirectInterceptor, () {
+    late LoginRedirectService service;
 
     setUp(() {
-      service = _MockRedirectService();
+      service = _MockLoginRedirectService();
     });
 
-    RedirectInterceptor createSubject() {
-      return RedirectInterceptor(
-        redirectService: service,
+    LoginRedirectInterceptor createSubject() {
+      return LoginRedirectInterceptor(
+        loginRedirectService: service,
       );
     }
 
@@ -39,7 +39,7 @@ void main() {
 
       final shouldRedirect = () => service.shouldRedirect(html);
 
-      final redirectToLogin = () => service.redirectToLogin();
+      final redirect = () => service.redirect();
 
       final next = () => handler.next(response);
 
@@ -50,14 +50,14 @@ void main() {
         verify(next).called(1);
       });
 
-      test('calls redirectToLogin and next when data is a string '
+      test('calls redirect and next when data is a string '
           'and shouldRedirect', () {
         when(() => response.data).thenReturn(html);
         when(shouldRedirect).thenReturn(true);
         final interceptor = createSubject();
         interceptor.onResponse(response, handler);
         verify(shouldRedirect).called(1);
-        verify(redirectToLogin).called(1);
+        verify(redirect).called(1);
         verify(next).called(1);
       });
 
@@ -69,7 +69,7 @@ void main() {
         interceptor.onResponse(response, handler);
         verify(shouldRedirect).called(1);
         verify(next).called(1);
-        verifyNever(redirectToLogin);
+        verifyNever(redirect);
       });
     });
   });

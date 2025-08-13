@@ -21,7 +21,7 @@ class _MockResponseInterceptorHandler extends Mock
 class _MockRequestOptions extends Mock implements RequestOptions {}
 
 void main() {
-  group(RedirectValidationInterceptor, () {
+  group(WebRedirectInterceptor, () {
     late AppClient client;
     late RedirectValidationService service;
 
@@ -30,8 +30,8 @@ void main() {
       service = _MockRedirectValidationService();
     });
 
-    RedirectValidationInterceptor createSubject() {
-      return RedirectValidationInterceptor(
+    WebRedirectInterceptor createSubject() {
+      return WebRedirectInterceptor(
         appClient: client,
         redirectValidationService: service,
       );

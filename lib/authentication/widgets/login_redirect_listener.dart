@@ -24,7 +24,7 @@ class LoginRedirectListener
           if (matchedLocation.contains(loginPath)) return;
 
           appRouter.push(
-            LoginRoute(from: appRouter.from),
+            LoginRoute(from: appRouter.currentLocation),
           );
         },
       );

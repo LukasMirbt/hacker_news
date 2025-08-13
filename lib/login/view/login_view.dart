@@ -7,11 +7,9 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoginSuccessListener(
-      child: Scaffold(
-        appBar: _AppBar(),
-        body: LoginBody(),
-      ),
+    return const Scaffold(
+      appBar: _AppBar(),
+      body: LoginBody(),
     );
   }
 }

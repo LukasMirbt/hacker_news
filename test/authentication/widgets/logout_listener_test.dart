@@ -13,7 +13,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
-import '../../../app/pump_app.dart';
+import '../../app/pump_app.dart';
 
 class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, AuthenticationState>

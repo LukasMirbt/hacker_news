@@ -195,10 +195,10 @@ void main() {
           expect(printed, object);
         });
 
-        test('second is $RedirectInterceptor', () {
+        test('second is $LoginRedirectInterceptor', () {
           expect(
             addedInterceptors()[1],
-            isA<RedirectInterceptor>(),
+            isA<LoginRedirectInterceptor>(),
           );
         });
 
@@ -258,17 +258,17 @@ void main() {
     });
 
     group('redirectToWeb', () {
-      final url = Uri.parse('https://example.com');
+      final redirect = WebRedirectPlaceholder();
 
       blocTest<AppClient, AuthenticationState>(
         'emits $WebRedirect',
         build: createSubject,
-        act: (client) => client.redirectToWeb(url),
+        act: (client) => client.redirectToWeb(redirect),
         expect: () => [
           isA<AuthenticationState>().having(
             (state) => state.redirect,
             'redirect',
-            isA<WebRedirect>(),
+            redirect,
           ),
         ],
       );

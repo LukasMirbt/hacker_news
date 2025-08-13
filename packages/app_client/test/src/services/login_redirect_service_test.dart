@@ -18,7 +18,7 @@ class _MockAuthenticationState extends Mock implements AuthenticationState {}
 class _MockDocument extends Mock implements Document {}
 
 void main() {
-  group(RedirectService, () {
+  group(LoginRedirectService, () {
     late AppClient client;
     late HtmlParser htmlParser;
     late IsLoginPageParser isLoginPageParser;
@@ -34,8 +34,8 @@ void main() {
       when(() => client.state).thenReturn(state);
     });
 
-    RedirectService createService() {
-      return RedirectService(
+    LoginRedirectService createService() {
+      return LoginRedirectService(
         appClient: client,
         htmlParser: htmlParser,
         isLoginPageParser: isLoginPageParser,
@@ -59,12 +59,12 @@ void main() {
       });
     });
 
-    group('redirectToLogin', () {
+    group('redirect', () {
       final redirectToLogin = () => client.redirectToLogin();
 
       test('calls client.redirectToLogin', () {
         final service = createService();
-        service.redirectToLogin();
+        service.redirect();
         verify(redirectToLogin).called(1);
       });
     });

@@ -20,6 +20,9 @@ class _MockWebRedirectState extends Mock implements WebRedirectState {}
 
 class _MockWebRedirectModel extends Mock implements WebRedirectModel {}
 
+class _MockInAppWebViewInitialData extends Mock
+    implements InAppWebViewInitialData {}
+
 class _MockURLRequest extends Mock implements URLRequest {}
 
 class _MockInAppWebViewController extends Mock
@@ -34,6 +37,7 @@ void main() {
     late WebRedirectBloc bloc;
     late WebRedirectState state;
     late WebRedirectModel redirect;
+    late InAppWebViewInitialData initialData;
     late URLRequest initialUrlRequest;
     late InAppWebViewController controller;
     late Logger logger;
@@ -43,11 +47,13 @@ void main() {
       bloc = _MockWebRedirectBloc();
       state = _MockWebRedirectState();
       redirect = _MockWebRedirectModel();
+      initialData = _MockInAppWebViewInitialData();
       initialUrlRequest = _MockURLRequest();
       controller = _MockInAppWebViewController();
       logger = _MockLogger();
       when(() => bloc.state).thenReturn(state);
       when(() => state.redirect).thenReturn(redirect);
+      when(() => redirect.initialData).thenReturn(initialData);
       when(() => redirect.initialUrlRequest).thenReturn(initialUrlRequest);
       platform = MockInAppWebViewPlatform();
       InAppWebViewPlatform.instance = platform;
@@ -68,6 +74,11 @@ void main() {
     );
 
     group(InAppWebView, () {
+      testWidgets('has correct initialData', (tester) async {
+        await tester.pumpApp(buildSubject());
+        expect(platform.params.initialData, initialData);
+      });
+
       testWidgets('has correct initialUrlRequest', (tester) async {
         await tester.pumpApp(buildSubject());
         expect(platform.params.initialUrlRequest, initialUrlRequest);

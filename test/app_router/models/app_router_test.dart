@@ -122,13 +122,34 @@ void main() {
       });
     });
 
-    group('from', () {
+    group('currentLocation', () {
       test('returns correct value', () {
-        const from = '/home?id=123';
-        final uri = Uri.parse(from);
+        const currentLocation = '/home?id=123';
+        final uri = Uri.parse(currentLocation);
         when(() => state.uri).thenReturn(uri);
         final appRouter = createSubject();
+        expect(appRouter.currentLocation, currentLocation);
+      });
+    });
+
+    group('from', () {
+      test('returns correct value when "from" query parameter '
+          'is non-null', () {
+        const from = 'from';
+        when(() => state.uri).thenReturn(
+          Uri(
+            queryParameters: {'from': from},
+          ),
+        );
+        final appRouter = createSubject();
         expect(appRouter.from, from);
+      });
+
+      test('returns initialLocation when "from" query parameter '
+          'is null', () {
+        when(() => state.uri).thenReturn(Uri());
+        final appRouter = createSubject();
+        expect(appRouter.from, AppRouter.initialLocation);
       });
     });
 
