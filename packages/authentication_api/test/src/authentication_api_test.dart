@@ -48,14 +48,6 @@ void main() {
       });
     });
 
-    group('redirectToLogin', () {
-      test('calls client.redirectToLogin', () {
-        final api = createSubject();
-        api.redirectToLogin();
-        verify(() => client.redirectToLogin()).called(1);
-      });
-    });
-
     group('cookies', () {
       final getCookies = () => client.cookies();
 

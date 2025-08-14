@@ -12,10 +12,6 @@ class AuthenticationApi {
   Stream<AuthenticationState> get stream => _client.stream;
   AuthenticationState get state => _client.state;
 
-  void redirectToLogin() {
-    _client.redirectToLogin();
-  }
-
   Future<List<Cookie>> cookies() async {
     final cookies = await _client.cookies();
     return cookies;
@@ -45,9 +41,7 @@ class AuthenticationApi {
       },
     );
 
-    await _client.authenticate(
-      User.initial(username),
-    );
+    await _client.authenticate(userId: username);
   }
 
   Future<void> createAccount({
@@ -67,9 +61,7 @@ class AuthenticationApi {
       },
     );
 
-    await _client.authenticate(
-      User.initial(username),
-    );
+    await _client.authenticate(userId: username);
   }
 
   Future<void> logout() async {

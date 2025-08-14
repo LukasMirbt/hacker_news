@@ -1,5 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart'
-    hide AuthenticationState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/authentication/authentication.dart';
@@ -10,14 +8,13 @@ class WebRedirectListener
   WebRedirectListener({super.key})
     : super(
         listenWhen: (previous, current) =>
-            previous.redirect != current.redirect,
+            previous.webRedirect != current.webRedirect,
         listener: (context, state) {
-          final redirect = state.redirect;
-          if (redirect is! WebRedirect) return;
-
           final appRouter = AppRouter.of(context);
           final matchedLocation = appRouter.matchedLocation;
           if (matchedLocation == WebRedirectRoute.config.path) return;
+
+          final redirect = state.webRedirect;
 
           appRouter.push(
             WebRedirectRoute(

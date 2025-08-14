@@ -88,12 +88,30 @@ void main() async {
     storageService: userIdStorageService,
   );
 
+  final loggingInterceptor = PrettyDioLogger(
+    responseBody: false,
+    logPrint: (object) {
+      if (kDebugMode) {
+        debugPrint(object.toString());
+      }
+    },
+  );
+
+  final authenticationStatusService = AuthenticationStatusService();
+  final htmlInterceptor = HtmlInterceptor();
+  final loginRedirectInterceptor = LoginRedirectInterceptor();
+  final webRedirectInterceptor = WebRedirectInterceptor();
+
   final appClient = AppClient(
     baseUrl: Uri.parse('https://news.ycombinator.com/'),
     cookieJar: cookieJar,
     userIdStorage: userIdStorage,
+    authenticationStatusService: authenticationStatusService,
+    loggingInterceptor: loggingInterceptor,
+    htmlInterceptor: htmlInterceptor,
+    loginRedirectInterceptor: loginRedirectInterceptor,
+    webRedirectInterceptor: webRedirectInterceptor,
     addPlatformConfiguration: addPlatformConfiguration,
-    debugPrint: debugPrint,
   );
 
   await appClient.start();
