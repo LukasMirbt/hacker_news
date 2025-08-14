@@ -1,11 +1,17 @@
-import 'package:app_client/app_client.dart' hide AuthenticationStatus;
+import 'dart:async';
+
+import 'package:app_client/app_client.dart';
+import 'package:authentication_parser/authentication_parser.dart';
 
 class LoginRedirectInterceptor extends Interceptor {
-  const LoginRedirectInterceptor({
-    required LoginRedirectService loginRedirectService,
-  }) : _service = loginRedirectService;
+  LoginRedirectInterceptor({
+    IsLoginPageParser? isLoginPageParser,
+  }) : _parser = isLoginPageParser ?? const IsLoginPageParser();
 
-  final LoginRedirectService _service;
+  final IsLoginPageParser _parser;
+
+  final _controller = StreamController<LoginRedirect>.broadcast();
+  Stream<LoginRedirect> get redirect => _controller.stream;
 
   @override
   void onResponse(
@@ -19,10 +25,10 @@ class LoginRedirectInterceptor extends Interceptor {
       return;
     }
 
-    final shouldRedirect = _service.shouldRedirect(data);
+    final isLoginPage = _parser.parse(data);
 
-    if (shouldRedirect) {
-      _service.redirect();
+    if (isLoginPage) {
+      _controller.add(LoginRedirect());
     }
 
     handler.next(response);

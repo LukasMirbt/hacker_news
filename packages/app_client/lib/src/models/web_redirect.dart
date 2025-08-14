@@ -1,18 +1,6 @@
 import 'package:web_links/web_links.dart';
 
-sealed class Redirect {
-  const Redirect();
-}
-
-class LoginRedirect extends Redirect {
-  LoginRedirect();
-
-  const LoginRedirect._();
-
-  static const initial = LoginRedirect._();
-}
-
-class WebRedirect extends Redirect {
+class WebRedirect {
   WebRedirect({
     required Uri url,
     this.html,
@@ -30,6 +18,8 @@ class WebRedirect extends Redirect {
       html: html,
     );
   }
+
+  static final empty = WebRedirect(url: Uri());
 
   final Uri url;
   final String? html;

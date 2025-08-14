@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthenticationState {
 
- Uri get baseUrl; User get user; Redirect get redirect; AuthenticationStatus get status;
+ Uri get baseUrl; WebRedirect get webRedirect; LoginRedirect get loginRedirect; User get user; AuthenticationStatus get status;
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AuthenticationStateCopyWith<AuthenticationState> get copyWith => _$Authenticati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl)&&(identical(other.user, user) || other.user == user)&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl)&&(identical(other.webRedirect, webRedirect) || other.webRedirect == webRedirect)&&(identical(other.loginRedirect, loginRedirect) || other.loginRedirect == loginRedirect)&&(identical(other.user, user) || other.user == user)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,baseUrl,user,redirect,status);
+int get hashCode => Object.hash(runtimeType,baseUrl,webRedirect,loginRedirect,user,status);
 
 @override
 String toString() {
-  return 'AuthenticationState(baseUrl: $baseUrl, user: $user, redirect: $redirect, status: $status)';
+  return 'AuthenticationState(baseUrl: $baseUrl, webRedirect: $webRedirect, loginRedirect: $loginRedirect, user: $user, status: $status)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AuthenticationStateCopyWith<$Res>  {
   factory $AuthenticationStateCopyWith(AuthenticationState value, $Res Function(AuthenticationState) _then) = _$AuthenticationStateCopyWithImpl;
 @useResult
 $Res call({
- Uri baseUrl, User user, Redirect redirect, AuthenticationStatus status
+ Uri baseUrl, WebRedirect webRedirect, LoginRedirect loginRedirect, User user, AuthenticationStatus status
 });
 
 
@@ -62,12 +62,13 @@ class _$AuthenticationStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? baseUrl = null,Object? user = null,Object? redirect = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? baseUrl = null,Object? webRedirect = null,Object? loginRedirect = null,Object? user = null,Object? status = null,}) {
   return _then(AuthenticationState(
 baseUrl: null == baseUrl ? _self.baseUrl : baseUrl // ignore: cast_nullable_to_non_nullable
-as Uri,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as User,redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
-as Redirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as Uri,webRedirect: null == webRedirect ? _self.webRedirect : webRedirect // ignore: cast_nullable_to_non_nullable
+as WebRedirect,loginRedirect: null == loginRedirect ? _self.loginRedirect : loginRedirect // ignore: cast_nullable_to_non_nullable
+as LoginRedirect,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as User,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as AuthenticationStatus,
   ));
 }

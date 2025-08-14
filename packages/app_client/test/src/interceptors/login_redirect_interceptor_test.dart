@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 // ignore_for_file: cascade_invocations
 
+import 'dart:async';
+
 import 'package:app_client/app_client.dart';
+import 'package:authentication_parser/authentication_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockLoginRedirectService extends Mock implements LoginRedirectService {}
+class _MockIsLoginPageParser extends Mock implements IsLoginPageParser {}
 
 class _MockResponseInterceptorHandler extends Mock
     implements ResponseInterceptorHandler {}
@@ -14,15 +17,15 @@ class _MockResponse extends Mock implements Response<dynamic> {}
 
 void main() {
   group(LoginRedirectInterceptor, () {
-    late LoginRedirectService service;
+    late IsLoginPageParser parser;
 
     setUp(() {
-      service = _MockLoginRedirectService();
+      parser = _MockIsLoginPageParser();
     });
 
     LoginRedirectInterceptor createSubject() {
       return LoginRedirectInterceptor(
-        loginRedirectService: service,
+        isLoginPageParser: parser,
       );
     }
 
@@ -36,11 +39,7 @@ void main() {
       });
 
       const html = 'html';
-
-      final shouldRedirect = () => service.shouldRedirect(html);
-
-      final redirect = () => service.redirect();
-
+      final parse = () => parser.parse(html);
       final next = () => handler.next(response);
 
       test('calls next and returns when data is not a string', () {
@@ -50,26 +49,39 @@ void main() {
         verify(next).called(1);
       });
 
-      test('calls redirect and next when data is a string '
-          'and shouldRedirect', () {
+      test('calls parse, next and emits $LoginRedirect '
+          'when data is a string and isLoginPage', () {
         when(() => response.data).thenReturn(html);
-        when(shouldRedirect).thenReturn(true);
+        when(parse).thenReturn(true);
         final interceptor = createSubject();
+        expect(
+          interceptor.redirect,
+          emits(
+            isA<LoginRedirect>(),
+          ),
+        );
         interceptor.onResponse(response, handler);
-        verify(shouldRedirect).called(1);
-        verify(redirect).called(1);
+        verify(parse).called(1);
         verify(next).called(1);
       });
 
       test('calls next when data is a string '
-          'and !shouldRedirect', () {
+          'and !isLoginPage', () async {
         when(() => response.data).thenReturn(html);
-        when(shouldRedirect).thenReturn(false);
+        when(parse).thenReturn(false);
+
+        final controller = StreamController<LoginRedirect>();
         final interceptor = createSubject();
+        interceptor.redirect.listen(controller.add);
+
+        expect(controller.stream, neverEmits(anything));
         interceptor.onResponse(response, handler);
-        verify(shouldRedirect).called(1);
+        await Future<void>.delayed(Duration.zero);
+
+        verify(parse).called(1);
         verify(next).called(1);
-        verifyNever(redirect);
+
+        await controller.close();
       });
     });
   });

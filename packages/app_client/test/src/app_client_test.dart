@@ -5,7 +5,6 @@ import 'package:app_client/app_client.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class _MockCookieJar extends Mock implements CookieJar {}
@@ -38,7 +37,6 @@ void main() {
         cookieJar: cookieJar,
         userIdStorage: userIdStorage,
         addPlatformConfiguration: addPlatformConfiguration ?? (_, __) {},
-        debugPrint: debugPrint,
       );
     }
 
@@ -202,10 +200,10 @@ void main() {
           );
         });
 
-        test('third is $AuthenticationInterceptor', () {
+        test('third is $HtmlInterceptor', () {
           expect(
             addedInterceptors()[2],
-            isA<AuthenticationInterceptor>(),
+            isA<HtmlInterceptor>(),
           );
         });
       });
@@ -253,23 +251,6 @@ void main() {
                 'redirect',
                 isNot(initialState.redirect),
               ),
-        ],
-      );
-    });
-
-    group('redirectToWeb', () {
-      final redirect = WebRedirectPlaceholder();
-
-      blocTest<AppClient, AuthenticationState>(
-        'emits $WebRedirect',
-        build: createSubject,
-        act: (client) => client.redirectToWeb(redirect),
-        expect: () => [
-          isA<AuthenticationState>().having(
-            (state) => state.redirect,
-            'redirect',
-            redirect,
-          ),
         ],
       );
     });

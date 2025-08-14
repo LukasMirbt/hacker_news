@@ -1,29 +1,30 @@
+import 'dart:async';
+
 import 'package:app_client/app_client.dart';
 
-class RedirectException extends DioException {
-  RedirectException({
+class WebRedirectException extends DioException {
+  WebRedirectException({
     required super.error,
     required super.requestOptions,
   });
 }
 
 class WebRedirectInterceptor extends Interceptor {
-  const WebRedirectInterceptor({
-    required AppClient appClient,
-    RedirectValidationService? redirectValidationService,
-  }) : _client = appClient,
-       _service =
-           redirectValidationService ?? const RedirectValidationService();
+  WebRedirectInterceptor({
+    RedirectValidator? redirectValidator,
+  }) : _validator = redirectValidator ?? const RedirectValidator();
 
-  final AppClient _client;
-  final RedirectValidationService _service;
+  final RedirectValidator _validator;
+  final _controller = StreamController<WebRedirect>.broadcast();
+
+  Stream<WebRedirect> get redirect => _controller.stream;
 
   @override
   Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final shouldValidate = _service.shouldValidate(options);
+    final shouldValidate = _validator.shouldValidate(options);
 
     if (shouldValidate) {
       options.followRedirects = false;
@@ -38,7 +39,7 @@ class WebRedirectInterceptor extends Interceptor {
     ResponseInterceptorHandler handler,
   ) async {
     final options = response.requestOptions;
-    final shouldValidate = _service.shouldValidate(options);
+    final shouldValidate = _validator.shouldValidate(options);
 
     if (!shouldValidate) {
       handler.next(response);
@@ -46,24 +47,24 @@ class WebRedirectInterceptor extends Interceptor {
     }
 
     try {
-      _service.validateRedirect(response);
+      _validator.validateRedirect(response);
       handler.next(response);
     } on ValidationException catch (error) {
       if (error is MissingRedirectException) {
-        await _client.redirectToWeb(
+        _controller.add(
           WebRedirect(
-            url: error.url,
-            html: error.html,
+            url: error.requestUrl,
+            html: error.responseHtml,
           ),
         );
       } else if (error is UnexpectedRedirectException) {
-        await _client.redirectToWeb(
-          WebRedirect(url: error.url),
+        _controller.add(
+          WebRedirect(url: error.redirectUrl),
         );
       }
 
       handler.reject(
-        RedirectException(
+        WebRedirectException(
           error: error,
           requestOptions: options,
         ),

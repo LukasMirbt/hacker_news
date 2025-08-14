@@ -1,14 +1,13 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 // ignore_for_file: cascade_invocations
 
+import 'dart:async';
+
 import 'package:app_client/app_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockAppClient extends Mock implements AppClient {}
-
-class _MockRedirectValidationService extends Mock
-    implements RedirectValidationService {}
+class _MockRedirectValidator extends Mock implements RedirectValidator {}
 
 class _MockRequestInterceptorHandler extends Mock
     implements RequestInterceptorHandler {}
@@ -22,18 +21,15 @@ class _MockRequestOptions extends Mock implements RequestOptions {}
 
 void main() {
   group(WebRedirectInterceptor, () {
-    late AppClient client;
-    late RedirectValidationService service;
+    late RedirectValidator validator;
 
     setUp(() {
-      client = _MockAppClient();
-      service = _MockRedirectValidationService();
+      validator = _MockRedirectValidator();
     });
 
     WebRedirectInterceptor createSubject() {
       return WebRedirectInterceptor(
-        appClient: client,
-        redirectValidationService: service,
+        redirectValidator: validator,
       );
     }
 
@@ -46,7 +42,7 @@ void main() {
         options = RequestOptions();
       });
 
-      final shouldValidate = () => service.shouldValidate(options);
+      final shouldValidate = () => validator.shouldValidate(options);
       final next = () => handler.next(options);
 
       test('sets followRedirects to false and calls next '
@@ -85,15 +81,26 @@ void main() {
         registerFallbackValue(
           DioException(requestOptions: requestOptions),
         );
+        registerFallbackValue(WebRedirectPlaceholder());
       });
 
-      final url = Uri.parse('https://example.com');
-      final unexpectedRedirectException = UnexpectedRedirectException(url);
+      final requestUrl = Uri.parse('https://example.com/request');
+      const responseHtml = 'responseHtml';
+      final redirectUrl = Uri.parse('https://example.com/redirect');
+
+      final missingRedirectException = MissingRedirectException(
+        requestUrl: requestUrl,
+        responseHtml: responseHtml,
+      );
+
+      final unexpectedRedirectException = UnexpectedRedirectException(
+        redirectUrl,
+      );
+
       const validationException = ValidationException();
 
-      final shouldValidate = () => service.shouldValidate(requestOptions);
-      final validateRedirect = () => service.validateRedirect(response);
-      final redirectToWeb = () => client.redirectToWeb(url);
+      final shouldValidate = () => validator.shouldValidate(requestOptions);
+      final validateRedirect = () => validator.validateRedirect(response);
 
       final next = () => handler.next(response);
       final reject = () => handler.reject(any());
@@ -116,29 +123,77 @@ void main() {
         verify(next).called(1);
       });
 
-      test('calls redirectToWeb and reject when shouldValidate '
-          'and validateRedirect throws $UnexpectedRedirectException', () async {
+      test('emits $WebRedirect and calls reject when shouldValidate '
+          'and validateRedirect throws $MissingRedirectException', () async {
         when(shouldValidate).thenReturn(true);
-        when(validateRedirect).thenThrow(unexpectedRedirectException);
-        when(redirectToWeb).thenAnswer((_) async {});
+        when(validateRedirect).thenThrow(missingRedirectException);
         final interceptor = createSubject();
+        expect(
+          interceptor.redirect,
+          emits(
+            isA<WebRedirect>()
+                .having(
+                  (redirect) => redirect.url,
+                  'url',
+                  requestUrl,
+                )
+                .having(
+                  (redirect) => redirect.html,
+                  'html',
+                  responseHtml,
+                ),
+          ),
+        );
         await interceptor.onResponse(response, handler);
         verify(shouldValidate).called(1);
         verify(validateRedirect).called(1);
-        verify(redirectToWeb).called(1);
+        verify(reject).called(1);
+      });
+
+      test('emits $WebRedirect and calls reject when shouldValidate '
+          'and validateRedirect throws $UnexpectedRedirectException', () async {
+        when(shouldValidate).thenReturn(true);
+        when(validateRedirect).thenThrow(unexpectedRedirectException);
+        final interceptor = createSubject();
+        expect(
+          interceptor.redirect,
+          emits(
+            isA<WebRedirect>()
+                .having(
+                  (redirect) => redirect.url,
+                  'url',
+                  redirectUrl,
+                )
+                .having(
+                  (redirect) => redirect.html,
+                  'html',
+                  null,
+                ),
+          ),
+        );
+        await interceptor.onResponse(response, handler);
+        verify(shouldValidate).called(1);
+        verify(validateRedirect).called(1);
         verify(reject).called(1);
       });
 
       test('calls reject when shouldValidate '
-          'and validateRedirect throws $ValidationException', () {
+          'and validateRedirect throws $ValidationException', () async {
         when(shouldValidate).thenReturn(true);
         when(validateRedirect).thenThrow(validationException);
+
+        final controller = StreamController<WebRedirect>();
         final interceptor = createSubject();
-        interceptor.onResponse(response, handler);
+        interceptor.redirect.listen(controller.add);
+        expect(controller.stream, neverEmits(anything));
+        await interceptor.onResponse(response, handler);
+        await Future<void>.delayed(Duration.zero);
+
         verify(shouldValidate).called(1);
         verify(validateRedirect).called(1);
-        verifyNever(redirectToWeb);
         verify(reject).called(1);
+
+        await controller.close();
       });
     });
   });
