@@ -70,6 +70,19 @@ void main() {
       });
     });
 
+    group('updateAuthenticationFromHtml', () {
+      const html = 'html';
+
+      final updateAuthenticationFromHtml = () =>
+          client.updateAuthenticationFromHtml(html);
+
+      test('calls client.updateAuthenticationFromHtml', () async {
+        final api = createSubject();
+        api.updateAuthenticationFromHtml(html);
+        verify(updateAuthenticationFromHtml).called(1);
+      });
+    });
+
     group('login', () {
       const username = 'username';
       const password = 'password';
@@ -91,9 +104,7 @@ void main() {
         },
       );
 
-      final authenticate = () => client.authenticate(
-        User.initial(username),
-      );
+      final authenticate = () => client.authenticate(userId: username);
 
       test('makes login request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
@@ -134,9 +145,7 @@ void main() {
         },
       );
 
-      final authenticate = () => client.authenticate(
-        User.initial(username),
-      );
+      final authenticate = () => client.authenticate(userId: username);
 
       test('makes create account request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
