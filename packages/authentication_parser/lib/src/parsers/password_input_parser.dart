@@ -4,7 +4,7 @@ class PasswordInputParser {
   const PasswordInputParser();
 
   Element? parse(Document document) {
-    final element = document.querySelector('input[name="pw"]');
-    return element;
+    final input = document.querySelector('input[name="pw"]');
+    return input;
   }
 }
