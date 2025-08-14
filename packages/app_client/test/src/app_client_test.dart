@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: cascade_invocations
 
 import 'package:app_client/app_client.dart';
+import 'package:authentication_parser/authentication_parser.dart'
+    hide AuthenticationStatus;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -11,20 +14,53 @@ class _MockCookieJar extends Mock implements CookieJar {}
 
 class _MockSecureUserIdStorage extends Mock implements SecureUserIdStorage {}
 
+class _MockAuthenticationStatusService extends Mock
+    implements AuthenticationStatusService {}
+
+class _MockPrettyDioLogger extends Mock implements PrettyDioLogger {}
+
+class _MockHtmlInterceptor extends Mock implements HtmlInterceptor {}
+
+class _MockLoginRedirectInterceptor extends Mock
+    implements LoginRedirectInterceptor {}
+
+class _MockWebRedirectInterceptor extends Mock
+    implements WebRedirectInterceptor {}
+
 void main() {
   final baseUrl = Uri.parse('https://example.com');
 
-  final initialState = AuthenticationState(
+  final initialState = AuthenticationState.initial(
     baseUrl: baseUrl,
   );
 
   group(AppClient, () {
     late CookieJar cookieJar;
     late SecureUserIdStorage userIdStorage;
+    late AuthenticationStatusService authenticationStatusService;
+    late PrettyDioLogger loggingInterceptor;
+    late HtmlInterceptor htmlInterceptor;
+    late LoginRedirectInterceptor loginRedirectInterceptor;
+    late WebRedirectInterceptor webRedirectInterceptor;
 
     setUp(() {
       cookieJar = _MockCookieJar();
       userIdStorage = _MockSecureUserIdStorage();
+      authenticationStatusService = _MockAuthenticationStatusService();
+      loggingInterceptor = _MockPrettyDioLogger();
+      htmlInterceptor = _MockHtmlInterceptor();
+      loginRedirectInterceptor = _MockLoginRedirectInterceptor();
+      webRedirectInterceptor = _MockWebRedirectInterceptor();
+      when(() => htmlInterceptor.stream).thenAnswer((_) => Stream.empty());
+      when(() => loginRedirectInterceptor.redirect).thenAnswer(
+        (_) => Stream.empty(),
+      );
+      when(() => webRedirectInterceptor.redirect).thenAnswer(
+        (_) => Stream.empty(),
+      );
+      when(() => authenticationStatusService.status).thenAnswer(
+        (_) => Stream.empty(),
+      );
     });
 
     AppClient createSubject({
@@ -36,6 +72,11 @@ void main() {
         baseUrl: baseUrl,
         cookieJar: cookieJar,
         userIdStorage: userIdStorage,
+        authenticationStatusService: authenticationStatusService,
+        loggingInterceptor: loggingInterceptor,
+        htmlInterceptor: htmlInterceptor,
+        loginRedirectInterceptor: loginRedirectInterceptor,
+        webRedirectInterceptor: webRedirectInterceptor,
         addPlatformConfiguration: addPlatformConfiguration ?? (_, __) {},
       );
     }
@@ -43,6 +84,136 @@ void main() {
     test('initial state is $AuthenticationState', () {
       final client = createSubject();
       expect(client.state, initialState);
+    });
+
+    group('constructor', () {
+      test('calls authenticationStatusService.update '
+          'when html stream emits value', () async {
+        const html = 'html';
+        when(() => htmlInterceptor.stream).thenAnswer(
+          (_) => Stream.value(html),
+        );
+        createSubject();
+        await Future<void>.delayed(Duration.zero);
+        verify(() => authenticationStatusService.update(html)).called(1);
+      });
+
+      test('emits updated state when login redirect '
+          'stream emits value', () {
+        final redirect = LoginRedirect();
+        when(() => loginRedirectInterceptor.redirect).thenAnswer(
+          (_) => Stream.value(redirect),
+        );
+        final client = createSubject();
+        expect(
+          client.stream,
+          emits(
+            isA<AuthenticationState>()
+                .having(
+                  (state) => state.loginRedirect,
+                  'redirect',
+                  redirect,
+                )
+                .having(
+                  (state) => state.user,
+                  'user',
+                  User.empty,
+                )
+                .having(
+                  (state) => state.status,
+                  'status',
+                  AuthenticationStatus.unauthenticated,
+                ),
+          ),
+        );
+      });
+
+      test('emits $WebRedirect when web redirect '
+          'stream emits value', () {
+        final redirect = WebRedirectPlaceholder();
+        when(() => webRedirectInterceptor.redirect).thenAnswer(
+          (_) => Stream.value(redirect),
+        );
+        final client = createSubject();
+        expect(
+          client.stream,
+          emits(
+            isA<AuthenticationState>().having(
+              (state) => state.webRedirect,
+              'redirect',
+              redirect,
+            ),
+          ),
+        );
+      });
+
+      test('writes userId and emits updated state '
+          'when status stream emits $Authenticated', () async {
+        final data = UserDataPlaceholder();
+        final writeUserId = () => userIdStorage.write(data.id);
+        when(() => authenticationStatusService.status).thenAnswer(
+          (_) => Stream.value(
+            Authenticated(data),
+          ),
+        );
+        when(writeUserId).thenAnswer((_) async {});
+        final client = createSubject();
+        await expectLater(
+          client.stream,
+          emits(
+            isA<AuthenticationState>()
+                .having(
+                  (state) => state.user,
+                  'user',
+                  User.fromData(data),
+                )
+                .having(
+                  (state) => state.status,
+                  'status',
+                  AuthenticationStatus.authenticated,
+                ),
+          ),
+        );
+        verify(writeUserId).called(1);
+      });
+
+      test('deletes persisted data and emits updated state '
+          'when status stream emits $Unauthenticated', () async {
+        final deleteAll = () => cookieJar.deleteAll();
+        final deleteUserId = () => userIdStorage.delete();
+        when(() => authenticationStatusService.status).thenAnswer(
+          (_) => Stream.value(Unauthenticated()),
+        );
+        when(deleteAll).thenAnswer((_) async {});
+        when(deleteUserId).thenAnswer((_) async {});
+        final client = createSubject();
+        await expectLater(
+          client.stream,
+          emits(
+            isA<AuthenticationState>()
+                .having(
+                  (state) => state.user,
+                  'user',
+                  User.empty,
+                )
+                .having(
+                  (state) => state.status,
+                  'status',
+                  AuthenticationStatus.unauthenticated,
+                ),
+          ),
+        );
+      });
+
+      test('returns when status stream emits $Unknown', () async {
+        when(() => authenticationStatusService.status).thenAnswer(
+          (_) => Stream.value(Unknown()),
+        );
+        final client = createSubject();
+        expect(client.stream, neverEmits(anything));
+        await Future<void>.delayed(Duration.zero);
+        await client.close();
+      });
     });
 
     group('start', () {
@@ -173,26 +344,6 @@ void main() {
           );
         });
 
-        test('$PrettyDioLogger logPrint calls debugPrint', () {
-          String? printed;
-
-          void debugPrint(String? object) {
-            printed = object;
-          }
-
-          final client = createSubject(
-            debugPrint: debugPrint,
-          );
-
-          const object = 'object';
-
-          client.http.interceptors.whereType<PrettyDioLogger>().first.logPrint(
-            object,
-          );
-
-          expect(printed, object);
-        });
-
         test('second is $LoginRedirectInterceptor', () {
           expect(
             addedInterceptors()[1],
@@ -226,33 +377,6 @@ void main() {
           );
         });
       });
-    });
-
-    group('redirectToLogin', () {
-      blocTest<AppClient, AuthenticationState>(
-        'emits empty user, ${AuthenticationStatus.unauthenticated} '
-        'and $LoginRedirect',
-        build: createSubject,
-        act: (client) => client.redirectToLogin(),
-        expect: () => [
-          isA<AuthenticationState>()
-              .having(
-                (state) => state.user,
-                'user',
-                User.empty,
-              )
-              .having(
-                (state) => state.status,
-                'status',
-                AuthenticationStatus.unauthenticated,
-              )
-              .having(
-                (state) => state.redirect,
-                'redirect',
-                isNot(initialState.redirect),
-              ),
-        ],
-      );
     });
 
     group('cookies', () {
@@ -291,42 +415,49 @@ void main() {
       });
     });
 
+    group('updateAuthenticationFromHtml', () {
+      const html = 'html';
+      final update = () => authenticationStatusService.update(html);
+
+      test('calls authenticationStatusService.update', () {
+        final client = createSubject();
+        client.updateAuthenticationFromHtml(html);
+        verify(update).called(1);
+      });
+    });
+
     group('authenticate', () {
-      final user = UserPlaceholder();
-      final write = () => userIdStorage.write(user.id);
+      const userId = 'userId';
+      final writeUserId = () => userIdStorage.write(userId);
 
       blocTest<AppClient, AuthenticationState>(
-        'calls write and emits updated state',
+        'writes userId and emits updated state',
         setUp: () {
-          when(write).thenAnswer((_) async {
-            return;
-          });
+          when(writeUserId).thenAnswer((_) async {});
         },
         build: createSubject,
-        act: (client) => client.authenticate(user),
+        act: (client) => client.authenticate(userId: userId),
         expect: () => [
           initialState.copyWith(
             status: AuthenticationStatus.authenticated,
-            user: user,
+            user: User.initial(userId),
           ),
         ],
         verify: (_) {
-          verify(write).called(1);
+          verify(writeUserId).called(1);
         },
       );
     });
 
     group('unauthenticate', () {
       final deleteAll = () => cookieJar.deleteAll();
-      final deleteUser = () => userIdStorage.delete();
+      final deleteUserId = () => userIdStorage.delete();
 
       blocTest<AppClient, AuthenticationState>(
         'deletes persisted data and emits updated state',
         setUp: () {
           when(deleteAll).thenAnswer((_) async {});
-          when(deleteUser).thenAnswer((_) async {
-            return;
-          });
+          when(deleteUserId).thenAnswer((_) async {});
         },
         build: createSubject,
         act: (client) => client.unauthenticate(),
@@ -338,7 +469,7 @@ void main() {
         ],
         verify: (_) {
           verify(deleteAll).called(1);
-          verify(deleteUser).called(1);
+          verify(deleteUserId).called(1);
         },
       );
     });

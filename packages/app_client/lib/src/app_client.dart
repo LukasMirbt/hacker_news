@@ -72,8 +72,8 @@ class AppClient extends Cubit<AuthenticationState> {
 
           emit(
             state.copyWith(
-              status: AuthenticationStatus.authenticated,
               user: user,
+              status: AuthenticationStatus.authenticated,
             ),
           );
         case Unauthenticated():
@@ -140,8 +140,8 @@ class AppClient extends Cubit<AuthenticationState> {
 
     emit(
       state.copyWith(
-        status: AuthenticationStatus.authenticated,
         user: User.initial(userId),
+        status: AuthenticationStatus.authenticated,
       ),
     );
   }
