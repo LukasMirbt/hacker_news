@@ -18,7 +18,7 @@ class _MockHeaders extends Mock implements Headers {}
 class _MockRequestOptions extends Mock implements RequestOptions {}
 
 void main() {
-  group(RedirectValidationService, () {
+  group(RedirectValidator, () {
     late RedirectValidationModel model;
     late Response<dynamic> response;
     late Headers headers;
@@ -33,8 +33,8 @@ void main() {
       when(() => response.requestOptions).thenReturn(options);
     });
 
-    RedirectValidationService createSubject() {
-      return RedirectValidationService(model: model);
+    RedirectValidator createSubject() {
+      return RedirectValidator(model: model);
     }
 
     group('shouldValidate', () {
@@ -60,7 +60,27 @@ void main() {
         redirectUri: redirectUri,
       );
 
-      test('throws $ValidationException when statusCode '
+      test('throws $MissingRedirectException when statusCode '
+          'is ${HttpStatus.ok} and data is string', () {
+        const data = 'html';
+        final requestUrl = Uri.parse('https://example.com/request');
+        when(() => response.statusCode).thenReturn(HttpStatus.ok);
+        when(() => response.data).thenReturn(data);
+        when(() => options.uri).thenReturn(requestUrl);
+        final service = createSubject();
+        expect(
+          () => service.validateRedirect(response),
+          throwsA(
+            MissingRedirectException(
+              requestUrl: requestUrl,
+              responseHtml: data,
+            ),
+          ),
+        );
+      });
+
+      test('throws $ValidationException when exception '
+          'is not $MissingRedirectException and statusCode '
           'is not ${HttpStatus.found}', () {
         when(() => response.statusCode).thenReturn(HttpStatus.ok);
         final service = createSubject();

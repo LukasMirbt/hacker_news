@@ -48,18 +48,20 @@ class RedirectValidator {
 
   void validateRedirect(Response<dynamic> response) {
     final statusCode = response.statusCode;
+    final options = response.requestOptions;
     final data = response.data;
 
     if (statusCode == HttpStatus.ok && data is String) {
       throw MissingRedirectException(
-        requestUrl: response.requestOptions.uri,
+        requestUrl: options.uri,
         responseHtml: data,
       );
     }
 
-    if (statusCode != HttpStatus.found) throw const ValidationException();
+    if (statusCode != HttpStatus.found) {
+      throw const ValidationException();
+    }
 
-    final options = response.requestOptions;
     final gotoUri = _model.parseGoto(options);
     if (gotoUri == null) throw const ValidationException();
 
