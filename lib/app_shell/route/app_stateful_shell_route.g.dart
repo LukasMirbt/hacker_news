@@ -201,12 +201,12 @@ mixin _$PostRoute on RelativeGoRouteData {
   PostRoute get _self => this as PostRoute;
 
   @override
-  String get subpath => RelativeGoRouteData.$location(
+  String get subLocation => RelativeGoRouteData.$location(
     'post/${Uri.encodeComponent(_self.postId)}',
   );
 
   @override
-  String get relativeLocation => './$subpath';
+  String get relativeLocation => './$subLocation';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
@@ -228,10 +228,10 @@ mixin _$CommentRoute on RelativeGoRouteData {
   static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
 
   @override
-  String get subpath => RelativeGoRouteData.$location('comment');
+  String get subLocation => RelativeGoRouteData.$location('comment');
 
   @override
-  String get relativeLocation => './$subpath';
+  String get relativeLocation => './$subLocation';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);
@@ -256,11 +256,11 @@ mixin _$ReplyRoute on RelativeGoRouteData {
   ReplyRoute get _self => this as ReplyRoute;
 
   @override
-  String get subpath =>
+  String get subLocation =>
       RelativeGoRouteData.$location('reply', queryParams: {'url': _self.url});
 
   @override
-  String get relativeLocation => './$subpath';
+  String get relativeLocation => './$subLocation';
 
   @override
   void goRelative(BuildContext context) => context.go(relativeLocation);

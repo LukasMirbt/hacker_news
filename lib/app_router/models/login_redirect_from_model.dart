@@ -12,7 +12,7 @@ class LoginRedirectFromModel {
     if (route is RelativeGoRouteData) {
       final uri = goRouter.state.uri;
       final baseUri = uri.replace(path: '${uri.path}/');
-      final routeUri = Uri.parse(route.subpath);
+      final routeUri = Uri.parse(route.subLocation);
       final newUri = baseUri.resolveUri(routeUri);
       return newUri.toString();
     }
