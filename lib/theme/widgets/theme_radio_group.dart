@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/theme/theme.dart';
 
 class ThemeRadioGroup extends StatelessWidget {
@@ -13,11 +14,25 @@ class ThemeRadioGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (final mode in modes) ThemeRadioOption(mode),
-      ],
+    final groupValue = context.select(
+      (ThemeBloc bloc) => bloc.state.mode,
+    );
+
+    return RadioGroup(
+      groupValue: groupValue,
+      onChanged: (value) {
+        if (value != null) {
+          context.read<ThemeBloc>().add(
+            ThemeOptionPressed(value),
+          );
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final mode in modes) ThemeRadioOption(mode),
+        ],
+      ),
     );
   }
 }
