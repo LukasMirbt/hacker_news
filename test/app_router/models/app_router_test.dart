@@ -8,6 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
+import 'package:hacker_client/login/login.dart';
+import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
@@ -122,13 +124,34 @@ void main() {
       });
     });
 
-    group('from', () {
+    group('currentLocation', () {
       test('returns correct value', () {
-        const from = '/home?id=123';
-        final uri = Uri.parse(from);
+        const currentLocation = '/home?id=123';
+        final uri = Uri.parse(currentLocation);
         when(() => state.uri).thenReturn(uri);
         final appRouter = createSubject();
+        expect(appRouter.currentLocation, currentLocation);
+      });
+    });
+
+    group('from', () {
+      test('returns correct value when "from" query parameter '
+          'is non-null', () {
+        const from = 'from';
+        when(() => state.uri).thenReturn(
+          Uri(
+            queryParameters: {'from': from},
+          ),
+        );
+        final appRouter = createSubject();
         expect(appRouter.from, from);
+      });
+
+      test('returns initialLocation when "from" query parameter '
+          'is null', () {
+        when(() => state.uri).thenReturn(Uri());
+        final appRouter = createSubject();
+        expect(appRouter.from, AppRouter.initialLocation);
       });
     });
 
@@ -223,9 +246,30 @@ void main() {
         verifyNever(() => goRouter.push(location));
       });
 
-      test('calls push when redirect is null', () async {
-        when(() => route.location).thenReturn(location);
-        final push = () => goRouter.push<String>(location);
+      test('calls push with extra when redirect is null '
+          r'and route has an "$extra" member', () async {
+        final route = WebRedirectRoute(
+          url: 'url',
+          $extra: 'html',
+        );
+        final push = () => goRouter.push<String>(
+          route.location,
+          extra: route.$extra,
+        );
+        const result = 'result';
+        when(push).thenAnswer((_) async => result);
+        final model = createSubject();
+        await expectLater(
+          model.push<String>(route),
+          completion(result),
+        );
+        verify(push).called(1);
+      });
+
+      test('calls push when redirect is null '
+          r'and route does not have an "$extra" member', () async {
+        final route = LoginRoute(from: 'from');
+        final push = () => goRouter.push<String>(route.location);
         const result = 'result';
         when(push).thenAnswer((_) async => result);
         final model = createSubject();

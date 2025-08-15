@@ -32,7 +32,11 @@ class AppRouter {
   final LoginRedirectModel _redirectModel;
 
   String get matchedLocation => goRouter.state.matchedLocation;
-  String get from => goRouter.state.uri.toString();
+
+  String get currentLocation => goRouter.state.uri.toString();
+
+  String get from =>
+      goRouter.state.uri.queryParameters['from'] ?? AppRouter.initialLocation;
 
   void go(GoRouteData route) {
     final redirect = _redirectModel.redirect(
@@ -59,7 +63,16 @@ class AppRouter {
       return Future.value();
     }
 
-    return goRouter.push(route.location);
+    Object? extra;
+
+    try {
+      extra = (route as dynamic).$extra;
+    } catch (_) {}
+
+    return goRouter.push(
+      route.location,
+      extra: extra,
+    );
   }
 
   void goRelative(RelativeGoRouteData route) {

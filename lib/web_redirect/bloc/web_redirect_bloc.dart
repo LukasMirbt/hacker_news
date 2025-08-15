@@ -6,10 +6,10 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   WebRedirectBloc({
     required WebRedirect redirect,
     required WebRedirectCookieManager webRedirectCookieManager,
-    required WebRedirectActionModel webRedirectActionModel,
+    required WebRedirectController webRedirectController,
     required AuthenticationRepository authenticationRepository,
   }) : _cookieManager = webRedirectCookieManager,
-       _actionModel = webRedirectActionModel,
+       _controller = webRedirectController,
        _repository = authenticationRepository,
        super(
          WebRedirectState.from(redirect),
@@ -25,7 +25,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   final WebRedirectCookieManager _cookieManager;
-  final WebRedirectActionModel _actionModel;
+  final WebRedirectController _controller;
   final AuthenticationRepository _repository;
 
   Future<void> _onStarted(
@@ -50,7 +50,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectCreated event,
     Emitter<WebRedirectState> emit,
   ) {
-    _actionModel.initialize(event.controller);
+    _controller.initialize(event.controller);
   }
 
   void _onLoadStarted(
@@ -85,8 +85,14 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     // TODO(LukasMirbt): Save cookies more efficiently
     await _repository.saveCookies(cookies);
 
-    final canGoBack = await _actionModel.canGoBack();
-    final canGoForward = await _actionModel.canGoForward();
+    final html = await _controller.html();
+
+    if (html != null) {
+      _repository.updateAuthenticationFromHtml(html);
+    }
+
+    final canGoBack = await _controller.canGoBack();
+    final canGoForward = await _controller.canGoForward();
 
     emit(
       state.copyWith(
@@ -100,20 +106,20 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectBackPressed event,
     Emitter<WebRedirectState> emit,
   ) {
-    _actionModel.goBack();
+    _controller.goBack();
   }
 
   void _onForwardPressed(
     WebRedirectForwardPressed event,
     Emitter<WebRedirectState> emit,
   ) {
-    _actionModel.goForward();
+    _controller.goForward();
   }
 
   void _onReloadPressed(
     WebRedirectReloadPressed event,
     Emitter<WebRedirectState> emit,
   ) {
-    _actionModel.reload();
+    _controller.reload();
   }
 }

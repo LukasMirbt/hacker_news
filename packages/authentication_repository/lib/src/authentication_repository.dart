@@ -19,6 +19,10 @@ class AuthenticationRepository {
     await _api.saveCookies(cookies);
   }
 
+  void updateAuthenticationFromHtml(String html) {
+    _api.updateAuthenticationFromHtml(html);
+  }
+
   Future<void> login({
     required String username,
     required String password,

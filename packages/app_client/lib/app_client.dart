@@ -5,6 +5,8 @@ export 'package:authentication_parser/authentication_parser.dart'
     show UserData, UserDataPlaceholder;
 export 'package:cookie_jar/cookie_jar.dart';
 export 'package:dio/dio.dart';
+export 'package:pretty_dio_logger/pretty_dio_logger.dart';
+export 'package:redirect_validator/redirect_validator.dart';
 
 export 'src/app_client.dart';
 export 'src/interceptors/interceptors.dart';

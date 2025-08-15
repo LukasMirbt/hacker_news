@@ -48,14 +48,6 @@ void main() {
       });
     });
 
-    group('redirectToLogin', () {
-      test('calls client.redirectToLogin', () {
-        final api = createSubject();
-        api.redirectToLogin();
-        verify(() => client.redirectToLogin()).called(1);
-      });
-    });
-
     group('cookies', () {
       final getCookies = () => client.cookies();
 
@@ -75,6 +67,19 @@ void main() {
         final api = createSubject();
         await api.saveCookies(cookies);
         verify(saveCookies).called(1);
+      });
+    });
+
+    group('updateAuthenticationFromHtml', () {
+      const html = 'html';
+
+      final updateAuthenticationFromHtml = () =>
+          client.updateAuthenticationFromHtml(html);
+
+      test('calls client.updateAuthenticationFromHtml', () async {
+        final api = createSubject();
+        api.updateAuthenticationFromHtml(html);
+        verify(updateAuthenticationFromHtml).called(1);
       });
     });
 
@@ -99,9 +104,7 @@ void main() {
         },
       );
 
-      final authenticate = () => client.authenticate(
-        User.initial(username),
-      );
+      final authenticate = () => client.authenticate(userId: username);
 
       test('makes login request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
@@ -142,9 +145,7 @@ void main() {
         },
       );
 
-      final authenticate = () => client.authenticate(
-        User.initial(username),
-      );
+      final authenticate = () => client.authenticate(userId: username);
 
       test('makes create account request and calls authenticate', () async {
         when(loginRequest).thenAnswer(
