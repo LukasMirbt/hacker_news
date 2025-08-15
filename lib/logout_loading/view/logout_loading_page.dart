@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
-// TODO: Redirect to from when logging out from web redirect.
+// TODO(LukasMirbt): Redirect to from when logging out from web redirect?
 
 class LogoutLoadingPage extends StatefulWidget {
   const LogoutLoadingPage({super.key});
