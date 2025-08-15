@@ -115,6 +115,11 @@ void main() {
       expect(find.byType(LoginRedirectListener), findsOneWidget);
     });
 
+    testWidgets('renders $LoginSuccessListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(LoginSuccessListener), findsOneWidget);
+    });
+
     testWidgets('renders $WebRedirectListener', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(WebRedirectListener), findsOneWidget);

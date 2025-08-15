@@ -16,7 +16,8 @@ enum LogoutStatus {
 abstract class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState({
     required User user,
-    required Redirect redirect,
+    required LoginRedirect loginRedirect,
+    required WebRedirect webRedirect,
     required AuthenticationStatus status,
     @Default(LogoutStatus.initial) LogoutStatus logoutStatus,
   }) = _AuthenticationState;

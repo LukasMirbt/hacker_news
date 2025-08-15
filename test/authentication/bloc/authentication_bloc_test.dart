@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
-// ignore_for_file: avoid_redundant_argument_values
 
 import 'package:authentication_repository/authentication_repository.dart'
     as authentication_repository;
@@ -21,12 +20,14 @@ class _MockUser extends Mock implements User {}
 
 void main() {
   final user = _MockUser();
-  final redirect = LoginRedirect();
+  final loginRedirect = LoginRedirect();
+  final webRedirect = WebRedirectPlaceholder();
   const status = AuthenticationStatus.unauthenticated;
 
   final initialState = AuthenticationState(
     user: user,
-    redirect: redirect,
+    loginRedirect: loginRedirect,
+    webRedirect: webRedirect,
     status: status,
   );
 
@@ -38,12 +39,14 @@ void main() {
       authenticationRepository = _MockAuthenticationRepository();
       repositoryState = _MockAuthenticationState();
       when(() => repositoryState.user).thenReturn(user);
-      when(() => repositoryState.redirect).thenReturn(redirect);
+      when(() => repositoryState.loginRedirect).thenReturn(loginRedirect);
+      when(() => repositoryState.webRedirect).thenReturn(webRedirect);
       when(() => repositoryState.status).thenReturn(status);
       when(() => authenticationRepository.state).thenReturn(
         authentication_repository.AuthenticationStatePlaceholder(
           user: user,
-          redirect: redirect,
+          loginRedirect: loginRedirect,
+          webRedirect: webRedirect,
           status: status,
         ),
       );
@@ -63,7 +66,8 @@ void main() {
       final updatedRepositoryState =
           authentication_repository.AuthenticationStatePlaceholder(
             user: _MockUser(),
-            redirect: WebRedirectPlaceholder(),
+            loginRedirect: LoginRedirect(),
+            webRedirect: WebRedirectPlaceholder(),
             status: AuthenticationStatus.authenticated,
           );
 
@@ -83,7 +87,8 @@ void main() {
         expect: () => [
           initialState.copyWith(
             user: updatedRepositoryState.user,
-            redirect: updatedRepositoryState.redirect,
+            loginRedirect: updatedRepositoryState.loginRedirect,
+            webRedirect: updatedRepositoryState.webRedirect,
             status: updatedRepositoryState.status,
           ),
         ],

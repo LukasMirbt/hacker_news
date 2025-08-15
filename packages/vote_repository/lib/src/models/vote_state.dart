@@ -31,6 +31,10 @@ sealed class VoteFailure extends VoteState implements Exception {
   const VoteFailure();
 }
 
+final class UnauthenticatedVote extends VoteFailure {
+  const UnauthenticatedVote();
+}
+
 final class InvalidVoteUrl extends VoteFailure {
   const InvalidVoteUrl();
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
+import 'package:hacker_client/login/login.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -10,14 +12,35 @@ class VoteFailureListener extends BlocListener<VoteFailureBloc, VoteState> {
         listenWhen: (previous, current) =>
             !previous.isFailure && current.isFailure,
         listener: (context, state) {
-          if (state is VoteFailure) {
+          if (state is! VoteFailure) return;
+
+          void showSnackBar(
+            String Function(AppLocalizations) message,
+          ) {
             final l10n = AppLocalizations.of(context);
-            final message = state.message(l10n);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(message),
-              ),
-            );
+            ScaffoldMessenger.of(context)
+              ..removeCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(message(l10n)),
+                ),
+              );
+          }
+
+          switch (state) {
+            case UnauthenticatedVote():
+              final router = AppRouter.of(context);
+              router.push(
+                LoginRoute(from: router.currentLocation),
+              );
+            case InvalidVoteUrl():
+              showSnackBar(
+                (l10n) => l10n.voteFailure_invalidUrl,
+              );
+            case UnknownVoteFailure():
+              showSnackBar(
+                (l10n) => l10n.generalServerError,
+              );
           }
         },
       );

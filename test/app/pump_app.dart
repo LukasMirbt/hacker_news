@@ -97,7 +97,8 @@ class _MockAuthenticationBloc
   authentication.AuthenticationState get state =>
       authentication.AuthenticationState(
         user: User.empty,
-        redirect: LoginRedirect.initial,
+        loginRedirect: LoginRedirect.initial,
+        webRedirect: WebRedirect.empty,
         status: AuthenticationStatus.unauthenticated,
       );
 }

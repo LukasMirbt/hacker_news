@@ -27,6 +27,7 @@ workspace:
   - packages/post_api
   - packages/post_parser
   - packages/post_repository
+  - packages/redirect_validator
   - packages/reply_api
   - packages/reply_parser
   - packages/reply_repository
@@ -118,6 +119,8 @@ dependencies:
   post_repository:
     path: packages/post_repository
   provider: ^6.1.2
+  redirect_validator:
+    path: packages/redirect_validator
   reply_api:
     path: packages/reply_api
   reply_repository:

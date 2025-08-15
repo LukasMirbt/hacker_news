@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 // ignore_for_file: cascade_invocations
 
+import 'dart:async';
+
 import 'package:app_client/app_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-
-class _MockAuthenticationService extends Mock
-    implements AuthenticationService {}
 
 class _MockResponse extends Mock implements Response<dynamic> {}
 
@@ -14,41 +13,42 @@ class _MockResponseInterceptorHandler extends Mock
     implements ResponseInterceptorHandler {}
 
 void main() {
-  group(AuthenticationInterceptor, () {
-    late AuthenticationService service;
+  group(HtmlInterceptor, () {
     late Response<dynamic> response;
     late ResponseInterceptorHandler handler;
 
     setUp(() {
-      service = _MockAuthenticationService();
       response = _MockResponse();
       handler = _MockResponseInterceptorHandler();
     });
 
-    AuthenticationInterceptor createSubject() {
-      return AuthenticationInterceptor(
-        authenticationService: service,
-      );
-    }
+    HtmlInterceptor createSubject() => HtmlInterceptor();
 
     group('onResponse', () {
       const html = 'html';
-      final update = () => service.update(html);
       final next = () => handler.next(response);
 
-      test('calls next when data is not a string', () {
+      test('calls next when data is not a string', () async {
         when(() => response.data).thenReturn(1);
+
+        final controller = StreamController<String>();
         final interceptor = createSubject();
+        interceptor.stream.listen(controller.add);
+
+        expect(controller.stream, neverEmits(anything));
         interceptor.onResponse(response, handler);
+        await Future<void>.delayed(Duration.zero);
+
         verify(next).called(1);
-        verifyNever(update);
+
+        await controller.close();
       });
 
-      test('calls update and next when data is a string', () {
+      test('emits data and calls next when data is a string', () {
         when(() => response.data).thenReturn(html);
         final interceptor = createSubject();
+        expect(interceptor.stream, emits(html));
         interceptor.onResponse(response, handler);
-        verify(update).called(1);
         verify(next).called(1);
       });
     });

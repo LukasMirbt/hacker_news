@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:app_client/app_client.dart';
+import 'package:authentication_parser/authentication_parser.dart'
+    hide AuthenticationStatus;
 import 'package:bloc/bloc.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:secure_user_id_storage/secure_user_id_storage.dart';
 
 class AppClient extends Cubit<AuthenticationState> {
@@ -10,13 +11,20 @@ class AppClient extends Cubit<AuthenticationState> {
     required Uri baseUrl,
     required CookieJar cookieJar,
     required SecureUserIdStorage userIdStorage,
+    required AuthenticationStatusService authenticationStatusService,
+    required PrettyDioLogger loggingInterceptor,
+    required HtmlInterceptor htmlInterceptor,
+    required LoginRedirectInterceptor loginRedirectInterceptor,
+    required WebRedirectInterceptor webRedirectInterceptor,
     required void Function(Dio, CookieJar) addPlatformConfiguration,
-    void Function(String?)? debugPrint,
   }) : _cookieJar = cookieJar,
        _userIdStorage = userIdStorage,
+       _authenticationStatusService = authenticationStatusService,
        http = SequentialDio(),
        super(
-         AuthenticationState(baseUrl: baseUrl),
+         AuthenticationState.initial(
+           baseUrl: baseUrl,
+         ),
        ) {
     final baseOptions = BaseOptions(
       connectTimeout: const Duration(milliseconds: 10000),
@@ -25,33 +33,63 @@ class AppClient extends Cubit<AuthenticationState> {
       baseUrl: baseUrl.toString(),
     );
 
-    final loggingInterceptor = PrettyDioLogger(
-      responseBody: false,
-      logPrint: (object) {
-        debugPrint?.call(object.toString());
-      },
-    );
-
-    final redirectInterceptor = RedirectInterceptor(
-      redirectService: RedirectService(appClient: this),
-    );
-
-    final authenticationInterceptor = AuthenticationInterceptor(
-      authenticationService: AuthenticationService(appClient: this),
-    );
-
-    final redirectValidationInterceptor = RedirectValidationInterceptor(
-      appClient: this,
-    );
-
     addPlatformConfiguration(http, cookieJar);
 
     http
       ..options = baseOptions
       ..interceptors.add(loggingInterceptor)
-      ..interceptors.add(redirectInterceptor)
-      ..interceptors.add(authenticationInterceptor)
-      ..interceptors.add(redirectValidationInterceptor);
+      ..interceptors.add(loginRedirectInterceptor)
+      ..interceptors.add(htmlInterceptor)
+      ..interceptors.add(webRedirectInterceptor);
+
+    htmlInterceptor.stream.listen(
+      _authenticationStatusService.update,
+    );
+
+    loginRedirectInterceptor.redirect.listen((redirect) {
+      emit(
+        state.copyWith(
+          loginRedirect: redirect,
+          user: User.empty,
+          status: AuthenticationStatus.unauthenticated,
+        ),
+      );
+    });
+
+    webRedirectInterceptor.redirect.listen((redirect) {
+      emit(
+        state.copyWith(
+          webRedirect: redirect,
+        ),
+      );
+    });
+
+    _authenticationStatusService.status.listen((status) async {
+      switch (status) {
+        case final Authenticated status:
+          final user = User.fromData(status.data);
+          await _userIdStorage.write(user.id);
+
+          emit(
+            state.copyWith(
+              user: user,
+              status: AuthenticationStatus.authenticated,
+            ),
+          );
+        case Unauthenticated():
+          await _cookieJar.deleteAll();
+          await _userIdStorage.delete();
+
+          emit(
+            state.copyWith(
+              user: User.empty,
+              status: AuthenticationStatus.unauthenticated,
+            ),
+          );
+        case Unknown():
+          return;
+      }
+    });
   }
 
   Future<void> start() async {
@@ -81,25 +119,8 @@ class AppClient extends Cubit<AuthenticationState> {
 
   final CookieJar _cookieJar;
   final SecureUserIdStorage _userIdStorage;
+  final AuthenticationStatusService _authenticationStatusService;
   final Dio http;
-
-  void redirectToLogin() {
-    emit(
-      state.copyWith(
-        user: User.empty,
-        status: AuthenticationStatus.unauthenticated,
-        redirect: LoginRedirect(),
-      ),
-    );
-  }
-
-  Future<void> redirectToWeb(Uri url) async {
-    emit(
-      state.copyWith(
-        redirect: WebRedirect(url: url),
-      ),
-    );
-  }
 
   Future<List<Cookie>> cookies() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);
@@ -110,13 +131,17 @@ class AppClient extends Cubit<AuthenticationState> {
     await _cookieJar.saveFromResponse(state.baseUrl, cookies);
   }
 
-  Future<void> authenticate(User user) async {
-    await _userIdStorage.write(user.id);
+  void updateAuthenticationFromHtml(String html) {
+    _authenticationStatusService.update(html);
+  }
+
+  Future<void> authenticate({required String userId}) async {
+    await _userIdStorage.write(userId);
 
     emit(
       state.copyWith(
+        user: User.initial(userId),
         status: AuthenticationStatus.authenticated,
-        user: user,
       ),
     );
   }

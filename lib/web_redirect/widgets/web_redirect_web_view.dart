@@ -4,23 +4,36 @@ import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-class WebRedirectWebView extends StatelessWidget {
+class WebRedirectWebView extends StatefulWidget {
   const WebRedirectWebView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final initialUrlRequest = context.select(
-      (WebRedirectBloc bloc) => bloc.state.redirect.initialUrlRequest,
-    );
+  State<WebRedirectWebView> createState() => _WebRedirectWebViewState();
+}
 
+class _WebRedirectWebViewState extends State<WebRedirectWebView> {
+  late final InAppWebViewInitialData? _initialData;
+  late final URLRequest? _initialUrlRequest;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<WebRedirectBloc>().state;
+    _initialData = state.redirect.initialData;
+    _initialUrlRequest = state.redirect.initialUrlRequest;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return InAppWebView(
-      initialUrlRequest: initialUrlRequest,
+      initialData: _initialData,
+      initialUrlRequest: _initialUrlRequest,
       onWebViewCreated: (controller) {
         context.read<WebRedirectBloc>().add(
           WebRedirectCreated(controller),
         );
       },
-      onLoadStart: (_, __) {
+      onLoadStart: (_, _) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStarted(),
         );
@@ -30,19 +43,19 @@ class WebRedirectWebView extends StatelessWidget {
           WebRedirectProgressChanged(progress),
         );
       },
-      onLoadStop: (_, __) {
+      onLoadStop: (_, _) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStopped(),
         );
       },
-      onReceivedError: (controller, request, error) {
+      onReceivedError: (_, _, error) {
         context.read<Logger>().severe(
           'Error',
           error,
           StackTrace.current,
         );
       },
-      onReceivedHttpError: (_, __, errorResponse) {
+      onReceivedHttpError: (_, _, errorResponse) {
         context.read<Logger>().severe(
           'Http error',
           errorResponse,

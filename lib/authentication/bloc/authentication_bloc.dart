@@ -13,7 +13,8 @@ class AuthenticationBloc
        super(
          AuthenticationState(
            user: authenticationRepository.state.user,
-           redirect: authenticationRepository.state.redirect,
+           loginRedirect: authenticationRepository.state.loginRedirect,
+           webRedirect: authenticationRepository.state.webRedirect,
            status: authenticationRepository.state.status,
          ),
        ) {
@@ -33,7 +34,8 @@ class AuthenticationBloc
       _repository.stream,
       onData: (repositoryState) => state.copyWith(
         user: repositoryState.user,
-        redirect: repositoryState.redirect,
+        loginRedirect: repositoryState.loginRedirect,
+        webRedirect: repositoryState.webRedirect,
         status: repositoryState.status,
       ),
     );

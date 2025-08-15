@@ -24,14 +24,19 @@ class VoteRepository extends Cubit<VoteState> {
     required String? upvoteUrl,
     required bool hasBeenUpvoted,
   }) async {
+    if (state is VoteLoading) return;
+
+    emit(
+      const VoteLoading(),
+    );
+
     final isAuthenticated = _authenticationApi.state.status.isAuthenticated;
 
     if (!isAuthenticated) {
-      _authenticationApi.redirectToLogin();
-      return;
+      return emit(
+        const UnauthenticatedVote(),
+      );
     }
-
-    if (state is VoteLoading) return;
 
     final vote = _voteParser.tryParse(
       upvoteUrl: upvoteUrl,
@@ -43,10 +48,6 @@ class VoteRepository extends Cubit<VoteState> {
         const InvalidVoteUrl(),
       );
     }
-
-    emit(
-      const VoteLoading(),
-    );
 
     try {
       await _voteApi.vote(vote.url);

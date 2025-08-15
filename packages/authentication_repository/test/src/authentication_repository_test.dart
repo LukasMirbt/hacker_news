@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: cascade_invocations
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -46,8 +47,8 @@ void main() {
 
       test('retuns cookies', () async {
         when(getCookies).thenAnswer((_) async => cookies);
-        final api = createSubject();
-        expect(api.cookies(), completion(cookies));
+        final repository = createSubject();
+        expect(repository.cookies(), completion(cookies));
         verify(getCookies).called(1);
       });
     });
@@ -57,9 +58,22 @@ void main() {
 
       test('calls api.saveCookies', () async {
         when(saveCookies).thenAnswer((_) async {});
-        final api = createSubject();
-        await api.saveCookies(cookies);
+        final repository = createSubject();
+        await repository.saveCookies(cookies);
         verify(saveCookies).called(1);
+      });
+    });
+
+    group('updateAuthenticationFromHtml', () {
+      const html = 'html';
+      final updateAuthenticationFromHtml = () =>
+          api.updateAuthenticationFromHtml(html);
+
+      test('calls api.updateAuthenticationFromHtml', () {
+        when(updateAuthenticationFromHtml).thenReturn(null);
+        final repository = createSubject();
+        repository.updateAuthenticationFromHtml(html);
+        verify(updateAuthenticationFromHtml).called(1);
       });
     });
 

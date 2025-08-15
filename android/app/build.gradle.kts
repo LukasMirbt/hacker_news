@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         applicationId = "com.lukasmirbt.hackerclient" 
-        minSdk = maxOf(flutter.minSdkVersion, 23) 
+        minSdk = flutter.minSdkVersion 
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

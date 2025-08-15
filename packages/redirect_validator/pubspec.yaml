@@ -1,0 +1,27 @@
+name: redirect_validator
+description: A generic Dart client for REST APIs that handles token
+  authentication. Adds Sentry integration and debug logging of requests out of
+  the box.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+
+resolution: workspace
+
+dependencies:
+  collection: ^1.19.1
+  dio: ^5.9.0
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true

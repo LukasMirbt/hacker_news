@@ -10,19 +10,19 @@ class _MockDocument extends Mock implements Document {}
 class _MockElement extends Mock implements Element {}
 
 void main() {
-  group(HasLoginLinkParser, () {
+  group(LoginLinkParser, () {
     late Document document;
 
     setUp(() {
       document = _MockDocument();
     });
 
-    HasLoginLinkParser createSubject() => HasLoginLinkParser();
+    LoginLinkParser createSubject() => LoginLinkParser();
 
     group('parse', () {
       final querySelectorAll = () => document.querySelectorAll('.pagetop a');
 
-      test('returns true when topLinks has a link '
+      test('returns loginLink when topLinks has a link '
           'with text "login"', () {
         final otherLink = _MockElement();
         final loginLink = _MockElement();
@@ -31,10 +31,10 @@ void main() {
         when(() => otherLink.text).thenReturn('other');
         when(querySelectorAll).thenReturn(topLinks);
         final parser = createSubject();
-        expect(parser.parse(document), true);
+        expect(parser.parse(document), loginLink);
       });
 
-      test('returns false when topLinks does not have a link '
+      test('returns null when topLinks does not have a link '
           'with text "login"', () {
         final otherLink = _MockElement();
         final anotherLink = _MockElement();
@@ -43,14 +43,14 @@ void main() {
         when(() => anotherLink.text).thenReturn('another');
         when(querySelectorAll).thenReturn(topLinks);
         final parser = createSubject();
-        expect(parser.parse(document), false);
+        expect(parser.parse(document), null);
       });
 
-      test('returns false when topLinks is empty', () {
+      test('returns null when topLinks is empty', () {
         final topLinks = <Element>[];
         when(querySelectorAll).thenReturn(topLinks);
         final parser = createSubject();
-        expect(parser.parse(document), false);
+        expect(parser.parse(document), null);
       });
     });
   });

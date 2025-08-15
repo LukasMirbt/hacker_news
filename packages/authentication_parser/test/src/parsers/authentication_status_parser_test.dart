@@ -5,71 +5,76 @@ import 'package:authentication_parser/authentication_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+class _MockHtmlParser extends Mock implements HtmlParser {}
+
 class _MockUserParser extends Mock implements UserParser {}
 
-class _MockHasLoginLinkParser extends Mock implements HasLoginLinkParser {}
+class _MockLoginLinkParser extends Mock implements LoginLinkParser {}
 
 class _MockDocument extends Mock implements Document {}
 
-class _MockUserData extends Mock implements UserData {}
+class _MockElement extends Mock implements Element {}
 
 void main() {
+  const html = 'html';
+  final user = UserDataPlaceholder();
+
   group(AuthenticationStatusParser, () {
+    late HtmlParser htmlParser;
     late UserParser userParser;
-    late HasLoginLinkParser hasLoginLinkParser;
+    late LoginLinkParser loginLinkParser;
     late Document document;
-    late UserData user;
+    late Element loginLink;
 
     setUp(() {
+      htmlParser = _MockHtmlParser();
       userParser = _MockUserParser();
-      hasLoginLinkParser = _MockHasLoginLinkParser();
+      loginLinkParser = _MockLoginLinkParser();
       document = _MockDocument();
-      user = _MockUserData();
+      loginLink = _MockElement();
     });
 
     AuthenticationStatusParser createSubject() {
       return AuthenticationStatusParser(
+        htmlParser: htmlParser,
         userParser: userParser,
-        hasLoginLinkParser: hasLoginLinkParser,
+        loginLinkParser: loginLinkParser,
       );
     }
 
     group('parse', () {
+      final parseHtml = () => htmlParser.parse(html);
       final parseUserData = () => userParser.parse(document);
-      final parseHasLoginLink = () => hasLoginLinkParser.parse(document);
+      final parseLoginLink = () => loginLinkParser.parse(document);
 
       test('returns $Authenticated when user is non-null', () {
+        when(parseHtml).thenReturn(document);
         when(parseUserData).thenReturn(user);
         final parser = createSubject();
-        expect(
-          parser.parse(document),
-          Authenticated(user),
-        );
+        expect(parser.parse(html), Authenticated(user));
+        verify(parseHtml).called(1);
         verify(parseUserData).called(1);
       });
 
       test('returns $Unauthenticated when user is null '
-          'and hasLoginLink', () {
-        when(parseHasLoginLink).thenReturn(true);
+          'and loginLink is non-null', () {
+        when(parseHtml).thenReturn(document);
+        when(parseLoginLink).thenReturn(loginLink);
         final parser = createSubject();
-        expect(
-          parser.parse(document),
-          Unauthenticated(),
-        );
+        expect(parser.parse(html), Unauthenticated());
+        verify(parseHtml).called(1);
         verify(parseUserData).called(1);
-        verify(parseHasLoginLink).called(1);
+        verify(parseLoginLink).called(1);
       });
 
       test('returns $Unknown when user is null '
-          'and !hasLoginLink', () {
-        when(parseHasLoginLink).thenReturn(false);
+          'and loginLink is null', () {
+        when(parseHtml).thenReturn(document);
         final parser = createSubject();
-        expect(
-          parser.parse(document),
-          Unknown(),
-        );
+        expect(parser.parse(html), Unknown());
+        verify(parseHtml).called(1);
         verify(parseUserData).called(1);
-        verify(parseHasLoginLink).called(1);
+        verify(parseLoginLink).called(1);
       });
     });
   });

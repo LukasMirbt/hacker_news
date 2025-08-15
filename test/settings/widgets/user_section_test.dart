@@ -19,7 +19,8 @@ class _MockAuthenticationBloc
 void main() {
   final initialState = AuthenticationState(
     user: UserPlaceholder(),
-    redirect: LoginRedirect.initial,
+    loginRedirect: LoginRedirect.initial,
+    webRedirect: WebRedirect.empty,
     status: AuthenticationStatus.unauthenticated,
   );
 
