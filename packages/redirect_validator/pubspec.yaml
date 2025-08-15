@@ -16,15 +16,10 @@ dependencies:
   equatable: ^2.0.7
   flutter:
     sdk: flutter
-  web_links:
-    path: ../web_links
 
 dev_dependencies:
-  bloc_test: ^10.0.0
-  build_runner: ^2.6.0
   flutter_test:
     sdk: flutter
-  freezed: ^3.2.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
 
