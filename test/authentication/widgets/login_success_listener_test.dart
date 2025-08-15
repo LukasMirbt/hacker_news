@@ -22,9 +22,10 @@ class _MockAuthenticationBloc
 class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() {
-  const initialState = AuthenticationState(
+  final initialState = AuthenticationState(
     user: User.empty,
-    redirect: LoginRedirect.initial,
+    loginRedirect: LoginRedirect.initial,
+    webRedirect: WebRedirect.empty,
     status: AuthenticationStatus.unauthenticated,
   );
 

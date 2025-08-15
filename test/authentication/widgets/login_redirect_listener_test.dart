@@ -26,9 +26,10 @@ class _MockAppRouter extends Mock implements AppRouter {}
 class _MockGoRouteData extends Mock implements GoRouteData {}
 
 void main() {
-  const initialState = AuthenticationState(
+  final initialState = AuthenticationState(
     user: User.empty,
-    redirect: LoginRedirect.initial,
+    loginRedirect: LoginRedirect.initial,
+    webRedirect: WebRedirect.empty,
     status: AuthenticationStatus.authenticated,
   );
 
@@ -64,27 +65,13 @@ void main() {
 
     final pushAnyRoute = () => router.push<void>(any());
 
-    testWidgets('returns when redirect is not $LoginRedirect', (tester) async {
-      whenListen(
-        authenticationBloc,
-        initialState: initialState,
-        Stream.value(
-          initialState.copyWith(
-            redirect: WebRedirectPlaceholder(),
-          ),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
-      verifyNever(pushAnyRoute);
-    });
-
     testWidgets('returns when isAuthenticated', (tester) async {
       whenListen(
         authenticationBloc,
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            redirect: LoginRedirect(),
+            loginRedirect: LoginRedirect(),
           ),
         ),
       );
@@ -102,7 +89,7 @@ void main() {
         initialState: unauthenticatedState,
         Stream.value(
           unauthenticatedState.copyWith(
-            redirect: LoginRedirect(),
+            loginRedirect: LoginRedirect(),
           ),
         ),
       );
@@ -120,7 +107,7 @@ void main() {
         initialState: unauthenticatedState,
         Stream.value(
           unauthenticatedState.copyWith(
-            redirect: LoginRedirect(),
+            loginRedirect: LoginRedirect(),
           ),
         ),
       );
@@ -144,7 +131,7 @@ void main() {
         initialState: unauthenticatedState,
         Stream.value(
           unauthenticatedState.copyWith(
-            redirect: LoginRedirect(),
+            loginRedirect: LoginRedirect(),
           ),
         ),
       );

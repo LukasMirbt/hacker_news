@@ -27,7 +27,7 @@ class WebRedirectPage extends StatelessWidget {
               cookieManager: cookieManager,
             ),
           ),
-          webRedirectActionModel: WebRedirectActionModel(),
+          webRedirectController: WebRedirectController(),
           authenticationRepository: context.read<AuthenticationRepository>(),
         )..add(
           const WebRedirectStarted(),

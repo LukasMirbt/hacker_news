@@ -25,9 +25,10 @@ class _MockAppRouter extends Mock implements AppRouter {}
 class _MockGoRouteData extends Mock implements GoRouteData {}
 
 void main() {
-  const initialState = AuthenticationState(
+  final initialState = AuthenticationState(
     user: User.empty,
-    redirect: LoginRedirect.initial,
+    loginRedirect: LoginRedirect.initial,
+    webRedirect: WebRedirect.empty,
     status: AuthenticationStatus.unauthenticated,
   );
 
@@ -61,20 +62,6 @@ void main() {
 
     final pushAnyRoute = () => router.push<void>(any());
 
-    testWidgets('returns when redirect is not $WebRedirect', (tester) async {
-      whenListen(
-        authenticationBloc,
-        initialState: initialState,
-        Stream.value(
-          initialState.copyWith(
-            redirect: LoginRedirect(),
-          ),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
-      verifyNever(pushAnyRoute);
-    });
-
     testWidgets('returns when matchedLocation '
         'is $WebRedirectRoute path', (tester) async {
       when(() => router.matchedLocation).thenReturn(
@@ -85,7 +72,7 @@ void main() {
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            redirect: redirect,
+            webRedirect: redirect,
           ),
         ),
       );
@@ -99,6 +86,7 @@ void main() {
       final pushWebRedirectRoute = () => router.push(
         WebRedirectRoute(
           url: redirect.urlString,
+          $extra: redirect.html,
         ),
       );
       when(pushWebRedirectRoute).thenAnswer((_) async => null);
@@ -108,7 +96,7 @@ void main() {
         initialState: initialState,
         Stream.value(
           initialState.copyWith(
-            redirect: redirect,
+            webRedirect: redirect,
           ),
         ),
       );

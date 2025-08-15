@@ -11,8 +11,8 @@ import 'package:mocktail/mocktail.dart';
 class _MockWebRedirectCookieManager extends Mock
     implements WebRedirectCookieManager {}
 
-class _MockWebRedirectActionModel extends Mock
-    implements WebRedirectActionModel {}
+class _MockWebRedirectController extends Mock
+    implements WebRedirectController {}
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
@@ -26,12 +26,12 @@ void main() {
 
   group(WebRedirectBloc, () {
     late WebRedirectCookieManager cookieManager;
-    late WebRedirectActionModel actionModel;
+    late WebRedirectController controller;
     late AuthenticationRepository repository;
 
     setUp(() {
       cookieManager = _MockWebRedirectCookieManager();
-      actionModel = _MockWebRedirectActionModel();
+      controller = _MockWebRedirectController();
       repository = _MockAuthenticationRepository();
     });
 
@@ -39,13 +39,47 @@ void main() {
       return WebRedirectBloc(
         redirect: redirect,
         webRedirectCookieManager: cookieManager,
-        webRedirectActionModel: actionModel,
+        webRedirectController: controller,
         authenticationRepository: repository,
       );
     }
 
+    TypeMatcher<WebRedirectState> matchState({
+      InitialLoadStatus? initialLoadStatus,
+      bool? canGoBack,
+      bool? canGoForward,
+      int? progress,
+    }) {
+      return isA<WebRedirectState>()
+          .having(
+            (state) => state.redirect,
+            'redirect',
+            isA<WebRedirectModel>(),
+          )
+          .having(
+            (state) => state.initialLoadStatus,
+            'initialLoadStatus',
+            initialLoadStatus ?? initialState.initialLoadStatus,
+          )
+          .having(
+            (state) => state.canGoBack,
+            'canGoBack',
+            canGoBack ?? initialState.canGoBack,
+          )
+          .having(
+            (state) => state.canGoForward,
+            'canGoForward',
+            canGoForward ?? initialState.canGoForward,
+          )
+          .having(
+            (state) => state.progress,
+            'progress',
+            progress ?? initialState.progress,
+          );
+    }
+
     test('initial state is $WebRedirectState', () {
-      expect(buildBloc().state, initialState);
+      expect(buildBloc().state, matchState());
     });
 
     group(WebRedirectStarted, () {
@@ -74,7 +108,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          matchState(
             initialLoadStatus: InitialLoadStatus.success,
           ),
         ],
@@ -87,7 +121,7 @@ void main() {
 
     group(WebRedirectCreated, () {
       final inAppWebViewController = _MockInAppWebViewController();
-      final initialize = () => actionModel.initialize(inAppWebViewController);
+      final initialize = () => controller.initialize(inAppWebViewController);
 
       blocTest<WebRedirectBloc, WebRedirectState>(
         'calls initialize',
@@ -116,7 +150,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(progress: 0),
+          matchState(progress: 0),
         ],
       );
     });
@@ -133,7 +167,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          matchState(
             progress: progress,
           ),
         ],
@@ -142,29 +176,37 @@ void main() {
 
     group(WebRedirectLoadStopped, () {
       final baseUrl = Uri.parse('baseUrl');
-      final state = AuthenticationState(baseUrl: baseUrl);
+      final state = AuthenticationState.initial(baseUrl: baseUrl);
 
       final cookies = [
         Cookie('name', 'value'),
       ];
 
+      const html = 'html';
+
       final getCookies = () => cookieManager.cookies(baseUrl);
       final saveCookies = () => repository.saveCookies(cookies);
+      final getHtml = () => controller.html();
+
+      final updateAuthenticationFromHtml = () =>
+          repository.updateAuthenticationFromHtml(html);
 
       const canGoBack = true;
       const canGoForward = true;
 
-      final canGoBackFuture = () => actionModel.canGoBack();
-      final canGoForwardFuture = () => actionModel.canGoForward();
+      final canGoBackMethod = () => controller.canGoBack();
+      final canGoForwardMethod = () => controller.canGoForward();
 
       blocTest<WebRedirectBloc, WebRedirectState>(
-        'saves cookies and emits canGoBack and canGoForward',
+        'calls saveCookies, updateAuthenticationFromHtml '
+        'and emits canGoBack and canGoForward',
         setUp: () {
           when(() => repository.state).thenReturn(state);
           when(getCookies).thenAnswer((_) async => cookies);
           when(saveCookies).thenAnswer((_) async {});
-          when(canGoBackFuture).thenAnswer((_) async => canGoBack);
-          when(canGoForwardFuture).thenAnswer((_) async => canGoForward);
+          when(getHtml).thenAnswer((_) async => html);
+          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
+          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
         },
         build: buildBloc,
         act: (bloc) {
@@ -173,7 +215,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          matchState(
             canGoBack: canGoBack,
             canGoForward: canGoForward,
           ),
@@ -181,14 +223,16 @@ void main() {
         verify: (_) {
           verify(getCookies).called(1);
           verify(saveCookies).called(1);
-          verify(canGoBackFuture).called(1);
-          verify(canGoForwardFuture).called(1);
+          verify(getHtml).called(1);
+          verify(updateAuthenticationFromHtml).called(1);
+          verify(canGoBackMethod).called(1);
+          verify(canGoForwardMethod).called(1);
         },
       );
     });
 
     group(WebRedirectBackPressed, () {
-      final goBack = () => actionModel.goBack();
+      final goBack = () => controller.goBack();
 
       blocTest<WebRedirectBloc, WebRedirectState>(
         'calls goBack',
@@ -208,7 +252,7 @@ void main() {
     });
 
     group(WebRedirectForwardPressed, () {
-      final goForward = () => actionModel.goForward();
+      final goForward = () => controller.goForward();
 
       blocTest<WebRedirectBloc, WebRedirectState>(
         'calls goForward',
@@ -228,7 +272,7 @@ void main() {
     });
 
     group(WebRedirectReloadPressed, () {
-      final reload = () => actionModel.reload();
+      final reload = () => controller.reload();
 
       blocTest<WebRedirectBloc, WebRedirectState>(
         'calls reload',

@@ -10,15 +10,15 @@ class _MockInAppWebViewController extends Mock
     implements InAppWebViewController {}
 
 void main() {
-  group(WebRedirectActionModel, () {
+  group(WebRedirectController, () {
     late InAppWebViewController controller;
 
     setUp(() {
       controller = _MockInAppWebViewController();
     });
 
-    WebRedirectActionModel createSubject() {
-      return WebRedirectActionModel()..initialize(controller);
+    WebRedirectController createSubject() {
+      return WebRedirectController()..initialize(controller);
     }
 
     group('canGoBack', () {
@@ -81,6 +81,21 @@ void main() {
         final model = createSubject();
         model.reload();
         verify(call).called(1);
+      });
+    });
+
+    group('html', () {
+      const html = 'html';
+      final getHtml = () => controller.getHtml();
+
+      test('calls controller and returns correct value', () {
+        when(getHtml).thenAnswer((_) async => html);
+        final model = createSubject();
+        expect(
+          model.html(),
+          completion(html),
+        );
+        verify(getHtml).called(1);
       });
     });
   });
