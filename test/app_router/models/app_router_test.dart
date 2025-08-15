@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
+import 'package:hacker_client/login/login.dart';
 import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
@@ -246,7 +247,7 @@ void main() {
       });
 
       test('calls push with extra when redirect is null '
-          'and extra is non-null', () async {
+          r'and route has an "$extra" member', () async {
         final route = WebRedirectRoute(
           url: 'url',
           $extra: 'html',
@@ -266,8 +267,8 @@ void main() {
       });
 
       test('calls push when redirect is null '
-          'and extra is null', () async {
-        final route = WebRedirectRoute(url: 'url');
+          r'and route does not have an "$extra" member', () async {
+        final route = LoginRoute(from: 'from');
         final push = () => goRouter.push<String>(route.location);
         const result = 'result';
         when(push).thenAnswer((_) async => result);
