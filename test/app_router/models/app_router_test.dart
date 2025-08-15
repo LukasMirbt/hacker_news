@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
+import 'package:hacker_client/web_redirect/web_redirect.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
@@ -244,9 +245,30 @@ void main() {
         verifyNever(() => goRouter.push(location));
       });
 
-      test('calls push when redirect is null', () async {
-        when(() => route.location).thenReturn(location);
-        final push = () => goRouter.push<String>(location);
+      test('calls push with extra when redirect is null '
+          'and extra is non-null', () async {
+        final route = WebRedirectRoute(
+          url: 'url',
+          $extra: 'html',
+        );
+        final push = () => goRouter.push<String>(
+          route.location,
+          extra: route.$extra,
+        );
+        const result = 'result';
+        when(push).thenAnswer((_) async => result);
+        final model = createSubject();
+        await expectLater(
+          model.push<String>(route),
+          completion(result),
+        );
+        verify(push).called(1);
+      });
+
+      test('calls push when redirect is null '
+          'and extra is null', () async {
+        final route = WebRedirectRoute(url: 'url');
+        final push = () => goRouter.push<String>(route.location);
         const result = 'result';
         when(push).thenAnswer((_) async => result);
         final model = createSubject();

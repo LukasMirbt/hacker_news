@@ -58,16 +58,16 @@ class AppRouter {
       route: route,
     );
 
+    if (redirect != null) {
+      goRouter.push(redirect);
+      return Future.value();
+    }
+
     Object? extra;
 
     try {
       extra = (route as dynamic).$extra;
     } catch (_) {}
-
-    if (redirect != null) {
-      goRouter.push(redirect);
-      return Future.value();
-    }
 
     return goRouter.push(
       route.location,
