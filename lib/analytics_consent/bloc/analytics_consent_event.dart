@@ -7,10 +7,14 @@ sealed class AnalyticsConsentEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class AnalyticsConsentContinuePressed extends AnalyticsConsentEvent {
-  const AnalyticsConsentContinuePressed();
+final class AnalyticsConsentPrivacyPolicyPressed extends AnalyticsConsentEvent {
+  const AnalyticsConsentPrivacyPolicyPressed();
 }
 
-final class AnalyticsConsentSkipPressed extends AnalyticsConsentEvent {
-  const AnalyticsConsentSkipPressed();
+final class AnalyticsConsentAgreePressed extends AnalyticsConsentEvent {
+  const AnalyticsConsentAgreePressed();
+}
+
+final class AnalyticsConsentDeclinePressed extends AnalyticsConsentEvent {
+  const AnalyticsConsentDeclinePressed();
 }

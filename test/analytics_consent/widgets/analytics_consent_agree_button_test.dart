@@ -14,25 +14,18 @@ class _MockAnalyticsConsentBloc
     extends MockBloc<AnalyticsConsentEvent, AnalyticsConsentState>
     implements AnalyticsConsentBloc {}
 
-class _MockAnalyticsConsentState extends Mock
-    implements AnalyticsConsentState {}
-
 void main() {
-  group(AnalyticsConsentContinueButton, () {
+  group(AnalyticsConsentAgreeButton, () {
     late AnalyticsConsentBloc bloc;
-    late AnalyticsConsentState state;
 
     setUp(() {
       bloc = _MockAnalyticsConsentBloc();
-      state = _MockAnalyticsConsentState();
-      when(() => bloc.state).thenReturn(state);
-      when(() => state.isLoading).thenReturn(false);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: AnalyticsConsentContinueButton(),
+        child: AnalyticsConsentAgreeButton(),
       );
     }
 
@@ -43,31 +36,16 @@ void main() {
         );
       }
 
-      group('isLoading', () {
-        testWidgets('is true when state.isLoading', (tester) async {
-          when(() => state.isLoading).thenReturn(true);
-          await tester.pumpApp(buildSubject());
-          final widget = findWidget(tester);
-          expect(widget.isLoading, true);
-        });
-
-        testWidgets('is false when !state.isLoading', (tester) async {
-          await tester.pumpApp(buildSubject());
-          final widget = findWidget(tester);
-          expect(widget.isLoading, false);
-        });
-      });
-
-      testWidgets('adds $AnalyticsConsentContinuePressed '
+      testWidgets('adds $AnalyticsConsentAgreePressed '
           'onPressed', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onPressed?.call();
         verify(
           () => bloc.add(
-            AnalyticsConsentContinuePressed(),
+            AnalyticsConsentAgreePressed(),
           ),
-        );
+        ).called(1);
       });
     });
   });

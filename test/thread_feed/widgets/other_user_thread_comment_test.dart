@@ -101,7 +101,7 @@ void main() {
         () => bloc.add(
           ThreadFeedExpansionToggled(item),
         ),
-      );
+      ).called(1);
     });
 
     testWidgets('navigates to $ThreadCommentOptionsSheet '

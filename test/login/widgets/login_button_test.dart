@@ -65,7 +65,9 @@ void main() {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onPressed?.call();
-        verify(() => bloc.add(LoginSubmitted()));
+        verify(
+          () => bloc.add(LoginSubmitted()),
+        ).called(1);
       });
     });
   });

@@ -101,7 +101,7 @@ void main() {
         () => bloc.add(
           ReplyParentExpansionToggled(),
         ),
-      );
+      ).called(1);
     });
 
     testWidgets(
