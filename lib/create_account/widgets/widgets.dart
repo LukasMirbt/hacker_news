@@ -1,3 +1,4 @@
+export 'create_account_app_bar.dart';
 export 'create_account_button.dart';
 export 'create_account_footer.dart';
 export 'create_account_form.dart';

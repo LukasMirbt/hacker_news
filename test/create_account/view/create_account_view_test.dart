@@ -36,9 +36,9 @@ void main() {
       expect(find.byType(CreateAccountSuccessListener), findsOneWidget);
     });
 
-    testWidgets('renders $AppBar', (tester) async {
+    testWidgets('renders $CreateAccountAppBar', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppBar), findsOneWidget);
+      expect(find.byType(CreateAccountAppBar), findsOneWidget);
     });
 
     testWidgets('renders $CreateAccountBody', (tester) async {
