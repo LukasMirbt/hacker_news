@@ -23,6 +23,8 @@ import 'package:version_repository/version_repository.dart';
 import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
+// TODO: Test Shorebird CI
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
