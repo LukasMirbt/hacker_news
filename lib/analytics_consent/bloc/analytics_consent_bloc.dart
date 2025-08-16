@@ -1,37 +1,30 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/analytics_consent/analytics_consent.dart';
-import 'package:hacker_client/external_links/external_links.dart';
-import 'package:link_launcher/link_launcher.dart';
 
 class AnalyticsConsentBloc
     extends Bloc<AnalyticsConsentEvent, AnalyticsConsentState> {
   AnalyticsConsentBloc({
     required AnalyticsRepository analyticsRepository,
-    LinkLauncher? linkLauncher,
   }) : _repository = analyticsRepository,
-       _launcher = linkLauncher ?? const LinkLauncher(),
        super(const AnalyticsConsentState()) {
-    on<AnalyticsConsentPrivacyPolicyPressed>(_onPrivacyPolicyPressed);
-    on<AnalyticsConsentAgreePressed>(_onAgreePressed);
-    on<AnalyticsConsentDeclinePressed>(_onDeclinePressed);
+    on<AnalyticsConsentContinuePressed>(_onContinuePressed);
+    on<AnalyticsConsentSkipPressed>(_onSkipPressed);
   }
 
   final AnalyticsRepository _repository;
-  final LinkLauncher _launcher;
 
-  void _onPrivacyPolicyPressed(
-    AnalyticsConsentPrivacyPolicyPressed event,
+  Future<void> _onContinuePressed(
+    AnalyticsConsentContinuePressed event,
     Emitter<AnalyticsConsentState> emit,
-  ) {
-    _launcher.launch(yapPrivacyPolicyLink);
-  }
+  ) async {
+    emit(
+      state.copyWith(
+        status: AnalyticsConsentStatus.loading,
+      ),
+    );
 
-  void _onAgreePressed(
-    AnalyticsConsentAgreePressed event,
-    Emitter<AnalyticsConsentState> emit,
-  ) {
-    _repository.enableAnalyticsCollection();
+    await _repository.enableAnalyticsCollection();
 
     emit(
       state.copyWith(
@@ -40,11 +33,17 @@ class AnalyticsConsentBloc
     );
   }
 
-  void _onDeclinePressed(
-    AnalyticsConsentDeclinePressed event,
+  Future<void> _onSkipPressed(
+    AnalyticsConsentSkipPressed event,
     Emitter<AnalyticsConsentState> emit,
-  ) {
-    _repository.disableAnalyticsCollection();
+  ) async {
+    emit(
+      state.copyWith(
+        status: AnalyticsConsentStatus.loading,
+      ),
+    );
+
+    await _repository.disableAnalyticsCollection();
 
     emit(
       state.copyWith(

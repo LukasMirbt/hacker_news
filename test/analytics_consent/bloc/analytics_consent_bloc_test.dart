@@ -5,29 +5,22 @@ import 'package:analytics_repository/analytics_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/analytics_consent/analytics_consent.dart';
-import 'package:hacker_client/external_links/external_links.dart';
-import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
-
-class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 void main() {
   final initialState = AnalyticsConsentState();
   group(AnalyticsConsentBloc, () {
     late AnalyticsRepository repository;
-    late LinkLauncher launcher;
 
     setUp(() {
       repository = _MockAnalyticsRepository();
-      launcher = _MockLinkLauncher();
     });
 
     AnalyticsConsentBloc buildBloc() {
       return AnalyticsConsentBloc(
         analyticsRepository: repository,
-        linkLauncher: launcher,
       );
     }
 
@@ -35,74 +28,58 @@ void main() {
       expect(buildBloc().state, initialState);
     });
 
-    group(AnalyticsConsentPrivacyPolicyPressed, () {
-      final launch = () => launcher.launch(yapPrivacyPolicyLink);
+    group(AnalyticsConsentContinuePressed, () {
+      final request = () => repository.enableAnalyticsCollection();
 
-      blocTest(
-        'calls launch',
+      blocTest<AnalyticsConsentBloc, AnalyticsConsentState>(
+        'emits [loading, success] when request succeeds',
         setUp: () {
-          when(launch).thenAnswer((_) async {});
+          when(request).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            AnalyticsConsentPrivacyPolicyPressed(),
-          );
-        },
-        verify: (_) {
-          verify(launch).called(1);
-        },
-      );
-    });
-
-    group(AnalyticsConsentAgreePressed, () {
-      final enableAnalyticsCollection = () =>
-          repository.enableAnalyticsCollection();
-
-      blocTest(
-        'calls enableAnalyticsCollection and emits success',
-        setUp: () {
-          when(enableAnalyticsCollection).thenAnswer((_) async {});
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            AnalyticsConsentAgreePressed(),
+            AnalyticsConsentContinuePressed(),
           );
         },
         expect: () => [
+          initialState.copyWith(
+            status: AnalyticsConsentStatus.loading,
+          ),
           initialState.copyWith(
             status: AnalyticsConsentStatus.success,
           ),
         ],
         verify: (_) {
-          verify(enableAnalyticsCollection).called(1);
+          verify(request).called(1);
         },
       );
     });
 
-    group(AnalyticsConsentDeclinePressed, () {
-      final disableAnalyticsCollection = () =>
-          repository.disableAnalyticsCollection();
+    group(AnalyticsConsentSkipPressed, () {
+      final request = () => repository.disableAnalyticsCollection();
 
-      blocTest(
-        'calls disableAnalyticsCollection and emits success',
+      blocTest<AnalyticsConsentBloc, AnalyticsConsentState>(
+        'emits [loading, success] when request succeeds',
         setUp: () {
-          when(disableAnalyticsCollection).thenAnswer((_) async {});
+          when(request).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            AnalyticsConsentDeclinePressed(),
+            AnalyticsConsentSkipPressed(),
           );
         },
         expect: () => [
+          initialState.copyWith(
+            status: AnalyticsConsentStatus.loading,
+          ),
           initialState.copyWith(
             status: AnalyticsConsentStatus.success,
           ),
         ],
         verify: (_) {
-          verify(disableAnalyticsCollection).called(1);
+          verify(request).called(1);
         },
       );
     });

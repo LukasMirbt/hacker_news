@@ -15,26 +15,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalServerError => 'Something went wrong';
 
   @override
-  String get analyticsConsent_title => 'Help improve the app?';
+  String get analyticsConsent_title => 'Help us improve the app?';
 
   @override
   String get analyticsConsent_explanation =>
-      'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.';
+      'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.';
 
   @override
-  String get analyticsConsent_privacyPolicyPart1 => 'Learn more in our ';
+  String get analyticsConsent_continue => 'Continue';
 
   @override
-  String get analyticsConsent_privacyPolicyPart2 => 'privacy policy';
-
-  @override
-  String get analyticsConsent_privacyPolicyPart3 => '.';
-
-  @override
-  String get analyticsConsent_agreeAction => 'Help improve';
-
-  @override
-  String get analyticsConsent_declineAction => 'No, thanks';
+  String get analyticsConsent_skip => 'Skip';
 
   @override
   String get appShell_home => 'Home';

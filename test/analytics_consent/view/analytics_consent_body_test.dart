@@ -29,14 +29,14 @@ void main() {
       );
     }
 
-    testWidgets('renders $AnalyticsConsentAgreeButton', (tester) async {
+    testWidgets('renders $AnalyticsConsentContinueButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AnalyticsConsentAgreeButton), findsOneWidget);
+      expect(find.byType(AnalyticsConsentContinueButton), findsOneWidget);
     });
 
-    testWidgets('renders $AnalyticsConsentDeclineButton', (tester) async {
+    testWidgets('renders $AnalyticsConsentSkipButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AnalyticsConsentDeclineButton), findsOneWidget);
+      expect(find.byType(AnalyticsConsentSkipButton), findsOneWidget);
     });
   });
 }

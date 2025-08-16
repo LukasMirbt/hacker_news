@@ -4,20 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/analytics_consent/analytics_consent.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 
-class AnalyticsConsentAgreeButton extends StatelessWidget {
-  const AnalyticsConsentAgreeButton({super.key});
+class AnalyticsConsentSkipButton extends StatelessWidget {
+  const AnalyticsConsentSkipButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.select(
+      (AnalyticsConsentBloc bloc) => bloc.state.isLoading,
+    );
+
     final l10n = AppLocalizations.of(context);
 
-    return AppFilledButton.expand(
+    return AppOutlinedButton.expand(
+      isLoading: isLoading,
       onPressed: () {
         context.read<AnalyticsConsentBloc>().add(
-          const AnalyticsConsentAgreePressed(),
+          const AnalyticsConsentSkipPressed(),
         );
       },
-      child: Text(l10n.analyticsConsent_agreeAction),
+      child: Text(l10n.analyticsConsent_skip),
     );
   }
 }

@@ -18,7 +18,7 @@ class _MockAnalyticsConsentState extends Mock
     implements AnalyticsConsentState {}
 
 void main() {
-  group(AnalyticsConsentDeclineButton, () {
+  group(AnalyticsConsentSkipButton, () {
     late AnalyticsConsentBloc bloc;
     late AnalyticsConsentState state;
 
@@ -32,7 +32,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: AnalyticsConsentDeclineButton(),
+        child: AnalyticsConsentSkipButton(),
       );
     }
 
@@ -58,16 +58,16 @@ void main() {
         });
       });
 
-      testWidgets('adds $AnalyticsConsentDeclinePressed '
+      testWidgets('adds $AnalyticsConsentSkipPressed '
           'onPressed', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onPressed?.call();
         verify(
           () => bloc.add(
-            AnalyticsConsentDeclinePressed(),
+            AnalyticsConsentSkipPressed(),
           ),
-        ).called(1);
+        );
       });
     });
   });

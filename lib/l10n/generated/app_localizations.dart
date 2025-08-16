@@ -109,44 +109,26 @@ abstract class AppLocalizations {
   /// No description provided for @analyticsConsent_title.
   ///
   /// In en, this message translates to:
-  /// **'Help improve the app?'**
+  /// **'Help us improve the app?'**
   String get analyticsConsent_title;
 
   /// No description provided for @analyticsConsent_explanation.
   ///
   /// In en, this message translates to:
-  /// **'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.'**
+  /// **'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.'**
   String get analyticsConsent_explanation;
 
-  /// No description provided for @analyticsConsent_privacyPolicyPart1.
+  /// No description provided for @analyticsConsent_continue.
   ///
   /// In en, this message translates to:
-  /// **'Learn more in our '**
-  String get analyticsConsent_privacyPolicyPart1;
+  /// **'Continue'**
+  String get analyticsConsent_continue;
 
-  /// No description provided for @analyticsConsent_privacyPolicyPart2.
+  /// No description provided for @analyticsConsent_skip.
   ///
   /// In en, this message translates to:
-  /// **'privacy policy'**
-  String get analyticsConsent_privacyPolicyPart2;
-
-  /// No description provided for @analyticsConsent_privacyPolicyPart3.
-  ///
-  /// In en, this message translates to:
-  /// **'.'**
-  String get analyticsConsent_privacyPolicyPart3;
-
-  /// No description provided for @analyticsConsent_agreeAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Help improve'**
-  String get analyticsConsent_agreeAction;
-
-  /// No description provided for @analyticsConsent_declineAction.
-  ///
-  /// In en, this message translates to:
-  /// **'No, thanks'**
-  String get analyticsConsent_declineAction;
+  /// **'Skip'**
+  String get analyticsConsent_skip;
 
   /// No description provided for @appShell_home.
   ///
