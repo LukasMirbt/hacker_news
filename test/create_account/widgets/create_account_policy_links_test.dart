@@ -22,9 +22,6 @@ void main() async {
 
     setUp(() {
       bloc = _MockCreateAccountBloc();
-      when(() => bloc.state).thenReturn(
-        CreateAccountState(from: 'from'),
-      );
     });
 
     Widget buildSubject() {

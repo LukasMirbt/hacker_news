@@ -109,26 +109,44 @@ abstract class AppLocalizations {
   /// No description provided for @analyticsConsent_title.
   ///
   /// In en, this message translates to:
-  /// **'Help us improve the app?'**
+  /// **'Help improve the app?'**
   String get analyticsConsent_title;
 
-  /// No description provided for @analyticsConsent_explanation.
+  /// No description provided for @analyticsConsent_explanationPart1.
   ///
   /// In en, this message translates to:
-  /// **'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.'**
-  String get analyticsConsent_explanation;
+  /// **'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.'**
+  String get analyticsConsent_explanationPart1;
 
-  /// No description provided for @analyticsConsent_continue.
+  /// No description provided for @analyticsConsent_explanationPart2.
   ///
   /// In en, this message translates to:
-  /// **'Continue'**
-  String get analyticsConsent_continue;
+  /// **' Learn more in our '**
+  String get analyticsConsent_explanationPart2;
 
-  /// No description provided for @analyticsConsent_skip.
+  /// No description provided for @analyticsConsent_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'Skip'**
-  String get analyticsConsent_skip;
+  /// **'privacy policy'**
+  String get analyticsConsent_privacyPolicy;
+
+  /// No description provided for @analyticsConsent_explanationPart4.
+  ///
+  /// In en, this message translates to:
+  /// **'.'**
+  String get analyticsConsent_explanationPart4;
+
+  /// No description provided for @analyticsConsent_agreeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Help improve'**
+  String get analyticsConsent_agreeAction;
+
+  /// No description provided for @analyticsConsent_declineAction.
+  ///
+  /// In en, this message translates to:
+  /// **'No, thanks'**
+  String get analyticsConsent_declineAction;
 
   /// No description provided for @appShell_home.
   ///
