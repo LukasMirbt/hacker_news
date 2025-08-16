@@ -4,53 +4,43 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hacker_client/analytics_consent/analytics_consent.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/login/login.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockLoginBloc extends MockBloc<LoginEvent, LoginState>
-    implements LoginBloc {}
+class _MockAnalyticsConsentBloc
+    extends MockBloc<AnalyticsConsentEvent, AnalyticsConsentState>
+    implements AnalyticsConsentBloc {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
-  group(LoginPolicyLinks, () {
-    late LoginBloc bloc;
+  group(AnalyticsConsentExplanation, () {
+    late AnalyticsConsentBloc bloc;
 
     setUp(() {
-      bloc = _MockLoginBloc();
+      bloc = _MockAnalyticsConsentBloc();
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: LoginPolicyLinks(),
+        child: AnalyticsConsentExplanation(),
       );
     }
 
-    testWidgets('adds $LoginTermsPressed when terms link '
-        'is pressed', (tester) async {
-      await tester.pumpApp(buildSubject());
-      await tester.tapOnText(
-        find.textRange.ofSubstring(l10n.login_termsOfUse),
-      );
-      verify(
-        () => bloc.add(LoginTermsPressed()),
-      ).called(1);
-    });
-
     testWidgets(
-      'adds $LoginPrivacyPolicyPressed when privacy policy link '
+      'adds $AnalyticsConsentPrivacyPolicyPressed when privacy policy link '
       'is pressed',
       (tester) async {
         await tester.pumpApp(buildSubject());
         await tester.tapOnText(
-          find.textRange.ofSubstring(l10n.login_privacyPolicy),
+          find.textRange.ofSubstring(l10n.analyticsConsent_privacyPolicy),
         );
         verify(
-          () => bloc.add(LoginPrivacyPolicyPressed()),
+          () => bloc.add(AnalyticsConsentPrivacyPolicyPressed()),
         ).called(1);
       },
     );

@@ -112,29 +112,29 @@ abstract class AppLocalizations {
   /// **'Help improve the app?'**
   String get analyticsConsent_title;
 
-  /// No description provided for @analyticsConsent_explanation.
+  /// No description provided for @analyticsConsent_explanationPart1.
   ///
   /// In en, this message translates to:
   /// **'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.'**
-  String get analyticsConsent_explanation;
+  String get analyticsConsent_explanationPart1;
 
-  /// No description provided for @analyticsConsent_privacyPolicyPart1.
+  /// No description provided for @analyticsConsent_explanationPart2.
   ///
   /// In en, this message translates to:
-  /// **'Learn more in our '**
-  String get analyticsConsent_privacyPolicyPart1;
+  /// **' Learn more in our '**
+  String get analyticsConsent_explanationPart2;
 
-  /// No description provided for @analyticsConsent_privacyPolicyPart2.
+  /// No description provided for @analyticsConsent_privacyPolicy.
   ///
   /// In en, this message translates to:
   /// **'privacy policy'**
-  String get analyticsConsent_privacyPolicyPart2;
+  String get analyticsConsent_privacyPolicy;
 
-  /// No description provided for @analyticsConsent_privacyPolicyPart3.
+  /// No description provided for @analyticsConsent_explanationPart4.
   ///
   /// In en, this message translates to:
   /// **'.'**
-  String get analyticsConsent_privacyPolicyPart3;
+  String get analyticsConsent_explanationPart4;
 
   /// No description provided for @analyticsConsent_agreeAction.
   ///

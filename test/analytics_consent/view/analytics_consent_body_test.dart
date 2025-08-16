@@ -29,6 +29,20 @@ void main() {
       );
     }
 
+    testWidgets('renders $CustomScrollView '
+        'and $SliverFillRemaining', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(
+        find.descendant(
+          of: find.byType(CustomScrollView),
+          matching: find.byWidgetPredicate(
+            (widget) => widget is SliverFillRemaining && !widget.hasScrollBody,
+          ),
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('renders $AnalyticsConsentAgreeButton', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AnalyticsConsentAgreeButton), findsOneWidget);

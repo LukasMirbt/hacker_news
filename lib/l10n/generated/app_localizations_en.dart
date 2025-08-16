@@ -18,17 +18,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get analyticsConsent_title => 'Help improve the app?';
 
   @override
-  String get analyticsConsent_explanation =>
+  String get analyticsConsent_explanationPart1 =>
       'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.';
 
   @override
-  String get analyticsConsent_privacyPolicyPart1 => 'Learn more in our ';
+  String get analyticsConsent_explanationPart2 => ' Learn more in our ';
 
   @override
-  String get analyticsConsent_privacyPolicyPart2 => 'privacy policy';
+  String get analyticsConsent_privacyPolicy => 'privacy policy';
 
   @override
-  String get analyticsConsent_privacyPolicyPart3 => '.';
+  String get analyticsConsent_explanationPart4 => '.';
 
   @override
   String get analyticsConsent_agreeAction => 'Help improve';

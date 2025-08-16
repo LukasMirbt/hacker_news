@@ -18,7 +18,7 @@ class _MockAnalyticsConsentBloc
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
-  group(AnalyticsConsentAgreeButton, () {
+  group(AnalyticsConsentDeclineButton, () {
     late AnalyticsConsentBloc bloc;
 
     setUp(() {
@@ -28,22 +28,22 @@ void main() async {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: AnalyticsConsentAgreeButton(),
+        child: AnalyticsConsentDeclineButton(),
       );
     }
 
-    testWidgets('renders $AppFilledButton', (tester) async {
+    testWidgets('renders $AppOutlinedButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppFilledButton), findsOneWidget);
+      expect(find.byType(AppOutlinedButton), findsOneWidget);
     });
 
-    testWidgets('adds $AnalyticsConsentAgreePressed '
-        'onPressed', (tester) async {
+    testWidgets('adds $AnalyticsConsentDeclinePressed '
+        'when $AppOutlinedButton is pressed', (tester) async {
       await tester.pumpApp(buildSubject());
-      await tester.tap(find.byType(AppFilledButton));
+      await tester.tap(find.byType(AppOutlinedButton));
       verify(
         () => bloc.add(
-          AnalyticsConsentAgreePressed(),
+          AnalyticsConsentDeclinePressed(),
         ),
       ).called(1);
     });
@@ -51,7 +51,7 @@ void main() async {
     testWidgets('renders correct text', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.text(l10n.analyticsConsent_agreeAction),
+        find.text(l10n.analyticsConsent_declineAction),
         findsOneWidget,
       );
     });
