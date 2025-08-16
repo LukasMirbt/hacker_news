@@ -87,7 +87,7 @@ void main() {
             exception,
             any(),
           ),
-        );
+        ).called(1);
       });
     });
 
@@ -143,8 +143,8 @@ void main() {
         await service.update((cookies) {
           cookies[key] = updatedValue;
         });
-        verify(serialize);
-        verify(write);
+        verify(serialize).called(1);
+        verify(write).called(1);
         expect(service.read(key), updatedValue);
       });
     });

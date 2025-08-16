@@ -153,7 +153,11 @@ void main() async {
       await tester.pumpApp(buildSubject());
       final widget = findWidget(tester);
       widget.onSubmitted?.call('');
-      verify(() => bloc.add(CreateAccountSubmitted())).called(1);
+      verify(
+        () => bloc.add(
+          CreateAccountSubmitted(),
+        ),
+      ).called(1);
     });
   });
 }

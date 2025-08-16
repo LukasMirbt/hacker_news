@@ -69,7 +69,7 @@ void main() {
           () => bloc.add(
             AuthenticationLogoutPressed(),
           ),
-        );
+        ).called(1);
       });
     });
   });
