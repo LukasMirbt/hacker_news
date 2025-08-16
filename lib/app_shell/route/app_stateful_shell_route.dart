@@ -12,6 +12,7 @@ import 'package:hacker_client/home/home.dart';
 import 'package:hacker_client/post/post.dart';
 import 'package:hacker_client/reply/reply.dart' hide ReplyParent;
 import 'package:hacker_client/settings/settings.dart';
+import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ part '../../home/route/home_route.dart';
 part '../../post/route/post_route.dart';
 part '../../reply/route/reply_route.dart';
 part '../../settings/route/settings_route.dart';
+part '../../theme/route/theme_route.dart';
 part '../../thread_feed/route/thread_feed_route.dart';
 part 'app_stateful_shell_route.g.dart';
 

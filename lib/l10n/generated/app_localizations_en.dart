@@ -269,13 +269,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_logout => 'Logout';
 
   @override
-  String get settings_themeSectionTitle => 'Theme';
-
-  @override
-  String get settings_generalSectionTitle => 'General';
-
-  @override
-  String get settings_userSectionTitle => 'User';
+  String get settings_theme => 'Theme';
 
   @override
   String get settings_licenses => 'Licenses';
@@ -287,13 +281,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_privacyPolicy => 'Privacy policy';
 
   @override
-  String get theme_system => 'Use device settings';
+  String get settings_userSectionTitle => 'User';
 
   @override
-  String get theme_light => 'Light';
+  String get theme_title => 'Theme';
 
   @override
-  String get theme_dark => 'Dark';
+  String get theme_systemMode => 'Use device settings';
+
+  @override
+  String get theme_lightMode => 'Light';
+
+  @override
+  String get theme_darkMode => 'Dark';
 
   @override
   String threadFeed_age({required String age}) {

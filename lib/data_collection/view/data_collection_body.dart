@@ -9,14 +9,9 @@ class DataCollectionBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.symmetric(
-        vertical: AppSpacing.lg,
-        horizontal: AppSpacing.xlg,
+        vertical: AppSpacing.sm,
       ),
-      child: Column(
-        children: [
-          AnalyticsSwitch(),
-        ],
-      ),
+      child: AnalyticsSwitch(),
     );
   }
 }

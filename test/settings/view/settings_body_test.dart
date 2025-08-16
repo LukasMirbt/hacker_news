@@ -10,14 +10,24 @@ void main() {
   group(SettingsBody, () {
     Widget buildSubject() => SettingsBody();
 
-    testWidgets('renders $ThemeSection', (tester) async {
+    testWidgets('renders $ThemeListItem', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ThemeSection), findsOneWidget);
+      expect(find.byType(ThemeListItem), findsOneWidget);
     });
 
-    testWidgets('renders $GeneralSection', (tester) async {
+    testWidgets('renders $DataCollectionListItem', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(GeneralSection), findsOneWidget);
+      expect(find.byType(DataCollectionListItem), findsOneWidget);
+    });
+
+    testWidgets('renders $LicenseListItem', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(LicenseListItem), findsOneWidget);
+    });
+
+    testWidgets('renders $PrivacyPolicyListItem', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(PrivacyPolicyListItem), findsOneWidget);
     });
 
     testWidgets('renders $UserSection', (tester) async {

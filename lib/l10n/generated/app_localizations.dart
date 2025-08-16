@@ -574,23 +574,11 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get settings_logout;
 
-  /// No description provided for @settings_themeSectionTitle.
+  /// No description provided for @settings_theme.
   ///
   /// In en, this message translates to:
   /// **'Theme'**
-  String get settings_themeSectionTitle;
-
-  /// No description provided for @settings_generalSectionTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'General'**
-  String get settings_generalSectionTitle;
-
-  /// No description provided for @settings_userSectionTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'User'**
-  String get settings_userSectionTitle;
+  String get settings_theme;
 
   /// No description provided for @settings_licenses.
   ///
@@ -610,23 +598,35 @@ abstract class AppLocalizations {
   /// **'Privacy policy'**
   String get settings_privacyPolicy;
 
-  /// No description provided for @theme_system.
+  /// No description provided for @settings_userSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get settings_userSectionTitle;
+
+  /// No description provided for @theme_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme_title;
+
+  /// No description provided for @theme_systemMode.
   ///
   /// In en, this message translates to:
   /// **'Use device settings'**
-  String get theme_system;
+  String get theme_systemMode;
 
-  /// No description provided for @theme_light.
+  /// No description provided for @theme_lightMode.
   ///
   /// In en, this message translates to:
   /// **'Light'**
-  String get theme_light;
+  String get theme_lightMode;
 
-  /// No description provided for @theme_dark.
+  /// No description provided for @theme_darkMode.
   ///
   /// In en, this message translates to:
   /// **'Dark'**
-  String get theme_dark;
+  String get theme_darkMode;
 
   /// No description provided for @threadFeed_age.
   ///

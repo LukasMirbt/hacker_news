@@ -45,6 +45,7 @@ void main() {
         expect(
           SettingsRoute.config.routes,
           [
+            ThemeRoute.config,
             DataCollectionRoute.config,
           ],
         );
