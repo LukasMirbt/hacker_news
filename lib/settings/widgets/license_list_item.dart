@@ -10,6 +10,7 @@ class LicenseListItem extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     return ListTile(
+      leading: const AppIcon(Symbols.description_rounded),
       title: Text(l10n.settings_licenses),
       trailing: const AppIcon(Symbols.chevron_right_rounded),
       onTap: () {

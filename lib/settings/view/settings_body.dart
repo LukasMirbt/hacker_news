@@ -11,16 +11,15 @@ class SettingsBody extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: AppSpacing.lg,
-            horizontal: AppSpacing.xlg,
+            vertical: AppSpacing.sm,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: AppSpacing.lg,
             children: [
-              ThemeSection(),
-              Divider(),
-              GeneralSection(),
+              ThemeListItem(),
+              DataCollectionListItem(),
+              LicenseListItem(),
+              PrivacyPolicyListItem(),
               Divider(),
               UserSection(),
             ],

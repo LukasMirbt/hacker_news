@@ -6,6 +6,7 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute, EquatableMixin {
   static const config = TypedGoRoute<SettingsRoute>(
     path: '/settings',
     routes: [
+      ThemeRoute.config,
       DataCollectionRoute.config,
     ],
   );
