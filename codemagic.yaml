@@ -1,6 +1,8 @@
 definitions:
-    flutter-version: &flutter-version
-        flutter: 3.32.8
+    shared_env: &shared_env
+        flutter: &flutter-version 3.35.0
+        vars:
+            FLUTTER_VERSION: *flutter-version
 
     set-build-version: &set-build-version
         name: Set build version
@@ -31,7 +33,7 @@ definitions:
         integrations:
             app_store_connect: Hacker Client API Key
         environment:
-            <<: *flutter-version
+            <<: *shared_env
             ios_signing:
                 distribution_type: app_store
                 bundle_identifier: "com.lukasmirbt.hackerclient"
@@ -58,7 +60,7 @@ definitions:
 
     android-config: &android-config
         environment:
-            <<: *flutter-version
+            <<: *shared_env
             android_signing:
                 - Hacker Client Keystore
             groups:
@@ -85,6 +87,7 @@ workflows:
             - name: Shorebird Release iOS
               script: |
                   shorebird release ios \
+                    --flutter-version=$FLUTTER_VERSION
                     --build-name=$BUILD_NAME \
                     --build-number=$BUILD_NUMBER \
                     --export-options-plist=/Users/builder/export_options.plist
@@ -128,6 +131,7 @@ workflows:
             - name: Shorebird Release Android
               script: |
                   shorebird release android \
+                    --flutter-version=$FLUTTER_VERSION \
                     --build-name=$BUILD_NAME \
                     --build-number=$BUILD_NUMBER
         artifacts:
