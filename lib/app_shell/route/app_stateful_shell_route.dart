@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment/comment.dart';
+import 'package:hacker_client/content_settings/content_settings.dart';
 import 'package:hacker_client/data_collection/data_collection.dart';
 import 'package:hacker_client/drafts/drafts.dart';
 import 'package:hacker_client/home/home.dart';
@@ -17,6 +18,7 @@ import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
 
 part '../../comment/route/comment_route.dart';
+part '../../content_settings/view/content_settings_route.dart';
 part '../../data_collection/route/data_collection_route.dart';
 part '../../drafts/route/draft_route.dart';
 part '../../home/route/home_route.dart';

@@ -17,6 +17,8 @@ class SettingsBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ThemeListItem(),
+              ContentSettingsListItem(),
+              Divider(),
               DataCollectionListItem(),
               LicenseListItem(),
               PrivacyPolicyListItem(),

@@ -1,3 +1,4 @@
+import 'package:analytics_consent_storage/analytics_consent_storage.dart';
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
 import 'package:app_database/app_database.dart';
@@ -12,7 +13,6 @@ import 'package:hacker_client/app/app.dart';
 import 'package:hacker_client/firebase_options.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:persistent_storage/persistent_storage.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:secure_cookie_storage/secure_cookie_storage.dart';
@@ -26,10 +26,8 @@ import 'package:vote_repository/vote_repository.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final sharedPreferences = SharedPreferencesAsync();
-
-  final persistentStorage = PersistentStorage(
-    sharedPreferences: sharedPreferences,
+  final sharedPreferences = await SharedPreferencesWithCache.create(
+    cacheOptions: const SharedPreferencesWithCacheOptions(),
   );
 
   final directory = await getApplicationDocumentsDirectory();
@@ -55,12 +53,14 @@ void main() async {
     !kDebugMode,
   );
 
+  final analyticsConsentStorage = AnalyticsConsentStorage(
+    sharedPreferences: sharedPreferences,
+  );
+
   final analyticsRepository = AnalyticsRepository(
     firebaseApp,
     firebaseAnalytics: FirebaseAnalytics.instance,
-    consentStorage: AnalyticsConsentStorage(
-      storage: persistentStorage,
-    ),
+    analyticsConsentStorage: analyticsConsentStorage,
   );
 
   Bloc.observer = AppBlocObserver(

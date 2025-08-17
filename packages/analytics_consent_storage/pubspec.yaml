@@ -1,4 +1,4 @@
-name: analytics_repository
+name: analytics_consent_storage
 description: A repository that handles analytics.
 version: 0.1.0+1
 publish_to: none
@@ -9,15 +9,10 @@ environment:
 resolution: workspace
 
 dependencies:
-  analytics_consent_storage:
-    path: ../analytics_consent_storage
-  equatable: ^2.0.7
-  firebase_analytics: ^11.4.0
-  firebase_core: ^3.10.0
   flutter:
     sdk: flutter
   mocktail: ^1.0.4
-  recase: ^4.1.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

@@ -238,6 +238,24 @@ abstract class AppLocalizations {
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
 
+  /// No description provided for @contentSettings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Content settings'**
+  String get contentSettings_title;
+
+  /// No description provided for @contentSettings_inAppLaunchMode.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app browser'**
+  String get contentSettings_inAppLaunchMode;
+
+  /// No description provided for @contentSettings_externalLaunchMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Device default browser'**
+  String get contentSettings_externalLaunchMode;
+
   /// No description provided for @createAccount_title.
   ///
   /// In en, this message translates to:

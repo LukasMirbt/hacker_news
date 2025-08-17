@@ -7,6 +7,7 @@ environment:
   sdk: ^3.9.0
 
 workspace:
+  - packages/analytics_consent_storage
   - packages/analytics_repository
   - packages/app_client
   - packages/app_client_platform_configuration
@@ -34,9 +35,6 @@ workspace:
   - packages/secure_cookie_storage
   - packages/secure_user_id_storage
   - packages/share_launcher
-  - packages/storage/persistent_storage
-  - packages/storage/secure_storage
-  - packages/storage/storage
   - packages/thread_api
   - packages/thread_parser
   - packages/thread_repository
@@ -47,6 +45,8 @@ workspace:
   - packages/web_links
 
 dependencies:
+  analytics_consent_storage:
+    path: packages/analytics_consent_storage
   analytics_repository:
     path: packages/analytics_repository
   app_client:
@@ -109,8 +109,6 @@ dependencies:
   nested: ^1.0.0
   path: ^1.9.1
   path_provider: ^2.1.5
-  persistent_storage:
-    path: packages/storage/persistent_storage
   plugin_platform_interface: ^2.1.8
   post_api:
     path: packages/post_api
@@ -127,8 +125,6 @@ dependencies:
     path: packages/reply_repository
   secure_cookie_storage:
     path: packages/secure_cookie_storage
-  secure_storage:
-    path: packages/storage/secure_storage
   secure_user_id_storage:
     path: packages/secure_user_id_storage
   share_launcher:

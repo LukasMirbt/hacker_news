@@ -21,16 +21,20 @@ class LinkFailure with EquatableMixin implements Exception {
 }
 
 class LinkLauncher {
-  const LinkLauncher({WebLinks? webLinks})
-    : _webLinks = webLinks ?? const WebLinks();
+  const LinkLauncher({
+    WebLinks? webLinks,
+    /*  LaunchModeService? launchModeService, */
+  }) : _webLinks = webLinks ?? const WebLinks();
 
   final WebLinks _webLinks;
+  /*   final LaunchModeStorage _launchModeStorage; */
 
   Future<void> launch(String urlString) async {
     bool didLaunch;
 
     try {
       final url = _webLinks.resolve(urlString);
+      /*       final mode = _launchModeStorage.read(); */
 
       didLaunch = await launchUrl(
         url,
@@ -45,4 +49,10 @@ class LinkLauncher {
 
     if (!didLaunch) throw LinkFailure(urlString);
   }
+
+  /*   LaunchMode get launchMode => _launchModeStorage.read();
+
+  void toggleLaunchMode() {
+    final launchMode = await _
+  } */
 }
