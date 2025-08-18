@@ -8,13 +8,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
-import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
-
-class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
@@ -31,12 +28,10 @@ void main() {
 
   group(FeedItemPressListener, () {
     late FeedBloc bloc;
-    late LinkLauncher linkLauncher;
     late AppRouter router;
 
     setUp(() {
       bloc = _MockFeedBloc();
-      linkLauncher = _MockLinkLauncher();
       router = _MockAppRouter();
       when(() => bloc.state).thenReturn(initialState);
     });
@@ -47,21 +42,19 @@ void main() {
         child: BlocProvider.value(
           value: bloc,
           child: FeedItemPressListener(
-            linkLauncher: linkLauncher,
             child: child,
           ),
         ),
       );
     }
 
-    testWidgets('calls launch when urlHost is non-null', (tester) async {
+    testWidgets('adds $FeedItemLinkLaunched when urlHost '
+        'is non-null', (tester) async {
       final itemPress = ItemPress(
         id: 'id',
         urlHost: 'urlHost',
         url: 'url',
       );
-      final launch = () => linkLauncher.launch(itemPress.url);
-      when(launch).thenAnswer((_) async {});
       whenListen(
         bloc,
         initialState: initialState,
@@ -72,10 +65,15 @@ void main() {
         ),
       );
       await tester.pumpApp(buildSubject());
-      verify(launch).called(1);
+      verify(
+        () => bloc.add(
+          FeedItemLinkLaunched(itemPress.url),
+        ),
+      ).called(1);
     });
 
-    testWidgets('navigates to $PostRoute when urlHost is null', (tester) async {
+    testWidgets('navigates to $PostRoute when urlHost '
+        'is null', (tester) async {
       final itemPress = ItemPress(
         id: 'id',
         urlHost: null,

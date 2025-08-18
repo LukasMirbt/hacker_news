@@ -14,14 +14,16 @@ class _MockDataCollectionBloc
     implements DataCollectionBloc {}
 
 void main() {
-  final initialState = DataCollectionState();
+  final initialState = DataCollectionState(
+    isAnalyticsCollectionEnabled: false,
+  );
 
   group(AnalyticsSwitch, () {
     late DataCollectionBloc bloc;
 
     setUp(() {
       bloc = _MockDataCollectionBloc();
-      when(() => bloc.state).thenReturn(DataCollectionState());
+      when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
