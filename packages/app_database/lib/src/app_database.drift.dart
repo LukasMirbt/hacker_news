@@ -3,6 +3,7 @@
 import 'package:drift/drift.dart' as i0;
 import 'package:draft_storage/src/tables/reply_drafts.drift.dart' as i1;
 import 'package:draft_storage/src/tables/comment_drafts.drift.dart' as i2;
+import 'package:visited_post_storage/src/tables/visited_posts.drift.dart' as i3;
 
 abstract class $AppDatabase extends i0.GeneratedDatabase {
   $AppDatabase(i0.QueryExecutor e) : super(e);
@@ -11,6 +12,7 @@ abstract class $AppDatabase extends i0.GeneratedDatabase {
   late final i2.$CommentDraftsTable commentDrafts = i2.$CommentDraftsTable(
     this,
   );
+  late final i3.$VisitedPostsTable visitedPosts = i3.$VisitedPostsTable(this);
   @override
   Iterable<i0.TableInfo<i0.Table, Object?>> get allTables =>
       allSchemaEntities.whereType<i0.TableInfo<i0.Table, Object?>>();
@@ -18,6 +20,7 @@ abstract class $AppDatabase extends i0.GeneratedDatabase {
   List<i0.DatabaseSchemaEntity> get allSchemaEntities => [
     replyDrafts,
     commentDrafts,
+    visitedPosts,
   ];
   @override
   i0.DriftDatabaseOptions get options =>
@@ -31,4 +34,6 @@ class $AppDatabaseManager {
       i1.$$ReplyDraftsTableTableManager(_db, _db.replyDrafts);
   i2.$$CommentDraftsTableTableManager get commentDrafts =>
       i2.$$CommentDraftsTableTableManager(_db, _db.commentDrafts);
+  i3.$$VisitedPostsTableTableManager get visitedPosts =>
+      i3.$$VisitedPostsTableTableManager(_db, _db.visitedPosts);
 }

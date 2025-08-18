@@ -12,7 +12,6 @@ enum DataCollectionStatus {
 @freezed
 abstract class DataCollectionState with _$DataCollectionState {
   const factory DataCollectionState({
-    @Default(DataCollectionStatus.loading) DataCollectionStatus status,
-    @Default(false) bool isAnalyticsCollectionEnabled,
+    required bool isAnalyticsCollectionEnabled,
   }) = _DataCollectionState;
 }

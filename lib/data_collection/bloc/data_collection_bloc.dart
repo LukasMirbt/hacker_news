@@ -7,26 +7,16 @@ class DataCollectionBloc
   DataCollectionBloc({
     required AnalyticsRepository analyticsRepository,
   }) : _repository = analyticsRepository,
-       super(const DataCollectionState()) {
-    on<DataCollectionStarted>(_onStarted);
+       super(
+         DataCollectionState(
+           isAnalyticsCollectionEnabled: analyticsRepository
+               .isAnalyticsCollectionEnabled(),
+         ),
+       ) {
     on<DataCollectionAnalyticsToggled>(_onAnalyticsToggled);
   }
 
   final AnalyticsRepository _repository;
-
-  Future<void> _onStarted(
-    DataCollectionStarted event,
-    Emitter<DataCollectionState> emit,
-  ) async {
-    final enabled = await _repository.isAnalyticsCollectionEnabled();
-
-    emit(
-      state.copyWith(
-        isAnalyticsCollectionEnabled: enabled,
-        status: DataCollectionStatus.success,
-      ),
-    );
-  }
 
   void _onAnalyticsToggled(
     DataCollectionAnalyticsToggled event,

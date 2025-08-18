@@ -14,15 +14,14 @@ import 'package:hacker_client/authentication/authentication.dart'
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
-import 'package:visited_post_repository/visited_post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 import 'package:vote_repository/vote_repository.dart';
-
-import '../init_mock_hydrated_storage.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 
@@ -32,7 +31,14 @@ class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
 
+class _MockSettingsStorage extends Mock implements SettingsStorage {
+  @override
+  bool readIsAnalyticsConsentCompleted() => false;
+}
+
 class _MockThreadApi extends Mock implements ThreadApi {}
+
+class _MockVisitedPostStorage extends Mock implements VisitedPostStorage {}
 
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 
@@ -44,6 +50,8 @@ class _MockAuthenticationRepository extends Mock
   @override
   Stream<AuthenticationState> get stream => Stream.empty();
 }
+
+class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 class _MockReplyRepository extends Mock implements ReplyRepository {}
 
@@ -61,19 +69,19 @@ class _MockVoteRepository extends Mock implements VoteRepository {
 }
 
 void main() {
-  initMockHydratedStorage();
-
   group(App, () {
     late AuthenticationApi authenticationApi;
     late DraftStorage draftStorage;
     late FeedApi feedApi;
     late PostApi postApi;
+    late SettingsStorage settingsStorage;
     late ThreadApi threadApi;
+    late VisitedPostStorage visitedPostStorage;
     late AnalyticsRepository analyticsRepository;
     late AuthenticationRepository authenticationRepository;
+    late LinkLauncher linkLauncher;
     late ReplyRepository replyRepository;
     late VersionRepository versionRepository;
-    late VisitedPostRepository visitedPostRepository;
     late VoteRepository voteRepository;
 
     setUp(() {
@@ -81,12 +89,14 @@ void main() {
       draftStorage = _MockDraftStorage();
       feedApi = _MockFeedApi();
       postApi = _MockPostApi();
+      settingsStorage = _MockSettingsStorage();
       threadApi = _MockThreadApi();
+      visitedPostStorage = _MockVisitedPostStorage();
       analyticsRepository = _MockAnalyticsRepository();
       authenticationRepository = _MockAuthenticationRepository();
+      linkLauncher = _MockLinkLauncher();
       replyRepository = _MockReplyRepository();
       voteRepository = _MockVoteRepository();
-      visitedPostRepository = VisitedPostRepository();
       versionRepository = _MockVersionRepository();
     });
 
@@ -96,12 +106,14 @@ void main() {
         draftStorage: draftStorage,
         feedApi: feedApi,
         postApi: postApi,
+        settingsStorage: settingsStorage,
         threadApi: threadApi,
+        visitedPostStorage: visitedPostStorage,
         analyticsRepository: analyticsRepository,
         authenticationRepository: authenticationRepository,
+        linkLauncher: linkLauncher,
         replyRepository: replyRepository,
         versionRepository: versionRepository,
-        visitedPostRepository: visitedPostRepository,
         voteRepository: voteRepository,
       );
     }
@@ -134,10 +146,22 @@ void main() {
       expect(context.read<PostApi>(), isNotNull);
     });
 
+    testWidgets('provides $SettingsStorage', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<SettingsStorage>(), isNotNull);
+    });
+
     testWidgets('provides $ThreadApi', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<ThreadApi>(), isNotNull);
+    });
+
+    testWidgets('provides $VisitedPostStorage', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<VisitedPostStorage>(), isNotNull);
     });
 
     testWidgets('provides $AnalyticsRepository', (tester) async {
@@ -152,6 +176,12 @@ void main() {
       expect(context.read<AuthenticationRepository>(), isNotNull);
     });
 
+    testWidgets('provides $LinkLauncher', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<LinkLauncher>(), isNotNull);
+    });
+
     testWidgets('provides $ReplyRepository', (tester) async {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
@@ -162,12 +192,6 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<VersionRepository>(), isNotNull);
-    });
-
-    testWidgets('provides $VisitedPostRepository', (tester) async {
-      await tester.pumpWidget(buildSubject());
-      final context = childContext(tester);
-      expect(context.read<VisitedPostRepository>(), isNotNull);
     });
 
     testWidgets('provides $VoteRepository', (tester) async {

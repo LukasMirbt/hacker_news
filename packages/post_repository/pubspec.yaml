@@ -21,6 +21,8 @@ dependencies:
   freezed_annotation: ^3.1.0
   post_api:
     path: ../post_api
+  visited_post_storage:
+    path: ../visited_post_storage
 
 dev_dependencies:
   bloc_test: ^10.0.0

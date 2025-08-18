@@ -11,33 +11,30 @@ part of 'app_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$AppState {
 
- AppStatus get status;
+ bool get isAnalyticsConsentCompleted;
 /// Create a copy of AppState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $AppStateCopyWith<AppState> get copyWith => _$AppStateCopyWithImpl<AppState>(this as AppState, _$identity);
 
-  /// Serializes this AppState to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppState&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppState&&(identical(other.isAnalyticsConsentCompleted, isAnalyticsConsentCompleted) || other.isAnalyticsConsentCompleted == isAnalyticsConsentCompleted));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,status);
+int get hashCode => Object.hash(runtimeType,isAnalyticsConsentCompleted);
 
 @override
 String toString() {
-  return 'AppState(status: $status)';
+  return 'AppState(isAnalyticsConsentCompleted: $isAnalyticsConsentCompleted)';
 }
 
 
@@ -48,7 +45,7 @@ abstract mixin class $AppStateCopyWith<$Res>  {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) _then) = _$AppStateCopyWithImpl;
 @useResult
 $Res call({
- AppStatus status
+ bool isAnalyticsConsentCompleted
 });
 
 
@@ -65,10 +62,10 @@ class _$AppStateCopyWithImpl<$Res>
 
 /// Create a copy of AppState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isAnalyticsConsentCompleted = null,}) {
   return _then(_self.copyWith(
-status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AppStatus,
+isAnalyticsConsentCompleted: null == isAnalyticsConsentCompleted ? _self.isAnalyticsConsentCompleted : isAnalyticsConsentCompleted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -153,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isAnalyticsConsentCompleted)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppState() when $default != null:
-return $default(_that.status);case _:
+return $default(_that.isAnalyticsConsentCompleted);case _:
   return orElse();
 
 }
@@ -174,10 +171,10 @@ return $default(_that.status);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppStatus status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isAnalyticsConsentCompleted)  $default,) {final _that = this;
 switch (_that) {
 case _AppState():
-return $default(_that.status);case _:
+return $default(_that.isAnalyticsConsentCompleted);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +191,10 @@ return $default(_that.status);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppStatus status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isAnalyticsConsentCompleted)?  $default,) {final _that = this;
 switch (_that) {
 case _AppState() when $default != null:
-return $default(_that.status);case _:
+return $default(_that.isAnalyticsConsentCompleted);case _:
   return null;
 
 }
@@ -206,13 +203,13 @@ return $default(_that.status);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
-class _AppState implements AppState {
-  const _AppState({this.status = AppStatus.initial});
-  factory _AppState.fromJson(Map<String, dynamic> json) => _$AppStateFromJson(json);
 
-@override@JsonKey() final  AppStatus status;
+class _AppState extends AppState {
+  const _AppState({required this.isAnalyticsConsentCompleted}): super._();
+  
+
+@override final  bool isAnalyticsConsentCompleted;
 
 /// Create a copy of AppState
 /// with the given fields replaced by the non-null parameter values.
@@ -220,23 +217,20 @@ class _AppState implements AppState {
 @pragma('vm:prefer-inline')
 _$AppStateCopyWith<_AppState> get copyWith => __$AppStateCopyWithImpl<_AppState>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AppStateToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppState&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppState&&(identical(other.isAnalyticsConsentCompleted, isAnalyticsConsentCompleted) || other.isAnalyticsConsentCompleted == isAnalyticsConsentCompleted));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,status);
+int get hashCode => Object.hash(runtimeType,isAnalyticsConsentCompleted);
 
 @override
 String toString() {
-  return 'AppState(status: $status)';
+  return 'AppState(isAnalyticsConsentCompleted: $isAnalyticsConsentCompleted)';
 }
 
 
@@ -247,7 +241,7 @@ abstract mixin class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res>
   factory _$AppStateCopyWith(_AppState value, $Res Function(_AppState) _then) = __$AppStateCopyWithImpl;
 @override @useResult
 $Res call({
- AppStatus status
+ bool isAnalyticsConsentCompleted
 });
 
 
@@ -264,10 +258,10 @@ class __$AppStateCopyWithImpl<$Res>
 
 /// Create a copy of AppState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isAnalyticsConsentCompleted = null,}) {
   return _then(_AppState(
-status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AppStatus,
+isAnalyticsConsentCompleted: null == isAnalyticsConsentCompleted ? _self.isAnalyticsConsentCompleted : isAnalyticsConsentCompleted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

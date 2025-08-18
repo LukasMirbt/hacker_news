@@ -87,13 +87,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
-  String get contentSettings_title => 'Content settings';
+  String get contentSettings_title => 'Content';
 
   @override
-  String get contentSettings_inAppLaunchMode => 'In-app browser';
+  String get contentSettings_inAppLaunchMode => 'Use in-app browser';
 
   @override
-  String get contentSettings_externalLaunchMode => 'Device default browser';
+  String get contentSettings_externalLaunchMode => 'Use device default browser';
 
   @override
   String get createAccount_title => 'Create account';

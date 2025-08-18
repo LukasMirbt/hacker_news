@@ -16,6 +16,7 @@ import 'package:hacker_client/settings/settings.dart';
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 
 part '../../comment/route/comment_route.dart';
 part '../../content_settings/view/content_settings_route.dart';
@@ -51,6 +52,7 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
     return RepositoryProvider(
       create: (context) => FeedRepository(
         feedApi: context.read<FeedApi>(),
+        visitedPostStorage: context.read<VisitedPostStorage>(),
       ),
       child: Provider.value(
         value: navigationShell,

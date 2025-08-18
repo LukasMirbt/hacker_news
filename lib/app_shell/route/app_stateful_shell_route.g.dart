@@ -158,7 +158,7 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
               factory: _$ThemeRoute._fromState,
             ),
             GoRouteData.$route(
-              path: 'data-collection',
+              path: 'content',
 
               parentNavigatorKey: ContentSettingsRoute.$parentNavigatorKey,
 
@@ -388,7 +388,7 @@ mixin _$ContentSettingsRoute on GoRouteData {
       const ContentSettingsRoute();
 
   @override
-  String get location => GoRouteData.$location('/settings/data-collection');
+  String get location => GoRouteData.$location('/settings/content');
 
   @override
   void go(BuildContext context) => context.go(location);

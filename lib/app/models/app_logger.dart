@@ -12,6 +12,8 @@ abstract class AppLogger {
       logger.level = Level.FINE;
     }
 
+    // TODO: Make sure that onRecord is connected to Crashlytics.
+
     logger.onRecord.listen(
       (record) {
         log(

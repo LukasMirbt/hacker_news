@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/login/login.dart';
+import 'package:link_launcher/link_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({
@@ -17,6 +18,7 @@ class LoginPage extends StatelessWidget {
       create: (context) => LoginBloc(
         from: from,
         authenticationRepository: context.read<AuthenticationRepository>(),
+        linkLauncher: context.read<LinkLauncher>(),
       ),
       child: const LoginView(),
     );

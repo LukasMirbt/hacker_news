@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hacker_client/content_settings/content_settings.dart';
+import 'package:settings_storage/settings_storage.dart';
 
 sealed class ContentSettingsEvent extends Equatable {
   const ContentSettingsEvent();

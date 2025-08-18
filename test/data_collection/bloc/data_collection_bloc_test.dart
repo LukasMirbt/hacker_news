@@ -10,13 +10,20 @@ import 'package:mocktail/mocktail.dart';
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
 
 void main() {
-  final initialState = DataCollectionState();
+  const isAnalyticsCollectionEnabled = false;
+
+  final initialState = DataCollectionState(
+    isAnalyticsCollectionEnabled: isAnalyticsCollectionEnabled,
+  );
 
   group(DataCollectionBloc, () {
     late AnalyticsRepository repository;
 
     setUp(() {
       repository = _MockAnalyticsRepository();
+      when(repository.isAnalyticsCollectionEnabled).thenReturn(
+        isAnalyticsCollectionEnabled,
+      );
     });
 
     DataCollectionBloc buildBloc() {
@@ -24,33 +31,6 @@ void main() {
         analyticsRepository: repository,
       );
     }
-
-    group(DataCollectionStarted, () {
-      const enabled = true;
-      final request = () => repository.isAnalyticsCollectionEnabled();
-
-      blocTest<DataCollectionBloc, DataCollectionState>(
-        'emits isAnalyticsCollectionEnabled and [success]',
-        setUp: () {
-          when(request).thenAnswer((_) async => enabled);
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            DataCollectionStarted(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            isAnalyticsCollectionEnabled: enabled,
-            status: DataCollectionStatus.success,
-          ),
-        ],
-        verify: (_) {
-          verify(request).called(1);
-        },
-      );
-    });
 
     group(DataCollectionAnalyticsToggled, () {
       final enable = () => repository.enableAnalyticsCollection();

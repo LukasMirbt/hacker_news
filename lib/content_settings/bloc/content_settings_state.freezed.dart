@@ -206,10 +206,10 @@ return $default(_that.linkLaunchMode);case _:
 
 
 class _ContentSettingsState implements ContentSettingsState {
-  const _ContentSettingsState({this.linkLaunchMode = LinkLaunchMode.inApp});
+  const _ContentSettingsState({required this.linkLaunchMode});
   
 
-@override@JsonKey() final  LinkLaunchMode linkLaunchMode;
+@override final  LinkLaunchMode linkLaunchMode;
 
 /// Create a copy of ContentSettingsState
 /// with the given fields replaced by the non-null parameter values.

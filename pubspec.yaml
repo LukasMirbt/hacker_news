@@ -34,12 +34,13 @@ workspace:
   - packages/reply_repository
   - packages/secure_cookie_storage
   - packages/secure_user_id_storage
+  - packages/settings_storage
   - packages/share_launcher
   - packages/thread_api
   - packages/thread_parser
   - packages/thread_repository
   - packages/version_repository
-  - packages/visited_post_repository
+  - packages/visited_post_storage
   - packages/vote_api
   - packages/vote_repository
   - packages/web_links
@@ -100,9 +101,7 @@ dependencies:
       ref: relative-routes
       path: packages/go_router
   html: ^0.15.6
-  hydrated_bloc: ^10.1.1
   intl: ^0.20.2
-  json_annotation: ^4.9.0
   link_launcher:
     path: packages/link_launcher
   logging: ^1.3.0
@@ -127,6 +126,8 @@ dependencies:
     path: packages/secure_cookie_storage
   secure_user_id_storage:
     path: packages/secure_user_id_storage
+  settings_storage:
+    path: packages/settings_storage
   share_launcher:
     path: packages/share_launcher
   shared_preferences: ^2.5.3
@@ -141,8 +142,8 @@ dependencies:
   version_repository:
     path: packages/version_repository
   very_good_infinite_list: ^0.9.0
-  visited_post_repository:
-    path: packages/visited_post_repository
+  visited_post_storage:
+    path: packages/visited_post_storage
   vote_api:
     path: packages/vote_api
   vote_repository:
@@ -162,7 +163,6 @@ dev_dependencies:
       url: https://github.com/LukasMirbt/packages.git
       ref: relative-routes
       path: packages/go_router_builder
-  json_serializable: ^6.10.0
   mockingjay: ^2.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0

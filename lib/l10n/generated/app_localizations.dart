@@ -241,19 +241,19 @@ abstract class AppLocalizations {
   /// No description provided for @contentSettings_title.
   ///
   /// In en, this message translates to:
-  /// **'Content settings'**
+  /// **'Content'**
   String get contentSettings_title;
 
   /// No description provided for @contentSettings_inAppLaunchMode.
   ///
   /// In en, this message translates to:
-  /// **'In-app browser'**
+  /// **'Use in-app browser'**
   String get contentSettings_inAppLaunchMode;
 
   /// No description provided for @contentSettings_externalLaunchMode.
   ///
   /// In en, this message translates to:
-  /// **'Device default browser'**
+  /// **'Use device default browser'**
   String get contentSettings_externalLaunchMode;
 
   /// No description provided for @createAccount_title.

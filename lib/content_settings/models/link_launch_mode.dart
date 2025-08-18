@@ -1,4 +1,0 @@
-enum LinkLaunchMode {
-  inApp,
-  external,
-}

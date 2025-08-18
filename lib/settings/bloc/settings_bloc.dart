@@ -5,8 +5,8 @@ import 'package:link_launcher/link_launcher.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, void> {
   SettingsBloc({
-    LinkLauncher? linkLauncher,
-  }) : _launcher = linkLauncher ?? const LinkLauncher(),
+    required LinkLauncher linkLauncher,
+  }) : _launcher = linkLauncher,
        super(null) {
     on<SettingsPrivacyPolicyPressed>(_onPrivacyPolicyPressed);
   }

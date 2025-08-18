@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DataCollectionState {
 
- DataCollectionStatus get status; bool get isAnalyticsCollectionEnabled;
+ bool get isAnalyticsCollectionEnabled;
 /// Create a copy of DataCollectionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $DataCollectionStateCopyWith<DataCollectionState> get copyWith => _$DataCollecti
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DataCollectionState&&(identical(other.status, status) || other.status == status)&&(identical(other.isAnalyticsCollectionEnabled, isAnalyticsCollectionEnabled) || other.isAnalyticsCollectionEnabled == isAnalyticsCollectionEnabled));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DataCollectionState&&(identical(other.isAnalyticsCollectionEnabled, isAnalyticsCollectionEnabled) || other.isAnalyticsCollectionEnabled == isAnalyticsCollectionEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isAnalyticsCollectionEnabled);
+int get hashCode => Object.hash(runtimeType,isAnalyticsCollectionEnabled);
 
 @override
 String toString() {
-  return 'DataCollectionState(status: $status, isAnalyticsCollectionEnabled: $isAnalyticsCollectionEnabled)';
+  return 'DataCollectionState(isAnalyticsCollectionEnabled: $isAnalyticsCollectionEnabled)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $DataCollectionStateCopyWith<$Res>  {
   factory $DataCollectionStateCopyWith(DataCollectionState value, $Res Function(DataCollectionState) _then) = _$DataCollectionStateCopyWithImpl;
 @useResult
 $Res call({
- DataCollectionStatus status, bool isAnalyticsCollectionEnabled
+ bool isAnalyticsCollectionEnabled
 });
 
 
@@ -62,10 +62,9 @@ class _$DataCollectionStateCopyWithImpl<$Res>
 
 /// Create a copy of DataCollectionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? isAnalyticsCollectionEnabled = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isAnalyticsCollectionEnabled = null,}) {
   return _then(_self.copyWith(
-status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as DataCollectionStatus,isAnalyticsCollectionEnabled: null == isAnalyticsCollectionEnabled ? _self.isAnalyticsCollectionEnabled : isAnalyticsCollectionEnabled // ignore: cast_nullable_to_non_nullable
+isAnalyticsCollectionEnabled: null == isAnalyticsCollectionEnabled ? _self.isAnalyticsCollectionEnabled : isAnalyticsCollectionEnabled // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -151,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DataCollectionStatus status,  bool isAnalyticsCollectionEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isAnalyticsCollectionEnabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DataCollectionState() when $default != null:
-return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
+return $default(_that.isAnalyticsCollectionEnabled);case _:
   return orElse();
 
 }
@@ -172,10 +171,10 @@ return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DataCollectionStatus status,  bool isAnalyticsCollectionEnabled)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isAnalyticsCollectionEnabled)  $default,) {final _that = this;
 switch (_that) {
 case _DataCollectionState():
-return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
+return $default(_that.isAnalyticsCollectionEnabled);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +191,10 @@ return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DataCollectionStatus status,  bool isAnalyticsCollectionEnabled)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isAnalyticsCollectionEnabled)?  $default,) {final _that = this;
 switch (_that) {
 case _DataCollectionState() when $default != null:
-return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
+return $default(_that.isAnalyticsCollectionEnabled);case _:
   return null;
 
 }
@@ -207,11 +206,10 @@ return $default(_that.status,_that.isAnalyticsCollectionEnabled);case _:
 
 
 class _DataCollectionState implements DataCollectionState {
-  const _DataCollectionState({this.status = DataCollectionStatus.loading, this.isAnalyticsCollectionEnabled = false});
+  const _DataCollectionState({required this.isAnalyticsCollectionEnabled});
   
 
-@override@JsonKey() final  DataCollectionStatus status;
-@override@JsonKey() final  bool isAnalyticsCollectionEnabled;
+@override final  bool isAnalyticsCollectionEnabled;
 
 /// Create a copy of DataCollectionState
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +221,16 @@ _$DataCollectionStateCopyWith<_DataCollectionState> get copyWith => __$DataColle
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DataCollectionState&&(identical(other.status, status) || other.status == status)&&(identical(other.isAnalyticsCollectionEnabled, isAnalyticsCollectionEnabled) || other.isAnalyticsCollectionEnabled == isAnalyticsCollectionEnabled));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DataCollectionState&&(identical(other.isAnalyticsCollectionEnabled, isAnalyticsCollectionEnabled) || other.isAnalyticsCollectionEnabled == isAnalyticsCollectionEnabled));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,isAnalyticsCollectionEnabled);
+int get hashCode => Object.hash(runtimeType,isAnalyticsCollectionEnabled);
 
 @override
 String toString() {
-  return 'DataCollectionState(status: $status, isAnalyticsCollectionEnabled: $isAnalyticsCollectionEnabled)';
+  return 'DataCollectionState(isAnalyticsCollectionEnabled: $isAnalyticsCollectionEnabled)';
 }
 
 
@@ -243,7 +241,7 @@ abstract mixin class _$DataCollectionStateCopyWith<$Res> implements $DataCollect
   factory _$DataCollectionStateCopyWith(_DataCollectionState value, $Res Function(_DataCollectionState) _then) = __$DataCollectionStateCopyWithImpl;
 @override @useResult
 $Res call({
- DataCollectionStatus status, bool isAnalyticsCollectionEnabled
+ bool isAnalyticsCollectionEnabled
 });
 
 
@@ -260,10 +258,9 @@ class __$DataCollectionStateCopyWithImpl<$Res>
 
 /// Create a copy of DataCollectionState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? isAnalyticsCollectionEnabled = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isAnalyticsCollectionEnabled = null,}) {
   return _then(_DataCollectionState(
-status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as DataCollectionStatus,isAnalyticsCollectionEnabled: null == isAnalyticsCollectionEnabled ? _self.isAnalyticsCollectionEnabled : isAnalyticsCollectionEnabled // ignore: cast_nullable_to_non_nullable
+isAnalyticsCollectionEnabled: null == isAnalyticsCollectionEnabled ? _self.isAnalyticsCollectionEnabled : isAnalyticsCollectionEnabled // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

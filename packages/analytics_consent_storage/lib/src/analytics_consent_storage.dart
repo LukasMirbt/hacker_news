@@ -12,11 +12,11 @@ class AnalyticsConsentStorage {
 
   final SharedPreferencesWithCache _sharedPreferences;
 
-  bool readAnalyticsCollectionEnabled() {
-    final savedValue = _sharedPreferences.getBool(
+  bool? readAnalyticsCollectionEnabled() {
+    final value = _sharedPreferences.getBool(
       AnalyticsConsentStorageKeys.isAnalyticsCollectionEnabledKey,
     );
-    return savedValue ?? false;
+    return value;
   }
 
   Future<void> writeAnalyticsCollectionEnabled({required bool enabled}) async {
