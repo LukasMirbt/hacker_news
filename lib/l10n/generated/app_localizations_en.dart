@@ -296,10 +296,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_theme => 'Theme';
 
   @override
-  String get settings_licenses => 'Licenses';
+  String get settings_content => 'Content';
 
   @override
   String get settings_dataCollection => 'Data collection';
+
+  @override
+  String get settings_licenses => 'Licenses';
 
   @override
   String get settings_privacyPolicy => 'Privacy policy';

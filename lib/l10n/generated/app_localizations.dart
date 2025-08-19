@@ -622,17 +622,23 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get settings_theme;
 
-  /// No description provided for @settings_licenses.
+  /// No description provided for @settings_content.
   ///
   /// In en, this message translates to:
-  /// **'Licenses'**
-  String get settings_licenses;
+  /// **'Content'**
+  String get settings_content;
 
   /// No description provided for @settings_dataCollection.
   ///
   /// In en, this message translates to:
   /// **'Data collection'**
   String get settings_dataCollection;
+
+  /// No description provided for @settings_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get settings_licenses;
 
   /// No description provided for @settings_privacyPolicy.
   ///

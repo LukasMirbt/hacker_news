@@ -13,7 +13,7 @@ class ContentSettingsListItem extends StatelessWidget {
 
     return ListTile(
       leading: const AppIcon(Symbols.browse_rounded),
-      title: const Text('Content'),
+      title: Text(l10n.settings_content),
       trailing: const AppIcon(Symbols.chevron_right_rounded),
       onTap: () {
         AppRouter.of(context).go(

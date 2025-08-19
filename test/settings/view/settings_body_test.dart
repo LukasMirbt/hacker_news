@@ -15,6 +15,11 @@ void main() {
       expect(find.byType(ThemeListItem), findsOneWidget);
     });
 
+    testWidgets('renders $ContentSettingsListItem', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(ContentSettingsListItem), findsOneWidget);
+    });
+
     testWidgets('renders $DataCollectionListItem', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(DataCollectionListItem), findsOneWidget);
