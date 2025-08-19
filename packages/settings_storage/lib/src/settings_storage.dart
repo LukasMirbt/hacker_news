@@ -3,15 +3,6 @@ import 'package:logging/logging.dart';
 import 'package:settings_storage/settings_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class SettingsStorageKeys {
-  static const linkLaunchModeKey = '__link_launch_mode_key__';
-
-  static const themeModeKey = '__theme_mode_key__';
-
-  static const analyticsConsentCompletedKey =
-      '__is_analytics_consent_completed_key__';
-}
-
 class SettingsStorage {
   const SettingsStorage({
     required SharedPreferencesWithCache sharedPreferences,
@@ -19,12 +10,19 @@ class SettingsStorage {
   }) : _sharedPreferences = sharedPreferences,
        _logger = logger;
 
+  static const _linkLaunchModeKey = '__link_launch_mode_key__';
+
+  static const _themeModeKey = '__theme_mode_key__';
+
+  static const _analyticsConsentCompletedKey =
+      '__analytics_consent_completed_key__';
+
   final SharedPreferencesWithCache _sharedPreferences;
   final Logger _logger;
 
   LinkLaunchMode readLinkLaunchMode() {
     final savedValue = _sharedPreferences.getString(
-      SettingsStorageKeys.linkLaunchModeKey,
+      _linkLaunchModeKey,
     );
 
     if (savedValue == null) return LinkLaunchMode.initial;
@@ -40,15 +38,13 @@ class SettingsStorage {
 
   Future<void> writeLinkLaunchMode(LinkLaunchMode mode) async {
     await _sharedPreferences.setString(
-      SettingsStorageKeys.linkLaunchModeKey,
+      _linkLaunchModeKey,
       mode.name,
     );
   }
 
   ThemeMode readThemeMode() {
-    final savedValue = _sharedPreferences.getString(
-      SettingsStorageKeys.themeModeKey,
-    );
+    final savedValue = _sharedPreferences.getString(_themeModeKey);
 
     if (savedValue == null) return ThemeMode.system;
 
@@ -63,14 +59,14 @@ class SettingsStorage {
 
   Future<void> writeThemeMode(ThemeMode mode) async {
     await _sharedPreferences.setString(
-      SettingsStorageKeys.themeModeKey,
+      _themeModeKey,
       mode.name,
     );
   }
 
   bool readAnalyticsConsentCompleted() {
     final savedValue = _sharedPreferences.getBool(
-      SettingsStorageKeys.analyticsConsentCompletedKey,
+      _analyticsConsentCompletedKey,
     );
     return savedValue ?? false;
   }
@@ -79,7 +75,7 @@ class SettingsStorage {
     required bool completed,
   }) async {
     await _sharedPreferences.setBool(
-      SettingsStorageKeys.analyticsConsentCompletedKey,
+      _analyticsConsentCompletedKey,
       completed,
     );
   }

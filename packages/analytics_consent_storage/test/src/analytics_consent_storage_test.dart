@@ -9,6 +9,8 @@ class _MockSharedPreferencesWithCache extends Mock
     implements SharedPreferencesWithCache {}
 
 void main() {
+  const analyticsCollectionEnabledKey = '__analytics_collection_enabled_key__';
+
   group(AnalyticsConsentStorage, () {
     late SharedPreferencesWithCache sharedPreferences;
 
@@ -23,9 +25,8 @@ void main() {
     }
 
     group('readAnalyticsCollectionEnabled', () {
-      final getBool = () => sharedPreferences.getBool(
-        AnalyticsConsentStorageKeys.isAnalyticsCollectionEnabledKey,
-      );
+      final getBool = () =>
+          sharedPreferences.getBool(analyticsCollectionEnabledKey);
 
       test('calls getBool and returns correct value '
           'when saved value is non-null', () {
@@ -54,7 +55,7 @@ void main() {
       const enabled = true;
 
       final write = () => sharedPreferences.setBool(
-        AnalyticsConsentStorageKeys.isAnalyticsCollectionEnabledKey,
+        analyticsCollectionEnabledKey,
         enabled,
       );
 

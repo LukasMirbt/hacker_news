@@ -13,6 +13,10 @@ class _MockSharedPreferencesWithCache extends Mock
 class _MockLogger extends Mock implements Logger {}
 
 void main() {
+  const linkLaunchModeKey = '__link_launch_mode_key__';
+  const themeModeKey = '__theme_mode_key__';
+  const analyticsConsentCompletedKey = '__analytics_consent_completed_key__';
+
   group(SettingsStorage, () {
     late SharedPreferencesWithCache sharedPreferences;
     late Logger logger;
@@ -30,9 +34,7 @@ void main() {
     }
 
     group('readLinkLaunchMode', () {
-      final getString = () => sharedPreferences.getString(
-        SettingsStorageKeys.linkLaunchModeKey,
-      );
+      final getString = () => sharedPreferences.getString(linkLaunchModeKey);
 
       test('calls getString and returns correct value '
           'when saved value matches $LinkLaunchMode name', () {
@@ -78,7 +80,7 @@ void main() {
       const mode = LinkLaunchMode.inAppBrowserView;
 
       final write = () => sharedPreferences.setString(
-        SettingsStorageKeys.linkLaunchModeKey,
+        linkLaunchModeKey,
         mode.name,
       );
 
@@ -91,9 +93,7 @@ void main() {
     });
 
     group('readThemeMode', () {
-      final getString = () => sharedPreferences.getString(
-        SettingsStorageKeys.themeModeKey,
-      );
+      final getString = () => sharedPreferences.getString(themeModeKey);
 
       test('calls getString and returns correct value '
           'when saved value matches $ThemeMode name', () {
@@ -139,7 +139,7 @@ void main() {
       const mode = ThemeMode.dark;
 
       final write = () => sharedPreferences.setString(
-        SettingsStorageKeys.themeModeKey,
+        themeModeKey,
         mode.name,
       );
 
@@ -153,7 +153,7 @@ void main() {
 
     group('readAnalyticsConsentCompleted', () {
       final getBool = () => sharedPreferences.getBool(
-        SettingsStorageKeys.analyticsConsentCompletedKey,
+        analyticsConsentCompletedKey,
       );
 
       test('calls getBool and returns correct value '
@@ -183,7 +183,7 @@ void main() {
       const completed = true;
 
       final write = () => sharedPreferences.setBool(
-        SettingsStorageKeys.analyticsConsentCompletedKey,
+        analyticsConsentCompletedKey,
         completed,
       );
 
