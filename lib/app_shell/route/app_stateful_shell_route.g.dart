@@ -15,7 +15,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/home',
-
           factory: _$HomeRoute._fromState,
           routes: [
             ShellRouteData.$route(
@@ -36,7 +35,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                       path: 'reply',
 
                       parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                       factory: _$ReplyRoute._fromState,
                     ),
                   ],
@@ -54,14 +52,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/threads',
-
               factory: _$ThreadFeedRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
 
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                   factory: _$ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
@@ -82,7 +78,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                           path: 'reply',
 
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                           factory: _$ReplyRoute._fromState,
                         ),
                       ],
@@ -102,14 +97,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/drafts',
-
               factory: _$DraftRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
 
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                   factory: _$ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
@@ -130,7 +123,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                           path: 'reply',
 
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                           factory: _$ReplyRoute._fromState,
                         ),
                       ],
@@ -147,28 +139,21 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/settings',
-
           factory: _$SettingsRoute._fromState,
           routes: [
             GoRouteData.$route(
               path: 'theme',
-
               parentNavigatorKey: ThemeRoute.$parentNavigatorKey,
-
               factory: _$ThemeRoute._fromState,
             ),
             GoRouteData.$route(
               path: 'content',
-
               parentNavigatorKey: ContentSettingsRoute.$parentNavigatorKey,
-
               factory: _$ContentSettingsRoute._fromState,
             ),
             GoRouteData.$route(
               path: 'data-collection',
-
               parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
-
               factory: _$DataCollectionRoute._fromState,
             ),
           ],

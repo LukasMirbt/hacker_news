@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$webRedirectRoute];
 
 RouteBase get $webRedirectRoute => GoRouteData.$route(
   path: '/web-redirect',
-
   factory: _$WebRedirectRoute._fromState,
 );
 
