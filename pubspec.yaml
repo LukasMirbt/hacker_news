@@ -95,11 +95,7 @@ dependencies:
   flutter_sticky_header: ^0.8.0
   flutter_widget_from_html_core: 0.16.0
   freezed_annotation: ^3.1.0
-  go_router:
-    git:
-      url: https://github.com/LukasMirbt/packages.git
-      ref: relative-routes
-      path: packages/go_router
+  go_router: ^16.2.0
   html: ^0.15.6
   intl: ^0.20.2
   link_launcher:
@@ -158,11 +154,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^3.2.0
-  go_router_builder:
-    git:
-      url: https://github.com/LukasMirbt/packages.git
-      ref: relative-routes
-      path: packages/go_router_builder
+  go_router_builder: ^3.3.0
   mockingjay: ^2.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
