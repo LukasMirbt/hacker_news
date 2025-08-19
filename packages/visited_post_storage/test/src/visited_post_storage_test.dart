@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,7 @@ import 'package:visited_post_storage/visited_post_storage.dart';
 import '../test_database.dart';
 
 void main() {
+  final now = DateTime(2025, 8, 19, 18, 15);
   final visitedPosts = {'postId'};
 
   group(VisitedPostStorage, () {
@@ -57,16 +59,26 @@ void main() {
     group('add', () {
       test('inserts visited post correctly '
           'when postId is not present', () async {
-        final selectStatement = database.select(database.visitedPosts);
+        await withClock(Clock.fixed(now), () async {
+          final selectStatement = database.select(database.visitedPosts);
 
-        final initialPosts = await selectStatement.get();
-        expect(initialPosts.length, 1);
+          final initialPosts = await selectStatement.get();
+          expect(initialPosts.length, 1);
 
-        const newPostId = 'newPostId';
-        await storage.add(newPostId);
+          const newPostId = 'newPostId';
+          await storage.add(newPostId);
 
-        final updatedPosts = await selectStatement.get();
-        expect(updatedPosts.length, 2);
+          final updatedPosts = await selectStatement.get();
+          expect(updatedPosts.length, 2);
+
+          expect(
+            updatedPosts.last,
+            VisitedPostData(
+              postId: newPostId,
+              createdAt: now.toUtc(),
+            ),
+          );
+        });
       });
 
       test('ignores insert when when postId '
