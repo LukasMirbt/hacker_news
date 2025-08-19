@@ -18,4 +18,4 @@ jobs:
     uses: ./.github/workflows/flutter_package.yaml
     with:
       working_directory: packages/visited_post_storage
-      coverage_excludes: "lib/src/tables/**"
+      coverage_excludes: "**/tables/**"
