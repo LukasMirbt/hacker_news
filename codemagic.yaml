@@ -87,7 +87,7 @@ workflows:
             - name: Shorebird Release iOS
               script: |
                   shorebird release ios \
-                    --flutter-version=$FLUTTER_VERSION
+                    --flutter-version=$FLUTTER_VERSION \
                     --build-name=$BUILD_NAME \
                     --build-number=$BUILD_NUMBER \
                     --export-options-plist=/Users/builder/export_options.plist
