@@ -26,7 +26,7 @@ class AnalyticsRepository {
 
   bool isAnalyticsCollectionEnabled() {
     final enabled = _storage.readAnalyticsCollectionEnabled();
-    return enabled ?? false;
+    return enabled;
   }
 
   Future<void> disableAnalyticsCollection() async {
