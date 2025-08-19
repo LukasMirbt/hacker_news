@@ -15,6 +15,7 @@ export 'app_outlined_button.dart';
 export 'app_post_header/app_post_header.dart';
 export 'app_post_header_comment_button/app_post_header_comment_button.dart';
 export 'app_post_header_vote_button/app_post_header_vote_button.dart';
+export 'app_section_header.dart';
 export 'app_user_avatar.dart';
 export 'button_spinner.dart';
 export 'error_text.dart';

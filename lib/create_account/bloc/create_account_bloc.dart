@@ -8,9 +8,9 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
   CreateAccountBloc({
     required String from,
     required AuthenticationRepository authenticationRepository,
-    LinkLauncher? linkLauncher,
+    required LinkLauncher linkLauncher,
   }) : _repository = authenticationRepository,
-       _launcher = linkLauncher ?? const LinkLauncher(),
+       _launcher = linkLauncher,
        super(
          CreateAccountState(from: from),
        ) {

@@ -11,7 +11,6 @@ part of 'theme_state.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$ThemeState {
 
@@ -22,8 +21,6 @@ mixin _$ThemeState {
 @pragma('vm:prefer-inline')
 $ThemeStateCopyWith<ThemeState> get copyWith => _$ThemeStateCopyWithImpl<ThemeState>(this as ThemeState, _$identity);
 
-  /// Serializes this ThemeState to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -31,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is ThemeState&&(identical(other.mode, mode) || other.mode == mode));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,mode);
 
@@ -206,11 +203,11 @@ return $default(_that.mode);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+
 
 class _ThemeState implements ThemeState {
   const _ThemeState({this.mode = ThemeMode.system});
-  factory _ThemeState.fromJson(Map<String, dynamic> json) => _$ThemeStateFromJson(json);
+  
 
 @override@JsonKey() final  ThemeMode mode;
 
@@ -220,17 +217,14 @@ class _ThemeState implements ThemeState {
 @pragma('vm:prefer-inline')
 _$ThemeStateCopyWith<_ThemeState> get copyWith => __$ThemeStateCopyWithImpl<_ThemeState>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$ThemeStateToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _ThemeState&&(identical(other.mode, mode) || other.mode == mode));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,mode);
 

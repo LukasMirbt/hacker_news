@@ -2,17 +2,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'data_collection_state.freezed.dart';
 
-enum DataCollectionStatus {
-  loading,
-  success;
-
-  bool get isLoading => this == loading;
-}
+enum DataCollectionStatus { loading, success }
 
 @freezed
 abstract class DataCollectionState with _$DataCollectionState {
   const factory DataCollectionState({
-    @Default(DataCollectionStatus.loading) DataCollectionStatus status,
-    @Default(false) bool isAnalyticsCollectionEnabled,
+    required bool isAnalyticsCollectionEnabled,
   }) = _DataCollectionState;
 }

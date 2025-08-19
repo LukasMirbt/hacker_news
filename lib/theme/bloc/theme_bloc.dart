@@ -1,29 +1,29 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/theme/theme.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:settings_storage/settings_storage.dart';
 
-class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(const ThemeState()) {
+class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
+  ThemeBloc({
+    required SettingsStorage settingsStorage,
+  }) : _storage = settingsStorage,
+       super(const ThemeState()) {
     on<ThemeOptionPressed>(_onOptionPressed);
   }
+
+  final SettingsStorage _storage;
 
   void _onOptionPressed(
     ThemeOptionPressed event,
     Emitter<ThemeState> emit,
   ) {
+    final mode = event.mode;
+
     emit(
       state.copyWith(
-        mode: event.mode,
+        mode: mode,
       ),
     );
-  }
 
-  @override
-  ThemeState? fromJson(Map<String, dynamic> json) {
-    return ThemeState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(ThemeState state) {
-    return state.toJson();
+    _storage.writeThemeMode(mode);
   }
 }

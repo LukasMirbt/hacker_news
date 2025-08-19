@@ -1,5 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -7,10 +7,10 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
   CommentBloc({
     required PostRepository postRepository,
     required CommentDraftSaver commentDraftSaver,
-    LinkLauncher? linkLauncher,
+    required LinkLauncher linkLauncher,
   }) : _postRepository = postRepository,
        _draftSaver = commentDraftSaver,
-       _linkLauncher = linkLauncher ?? const LinkLauncher(),
+       _linkLauncher = linkLauncher,
        super(
          CommentState.from(postRepository),
        ) {

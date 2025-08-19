@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 
 class PostShellRoute extends ShellRouteData {
   const PostShellRoute();
@@ -29,6 +30,7 @@ class PostShellRoute extends ShellRouteData {
         postApi: context.read<PostApi>(),
         authenticationApi: context.read<AuthenticationApi>(),
         draftStorage: context.read<DraftStorage>(),
+        visitedPostStorage: context.read<VisitedPostStorage>(),
       ),
       child: navigator,
     );

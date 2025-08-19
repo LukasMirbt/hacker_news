@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 // ignore_for_file: cascade_invocations
 
+import 'package:analytics_consent_storage/analytics_consent_storage.dart';
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,22 +32,20 @@ void main() {
       return AnalyticsRepository(
         firebaseApp,
         firebaseAnalytics: firebaseAnalytics,
-        consentStorage: storage,
+        analyticsConsentStorage: storage,
       );
     }
 
     group('isAnalyticsCollectionEnabled', () {
       final read = () => storage.readAnalyticsCollectionEnabled();
 
-      test('reads storage and returns value', () async {
+      test('reads storage and returns value', () {
         const enabled = true;
-        when(read).thenAnswer(
-          (_) async => enabled,
-        );
+        when(read).thenReturn(enabled);
         final repository = createSubject();
         expect(
           repository.isAnalyticsCollectionEnabled(),
-          completion(enabled),
+          enabled,
         );
         verify(read).called(1);
       });

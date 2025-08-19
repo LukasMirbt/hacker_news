@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,9 @@ class _MockDataCollectionBloc
     implements DataCollectionBloc {}
 
 void main() {
-  final initialState = DataCollectionState();
+  final initialState = DataCollectionState(
+    isAnalyticsCollectionEnabled: false,
+  );
 
   group(DataCollectionView, () {
     late DataCollectionBloc bloc;
@@ -37,15 +38,7 @@ void main() {
       expect(find.byType(AppBar), findsOneWidget);
     });
 
-    testWidgets('renders $Spinner when isLoading', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(Spinner), findsOneWidget);
-    });
-
-    testWidgets('renders $DataCollectionBody when !isLoading', (tester) async {
-      when(() => bloc.state).thenReturn(
-        initialState.copyWith(status: DataCollectionStatus.success),
-      );
+    testWidgets('renders $DataCollectionBody', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(DataCollectionBody), findsOneWidget);
     });

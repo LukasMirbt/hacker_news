@@ -4,16 +4,19 @@ import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc/bloc.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 
 class PostRepository extends Cubit<PostRepositoryState> {
   PostRepository({
     required PostApi postApi,
     required AuthenticationApi authenticationApi,
     required DraftStorage draftStorage,
+    required VisitedPostStorage visitedPostStorage,
     CancelTokenService? cancelTokenService,
   }) : _postApi = postApi,
        _authenticationApi = authenticationApi,
        _draftStorage = draftStorage,
+       _visitedPostStorage = visitedPostStorage,
        _cancelTokenService = cancelTokenService ?? CancelTokenService(),
        super(
          PostRepositoryState.initial(),
@@ -22,6 +25,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
   final PostApi _postApi;
   final AuthenticationApi _authenticationApi;
   final DraftStorage _draftStorage;
+  final VisitedPostStorage _visitedPostStorage;
   final CancelTokenService _cancelTokenService;
 
   Future<void> fetchPostStream({required String id}) async {
@@ -180,5 +184,13 @@ class PostRepository extends Cubit<PostRepositoryState> {
         ),
       );
     }
+  }
+
+  Stream<Set<String>> get visitedPosts => _visitedPostStorage.watch();
+
+  Set<String> readVisitedPosts() => _visitedPostStorage.read();
+
+  void addVisitedPost(String postId) {
+    _visitedPostStorage.add(postId);
   }
 }

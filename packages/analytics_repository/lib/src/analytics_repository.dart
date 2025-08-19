@@ -1,3 +1,4 @@
+import 'package:analytics_consent_storage/analytics_consent_storage.dart';
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,15 +17,15 @@ class AnalyticsRepository {
   const AnalyticsRepository(
     FirebaseApp _, {
     required FirebaseAnalytics firebaseAnalytics,
-    required AnalyticsConsentStorage consentStorage,
+    required AnalyticsConsentStorage analyticsConsentStorage,
   }) : _firebaseAnalytics = firebaseAnalytics,
-       _storage = consentStorage;
+       _storage = analyticsConsentStorage;
 
   final FirebaseAnalytics _firebaseAnalytics;
   final AnalyticsConsentStorage _storage;
 
-  Future<bool> isAnalyticsCollectionEnabled() async {
-    final enabled = await _storage.readAnalyticsCollectionEnabled();
+  bool isAnalyticsCollectionEnabled() {
+    final enabled = _storage.readAnalyticsCollectionEnabled();
     return enabled;
   }
 

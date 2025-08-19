@@ -11,11 +11,11 @@ import '../pump_app.dart';
 
 class _MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {}
 
+class _MockAppState extends Mock implements AppState {}
+
 class _MockGoRouter extends Mock implements GoRouter {}
 
 void main() {
-  const initialState = AppState();
-
   group(AppStatusListener, () {
     late AppBloc bloc;
     late GoRouter goRouter;
@@ -23,7 +23,6 @@ void main() {
     setUp(() {
       bloc = _MockAppBloc();
       goRouter = _MockGoRouter();
-      when(() => bloc.state).thenReturn(initialState);
     });
 
     Widget buildSubject() {
@@ -42,14 +41,14 @@ void main() {
     }
 
     testWidgets('calls refresh when status changes', (tester) async {
+      final firstState = _MockAppState();
+      final secondState = _MockAppState();
+      when(() => firstState.status).thenReturn(AppStatus.analyticsConsent);
+      when(() => secondState.status).thenReturn(AppStatus.home);
       whenListen(
         bloc,
-        initialState: initialState,
-        Stream.value(
-          initialState.copyWith(
-            status: AppStatus.home,
-          ),
-        ),
+        initialState: firstState,
+        Stream.value(secondState),
       );
       await tester.pumpApp(buildSubject());
       verify(goRouter.refresh).called(1);

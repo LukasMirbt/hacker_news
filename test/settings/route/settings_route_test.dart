@@ -46,6 +46,7 @@ void main() {
           SettingsRoute.config.routes,
           [
             ThemeRoute.config,
+            ContentSettingsRoute.config,
             DataCollectionRoute.config,
           ],
         );

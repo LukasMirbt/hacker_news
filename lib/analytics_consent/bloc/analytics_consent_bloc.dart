@@ -8,9 +8,9 @@ class AnalyticsConsentBloc
     extends Bloc<AnalyticsConsentEvent, AnalyticsConsentState> {
   AnalyticsConsentBloc({
     required AnalyticsRepository analyticsRepository,
-    LinkLauncher? linkLauncher,
+    required LinkLauncher linkLauncher,
   }) : _repository = analyticsRepository,
-       _launcher = linkLauncher ?? const LinkLauncher(),
+       _launcher = linkLauncher,
        super(const AnalyticsConsentState()) {
     on<AnalyticsConsentPrivacyPolicyPressed>(_onPrivacyPolicyPressed);
     on<AnalyticsConsentAgreePressed>(_onAgreePressed);

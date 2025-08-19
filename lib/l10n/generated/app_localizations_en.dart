@@ -87,6 +87,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commentOptions_openOnWeb => 'Open on web';
 
   @override
+  String get contentSettings_title => 'Content';
+
+  @override
+  String get contentSettings_linkSectionTitle => 'Links';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeTitle => 'In-app browser';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS =>
+      'Opens links inside the app';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid =>
+      'Opens links inside the app. Some links may open their dedicated app.';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeTitle => 'Default browser';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeSubtitle =>
+      'Opens links in the default browser or another app';
+
+  @override
   String get createAccount_title => 'Create account';
 
   @override
@@ -272,10 +296,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_theme => 'Theme';
 
   @override
-  String get settings_licenses => 'Licenses';
+  String get settings_content => 'Content';
 
   @override
   String get settings_dataCollection => 'Data collection';
+
+  @override
+  String get settings_licenses => 'Licenses';
 
   @override
   String get settings_privacyPolicy => 'Privacy policy';

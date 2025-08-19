@@ -9,12 +9,9 @@ class DataCollectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          DataCollectionBloc(
-            analyticsRepository: context.read<AnalyticsRepository>(),
-          )..add(
-            const DataCollectionStarted(),
-          ),
+      create: (context) => DataCollectionBloc(
+        analyticsRepository: context.read<AnalyticsRepository>(),
+      ),
       child: const DataCollectionView(),
     );
   }

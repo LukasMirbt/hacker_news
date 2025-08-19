@@ -7,6 +7,7 @@ class SettingsRoute extends GoRouteData with _$SettingsRoute, EquatableMixin {
     path: '/settings',
     routes: [
       ThemeRoute.config,
+      ContentSettingsRoute.config,
       DataCollectionRoute.config,
     ],
   );

@@ -19,7 +19,11 @@ void main() {
 
     setUp(() {
       bloc = _MockDataCollectionBloc();
-      when(() => bloc.state).thenReturn(DataCollectionState());
+      when(() => bloc.state).thenReturn(
+        DataCollectionState(
+          isAnalyticsCollectionEnabled: false,
+        ),
+      );
     });
 
     Widget buildSubject() {

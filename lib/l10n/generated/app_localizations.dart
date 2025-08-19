@@ -238,6 +238,48 @@ abstract class AppLocalizations {
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
 
+  /// No description provided for @contentSettings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get contentSettings_title;
+
+  /// No description provided for @contentSettings_linkSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get contentSettings_linkSectionTitle;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app browser'**
+  String get contentSettings_inAppBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleIOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app. Some links may open their dedicated app.'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Default browser'**
+  String get contentSettings_defaultBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links in the default browser or another app'**
+  String get contentSettings_defaultBrowserLaunchModeSubtitle;
+
   /// No description provided for @createAccount_title.
   ///
   /// In en, this message translates to:
@@ -580,17 +622,23 @@ abstract class AppLocalizations {
   /// **'Theme'**
   String get settings_theme;
 
-  /// No description provided for @settings_licenses.
+  /// No description provided for @settings_content.
   ///
   /// In en, this message translates to:
-  /// **'Licenses'**
-  String get settings_licenses;
+  /// **'Content'**
+  String get settings_content;
 
   /// No description provided for @settings_dataCollection.
   ///
   /// In en, this message translates to:
   /// **'Data collection'**
   String get settings_dataCollection;
+
+  /// No description provided for @settings_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get settings_licenses;
 
   /// No description provided for @settings_privacyPolicy.
   ///

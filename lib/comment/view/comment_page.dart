@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/comment/comment.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
 
 class CommentPage extends StatelessWidget {
@@ -13,6 +14,7 @@ class CommentPage extends StatelessWidget {
         final postRepository = context.read<PostRepository>();
         return CommentBloc(
             postRepository: postRepository,
+            linkLauncher: context.read<LinkLauncher>(),
             commentDraftSaver: CommentDraftSaver(
               postRepository: postRepository,
             ),

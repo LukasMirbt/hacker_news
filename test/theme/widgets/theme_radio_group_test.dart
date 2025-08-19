@@ -64,7 +64,7 @@ void main() {
         'renders $ThemeRadioOption for each $ThemeMode',
         (tester) async {
           await tester.pumpApp(buildSubject());
-          for (final (index, mode) in ThemeRadioGroup.modes.indexed) {
+          for (final (index, mode) in ThemeMode.values.indexed) {
             final option = tester.widget<ThemeRadioOption>(
               find.byType(ThemeRadioOption).at(index),
             );

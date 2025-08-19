@@ -21,13 +21,14 @@ import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
-import 'package:visited_post_repository/visited_post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
@@ -38,11 +39,15 @@ class _MockFeedApi extends Mock implements FeedApi {}
 
 class _MockPostApi extends Mock implements PostApi {}
 
+class _MockSettingsStorage extends Mock implements SettingsStorage {}
+
 class _MockThreadApi extends Mock implements ThreadApi {}
+
+class _MockVisitedPostStorage extends Mock implements VisitedPostStorage {}
 
 class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {
   @override
-  Future<bool> isAnalyticsCollectionEnabled() async => false;
+  bool isAnalyticsCollectionEnabled() => false;
 }
 
 class _MockAuthenticationRepository extends Mock
@@ -57,6 +62,11 @@ class _MockAuthenticationRepository extends Mock
   Future<List<Cookie>> cookies() async => [];
 }
 
+class _MockLinkLauncher extends Mock implements LinkLauncher {
+  @override
+  LinkLaunchMode get launchMode => LinkLaunchMode.inAppBrowserView;
+}
+
 class _MockReplyRepository extends Mock implements ReplyRepository {
   @override
   Stream<Reply> get stream => Stream.empty();
@@ -65,14 +75,6 @@ class _MockReplyRepository extends Mock implements ReplyRepository {
 class _MockVersionRepository extends Mock implements VersionRepository {
   @override
   Future<Version> currentVersion() async => Version(1, 0, 0);
-}
-
-class _MockVisitedPostRepository extends Mock implements VisitedPostRepository {
-  @override
-  VisitedPostState get state => VisitedPostState();
-
-  @override
-  Stream<VisitedPostState> get stream => Stream.empty();
 }
 
 class _MockVoteRepository extends Mock implements VoteRepository {
@@ -85,7 +87,7 @@ class _MockVoteRepository extends Mock implements VoteRepository {
 
 class _MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
   @override
-  AppState get state => AppState();
+  AppState get state => AppState(isAnalyticsConsentCompleted: false);
 }
 
 class _MockAppRouter extends Mock implements AppRouter {}
@@ -148,8 +150,14 @@ extension PumpAppExtension on WidgetTester {
           Provider<PostApi>(
             create: (_) => _MockPostApi(),
           ),
+          Provider<SettingsStorage>(
+            create: (_) => _MockSettingsStorage(),
+          ),
           Provider<ThreadApi>(
             create: (_) => _MockThreadApi(),
+          ),
+          Provider<VisitedPostStorage>(
+            create: (_) => _MockVisitedPostStorage(),
           ),
         ],
         child: MultiRepositoryProvider(
@@ -160,14 +168,14 @@ extension PumpAppExtension on WidgetTester {
             RepositoryProvider<AuthenticationRepository>(
               create: (_) => _MockAuthenticationRepository(),
             ),
+            RepositoryProvider<LinkLauncher>(
+              create: (_) => _MockLinkLauncher(),
+            ),
             RepositoryProvider<ReplyRepository>(
               create: (_) => _MockReplyRepository(),
             ),
             RepositoryProvider<VersionRepository>(
               create: (_) => _MockVersionRepository(),
-            ),
-            RepositoryProvider<VisitedPostRepository>(
-              create: (_) => _MockVisitedPostRepository(),
             ),
             RepositoryProvider<VoteRepository>(
               create: (_) => _MockVoteRepository(),

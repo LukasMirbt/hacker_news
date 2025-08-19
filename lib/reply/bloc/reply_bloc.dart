@@ -10,13 +10,13 @@ class ReplyBloc extends Bloc<ReplyEvent, ReplyState> {
     required ReplyRepository replyRepository,
     required VoteRepository voteRepository,
     required ReplyDraftSaver replyDraftSaver,
+    required LinkLauncher linkLauncher,
     ReplyParentVoteModel? voteModel,
-    LinkLauncher? linkLauncher,
   }) : _replyRepository = replyRepository,
        _voteRepository = voteRepository,
        _draftSaver = replyDraftSaver,
        _voteModel = voteModel ?? const ReplyParentVoteModel(),
-       _linkLauncher = linkLauncher ?? const LinkLauncher(),
+       _linkLauncher = linkLauncher,
        super(
          ReplyState.initial(url: url),
        ) {

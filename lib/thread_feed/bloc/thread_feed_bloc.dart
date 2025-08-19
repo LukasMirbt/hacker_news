@@ -12,16 +12,16 @@ class ThreadFeedBloc extends Bloc<ThreadFeedEvent, ThreadFeedState> {
     required AuthenticationRepository authenticationRepository,
     required VoteRepository voteRepository,
     required ReplyRepository replyRepository,
+    required LinkLauncher linkLauncher,
     ThreadFeedVoteModel? voteModel,
     ThreadFeedReplyModel? replyModel,
-    LinkLauncher? linkLauncher,
   }) : _threadRepository = threadRepository,
        _authenticationRepository = authenticationRepository,
        _voteRepository = voteRepository,
        _replyRepository = replyRepository,
+       _linkLauncher = linkLauncher,
        _voteModel = voteModel ?? const ThreadFeedVoteModel(),
        _replyModel = replyModel ?? const ThreadFeedReplyModel(),
-       _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          ThreadFeedState.initial(),
        ) {
