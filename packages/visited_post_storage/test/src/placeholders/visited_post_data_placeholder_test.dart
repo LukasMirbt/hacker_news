@@ -2,11 +2,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:visited_post_storage/visited_post_storage.dart';
 
 void main() {
-  group(ReplyDraftDataPlaceholder, () {
-    test('returns $ReplyDraftData', () {
+  group(VisitedPostDataPlaceholder, () {
+    test('returns $VisitedPostData', () {
       expect(
-        ReplyDraftDataPlaceholder(),
-        isA<ReplyDraftData>(),
+        VisitedPostDataPlaceholder(),
+        isA<VisitedPostData>(),
       );
     });
   });

@@ -10,15 +10,15 @@ class VisitedPostStorage extends DatabaseAccessor<GeneratedDatabase>
 
   static const tables = [VisitedPosts];
 
-  late final Set<String> _visitedPosts;
-
   static Future<VisitedPostStorage> open(GeneratedDatabase db) async {
     final storage = VisitedPostStorage._(db);
-    await storage._init();
+    await storage._loadVisitedPosts();
     return storage;
   }
 
-  Future<void> _init() async {
+  late final Set<String> _visitedPosts;
+
+  Future<void> _loadVisitedPosts() async {
     final query = select(visitedPosts).map(
       (row) => row.postId,
     );
