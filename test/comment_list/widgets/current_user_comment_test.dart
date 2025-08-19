@@ -115,7 +115,7 @@ void main() {
         () => commentListBloc.add(
           CommentListExpansionToggled(item),
         ),
-      );
+      ).called(1);
     });
 
     testWidgets(

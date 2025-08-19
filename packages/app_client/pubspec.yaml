@@ -6,7 +6,7 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.9.0
 
 resolution: workspace
 
@@ -14,17 +14,16 @@ dependencies:
   authentication_parser:
     path: ../authentication_parser
   bloc: ^9.0.0
-  collection: ^1.19.1
   cookie_jar: ^4.0.8
-  dio: ^5.7.0
-  dio_cookie_manager: ^3.1.1
+  dio: ^5.9.0
   equatable: ^2.0.7
   flutter:
     sdk: flutter
   freezed_annotation: ^3.1.0
-  meta: ^1.12.0
   mutex: ^3.1.0
   pretty_dio_logger: ^1.3.1
+  redirect_validator:
+    path: ../redirect_validator
   secure_user_id_storage:
     path: ../secure_user_id_storage
   web_links:

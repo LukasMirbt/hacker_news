@@ -1,29 +1,36 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app/app.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:settings_storage/settings_storage.dart';
 
-class AppBloc extends HydratedBloc<AppEvent, AppState> {
-  AppBloc() : super(const AppState()) {
+class AppBloc extends Bloc<AppEvent, AppState> {
+  AppBloc({
+    required SettingsStorage settingsStorage,
+  }) : _storage = settingsStorage,
+       super(
+         AppState(
+           isAnalyticsConsentCompleted: settingsStorage
+               .readAnalyticsConsentCompleted(),
+         ),
+       ) {
     on<AppAnalyticsConsentCompleted>(_onAnalyticsConsentCompleted);
   }
+
+  final SettingsStorage _storage;
 
   void _onAnalyticsConsentCompleted(
     AppAnalyticsConsentCompleted event,
     Emitter<AppState> emit,
   ) {
+    const completed = true;
+
     emit(
       state.copyWith(
-        status: AppStatus.home,
+        isAnalyticsConsentCompleted: completed,
       ),
     );
-  }
 
-  @override
-  AppState? fromJson(Map<String, dynamic> json) {
-    return AppState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(AppState state) {
-    return state.toJson();
+    _storage.writeAnalyticsConsentCompleted(
+      completed: completed,
+    );
   }
 }

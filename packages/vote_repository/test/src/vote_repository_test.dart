@@ -52,34 +52,12 @@ void main() {
       final vote = VotePlaceholder();
       final exception = Exception('oops');
 
-      final redirectToLogin = () => authenticationApi.redirectToLogin();
-
       final tryParse = () => voteParser.tryParse(
         upvoteUrl: upvoteUrl,
         hasBeenUpvoted: hasBeenUpvoted,
       );
 
       final voteRequest = () => voteApi.vote(vote.url);
-
-      blocTest<VoteRepository, VoteState>(
-        'calls redirectToLogin and returns when !isAuthenticated',
-        setUp: () {
-          when(() => authenticationState.status).thenReturn(
-            AuthenticationStatus.unauthenticated,
-          );
-        },
-        build: buildCubit,
-        act: (cubit) {
-          cubit.vote(
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
-          );
-        },
-        expect: () => <VoteState>[],
-        verify: (_) {
-          verify(redirectToLogin).called(1);
-        },
-      );
 
       blocTest<VoteRepository, VoteState>(
         'returns when state is $VoteLoading',
@@ -95,7 +73,13 @@ void main() {
       );
 
       blocTest<VoteRepository, VoteState>(
-        'emits $InvalidVoteUrl when voteParser returns null',
+        'emits [$VoteLoading, $UnauthenticatedVote] and returns '
+        'when !isAuthenticated',
+        setUp: () {
+          when(() => authenticationState.status).thenReturn(
+            AuthenticationStatus.unauthenticated,
+          );
+        },
         build: buildCubit,
         act: (cubit) {
           cubit.vote(
@@ -104,6 +88,23 @@ void main() {
           );
         },
         expect: () => [
+          VoteLoading(),
+          UnauthenticatedVote(),
+        ],
+      );
+
+      blocTest<VoteRepository, VoteState>(
+        'emits [$VoteLoading, $InvalidVoteUrl] '
+        'when voteParser returns null',
+        build: buildCubit,
+        act: (cubit) {
+          cubit.vote(
+            upvoteUrl: upvoteUrl,
+            hasBeenUpvoted: hasBeenUpvoted,
+          );
+        },
+        expect: () => [
+          VoteLoading(),
           InvalidVoteUrl(),
         ],
         verify: (_) {

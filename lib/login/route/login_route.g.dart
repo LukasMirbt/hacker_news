@@ -10,12 +10,10 @@ List<RouteBase> get $appRoutes => [$loginRoute];
 
 RouteBase get $loginRoute => GoRouteData.$route(
   path: '/login',
-
   factory: _$LoginRoute._fromState,
   routes: [
     GoRouteData.$route(
       path: 'create-account',
-
       factory: _$CreateAccountRoute._fromState,
     ),
   ],

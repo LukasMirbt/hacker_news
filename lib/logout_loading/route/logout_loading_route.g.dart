@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$logoutLoadingRoute];
 
 RouteBase get $logoutLoadingRoute => GoRouteData.$route(
   path: '/logout-loading',
-
   factory: _$LogoutLoadingRoute._fromState,
 );
 

@@ -8,9 +8,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     required String from,
     required AuthenticationRepository authenticationRepository,
-    LinkLauncher? linkLauncher,
+    required LinkLauncher linkLauncher,
   }) : _repository = authenticationRepository,
-       _launcher = linkLauncher ?? const LinkLauncher(),
+       _launcher = linkLauncher,
        super(
          LoginState(from: from),
        ) {

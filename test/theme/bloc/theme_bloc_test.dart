@@ -1,18 +1,30 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/theme/theme.dart';
+import 'package:link_launcher/link_launcher.dart';
+import 'package:mocktail/mocktail.dart';
 
-import '../../app/init_mock_hydrated_storage.dart';
+class _MockSettingsStorage extends Mock implements SettingsStorage {}
 
 void main() {
-  initMockHydratedStorage();
   final initialState = ThemeState();
 
   group(ThemeBloc, () {
-    ThemeBloc buildBloc() => ThemeBloc();
+    late SettingsStorage storage;
+
+    setUp(() {
+      storage = _MockSettingsStorage();
+    });
+
+    ThemeBloc buildBloc() {
+      return ThemeBloc(
+        settingsStorage: storage,
+      );
+    }
 
     test('initial state is $ThemeState', () {
       expect(buildBloc().state, initialState);
@@ -20,9 +32,13 @@ void main() {
 
     group(ThemeOptionPressed, () {
       const mode = ThemeMode.dark;
+      final writeThemeMode = () => storage.writeThemeMode(mode);
 
-      blocTest<ThemeBloc, ThemeState>(
-        'emits mode',
+      blocTest(
+        'emits updated state and writes to storage',
+        setUp: () {
+          when(writeThemeMode).thenAnswer((_) async {});
+        },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -30,30 +46,14 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(mode: mode),
+          initialState.copyWith(
+            mode: mode,
+          ),
         ],
+        verify: (_) {
+          verify(writeThemeMode).called(1);
+        },
       );
-    });
-
-    group('fromJson', () {
-      test('returns $ThemeState', () {
-        final bloc = buildBloc();
-        final json = initialState.toJson();
-        expect(
-          bloc.fromJson(json),
-          initialState,
-        );
-      });
-    });
-
-    group('toJson', () {
-      test('returns json', () {
-        final bloc = buildBloc();
-        expect(
-          bloc.toJson(initialState),
-          initialState.toJson(),
-        );
-      });
     });
   });
 }

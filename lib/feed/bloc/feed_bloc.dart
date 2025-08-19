@@ -1,8 +1,8 @@
 import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:share_launcher/share_launcher.dart';
-import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class FeedBloc extends Bloc<FeedEvent, FeedState> {
@@ -10,18 +10,18 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     required FeedType type,
     required FeedRepository feedRepository,
     required VoteRepository voteRepository,
-    required VisitedPostRepository visitedPostRepository,
+    required LinkLauncher linkLauncher,
     ShareLauncher? shareLauncher,
     FeedVoteModel? voteModel,
   }) : _feedRepository = feedRepository,
        _voteRepository = voteRepository,
-       _visitedPostRepository = visitedPostRepository,
+       _linkLauncher = linkLauncher,
        _shareLauncher = shareLauncher ?? ShareLauncher(),
        _voteModel = voteModel ?? const FeedVoteModel(),
        super(
          FeedState.initial(
            type: type,
-           visitedPosts: visitedPostRepository.state.items,
+           visitedPosts: feedRepository.readVisitedPosts(),
          ),
        ) {
     on<FeedVoteSubscriptionRequested>(
@@ -34,13 +34,14 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     on<FeedDataFetched>(_onDataFetched);
     on<FeedRefreshTriggered>(_onRefreshTriggered);
     on<FeedItemPressed>(_onItemPressed);
+    on<FeedItemLinkLaunched>(_onItemLinkLaunched);
     on<FeedItemVotePressed>(_onItemVotePressed);
     on<FeedItemSharePressed>(_onItemSharePressed);
   }
 
   final FeedRepository _feedRepository;
   final VoteRepository _voteRepository;
-  final VisitedPostRepository _visitedPostRepository;
+  final LinkLauncher _linkLauncher;
   final ShareLauncher _shareLauncher;
   final FeedVoteModel _voteModel;
 
@@ -70,11 +71,11 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     Emitter<FeedState> emit,
   ) {
     return emit.onEach(
-      _visitedPostRepository.stream,
-      onData: (repositoryState) {
+      _feedRepository.visitedPosts,
+      onData: (visitedPosts) {
         emit(
           state.copyWith(
-            visitedPosts: repositoryState.items,
+            visitedPosts: visitedPosts,
           ),
         );
       },
@@ -173,23 +174,27 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     FeedItemPressed event,
     Emitter<FeedState> emit,
   ) {
-    final FeedItemModel(
-      :id,
-      :urlHost,
-      :url,
-    ) = event.item;
+    final item = event.item;
+    final id = item.id;
 
     emit(
       state.copyWith(
         itemPress: ItemPress(
           id: id,
-          urlHost: urlHost,
-          url: url,
+          urlHost: item.urlHost,
+          url: item.url,
         ),
       ),
     );
 
-    _visitedPostRepository.addVisitedPost(id);
+    _feedRepository.addVisitedPost(id);
+  }
+
+  void _onItemLinkLaunched(
+    FeedItemLinkLaunched event,
+    Emitter<FeedState> emit,
+  ) {
+    _linkLauncher.launch(event.url);
   }
 
   void _onItemVotePressed(

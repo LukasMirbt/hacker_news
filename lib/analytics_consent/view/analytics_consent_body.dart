@@ -8,25 +8,33 @@ class AnalyticsConsentBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: AppSpacing.lg,
-          horizontal: AppSpacing.xlg,
+    return const CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: AppSpacing.lg,
+                horizontal: AppSpacing.xlg,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _Title(),
+                  SizedBox(height: AppSpacing.lg),
+                  AnalyticsConsentExplanation(),
+                  Spacer(),
+                  SizedBox(height: AppSpacing.lg),
+                  AnalyticsConsentAgreeButton(),
+                  SizedBox(height: AppSpacing.sm),
+                  AnalyticsConsentDeclineButton(),
+                ],
+              ),
+            ),
+          ),
         ),
-        child: Column(
-          children: [
-            _Title(),
-            SizedBox(height: AppSpacing.lg),
-            _Explanation(),
-            Spacer(),
-            SizedBox(height: AppSpacing.lg),
-            AnalyticsConsentContinueButton(),
-            SizedBox(height: AppSpacing.sm),
-            AnalyticsConsentSkipButton(),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
@@ -42,20 +50,6 @@ class _Title extends StatelessWidget {
     return Text(
       l10n.analyticsConsent_title,
       style: textTheme.titleLarge,
-      textAlign: TextAlign.center,
-    );
-  }
-}
-
-class _Explanation extends StatelessWidget {
-  const _Explanation();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
-    return Text(
-      l10n.analyticsConsent_explanation,
       textAlign: TextAlign.center,
     );
   }

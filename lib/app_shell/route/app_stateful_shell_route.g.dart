@@ -15,7 +15,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/home',
-
           factory: _$HomeRoute._fromState,
           routes: [
             ShellRouteData.$route(
@@ -36,7 +35,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                       path: 'reply',
 
                       parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                       factory: _$ReplyRoute._fromState,
                     ),
                   ],
@@ -54,14 +52,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/threads',
-
               factory: _$ThreadFeedRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
 
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                   factory: _$ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
@@ -82,7 +78,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                           path: 'reply',
 
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                           factory: _$ReplyRoute._fromState,
                         ),
                       ],
@@ -102,14 +97,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/drafts',
-
               factory: _$DraftRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
 
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                   factory: _$ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
@@ -130,7 +123,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                           path: 'reply',
 
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-
                           factory: _$ReplyRoute._fromState,
                         ),
                       ],
@@ -147,14 +139,21 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/settings',
-
           factory: _$SettingsRoute._fromState,
           routes: [
             GoRouteData.$route(
+              path: 'theme',
+              parentNavigatorKey: ThemeRoute.$parentNavigatorKey,
+              factory: _$ThemeRoute._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'content',
+              parentNavigatorKey: ContentSettingsRoute.$parentNavigatorKey,
+              factory: _$ContentSettingsRoute._fromState,
+            ),
+            GoRouteData.$route(
               path: 'data-collection',
-
               parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
-
               factory: _$DataCollectionRoute._fromState,
             ),
           ],
@@ -334,6 +333,47 @@ mixin _$SettingsRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/settings');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$ThemeRoute on GoRouteData {
+  static ThemeRoute _fromState(GoRouterState state) => const ThemeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/settings/theme');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$ContentSettingsRoute on GoRouteData {
+  static ContentSettingsRoute _fromState(GoRouterState state) =>
+      const ContentSettingsRoute();
+
+  @override
+  String get location => GoRouteData.$location('/settings/content');
 
   @override
   void go(BuildContext context) => context.go(location);

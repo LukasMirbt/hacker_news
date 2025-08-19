@@ -84,7 +84,7 @@ void main() {
             exception,
             any(),
           ),
-        );
+        ).called(1);
       });
     });
 
@@ -126,7 +126,7 @@ void main() {
         final service = createSubject(userId: userId);
         expect(service.read(), userId);
         await service.update(updatedUserId);
-        verify(write);
+        verify(write).called(1);
         expect(service.read(), updatedUserId);
       });
     });
@@ -152,7 +152,7 @@ void main() {
       final service = createSubject(userId: userId);
       expect(service.read(), userId);
       await service.delete();
-      verify(delete);
+      verify(delete).called(1);
       expect(service.read(), null);
     });
   });

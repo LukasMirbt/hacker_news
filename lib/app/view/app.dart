@@ -10,12 +10,13 @@ import 'package:hacker_client/authentication/authentication.dart';
 import 'package:hacker_client/theme/theme.dart';
 import 'package:hacker_client/version/version.dart';
 import 'package:hacker_client/vote_failure/vote_failure.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:thread_api/thread_api.dart';
 import 'package:version_repository/version_repository.dart';
-import 'package:visited_post_repository/visited_post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class App extends StatelessWidget {
@@ -24,36 +25,42 @@ class App extends StatelessWidget {
     required DraftStorage draftStorage,
     required FeedApi feedApi,
     required PostApi postApi,
+    required SettingsStorage settingsStorage,
     required ThreadApi threadApi,
+    required VisitedPostStorage visitedPostStorage,
     required AnalyticsRepository analyticsRepository,
     required AuthenticationRepository authenticationRepository,
+    required LinkLauncher linkLauncher,
     required ReplyRepository replyRepository,
     required VersionRepository versionRepository,
-    required VisitedPostRepository visitedPostRepository,
     required VoteRepository voteRepository,
     super.key,
   }) : _authenticationApi = authenticationApi,
        _draftStorage = draftStorage,
        _feedApi = feedApi,
        _postApi = postApi,
+       _settingsStorage = settingsStorage,
        _threadApi = threadApi,
+       _visitedPostStorage = visitedPostStorage,
        _analyticsRepository = analyticsRepository,
        _authenticationRepository = authenticationRepository,
+       _linkLauncher = linkLauncher,
        _replyRepository = replyRepository,
        _versionRepository = versionRepository,
-       _visitedPostRepository = visitedPostRepository,
        _voteRepository = voteRepository;
 
   final AuthenticationApi _authenticationApi;
   final DraftStorage _draftStorage;
-  final PostApi _postApi;
   final FeedApi _feedApi;
+  final PostApi _postApi;
+  final SettingsStorage _settingsStorage;
   final ThreadApi _threadApi;
+  final VisitedPostStorage _visitedPostStorage;
   final AnalyticsRepository _analyticsRepository;
   final AuthenticationRepository _authenticationRepository;
+  final LinkLauncher _linkLauncher;
   final ReplyRepository _replyRepository;
   final VersionRepository _versionRepository;
-  final VisitedPostRepository _visitedPostRepository;
   final VoteRepository _voteRepository;
 
   @override
@@ -64,21 +71,25 @@ class App extends StatelessWidget {
         Provider.value(value: _draftStorage),
         Provider.value(value: _feedApi),
         Provider.value(value: _postApi),
+        Provider.value(value: _settingsStorage),
         Provider.value(value: _threadApi),
+        Provider.value(value: _visitedPostStorage),
       ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(value: _analyticsRepository),
           RepositoryProvider.value(value: _authenticationRepository),
+          RepositoryProvider.value(value: _linkLauncher),
           RepositoryProvider.value(value: _replyRepository),
           RepositoryProvider.value(value: _versionRepository),
-          RepositoryProvider.value(value: _visitedPostRepository),
           RepositoryProvider.value(value: _voteRepository),
         ],
         child: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) => AppBloc(),
+              create: (context) => AppBloc(
+                settingsStorage: context.read<SettingsStorage>(),
+              ),
             ),
             BlocProvider(
               create: (context) =>
@@ -90,7 +101,9 @@ class App extends StatelessWidget {
                   ),
             ),
             BlocProvider(
-              create: (_) => ThemeBloc(),
+              create: (context) => ThemeBloc(
+                settingsStorage: context.read<SettingsStorage>(),
+              ),
             ),
             BlocProvider(
               create: (context) =>

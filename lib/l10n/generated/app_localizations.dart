@@ -109,26 +109,44 @@ abstract class AppLocalizations {
   /// No description provided for @analyticsConsent_title.
   ///
   /// In en, this message translates to:
-  /// **'Help us improve the app?'**
+  /// **'Help improve the app?'**
   String get analyticsConsent_title;
 
-  /// No description provided for @analyticsConsent_explanation.
+  /// No description provided for @analyticsConsent_explanationPart1.
   ///
   /// In en, this message translates to:
-  /// **'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.'**
-  String get analyticsConsent_explanation;
+  /// **'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.'**
+  String get analyticsConsent_explanationPart1;
 
-  /// No description provided for @analyticsConsent_continue.
+  /// No description provided for @analyticsConsent_explanationPart2.
   ///
   /// In en, this message translates to:
-  /// **'Continue'**
-  String get analyticsConsent_continue;
+  /// **' Learn more in our '**
+  String get analyticsConsent_explanationPart2;
 
-  /// No description provided for @analyticsConsent_skip.
+  /// No description provided for @analyticsConsent_privacyPolicy.
   ///
   /// In en, this message translates to:
-  /// **'Skip'**
-  String get analyticsConsent_skip;
+  /// **'privacy policy'**
+  String get analyticsConsent_privacyPolicy;
+
+  /// No description provided for @analyticsConsent_explanationPart4.
+  ///
+  /// In en, this message translates to:
+  /// **'.'**
+  String get analyticsConsent_explanationPart4;
+
+  /// No description provided for @analyticsConsent_agreeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Help improve'**
+  String get analyticsConsent_agreeAction;
+
+  /// No description provided for @analyticsConsent_declineAction.
+  ///
+  /// In en, this message translates to:
+  /// **'No, thanks'**
+  String get analyticsConsent_declineAction;
 
   /// No description provided for @appShell_home.
   ///
@@ -219,6 +237,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
+
+  /// No description provided for @contentSettings_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Content'**
+  String get contentSettings_title;
+
+  /// No description provided for @contentSettings_linkSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get contentSettings_linkSectionTitle;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In-app browser'**
+  String get contentSettings_inAppBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleIOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app. Some links may open their dedicated app.'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Default browser'**
+  String get contentSettings_defaultBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links in the default browser or another app'**
+  String get contentSettings_defaultBrowserLaunchModeSubtitle;
 
   /// No description provided for @createAccount_title.
   ///
@@ -556,29 +616,17 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get settings_logout;
 
-  /// No description provided for @settings_themeSectionTitle.
+  /// No description provided for @settings_theme.
   ///
   /// In en, this message translates to:
   /// **'Theme'**
-  String get settings_themeSectionTitle;
+  String get settings_theme;
 
-  /// No description provided for @settings_generalSectionTitle.
+  /// No description provided for @settings_content.
   ///
   /// In en, this message translates to:
-  /// **'General'**
-  String get settings_generalSectionTitle;
-
-  /// No description provided for @settings_userSectionTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'User'**
-  String get settings_userSectionTitle;
-
-  /// No description provided for @settings_licenses.
-  ///
-  /// In en, this message translates to:
-  /// **'Licenses'**
-  String get settings_licenses;
+  /// **'Content'**
+  String get settings_content;
 
   /// No description provided for @settings_dataCollection.
   ///
@@ -586,29 +634,47 @@ abstract class AppLocalizations {
   /// **'Data collection'**
   String get settings_dataCollection;
 
+  /// No description provided for @settings_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get settings_licenses;
+
   /// No description provided for @settings_privacyPolicy.
   ///
   /// In en, this message translates to:
   /// **'Privacy policy'**
   String get settings_privacyPolicy;
 
-  /// No description provided for @theme_system.
+  /// No description provided for @settings_userSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get settings_userSectionTitle;
+
+  /// No description provided for @theme_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme_title;
+
+  /// No description provided for @theme_systemMode.
   ///
   /// In en, this message translates to:
   /// **'Use device settings'**
-  String get theme_system;
+  String get theme_systemMode;
 
-  /// No description provided for @theme_light.
+  /// No description provided for @theme_lightMode.
   ///
   /// In en, this message translates to:
   /// **'Light'**
-  String get theme_light;
+  String get theme_lightMode;
 
-  /// No description provided for @theme_dark.
+  /// No description provided for @theme_darkMode.
   ///
   /// In en, this message translates to:
   /// **'Dark'**
-  String get theme_dark;
+  String get theme_darkMode;
 
   /// No description provided for @threadFeed_age.
   ///

@@ -21,9 +21,6 @@ void main() async {
 
     setUp(() {
       bloc = _MockLoginBloc();
-      when(() => bloc.state).thenReturn(
-        LoginState(from: 'from'),
-      );
     });
 
     Widget buildSubject() {

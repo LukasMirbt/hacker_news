@@ -30,11 +30,6 @@ void main() {
       );
     }
 
-    testWidgets('renders $LoginSuccessListener', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(LoginSuccessListener), findsOneWidget);
-    });
-
     testWidgets('renders $AppBar', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppBar), findsOneWidget);

@@ -18,8 +18,10 @@ void main() {
         final redirect = WebRedirectPlaceholder();
         expect(
           WebRedirectState.from(redirect),
-          WebRedirectState(
-            redirect: WebRedirectModel(redirect: redirect),
+          isA<WebRedirectState>().having(
+            (state) => state.redirect,
+            'redirect',
+            isA<WebRedirectModel>(),
           ),
         );
       });

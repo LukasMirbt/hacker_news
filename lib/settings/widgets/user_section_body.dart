@@ -10,14 +10,20 @@ class UserSectionBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: AppSpacing.lg,
-      children: [
-        _Title(),
-        _UserId(),
-        LogoutButton(),
-      ],
+    return const Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: AppSpacing.lg,
+        horizontal: AppSpacing.xlg,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppSpacing.lg,
+        children: [
+          _Title(),
+          _UserId(),
+          LogoutButton(),
+        ],
+      ),
     );
   }
 }

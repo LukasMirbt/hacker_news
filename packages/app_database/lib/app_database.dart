@@ -5,3 +5,4 @@ export 'package:drift/drift.dart';
 
 export 'src/app_database.dart';
 export 'src/app_database.drift.dart';
+export 'src/app_database.steps.dart';

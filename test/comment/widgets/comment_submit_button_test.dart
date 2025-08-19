@@ -68,7 +68,9 @@ void main() {
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           widget.onPressed?.call();
-          verify(() => bloc.add(CommentSubmitted()));
+          verify(
+            () => bloc.add(CommentSubmitted()),
+          ).called(1);
         });
 
         testWidgets('does not add $CommentSubmitted '
@@ -76,7 +78,9 @@ void main() {
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           widget.onPressed?.call();
-          verifyNever(() => bloc.add(CommentSubmitted()));
+          verifyNever(
+            () => bloc.add(CommentSubmitted()),
+          );
         });
       });
     });

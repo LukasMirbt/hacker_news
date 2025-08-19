@@ -3,19 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/feed/feed.dart';
-import 'package:link_launcher/link_launcher.dart';
 import 'package:web_links/web_links.dart';
 
 class FeedItemPressListener extends StatelessWidget {
   const FeedItemPressListener({
     required this.child,
     this.webLinks = const WebLinks(),
-    this.linkLauncher = const LinkLauncher(),
     super.key,
   });
 
   final WebLinks webLinks;
-  final LinkLauncher linkLauncher;
   final Widget child;
 
   @override
@@ -28,7 +25,9 @@ class FeedItemPressListener extends StatelessWidget {
         final urlHost = itemPress.urlHost;
 
         if (urlHost != null) {
-          linkLauncher.launch(itemPress.url);
+          context.read<FeedBloc>().add(
+            FeedItemLinkLaunched(itemPress.url),
+          );
         } else {
           AppRouter.of(context).goRelative(
             PostRoute(postId: itemPress.id),

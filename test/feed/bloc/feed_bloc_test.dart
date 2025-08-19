@@ -5,17 +5,16 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/feed/feed.dart';
+import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:share_launcher/share_launcher.dart';
-import 'package:visited_post_repository/visited_post_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
 class _MockFeedRepository extends Mock implements FeedRepository {}
 
 class _MockVoteRepository extends Mock implements VoteRepository {}
 
-class _MockVisitedPostRepository extends Mock
-    implements VisitedPostRepository {}
+class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 class _MockShareLauncher extends Mock implements ShareLauncher {}
 
@@ -35,19 +34,17 @@ void main() {
   group(FeedBloc, () {
     late FeedRepository feedRepository;
     late VoteRepository voteRepository;
-    late VisitedPostRepository visitedPostRepository;
+    late LinkLauncher linkLauncher;
     late ShareLauncher shareLauncher;
     late FeedVoteModel voteModel;
 
     setUp(() {
       feedRepository = _MockFeedRepository();
       voteRepository = _MockVoteRepository();
-      visitedPostRepository = _MockVisitedPostRepository();
+      linkLauncher = _MockLinkLauncher();
       shareLauncher = _MockShareLauncher();
       voteModel = _MockFeedVoteModel();
-      when(() => visitedPostRepository.state).thenReturn(
-        VisitedPostState(items: visitedPosts),
-      );
+      when(feedRepository.readVisitedPosts).thenReturn(visitedPosts);
     });
 
     FeedBloc buildBloc() {
@@ -55,7 +52,7 @@ void main() {
         type: type,
         feedRepository: feedRepository,
         voteRepository: voteRepository,
-        visitedPostRepository: visitedPostRepository,
+        linkLauncher: linkLauncher,
         shareLauncher: shareLauncher,
         voteModel: voteModel,
       );
@@ -81,7 +78,7 @@ void main() {
         feed: state.feed,
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits updated feed when repository emits $VoteSuccess',
         setUp: () {
           when(() => voteRepository.stream).thenAnswer(
@@ -108,15 +105,13 @@ void main() {
     });
 
     group(FeedVisitedPostSubscriptionRequested, () {
-      final updatedRepositoryState = VisitedPostState(
-        items: {'id'},
-      );
+      final updatedPosts = {'id'};
 
-      blocTest<FeedBloc, FeedState>(
-        'emits updated feed when repository emits $VoteSuccess',
+      blocTest(
+        'emits updated visited posts when stream emits new value',
         setUp: () {
-          when(() => visitedPostRepository.stream).thenAnswer(
-            (_) => Stream.value(updatedRepositoryState),
+          when(() => feedRepository.visitedPosts).thenAnswer(
+            (_) => Stream.value(updatedPosts),
           );
         },
         build: buildBloc,
@@ -127,7 +122,7 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            visitedPosts: updatedRepositoryState.items,
+            visitedPosts: updatedPosts,
           ),
         ],
       );
@@ -144,7 +139,7 @@ void main() {
         ],
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [success] and $PaginatedFeedModel '
         'when request succeeds',
         setUp: () {
@@ -167,7 +162,7 @@ void main() {
         },
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -212,7 +207,7 @@ void main() {
 
       final request = () => feedRepository.fetchMore(initialRepositoryFeed);
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [loading, success] and $PaginatedFeedModel '
         'when request succeeds',
         setUp: () {
@@ -240,7 +235,7 @@ void main() {
         },
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(feed.toRepository).thenReturn(initialRepositoryFeed);
@@ -282,7 +277,7 @@ void main() {
         fetchStatus: FetchStatus.success,
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [loading, success] and $PaginatedFeedModel '
         'when request succeeds',
         setUp: () {
@@ -310,7 +305,7 @@ void main() {
         },
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
@@ -341,10 +336,9 @@ void main() {
         FeedItemPlaceholder(),
       );
 
-      final addVisitedPost = () =>
-          visitedPostRepository.addVisitedPost(item.id);
+      final addVisitedPost = () => feedRepository.addVisitedPost(item.id);
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'emits $ItemPress and adds visited post',
         setUp: () {
           when(addVisitedPost).thenAnswer((_) async {});
@@ -383,6 +377,27 @@ void main() {
       );
     });
 
+    group(FeedItemLinkLaunched, () {
+      const url = 'url';
+      final launch = () => linkLauncher.launch(url);
+
+      blocTest(
+        'calls launch',
+        setUp: () {
+          when(launch).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            FeedItemLinkLaunched(url),
+          );
+        },
+        verify: (_) {
+          verify(launch).called(1);
+        },
+      );
+    });
+
     group(FeedItemVotePressed, () {
       final item = FeedItemModel(
         FeedItemPlaceholder(),
@@ -393,7 +408,7 @@ void main() {
         hasBeenUpvoted: item.hasBeenUpvoted,
       );
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'calls vote',
         setUp: () {
           when(vote).thenAnswer((_) async {});
@@ -414,7 +429,7 @@ void main() {
       const text = 'text';
       final share = () => shareLauncher.share(text: text);
 
-      blocTest<FeedBloc, FeedState>(
+      blocTest(
         'calls share',
         setUp: () {
           when(share).thenAnswer((_) async {});

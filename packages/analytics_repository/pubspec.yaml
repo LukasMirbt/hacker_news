@@ -4,11 +4,13 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.9.0
 
 resolution: workspace
 
 dependencies:
+  analytics_consent_storage:
+    path: ../analytics_consent_storage
   equatable: ^2.0.7
   firebase_analytics: ^11.4.0
   firebase_core: ^3.10.0
@@ -16,8 +18,6 @@ dependencies:
     sdk: flutter
   mocktail: ^1.0.4
   recase: ^4.1.0
-  storage:
-    path: ../storage/storage
 
 dev_dependencies:
   flutter_test:

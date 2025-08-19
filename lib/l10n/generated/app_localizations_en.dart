@@ -15,17 +15,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalServerError => 'Something went wrong';
 
   @override
-  String get analyticsConsent_title => 'Help us improve the app?';
+  String get analyticsConsent_title => 'Help improve the app?';
 
   @override
-  String get analyticsConsent_explanation =>
-      'We use Firebase Analytics to collect anonymous usage data to helps us understand user behavior and pain points. You can opt out at any time.';
+  String get analyticsConsent_explanationPart1 =>
+      'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.';
 
   @override
-  String get analyticsConsent_continue => 'Continue';
+  String get analyticsConsent_explanationPart2 => ' Learn more in our ';
 
   @override
-  String get analyticsConsent_skip => 'Skip';
+  String get analyticsConsent_privacyPolicy => 'privacy policy';
+
+  @override
+  String get analyticsConsent_explanationPart4 => '.';
+
+  @override
+  String get analyticsConsent_agreeAction => 'Help improve';
+
+  @override
+  String get analyticsConsent_declineAction => 'No, thanks';
 
   @override
   String get appShell_home => 'Home';
@@ -76,6 +85,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentOptions_openOnWeb => 'Open on web';
+
+  @override
+  String get contentSettings_title => 'Content';
+
+  @override
+  String get contentSettings_linkSectionTitle => 'Links';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeTitle => 'In-app browser';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS =>
+      'Opens links inside the app';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid =>
+      'Opens links inside the app. Some links may open their dedicated app.';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeTitle => 'Default browser';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeSubtitle =>
+      'Opens links in the default browser or another app';
 
   @override
   String get createAccount_title => 'Create account';
@@ -260,31 +293,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_logout => 'Logout';
 
   @override
-  String get settings_themeSectionTitle => 'Theme';
+  String get settings_theme => 'Theme';
 
   @override
-  String get settings_generalSectionTitle => 'General';
-
-  @override
-  String get settings_userSectionTitle => 'User';
-
-  @override
-  String get settings_licenses => 'Licenses';
+  String get settings_content => 'Content';
 
   @override
   String get settings_dataCollection => 'Data collection';
 
   @override
+  String get settings_licenses => 'Licenses';
+
+  @override
   String get settings_privacyPolicy => 'Privacy policy';
 
   @override
-  String get theme_system => 'Use device settings';
+  String get settings_userSectionTitle => 'User';
 
   @override
-  String get theme_light => 'Light';
+  String get theme_title => 'Theme';
 
   @override
-  String get theme_dark => 'Dark';
+  String get theme_systemMode => 'Use device settings';
+
+  @override
+  String get theme_lightMode => 'Light';
+
+  @override
+  String get theme_darkMode => 'Dark';
 
   @override
   String threadFeed_age({required String age}) {

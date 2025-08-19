@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:link_launcher/src/models/link_launch_mode_extension.dart';
+import 'package:settings_storage/settings_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_links/web_links.dart';
 
@@ -11,30 +13,30 @@ class LinkException with EquatableMixin implements Exception {
   List<Object?> get props => [error];
 }
 
-class LinkFailure with EquatableMixin implements Exception {
-  const LinkFailure(this.url);
-
-  final Object? url;
-
-  @override
-  List<Object?> get props => [url];
-}
-
 class LinkLauncher {
-  const LinkLauncher({WebLinks? webLinks})
-    : _webLinks = webLinks ?? const WebLinks();
+  const LinkLauncher({
+    required SettingsStorage settingsStorage,
+    WebLinks? webLinks,
+  }) : _storage = settingsStorage,
+       _webLinks = webLinks ?? const WebLinks();
 
+  final SettingsStorage _storage;
   final WebLinks _webLinks;
 
-  Future<void> launch(String urlString) async {
-    bool didLaunch;
+  LinkLaunchMode get launchMode => _storage.readLinkLaunchMode();
 
+  Future<void> setLaunchMode(LinkLaunchMode mode) async {
+    await _storage.writeLinkLaunchMode(mode);
+  }
+
+  Future<void> launch(String urlString) async {
     try {
       final url = _webLinks.resolve(urlString);
+      final mode = _storage.readLinkLaunchMode();
 
-      didLaunch = await launchUrl(
+      await launchUrl(
         url,
-        mode: LaunchMode.inAppBrowserView,
+        mode: mode.toLaunchMode(),
       );
     } catch (error, stackTrace) {
       Error.throwWithStackTrace(
@@ -42,7 +44,5 @@ class LinkLauncher {
         stackTrace,
       );
     }
-
-    if (!didLaunch) throw LinkFailure(urlString);
   }
 }

@@ -12,17 +12,26 @@ void main() async {
     group('label', () {
       test('returns correct value for ${ThemeMode.system}', () {
         const mode = ThemeMode.system;
-        expect(mode.label(l10n), l10n.theme_system);
+        expect(
+          mode.label(l10n),
+          l10n.theme_systemMode,
+        );
       });
 
       test('returns correct value for ${ThemeMode.light}', () {
         const mode = ThemeMode.light;
-        expect(mode.label(l10n), l10n.theme_light);
+        expect(
+          mode.label(l10n),
+          l10n.theme_lightMode,
+        );
       });
 
       test('returns correct value for ${ThemeMode.dark}', () {
         const mode = ThemeMode.dark;
-        expect(mode.label(l10n), l10n.theme_dark);
+        expect(
+          mode.label(l10n),
+          l10n.theme_darkMode,
+        );
       });
     });
   });

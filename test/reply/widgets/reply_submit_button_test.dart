@@ -68,7 +68,7 @@ void main() {
           await tester.pumpApp(buildSubject());
           final widget = findWidget(tester);
           widget.onPressed?.call();
-          verify(() => bloc.add(ReplySubmitted()));
+          verify(() => bloc.add(ReplySubmitted())).called(1);
         });
 
         testWidgets('does not add $ReplySubmitted '

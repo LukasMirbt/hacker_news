@@ -10,7 +10,6 @@ List<RouteBase> get $appRoutes => [$analyticsConsentRoute];
 
 RouteBase get $analyticsConsentRoute => GoRouteData.$route(
   path: '/analytics-consent',
-
   factory: _$AnalyticsConsentRoute._fromState,
 );
 

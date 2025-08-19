@@ -61,7 +61,7 @@ void main() {
 
       group('schemaVersion', () {
         test('returns correct value', () {
-          expect(database.schemaVersion, 1);
+          expect(database.schemaVersion, 2);
         });
       });
     });

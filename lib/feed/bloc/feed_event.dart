@@ -29,6 +29,15 @@ final class FeedItemPressed extends FeedEvent {
   List<Object> get props => [item];
 }
 
+final class FeedItemLinkLaunched extends FeedEvent {
+  const FeedItemLinkLaunched(this.url);
+
+  final String url;
+
+  @override
+  List<Object> get props => [url];
+}
+
 final class FeedItemVotePressed extends FeedEvent {
   const FeedItemVotePressed(this.item);
 

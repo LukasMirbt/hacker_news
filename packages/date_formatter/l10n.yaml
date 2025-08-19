@@ -2,7 +2,6 @@ arb-dir: lib/src/l10n
 output-dir: lib/src/l10n/generated
 output-class: DateFormatterLocalizations
 output-localization-file: date_formatter_localizations.dart
-synthetic-package: false
 nullable-getter: false
 use-named-parameters: true
 format: true

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_lambdas, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
@@ -15,6 +15,7 @@ class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
   const url = 'https://example.com';
+  const html = 'html';
 
   group(WebRedirectRoute, () {
     late GoRouterState state;
@@ -24,7 +25,10 @@ void main() {
     });
 
     WebRedirectRoute createSubject() {
-      return WebRedirectRoute(url: url);
+      return WebRedirectRoute(
+        url: url,
+        $extra: html,
+      );
     }
 
     test('is a $GoRouteData', () {
@@ -80,12 +84,13 @@ void main() {
         );
       });
 
-      testWidgets('renders $WebRedirectPage with correct url', (tester) async {
+      testWidgets('renders $WebRedirectPage with correct data', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = tester.widget<WebRedirectPage>(
           find.byType(WebRedirectPage),
         );
         expect(widget.url, url);
+        expect(widget.html, html);
       });
     });
   });

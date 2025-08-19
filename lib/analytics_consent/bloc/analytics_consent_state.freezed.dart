@@ -205,8 +205,8 @@ return $default(_that.status);case _:
 /// @nodoc
 
 
-class _AnalyticsConsentState extends AnalyticsConsentState {
-  const _AnalyticsConsentState({this.status = AnalyticsConsentStatus.initial}): super._();
+class _AnalyticsConsentState implements AnalyticsConsentState {
+  const _AnalyticsConsentState({this.status = AnalyticsConsentStatus.initial});
   
 
 @override@JsonKey() final  AnalyticsConsentStatus status;

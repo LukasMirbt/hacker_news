@@ -30,7 +30,7 @@ abstract class WebRedirectState with _$WebRedirectState {
 
   factory WebRedirectState.from(WebRedirect redirect) {
     return WebRedirectState(
-      redirect: WebRedirectModel(redirect: redirect),
+      redirect: WebRedirectModel.from(redirect),
     );
   }
 

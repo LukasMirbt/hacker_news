@@ -7,6 +7,7 @@ class _MockWebLinks extends Mock implements WebLinks {}
 
 void main() {
   final url = Uri.parse('https://example.com/');
+  const html = 'html';
 
   group(WebRedirect, () {
     late WebLinks webLinks;
@@ -20,6 +21,7 @@ void main() {
       return WebRedirect(
         url: url,
         webLinks: webLinks,
+        html: html,
       );
     }
 
@@ -27,6 +29,7 @@ void main() {
       test('returns $WebRedirect with resolved url', () {
         final redirect = createSubject();
         expect(redirect.url, url);
+        expect(redirect.html, html);
         verify(
           () => webLinks.resolve(
             url.toString(),
@@ -39,12 +42,21 @@ void main() {
       test('returns $WebRedirect', () {
         final urlString = url.toString();
         expect(
-          WebRedirect.from(urlString),
-          isA<WebRedirect>().having(
-            (redirect) => redirect.url,
-            'url',
-            url,
+          WebRedirect.from(
+            urlString,
+            html: html,
           ),
+          isA<WebRedirect>()
+              .having(
+                (redirect) => redirect.url,
+                'url',
+                url,
+              )
+              .having(
+                (redirect) => redirect.html,
+                'html',
+                html,
+              ),
         );
       });
     });

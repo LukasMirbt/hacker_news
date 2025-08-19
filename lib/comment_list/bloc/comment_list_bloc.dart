@@ -11,15 +11,15 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     required PostRepository postRepository,
     required VoteRepository voteRepository,
     required ReplyRepository replyRepository,
+    required LinkLauncher linkLauncher,
     CommentListVoteModel? voteModel,
     CommentListReplyModel? replyModel,
-    LinkLauncher? linkLauncher,
   }) : _postRepository = postRepository,
        _voteRepository = voteRepository,
        _replyRepository = replyRepository,
+       _linkLauncher = linkLauncher,
        _voteModel = voteModel ?? const CommentListVoteModel(),
        _replyModel = replyModel ?? const CommentListReplyModel(),
-       _linkLauncher = linkLauncher ?? const LinkLauncher(),
        super(
          CommentListState.initial(id: id),
        ) {

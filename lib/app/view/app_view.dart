@@ -45,6 +45,7 @@ class AppView extends StatelessWidget {
           goRouter: goRouter,
           child: Nested(
             children: [
+              LoginSuccessListener(),
               WebRedirectListener(),
               LogoutListener(),
               VoteFailureListener(),

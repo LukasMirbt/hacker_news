@@ -10,28 +10,36 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
+class _MockSettingsStorage extends Mock implements SettingsStorage {}
+
 class _MockUrlLauncherPlatform extends Mock
     with MockPlatformInterfaceMixin
     implements UrlLauncherPlatform {}
 
 void main() {
   group(LinkLauncher, () {
+    late SettingsStorage storage;
     late WebLinks webLinks;
     late UrlLauncherPlatform platform;
 
     setUp(() {
+      storage = _MockSettingsStorage();
       webLinks = _MockWebLinks();
       platform = _MockUrlLauncherPlatform();
       UrlLauncherPlatform.instance = platform;
       registerFallbackValue(LaunchOptions());
     });
 
+    LinkLauncher createSubject() {
+      return LinkLauncher(
+        settingsStorage: storage,
+        webLinks: webLinks,
+      );
+    }
+
     const urlString = 'https://www.example.com';
     final url = Uri.parse(urlString);
-
-    LinkLauncher createSubject() {
-      return LinkLauncher(webLinks: webLinks);
-    }
+    const mode = LinkLaunchMode.inAppBrowserView;
 
     final matchesOptions = isA<LaunchOptions>().having(
       (options) => options.mode,
@@ -41,15 +49,38 @@ void main() {
 
     final resolve = () => webLinks.resolve(urlString);
 
+    final readLinkLaunchMode = () => storage.readLinkLaunchMode();
+
     final launchUrl = () => platform.launchUrl(
       urlString,
       any(that: matchesOptions),
     );
 
+    group('launchMode', () {
+      test('returns correct value', () {
+        when(storage.readLinkLaunchMode).thenReturn(mode);
+        final launcher = createSubject();
+        expect(launcher.launchMode, mode);
+        verify(storage.readLinkLaunchMode).called(1);
+      });
+    });
+
+    group('setLaunchMode', () {
+      const mode = LinkLaunchMode.externalApplication;
+      final writeLinkLaunchMode = () => storage.writeLinkLaunchMode(mode);
+
+      test('calls storage.writeLinkLaunchMode', () async {
+        when(writeLinkLaunchMode).thenAnswer((_) async {});
+        final launcher = createSubject();
+        await launcher.setLaunchMode(mode);
+        verify(writeLinkLaunchMode).called(1);
+      });
+    });
+
     group('launch', () {
-      test('calls resolve, launchUrl and returns '
-          'when launchUrl returns true', () async {
+      test('calls launchUrl with correct url and mode', () async {
         when(resolve).thenReturn(url);
+        when(readLinkLaunchMode).thenReturn(mode);
         when(launchUrl).thenAnswer((_) async => true);
         final service = createSubject();
         await service.launch(urlString);
@@ -60,26 +91,13 @@ void main() {
       test('throws $LinkException when launchUrl throws', () {
         final exception = Exception('oops');
         when(resolve).thenReturn(url);
+        when(readLinkLaunchMode).thenReturn(mode);
         when(launchUrl).thenThrow(exception);
         final service = createSubject();
         expect(
           service.launch(urlString),
           throwsA(
             LinkException(exception),
-          ),
-        );
-        verify(resolve).called(1);
-        verify(launchUrl).called(1);
-      });
-
-      test('throws $LinkFailure when launchUrl returns false', () {
-        when(resolve).thenReturn(url);
-        when(launchUrl).thenAnswer((_) async => false);
-        final service = createSubject();
-        expect(
-          service.launch(urlString),
-          throwsA(
-            LinkFailure(urlString),
           ),
         );
         verify(resolve).called(1);

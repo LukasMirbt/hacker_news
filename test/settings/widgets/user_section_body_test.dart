@@ -21,7 +21,8 @@ void main() {
 
   final initialState = AuthenticationState(
     user: user,
-    redirect: LoginRedirect.initial,
+    loginRedirect: LoginRedirect.initial,
+    webRedirect: WebRedirect.empty,
     status: AuthenticationStatus.unauthenticated,
   );
 

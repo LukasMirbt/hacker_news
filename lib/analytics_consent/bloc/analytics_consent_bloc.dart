@@ -1,30 +1,37 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/analytics_consent/analytics_consent.dart';
+import 'package:hacker_client/external_links/external_links.dart';
+import 'package:link_launcher/link_launcher.dart';
 
 class AnalyticsConsentBloc
     extends Bloc<AnalyticsConsentEvent, AnalyticsConsentState> {
   AnalyticsConsentBloc({
     required AnalyticsRepository analyticsRepository,
+    required LinkLauncher linkLauncher,
   }) : _repository = analyticsRepository,
+       _launcher = linkLauncher,
        super(const AnalyticsConsentState()) {
-    on<AnalyticsConsentContinuePressed>(_onContinuePressed);
-    on<AnalyticsConsentSkipPressed>(_onSkipPressed);
+    on<AnalyticsConsentPrivacyPolicyPressed>(_onPrivacyPolicyPressed);
+    on<AnalyticsConsentAgreePressed>(_onAgreePressed);
+    on<AnalyticsConsentDeclinePressed>(_onDeclinePressed);
   }
 
   final AnalyticsRepository _repository;
+  final LinkLauncher _launcher;
 
-  Future<void> _onContinuePressed(
-    AnalyticsConsentContinuePressed event,
+  void _onPrivacyPolicyPressed(
+    AnalyticsConsentPrivacyPolicyPressed event,
     Emitter<AnalyticsConsentState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        status: AnalyticsConsentStatus.loading,
-      ),
-    );
+  ) {
+    _launcher.launch(yapPrivacyPolicyLink);
+  }
 
-    await _repository.enableAnalyticsCollection();
+  void _onAgreePressed(
+    AnalyticsConsentAgreePressed event,
+    Emitter<AnalyticsConsentState> emit,
+  ) {
+    _repository.enableAnalyticsCollection();
 
     emit(
       state.copyWith(
@@ -33,17 +40,11 @@ class AnalyticsConsentBloc
     );
   }
 
-  Future<void> _onSkipPressed(
-    AnalyticsConsentSkipPressed event,
+  void _onDeclinePressed(
+    AnalyticsConsentDeclinePressed event,
     Emitter<AnalyticsConsentState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        status: AnalyticsConsentStatus.loading,
-      ),
-    );
-
-    await _repository.disableAnalyticsCollection();
+  ) {
+    _repository.disableAnalyticsCollection();
 
     emit(
       state.copyWith(
