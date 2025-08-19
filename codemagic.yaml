@@ -1,8 +1,5 @@
 definitions:
-    shared_env: &shared_env
-        flutter: &flutter-version 3.35.1
-        vars:
-            FLUTTER_VERSION: *flutter-version
+    flutter_version: &flutter-version 3.35.1
 
     set-build-version: &set-build-version
         name: Set build version
@@ -14,6 +11,11 @@ definitions:
             echo "BUILD_NUMBER=$BUILD_NUMBER" >> $CM_ENV
 
             echo "Build version is $BUILD_NAME+$BUILD_NUMBER"
+
+    log-flutter-version: &log-flutter-version
+        name: Log Flutter Version
+        script: |
+            echo "Flutter version is $FLUTTER_VERSION"
 
     install-shorebird: &install-shorebird
         name: Install Shorebird
@@ -33,7 +35,7 @@ definitions:
         integrations:
             app_store_connect: Hacker Client API Key
         environment:
-            <<: *shared_env
+            flutter: *flutter-version
             ios_signing:
                 distribution_type: app_store
                 bundle_identifier: "com.lukasmirbt.hackerclient"
@@ -41,6 +43,7 @@ definitions:
                 - shorebird
             vars:
                 APP_STORE_APPLE_ID: 6744292693
+                FLUTTER_VERSION: *flutter-version
 
     ios-use-profiles: &ios-use-profiles
         name: Set up code signing settings on Xcode project
@@ -60,12 +63,14 @@ definitions:
 
     android-config: &android-config
         environment:
-            <<: *shared_env
+            flutter: *flutter-version
             android_signing:
                 - Hacker Client Keystore
             groups:
                 - shorebird
                 - google_play
+            vars:
+                FLUTTER_VERSION: *flutter-version
 
     android-cache: &android-cache
         cache:
@@ -79,6 +84,7 @@ workflows:
             - *ios-config
             - *ios-cache
         scripts:
+            - *log-flutter-version
             - *set-build-version
             - *install-shorebird
             - *fetch-dependencies
@@ -125,6 +131,7 @@ workflows:
             - *android-config
             - *android-cache
         scripts:
+            - *log-flutter-version
             - *set-build-version
             - *fetch-dependencies
             - *install-shorebird
