@@ -8,7 +8,7 @@ abstract class SettingsStorageKeys {
 
   static const themeModeKey = '__theme_mode_key__';
 
-  static const isAnalyticsConsentCompletedKey =
+  static const analyticsConsentCompletedKey =
       '__is_analytics_consent_completed_key__';
 }
 
@@ -23,16 +23,16 @@ class SettingsStorage {
   final Logger _logger;
 
   LinkLaunchMode readLinkLaunchMode() {
-    final value = _sharedPreferences.getString(
+    final savedValue = _sharedPreferences.getString(
       SettingsStorageKeys.linkLaunchModeKey,
     );
 
-    if (value == null) return LinkLaunchMode.initial;
+    if (savedValue == null) return LinkLaunchMode.initial;
 
     return LinkLaunchMode.values.firstWhere(
-      (mode) => mode.name == value,
+      (mode) => mode.name == savedValue,
       orElse: () {
-        _logger.severe('Unknown link launch mode: $value');
+        _logger.severe('Unknown link launch mode: $savedValue');
         return LinkLaunchMode.initial;
       },
     );
@@ -46,16 +46,16 @@ class SettingsStorage {
   }
 
   ThemeMode readThemeMode() {
-    final value = _sharedPreferences.getString(
+    final savedValue = _sharedPreferences.getString(
       SettingsStorageKeys.themeModeKey,
     );
 
-    if (value == null) return ThemeMode.system;
+    if (savedValue == null) return ThemeMode.system;
 
     return ThemeMode.values.firstWhere(
-      (mode) => mode.name == value,
+      (mode) => mode.name == savedValue,
       orElse: () {
-        _logger.severe('Unknown theme mode: $value');
+        _logger.severe('Unknown theme mode: $savedValue');
         return ThemeMode.system;
       },
     );
@@ -68,18 +68,18 @@ class SettingsStorage {
     );
   }
 
-  bool readIsAnalyticsConsentCompleted() {
-    final value = _sharedPreferences.getBool(
-      SettingsStorageKeys.isAnalyticsConsentCompletedKey,
+  bool readAnalyticsConsentCompleted() {
+    final savedValue = _sharedPreferences.getBool(
+      SettingsStorageKeys.analyticsConsentCompletedKey,
     );
-    return value ?? false;
+    return savedValue ?? false;
   }
 
-  Future<void> writeIsAnalyticsConsentCompleted({
+  Future<void> writeAnalyticsConsentCompleted({
     required bool completed,
   }) async {
     await _sharedPreferences.setBool(
-      SettingsStorageKeys.isAnalyticsConsentCompletedKey,
+      SettingsStorageKeys.analyticsConsentCompletedKey,
       completed,
     );
   }
