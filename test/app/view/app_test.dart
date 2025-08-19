@@ -33,7 +33,7 @@ class _MockPostApi extends Mock implements PostApi {}
 
 class _MockSettingsStorage extends Mock implements SettingsStorage {
   @override
-  bool readIsAnalyticsConsentCompleted() => false;
+  bool readAnalyticsConsentCompleted() => false;
 }
 
 class _MockThreadApi extends Mock implements ThreadApi {}

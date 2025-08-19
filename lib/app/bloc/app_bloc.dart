@@ -9,7 +9,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
        super(
          AppState(
            isAnalyticsConsentCompleted: settingsStorage
-               .readIsAnalyticsConsentCompleted(),
+               .readAnalyticsConsentCompleted(),
          ),
        ) {
     on<AppAnalyticsConsentCompleted>(_onAnalyticsConsentCompleted);
@@ -29,7 +29,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       ),
     );
 
-    _storage.writeIsAnalyticsConsentCompleted(
+    _storage.writeAnalyticsConsentCompleted(
       completed: completed,
     );
   }

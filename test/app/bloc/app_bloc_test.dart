@@ -21,7 +21,7 @@ void main() {
 
     setUp(() {
       storage = _MockSettingsStorage();
-      when(storage.readIsAnalyticsConsentCompleted).thenReturn(
+      when(storage.readAnalyticsConsentCompleted).thenReturn(
         isAnalyticsConsentCompleted,
       );
     });
@@ -40,7 +40,7 @@ void main() {
       const completed = true;
 
       final write = () =>
-          storage.writeIsAnalyticsConsentCompleted(completed: completed);
+          storage.writeAnalyticsConsentCompleted(completed: completed);
 
       blocTest<AppBloc, AppState>(
         'emits updated state and writes to storage',
