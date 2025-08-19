@@ -11,7 +11,13 @@ import 'package:provider/provider.dart';
 
 import '../app/pump_app.dart';
 
-class _MockFeedRepository extends Mock implements FeedRepository {}
+class _MockFeedRepository extends Mock implements FeedRepository {
+  @override
+  Stream<Set<String>> get visitedPosts => Stream.empty();
+
+  @override
+  Set<String> readVisitedPosts() => {};
+}
 
 class _MockStatefulNavigationShell extends Mock
     with Diagnosticable

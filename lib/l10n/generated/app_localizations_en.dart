@@ -90,10 +90,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contentSettings_title => 'Content';
 
   @override
-  String get contentSettings_inAppLaunchMode => 'Use in-app browser';
+  String get contentSettings_linkSectionTitle => 'Links';
 
   @override
-  String get contentSettings_externalLaunchMode => 'Use device default browser';
+  String get contentSettings_inAppBrowserLaunchModeTitle => 'In-app browser';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS =>
+      'Opens links inside the app';
+
+  @override
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid =>
+      'Opens links inside the app. Some links may open their dedicated app.';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeTitle => 'Default browser';
+
+  @override
+  String get contentSettings_defaultBrowserLaunchModeSubtitle =>
+      'Opens links in the default browser or another app';
 
   @override
   String get createAccount_title => 'Create account';

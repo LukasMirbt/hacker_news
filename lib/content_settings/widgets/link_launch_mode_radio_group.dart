@@ -24,7 +24,8 @@ class LinkLaunchModeRadioGroup extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final mode in LinkLaunchMode.values) LinkLaunchModeOption(mode),
+          for (final mode in LinkLaunchMode.values)
+            LinkLaunchModeRadioOption(mode),
         ],
       ),
     );

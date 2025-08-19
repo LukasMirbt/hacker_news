@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:visited_post_storage/visited_post_storage.dart';
 
 part '../../comment/route/comment_route.dart';
-part '../../content_settings/view/content_settings_route.dart';
+part '../../content_settings/route/content_settings_route.dart';
 part '../../data_collection/route/data_collection_route.dart';
 part '../../drafts/route/draft_route.dart';
 part '../../home/route/home_route.dart';

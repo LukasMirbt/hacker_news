@@ -9,7 +9,7 @@ class ContentSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: _AppBar(),
-      body: _Body(),
+      body: ContentSettingsBody(),
     );
   }
 }
@@ -27,14 +27,5 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(l10n.contentSettings_title),
     );
-  }
-}
-
-class _Body extends StatelessWidget {
-  const _Body();
-
-  @override
-  Widget build(BuildContext context) {
-    return const ContentSettingsBody();
   }
 }

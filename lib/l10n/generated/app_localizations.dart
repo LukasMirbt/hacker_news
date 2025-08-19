@@ -244,17 +244,41 @@ abstract class AppLocalizations {
   /// **'Content'**
   String get contentSettings_title;
 
-  /// No description provided for @contentSettings_inAppLaunchMode.
+  /// No description provided for @contentSettings_linkSectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Use in-app browser'**
-  String get contentSettings_inAppLaunchMode;
+  /// **'Links'**
+  String get contentSettings_linkSectionTitle;
 
-  /// No description provided for @contentSettings_externalLaunchMode.
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Use device default browser'**
-  String get contentSettings_externalLaunchMode;
+  /// **'In-app browser'**
+  String get contentSettings_inAppBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleIOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS;
+
+  /// No description provided for @contentSettings_inAppBrowserLaunchModeSubtitleAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links inside the app. Some links may open their dedicated app.'**
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Default browser'**
+  String get contentSettings_defaultBrowserLaunchModeTitle;
+
+  /// No description provided for @contentSettings_defaultBrowserLaunchModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens links in the default browser or another app'**
+  String get contentSettings_defaultBrowserLaunchModeSubtitle;
 
   /// No description provided for @createAccount_title.
   ///

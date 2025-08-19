@@ -62,7 +62,10 @@ class _MockAuthenticationRepository extends Mock
   Future<List<Cookie>> cookies() async => [];
 }
 
-class _MockLinkLauncher extends Mock implements LinkLauncher {}
+class _MockLinkLauncher extends Mock implements LinkLauncher {
+  @override
+  LinkLaunchMode get launchMode => LinkLaunchMode.inAppBrowserView;
+}
 
 class _MockReplyRepository extends Mock implements ReplyRepository {
   @override

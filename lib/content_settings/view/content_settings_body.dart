@@ -1,6 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/content_settings/content_settings.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 
 class ContentSettingsBody extends StatelessWidget {
   const ContentSettingsBody({super.key});
@@ -30,8 +31,10 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppSectionHeader(
-      title: 'Links',
+    final l10n = AppLocalizations.of(context);
+
+    return AppSectionHeader(
+      title: l10n.contentSettings_linkSectionTitle,
     );
   }
 }

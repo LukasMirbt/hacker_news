@@ -3,9 +3,6 @@ import 'package:settings_storage/settings_storage.dart';
 
 sealed class ContentSettingsEvent extends Equatable {
   const ContentSettingsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 final class ContentSettingsLinkLaunchModeChanged extends ContentSettingsEvent {
