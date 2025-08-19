@@ -13,15 +13,6 @@ class LinkException with EquatableMixin implements Exception {
   List<Object?> get props => [error];
 }
 
-class LinkFailure with EquatableMixin implements Exception {
-  const LinkFailure(this.url);
-
-  final Object? url;
-
-  @override
-  List<Object?> get props => [url];
-}
-
 class LinkLauncher {
   const LinkLauncher({
     required SettingsStorage settingsStorage,
@@ -31,6 +22,12 @@ class LinkLauncher {
 
   final SettingsStorage _storage;
   final WebLinks _webLinks;
+
+  LinkLaunchMode get launchMode => _storage.readLinkLaunchMode();
+
+  Future<void> setLaunchMode(LinkLaunchMode mode) async {
+    await _storage.writeLinkLaunchMode(mode);
+  }
 
   Future<void> launch(String urlString) async {
     try {
@@ -47,11 +44,5 @@ class LinkLauncher {
         stackTrace,
       );
     }
-  }
-
-  LinkLaunchMode get launchMode => _storage.readLinkLaunchMode();
-
-  Future<void> setLaunchMode(LinkLaunchMode mode) async {
-    await _storage.writeLinkLaunchMode(mode);
   }
 }
