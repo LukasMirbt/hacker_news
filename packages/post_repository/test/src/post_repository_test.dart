@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
+// ignore_for_file: cascade_invocations
 
 import 'package:authentication_api/authentication_api.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -7,6 +8,7 @@ import 'package:draft_storage/draft_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:visited_post_storage/visited_post_storage.dart';
 
 class _MockPostApi extends Mock implements PostApi {}
 
@@ -15,6 +17,8 @@ class _MockAuthenticationApi extends Mock implements AuthenticationApi {}
 class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
 class _MockDraftStorage extends Mock implements DraftStorage {}
+
+class _MockVisitedPostStorage extends Mock implements VisitedPostStorage {}
 
 class _MockCancelTokenService extends Mock implements CancelTokenService {}
 
@@ -38,6 +42,7 @@ void main() {
     late AuthenticationApi authenticationApi;
     late AuthenticationState authenticationState;
     late DraftStorage draftStorage;
+    late VisitedPostStorage visitedPostStorage;
     late CancelTokenService cancelTokenService;
     late CancelToken cancelToken;
 
@@ -46,6 +51,7 @@ void main() {
       authenticationApi = _MockAuthenticationApi();
       authenticationState = _MockAuthenticationState();
       draftStorage = _MockDraftStorage();
+      visitedPostStorage = _MockVisitedPostStorage();
       cancelTokenService = _MockCancelTokenService();
       cancelToken = _MockCancelToken();
       when(() => authenticationApi.state).thenReturn(authenticationState);
@@ -57,6 +63,7 @@ void main() {
         postApi: postApi,
         authenticationApi: authenticationApi,
         draftStorage: draftStorage,
+        visitedPostStorage: visitedPostStorage,
         cancelTokenService: cancelTokenService,
       );
     }
@@ -70,6 +77,7 @@ void main() {
             postApi: postApi,
             authenticationApi: authenticationApi,
             draftStorage: draftStorage,
+            visitedPostStorage: visitedPostStorage,
           ),
           returnsNormally,
         );
@@ -106,7 +114,7 @@ void main() {
         ),
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [success] and $Post for each stream value '
         'when stream succeeds',
         setUp: () {
@@ -140,7 +148,7 @@ void main() {
         },
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [failure] and rethrows when stream throws',
         setUp: () {
           when(generate).thenReturn(cancelToken);
@@ -172,7 +180,7 @@ void main() {
         cancelToken: cancelToken,
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [loading, success] and $Post '
         'when request succeeds',
         setUp: () {
@@ -197,7 +205,7 @@ void main() {
         },
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [loading, failure] and rethrows '
         'when request throws',
         setUp: () {
@@ -304,7 +312,7 @@ void main() {
       final deleteCommentDraft = () =>
           draftStorage.deleteCommentDraft(draftStorageKey);
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [success], $Post and calls deleteCommentDraft '
         'when fetchPost succeeds',
         setUp: () {
@@ -330,7 +338,7 @@ void main() {
         },
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'emits [failure] and returns when fetchPost throws',
         setUp: () {
           when(comment).thenAnswer((_) async {});
@@ -352,7 +360,7 @@ void main() {
         },
       );
 
-      blocTest<PostRepository, PostRepositoryState>(
+      blocTest(
         'throws when postApi.comment throws',
         setUp: () {
           when(comment).thenThrow(exception);
@@ -365,6 +373,42 @@ void main() {
           verify(comment).called(1);
         },
       );
+    });
+
+    group('visitedPosts', () {
+      test('returns stream', () {
+        final stream = Stream<Set<String>>.empty();
+        when(visitedPostStorage.watch).thenAnswer((_) => stream);
+        final repository = buildCubit();
+        expect(repository.visitedPosts, stream);
+      });
+    });
+
+    group('readVisitedPosts', () {
+      final visitedPosts = {'id'};
+      final read = () => visitedPostStorage.read();
+
+      test('returns correct value', () {
+        when(read).thenReturn(visitedPosts);
+        final repository = buildCubit();
+        expect(
+          repository.readVisitedPosts(),
+          visitedPosts,
+        );
+        verify(read).called(1);
+      });
+    });
+
+    group('addVisitedPost', () {
+      const postId = 'postId';
+      final add = () => visitedPostStorage.add(postId);
+
+      test('calls storage.add', () {
+        when(add).thenAnswer((_) async {});
+        final repository = buildCubit();
+        repository.addVisitedPost(postId);
+        verify(add).called(1);
+      });
     });
   });
 }
