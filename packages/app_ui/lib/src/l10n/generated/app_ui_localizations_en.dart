@@ -9,7 +9,10 @@ class AppUiLocalizationsEn extends AppUiLocalizations {
   AppUiLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get error => 'Something went wrong.';
+  String get errorTitle => 'Oops, something went wrong';
+
+  @override
+  String get errorBody => 'An unexpected issue occurred. Please try again.';
 
   @override
   String get middleDot => '·';

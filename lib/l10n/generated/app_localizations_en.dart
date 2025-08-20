@@ -332,6 +332,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get theme_darkMode => 'Dark';
 
   @override
+  String get threadFeed_emptyTitle => 'No threads yet';
+
+  @override
+  String get threadFeed_emptyBody =>
+      '\'Your replies and comment threads will appear here. Join a discussion to get started.\'';
+
+  @override
   String threadFeed_age({required String age}) {
     return '$age ago';
   }

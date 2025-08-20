@@ -1,8 +1,19 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class ThreadFeedEmpty extends StatelessWidget {
-  const ThreadFeedEmpty({super.key});
+class AppEmptyView extends StatelessWidget {
+  const AppEmptyView({
+    required this.icon,
+    required this.title,
+    required this.body,
+    super.key,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  static const double _iconSize = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +30,26 @@ class ThreadFeedEmpty extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppIcon.filled(
-                Symbols.forum_rounded,
+                icon,
                 color: colorScheme.secondary,
-                size: 40,
+                size: _iconSize,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
-                'No threads yet',
+                title,
                 style: textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'Your replies and comment threads will appear here. Join a discussion to get started.',
+                body,
                 textAlign: TextAlign.center,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              const SizedBox(height: 40),
+              const SizedBox(height: _iconSize),
             ],
           ),
         ),

@@ -1,0 +1,18 @@
+import 'package:app_ui/app_ui.dart';
+import 'package:flutter/material.dart';
+import 'package:hacker_client/l10n/l10n.dart';
+
+class ThreadFeedEmptyText extends StatelessWidget {
+  const ThreadFeedEmptyText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return EmptyText(
+      icon: Symbols.forum_rounded,
+      title: l10n.threadFeed_emptyTitle,
+      body: l10n.threadFeed_emptyBody,
+    );
+  }
+}

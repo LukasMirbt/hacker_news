@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -34,16 +35,39 @@ class _Body extends StatelessWidget {
 
     if (isFailure) {
       return const AlwaysScrollable(
-        child: ErrorText(),
+        child: AppErrorView(),
       );
     }
 
+<<<<<<< Updated upstream
     /*    if (isEmpty) */
     return const ThreadFeedEmpty();
+=======
+    if (isEmpty) {
+      return const AlwaysScrollable(
+        child: _EmptyText(),
+      );
+    }
+>>>>>>> Stashed changes
 
     return Skeletonizer(
       enabled: isPlaceholder,
       child: const ThreadFeedBody(),
+    );
+  }
+}
+
+class _EmptyText extends StatelessWidget {
+  const _EmptyText();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    return AppEmptyView(
+      icon: Symbols.forum_rounded,
+      title: l10n.threadFeed_emptyTitle,
+      body: l10n.threadFeed_emptyBody,
     );
   }
 }

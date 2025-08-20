@@ -94,11 +94,17 @@ abstract class AppUiLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
-  /// No description provided for @error.
+  /// No description provided for @errorTitle.
   ///
   /// In en, this message translates to:
-  /// **'Something went wrong.'**
-  String get error;
+  /// **'Oops, something went wrong'**
+  String get errorTitle;
+
+  /// No description provided for @errorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected issue occurred. Please try again.'**
+  String get errorBody;
 
   /// No description provided for @middleDot.
   ///
