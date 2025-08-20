@@ -25,7 +25,7 @@ class AnalyticsConsentBody extends StatelessWidget {
                   SizedBox(height: AppSpacing.xlg),
                   _Title(),
                   SizedBox(height: AppSpacing.lg),
-                  Expanded(child: AnalyticsConsentExplanation()),
+                  AnalyticsConsentExplanation(),
                   Spacer(),
                   SizedBox(height: AppSpacing.lg),
                   AnalyticsConsentAgreeButton(),

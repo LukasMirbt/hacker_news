@@ -30,6 +30,8 @@ void main() async {
     cacheOptions: const SharedPreferencesWithCacheOptions(),
   );
 
+  await sharedPreferences.clear();
+
   final firebaseApp = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
