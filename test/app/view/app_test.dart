@@ -34,6 +34,9 @@ class _MockPostApi extends Mock implements PostApi {}
 class _MockSettingsStorage extends Mock implements SettingsStorage {
   @override
   bool readAnalyticsConsentCompleted() => false;
+
+  @override
+  ThemeMode readThemeMode() => ThemeMode.system;
 }
 
 class _MockThreadApi extends Mock implements ThreadApi {}
