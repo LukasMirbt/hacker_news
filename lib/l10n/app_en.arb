@@ -158,7 +158,7 @@
   "theme_lightMode": "Light",
   "theme_darkMode": "Dark",
   "threadFeed_emptyTitle": "No threads yet",
-  "threadFeed_emptyBody": "'Your replies and comment threads will appear here. Join a discussion to get started.'",
+  "threadFeed_emptyBody": "Your replies and comment threads will appear here. Join a discussion to get started.",
   "threadFeed_age": "{age} ago",
   "@threadFeed_age": {
     "placeholders": {

@@ -343,7 +343,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadFeed_emptyBody =>
-      '\'Your replies and comment threads will appear here. Join a discussion to get started.\'';
+      'Your replies and comment threads will appear here. Join a discussion to get started.';
 
   @override
   String threadFeed_age({required String age}) {

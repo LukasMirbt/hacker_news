@@ -715,7 +715,7 @@ abstract class AppLocalizations {
   /// No description provided for @threadFeed_emptyBody.
   ///
   /// In en, this message translates to:
-  /// **'\'Your replies and comment threads will appear here. Join a discussion to get started.\''**
+  /// **'Your replies and comment threads will appear here. Join a discussion to get started.'**
   String get threadFeed_emptyBody;
 
   /// No description provided for @threadFeed_age.
