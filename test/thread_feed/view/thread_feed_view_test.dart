@@ -38,7 +38,7 @@ void main() {
       expect(find.byType(ThreadFeedRefreshIndicator), findsOneWidget);
     });
 
-    testWidgets('renders $AlwaysScrollable and $ErrorText '
+    testWidgets('renders $AlwaysScrollable and $AppErrorBody '
         'when isFailure', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
@@ -49,14 +49,34 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(AlwaysScrollable),
-          matching: find.byType(ErrorText),
+          matching: find.byType(AppErrorBody),
         ),
         findsOneWidget,
       );
     });
 
-    testWidgets('renders skeletonized $ThreadFeedBody when !isFailure '
-        'and isPlaceholder ', (tester) async {
+    testWidgets('renders $AlwaysScrollable and $ThreadFeedEmptyBody '
+        'when !isFailure and isEmpty', (tester) async {
+      when(() => bloc.state).thenReturn(
+        initialState.copyWith(
+          fetchStatus: FetchStatus.success,
+          feed: PaginatedThreadFeedModel.fromRepository(
+            PaginatedThreadFeedPlaceholder(),
+          ),
+        ),
+      );
+      await tester.pumpApp(buildSubject());
+      expect(
+        find.descendant(
+          of: find.byType(AlwaysScrollable),
+          matching: find.byType(ThreadFeedEmptyBody),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('renders skeletonized $ThreadFeedBody '
+        'when !isFailure, !isEmpty and isPlaceholder ', (tester) async {
       await tester.pumpApp(buildSubject());
       final skeletonizerScope = tester.widget<SkeletonizerScope>(
         find.ancestor(
@@ -67,12 +87,16 @@ void main() {
       expect(skeletonizerScope.enabled, true);
     });
 
-    testWidgets('renders non-skeletonized $ThreadFeedBody when !isFailure '
-        'and !isPlaceholder', (tester) async {
+    testWidgets('renders non-skeletonized $ThreadFeedBody '
+        'when !isFailure, !isEmpty and !isPlaceholder', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           feed: PaginatedThreadFeedModel.fromRepository(
-            PaginatedThreadFeedPlaceholder(),
+            PaginatedThreadFeedPlaceholder(
+              items: [
+                OtherUserThreadCommentPlaceholder(),
+              ],
+            ),
           ),
         ),
       );

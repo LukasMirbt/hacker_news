@@ -2,6 +2,7 @@
 
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,24 +32,40 @@ void main() {
       );
     }
 
-    testWidgets('renders $Spinner when status '
+    testWidgets('renders $AppLoadingBody when status '
         'is ${DraftStatus.loading}', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(Spinner), findsOneWidget);
+      expect(find.byType(AppLoadingBody), findsOneWidget);
     });
 
-    testWidgets('renders $DraftBody when status '
-        'is ${DraftStatus.success}', (tester) async {
+    testWidgets('renders $DraftEmptyBody when status '
+        'is ${DraftStatus.success} and drafts.isEmpty', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           status: DraftStatus.success,
         ),
       );
       await tester.pumpApp(buildSubject());
+      expect(find.byType(DraftEmptyBody), findsOneWidget);
+    });
+
+    testWidgets('renders $DraftBody when status '
+        'is ${DraftStatus.success} and !drafts.isEmpty', (tester) async {
+      when(() => bloc.state).thenReturn(
+        initialState.copyWith(
+          status: DraftStatus.success,
+          drafts: [
+            ReplyDraftModel(
+              draft: ReplyDraftPlaceholder(),
+            ),
+          ],
+        ),
+      );
+      await tester.pumpApp(buildSubject());
       expect(find.byType(DraftBody), findsOneWidget);
     });
 
-    testWidgets('renders $ErrorText when status '
+    testWidgets('renders $AppErrorBody when status '
         'is ${DraftStatus.failure}', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
@@ -56,7 +73,7 @@ void main() {
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ErrorText), findsOneWidget);
+      expect(find.byType(AppErrorBody), findsOneWidget);
     });
   });
 }

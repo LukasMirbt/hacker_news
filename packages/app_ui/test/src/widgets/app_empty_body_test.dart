@@ -6,15 +6,23 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/helpers.dart';
 
-void main() async {
-  final l10n = await AppUiLocalizations.delegate.load(Locale('en'));
+void main() {
+  const icon = Symbols.abc_rounded;
+  const title = 'title';
+  const body = 'body';
 
-  group(AppErrorView, () {
-    Widget buildSubject() => AppErrorView();
+  group(AppEmptyBody, () {
+    Widget buildSubject() {
+      return AppEmptyBody(
+        icon: icon,
+        title: title,
+        body: body,
+      );
+    }
 
     ColorScheme findColorScheme(WidgetTester tester) {
       final context = tester.element(
-        find.byType(AppErrorView),
+        find.byType(AppEmptyBody),
       );
       return ColorScheme.of(context);
     }
@@ -23,7 +31,7 @@ void main() async {
       await tester.pumpApp(buildSubject());
       expect(
         find.descendant(
-          of: find.byType(AppErrorView),
+          of: find.byType(AppEmptyBody),
           matching: find.byType(SafeArea),
         ),
         findsOneWidget,
@@ -42,7 +50,7 @@ void main() async {
             .having(
               (widget) => widget.icon,
               'icon',
-              Symbols.error_rounded,
+              icon,
             )
             .having(
               (widget) => widget.size,
@@ -52,19 +60,19 @@ void main() async {
             .having(
               (widget) => widget.color,
               'color',
-              colorScheme.error,
+              colorScheme.secondary,
             ),
       );
     });
 
-    testWidgets('renders errorTitle', (tester) async {
+    testWidgets('renders title', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(l10n.errorTitle), findsOneWidget);
+      expect(find.text(title), findsOneWidget);
     });
 
-    testWidgets('renders errorBody', (tester) async {
+    testWidgets('renders body', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(l10n.errorBody), findsOneWidget);
+      expect(find.text(body), findsOneWidget);
     });
   });
 }

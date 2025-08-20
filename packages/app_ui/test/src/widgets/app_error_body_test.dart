@@ -6,23 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/helpers.dart';
 
-void main() {
-  const icon = Symbols.abc_rounded;
-  const title = 'title';
-  const body = 'body';
+void main() async {
+  final l10n = await AppUiLocalizations.delegate.load(Locale('en'));
 
-  group(AppEmptyView, () {
-    Widget buildSubject() {
-      return AppEmptyView(
-        icon: icon,
-        title: title,
-        body: body,
-      );
-    }
+  group(AppErrorBody, () {
+    Widget buildSubject() => AppErrorBody();
 
     ColorScheme findColorScheme(WidgetTester tester) {
       final context = tester.element(
-        find.byType(AppEmptyView),
+        find.byType(AppErrorBody),
       );
       return ColorScheme.of(context);
     }
@@ -31,7 +23,7 @@ void main() {
       await tester.pumpApp(buildSubject());
       expect(
         find.descendant(
-          of: find.byType(AppEmptyView),
+          of: find.byType(AppErrorBody),
           matching: find.byType(SafeArea),
         ),
         findsOneWidget,
@@ -50,7 +42,7 @@ void main() {
             .having(
               (widget) => widget.icon,
               'icon',
-              icon,
+              Symbols.error_rounded,
             )
             .having(
               (widget) => widget.size,
@@ -60,19 +52,19 @@ void main() {
             .having(
               (widget) => widget.color,
               'color',
-              colorScheme.secondary,
+              colorScheme.error,
             ),
       );
     });
 
-    testWidgets('renders title', (tester) async {
+    testWidgets('renders errorTitle', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(title), findsOneWidget);
+      expect(find.text(l10n.errorTitle), findsOneWidget);
     });
 
-    testWidgets('renders body', (tester) async {
+    testWidgets('renders errorBody', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.text(body), findsOneWidget);
+      expect(find.text(l10n.errorBody), findsOneWidget);
     });
   });
 }

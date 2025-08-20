@@ -7,14 +7,14 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/helpers.dart';
 
 void main() {
-  group(AppLoadingView, () {
-    Widget buildSubject() => AppLoadingView();
+  group(AppLoadingBody, () {
+    Widget buildSubject() => AppLoadingBody();
 
     testWidgets('renders $SafeArea', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
         find.descendant(
-          of: find.byType(AppLoadingView),
+          of: find.byType(AppLoadingBody),
           matching: find.byType(SafeArea),
         ),
         findsOneWidget,

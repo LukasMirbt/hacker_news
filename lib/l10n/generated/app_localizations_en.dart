@@ -179,6 +179,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteDraft_confirmAction => 'Delete';
 
   @override
+  String get drafts_emptyTitle => 'No drafts saved';
+
+  @override
+  String get drafts_emptyBody =>
+      'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
+
+  @override
   String feed_shareText({required String title, required String url}) {
     return '$title $url';
   }

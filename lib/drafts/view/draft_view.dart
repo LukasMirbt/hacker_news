@@ -17,10 +17,10 @@ class DraftView extends StatelessWidget {
     );
 
     return switch (status) {
-      DraftStatus.loading => const Spinner(),
-      DraftStatus.success when isEmpty => const DraftEmpty(),
+      DraftStatus.loading => const AppLoadingBody(),
+      DraftStatus.success when isEmpty => const DraftEmptyBody(),
       DraftStatus.success => const DraftBody(),
-      DraftStatus.failure => const ErrorText(),
+      DraftStatus.failure => const AppErrorBody(),
     };
   }
 }

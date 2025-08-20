@@ -1,17 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class AppEmptyView extends StatelessWidget {
-  const AppEmptyView({
-    required this.icon,
-    required this.title,
-    required this.body,
-    super.key,
-  });
-
-  final IconData icon;
-  final String title;
-  final String body;
+class AppErrorBody extends StatelessWidget {
+  const AppErrorBody({super.key});
 
   static const double _iconSize = 40;
 
@@ -19,30 +10,32 @@ class AppEmptyView extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.of(context);
     final textTheme = TextTheme.of(context);
+    final l10n = AppUiLocalizations.of(context);
 
     return SafeArea(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
+            vertical: AppSpacing.lg,
             horizontal: AppSpacing.xlg,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppIcon.filled(
-                icon,
-                color: colorScheme.secondary,
+                Symbols.error_rounded,
                 size: _iconSize,
+                color: colorScheme.error,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
-                title,
+                l10n.errorTitle,
                 style: textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                body,
+                l10n.errorBody,
                 textAlign: TextAlign.center,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,

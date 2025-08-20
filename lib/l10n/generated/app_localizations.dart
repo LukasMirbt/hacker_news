@@ -412,6 +412,18 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get deleteDraft_confirmAction;
 
+  /// No description provided for @drafts_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No drafts saved'**
+  String get drafts_emptyTitle;
+
+  /// No description provided for @drafts_emptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your unfinished replies and comments will appear here. Drafts are saved automatically.'**
+  String get drafts_emptyBody;
+
   /// No description provided for @feed_shareText.
   ///
   /// In en, this message translates to:

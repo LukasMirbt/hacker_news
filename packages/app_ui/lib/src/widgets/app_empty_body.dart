@@ -1,8 +1,19 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class DraftEmpty extends StatelessWidget {
-  const DraftEmpty({super.key});
+class AppEmptyBody extends StatelessWidget {
+  const AppEmptyBody({
+    required this.icon,
+    required this.title,
+    required this.body,
+    super.key,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  static const double _iconSize = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +30,26 @@ class DraftEmpty extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppIcon.filled(
-                Symbols.drafts_rounded,
+                icon,
                 color: colorScheme.secondary,
-                size: 40,
+                size: _iconSize,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
-                'No drafts saved',
+                title,
                 style: textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'Your unfinished replies and comments will appear here. Drafts are saved automatically.',
+                body,
                 textAlign: TextAlign.center,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              const SizedBox(height: 40),
+              const SizedBox(height: _iconSize),
             ],
           ),
         ),
