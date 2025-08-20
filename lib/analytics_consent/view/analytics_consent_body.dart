@@ -8,41 +8,50 @@ class AnalyticsConsentBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
+    return const CustomScrollView(
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 vertical: AppSpacing.lg,
                 horizontal: AppSpacing.xlg,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppIcon.filled(
-                    Symbols.auto_fix_high_rounded,
-                    size: 40,
-                    color: ColorScheme.of(context).secondary,
-                  ),
-                  const SizedBox(
-                    height: AppSpacing.xlg,
-                  ),
-                  const _Title(),
-                  const SizedBox(height: AppSpacing.lg),
-                  const Expanded(child: AnalyticsConsentExplanation()),
-                  const Spacer(),
-                  const SizedBox(height: AppSpacing.lg),
-                  const AnalyticsConsentAgreeButton(),
-                  const SizedBox(height: AppSpacing.sm),
-                  const AnalyticsConsentDeclineButton(),
+                  _Icon(),
+                  SizedBox(height: AppSpacing.xlg),
+                  _Title(),
+                  SizedBox(height: AppSpacing.lg),
+                  Expanded(child: AnalyticsConsentExplanation()),
+                  Spacer(),
+                  SizedBox(height: AppSpacing.lg),
+                  AnalyticsConsentAgreeButton(),
+                  SizedBox(height: AppSpacing.sm),
+                  AnalyticsConsentDeclineButton(),
                 ],
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class _Icon extends StatelessWidget {
+  const _Icon();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
+
+    return AppIcon.filled(
+      Symbols.auto_fix_high_rounded,
+      color: colorScheme.secondary,
+      size: 40,
     );
   }
 }
