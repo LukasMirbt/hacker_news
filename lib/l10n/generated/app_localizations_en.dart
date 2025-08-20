@@ -15,6 +15,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get generalServerError => 'Something went wrong';
 
   @override
+  String get about_title => 'About';
+
+  @override
+  String get about_licenses => 'Licenses';
+
+  @override
+  String get about_privacyPolicy => 'Privacy policy';
+
+  @override
+  String get about_version => 'Version';
+
+  @override
   String get analyticsConsent_title => 'Help improve the app?';
 
   @override
@@ -302,10 +314,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_dataCollection => 'Data collection';
 
   @override
-  String get settings_licenses => 'Licenses';
-
-  @override
-  String get settings_privacyPolicy => 'Privacy policy';
+  String get settings_about => 'About';
 
   @override
   String get settings_userSectionTitle => 'User';

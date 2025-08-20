@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/version/version.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
@@ -99,11 +98,6 @@ void main() async {
       );
       verify(() => router.goBranch(shell, index)).called(1);
       expect(scaffoldState.calledCloseDrawer, true);
-    });
-
-    testWidgets('renders $CurrentVersion', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(CurrentVersion), findsOneWidget);
     });
   });
 }

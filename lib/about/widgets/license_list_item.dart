@@ -11,7 +11,7 @@ class LicenseListItem extends StatelessWidget {
 
     return ListTile(
       leading: const AppIcon(Symbols.description_rounded),
-      title: Text(l10n.settings_licenses),
+      title: Text(l10n.about_licenses),
       trailing: const AppIcon(Symbols.chevron_right_rounded),
       onTap: () {
         showLicensePage(

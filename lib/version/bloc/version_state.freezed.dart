@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VersionState {
 
- VersionModel get model;
+ VersionModel get version;
 /// Create a copy of VersionState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $VersionStateCopyWith<VersionState> get copyWith => _$VersionStateCopyWithImpl<V
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VersionState&&(identical(other.model, model) || other.model == model));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VersionState&&(identical(other.version, version) || other.version == version));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,model);
+int get hashCode => Object.hash(runtimeType,version);
 
 @override
 String toString() {
-  return 'VersionState(model: $model)';
+  return 'VersionState(version: $version)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $VersionStateCopyWith<$Res>  {
   factory $VersionStateCopyWith(VersionState value, $Res Function(VersionState) _then) = _$VersionStateCopyWithImpl;
 @useResult
 $Res call({
- VersionModel model
+ VersionModel? version
 });
 
 
@@ -62,10 +62,10 @@ class _$VersionStateCopyWithImpl<$Res>
 
 /// Create a copy of VersionState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? model = null,}) {
-  return _then(_self.copyWith(
-model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
-as VersionModel,
+@pragma('vm:prefer-inline') @override $Res call({Object? version = freezed,}) {
+  return _then(VersionState(
+version: freezed == version ? _self.version! : version // ignore: cast_nullable_to_non_nullable
+as VersionModel?,
   ));
 }
 
@@ -86,11 +86,10 @@ extension VersionStatePatterns on VersionState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _VersionState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _VersionState() when $default != null:
-return $default(_that);case _:
+case _:
   return orElse();
 
 }
@@ -108,11 +107,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _VersionState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _VersionState():
-return $default(_that);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -129,11 +127,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _VersionState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _VersionState() when $default != null:
-return $default(_that);case _:
+case _:
   return null;
 
 }
@@ -150,10 +147,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( VersionModel model)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _VersionState() when $default != null:
-return $default(_that.model);case _:
+case _:
   return orElse();
 
 }
@@ -171,10 +167,9 @@ return $default(_that.model);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( VersionModel model)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _VersionState():
-return $default(_that.model);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,80 +186,13 @@ return $default(_that.model);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( VersionModel model)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _VersionState() when $default != null:
-return $default(_that.model);case _:
+case _:
   return null;
 
 }
 }
-
-}
-
-/// @nodoc
-
-
-class _VersionState implements VersionState {
-  const _VersionState({this.model = VersionModel.empty});
-  
-
-@override@JsonKey() final  VersionModel model;
-
-/// Create a copy of VersionState
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$VersionStateCopyWith<_VersionState> get copyWith => __$VersionStateCopyWithImpl<_VersionState>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VersionState&&(identical(other.model, model) || other.model == model));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,model);
-
-@override
-String toString() {
-  return 'VersionState(model: $model)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$VersionStateCopyWith<$Res> implements $VersionStateCopyWith<$Res> {
-  factory _$VersionStateCopyWith(_VersionState value, $Res Function(_VersionState) _then) = __$VersionStateCopyWithImpl;
-@override @useResult
-$Res call({
- VersionModel model
-});
-
-
-
-
-}
-/// @nodoc
-class __$VersionStateCopyWithImpl<$Res>
-    implements _$VersionStateCopyWith<$Res> {
-  __$VersionStateCopyWithImpl(this._self, this._then);
-
-  final _VersionState _self;
-  final $Res Function(_VersionState) _then;
-
-/// Create a copy of VersionState
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? model = null,}) {
-  return _then(_VersionState(
-model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
-as VersionModel,
-  ));
-}
-
 
 }
 

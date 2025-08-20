@@ -46,7 +46,7 @@ void main() {
         },
         expect: () => [
           initialState.copyWith(
-            model: VersionModel(currentVersion),
+            version: VersionModel(currentVersion),
           ),
         ],
         verify: (_) {

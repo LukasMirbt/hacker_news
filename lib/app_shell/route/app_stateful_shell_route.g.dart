@@ -156,6 +156,11 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
               parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
               factory: _$DataCollectionRoute._fromState,
             ),
+            GoRouteData.$route(
+              path: 'about',
+              parentNavigatorKey: AboutRoute.$parentNavigatorKey,
+              factory: _$AboutRoute._fromState,
+            ),
           ],
         ),
       ],
@@ -395,6 +400,26 @@ mixin _$DataCollectionRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/settings/data-collection');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$AboutRoute on GoRouteData {
+  static AboutRoute _fromState(GoRouterState state) => const AboutRoute();
+
+  @override
+  String get location => GoRouteData.$location('/settings/about');
 
   @override
   void go(BuildContext context) => context.go(location);

@@ -1,8 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hacker_client/about/about.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/settings/settings.dart';
 
 class PrivacyPolicyListItem extends StatelessWidget {
   const PrivacyPolicyListItem({super.key});
@@ -13,11 +13,11 @@ class PrivacyPolicyListItem extends StatelessWidget {
 
     return ListTile(
       leading: const AppIcon(Symbols.privacy_tip_rounded),
-      title: Text(l10n.settings_privacyPolicy),
+      title: Text(l10n.about_privacyPolicy),
       trailing: const AppIcon(Symbols.launch_rounded),
       onTap: () {
-        context.read<SettingsBloc>().add(
-          const SettingsPrivacyPolicyPressed(),
+        context.read<AboutBloc>().add(
+          const AboutPrivacyPolicyPressed(),
         );
       },
     );

@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/about/about.dart';
+import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
-import 'package:hacker_client/settings/settings.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
@@ -12,44 +13,48 @@ import '../../app/pump_app.dart';
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
 void main() {
-  group(SettingsRoute, () {
+  group(AboutRoute, () {
     late GoRouterState state;
 
     setUp(() {
       state = _MockGoRouterState();
     });
 
-    SettingsRoute createSubject() => SettingsRoute();
+    AboutRoute createSubject() => AboutRoute();
 
     test('is a $GoRouteData', () {
       final route = createSubject();
       expect(route, isA<GoRouteData>());
     });
 
+    group('parentNavigatorKey', () {
+      test('returns correct navigatorKey', () {
+        expect(
+          AboutRoute.$parentNavigatorKey,
+          AppRouter.navigatorKey,
+        );
+      });
+    });
+
     group('config', () {
       test('has correct type', () {
         expect(
-          SettingsRoute.config,
-          isA<TypedGoRoute<SettingsRoute>>(),
+          AboutRoute.config,
+          isA<TypedGoRoute<AboutRoute>>(),
         );
       });
 
       test('has correct path', () {
         expect(
-          SettingsRoute.config.path,
-          '/settings',
+          AboutRoute.config.path,
+          'about',
         );
       });
 
       test('has correct routes', () {
         expect(
-          SettingsRoute.config.routes,
-          [
-            ThemeRoute.config,
-            ContentSettingsRoute.config,
-            DataCollectionRoute.config,
-            AboutRoute.config,
-          ],
+          AboutRoute.config.routes,
+          <TypedRoute<RouteData>>[],
         );
       });
     });
@@ -62,9 +67,9 @@ void main() {
         );
       }
 
-      testWidgets('renders $SettingsPage', (tester) async {
+      testWidgets('renders $AboutPage', (tester) async {
         await tester.pumpApp(buildSubject());
-        expect(find.byType(SettingsPage), findsOneWidget);
+        expect(find.byType(AboutPage), findsOneWidget);
       });
     });
   });

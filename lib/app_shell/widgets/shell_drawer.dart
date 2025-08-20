@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/generated/app_localizations.dart';
-import 'package:hacker_client/version/version.dart';
 
 class ShellDrawer extends StatelessWidget {
   const ShellDrawer({super.key});
@@ -40,10 +39,6 @@ class ShellDrawer extends StatelessWidget {
         const Divider(),
         ShellDrawerDestination(
           data: AppDestination.settings.data(l10n),
-        ),
-        const SizedBox(height: AppSpacing.lg),
-        const Center(
-          child: CurrentVersion(),
         ),
       ],
     );
