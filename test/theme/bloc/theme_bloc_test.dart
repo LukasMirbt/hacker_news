@@ -11,13 +11,15 @@ import 'package:mocktail/mocktail.dart';
 class _MockSettingsStorage extends Mock implements SettingsStorage {}
 
 void main() {
-  final initialState = ThemeState();
+  const mode = ThemeMode.dark;
+  final initialState = ThemeState(mode: mode);
 
   group(ThemeBloc, () {
     late SettingsStorage storage;
 
     setUp(() {
       storage = _MockSettingsStorage();
+      when(storage.readThemeMode).thenReturn(mode);
     });
 
     ThemeBloc buildBloc() {
