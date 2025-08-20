@@ -24,6 +24,7 @@ class AppEmptyBody extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
+            vertical: AppSpacing.lg,
             horizontal: AppSpacing.xlg,
           ),
           child: Column(

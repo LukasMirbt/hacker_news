@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class AppLoadingBody extends StatelessWidget {
@@ -6,8 +7,14 @@ class AppLoadingBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-      child: Center(
-        child: CircularProgressIndicator(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: AppSpacing.lg,
+          horizontal: AppSpacing.xlg,
+        ),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
