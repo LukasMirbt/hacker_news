@@ -5,23 +5,22 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hacker_client/about/about.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/settings/settings.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockSettingsBloc extends MockBloc<SettingsEvent, void>
-    implements SettingsBloc {}
+class _MockAboutBloc extends MockBloc<AboutEvent, void> implements AboutBloc {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
 
   group(PrivacyPolicyListItem, () {
-    late SettingsBloc bloc;
+    late AboutBloc bloc;
 
     setUp(() {
-      bloc = _MockSettingsBloc();
+      bloc = _MockAboutBloc();
     });
 
     Widget buildSubject() {
@@ -59,7 +58,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'title',
-            l10n.settings_privacyPolicy,
+            l10n.about_privacyPolicy,
           ),
         );
       });
@@ -77,13 +76,13 @@ void main() async {
         );
       });
 
-      testWidgets('adds $SettingsPrivacyPolicyPressed when $ListTile '
+      testWidgets('adds $AboutPrivacyPolicyPressed when $ListTile '
           'is tapped', (tester) async {
         await tester.pumpApp(buildSubject());
         await tester.tap(find.byType(ListTile));
         verify(
           () => bloc.add(
-            SettingsPrivacyPolicyPressed(),
+            AboutPrivacyPolicyPressed(),
           ),
         ).called(1);
       });

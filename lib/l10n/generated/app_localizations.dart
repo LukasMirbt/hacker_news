@@ -106,6 +106,30 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get generalServerError;
 
+  /// No description provided for @about_title.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about_title;
+
+  /// No description provided for @about_licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get about_licenses;
+
+  /// No description provided for @about_privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get about_privacyPolicy;
+
+  /// No description provided for @about_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get about_version;
+
   /// No description provided for @analyticsConsent_title.
   ///
   /// In en, this message translates to:
@@ -634,17 +658,11 @@ abstract class AppLocalizations {
   /// **'Data collection'**
   String get settings_dataCollection;
 
-  /// No description provided for @settings_licenses.
+  /// No description provided for @settings_about.
   ///
   /// In en, this message translates to:
-  /// **'Licenses'**
-  String get settings_licenses;
-
-  /// No description provided for @settings_privacyPolicy.
-  ///
-  /// In en, this message translates to:
-  /// **'Privacy policy'**
-  String get settings_privacyPolicy;
+  /// **'About'**
+  String get settings_about;
 
   /// No description provided for @settings_userSectionTitle.
   ///

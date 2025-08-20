@@ -3,6 +3,7 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hacker_client/about/about.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/comment/comment.dart';
@@ -18,6 +19,7 @@ import 'package:hacker_client/thread_feed/thread_feed.dart';
 import 'package:provider/provider.dart';
 import 'package:visited_post_storage/visited_post_storage.dart';
 
+part '../../about/route/about_route.dart';
 part '../../comment/route/comment_route.dart';
 part '../../content_settings/route/content_settings_route.dart';
 part '../../data_collection/route/data_collection_route.dart';

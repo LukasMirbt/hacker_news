@@ -4,7 +4,7 @@ import 'package:version_repository/version_repository.dart';
 
 void main() {
   group(VersionModel, () {
-    VersionModel createSubject(Version? version) {
+    VersionModel createSubject(Version version) {
       return VersionModel(version);
     }
 
@@ -17,16 +17,11 @@ void main() {
       });
     });
 
-    group('version', () {
-      test('returns null when version is null', () {
-        final model = createSubject(null);
-        expect(model.version, null);
-      });
-
-      test('returns correct string when version is non-null', () {
+    group('label', () {
+      test('returns correct value', () {
         final version = Version(1, 0, 0);
         final model = createSubject(version);
-        expect(model.version, version.toString());
+        expect(model.label, '1.0.0');
       });
     });
   });

@@ -6,7 +6,7 @@ class VersionBloc extends Bloc<VersionEvent, VersionState> {
   VersionBloc({
     required VersionRepository versionRepository,
   }) : _repository = versionRepository,
-       super(const VersionState()) {
+       super(VersionState()) {
     on<VersionStarted>(_onStarted);
   }
 
@@ -20,7 +20,7 @@ class VersionBloc extends Bloc<VersionEvent, VersionState> {
 
     emit(
       state.copyWith(
-        model: VersionModel(currentVersion),
+        version: VersionModel(currentVersion),
       ),
     );
   }
