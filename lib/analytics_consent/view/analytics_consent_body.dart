@@ -21,6 +21,8 @@ class AnalyticsConsentBody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  _Icon(),
+                  SizedBox(height: AppSpacing.xlg),
                   _Title(),
                   SizedBox(height: AppSpacing.lg),
                   AnalyticsConsentExplanation(),
@@ -35,6 +37,21 @@ class AnalyticsConsentBody extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _Icon extends StatelessWidget {
+  const _Icon();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
+
+    return AppIcon.filled(
+      Symbols.auto_fix_high_rounded,
+      color: colorScheme.secondary,
+      size: 40,
     );
   }
 }

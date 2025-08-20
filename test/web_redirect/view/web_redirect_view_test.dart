@@ -51,16 +51,14 @@ void main() {
       expect(find.byType(WebRedirectActionBar), findsOneWidget);
     });
 
-    testWidgets('renders $Spinner when isLoading', (
-      tester,
-    ) async {
+    testWidgets('renders $AppLoadingBody when isLoading', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           initialLoadStatus: InitialLoadStatus.loading,
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(Spinner), findsOneWidget);
+      expect(find.byType(AppLoadingBody), findsOneWidget);
     });
 
     testWidgets('renders $WebRedirectView when !isLoading', (tester) async {

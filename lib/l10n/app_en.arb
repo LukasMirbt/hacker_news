@@ -67,6 +67,8 @@
   "deleteDraft_title": "Delete draft",
   "deleteDraft_content": "The draft will be permanently deleted",
   "deleteDraft_confirmAction": "Delete",
+  "drafts_emptyTitle": "No drafts saved",
+  "drafts_emptyBody": "Your unfinished replies and comments will appear here. Drafts are saved automatically.",
   "feed_shareText": "{title} {url}",
   "@feed_shareText": {
     "placeholders": {
@@ -155,6 +157,8 @@
   "theme_systemMode": "Use device settings",
   "theme_lightMode": "Light",
   "theme_darkMode": "Dark",
+  "threadFeed_emptyTitle": "No threads yet",
+  "threadFeed_emptyBody": "Your replies and comment threads will appear here. Join a discussion to get started.",
   "threadFeed_age": "{age} ago",
   "@threadFeed_age": {
     "placeholders": {

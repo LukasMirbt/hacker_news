@@ -11,6 +11,9 @@ abstract class AppColors {
   Color get primaryContainer;
   Color get onPrimaryContainer;
 
+  Color get secondary;
+  Color get onSecondary;
+
   // Navigation drawer indicator color
   Color get secondaryContainer;
   // Navigation drawer indicator text color

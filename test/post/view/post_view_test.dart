@@ -72,7 +72,7 @@ void main() {
       expect(find.byType(PostRefreshIndicator), findsOneWidget);
     });
 
-    testWidgets('renders $AlwaysScrollable and $ErrorText '
+    testWidgets('renders $AlwaysScrollable and $AppErrorBody '
         'when isFailure', (tester) async {
       when(() => postBloc.state).thenReturn(
         initialState.copyWith(
@@ -83,7 +83,7 @@ void main() {
       expect(
         find.descendant(
           of: find.byType(AlwaysScrollable),
-          matching: find.byType(ErrorText),
+          matching: find.byType(AppErrorBody),
         ),
         findsOneWidget,
       );

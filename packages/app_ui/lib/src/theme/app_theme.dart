@@ -81,6 +81,8 @@ abstract class AppTheme {
       onPrimary: colors.onPrimary,
       primaryContainer: colors.primaryContainer,
       onPrimaryContainer: colors.onPrimaryContainer,
+      secondary: colors.secondary,
+      onSecondary: colors.onSecondary,
       secondaryContainer: colors.secondaryContainer,
       onSecondaryContainer: colors.onSecondaryContainer,
       tertiary: colors.tertiary,

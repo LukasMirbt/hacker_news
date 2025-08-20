@@ -179,6 +179,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteDraft_confirmAction => 'Delete';
 
   @override
+  String get drafts_emptyTitle => 'No drafts saved';
+
+  @override
+  String get drafts_emptyBody =>
+      'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
+
+  @override
   String feed_shareText({required String title, required String url}) {
     return '$title $url';
   }
@@ -330,6 +337,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get theme_darkMode => 'Dark';
+
+  @override
+  String get threadFeed_emptyTitle => 'No threads yet';
+
+  @override
+  String get threadFeed_emptyBody =>
+      'Your replies and comment threads will appear here. Join a discussion to get started.';
 
   @override
   String threadFeed_age({required String age}) {

@@ -12,10 +12,15 @@ class DraftView extends StatelessWidget {
       (DraftBloc bloc) => bloc.state.status,
     );
 
+    final isEmpty = context.select(
+      (DraftBloc bloc) => bloc.state.drafts.isEmpty,
+    );
+
     return switch (status) {
-      DraftStatus.loading => const Spinner(),
+      DraftStatus.loading => const AppLoadingBody(),
+      DraftStatus.success when isEmpty => const DraftEmptyBody(),
       DraftStatus.success => const DraftBody(),
-      DraftStatus.failure => const ErrorText(),
+      DraftStatus.failure => const AppErrorBody(),
     };
   }
 }

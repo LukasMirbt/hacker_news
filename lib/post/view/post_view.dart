@@ -33,7 +33,7 @@ class _Body extends StatelessWidget {
 
     if (isFailure) {
       return const AlwaysScrollable(
-        child: ErrorText(),
+        child: AppErrorBody(),
       );
     }
 

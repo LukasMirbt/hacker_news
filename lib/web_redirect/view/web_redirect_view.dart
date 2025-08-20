@@ -26,7 +26,7 @@ class _Body extends StatelessWidget {
       (WebRedirectBloc bloc) => bloc.state.initialLoadStatus.isLoading,
     );
 
-    if (isLoading) return const Spinner();
+    if (isLoading) return const AppLoadingBody();
 
     return const WebRedirectBody();
   }

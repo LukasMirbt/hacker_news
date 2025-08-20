@@ -32,9 +32,9 @@ class _Body extends StatelessWidget {
     );
 
     return switch (fetchStatus) {
-      FetchStatus.loading => const Spinner(),
+      FetchStatus.loading => const AppLoadingBody(),
       FetchStatus.success => const CommentBody(),
-      FetchStatus.failure => const ErrorText(),
+      FetchStatus.failure => const AppErrorBody(),
     };
   }
 }

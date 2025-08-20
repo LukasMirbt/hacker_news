@@ -60,10 +60,10 @@ void main() {
       expect(find.byType(CommentAppBar), findsOneWidget);
     });
 
-    testWidgets('renders $Spinner when fetchStatus is '
+    testWidgets('renders $AppLoadingBody when fetchStatus is '
         '${FetchStatus.loading}', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(Spinner), findsOneWidget);
+      expect(find.byType(AppLoadingBody), findsOneWidget);
     });
 
     testWidgets('renders $CommentBody when fetchStatus is '
@@ -77,7 +77,7 @@ void main() {
       expect(find.byType(CommentBody), findsOneWidget);
     });
 
-    testWidgets('renders $ErrorText when fetchStatus is '
+    testWidgets('renders $AppErrorBody when fetchStatus is '
         '${FetchStatus.failure}', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
@@ -85,7 +85,7 @@ void main() {
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ErrorText), findsOneWidget);
+      expect(find.byType(AppErrorBody), findsOneWidget);
     });
   });
 }
