@@ -8,27 +8,35 @@ class AnalyticsConsentBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    return CustomScrollView(
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
           child: SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: AppSpacing.lg,
                 horizontal: AppSpacing.xlg,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _Title(),
-                  SizedBox(height: AppSpacing.lg),
-                  AnalyticsConsentExplanation(),
-                  Spacer(),
-                  SizedBox(height: AppSpacing.lg),
-                  AnalyticsConsentAgreeButton(),
-                  SizedBox(height: AppSpacing.sm),
-                  AnalyticsConsentDeclineButton(),
+                  AppIcon.filled(
+                    Symbols.auto_fix_high_rounded,
+                    size: 40,
+                    color: ColorScheme.of(context).secondary,
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.xlg,
+                  ),
+                  const _Title(),
+                  const SizedBox(height: AppSpacing.lg),
+                  const Expanded(child: AnalyticsConsentExplanation()),
+                  const Spacer(),
+                  const SizedBox(height: AppSpacing.lg),
+                  const AnalyticsConsentAgreeButton(),
+                  const SizedBox(height: AppSpacing.sm),
+                  const AnalyticsConsentDeclineButton(),
                 ],
               ),
             ),

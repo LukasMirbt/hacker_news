@@ -20,6 +20,12 @@ class DarkColors extends AppColors {
   Color get onPrimaryContainer => const Color(0xFFFFDBC8);
 
   @override
+  Color get secondary => const Color(0xFFFF9800);
+
+  @override
+  Color get onSecondary => Colors.black;
+
+  @override
   Color get secondaryContainer => const Color.fromRGBO(40, 40, 40, 1);
 
   @override

@@ -28,11 +28,18 @@ class _Body extends StatelessWidget {
       (ThreadFeedBloc bloc) => bloc.state.feed.isPlaceholder,
     );
 
+    final isEmpty = context.select(
+      (ThreadFeedBloc bloc) => bloc.state.feed.isEmpty,
+    );
+
     if (isFailure) {
       return const AlwaysScrollable(
         child: ErrorText(),
       );
     }
+
+    /*    if (isEmpty) */
+    return const ThreadFeedEmpty();
 
     return Skeletonizer(
       enabled: isPlaceholder,
