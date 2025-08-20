@@ -6,7 +6,11 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc({
     required SettingsStorage settingsStorage,
   }) : _storage = settingsStorage,
-       super(const ThemeState()) {
+       super(
+         ThemeState(
+           mode: settingsStorage.readThemeMode(),
+         ),
+       ) {
     on<ThemeOptionPressed>(_onOptionPressed);
   }
 
