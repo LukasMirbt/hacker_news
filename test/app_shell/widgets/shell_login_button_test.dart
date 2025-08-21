@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
 import 'package:hacker_client/l10n/l10n.dart';
-import 'package:hacker_client/login/login.dart' hide LoginButton;
+import 'package:hacker_client/login/login.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +18,7 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
   const currentLocation = 'currentLocation';
 
-  group(LoginButton, () {
+  group(ShellLoginButton, () {
     late AppRouter router;
 
     setUp(() {
@@ -29,7 +29,7 @@ void main() async {
     Widget buildSubject() {
       return Provider.value(
         value: router,
-        child: LoginButton(),
+        child: ShellLoginButton(),
       );
     }
 

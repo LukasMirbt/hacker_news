@@ -10,15 +10,16 @@ class WebRedirectListener
         listenWhen: (previous, current) =>
             previous.webRedirect != current.webRedirect,
         listener: (context, state) {
-          final appRouter = AppRouter.of(context);
-          final matchedLocation = appRouter.matchedLocation;
+          final router = AppRouter.of(context);
+          final matchedLocation = router.matchedLocation;
           if (matchedLocation == WebRedirectRoute.config.path) return;
 
           final redirect = state.webRedirect;
 
-          appRouter.push(
+          router.push(
             WebRedirectRoute(
               url: redirect.urlString,
+              from: router.from,
               $extra: redirect.html,
             ),
           );

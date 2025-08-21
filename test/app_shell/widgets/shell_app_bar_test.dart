@@ -159,14 +159,14 @@ void main() async {
         expect(widget.shape, Border());
       });
 
-      testWidgets('actions contains $LoginButton '
+      testWidgets('actions contains $ShellLoginButton '
           'when !isAuthenticated', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(
           widget.actions,
           contains(
-            isA<LoginButton>(),
+            isA<ShellLoginButton>(),
           ),
         );
       });

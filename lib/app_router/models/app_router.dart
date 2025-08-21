@@ -35,8 +35,13 @@ class AppRouter {
 
   String get currentLocation => goRouter.state.uri.toString();
 
-  String get from =>
-      goRouter.state.uri.queryParameters['from'] ?? AppRouter.initialLocation;
+  String get from {
+    final state = goRouter.state;
+    final uri = state.uri;
+    final queryParameters = uri.queryParameters;
+    final from = queryParameters['from'];
+    return from ?? AppRouter.initialLocation;
+  }
 
   void go(GoRouteData route) {
     final redirect = _redirectModel.redirect(
