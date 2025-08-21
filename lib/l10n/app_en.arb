@@ -64,7 +64,7 @@
   "commentDraftOptions_delete": "Delete draft",
   "dataCollection_title": "Data collection",
   "dataCollection_analytics": "Analytics",
-  "deleteDraft_title": "Delete draft",
+  "deleteDraft_title": "Delete draft?",
   "deleteDraft_content": "The draft will be permanently deleted",
   "deleteDraft_confirmAction": "Delete",
   "drafts_emptyTitle": "No drafts saved",

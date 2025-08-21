@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/app_shell/app_shell.dart';
@@ -14,6 +15,10 @@ class CommentDraftItem extends StatelessWidget {
       title: _SingleLineText(draft.title),
       subtitle: _SingleLineText(draft.subtitle),
       trailing: CommentDraftMoreButton(draft),
+      contentPadding: const EdgeInsets.only(
+        left: AppSpacing.xlg,
+        right: 10,
+      ),
       onTap: () {
         AppRouter.of(context)
           ..goRelative(

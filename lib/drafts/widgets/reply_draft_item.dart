@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hacker_client/app_router/app_router.dart';
@@ -15,6 +16,10 @@ class ReplyDraftItem extends StatelessWidget {
       title: _SingleLineText(draft.title),
       subtitle: _SingleLineText(draft.subtitle),
       trailing: ReplyDraftMoreButton(draft),
+      contentPadding: const EdgeInsets.only(
+        left: AppSpacing.xlg,
+        right: 10,
+      ),
       onTap: () {
         context.read<AppRouter>().goRelative(
           ReplyRoute(url: draft.url),
