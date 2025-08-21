@@ -62,6 +62,9 @@ class LightColors extends AppColors {
   Color get surfaceContainerLow => const Color(0xFFF1F3F5);
 
   @override
+  Color get surfaceContainerHigh => const Color(0xFFEDEFF2);
+
+  @override
   Color get surfaceContainerHighest => const Color(0xFFE9ECEF);
 
   @override

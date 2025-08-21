@@ -62,7 +62,10 @@ class DarkColors extends AppColors {
   Color get surfaceContainerLow => const Color.fromRGBO(30, 30, 30, 1);
 
   @override
-  Color get surfaceContainerHighest => const Color.fromRGBO(30, 30, 30, 1);
+  Color get surfaceContainerHigh => const Color(0xFF2A2A2A);
+
+  @override
+  Color get surfaceContainerHighest => const Color(0xFF353535);
 
   @override
   Color get surfaceTint => const Color.fromRGBO(255, 102, 0, 1);

@@ -22,6 +22,7 @@ abstract class AppTheme {
       listTileTheme: _listTileTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
       pageTransitionsTheme: _pageTransitionsTheme,
+      progressIndicatorTheme: _progressIndicatorTheme,
       tabBarTheme: _tabBarTheme,
       textButtonTheme: _textButtonTheme,
       textTheme: _textTheme,
@@ -95,6 +96,7 @@ abstract class AppTheme {
       outline: colors.outline,
       outlineVariant: colors.outlineVariant,
       surfaceContainerLow: colors.surfaceContainerLow,
+      surfaceContainerHigh: colors.surfaceContainerHigh,
       surfaceContainerHighest: colors.surfaceContainerHighest,
       surfaceTint: colors.surfaceTint,
     );
@@ -165,6 +167,12 @@ abstract class AppTheme {
     );
   }
 
+  ProgressIndicatorThemeData get _progressIndicatorTheme {
+    return ProgressIndicatorThemeData(
+      refreshBackgroundColor: colors.surfaceContainerHigh,
+    );
+  }
+
   TabBarThemeData get _tabBarTheme {
     return TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
@@ -214,10 +222,16 @@ abstract class AppTheme {
 
   SkeletonizerConfigData get _skeletonizerConfig {
     return SkeletonizerConfigData(
-      effect: ShimmerEffect(
-        baseColor: colors.surfaceContainerHighest,
-        highlightColor: colors.surface,
-      ),
+      effect: switch (colors.brightness) {
+        Brightness.light => ShimmerEffect(
+          baseColor: colors.outlineVariant,
+          highlightColor: colors.surfaceContainerLow,
+        ),
+        Brightness.dark => ShimmerEffect(
+          baseColor: colors.surfaceContainerHigh,
+          highlightColor: colors.surfaceContainerHighest,
+        ),
+      },
     );
   }
 }
