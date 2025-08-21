@@ -8,7 +8,6 @@ class ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
     final l10n = AppLocalizations.of(context);
 
     return TextButton(
@@ -18,12 +17,7 @@ class ConfirmButton extends StatelessWidget {
         );
         Navigator.of(context).pop();
       },
-      style: TextButton.styleFrom(
-        foregroundColor: colorScheme.error,
-      ),
-      child: Text(
-        l10n.deleteDraft_confirmAction,
-      ),
+      child: Text(l10n.deleteDraft_confirmAction),
     );
   }
 }

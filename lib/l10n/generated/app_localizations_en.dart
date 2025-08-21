@@ -170,7 +170,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataCollection_analytics => 'Analytics';
 
   @override
-  String get deleteDraft_title => 'Delete draft';
+  String get deleteDraft_title => 'Delete draft?';
 
   @override
   String get deleteDraft_content => 'The draft will be permanently deleted';

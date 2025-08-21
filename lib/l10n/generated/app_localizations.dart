@@ -397,7 +397,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteDraft_title.
   ///
   /// In en, this message translates to:
-  /// **'Delete draft'**
+  /// **'Delete draft?'**
   String get deleteDraft_title;
 
   /// No description provided for @deleteDraft_content.
