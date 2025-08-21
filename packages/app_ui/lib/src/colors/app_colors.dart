@@ -34,6 +34,7 @@ abstract class AppColors {
 
   // Navigation drawer background color
   Color get surfaceContainerLow;
+  Color get surfaceContainerHigh;
   Color get surfaceContainerHighest;
 
   Color get surfaceTint;
