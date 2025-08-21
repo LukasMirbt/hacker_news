@@ -16,6 +16,7 @@ class LoginUsernameTextField extends StatelessWidget {
     );
 
     return TextField(
+      restorationId: 'login_username_text_field',
       autocorrect: false,
       enableSuggestions: false,
       textInputAction: TextInputAction.next,

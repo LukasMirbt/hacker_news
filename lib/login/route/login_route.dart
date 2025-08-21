@@ -26,6 +26,7 @@ class LoginRoute extends GoRouteData with _$LoginRoute, EquatableMixin {
     GoRouterState state,
   ) {
     return MaterialPage(
+      restorationId: 'login_page',
       fullscreenDialog: true,
       child: LoginPage(from: from),
     );

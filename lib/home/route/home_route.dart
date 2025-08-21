@@ -1,6 +1,6 @@
 part of '../../app_shell/route/app_stateful_shell_route.dart';
 
-class HomeRoute extends GoRouteData with _$HomeRoute, EquatableMixin {
+class HomeRoute extends GoRouteData with _$HomeRoute {
   const HomeRoute();
 
   static const config = TypedGoRoute<HomeRoute>(
@@ -11,10 +11,10 @@ class HomeRoute extends GoRouteData with _$HomeRoute, EquatableMixin {
   );
 
   @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const HomePage();
+  Page<void> buildPage(BuildContext context, GoRouterState state) {
+    return const MaterialPage(
+      restorationId: 'home_route52345234324',
+      child: HomePage(),
+    );
   }
-
-  @override
-  List<Object> get props => [];
 }
