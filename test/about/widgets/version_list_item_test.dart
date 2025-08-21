@@ -64,29 +64,22 @@ void main() async {
         );
       });
 
-      testWidgets('has correct title', (tester) async {
+      testWidgets('renders title', (tester) async {
         await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
         expect(
-          widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'title',
-            l10n.about_version,
-          ),
+          find.text(l10n.about_version),
+          findsOneWidget,
         );
       });
 
-      testWidgets('has correct trailing', (tester) async {
+      testWidgets('renders label', (tester) async {
         await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
         expect(
-          widget.trailing,
-          isA<SelectableText>().having(
-            (icon) => icon.data,
-            'data',
-            label,
+          find.descendant(
+            of: find.byType(SelectableText),
+            matching: find.text(label),
           ),
+          findsOneWidget,
         );
       });
     });
