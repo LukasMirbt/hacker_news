@@ -19,12 +19,20 @@ class VersionListItem extends StatelessWidget {
 
     return ListTile(
       leading: const AppIcon(Symbols.build_rounded),
-      title: Text(l10n.about_version),
-      trailing: SelectableText(
-        label,
-        style: textTheme.labelLarge?.copyWith(
-          color: colorScheme.onSurfaceVariant,
-        ),
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Expanded(
+            child: Text(l10n.about_version),
+          ),
+          SelectableText(
+            label,
+            style: textTheme.labelLarge?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ],
       ),
     );
   }
