@@ -3,8 +3,8 @@ import 'package:hacker_client/app_router/app_router.dart';
 import 'package:hacker_client/l10n/l10n.dart';
 import 'package:hacker_client/login/login.dart';
 
-class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+class ShellLoginButton extends StatelessWidget {
+  const ShellLoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -33,6 +33,7 @@ void main() {
   );
 
   final redirect = WebRedirectPlaceholder();
+  const from = 'from';
 
   group(WebRedirectListener, () {
     late AuthenticationBloc authenticationBloc;
@@ -43,6 +44,7 @@ void main() {
       router = _MockAppRouter();
       registerFallbackValue(_MockGoRouteData());
       when(() => authenticationBloc.state).thenReturn(initialState);
+      when(() => router.from).thenReturn(from);
     });
 
     Widget buildSubject() {
@@ -86,6 +88,7 @@ void main() {
       final pushWebRedirectRoute = () => router.push(
         WebRedirectRoute(
           url: redirect.urlString,
+          from: from,
           $extra: redirect.html,
         ),
       );

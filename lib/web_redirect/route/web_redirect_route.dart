@@ -10,6 +10,7 @@ class WebRedirectRoute extends GoRouteData
     with _$WebRedirectRoute, EquatableMixin {
   const WebRedirectRoute({
     required this.url,
+    this.from,
     this.$extra,
   });
 
@@ -18,6 +19,7 @@ class WebRedirectRoute extends GoRouteData
   );
 
   final String url;
+  final String? from;
   final String? $extra;
 
   @override
@@ -37,6 +39,7 @@ class WebRedirectRoute extends GoRouteData
   @override
   List<Object?> get props => [
     url,
+    from,
     $extra,
   ];
 }

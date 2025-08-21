@@ -51,7 +51,7 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
       shape: shape,
       actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
-        if (!isAuthenticated) const LoginButton(),
+        if (!isAuthenticated) const ShellLoginButton(),
       ],
     );
   }
