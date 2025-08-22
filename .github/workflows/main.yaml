@@ -1,0 +1,25 @@
+name: main
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "packages/**"
+      - "pubspec.yaml"
+      - ".github/workflows/main.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      # Remove when workspace coverage is fixed
+      min_coverage: 0
+      coverage_excludes: "**/*.freezed.dart lib/l10n/generated/** **/bootstrap.dart **/firebase_options.dart"

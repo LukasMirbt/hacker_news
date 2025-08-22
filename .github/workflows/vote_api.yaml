@@ -1,0 +1,20 @@
+name: vote_api
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/vote_api/**"
+      - ".github/workflows/vote_api.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/vote_api

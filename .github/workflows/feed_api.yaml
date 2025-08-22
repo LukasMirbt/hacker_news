@@ -1,0 +1,20 @@
+name: feed_api
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/feed_api/**"
+      - ".github/workflows/feed_api.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/feed_api
