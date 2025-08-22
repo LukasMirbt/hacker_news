@@ -16,6 +16,15 @@ final class CreateAccountUsernameChanged extends CreateAccountEvent {
   List<Object> get props => [username];
 }
 
+final class CreateAccountUsernameRestored extends CreateAccountEvent {
+  const CreateAccountUsernameRestored(this.username);
+
+  final String username;
+
+  @override
+  List<Object> get props => [username];
+}
+
 final class CreateAccountPasswordChanged extends CreateAccountEvent {
   const CreateAccountPasswordChanged(this.password);
 
