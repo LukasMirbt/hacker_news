@@ -36,7 +36,7 @@ part 'app_stateful_shell_route.g.dart';
 class AppStatefulShellRoute extends StatefulShellRouteData {
   const AppStatefulShellRoute();
 
-  static const $restorationScopeId = 'app_stateful_shell_route';
+  static const $restorationScopeId = 'appStatefulShellRoute';
 
   static const config = TypedStatefulShellRoute<AppStatefulShellRoute>(
     branches: [
@@ -54,7 +54,7 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
     StatefulNavigationShell navigationShell,
   ) {
     return MaterialPage(
-      restorationId: 'app_stateful_shell_route_page',
+      restorationId: 'appStatefulShellRoutePage',
       child: RepositoryProvider(
         create: (context) => FeedRepository(
           feedApi: context.read<FeedApi>(),

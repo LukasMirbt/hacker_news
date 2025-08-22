@@ -4,6 +4,8 @@ import 'package:hacker_client/thread_feed/thread_feed.dart';
 class ThreadFeedBranch extends StatefulShellBranchData {
   const ThreadFeedBranch();
 
+  static const $restorationScopeId = 'threadFeedBranch';
+
   static const config = TypedStatefulShellBranch<ThreadFeedBranch>(
     routes: [
       ThreadFeedShellRoute.config,
