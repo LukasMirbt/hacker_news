@@ -18,4 +18,5 @@ jobs:
   build:
     uses: ./.github/workflows/flutter_package.yaml
     with:
+      working_directory: packages/app
       coverage_excludes: "**/*.freezed.dart **/*.g.dart lib/l10n/generated/** **/bootstrap.dart **/firebase_options.dart"
