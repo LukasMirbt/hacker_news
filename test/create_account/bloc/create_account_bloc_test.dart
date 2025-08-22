@@ -43,7 +43,7 @@ void main() {
     });
 
     group(CreateAccountUsernameChanged, () {
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits username',
         build: buildBloc,
         act: (bloc) {
@@ -59,8 +59,25 @@ void main() {
       );
     });
 
+    group(CreateAccountUsernameRestored, () {
+      blocTest(
+        'emits username',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CreateAccountUsernameRestored(username),
+          );
+        },
+        expect: () => [
+          initialState.copyWith.form(
+            username: Username(username),
+          ),
+        ],
+      );
+    });
+
     group(CreateAccountPasswordChanged, () {
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits password',
         build: buildBloc,
         act: (bloc) {
@@ -77,7 +94,7 @@ void main() {
     });
 
     group(CreateAccountPasswordVisibilityToggled, () {
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits toggled obscurePassword',
         build: buildBloc,
         act: (bloc) {
@@ -103,7 +120,7 @@ void main() {
     group(CreateAccountTermsPressed, () {
       final launch = () => launcher.launch(hackerNewsTermsLink);
 
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -123,7 +140,7 @@ void main() {
     group(CreateAccountPrivacyPolicyPressed, () {
       final launch = () => launcher.launch(hackerNewsPrivacyPolicyLink);
 
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -151,7 +168,7 @@ void main() {
         password: Password(password),
       );
 
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits [invalid] when !form.isValid',
         build: buildBloc,
         act: (bloc) {
@@ -166,7 +183,7 @@ void main() {
         ],
       );
 
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits [loading, success] when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
@@ -191,7 +208,7 @@ void main() {
         },
       );
 
-      blocTest<CreateAccountBloc, CreateAccountState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));
