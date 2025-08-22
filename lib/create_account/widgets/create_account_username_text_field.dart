@@ -56,6 +56,7 @@ class _CreateAccountUsernameTextFieldState
     );
 
     return TextField(
+      controller: _controller.value,
       autocorrect: false,
       enableSuggestions: false,
       textInputAction: TextInputAction.next,
