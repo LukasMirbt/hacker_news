@@ -39,9 +39,12 @@ void main() async {
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: CreateAccountUsernameTextField(),
+      return RootRestorationScope(
+        restorationId: 'app',
+        child: BlocProvider.value(
+          value: bloc,
+          child: CreateAccountUsernameTextField(),
+        ),
       );
     }
 
@@ -50,6 +53,36 @@ void main() async {
         find.byType(TextField),
       );
     }
+
+    testWidgets('controller is non-null', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = findWidget(tester);
+      expect(widget.controller, isNotNull);
+    });
+
+    testWidgets('restores controller state', (tester) async {
+      await tester.pumpApp(buildSubject());
+      const text = 'text';
+      await tester.enterText(find.byType(TextField), text);
+      await tester.pump();
+      await tester.restartAndRestore();
+      final widget = findWidget(tester);
+      expect(widget.controller?.text, text);
+    });
+
+    testWidgets('adds $CreateAccountUsernameRestored when state '
+        'is restored', (tester) async {
+      await tester.pumpApp(buildSubject());
+      const text = 'text';
+      await tester.enterText(find.byType(TextField), text);
+      await tester.pump();
+      await tester.restartAndRestore();
+      verify(
+        () => bloc.add(
+          CreateAccountUsernameRestored(text),
+        ),
+      ).called(1);
+    });
 
     testWidgets('autocorrect is false', (tester) async {
       await tester.pumpApp(buildSubject());

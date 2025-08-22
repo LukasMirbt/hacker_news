@@ -53,6 +53,12 @@ void main() async {
         );
       }
 
+      testWidgets('controller is non-null', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.controller, isNotNull);
+      });
+
       testWidgets('restores controller state', (tester) async {
         await tester.pumpApp(buildSubject());
         const text = 'text';

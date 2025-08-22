@@ -43,7 +43,7 @@ void main() {
     });
 
     group(LoginUsernameChanged, () {
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits username',
         build: buildBloc,
         act: (bloc) {
@@ -60,7 +60,7 @@ void main() {
     });
 
     group(LoginUsernameRestored, () {
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits username',
         build: buildBloc,
         act: (bloc) {
@@ -77,7 +77,7 @@ void main() {
     });
 
     group(LoginPasswordChanged, () {
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits password',
         build: buildBloc,
         act: (bloc) {
@@ -94,7 +94,7 @@ void main() {
     });
 
     group(LoginPasswordVisibilityToggled, () {
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits toggled obscurePassword',
         build: buildBloc,
         act: (bloc) {
@@ -120,7 +120,7 @@ void main() {
     group(LoginTermsPressed, () {
       final launch = () => launcher.launch(hackerNewsTermsLink);
 
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -140,7 +140,7 @@ void main() {
     group(LoginPrivacyPolicyPressed, () {
       final launch = () => launcher.launch(hackerNewsPrivacyPolicyLink);
 
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'calls launch',
         setUp: () {
           when(launch).thenAnswer((_) async {});
@@ -168,7 +168,7 @@ void main() {
         password: Password(password),
       );
 
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits [invalid] when !form.isValid',
         build: buildBloc,
         act: (bloc) {
@@ -183,7 +183,7 @@ void main() {
         ],
       );
 
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits [loading, success] when request succeeds',
         setUp: () {
           when(request).thenAnswer((_) async {});
@@ -208,7 +208,7 @@ void main() {
         },
       );
 
-      blocTest<LoginBloc, LoginState>(
+      blocTest(
         'emits [loading, failure] when request throws',
         setUp: () {
           when(request).thenThrow(Exception('oops'));

@@ -15,6 +15,7 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
          CreateAccountState(from: from),
        ) {
     on<CreateAccountUsernameChanged>(_onUsernameChanged);
+    on<CreateAccountUsernameRestored>(_onUsernameRestored);
     on<CreateAccountPasswordChanged>(_onPasswordChanged);
     on<CreateAccountPasswordVisibilityToggled>(_onPasswordVisibilityToggled);
     on<CreateAccountTermsPressed>(_onTermsPressed);
@@ -27,6 +28,17 @@ class CreateAccountBloc extends Bloc<CreateAccountEvent, CreateAccountState> {
 
   void _onUsernameChanged(
     CreateAccountUsernameChanged event,
+    Emitter<CreateAccountState> emit,
+  ) {
+    emit(
+      state.copyWith.form(
+        username: Username(event.username),
+      ),
+    );
+  }
+
+  void _onUsernameRestored(
+    CreateAccountUsernameRestored event,
     Emitter<CreateAccountState> emit,
   ) {
     emit(
