@@ -37,99 +37,128 @@ void main() async {
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: LoginUsernameTextField(),
+      return RootRestorationScope(
+        restorationId: 'app',
+        child: BlocProvider.value(
+          value: bloc,
+          child: LoginUsernameTextField(),
+        ),
       );
     }
 
-    TextField findWidget(WidgetTester tester) {
-      return tester.widget<TextField>(
-        find.byType(TextField),
-      );
-    }
+    group(TextField, () {
+      TextField findWidget(WidgetTester tester) {
+        return tester.widget<TextField>(
+          find.byType(TextField),
+        );
+      }
 
-    testWidgets('autocorrect is false', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.autocorrect, false);
-    });
+      testWidgets('restores controller state', (tester) async {
+        await tester.pumpApp(buildSubject());
+        const text = 'text';
+        await tester.enterText(find.byType(TextField), text);
+        await tester.pump();
+        await tester.restartAndRestore();
+        final widget = findWidget(tester);
+        expect(widget.controller?.text, text);
+      });
 
-    testWidgets('enableSuggestions is false', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.enableSuggestions, false);
-    });
+      testWidgets('adds $LoginUsernameRestored when state '
+          'is restored', (tester) async {
+        await tester.pumpApp(buildSubject());
+        const text = 'text';
+        await tester.enterText(find.byType(TextField), text);
+        await tester.pump();
+        await tester.restartAndRestore();
+        verify(
+          () => bloc.add(
+            LoginUsernameRestored(text),
+          ),
+        ).called(1);
+      });
 
-    testWidgets('textInputAction is ${TextInputAction.next}', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.textInputAction, TextInputAction.next);
-    });
+      testWidgets('autocorrect is false', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.autocorrect, false);
+      });
 
-    testWidgets('autofillHints are correct', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(
-        widget.autofillHints,
-        [AutofillHints.username],
-      );
-    });
+      testWidgets('enableSuggestions is false', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.enableSuggestions, false);
+      });
 
-    testWidgets('labelText is correct', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(
-        widget.decoration?.labelText,
-        l10n.login_usernameLabel,
-      );
-    });
+      testWidgets('textInputAction is ${TextInputAction.next}', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.textInputAction, TextInputAction.next);
+      });
 
-    testWidgets('errorText is correct', (tester) async {
-      when(
-        () => form.usernameErrorText(any()),
-      ).thenReturn(errorText);
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(
-        widget.decoration?.errorText,
-        errorText,
-      );
-    });
+      testWidgets('autofillHints are correct', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.autofillHints,
+          [AutofillHints.username],
+        );
+      });
 
-    testWidgets('suffixIcon is error icon '
-        'when errorText is non-null', (tester) async {
-      when(
-        () => form.usernameErrorText(any()),
-      ).thenReturn(errorText);
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(
-        widget.decoration?.suffixIcon,
-        isA<AppIcon>().having(
-          (icon) => icon.icon,
-          'icon',
-          Symbols.error_rounded,
-        ),
-      );
-    });
+      testWidgets('labelText is correct', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.decoration?.labelText,
+          l10n.login_usernameLabel,
+        );
+      });
 
-    testWidgets('suffixIcon is null when errorText is null', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      expect(widget.decoration?.suffixIcon, null);
-    });
+      testWidgets('errorText is correct', (tester) async {
+        when(
+          () => form.usernameErrorText(any()),
+        ).thenReturn(errorText);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.decoration?.errorText,
+          errorText,
+        );
+      });
 
-    testWidgets('adds $LoginUsernameChanged onChanged', (tester) async {
-      const username = 'username';
-      await tester.pumpApp(buildSubject());
-      final widget = findWidget(tester);
-      widget.onChanged?.call(username);
-      verify(
-        () => bloc.add(
-          LoginUsernameChanged(username),
-        ),
-      ).called(1);
+      testWidgets('suffixIcon is error icon '
+          'when errorText is non-null', (tester) async {
+        when(
+          () => form.usernameErrorText(any()),
+        ).thenReturn(errorText);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.decoration?.suffixIcon,
+          isA<AppIcon>().having(
+            (icon) => icon.icon,
+            'icon',
+            Symbols.error_rounded,
+          ),
+        );
+      });
+
+      testWidgets('suffixIcon is null when errorText is null', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.decoration?.suffixIcon, null);
+      });
+
+      testWidgets('adds $LoginUsernameChanged onChanged', (tester) async {
+        const username = 'username';
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        widget.onChanged?.call(username);
+        verify(
+          () => bloc.add(
+            LoginUsernameChanged(username),
+          ),
+        ).called(1);
+      });
     });
   });
 }
