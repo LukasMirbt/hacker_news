@@ -2,7 +2,6 @@
 
 // coverage:ignore-file
 
-
 part of 'app_stateful_shell_route.dart';
 
 // **************************************************************************

@@ -2,7 +2,6 @@
 
 // coverage:ignore-file
 
-
 part of 'logout_loading_route.dart';
 
 // **************************************************************************
