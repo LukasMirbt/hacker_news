@@ -9,11 +9,9 @@ part of 'app_stateful_shell_route.dart';
 List<RouteBase> get $appRoutes => [$appStatefulShellRoute];
 
 RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
-  restorationScopeId: AppStatefulShellRoute.$restorationScopeId,
   factory: $AppStatefulShellRouteExtension._fromState,
   branches: [
     StatefulShellBranchData.$branch(
-      restorationScopeId: HomeBranch.$restorationScopeId,
       routes: [
         GoRouteData.$route(
           path: '/home',

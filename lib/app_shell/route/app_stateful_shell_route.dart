@@ -36,8 +36,6 @@ part 'app_stateful_shell_route.g.dart';
 class AppStatefulShellRoute extends StatefulShellRouteData {
   const AppStatefulShellRoute();
 
-  static const $restorationScopeId = 'appStatefulShellRoute';
-
   static const config = TypedStatefulShellRoute<AppStatefulShellRoute>(
     branches: [
       HomeBranch.config,
@@ -48,22 +46,19 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
   );
 
   @override
-  Page<void> pageBuilder(
+  Widget builder(
     BuildContext context,
     GoRouterState state,
     StatefulNavigationShell navigationShell,
   ) {
-    return MaterialPage(
-      restorationId: 'appStatefulShellRoutePage',
-      child: RepositoryProvider(
-        create: (context) => FeedRepository(
-          feedApi: context.read<FeedApi>(),
-          visitedPostStorage: context.read<VisitedPostStorage>(),
-        ),
-        child: Provider.value(
-          value: navigationShell,
-          child: const AppShell(),
-        ),
+    return RepositoryProvider(
+      create: (context) => FeedRepository(
+        feedApi: context.read<FeedApi>(),
+        visitedPostStorage: context.read<VisitedPostStorage>(),
+      ),
+      child: Provider.value(
+        value: navigationShell,
+        child: const AppShell(),
       ),
     );
   }

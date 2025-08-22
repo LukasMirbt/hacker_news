@@ -11,10 +11,7 @@ class HomeRoute extends GoRouteData with _$HomeRoute {
   );
 
   @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return const MaterialPage(
-      restorationId: 'home_route52345234324',
-      child: HomePage(),
-    );
+  Widget build(BuildContext context, GoRouterState state) {
+    return const HomePage();
   }
 }
