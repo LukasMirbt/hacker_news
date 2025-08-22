@@ -1,5 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// coverage:ignore-file
+
+
 part of 'app_stateful_shell_route.dart';
 
 // **************************************************************************
