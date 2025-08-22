@@ -1,4 +1,4 @@
-name: main
+name: app
 
 on:
   workflow_dispatch:
@@ -6,11 +6,9 @@ on:
     branches:
       - main
     paths:
-      - "lib/**"
-      - "test/**"
       - "packages/**"
       - "pubspec.yaml"
-      - ".github/workflows/main.yaml"
+      - ".github/workflows/app.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,6 +18,4 @@ jobs:
   build:
     uses: ./.github/workflows/flutter_package.yaml
     with:
-      # Remove when workspace coverage is fixed
-      min_coverage: 0
-      coverage_excludes: "**/*.freezed.dart lib/l10n/generated/** **/bootstrap.dart **/firebase_options.dart"
+      coverage_excludes: "**/*.freezed.dart **/*.g.dart lib/l10n/generated/** **/bootstrap.dart **/firebase_options.dart"
