@@ -56,7 +56,6 @@ class _CreateAccountUsernameTextFieldState
     );
 
     return TextField(
-      restorationId: 'createAccountUsernameTextField',
       autocorrect: false,
       enableSuggestions: false,
       textInputAction: TextInputAction.next,
