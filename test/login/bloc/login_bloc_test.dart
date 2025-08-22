@@ -59,6 +59,23 @@ void main() {
       );
     });
 
+    group(LoginUsernameRestored, () {
+      blocTest<LoginBloc, LoginState>(
+        'emits username',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            LoginUsernameRestored(username),
+          );
+        },
+        expect: () => [
+          initialState.copyWith.form(
+            username: Username(username),
+          ),
+        ],
+      );
+    });
+
     group(LoginPasswordChanged, () {
       blocTest<LoginBloc, LoginState>(
         'emits password',

@@ -165,6 +165,14 @@ void main() {
           );
         }
 
+        test('has correct restorationScopeId', () {
+          final appRouter = createSubject();
+          expect(
+            appRouter.goRouter.routerDelegate.builder.restorationScopeId,
+            'router',
+          );
+        });
+
         test('has correct navigatorKey', () {
           final appRouter = createSubject();
           expect(

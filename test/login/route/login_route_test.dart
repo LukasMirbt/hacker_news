@@ -72,11 +72,17 @@ void main() {
         await tester.pumpApp(buildSubject());
         expect(
           page,
-          isA<MaterialPage<void>>().having(
-            (page) => page.fullscreenDialog,
-            'fullscreenDialog',
-            true,
-          ),
+          isA<MaterialPage<void>>()
+              .having(
+                (page) => page.restorationId,
+                'restorationId',
+                'loginPage',
+              )
+              .having(
+                (page) => page.fullscreenDialog,
+                'fullscreenDialog',
+                true,
+              ),
         );
       });
 

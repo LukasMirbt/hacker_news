@@ -15,6 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
          LoginState(from: from),
        ) {
     on<LoginUsernameChanged>(_onUsernameChanged);
+    on<LoginUsernameRestored>(_onUsernameRestored);
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginPasswordVisibilityToggled>(_onPasswordVisibilityToggled);
     on<LoginTermsPressed>(_onTermsPressed);
@@ -27,6 +28,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void _onUsernameChanged(
     LoginUsernameChanged event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(
+      state.copyWith.form(
+        username: Username(event.username),
+      ),
+    );
+  }
+
+  void _onUsernameRestored(
+    LoginUsernameRestored event,
     Emitter<LoginState> emit,
   ) {
     emit(
