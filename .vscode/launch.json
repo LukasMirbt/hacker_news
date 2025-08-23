@@ -8,7 +8,7 @@
       "name": "Run",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main.dart",
+      "program": "packages/app/lib/main.dart",
       "args": [
         "--dart-define=cronetHttpNoPlay=true"
       ]

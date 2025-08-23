@@ -1,0 +1,22 @@
+name: app
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+      - "pubspec.yaml"
+      - ".github/workflows/app.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/app
+      coverage_excludes: "**/*.freezed.dart **/*.g.dart lib/l10n/generated/** **/bootstrap.dart **/firebase_options.dart"
