@@ -9,6 +9,6 @@ class AuthenticationStatePlaceholder extends AuthenticationState {
     super.status,
   }) : super(
          baseUrl: baseUrl ?? Uri.parse('https://example.com'),
-         webRedirect: webRedirect ?? WebRedirect.empty,
+         webRedirect: webRedirect ?? UrlRedirect.empty,
        );
 }

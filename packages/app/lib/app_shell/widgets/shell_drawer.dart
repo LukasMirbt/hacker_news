@@ -29,6 +29,9 @@ class ShellDrawer extends StatelessWidget {
         ShellDrawerDestination(
           data: AppDestination.home.data(l10n),
         ),
+        ShellDrawerDestination(
+          data: AppDestination.search.data(l10n),
+        ),
         const Divider(),
         ShellDrawerDestination(
           data: AppDestination.threads.data(l10n),

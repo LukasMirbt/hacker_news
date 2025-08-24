@@ -15,9 +15,9 @@ class CommentModel extends Equatable {
 
   String? get replyUrl => _comment.replyUrl;
 
-  WebRedirect get webRedirect {
+  UrlRedirect get webRedirect {
     final url = _links.commentUrl(_comment.id);
-    return WebRedirect(url: url);
+    return UrlRedirect(url);
   }
 
   String get shareText {

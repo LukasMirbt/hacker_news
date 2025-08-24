@@ -10,7 +10,6 @@ part 'login_route.g.dart';
 @LoginRoute.config
 class LoginRoute extends GoRouteData with _$LoginRoute, EquatableMixin {
   const LoginRoute({required this.from});
-
   static const config = TypedGoRoute<LoginRoute>(
     path: '/login',
     routes: [

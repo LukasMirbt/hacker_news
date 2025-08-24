@@ -1,28 +1,32 @@
 import 'package:web_links/web_links.dart';
 
-class WebRedirect {
-  WebRedirect({
-    required Uri url,
-    this.html,
+sealed class WebRedirect {}
+
+class UrlRedirect extends WebRedirect {
+  UrlRedirect(
+    Uri url, {
     WebLinks webLinks = const WebLinks(),
   }) : url = webLinks.resolve(
          url.toString(),
        );
 
-  factory WebRedirect.from(
-    String urlString, {
-    String? html,
-  }) {
-    return WebRedirect(
-      url: Uri.parse(urlString),
-      html: html,
+  factory UrlRedirect.from(String urlString) {
+    return UrlRedirect(
+      Uri.parse(urlString),
     );
   }
 
-  static final empty = WebRedirect(url: Uri());
+  static final empty = UrlRedirect(Uri());
 
   final Uri url;
-  final String? html;
+}
 
-  String get urlString => url.toString();
+class HtmlRedirect extends WebRedirect {
+  HtmlRedirect({
+    required this.baseUrl,
+    required this.html,
+  });
+
+  final Uri baseUrl;
+  final String html;
 }

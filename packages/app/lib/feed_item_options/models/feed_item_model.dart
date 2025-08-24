@@ -13,9 +13,9 @@ class FeedItemModel extends Equatable {
   final FeedItem _item;
   final WebLinks _links;
 
-  WebRedirect get webRedirect {
+  UrlRedirect get webRedirect {
     final url = _links.feedItemUrl(_item.id);
-    return WebRedirect(url: url);
+    return UrlRedirect(url);
   }
 
   @override

@@ -6,13 +6,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebRedirectPage extends StatelessWidget {
   const WebRedirectPage({
-    required this.url,
-    required this.html,
+    required this.redirect,
     super.key,
   });
 
-  final String url;
-  final String? html;
+  final WebRedirect redirect;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,7 @@ class WebRedirectPage extends StatelessWidget {
       create: (context) {
         final cookieManager = CookieManager.instance();
         return WebRedirectBloc(
-          redirect: WebRedirect.from(url, html: html),
+          redirect: redirect,
           webRedirectCookieManager: WebRedirectCookieManager(
             cookieManager: cookieManager,
             cookieAdapter: WebRedirectCookieAdapter(

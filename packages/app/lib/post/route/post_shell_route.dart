@@ -1,13 +1,21 @@
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/comment/comment.dart';
+import 'package:app/post/post.dart';
+import 'package:app/reply/reply.dart';
 import 'package:authentication_api/authentication_api.dart';
 import 'package:draft_storage/draft_storage.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:visited_post_storage/visited_post_storage.dart';
 
+part '../../comment/route/comment_route.dart';
+part 'post_route.dart';
+part 'post_shell_route.g.dart';
+
+@PostShellRoute.config
 class PostShellRoute extends ShellRouteData {
   const PostShellRoute();
 

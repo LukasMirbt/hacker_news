@@ -52,14 +52,14 @@ class WebRedirectInterceptor extends Interceptor {
     } on ValidationException catch (error) {
       if (error is MissingRedirectException) {
         _controller.add(
-          WebRedirect(
-            url: error.requestUrl,
+          HtmlRedirect(
+            baseUrl: error.requestUrl,
             html: error.responseHtml,
           ),
         );
       } else if (error is UnexpectedRedirectException) {
         _controller.add(
-          WebRedirect(url: error.redirectUrl),
+          UrlRedirect(error.redirectUrl),
         );
       }
 

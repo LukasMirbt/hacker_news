@@ -13,9 +13,9 @@ class ReplyParentModel extends Equatable {
   final ReplyParent _parent;
   final WebLinks _links;
 
-  WebRedirect get webRedirect {
+  UrlRedirect get webRedirect {
     final url = _links.commentUrl(_parent.id);
-    return WebRedirect(url: url);
+    return UrlRedirect(url);
   }
 
   String get shareText {

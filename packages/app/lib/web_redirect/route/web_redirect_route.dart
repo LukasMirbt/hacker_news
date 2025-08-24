@@ -1,4 +1,5 @@
 import 'package:app/web_redirect/web_redirect.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,18 +10,26 @@ part 'web_redirect_route.g.dart';
 class WebRedirectRoute extends GoRouteData
     with _$WebRedirectRoute, EquatableMixin {
   const WebRedirectRoute({
-    required this.url,
+    required this.$extra,
     this.from,
-    this.$extra,
   });
+
+  factory WebRedirectRoute.from(
+    WebRedirect redirect, {
+    String? from,
+  }) {
+    return WebRedirectRoute(
+      $extra: redirect,
+      from: from,
+    );
+  }
 
   static const config = TypedGoRoute<WebRedirectRoute>(
     path: '/web-redirect',
   );
 
-  final String url;
   final String? from;
-  final String? $extra;
+  final WebRedirect $extra;
 
   @override
   Page<void> buildPage(
@@ -29,17 +38,13 @@ class WebRedirectRoute extends GoRouteData
   ) {
     return MaterialPage(
       fullscreenDialog: true,
-      child: WebRedirectPage(
-        url: url,
-        html: $extra,
-      ),
+      child: WebRedirectPage(redirect: $extra),
     );
   }
 
   @override
   List<Object?> get props => [
-    url,
-    from,
     $extra,
+    from,
   ];
 }

@@ -1,4 +1,4 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+part of 'post_shell_route.dart';
 
 class PostRoute extends RelativeGoRouteData with _$PostRoute, EquatableMixin {
   const PostRoute({
