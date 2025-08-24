@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -19,7 +21,12 @@ class WebRedirectRoute extends GoRouteData
     String? from,
   }) {
     return WebRedirectRoute(
-      $extra: redirect,
+      $extra: jsonEncode(
+        switch (redirect) {
+          UrlRedirect() => redirect.toJson(),
+          HtmlRedirect() => redirect.toJson(),
+        },
+      ),
       from: from,
     );
   }
@@ -29,16 +36,32 @@ class WebRedirectRoute extends GoRouteData
   );
 
   final String? from;
-  final WebRedirect $extra;
+  final String $extra;
 
   @override
   Page<void> buildPage(
     BuildContext context,
     GoRouterState state,
   ) {
+    WebRedirect redirect;
+
+    try {
+      redirect = HtmlRedirect.fromJson(
+        jsonDecode($extra) as Map<String, dynamic>,
+      );
+    } catch (_) {
+      redirect = UrlRedirect.fromJson(
+        jsonDecode($extra) as Map<String, dynamic>,
+      );
+    }
+
+    print('restored extra: ${$extra}');
+
     return MaterialPage(
       fullscreenDialog: true,
-      child: WebRedirectPage(redirect: $extra),
+      child: WebRedirectPage(
+        redirect: redirect,
+      ),
     );
   }
 

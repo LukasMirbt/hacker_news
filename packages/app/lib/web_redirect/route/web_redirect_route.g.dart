@@ -18,7 +18,7 @@ RouteBase get $webRedirectRoute => GoRouteData.$route(
 mixin _$WebRedirectRoute on GoRouteData {
   static WebRedirectRoute _fromState(GoRouterState state) => WebRedirectRoute(
     from: state.uri.queryParameters['from'],
-    $extra: state.extra as WebRedirect,
+    $extra: state.extra as String,
   );
 
   WebRedirectRoute get _self => this as WebRedirectRoute;

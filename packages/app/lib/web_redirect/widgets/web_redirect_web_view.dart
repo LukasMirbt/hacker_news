@@ -1,5 +1,3 @@
-import 'package:app/app_router/app_router.dart';
-import 'package:app/post/post.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -42,7 +40,7 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
 
         if (uri == null) return;
 
-        if (uri.uriValue.toString().startsWith(
+        /*         if (uri.uriValue.toString().startsWith(
           'https://news.ycombinator.com/item?',
         )) {
           controller.stopLoading();
@@ -50,16 +48,16 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           AppRouter.of(context).pushRelative(
             PostRoute(postId: postId),
           );
-        }
+        } */
       },
       onProgressChanged: (_, progress) {
         context.read<WebRedirectBloc>().add(
           WebRedirectProgressChanged(progress),
         );
       },
-      onLoadStop: (_, _) {
+      onLoadStop: (_, url) {
         context.read<WebRedirectBloc>().add(
-          const WebRedirectLoadStopped(),
+          WebRedirectLoadStopped(url?.uriValue),
         );
       },
       onReceivedError: (_, _, error) {

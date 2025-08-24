@@ -127,8 +127,8 @@ class AppClient extends Cubit<AuthenticationState> {
     return cookies;
   }
 
-  Future<void> saveCookies(List<Cookie> cookies) async {
-    await _cookieJar.saveFromResponse(state.baseUrl, cookies);
+  Future<void> saveCookies(Uri url, List<Cookie> cookies) async {
+    await _cookieJar.saveFromResponse(url, cookies);
   }
 
   void updateAuthenticationFromHtml(String html) {

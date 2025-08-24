@@ -35,7 +35,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     final cookies = await _repository.cookies();
 
     await _cookieManager.setCookies(
-      url: state.redirect.url,
+      url: _repository.state.baseUrl,
       cookies: cookies,
     );
 
@@ -79,16 +79,18 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectLoadStopped event,
     Emitter<WebRedirectState> emit,
   ) async {
+    final url = event.url;
     final baseUrl = _repository.state.baseUrl;
-    final cookies = await _cookieManager.cookies(baseUrl);
 
-    // TODO(LukasMirbt): Save cookies more efficiently
-    await _repository.saveCookies(cookies);
+    if (url != null && url.host == baseUrl.host) {
+      final cookies = await _cookieManager.cookies(url);
+      await _repository.saveCookies(url, cookies);
 
-    final html = await _controller.html();
+      final html = await _controller.html();
 
-    if (html != null) {
-      _repository.updateAuthenticationFromHtml(html);
+      if (html != null) {
+        _repository.updateAuthenticationFromHtml(html);
+      }
     }
 
     final canGoBack = await _controller.canGoBack();

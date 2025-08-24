@@ -31,8 +31,8 @@ class RecentSearchItem extends StatelessWidget {
       ),
       onTap: () {
         AppRouter.of(context).push(
-          WebRedirectRoute(
-            $extra: UrlRedirect.from('https://hn.algolia.com/?q=$search'),
+          WebRedirectRoute.from(
+            UrlRedirect.from('https://hn.algolia.com/?q=$search'),
           ),
         );
       },

@@ -49,8 +49,8 @@ class _SomethingSearchBarState extends State<SomethingSearchBar> {
         final url = widget.links.searchUrl(value);
 
         AppRouter.of(context).push(
-          WebRedirectRoute(
-            $extra: UrlRedirect(url),
+          WebRedirectRoute.from(
+            UrlRedirect(url),
           ),
         );
 

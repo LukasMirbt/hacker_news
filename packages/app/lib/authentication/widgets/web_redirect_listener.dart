@@ -16,8 +16,8 @@ class WebRedirectListener
           if (matchedLocation == WebRedirectRoute.config.path) return;
 
           router.push(
-            WebRedirectRoute(
-              $extra: state.webRedirect,
+            WebRedirectRoute.from(
+              state.webRedirect,
               from: router.from,
             ),
           );

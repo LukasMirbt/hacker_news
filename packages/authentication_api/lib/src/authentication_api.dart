@@ -17,8 +17,8 @@ class AuthenticationApi {
     return cookies;
   }
 
-  Future<void> saveCookies(List<Cookie> cookies) async {
-    await _client.saveCookies(cookies);
+  Future<void> saveCookies(Uri url, List<Cookie> cookies) async {
+    await _client.saveCookies(url, cookies);
   }
 
   void updateAuthenticationFromHtml(String html) {
