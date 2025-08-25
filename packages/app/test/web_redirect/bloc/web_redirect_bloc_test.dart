@@ -95,7 +95,7 @@ void main() {
         cookies: cookies,
       );
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'sets cookies and emits [success]',
         setUp: () {
           when(getCookies).thenAnswer((_) async => cookies);
@@ -125,7 +125,7 @@ void main() {
       final inAppWebViewController = _MockInAppWebViewController();
       final initialize = () => controller.initialize(inAppWebViewController);
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'calls initialize',
         setUp: () {
           when(initialize).thenAnswer((_) async {
@@ -145,7 +145,7 @@ void main() {
     });
 
     group(WebRedirectLoadStarted, () {
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'sets progress to 0',
         build: buildBloc,
         act: (bloc) {
@@ -159,10 +159,42 @@ void main() {
       );
     });
 
+    group(WebRedirectVisitedHistoryUpdated, () {
+      const canGoBack = true;
+      const canGoForward = true;
+
+      final canGoBackMethod = () => controller.canGoBack();
+      final canGoForwardMethod = () => controller.canGoForward();
+
+      blocTest(
+        'emits canGoBack and canGoForward',
+        setUp: () {
+          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
+          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            WebRedirectVisitedHistoryUpdated(),
+          );
+        },
+        expect: () => [
+          matchState(
+            canGoBack: canGoBack,
+            canGoForward: canGoForward,
+          ),
+        ],
+        verify: (_) {
+          verify(canGoBackMethod).called(1);
+          verify(canGoForwardMethod).called(1);
+        },
+      );
+    });
+
     group(WebRedirectProgressChanged, () {
       const progress = 50;
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'emits progress',
         build: buildBloc,
         act: (bloc) {
@@ -201,7 +233,7 @@ void main() {
       final canGoBackMethod = () => controller.canGoBack();
       final canGoForwardMethod = () => controller.canGoForward();
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'calls saveCookies, updateAuthenticationFromHtml '
         'and emits canGoBack and canGoForward',
         setUp: () {
@@ -240,7 +272,7 @@ void main() {
     group(WebRedirectBackPressed, () {
       final goBack = () => controller.goBack();
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'calls goBack',
         setUp: () {
           when(goBack).thenAnswer((_) async {
@@ -262,7 +294,7 @@ void main() {
     group(WebRedirectForwardPressed, () {
       final goForward = () => controller.goForward();
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'calls goForward',
         setUp: () {
           when(goForward).thenAnswer((_) async {
@@ -284,7 +316,7 @@ void main() {
     group(WebRedirectReloadPressed, () {
       final reload = () => controller.reload();
 
-      blocTest<WebRedirectBloc, WebRedirectState>(
+      blocTest(
         'calls reload',
         setUp: () {
           when(reload).thenAnswer((_) async {
