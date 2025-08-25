@@ -14,18 +14,26 @@ class _MockWebRedirectBloc extends MockBloc<WebRedirectEvent, WebRedirectState>
 
 class _MockWebRedirectState extends Mock implements WebRedirectState {}
 
+class _MockWebRedirectProgressModel extends Mock
+    implements WebRedirectProgressModel {}
+
 void main() {
-  const progressValue = 0.5;
+  const opacity = 0.6;
+  const value = 0.3;
 
   group(WebRedirectProgressIndicator, () {
     late WebRedirectBloc bloc;
     late WebRedirectState state;
+    late WebRedirectProgressModel progress;
 
     setUp(() {
       bloc = _MockWebRedirectBloc();
       state = _MockWebRedirectState();
+      progress = _MockWebRedirectProgressModel();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.progressValue).thenReturn(progressValue);
+      when(() => state.progress).thenReturn(progress);
+      when(() => progress.opacity).thenReturn(opacity);
+      when(() => progress.value).thenReturn(value);
     });
 
     Widget buildSubject() {
@@ -35,14 +43,22 @@ void main() {
       );
     }
 
-    testWidgets('renders $LinearProgressIndicator with correct value', (
-      tester,
-    ) async {
+    testWidgets('renders $AnimatedOpacity '
+        'with correct opacity', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final widget = tester.widget<AnimatedOpacity>(
+        find.byType(AnimatedOpacity),
+      );
+      expect(widget.opacity, opacity);
+    });
+
+    testWidgets('renders $LinearProgressIndicator '
+        'with correct value', (tester) async {
       await tester.pumpApp(buildSubject());
       final widget = tester.widget<LinearProgressIndicator>(
         find.byType(LinearProgressIndicator),
       );
-      expect(widget.value, progressValue);
+      expect(widget.value, value);
     });
   });
 }
