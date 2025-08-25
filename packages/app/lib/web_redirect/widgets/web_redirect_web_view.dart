@@ -64,10 +64,10 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           StackTrace.current,
         );
       },
-      onReceivedHttpError: (_, _, errorResponse) {
+      onReceivedHttpError: (_, _, response) {
         context.read<Logger>().severe(
           'Http error',
-          errorResponse,
+          response.statusCode,
           StackTrace.current,
         );
       },
