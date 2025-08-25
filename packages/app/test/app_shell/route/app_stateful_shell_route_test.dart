@@ -3,6 +3,7 @@
 import 'package:app/app_shell/app_shell.dart';
 import 'package:app/drafts/drafts.dart';
 import 'package:app/home/home.dart';
+import 'package:app/search/search.dart';
 import 'package:app/settings/settings.dart';
 import 'package:app/thread_feed/thread_feed.dart';
 import 'package:feed_repository/feed_repository.dart';
@@ -38,6 +39,7 @@ void main() {
           AppStatefulShellRoute.config.branches,
           [
             HomeBranch.config,
+            SearchBranch.config,
             ThreadFeedBranch.config,
             DraftBranch.config,
             SettingsBranch.config,
