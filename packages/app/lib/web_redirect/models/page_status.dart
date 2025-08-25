@@ -1,8 +1,12 @@
-sealed class PageStatus {
+import 'package:equatable/equatable.dart';
+
+sealed class PageStatus extends Equatable {
   const PageStatus();
 
   int get progress;
-  bool get isLoading => this is PageLoading;
+
+  @override
+  List<Object> get props => [];
 }
 
 final class PageInitial extends PageStatus {
@@ -17,6 +21,9 @@ final class PageLoading extends PageStatus {
 
   @override
   final int progress;
+
+  @override
+  List<Object> get props => [progress];
 }
 
 final class PageSuccess extends PageStatus {

@@ -9,7 +9,7 @@ class WebRedirectProgressModel extends Equatable {
   final PageStatus _status;
 
   double get value => _status.progress / 100;
-  double get opacity => _status.isLoading ? 1 : 0;
+  double get opacity => _status is PageLoading ? 1 : 0;
 
   @override
   List<Object> get props => [_status];

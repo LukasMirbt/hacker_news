@@ -46,9 +46,9 @@ void main() {
 
     TypeMatcher<WebRedirectState> matchState({
       InitialLoadStatus? initialLoadStatus,
+      WebRedirectProgressModel? progress,
       bool? canGoBack,
       bool? canGoForward,
-      int? progress,
     }) {
       return isA<WebRedirectState>()
           .having(
@@ -60,6 +60,11 @@ void main() {
             (state) => state.initialLoadStatus,
             'initialLoadStatus',
             initialLoadStatus ?? initialState.initialLoadStatus,
+          )
+          .having(
+            (state) => state.progress,
+            'progress',
+            progress ?? initialState.progress,
           )
           .having(
             (state) => state.canGoBack,
@@ -146,7 +151,7 @@ void main() {
 
     group(WebRedirectLoadStarted, () {
       blocTest(
-        'sets progress to 0',
+        'updates progress',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -154,7 +159,11 @@ void main() {
           );
         },
         expect: () => [
-          matchState(progress: 0),
+          matchState(
+            progress: WebRedirectProgressModel(
+              status: PageLoading(),
+            ),
+          ),
         ],
       );
     });
@@ -204,7 +213,9 @@ void main() {
         },
         expect: () => [
           matchState(
-            progress: progress,
+            progress: WebRedirectProgressModel(
+              status: PageLoading(progress),
+            ),
           ),
         ],
       );
@@ -235,7 +246,7 @@ void main() {
 
       blocTest(
         'calls saveCookies, updateAuthenticationFromHtml '
-        'and emits canGoBack and canGoForward',
+        'and emits updated state',
         setUp: () {
           when(() => repository.state).thenReturn(state);
           when(getCookies).thenAnswer((_) async => cookies);
@@ -254,6 +265,9 @@ void main() {
         },
         expect: () => [
           matchState(
+            progress: WebRedirectProgressModel(
+              status: PageSuccess(),
+            ),
             canGoBack: canGoBack,
             canGoForward: canGoForward,
           ),
@@ -269,15 +283,32 @@ void main() {
       );
     });
 
+    group(WebRedirectReceivedError, () {
+      blocTest(
+        'emits updated progress',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            WebRedirectReceivedError(),
+          );
+        },
+        expect: () => [
+          matchState(
+            progress: WebRedirectProgressModel(
+              status: PageFailure(),
+            ),
+          ),
+        ],
+      );
+    });
+
     group(WebRedirectBackPressed, () {
       final goBack = () => controller.goBack();
 
       blocTest(
         'calls goBack',
         setUp: () {
-          when(goBack).thenAnswer((_) async {
-            return;
-          });
+          when(goBack).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
@@ -297,9 +328,7 @@ void main() {
       blocTest(
         'calls goForward',
         setUp: () {
-          when(goForward).thenAnswer((_) async {
-            return;
-          });
+          when(goForward).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
@@ -319,9 +348,7 @@ void main() {
       blocTest(
         'calls reload',
         setUp: () {
-          when(reload).thenAnswer((_) async {
-            return;
-          });
+          when(reload).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
