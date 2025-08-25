@@ -38,6 +38,11 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           const WebRedirectLoadStarted(),
         );
       },
+      onUpdateVisitedHistory: (_, _, _) {
+        context.read<WebRedirectBloc>().add(
+          const WebRedirectVisitedHistoryUpdated(),
+        );
+      },
       onProgressChanged: (_, progress) {
         context.read<WebRedirectBloc>().add(
           WebRedirectProgressChanged(progress),
