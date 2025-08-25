@@ -1,4 +1,3 @@
-import 'package:app/l10n/l10n.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart'
     hide PostHeaderCommentButton, PostHeaderVoteButton;
@@ -65,10 +64,12 @@ class PostHeader extends StatelessWidget {
         },
         onSharePressed: () {
           final bloc = context.read<PostHeaderBloc>();
-          final l10n = AppLocalizations.of(context);
-          final text = bloc.state.header.shareText(l10n);
-          context.read<PostHeaderBloc>().add(
-            PostHeaderSharePressed(text: text),
+          final header = bloc.state.header;
+          bloc.add(
+            PostHeaderSharePressed(
+              title: header.title,
+              url: header.url,
+            ),
           );
         },
         voteButton: score == null

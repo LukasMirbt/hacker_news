@@ -12,6 +12,10 @@ class AuthenticationApi {
   Stream<AuthenticationState> get stream => _client.stream;
   AuthenticationState get state => _client.state;
 
+  Uri resolve(String urlString) {
+    return _client.resolve(urlString);
+  }
+
   Future<List<Cookie>> cookies() async {
     final cookies = await _client.cookies();
     return cookies;

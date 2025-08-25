@@ -1,13 +1,8 @@
-import 'package:web_links/web_links.dart';
-
 class WebRedirect {
   WebRedirect({
-    required Uri url,
+    required this.url,
     this.html,
-    WebLinks webLinks = const WebLinks(),
-  }) : url = webLinks.resolve(
-         url.toString(),
-       );
+  });
 
   factory WebRedirect.from(
     String urlString, {

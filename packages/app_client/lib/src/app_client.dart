@@ -59,7 +59,12 @@ class AppClient extends Cubit<AuthenticationState> {
     webRedirectInterceptor.redirect.listen((redirect) {
       emit(
         state.copyWith(
-          webRedirect: redirect,
+          webRedirect: WebRedirect(
+            url: resolve(
+              redirect.url.toString(),
+            ),
+            html: redirect.html,
+          ),
         ),
       );
     });
@@ -121,6 +126,12 @@ class AppClient extends Cubit<AuthenticationState> {
   final SecureUserIdStorage _userIdStorage;
   final AuthenticationStatusService _authenticationStatusService;
   final Dio http;
+
+  Uri resolve(String urlString) {
+    final url = Uri.parse(urlString);
+    if (url.isAbsolute) return url;
+    return state.baseUrl.resolveUri(url);
+  }
 
   Future<List<Cookie>> cookies() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);

@@ -12,7 +12,6 @@ class SearchRoute extends GoRouteData with _$SearchRoute, EquatableMixin {
     path: '/search',
     routes: [
       PostShellRoute.config,
-      SearchWebRedirectRoute.config,
     ],
   );
 

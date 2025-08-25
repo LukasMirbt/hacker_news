@@ -13,7 +13,6 @@ class WebRedirectToolbar extends StatelessWidget {
           WebRedirectBackButton(),
           WebRedirectForwardButton(),
           WebRedirectShareButton(),
-          WebRedirectReloadButton(),
           WebRedirectCloseButton(),
         ],
       ),

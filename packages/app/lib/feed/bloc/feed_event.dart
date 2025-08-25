@@ -48,12 +48,19 @@ final class FeedItemVotePressed extends FeedEvent {
 }
 
 final class FeedItemSharePressed extends FeedEvent {
-  const FeedItemSharePressed({required this.text});
+  const FeedItemSharePressed({
+    required this.title,
+    required this.url,
+  });
 
-  final String text;
+  final String title;
+  final String url;
 
   @override
-  List<Object> get props => [text];
+  List<Object> get props => [
+    title,
+    url,
+  ];
 }
 
 final class FeedDataFetched extends FeedEvent {

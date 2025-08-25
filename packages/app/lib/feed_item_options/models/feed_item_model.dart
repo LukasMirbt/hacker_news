@@ -1,4 +1,4 @@
-import 'package:app_client/app_client.dart';
+import 'package:app/external_links/external_links.dart';
 import 'package:equatable/equatable.dart';
 import 'package:feed_repository/feed_repository.dart';
 import 'package:web_links/web_links.dart';
@@ -13,9 +13,9 @@ class FeedItemModel extends Equatable {
   final FeedItem _item;
   final WebLinks _links;
 
-  WebRedirect get webRedirect {
-    final url = _links.feedItemUrl(_item.id);
-    return WebRedirect(url: url);
+  String get webUrl {
+    final id = _item.id;
+    return hackerNewsItemLink(id: id);
   }
 
   @override

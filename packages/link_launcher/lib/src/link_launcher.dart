@@ -1,8 +1,8 @@
+import 'package:authentication_api/authentication_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:link_launcher/src/models/link_launch_mode_extension.dart';
 import 'package:settings_storage/settings_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web_links/web_links.dart';
 
 class LinkException with EquatableMixin implements Exception {
   const LinkException(this.error);
@@ -15,13 +15,13 @@ class LinkException with EquatableMixin implements Exception {
 
 class LinkLauncher {
   const LinkLauncher({
+    required AuthenticationApi authenticationApi,
     required SettingsStorage settingsStorage,
-    WebLinks? webLinks,
-  }) : _storage = settingsStorage,
-       _webLinks = webLinks ?? const WebLinks();
+  }) : _api = authenticationApi,
+       _storage = settingsStorage;
 
+  final AuthenticationApi _api;
   final SettingsStorage _storage;
-  final WebLinks _webLinks;
 
   LinkLaunchMode get launchMode => _storage.readLinkLaunchMode();
 
@@ -29,13 +29,13 @@ class LinkLauncher {
     await _storage.writeLinkLaunchMode(mode);
   }
 
-  Future<void> launch(String urlString) async {
+  Future<void> launch(String url) async {
     try {
-      final url = _webLinks.resolve(urlString);
+      final resolvedUrl = _api.resolve(url);
       final mode = _storage.readLinkLaunchMode();
 
       await launchUrl(
-        url,
+        resolvedUrl,
         mode: mode.toLaunchMode(),
       );
     } catch (error, stackTrace) {

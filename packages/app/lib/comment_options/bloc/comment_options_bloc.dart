@@ -21,8 +21,8 @@ class CommentOptionsBloc
     CommentOptionsSharePressed event,
     Emitter<CommentOptionsState> emit,
   ) {
-    _shareLauncher.share(
-      text: state.comment.shareText,
+    _shareLauncher.shareLink(
+      url: state.comment.webUrl,
     );
   }
 }

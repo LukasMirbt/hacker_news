@@ -211,6 +211,9 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     FeedItemSharePressed event,
     Emitter<FeedState> emit,
   ) {
-    _shareLauncher.share(text: event.text);
+    _shareLauncher.shareLink(
+      title: event.title,
+      url: event.url,
+    );
   }
 }

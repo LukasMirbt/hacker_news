@@ -60,6 +60,6 @@ final class WebRedirectForwardPressed extends WebRedirectEvent {
   const WebRedirectForwardPressed();
 }
 
-final class WebRedirectReloadPressed extends WebRedirectEvent {
-  const WebRedirectReloadPressed();
+final class WebRedirectSharePressed extends WebRedirectEvent {
+  const WebRedirectSharePressed();
 }

@@ -119,7 +119,10 @@ class PostHeaderBloc extends Bloc<PostHeaderEvent, PostHeaderState> {
     PostHeaderSharePressed event,
     Emitter<PostHeaderState> emit,
   ) {
-    _shareLauncher.share(text: event.text);
+    _shareLauncher.shareLink(
+      title: event.title,
+      url: event.url,
+    );
   }
 
   void _onTextLinkPressed(

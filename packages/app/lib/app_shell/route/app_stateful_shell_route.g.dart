@@ -71,11 +71,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                 ),
               ],
             ),
-            GoRouteData.$route(
-              path: 'search-web-redirect',
-              parentNavigatorKey: SearchWebRedirectRoute.$parentNavigatorKey,
-              factory: _$SearchWebRedirectRoute._fromState,
-            ),
           ],
         ),
       ],
@@ -314,38 +309,6 @@ mixin _$SearchRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/search');
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin _$SearchWebRedirectRoute on GoRouteData {
-  static SearchWebRedirectRoute _fromState(GoRouterState state) =>
-      SearchWebRedirectRoute(
-        search: state.uri.queryParameters['search']!,
-        from: state.uri.queryParameters['from'],
-      );
-
-  SearchWebRedirectRoute get _self => this as SearchWebRedirectRoute;
-
-  @override
-  String get location => GoRouteData.$location(
-    '/search/search-web-redirect',
-    queryParams: {
-      'search': _self.search,
-      if (_self.from != null) 'from': _self.from,
-    },
-  );
 
   @override
   void go(BuildContext context) => context.go(location);

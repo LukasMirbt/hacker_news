@@ -20,8 +20,8 @@ class ReplyOptionsBloc extends Bloc<ReplyOptionsEvent, ReplyOptionsState> {
     ReplyOptionsSharePressed event,
     Emitter<ReplyOptionsState> emit,
   ) {
-    _shareLauncher.share(
-      text: state.parent.shareText,
+    _shareLauncher.shareLink(
+      url: state.parent.webUrl,
     );
   }
 }

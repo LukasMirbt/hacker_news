@@ -42,9 +42,11 @@ class FeedItem extends StatelessWidget {
           );
         },
         onSharePressed: () {
-          final text = item.shareText(appL10n);
           context.read<FeedBloc>().add(
-            FeedItemSharePressed(text: text),
+            FeedItemSharePressed(
+              title: item.title,
+              url: item.url,
+            ),
           );
         },
         onMorePressed: () {

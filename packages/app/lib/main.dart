@@ -133,6 +133,7 @@ void main() async {
   );
 
   final linkLauncher = LinkLauncher(
+    authenticationApi: authenticationApi,
     settingsStorage: settingsStorage,
   );
 

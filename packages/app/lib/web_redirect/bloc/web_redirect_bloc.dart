@@ -1,6 +1,7 @@
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_launcher/share_launcher.dart';
 
 class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   WebRedirectBloc({
@@ -8,10 +9,12 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     required WebRedirectCookieManager webRedirectCookieManager,
     required WebRedirectController webRedirectController,
     required AuthenticationRepository authenticationRepository,
+    ShareLauncher? shareLauncher,
     OnNavigationRequest? onNavigationRequest,
   }) : _cookieManager = webRedirectCookieManager,
        _controller = webRedirectController,
        _repository = authenticationRepository,
+       _shareLauncher = shareLauncher ?? ShareLauncher(),
        super(
          WebRedirectState.from(
            redirect: redirect,
@@ -26,22 +29,30 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     on<WebRedirectLoadStopped>(_onLoadStopped);
     on<WebRedirectBackPressed>(_onBackPressed);
     on<WebRedirectForwardPressed>(_onForwardPressed);
-    on<WebRedirectReloadPressed>(_onReloadPressed);
+    on<WebRedirectSharePressed>(_onSharePressed);
   }
 
   final WebRedirectCookieManager _cookieManager;
   final WebRedirectController _controller;
   final AuthenticationRepository _repository;
+  final ShareLauncher _shareLauncher;
 
   Future<void> _onStarted(
     WebRedirectStarted event,
     Emitter<WebRedirectState> emit,
   ) async {
+    final stopwatch = Stopwatch()..start();
+
     final cookies = await _repository.cookies();
 
     await _cookieManager.setCookies(
       url: _repository.state.baseUrl,
       cookies: cookies,
+    );
+
+    stopwatch.stop();
+    print(
+      'WebRedirectBloc._onStarted took ${stopwatch.elapsedMilliseconds} ms',
     );
 
     emit(
@@ -138,10 +149,14 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     _controller.goForward();
   }
 
-  void _onReloadPressed(
-    WebRedirectReloadPressed event,
+  void _onSharePressed(
+    WebRedirectSharePressed event,
     Emitter<WebRedirectState> emit,
   ) {
-    _controller.reload();
+    // TODO: Share current url, not initial url
+
+    _shareLauncher.shareLink(
+      url: state.redirect.url.toString(),
+    );
   }
 }

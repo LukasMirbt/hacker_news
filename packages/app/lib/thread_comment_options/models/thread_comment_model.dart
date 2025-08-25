@@ -1,4 +1,4 @@
-import 'package:app_client/app_client.dart';
+import 'package:app/external_links/external_links.dart';
 import 'package:equatable/equatable.dart';
 import 'package:thread_repository/thread_repository.dart';
 import 'package:web_links/web_links.dart';
@@ -18,14 +18,9 @@ class ThreadCommentModel extends Equatable {
   String? get replyUrl => _comment.replyUrl;
   String? get onTitle => _comment.onTitle;
 
-  WebRedirect get webRedirect {
-    final url = _links.commentUrl(_comment.id);
-    return WebRedirect(url: url);
-  }
-
-  String get shareText {
-    final url = _links.commentUrl(_comment.id);
-    return url.toString();
+  String get webUrl {
+    final id = _comment.id;
+    return hackerNewsItemLink(id: id);
   }
 
   @override

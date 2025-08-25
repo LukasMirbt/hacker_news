@@ -8,7 +8,7 @@ class WebLinks {
     scheme: 'https',
     host: 'news.ycombinator.com',
   );
-
+  /* 
   Uri resolve(String urlString) {
     final url = Uri.parse(urlString);
     if (url.isAbsolute) return url;
@@ -43,5 +43,5 @@ class WebLinks {
       path: '/',
       queryParameters: {'q': search},
     );
-  }
+  } */
 }

@@ -2,7 +2,6 @@ import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:share_launcher/share_launcher.dart';
 
 class WebRedirectShareButton extends StatelessWidget {
   const WebRedirectShareButton({super.key});
@@ -15,9 +14,8 @@ class WebRedirectShareButton extends StatelessWidget {
         size: 20,
       ),
       onPressed: () {
-        final state = context.read<WebRedirectBloc>().state;
-        ShareLauncher().share(
-          text: state.redirect.url.toString(),
+        context.read<WebRedirectBloc>().add(
+          const WebRedirectSharePressed(),
         );
       },
     );

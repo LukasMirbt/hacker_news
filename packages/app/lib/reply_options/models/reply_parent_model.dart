@@ -1,4 +1,4 @@
-import 'package:app_client/app_client.dart';
+import 'package:app/external_links/external_links.dart';
 import 'package:equatable/equatable.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:web_links/web_links.dart';
@@ -13,14 +13,9 @@ class ReplyParentModel extends Equatable {
   final ReplyParent _parent;
   final WebLinks _links;
 
-  WebRedirect get webRedirect {
-    final url = _links.commentUrl(_parent.id);
-    return WebRedirect(url: url);
-  }
-
-  String get shareText {
-    final url = _links.commentUrl(_parent.id);
-    return url.toString();
+  String get webUrl {
+    final id = _parent.id;
+    return hackerNewsItemLink(id: id);
   }
 
   @override

@@ -21,8 +21,8 @@ class ThreadCommentOptionsBloc
     ThreadCommentOptionsSharePressed event,
     Emitter<ThreadCommentOptionsState> emit,
   ) {
-    _shareLauncher.share(
-      text: state.comment.shareText,
+    _shareLauncher.shareLink(
+      url: state.comment.webUrl,
     );
   }
 }
