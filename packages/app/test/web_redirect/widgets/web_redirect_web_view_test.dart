@@ -30,6 +30,10 @@ class _MockInAppWebViewController extends Mock
 
 class _MockWebResourceRequest extends Mock implements WebResourceRequest {}
 
+class _MockWebResourceError extends Mock implements WebResourceError {}
+
+class _MockWebResourceResponse extends Mock implements WebResourceResponse {}
+
 class _MockLogger extends Mock implements Logger {}
 
 void main() {
@@ -40,6 +44,9 @@ void main() {
     late InAppWebViewInitialData initialData;
     late URLRequest initialUrlRequest;
     late InAppWebViewController controller;
+    late WebResourceRequest request;
+    late WebResourceError error;
+    late WebResourceResponse response;
     late Logger logger;
     late MockInAppWebViewPlatform platform;
 
@@ -50,6 +57,9 @@ void main() {
       initialData = _MockInAppWebViewInitialData();
       initialUrlRequest = _MockURLRequest();
       controller = _MockInAppWebViewController();
+      request = _MockWebResourceRequest();
+      error = _MockWebResourceError();
+      response = _MockWebResourceResponse();
       logger = _MockLogger();
       when(() => bloc.state).thenReturn(state);
       when(() => state.redirect).thenReturn(redirect);
@@ -143,40 +153,35 @@ void main() {
         ).called(1);
       });
 
-      testWidgets('calls logger.severe onReceivedError', (tester) async {
-        final error = WebResourceError(
-          description: 'description',
-          type: WebResourceErrorType.BAD_URL,
-        );
+      testWidgets('adds $WebRedirectReceivedError '
+          'onReceivedError', (tester) async {
         await tester.pumpApp(buildSubject());
-
         final onReceivedError = platform.params.onReceivedError;
+        onReceivedError?.call(controller, request, error);
+        verify(
+          () => bloc.add(
+            WebRedirectReceivedError(),
+          ),
+        ).called(1);
+      });
 
-        onReceivedError?.call(
-          _MockInAppWebViewController(),
-          _MockWebResourceRequest(),
-          error,
-        );
-
+      testWidgets('calls logger.severe onReceivedError', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final onReceivedError = platform.params.onReceivedError;
+        onReceivedError?.call(controller, request, error);
         verify(
           () => logger.severe('Error', error, any()),
         ).called(1);
       });
 
       testWidgets('calls logger.severe onReceivedHttpError', (tester) async {
-        final errorResponse = WebResourceResponse();
+        const statusCode = 404;
+        when(() => response.statusCode).thenReturn(statusCode);
         await tester.pumpApp(buildSubject());
-
         final onReceivedHttpError = platform.params.onReceivedHttpError;
-
-        onReceivedHttpError?.call(
-          _MockInAppWebViewController(),
-          _MockWebResourceRequest(),
-          errorResponse,
-        );
-
+        onReceivedHttpError?.call(controller, request, response);
         verify(
-          () => logger.severe('Http error', errorResponse, any()),
+          () => logger.severe('Http error', statusCode, any()),
         ).called(1);
       });
     });

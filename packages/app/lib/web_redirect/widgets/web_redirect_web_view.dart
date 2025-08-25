@@ -116,10 +116,10 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
 
         _pullToRefreshController.endRefreshing();
       },
-      onReceivedHttpError: (_, _, errorResponse) {
+      onReceivedHttpError: (_, _, response) {
         context.read<Logger>().severe(
           'Http error',
-          errorResponse,
+          response.statusCode,
           StackTrace.current,
         );
       },
