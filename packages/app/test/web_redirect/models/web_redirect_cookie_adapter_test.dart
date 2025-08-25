@@ -134,222 +134,208 @@ void main() {
     });
 
     group('convert', () {
-      test(
-        'returns cookie with correct values '
-        'when fields are null',
-        () {
-          const name = 'name';
-          const value = 'value';
+      test('returns cookie with correct values '
+          'when fields are non-null', () {
+        const name = 'name';
+        const value = 'value';
 
-          final webViewCookie = web_view.Cookie(
-            name: name,
-            value: value,
-          );
+        final expires = DateTime(1);
+        final expiresDate = expires.millisecondsSinceEpoch;
 
-          final ioCookie = io.Cookie(name, value);
+        const domain = 'domain';
+        const path = 'path';
+        const isSecure = true;
+        const isHttpOnly = true;
+        const sameSite = web_view.HTTPCookieSameSitePolicy.LAX;
 
-          final adapter = createSubject();
-          final cookie = adapter.convert(webViewCookie);
+        final webViewCookie = web_view.Cookie(
+          name: name,
+          value: value,
+          expiresDate: expiresDate,
+          domain: domain,
+          path: path,
+          isSecure: isSecure,
+          isHttpOnly: isHttpOnly,
+          sameSite: sameSite,
+        );
 
-          expect(
-            cookie,
-            isA<io.Cookie>()
-                .having(
-                  (cookie) => cookie.name,
-                  'name',
-                  name,
-                )
-                .having(
-                  (cookie) => cookie.value,
-                  'value',
-                  value,
-                )
-                .having(
-                  (cookie) => cookie.expires,
-                  'expires',
-                  null,
-                )
-                .having(
-                  (cookie) => cookie.domain,
-                  'domain',
-                  null,
-                )
-                .having(
-                  (cookie) => cookie.path,
-                  'path',
-                  null,
-                )
-                .having(
-                  (cookie) => cookie.secure,
-                  'secure',
-                  ioCookie.secure,
-                )
-                .having(
-                  (cookie) => cookie.httpOnly,
-                  'httpOnly',
-                  ioCookie.httpOnly,
-                )
-                .having(
-                  (cookie) => cookie.sameSite,
-                  'sameSite',
-                  null,
-                ),
-          );
-        },
-      );
+        final adapter = createSubject();
+        final cookie = adapter.convert(webViewCookie);
 
-      test(
-        'returns cookie with correct values '
-        'when fields are non-null',
-        () {
-          const name = 'name';
-          const value = 'value';
+        expect(
+          cookie,
+          isA<io.Cookie>()
+              .having(
+                (cookie) => cookie.name,
+                'name',
+                name,
+              )
+              .having(
+                (cookie) => cookie.value,
+                'value',
+                value,
+              )
+              .having(
+                (cookie) => cookie.expires,
+                'expires',
+                expires,
+              )
+              .having(
+                (cookie) => cookie.domain,
+                'domain',
+                domain,
+              )
+              .having(
+                (cookie) => cookie.path,
+                'path',
+                path,
+              )
+              .having(
+                (cookie) => cookie.secure,
+                'secure',
+                isSecure,
+              )
+              .having(
+                (cookie) => cookie.httpOnly,
+                'httpOnly',
+                isHttpOnly,
+              )
+              .having(
+                (cookie) => cookie.sameSite,
+                'sameSite',
+                io.SameSite.lax,
+              ),
+        );
+      });
 
-          final expires = DateTime(1);
-          final expiresDate = expires.millisecondsSinceEpoch;
+      test('returns cookie with correct values '
+          'when fields are null', () {
+        const name = 'name';
 
-          const domain = 'domain';
-          const path = 'path';
-          const isSecure = true;
-          const isHttpOnly = true;
-          const sameSite = web_view.HTTPCookieSameSitePolicy.LAX;
+        final webViewCookie = web_view.Cookie(
+          name: name,
+        );
 
-          final webViewCookie = web_view.Cookie(
-            name: name,
-            value: value,
-            expiresDate: expiresDate,
-            domain: domain,
-            path: path,
-            isSecure: isSecure,
-            isHttpOnly: isHttpOnly,
-            sameSite: sameSite,
-          );
+        final ioCookie = io.Cookie(name, 'null');
 
-          final adapter = createSubject();
-          final cookie = adapter.convert(webViewCookie);
+        final adapter = createSubject();
+        final cookie = adapter.convert(webViewCookie);
 
-          expect(
-            cookie,
-            isA<io.Cookie>()
-                .having(
-                  (cookie) => cookie.name,
-                  'name',
-                  name,
-                )
-                .having(
-                  (cookie) => cookie.value,
-                  'value',
-                  value,
-                )
-                .having(
-                  (cookie) => cookie.expires,
-                  'expires',
-                  expires,
-                )
-                .having(
-                  (cookie) => cookie.domain,
-                  'domain',
-                  domain,
-                )
-                .having(
-                  (cookie) => cookie.path,
-                  'path',
-                  path,
-                )
-                .having(
-                  (cookie) => cookie.secure,
-                  'secure',
-                  isSecure,
-                )
-                .having(
-                  (cookie) => cookie.httpOnly,
-                  'httpOnly',
-                  isHttpOnly,
-                )
-                .having(
-                  (cookie) => cookie.sameSite,
-                  'sameSite',
-                  io.SameSite.lax,
-                ),
-          );
-        },
-      );
+        expect(
+          cookie,
+          isA<io.Cookie>()
+              .having(
+                (cookie) => cookie.name,
+                'name',
+                name,
+              )
+              .having(
+                (cookie) => cookie.value,
+                'value',
+                'null',
+              )
+              .having(
+                (cookie) => cookie.expires,
+                'expires',
+                null,
+              )
+              .having(
+                (cookie) => cookie.domain,
+                'domain',
+                null,
+              )
+              .having(
+                (cookie) => cookie.path,
+                'path',
+                null,
+              )
+              .having(
+                (cookie) => cookie.secure,
+                'secure',
+                ioCookie.secure,
+              )
+              .having(
+                (cookie) => cookie.httpOnly,
+                'httpOnly',
+                ioCookie.httpOnly,
+              )
+              .having(
+                (cookie) => cookie.sameSite,
+                'sameSite',
+                null,
+              ),
+        );
+      });
 
-      test(
-        'returns cookie with correct values '
-        'when sameSite is ${web_view.HTTPCookieSameSitePolicy.STRICT}',
-        () {
-          const name = 'name';
-          const value = 'value';
+      test('returns cookie with correct values '
+          'when sameSite is ${web_view.HTTPCookieSameSitePolicy.STRICT}', () {
+        const name = 'name';
+        const value = 'value';
 
-          final webViewCookie = web_view.Cookie(
-            name: name,
-            value: value,
-            sameSite: web_view.HTTPCookieSameSitePolicy.STRICT,
-          );
+        final webViewCookie = web_view.Cookie(
+          name: name,
+          value: value,
+          sameSite: web_view.HTTPCookieSameSitePolicy.STRICT,
+        );
 
-          final adapter = createSubject();
-          final cookie = adapter.convert(webViewCookie);
+        final adapter = createSubject();
+        final cookie = adapter.convert(webViewCookie);
 
-          expect(
-            cookie,
-            isA<io.Cookie>()
-                .having(
-                  (cookie) => cookie.name,
-                  'name',
-                  name,
-                )
-                .having(
-                  (cookie) => cookie.value,
-                  'value',
-                  value,
-                )
-                .having(
-                  (cookie) => cookie.sameSite,
-                  'sameSite',
-                  io.SameSite.strict,
-                ),
-          );
-        },
-      );
+        expect(
+          cookie,
+          isA<io.Cookie>()
+              .having(
+                (cookie) => cookie.name,
+                'name',
+                name,
+              )
+              .having(
+                (cookie) => cookie.value,
+                'value',
+                value,
+              )
+              .having(
+                (cookie) => cookie.sameSite,
+                'sameSite',
+                io.SameSite.strict,
+              ),
+        );
+      });
 
-      test(
-        'returns cookie with correct values '
-        'when sameSite is ${web_view.HTTPCookieSameSitePolicy.NONE}',
-        () {
-          const name = 'name';
-          const value = 'value';
+      test('returns cookie with correct values '
+          'when sameSite is ${web_view.HTTPCookieSameSitePolicy.NONE}', () {
+        const name = 'name';
+        const value = 'value';
 
-          final webViewCookie = web_view.Cookie(
-            name: name,
-            value: value,
-            sameSite: web_view.HTTPCookieSameSitePolicy.NONE,
-          );
+        final webViewCookie = web_view.Cookie(
+          name: name,
+          value: value,
+          sameSite: web_view.HTTPCookieSameSitePolicy.NONE,
+        );
 
-          final adapter = createSubject();
-          final cookie = adapter.convert(webViewCookie);
+        final adapter = createSubject();
+        final cookie = adapter.convert(webViewCookie);
 
-          expect(
-            cookie,
-            isA<io.Cookie>()
-                .having(
-                  (cookie) => cookie.name,
-                  'name',
-                  name,
-                )
-                .having(
-                  (cookie) => cookie.value,
-                  'value',
-                  value,
-                )
-                .having(
-                  (cookie) => cookie.sameSite,
-                  'sameSite',
-                  io.SameSite.none,
-                ),
-          );
-        },
-      );
+        expect(
+          cookie,
+          isA<io.Cookie>()
+              .having(
+                (cookie) => cookie.name,
+                'name',
+                name,
+              )
+              .having(
+                (cookie) => cookie.value,
+                'value',
+                value,
+              )
+              .having(
+                (cookie) => cookie.sameSite,
+                'sameSite',
+                io.SameSite.none,
+              ),
+        );
+      });
     });
   });
 }
