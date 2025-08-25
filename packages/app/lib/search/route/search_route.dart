@@ -5,9 +5,6 @@ class SearchRoute extends GoRouteData with _$SearchRoute, EquatableMixin {
 
   static const config = TypedGoRoute<SearchRoute>(
     path: '/search',
-    routes: [
-      PostShellRoute.config,
-    ],
   );
 
   @override
