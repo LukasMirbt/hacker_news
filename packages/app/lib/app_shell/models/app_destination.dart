@@ -5,12 +5,14 @@ import 'package:go_router/go_router.dart';
 
 enum AppDestination {
   home,
+  search,
   threads,
   drafts,
   settings;
 
   RouteData get route => switch (this) {
     AppDestination.home => const HomeRoute(),
+    AppDestination.search => const SearchRoute(),
     AppDestination.threads => const ThreadFeedRoute(),
     AppDestination.drafts => const DraftRoute(),
     AppDestination.settings => const SettingsRoute(),
@@ -21,6 +23,10 @@ enum AppDestination {
       AppDestination.home => DestinationData(
         icon: Symbols.home_rounded,
         label: l10n.appShell_home,
+      ),
+      AppDestination.search => DestinationData(
+        icon: Symbols.search_rounded,
+        label: l10n.appShell_search,
       ),
       AppDestination.threads => DestinationData(
         icon: Symbols.forum_rounded,
