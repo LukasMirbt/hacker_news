@@ -18,7 +18,7 @@ class AuthenticationState with _$AuthenticationState {
   factory AuthenticationState.initial({required Uri baseUrl}) {
     return AuthenticationState(
       baseUrl: baseUrl,
-      webRedirect: UrlRedirect.empty,
+      webRedirect: WebRedirect.empty,
     );
   }
 

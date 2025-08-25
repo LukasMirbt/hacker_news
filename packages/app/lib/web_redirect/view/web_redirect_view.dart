@@ -11,7 +11,7 @@ class WebRedirectView extends StatelessWidget {
     return const WebRedirectPopScope(
       child: Scaffold(
         body: _Body(),
-        bottomNavigationBar: WebRedirectActionBar(),
+        bottomNavigationBar: WebRedirectToolbar(),
       ),
     );
   }

@@ -18,19 +18,26 @@ enum PageLoadStatus {
   failure,
 }
 
+typedef OnNavigationRequest = NavigationDecision Function(Uri url);
+
 @freezed
 abstract class WebRedirectState with _$WebRedirectState {
   const factory WebRedirectState({
     required WebRedirectModel redirect,
+    OnNavigationRequest? onNavigationRequest,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
     @Default(0) int progress,
   }) = _WebRedirectState;
 
-  factory WebRedirectState.from(WebRedirect redirect) {
+  factory WebRedirectState.from({
+    required WebRedirect redirect,
+    required OnNavigationRequest? onNavigationRequest,
+  }) {
     return WebRedirectState(
       redirect: WebRedirectModel.from(redirect),
+      onNavigationRequest: onNavigationRequest,
     );
   }
 

@@ -10,24 +10,25 @@ class WebRedirectModel extends Equatable {
   }) : _redirect = redirect;
 
   factory WebRedirectModel.from(WebRedirect redirect) {
-    switch (redirect) {
-      case UrlRedirect():
-        return WebRedirectModel(
-          redirect: redirect,
-          initialData: null,
-          initialUrlRequest: URLRequest(
-            url: WebUri.uri(redirect.url),
-          ),
-        );
-      case HtmlRedirect():
-        return WebRedirectModel(
-          redirect: redirect,
-          initialUrlRequest: null,
-          initialData: InAppWebViewInitialData(
-            baseUrl: WebUri.uri(redirect.baseUrl),
-            data: redirect.html,
-          ),
-        );
+    final html = redirect.html;
+
+    if (html != null) {
+      return WebRedirectModel(
+        redirect: redirect,
+        initialUrlRequest: null,
+        initialData: InAppWebViewInitialData(
+          baseUrl: WebUri.uri(redirect.url),
+          data: html,
+        ),
+      );
+    } else {
+      return WebRedirectModel(
+        redirect: redirect,
+        initialData: null,
+        initialUrlRequest: URLRequest(
+          url: WebUri.uri(redirect.url),
+        ),
+      );
     }
   }
 
@@ -35,10 +36,7 @@ class WebRedirectModel extends Equatable {
   final InAppWebViewInitialData? initialData;
   final URLRequest? initialUrlRequest;
 
-  Uri get url => switch (_redirect) {
-    UrlRedirect() => _redirect.url,
-    HtmlRedirect() => _redirect.baseUrl,
-  };
+  Uri get url => _redirect.url;
 
   @override
   List<Object?> get props => [

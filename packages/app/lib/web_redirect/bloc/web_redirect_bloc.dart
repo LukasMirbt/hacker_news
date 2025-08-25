@@ -8,15 +8,20 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     required WebRedirectCookieManager webRedirectCookieManager,
     required WebRedirectController webRedirectController,
     required AuthenticationRepository authenticationRepository,
+    OnNavigationRequest? onNavigationRequest,
   }) : _cookieManager = webRedirectCookieManager,
        _controller = webRedirectController,
        _repository = authenticationRepository,
        super(
-         WebRedirectState.from(redirect),
+         WebRedirectState.from(
+           redirect: redirect,
+           onNavigationRequest: onNavigationRequest,
+         ),
        ) {
     on<WebRedirectStarted>(_onStarted);
     on<WebRedirectCreated>(_onCreated);
     on<WebRedirectLoadStarted>(_onLoadStarted);
+    on<WebRedirectVisitedHistoryUpdated>(_onVisitedHistoryUpdated);
     on<WebRedirectProgressChanged>(_onProgressChanged);
     on<WebRedirectLoadStopped>(_onLoadStopped);
     on<WebRedirectBackPressed>(_onBackPressed);
@@ -60,6 +65,21 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     emit(
       state.copyWith(
         progress: 0,
+      ),
+    );
+  }
+
+  Future<void> _onVisitedHistoryUpdated(
+    WebRedirectVisitedHistoryUpdated event,
+    Emitter<WebRedirectState> emit,
+  ) async {
+    final canGoBack = await _controller.canGoBack();
+    final canGoForward = await _controller.canGoForward();
+
+    emit(
+      state.copyWith(
+        canGoBack: canGoBack,
+        canGoForward: canGoForward,
       ),
     );
   }

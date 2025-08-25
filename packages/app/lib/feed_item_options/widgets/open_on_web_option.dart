@@ -18,9 +18,10 @@ class OpenOnWebOption extends StatelessWidget {
       title: Text(l10n.feedItemOptions_openOnWeb),
       onTap: () {
         final state = context.read<FeedItemOptionsBloc>().state;
+        final url = state.item.webRedirect.urlString;
         Navigator.of(context).pop();
         AppRouter.of(context).push(
-          WebRedirectRoute.from(state.item.webRedirect),
+          WebRedirectRoute(url: url),
         );
       },
     );

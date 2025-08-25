@@ -17,10 +17,14 @@ class ShareLauncher {
 
   final SharePlus _instance;
 
+  // TODO: Expose uri param
+
   Future<void> share({required String text}) async {
     try {
       await _instance.share(
-        ShareParams(text: text),
+        ShareParams(
+          uri: Uri.parse('https://hn.algolia.com'),
+        ),
       );
     } catch (error, stackTrace) {
       Error.throwWithStackTrace(

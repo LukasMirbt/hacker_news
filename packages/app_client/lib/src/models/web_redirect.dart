@@ -1,47 +1,28 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:web_links/web_links.dart';
 
-part 'web_redirect.g.dart';
-
-sealed class WebRedirect {}
-
-@JsonSerializable()
-class UrlRedirect extends WebRedirect {
-  UrlRedirect(
-    Uri url, {
+class WebRedirect {
+  WebRedirect({
+    required Uri url,
+    this.html,
     WebLinks webLinks = const WebLinks(),
   }) : url = webLinks.resolve(
          url.toString(),
        );
 
-  factory UrlRedirect.from(String urlString) {
-    return UrlRedirect(
-      Uri.parse(urlString),
+  factory WebRedirect.from(
+    String urlString, {
+    String? html,
+  }) {
+    return WebRedirect(
+      url: Uri.parse(urlString),
+      html: html,
     );
   }
 
-  factory UrlRedirect.fromJson(Map<String, dynamic> json) =>
-      _$UrlRedirectFromJson(json);
-
-  static final empty = UrlRedirect(Uri());
+  static final empty = WebRedirect(url: Uri());
 
   final Uri url;
+  final String? html;
 
-  Map<String, dynamic> toJson() => _$UrlRedirectToJson(this);
-}
-
-@JsonSerializable()
-class HtmlRedirect extends WebRedirect {
-  HtmlRedirect({
-    required this.baseUrl,
-    required this.html,
-  });
-
-  factory HtmlRedirect.fromJson(Map<String, dynamic> json) =>
-      _$HtmlRedirectFromJson(json);
-
-  final Uri baseUrl;
-  final String html;
-
-  Map<String, dynamic> toJson() => _$HtmlRedirectToJson(this);
+  String get urlString => url.toString();
 }

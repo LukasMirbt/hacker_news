@@ -13,9 +13,9 @@ class PostModel extends Equatable {
   final Post _post;
   final WebLinks _links;
 
-  UrlRedirect get webRedirect {
+  WebRedirect get webRedirect {
     final url = _links.postUrl(_post.header.id);
-    return UrlRedirect(url);
+    return WebRedirect(url: url);
   }
 
   @override

@@ -18,9 +18,9 @@ class ThreadCommentModel extends Equatable {
   String? get replyUrl => _comment.replyUrl;
   String? get onTitle => _comment.onTitle;
 
-  UrlRedirect get redirect {
+  WebRedirect get webRedirect {
     final url = _links.commentUrl(_comment.id);
-    return UrlRedirect(url);
+    return WebRedirect(url: url);
   }
 
   String get shareText {

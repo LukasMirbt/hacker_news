@@ -1,7 +1,6 @@
 import 'package:app/app_router/app_router.dart';
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_shell/app_shell.dart';
 import 'package:app_ui/app_ui.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 
 class RecentSearchItem extends StatelessWidget {
@@ -31,8 +30,8 @@ class RecentSearchItem extends StatelessWidget {
       ),
       onTap: () {
         AppRouter.of(context).push(
-          WebRedirectRoute.from(
-            UrlRedirect.from('https://hn.algolia.com/?q=$search'),
+          SearchWebRedirectRoute(
+            search: search,
           ),
         );
       },
