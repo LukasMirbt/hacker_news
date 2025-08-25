@@ -63,6 +63,39 @@ void main() async {
         );
       }
 
+      testWidgets('shape is correct when !isHome '
+          'and !isSearch', (tester) async {
+        when(() => shell.currentIndex).thenReturn(2);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        final context = tester.element(
+          find.byWidget(widget),
+        );
+        final colorScheme = ColorScheme.of(context);
+        expect(
+          widget.shape,
+          Border(
+            bottom: BorderSide(
+              color: colorScheme.outlineVariant,
+            ),
+          ),
+        );
+      });
+
+      testWidgets('shape is correct when isHome', (tester) async {
+        when(() => shell.currentIndex).thenReturn(0);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.shape, Border());
+      });
+
+      testWidgets('shape is correct when isSearch', (tester) async {
+        when(() => shell.currentIndex).thenReturn(1);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.shape, Border());
+      });
+
       testWidgets('leading is $UserAvatar '
           'when isAuthenticated', (tester) async {
         when(() => authenticationState.status).thenReturn(
@@ -94,7 +127,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
-            l10n.appShell_threads,
+            l10n.appShell_search,
           ),
         );
       });
@@ -108,7 +141,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
-            l10n.appShell_drafts,
+            l10n.appShell_threads,
           ),
         );
       });
@@ -122,41 +155,30 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
+            l10n.appShell_drafts,
+          ),
+        );
+      });
+
+      testWidgets('has correct title when currentIndex is 4', (tester) async {
+        when(() => shell.currentIndex).thenReturn(4);
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.title,
+          isA<Text>().having(
+            (text) => text.data,
+            'text',
             l10n.appShell_settings,
           ),
         );
       });
 
       testWidgets('has correct title when currentIndex '
-          'is not 1, 2 or 3', (tester) async {
+          'is not 1, 2, 3 or 4', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.title, isA<Logo>());
-      });
-
-      testWidgets('shape is correct when !isHome', (tester) async {
-        when(() => shell.currentIndex).thenReturn(1);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        final context = tester.element(
-          find.byWidget(widget),
-        );
-        final colorScheme = ColorScheme.of(context);
-        expect(
-          widget.shape,
-          Border(
-            bottom: BorderSide(
-              color: colorScheme.outlineVariant,
-            ),
-          ),
-        );
-      });
-
-      testWidgets('shape is correct when isHome', (tester) async {
-        when(() => shell.currentIndex).thenReturn(0);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.shape, Border());
       });
 
       testWidgets('actions contains $ShellLoginButton '

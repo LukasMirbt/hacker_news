@@ -16,6 +16,11 @@ void main() async {
         expect(destination.route, HomeRoute());
       });
 
+      test('returns correct route for ${AppDestination.search}', () {
+        const destination = AppDestination.search;
+        expect(destination.route, SearchRoute());
+      });
+
       test('returns correct route for ${AppDestination.threads}', () {
         const destination = AppDestination.threads;
         expect(destination.route, ThreadFeedRoute());
@@ -41,6 +46,18 @@ void main() async {
           DestinationData(
             icon: Symbols.home_rounded,
             label: l10n.appShell_home,
+          ),
+        );
+      });
+
+      test('returns correct $NavigationDrawerDestination '
+          'for ${AppDestination.search}', () {
+        const destination = AppDestination.search;
+        expect(
+          destination.data(l10n),
+          DestinationData(
+            icon: Symbols.search_rounded,
+            label: l10n.appShell_search,
           ),
         );
       });

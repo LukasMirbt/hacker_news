@@ -6,19 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 
-// TODO: Inline webview with hn.algolia.com as first page,
-
-// TODO: State restore url even after changing from initial
-
-// TODO: Replace WebRedirect actionbar refresh button with pull-to-refresh
-
-// TODO: Put close button in AppBar?
-// TODO: Show page title in AppBar title?
-
-// TODO: Figure out if it's possible to have dark mode in webview
-
-// TODO: Fix webview navigation bar dark mode colors
-
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
 

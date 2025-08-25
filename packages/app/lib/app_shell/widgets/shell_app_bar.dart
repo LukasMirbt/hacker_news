@@ -41,6 +41,7 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     return AppBar(
+      shape: shape,
       leading: isAuthenticated ? const UserAvatar() : null,
       centerTitle: true,
       title: switch (currentIndex) {
@@ -50,7 +51,6 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
         4 => Text(l10n.appShell_settings),
         _ => const Logo(),
       },
-      shape: shape,
       actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
         if (!isAuthenticated) const ShellLoginButton(),
