@@ -35,12 +35,7 @@ final class WebRedirectLoadStarted extends WebRedirectEvent {
 }
 
 final class WebRedirectVisitedHistoryUpdated extends WebRedirectEvent {
-  const WebRedirectVisitedHistoryUpdated(this.url);
-
-  final Uri? url;
-
-  @override
-  List<Object?> get props => [url];
+  const WebRedirectVisitedHistoryUpdated();
 }
 
 final class WebRedirectLoadStopped extends WebRedirectEvent {

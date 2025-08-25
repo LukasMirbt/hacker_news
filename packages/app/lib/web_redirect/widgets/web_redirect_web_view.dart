@@ -82,6 +82,11 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           const WebRedirectLoadStarted(),
         );
       },
+      onUpdateVisitedHistory: (_, _, _) {
+        context.read<WebRedirectBloc>().add(
+          const WebRedirectVisitedHistoryUpdated(),
+        );
+      },
       onProgressChanged: (_, progress) {
         context.read<WebRedirectBloc>().add(
           WebRedirectProgressChanged(progress),
@@ -90,11 +95,6 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
         if (progress == 100) {
           _pullToRefreshController.endRefreshing();
         }
-      },
-      onUpdateVisitedHistory: (_, url, _) {
-        context.read<WebRedirectBloc>().add(
-          WebRedirectVisitedHistoryUpdated(url?.uriValue),
-        );
       },
       onLoadStop: (controller, url) {
         context.read<WebRedirectBloc>().add(

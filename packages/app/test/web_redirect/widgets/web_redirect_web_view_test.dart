@@ -84,9 +84,8 @@ void main() {
         expect(platform.params.initialUrlRequest, initialUrlRequest);
       });
 
-      testWidgets('adds $WebRedirectCreated onWebViewCreated', (
-        tester,
-      ) async {
+      testWidgets('adds $WebRedirectCreated '
+          'onWebViewCreated', (tester) async {
         await tester.pumpApp(buildSubject());
         final onWebViewCreated = platform.params.onWebViewCreated;
         onWebViewCreated?.call(controller);
@@ -97,9 +96,8 @@ void main() {
         ).called(1);
       });
 
-      testWidgets('adds $WebRedirectLoadStarted onLoadStart', (
-        tester,
-      ) async {
+      testWidgets('adds $WebRedirectLoadStarted '
+          'onLoadStart', (tester) async {
         await tester.pumpApp(buildSubject());
         final onLoadStart = platform.params.onLoadStart;
         onLoadStart?.call(controller, uri);
@@ -110,9 +108,20 @@ void main() {
         ).called(1);
       });
 
-      testWidgets('adds $WebRedirectProgressChanged onProgressChanged', (
-        tester,
-      ) async {
+      testWidgets('adds $WebRedirectVisitedHistoryUpdated '
+          'onUpdateVisitedHistory', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final onUpdateVisitedHistory = platform.params.onUpdateVisitedHistory;
+        onUpdateVisitedHistory?.call(controller, uri, false);
+        verify(
+          () => bloc.add(
+            WebRedirectVisitedHistoryUpdated(),
+          ),
+        ).called(1);
+      });
+
+      testWidgets('adds $WebRedirectProgressChanged '
+          'onProgressChanged', (tester) async {
         await tester.pumpApp(buildSubject());
         final onProgressChanged = platform.params.onProgressChanged;
         onProgressChanged?.call(controller, 50);
