@@ -1,5 +1,7 @@
 import 'package:post_parser/post_parser.dart';
 
+// TODO: Support comments (for opening comment in it's own thread and for search)
+
 class PostParser {
   const PostParser({
     HtmlParser? htmlParser,

@@ -48,7 +48,7 @@ class SearchPage extends StatelessWidget {
         final postId = url.queryParameters['id'];
         if (postId == null) return NavigationDecision.navigate;
 
-        AppRouter.of(context).pushRelative(
+        AppRouter.of(context).goRelative(
           PostRoute(postId: postId),
         );
 

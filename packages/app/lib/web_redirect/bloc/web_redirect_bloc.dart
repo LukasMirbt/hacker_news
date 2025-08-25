@@ -41,18 +41,11 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectStarted event,
     Emitter<WebRedirectState> emit,
   ) async {
-    final stopwatch = Stopwatch()..start();
-
     final cookies = await _repository.cookies();
 
     await _cookieManager.setCookies(
       url: _repository.state.baseUrl,
       cookies: cookies,
-    );
-
-    stopwatch.stop();
-    print(
-      'WebRedirectBloc._onStarted took ${stopwatch.elapsedMilliseconds} ms',
     );
 
     emit(

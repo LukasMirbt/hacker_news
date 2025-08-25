@@ -24,11 +24,11 @@ typedef OnNavigationRequest = NavigationDecision Function(Uri url);
 abstract class WebRedirectState with _$WebRedirectState {
   const factory WebRedirectState({
     required WebRedirectModel redirect,
-    OnNavigationRequest? onNavigationRequest,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
     @Default(0) int progress,
+    OnNavigationRequest? onNavigationRequest,
   }) = _WebRedirectState;
 
   factory WebRedirectState.from({
