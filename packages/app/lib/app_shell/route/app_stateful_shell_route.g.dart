@@ -77,11 +77,6 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
     ),
     StatefulShellBranchData.$branch(
       routes: [
-        GoRouteData.$route(path: '/search', factory: _$SearchRoute._fromState),
-      ],
-    ),
-    StatefulShellBranchData.$branch(
-      routes: [
         ShellRouteData.$route(
           factory: $ThreadFeedShellRouteExtension._fromState,
           routes: [
