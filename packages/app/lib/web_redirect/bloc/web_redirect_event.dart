@@ -42,6 +42,10 @@ final class WebRedirectLoadStopped extends WebRedirectEvent {
   const WebRedirectLoadStopped();
 }
 
+final class WebRedirectReceivedError extends WebRedirectEvent {
+  const WebRedirectReceivedError();
+}
+
 final class WebRedirectBackPressed extends WebRedirectEvent {
   const WebRedirectBackPressed();
 }

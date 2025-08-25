@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WebRedirectState {
 
- WebRedirectModel get redirect; InitialLoadStatus get initialLoadStatus; bool get canGoBack; bool get canGoForward; int get progress;
+ WebRedirectModel get redirect; InitialLoadStatus get initialLoadStatus; WebRedirectProgressModel get progress; bool get canGoBack; bool get canGoForward;
 /// Create a copy of WebRedirectState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $WebRedirectStateCopyWith<WebRedirectState> get copyWith => _$WebRedirectStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WebRedirectState&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.progress, progress) || other.progress == progress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WebRedirectState&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,redirect,initialLoadStatus,canGoBack,canGoForward,progress);
+int get hashCode => Object.hash(runtimeType,redirect,initialLoadStatus,progress,canGoBack,canGoForward);
 
 @override
 String toString() {
-  return 'WebRedirectState(redirect: $redirect, initialLoadStatus: $initialLoadStatus, canGoBack: $canGoBack, canGoForward: $canGoForward, progress: $progress)';
+  return 'WebRedirectState(redirect: $redirect, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $WebRedirectStateCopyWith<$Res>  {
   factory $WebRedirectStateCopyWith(WebRedirectState value, $Res Function(WebRedirectState) _then) = _$WebRedirectStateCopyWithImpl;
 @useResult
 $Res call({
- WebRedirectModel redirect, InitialLoadStatus initialLoadStatus, bool canGoBack, bool canGoForward, int progress
+ WebRedirectModel redirect, InitialLoadStatus initialLoadStatus, WebRedirectProgressModel progress, bool canGoBack, bool canGoForward
 });
 
 
@@ -62,14 +62,14 @@ class _$WebRedirectStateCopyWithImpl<$Res>
 
 /// Create a copy of WebRedirectState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? redirect = null,Object? initialLoadStatus = null,Object? canGoBack = null,Object? canGoForward = null,Object? progress = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? redirect = null,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,}) {
   return _then(_self.copyWith(
 redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
 as WebRedirectModel,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
-as InitialLoadStatus,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
+as InitialLoadStatus,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as WebRedirectProgressModel,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
 as bool,canGoForward: null == canGoForward ? _self.canGoForward : canGoForward // ignore: cast_nullable_to_non_nullable
-as bool,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 
@@ -154,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  bool canGoBack,  bool canGoForward,  int progress)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  WebRedirectProgressModel progress,  bool canGoBack,  bool canGoForward)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WebRedirectState() when $default != null:
-return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.canGoForward,_that.progress);case _:
+return $default(_that.redirect,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward);case _:
   return orElse();
 
 }
@@ -175,10 +175,10 @@ return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.can
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  bool canGoBack,  bool canGoForward,  int progress)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  WebRedirectProgressModel progress,  bool canGoBack,  bool canGoForward)  $default,) {final _that = this;
 switch (_that) {
 case _WebRedirectState():
-return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.canGoForward,_that.progress);case _:
+return $default(_that.redirect,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +195,10 @@ return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.can
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  bool canGoBack,  bool canGoForward,  int progress)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( WebRedirectModel redirect,  InitialLoadStatus initialLoadStatus,  WebRedirectProgressModel progress,  bool canGoBack,  bool canGoForward)?  $default,) {final _that = this;
 switch (_that) {
 case _WebRedirectState() when $default != null:
-return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.canGoForward,_that.progress);case _:
+return $default(_that.redirect,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward);case _:
   return null;
 
 }
@@ -209,15 +209,15 @@ return $default(_that.redirect,_that.initialLoadStatus,_that.canGoBack,_that.can
 /// @nodoc
 
 
-class _WebRedirectState extends WebRedirectState {
-  const _WebRedirectState({required this.redirect, this.initialLoadStatus = InitialLoadStatus.loading, this.canGoBack = false, this.canGoForward = false, this.progress = 0}): super._();
+class _WebRedirectState implements WebRedirectState {
+  const _WebRedirectState({required this.redirect, this.initialLoadStatus = InitialLoadStatus.loading, this.progress = const WebRedirectProgressModel(), this.canGoBack = false, this.canGoForward = false});
   
 
 @override final  WebRedirectModel redirect;
 @override@JsonKey() final  InitialLoadStatus initialLoadStatus;
+@override@JsonKey() final  WebRedirectProgressModel progress;
 @override@JsonKey() final  bool canGoBack;
 @override@JsonKey() final  bool canGoForward;
-@override@JsonKey() final  int progress;
 
 /// Create a copy of WebRedirectState
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +229,16 @@ _$WebRedirectStateCopyWith<_WebRedirectState> get copyWith => __$WebRedirectStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WebRedirectState&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.progress, progress) || other.progress == progress));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WebRedirectState&&(identical(other.redirect, redirect) || other.redirect == redirect)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,redirect,initialLoadStatus,canGoBack,canGoForward,progress);
+int get hashCode => Object.hash(runtimeType,redirect,initialLoadStatus,progress,canGoBack,canGoForward);
 
 @override
 String toString() {
-  return 'WebRedirectState(redirect: $redirect, initialLoadStatus: $initialLoadStatus, canGoBack: $canGoBack, canGoForward: $canGoForward, progress: $progress)';
+  return 'WebRedirectState(redirect: $redirect, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward)';
 }
 
 
@@ -249,7 +249,7 @@ abstract mixin class _$WebRedirectStateCopyWith<$Res> implements $WebRedirectSta
   factory _$WebRedirectStateCopyWith(_WebRedirectState value, $Res Function(_WebRedirectState) _then) = __$WebRedirectStateCopyWithImpl;
 @override @useResult
 $Res call({
- WebRedirectModel redirect, InitialLoadStatus initialLoadStatus, bool canGoBack, bool canGoForward, int progress
+ WebRedirectModel redirect, InitialLoadStatus initialLoadStatus, WebRedirectProgressModel progress, bool canGoBack, bool canGoForward
 });
 
 
@@ -266,14 +266,14 @@ class __$WebRedirectStateCopyWithImpl<$Res>
 
 /// Create a copy of WebRedirectState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? redirect = null,Object? initialLoadStatus = null,Object? canGoBack = null,Object? canGoForward = null,Object? progress = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? redirect = null,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,}) {
   return _then(_WebRedirectState(
 redirect: null == redirect ? _self.redirect : redirect // ignore: cast_nullable_to_non_nullable
 as WebRedirectModel,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
-as InitialLoadStatus,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
+as InitialLoadStatus,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as WebRedirectProgressModel,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
 as bool,canGoForward: null == canGoForward ? _self.canGoForward : canGoForward // ignore: cast_nullable_to_non_nullable
-as bool,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 
