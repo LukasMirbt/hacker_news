@@ -33,12 +33,7 @@ class WebRedirectCookieAdapter {
 
   io.Cookie convert(web_view.Cookie cookie) {
     final name = cookie.name;
-
-    // TODO: Add test case
-    final value = switch (cookie.value) {
-      final String value => value,
-      final Object? value => value.toString(),
-    };
+    final value = cookie.value.toString();
 
     final ioCookie = io.Cookie(name, value);
     final expiresDate = cookie.expiresDate;
