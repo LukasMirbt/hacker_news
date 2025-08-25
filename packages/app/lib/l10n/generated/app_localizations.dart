@@ -180,6 +180,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get appShell_home;
 
+  /// No description provided for @appShell_search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get appShell_search;
+
   /// No description provided for @appShell_threads.
   ///
   /// In en, this message translates to:

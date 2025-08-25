@@ -26,10 +26,11 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
     final l10n = AppLocalizations.of(context);
 
     final isHome = currentIndex == 0;
+    final isSearch = currentIndex == 1;
 
     ShapeBorder shape;
 
-    if (!isHome) {
+    if (!isHome && !isSearch) {
       shape = Border(
         bottom: BorderSide(
           color: colorScheme.outlineVariant,
@@ -40,15 +41,16 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
 
     return AppBar(
+      shape: shape,
       leading: isAuthenticated ? const UserAvatar() : null,
       centerTitle: true,
       title: switch (currentIndex) {
-        1 => Text(l10n.appShell_threads),
-        2 => Text(l10n.appShell_drafts),
-        3 => Text(l10n.appShell_settings),
+        1 => Text(l10n.appShell_search),
+        2 => Text(l10n.appShell_threads),
+        3 => Text(l10n.appShell_drafts),
+        4 => Text(l10n.appShell_settings),
         _ => const Logo(),
       },
-      shape: shape,
       actionsPadding: const EdgeInsets.only(right: AppSpacing.sm),
       actions: [
         if (!isAuthenticated) const ShellLoginButton(),
