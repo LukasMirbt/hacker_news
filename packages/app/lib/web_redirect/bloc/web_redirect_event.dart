@@ -47,6 +47,10 @@ final class WebRedirectLoadStopped extends WebRedirectEvent {
   List<Object?> get props => [url];
 }
 
+final class WebRedirectReceivedError extends WebRedirectEvent {
+  const WebRedirectReceivedError();
+}
+
 final class WebRedirectBackPressed extends WebRedirectEvent {
   const WebRedirectBackPressed();
 }

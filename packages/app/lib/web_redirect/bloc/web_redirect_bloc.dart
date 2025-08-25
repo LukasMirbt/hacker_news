@@ -27,6 +27,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     on<WebRedirectVisitedHistoryUpdated>(_onVisitedHistoryUpdated);
     on<WebRedirectProgressChanged>(_onProgressChanged);
     on<WebRedirectLoadStopped>(_onLoadStopped);
+    on<WebRedirectReceivedError>(_onReceivedError);
     on<WebRedirectBackPressed>(_onBackPressed);
     on<WebRedirectForwardPressed>(_onForwardPressed);
     on<WebRedirectSharePressed>(_onSharePressed);
@@ -68,7 +69,9 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   ) {
     emit(
       state.copyWith(
-        progress: 0,
+        progress: const WebRedirectProgressModel(
+          status: PageLoading(),
+        ),
       ),
     );
   }
@@ -94,7 +97,9 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   ) {
     emit(
       state.copyWith(
-        progress: event.progress,
+        progress: WebRedirectProgressModel(
+          status: PageLoading(event.progress),
+        ),
       ),
     );
   }
@@ -122,8 +127,24 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
 
     emit(
       state.copyWith(
+        progress: const WebRedirectProgressModel(
+          status: PageSuccess(),
+        ),
         canGoBack: canGoBack,
         canGoForward: canGoForward,
+      ),
+    );
+  }
+
+  void _onReceivedError(
+    WebRedirectReceivedError event,
+    Emitter<WebRedirectState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        progress: const WebRedirectProgressModel(
+          status: PageFailure(),
+        ),
       ),
     );
   }

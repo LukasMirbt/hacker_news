@@ -11,13 +11,6 @@ enum InitialLoadStatus {
   bool get isLoading => this == loading;
 }
 
-enum PageLoadStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
-
 typedef OnNavigationRequest = NavigationDecision Function(Uri url);
 
 @freezed
@@ -25,9 +18,9 @@ abstract class WebRedirectState with _$WebRedirectState {
   const factory WebRedirectState({
     required WebRedirectModel redirect,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
+    @Default(WebRedirectProgressModel()) WebRedirectProgressModel progress,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
-    @Default(0) int progress,
     OnNavigationRequest? onNavigationRequest,
   }) = _WebRedirectState;
 
@@ -40,8 +33,4 @@ abstract class WebRedirectState with _$WebRedirectState {
       onNavigationRequest: onNavigationRequest,
     );
   }
-
-  const WebRedirectState._();
-
-  double get progressValue => progress / 100;
 }

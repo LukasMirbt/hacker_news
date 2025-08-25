@@ -104,7 +104,9 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
         _pullToRefreshController.endRefreshing();
       },
       onReceivedError: (_, _, error) {
-        // TODO: Reset progress onReceivedError
+        context.read<WebRedirectBloc>().add(
+          const WebRedirectReceivedError(),
+        );
 
         context.read<Logger>().severe(
           'Error',

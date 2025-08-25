@@ -7,14 +7,18 @@ class WebRedirectProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progressValue = context.select(
-      (WebRedirectBloc bloc) => bloc.state.progressValue,
+    final opacity = context.select(
+      (WebRedirectBloc bloc) => bloc.state.progress.opacity,
+    );
+
+    final value = context.select(
+      (WebRedirectBloc bloc) => bloc.state.progress.value,
     );
 
     return AnimatedOpacity(
-      opacity: progressValue == 1 ? 0 : 1,
+      opacity: opacity,
       duration: const Duration(milliseconds: 150),
-      child: LinearProgressIndicator(value: progressValue),
+      child: LinearProgressIndicator(value: value),
     );
   }
 }
