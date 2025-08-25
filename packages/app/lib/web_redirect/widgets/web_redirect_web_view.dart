@@ -54,6 +54,10 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
         );
       },
       onReceivedError: (_, _, error) {
+        context.read<WebRedirectBloc>().add(
+          const WebRedirectReceivedError(),
+        );
+
         context.read<Logger>().severe(
           'Error',
           error,
