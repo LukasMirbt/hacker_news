@@ -635,14 +635,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  flutter_sticky_header:
-    dependency: transitive
-    description:
-      name: flutter_sticky_header
-      sha256: fb4fda6164ef3e5fc7ab73aba34aad253c17b7c6ecf738fa26f1a905b7d2d1e2
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.0"
   flutter_test:
     dependency: transitive
     description: flutter
@@ -657,10 +649,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_widget_from_html_core
-      sha256: f77ea1aa1ba29a38fcce04483f44f12382f541b9e8c2150df37166c23bbbd30f
+      sha256: "1120ee6ed3509ceff2d55aa6c6cbc7b6b1291434422de2411b5a59364dd6ff03"
       url: "https://pub.dev"
     source: hosted
-    version: "0.16.0"
+    version: "0.17.0"
   freezed:
     dependency: transitive
     description:
@@ -706,7 +698,7 @@ packages:
     description:
       path: "packages/go_router_builder"
       ref: "go-router-builder/relative-route-generation-newlines"
-      resolved-ref: d2f1936b2245a006b8000b3a3896ed4912004e55
+      resolved-ref: "22ba0490f60293fdfa6f16063e057545486591d2"
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "3.3.1"
@@ -1491,14 +1483,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.1"
-  value_layout_builder:
-    dependency: transitive
-    description:
-      name: value_layout_builder
-      sha256: ab4b7d98bac8cefeb9713154d43ee0477490183f5aa23bb4ffa5103d9bbf6275
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   vector_graphics_codec:
     dependency: transitive
     description:

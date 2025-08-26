@@ -53,10 +53,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.4.6
-  # Pinned to avoid duplicate semantics when PR is merged
-  # https://github.com/daohoangson/flutter_widget_from_html/pull/1429
-  flutter_sticky_header: ^0.8.0
-  flutter_widget_from_html_core: 0.16.0
   freezed_annotation: ^3.1.0
   go_router: ^16.2.0
   html: ^0.15.6
@@ -65,8 +61,6 @@ dependencies:
     path: ../link_launcher
   logging: ^1.3.0
   nested: ^1.0.0
-  path: ^1.9.1
-  path_provider: ^2.1.5
   plugin_platform_interface: ^2.1.8
   post_api:
     path: ../post_api
