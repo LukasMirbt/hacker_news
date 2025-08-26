@@ -80,6 +80,7 @@ definitions:
 
 workflows:
     release-ios:
+        working_directory: packages/app
         <<:
             - *ios-config
             - *ios-cache
@@ -109,6 +110,7 @@ workflows:
                     - External
 
     patch-ios:
+        working_directory: packages/app
         <<:
             - *ios-config
             - *ios-cache
@@ -127,6 +129,7 @@ workflows:
                     --export-options-plist=/Users/builder/export_options.plist
 
     release-android:
+        working_directory: packages/app
         <<:
             - *android-config
             - *android-cache
@@ -153,6 +156,7 @@ workflows:
                     track: alpha
 
     patch-android:
+        working_directory: packages/app
         <<:
             - *android-config
             - *android-cache
