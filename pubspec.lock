@@ -698,7 +698,7 @@ packages:
     description:
       path: "packages/go_router_builder"
       ref: "go-router-builder/relative-route-generation-newlines"
-      resolved-ref: d2f1936b2245a006b8000b3a3896ed4912004e55
+      resolved-ref: "22ba0490f60293fdfa6f16063e057545486591d2"
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "3.3.1"
