@@ -1,5 +1,7 @@
 definitions:
-    flutter_version: &flutter-version 3.35.2
+    flutter-version: &flutter-version 3.35.2
+
+    working-directory: &working-directory packages/app
 
     set-build-version: &set-build-version
         name: Set build version
@@ -80,8 +82,8 @@ definitions:
 
 workflows:
     release-ios:
-        working_directory: packages/app
         <<:
+            - *working-directory
             - *ios-config
             - *ios-cache
         scripts:
@@ -110,8 +112,8 @@ workflows:
                     - External
 
     patch-ios:
-        working_directory: packages/app
         <<:
+            - *working-directory
             - *ios-config
             - *ios-cache
         scripts:
@@ -129,8 +131,8 @@ workflows:
                     --export-options-plist=/Users/builder/export_options.plist
 
     release-android:
-        working_directory: packages/app
         <<:
+            - *working-directory
             - *android-config
             - *android-cache
         scripts:
@@ -156,8 +158,8 @@ workflows:
                     track: alpha
 
     patch-android:
-        working_directory: packages/app
         <<:
+            - *working-directory
             - *android-config
             - *android-cache
         scripts:
