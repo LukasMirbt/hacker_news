@@ -20,7 +20,6 @@ class WebRedirectListener
             WebRedirectRoute(
               url: redirect.urlString,
               from: router.from,
-              $extra: redirect.html,
             ),
           );
         },
