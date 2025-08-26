@@ -1,7 +1,8 @@
 definitions:
     flutter-version: &flutter-version 3.35.2
 
-    working-directory: &working-directory packages/app
+    working-directory: &working-directory
+        working_directory: packages/app
 
     set-build-version: &set-build-version
         name: Set build version
