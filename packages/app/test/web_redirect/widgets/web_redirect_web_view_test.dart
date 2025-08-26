@@ -148,7 +148,7 @@ void main() {
         onLoadStop?.call(controller, uri);
         verify(
           () => bloc.add(
-            WebRedirectLoadStopped(),
+            WebRedirectLoadStopped(uri.uriValue),
           ),
         ).called(1);
       });

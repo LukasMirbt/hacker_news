@@ -5,12 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   WebRedirectBloc({
     required WebRedirect redirect,
-    required WebRedirectCookieManager webRedirectCookieManager,
     required WebRedirectController webRedirectController,
-    required AuthenticationRepository authenticationRepository,
-  }) : _cookieManager = webRedirectCookieManager,
-       _controller = webRedirectController,
-       _repository = authenticationRepository,
+    required WebRedirectAuthenticationModel webRedirectAuthenticationModel,
+  }) : _controller = webRedirectController,
+       _authenticationModel = webRedirectAuthenticationModel,
        super(
          WebRedirectState.from(redirect),
        ) {
@@ -26,20 +24,14 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     on<WebRedirectReloadPressed>(_onReloadPressed);
   }
 
-  final WebRedirectCookieManager _cookieManager;
+  final WebRedirectAuthenticationModel _authenticationModel;
   final WebRedirectController _controller;
-  final AuthenticationRepository _repository;
 
   Future<void> _onStarted(
     WebRedirectStarted event,
     Emitter<WebRedirectState> emit,
   ) async {
-    final cookies = await _repository.cookies();
-
-    await _cookieManager.setCookies(
-      url: state.redirect.url,
-      cookies: cookies,
-    );
+    await _authenticationModel.syncCookiesToWebView();
 
     emit(
       state.copyWith(
@@ -100,16 +92,12 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectLoadStopped event,
     Emitter<WebRedirectState> emit,
   ) async {
-    final baseUrl = _repository.state.baseUrl;
-    final cookies = await _cookieManager.cookies(baseUrl);
+    final url = event.url;
+    final matchesAppHost = _authenticationModel.matchesAppHost(url);
 
-    // TODO(LukasMirbt): Save cookies more efficiently
-    await _repository.saveCookies(cookies);
-
-    final html = await _controller.html();
-
-    if (html != null) {
-      _repository.updateAuthenticationFromHtml(html);
+    if (matchesAppHost) {
+      await _authenticationModel.syncCookiesToApp();
+      await _authenticationModel.updateAuthenticationFromHtml();
     }
 
     final canGoBack = await _controller.canGoBack();

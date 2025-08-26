@@ -8,14 +8,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockWebRedirectCookieManager extends Mock
-    implements WebRedirectCookieManager {}
-
 class _MockWebRedirectController extends Mock
     implements WebRedirectController {}
 
-class _MockAuthenticationRepository extends Mock
-    implements AuthenticationRepository {}
+class _MockWebRedirectAuthenticationModel extends Mock
+    implements WebRedirectAuthenticationModel {}
 
 class _MockInAppWebViewController extends Mock
     implements InAppWebViewController {}
@@ -25,22 +22,19 @@ void main() {
   final initialState = WebRedirectState.from(redirect);
 
   group(WebRedirectBloc, () {
-    late WebRedirectCookieManager cookieManager;
     late WebRedirectController controller;
-    late AuthenticationRepository repository;
+    late _MockWebRedirectAuthenticationModel authenticationModel;
 
     setUp(() {
-      cookieManager = _MockWebRedirectCookieManager();
       controller = _MockWebRedirectController();
-      repository = _MockAuthenticationRepository();
+      authenticationModel = _MockWebRedirectAuthenticationModel();
     });
 
     WebRedirectBloc buildBloc() {
       return WebRedirectBloc(
         redirect: redirect,
-        webRedirectCookieManager: cookieManager,
         webRedirectController: controller,
-        authenticationRepository: repository,
+        webRedirectAuthenticationModel: authenticationModel,
       );
     }
 
@@ -88,25 +82,13 @@ void main() {
     });
 
     group(WebRedirectStarted, () {
-      final cookies = [
-        Cookie('name1', 'value1'),
-        Cookie('name2', 'value2'),
-      ];
-
-      final getCookies = () => repository.cookies();
-
-      final setCookies = () => cookieManager.setCookies(
-        url: redirect.url,
-        cookies: cookies,
-      );
+      final syncCookiesToWebView = () =>
+          authenticationModel.syncCookiesToWebView();
 
       blocTest(
-        'sets cookies and emits [success]',
+        'calls syncCookiesToWebView and emits [success]',
         setUp: () {
-          when(getCookies).thenAnswer((_) async => cookies);
-          when(setCookies).thenAnswer((_) async {
-            return;
-          });
+          when(syncCookiesToWebView).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
@@ -120,8 +102,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(getCookies).called(1);
-          verify(setCookies).called(1);
+          verify(syncCookiesToWebView).called(1);
         },
       );
     });
@@ -222,21 +203,13 @@ void main() {
     });
 
     group(WebRedirectLoadStopped, () {
-      final baseUrl = Uri.parse('baseUrl');
-      final state = AuthenticationState.initial(baseUrl: baseUrl);
+      final url = Uri.parse('https://www.example.com');
 
-      final cookies = [
-        Cookie('name', 'value'),
-      ];
-
-      const html = 'html';
-
-      final getCookies = () => cookieManager.cookies(baseUrl);
-      final saveCookies = () => repository.saveCookies(cookies);
-      final getHtml = () => controller.html();
+      final matchesAppHost = () => authenticationModel.matchesAppHost(url);
+      final syncCookiesToApp = () => authenticationModel.syncCookiesToApp();
 
       final updateAuthenticationFromHtml = () =>
-          repository.updateAuthenticationFromHtml(html);
+          authenticationModel.updateAuthenticationFromHtml();
 
       const canGoBack = true;
       const canGoForward = true;
@@ -245,22 +218,19 @@ void main() {
       final canGoForwardMethod = () => controller.canGoForward();
 
       blocTest(
-        'calls saveCookies, updateAuthenticationFromHtml '
-        'and emits updated state',
+        'calls syncCookiesToApp, updateAuthenticationFromHtml '
+        'when url matches app host and emits updated state',
         setUp: () {
-          when(() => repository.state).thenReturn(state);
-          when(getCookies).thenAnswer((_) async => cookies);
-          when(saveCookies).thenAnswer((_) async {
-            return;
-          });
-          when(getHtml).thenAnswer((_) async => html);
+          when(matchesAppHost).thenReturn(true);
+          when(syncCookiesToApp).thenAnswer((_) async {});
+          when(updateAuthenticationFromHtml).thenAnswer((_) async {});
           when(canGoBackMethod).thenAnswer((_) async => canGoBack);
           when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            WebRedirectLoadStopped(),
+            WebRedirectLoadStopped(url),
           );
         },
         expect: () => [
@@ -273,12 +243,42 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(getCookies).called(1);
-          verify(saveCookies).called(1);
-          verify(getHtml).called(1);
+          verify(matchesAppHost).called(1);
+          verify(syncCookiesToApp).called(1);
           verify(updateAuthenticationFromHtml).called(1);
           verify(canGoBackMethod).called(1);
           verify(canGoForwardMethod).called(1);
+        },
+      );
+
+      blocTest(
+        'emits updated state when url does not match app host',
+        setUp: () {
+          when(matchesAppHost).thenReturn(false);
+          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
+          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            WebRedirectLoadStopped(url),
+          );
+        },
+        expect: () => [
+          matchState(
+            progress: WebRedirectProgressModel(
+              status: PageSuccess(),
+            ),
+            canGoBack: canGoBack,
+            canGoForward: canGoForward,
+          ),
+        ],
+        verify: (_) {
+          verify(matchesAppHost).called(1);
+          verify(canGoBackMethod).called(1);
+          verify(canGoForwardMethod).called(1);
+          verifyNever(syncCookiesToApp);
+          verifyNever(updateAuthenticationFromHtml);
         },
       );
     });

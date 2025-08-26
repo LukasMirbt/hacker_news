@@ -48,9 +48,9 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           WebRedirectProgressChanged(progress),
         );
       },
-      onLoadStop: (_, _) {
+      onLoadStop: (_, url) {
         context.read<WebRedirectBloc>().add(
-          const WebRedirectLoadStopped(),
+          WebRedirectLoadStopped(url?.uriValue),
         );
       },
       onReceivedError: (_, _, error) {

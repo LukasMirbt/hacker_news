@@ -18,17 +18,21 @@ class WebRedirectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
+        final controller = WebRedirectController();
         final cookieManager = CookieManager.instance();
         return WebRedirectBloc(
           redirect: WebRedirect.from(url, html: html),
-          webRedirectCookieManager: WebRedirectCookieManager(
-            cookieManager: cookieManager,
-            cookieAdapter: WebRedirectCookieAdapter(
+          webRedirectController: controller,
+          webRedirectAuthenticationModel: WebRedirectAuthenticationModel(
+            controller: controller,
+            cookieManager: WebRedirectCookieManager(
               cookieManager: cookieManager,
+              cookieAdapter: WebRedirectCookieAdapter(
+                cookieManager: cookieManager,
+              ),
             ),
+            repository: context.read<AuthenticationRepository>(),
           ),
-          webRedirectController: WebRedirectController(),
-          authenticationRepository: context.read<AuthenticationRepository>(),
         )..add(
           const WebRedirectStarted(),
         );
