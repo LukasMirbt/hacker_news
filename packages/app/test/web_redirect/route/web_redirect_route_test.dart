@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/web_redirect/web_redirect.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart'
     show InAppWebViewPlatform;
 import 'package:flutter_test/flutter_test.dart';
@@ -13,9 +15,11 @@ import '../mock_in_app_web_view_platform.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
+class _MockAuthenticationRepository extends Mock
+    implements AuthenticationRepository {}
+
 void main() {
-  const url = 'https://example.com';
-  const html = 'html';
+  const url = 'https://www.example.com/redirect';
 
   group(WebRedirectRoute, () {
     late GoRouterState state;
@@ -27,7 +31,6 @@ void main() {
     WebRedirectRoute createSubject() {
       return WebRedirectRoute(
         url: url,
-        $extra: html,
       );
     }
 
@@ -53,22 +56,38 @@ void main() {
     });
 
     group('buildPage', () {
+      const html = 'html';
+
       late Page<void> page;
+      late AuthenticationRepository authenticationRepository;
 
       setUp(() {
+        authenticationRepository = _MockAuthenticationRepository();
+        when(authenticationRepository.cookies).thenAnswer(
+          (_) async => [],
+        );
+        when(() => authenticationRepository.state).thenReturn(
+          AuthenticationState(
+            baseUrl: Uri.parse('https://www.example.com'),
+            webRedirect: WebRedirectPlaceholder(html: html),
+          ),
+        );
         InAppWebViewPlatform.instance = MockInAppWebViewPlatform();
       });
 
       Widget buildSubject() {
         final route = createSubject();
-        return Builder(
-          builder: (context) {
-            page = route.buildPage(context, state);
-            return Navigator(
-              onDidRemovePage: (_) {},
-              pages: [page],
-            );
-          },
+        return RepositoryProvider.value(
+          value: authenticationRepository,
+          child: Builder(
+            builder: (context) {
+              page = route.buildPage(context, state);
+              return Navigator(
+                onDidRemovePage: (_) {},
+                pages: [page],
+              );
+            },
+          ),
         );
       }
 

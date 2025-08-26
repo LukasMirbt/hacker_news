@@ -5,7 +5,6 @@
 import 'package:app/app_router/app_router.dart';
 import 'package:app/app_shell/app_shell.dart';
 import 'package:app/login/login.dart';
-import 'package:app/web_redirect/web_redirect.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -244,7 +243,8 @@ void main() {
         goRouter: goRouter,
       );
 
-      test('pushes redirect and returns when non-null', () async {
+      test('pushes redirect and returns when redirect '
+          'is non-null', () async {
         final pushRedirect = () => goRouter.push(redirect);
         when(redirectMethod).thenReturn(redirect);
         when(pushRedirect).thenAnswer((_) async => null);
@@ -254,28 +254,7 @@ void main() {
         verifyNever(() => goRouter.push(location));
       });
 
-      test('calls push with extra when redirect is null '
-          r'and route has an "$extra" member', () async {
-        final route = WebRedirectRoute(
-          url: 'url',
-          $extra: 'html',
-        );
-        final push = () => goRouter.push<String>(
-          route.location,
-          extra: route.$extra,
-        );
-        const result = 'result';
-        when(push).thenAnswer((_) async => result);
-        final model = createSubject();
-        await expectLater(
-          model.push<String>(route),
-          completion(result),
-        );
-        verify(push).called(1);
-      });
-
-      test('calls push when redirect is null '
-          r'and route does not have an "$extra" member', () async {
+      test('calls push when redirect is null', () async {
         final route = LoginRoute(from: 'from');
         final push = () => goRouter.push<String>(route.location);
         const result = 'result';
@@ -324,7 +303,8 @@ void main() {
         goRouter: goRouter,
       );
 
-      test('pushes redirect and returns when non-null', () async {
+      test('pushes redirect and returns when redirect '
+          'is non-null', () async {
         final pushRedirect = () => goRouter.push(redirect);
         when(redirectMethod).thenReturn(redirect);
         when(pushRedirect).thenAnswer((_) async => null);

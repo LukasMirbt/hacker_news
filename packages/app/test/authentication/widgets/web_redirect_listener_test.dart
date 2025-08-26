@@ -89,7 +89,6 @@ void main() {
         WebRedirectRoute(
           url: redirect.urlString,
           from: from,
-          $extra: redirect.html,
         ),
       );
       when(pushWebRedirectRoute).thenAnswer((_) async => null);
