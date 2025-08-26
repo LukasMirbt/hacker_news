@@ -31,10 +31,7 @@ class FeedItemModel extends Equatable {
   String shareText(AppLocalizations l10n) {
     final title = _item.title;
     final resolvedUrl = _webLinks.resolve(_item.url);
-    return l10n.feed_shareText(
-      title: title,
-      url: resolvedUrl.toString(),
-    );
+    return '$title\n$resolvedUrl\n\nDiscussion\n${_webLinks.postUrl(id)}';
   }
 
   String age(DateFormatterLocalizations l10n) {

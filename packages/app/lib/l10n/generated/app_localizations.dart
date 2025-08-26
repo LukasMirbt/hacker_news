@@ -435,8 +435,12 @@ abstract class AppLocalizations {
   /// No description provided for @feed_shareText.
   ///
   /// In en, this message translates to:
-  /// **'{title} {url}'**
-  String feed_shareText({required String title, required String url});
+  /// **'{title}\n{articleUrl}\n\nDiscussion\n{discussionUrl}'**
+  String feed_shareText({
+    required String title,
+    required String articleUrl,
+    required String discussionUrl,
+  });
 
   /// No description provided for @feed_rank.
   ///
@@ -591,7 +595,7 @@ abstract class AppLocalizations {
   /// No description provided for @postHeader_shareText.
   ///
   /// In en, this message translates to:
-  /// **'{title} {url}'**
+  /// **'{title}\n{url}'**
   String postHeader_shareText({required String title, required String url});
 
   /// No description provided for @reply_title.
