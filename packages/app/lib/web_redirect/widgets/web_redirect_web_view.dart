@@ -1,7 +1,7 @@
 import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app_logging/app_logging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 class WebRedirectWebView extends StatefulWidget {
