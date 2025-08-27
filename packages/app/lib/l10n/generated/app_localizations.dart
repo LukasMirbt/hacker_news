@@ -432,15 +432,21 @@ abstract class AppLocalizations {
   /// **'Your unfinished replies and comments will appear here. Drafts are saved automatically.'**
   String get drafts_emptyBody;
 
-  /// No description provided for @feed_shareText.
+  /// No description provided for @feed_articleAndDiscussionShareText.
   ///
   /// In en, this message translates to:
   /// **'{title}\n{articleUrl}\n\nDiscussion\n{discussionUrl}'**
-  String feed_shareText({
+  String feed_articleAndDiscussionShareText({
     required String title,
     required String articleUrl,
     required String discussionUrl,
   });
+
+  /// No description provided for @feed_postShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}\n{postUrl}'**
+  String feed_postShareText({required String title, required String postUrl});
 
   /// No description provided for @feed_rank.
   ///

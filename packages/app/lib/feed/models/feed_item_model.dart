@@ -28,15 +28,32 @@ class FeedItemModel extends Equatable {
   String? get upvoteUrl => _item.upvoteUrl;
   bool get hasBeenUpvoted => _item.hasBeenUpvoted;
 
+  // TODO: Create sealed class with ArticleFeedItem, PostFeedItem, JobFeedItem
+
   String shareText(AppLocalizations l10n) {
     final title = _item.title;
-    final articleUrl = _webLinks.resolve(_item.url);
-    final discussionUrl = _webLinks.postUrl(id);
+    final postUrl = _webLinks.postUrl(id);
 
-    return l10n.feed_shareText(
+    if (_item.isJob) {
+      return l10n.feed_jobShareText(
+        title: title,
+        postUrl: postUrl.toString(),
+      );
+    }
+
+    if (_item.urlHost == null) {
+      return l10n.feed_postShareText(
+        title: title,
+        postUrl: postUrl.toString(),
+      );
+    }
+
+    final articleUrl = _webLinks.resolve(_item.url);
+
+    return l10n.feed_articleAndDiscussionShareText(
       title: title,
       articleUrl: articleUrl.toString(),
-      discussionUrl: discussionUrl.toString(),
+      discussionUrl: postUrl.toString(),
     );
   }
 

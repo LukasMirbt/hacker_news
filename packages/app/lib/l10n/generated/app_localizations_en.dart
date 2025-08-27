@@ -191,12 +191,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
 
   @override
-  String feed_shareText({
+  String feed_articleAndDiscussionShareText({
     required String title,
     required String articleUrl,
     required String discussionUrl,
   }) {
     return '$title\n$articleUrl\n\nDiscussion\n$discussionUrl';
+  }
+
+  @override
+  String feed_postShareText({required String title, required String postUrl}) {
+    return '$title\n$postUrl';
   }
 
   @override

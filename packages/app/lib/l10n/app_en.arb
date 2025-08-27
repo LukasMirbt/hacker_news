@@ -70,8 +70,8 @@
   "deleteDraft_confirmAction": "Delete",
   "drafts_emptyTitle": "No drafts saved",
   "drafts_emptyBody": "Your unfinished replies and comments will appear here. Drafts are saved automatically.",
-  "feed_shareText": "{title}\n{articleUrl}\n\nDiscussion\n{discussionUrl}",
-  "@feed_shareText": {
+  "feed_articleAndDiscussionShareText": "{title}\n{articleUrl}\n\nDiscussion\n{discussionUrl}",
+  "@feed_articleAndDiscussionShareText": {
     "placeholders": {
       "title": {
         "type": "String"
@@ -80,6 +80,17 @@
         "type": "String"
       },
       "discussionUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "feed_postShareText": "{title}\n{postUrl}",
+  "@feed_postShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "postUrl": {
         "type": "String"
       }
     }
