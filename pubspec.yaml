@@ -12,6 +12,7 @@ workspace:
   - packages/app_client
   - packages/app_client_platform_configuration
   - packages/app_database
+  - packages/app_logging
   - packages/app_ui
   - packages/authentication_api
   - packages/authentication_parser

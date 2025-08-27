@@ -4,6 +4,7 @@ import 'package:app/app/app.dart';
 import 'package:app/firebase_options.dart';
 import 'package:app_client_platform_configuration/app_client_platform_configuration.dart';
 import 'package:app_database/app_database.dart';
+import 'package:app_logging/app_logging.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:feed_api/feed_api.dart';
@@ -34,7 +35,20 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final logger = AppLogger.start(debug: kDebugMode);
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+    !kDebugMode,
+  );
+
+  final logger = AppLogging.start(
+    debug: kDebugMode,
+    integrations: [
+      const ConsoleLoggingIntegration(),
+      CrashlyticsLoggingIntegration(
+        firebaseApp,
+        firebaseCrashlytics: FirebaseCrashlytics.instance,
+      ),
+    ],
+  );
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
@@ -42,10 +56,6 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
-
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-    !kDebugMode,
-  );
 
   final analyticsConsentStorage = AnalyticsConsentStorage(
     sharedPreferences: sharedPreferences,
