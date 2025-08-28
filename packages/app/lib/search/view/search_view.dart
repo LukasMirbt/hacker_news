@@ -3,29 +3,21 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WebRedirectView extends StatelessWidget {
-  const WebRedirectView({super.key});
+class SearchView extends StatelessWidget {
+  const SearchView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final url = context.select(
-      (WebRedirectBloc bloc) => bloc.state.url,
-    );
-
-    final textTheme = TextTheme.of(context);
-
-    return WebRedirectPopScope(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            url?.host ?? '',
-            style: textTheme.titleMedium,
-          ),
-          toolbarHeight: 48,
+    return const SafeArea(
+      child: WebRedirectPopScope(
+        child: Column(
+          children: [
+            Expanded(
+              child: _Body(),
+            ),
+            WebRedirectActionBar(),
+          ],
         ),
-        body: const _Body(),
-        bottomNavigationBar: const WebRedirectActionBar(),
       ),
     );
   }

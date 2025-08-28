@@ -33,6 +33,21 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
           WebRedirectCreated(controller),
         );
       },
+      shouldOverrideUrlLoading: (_, navigationAction) {
+        final state = context.read<WebRedirectBloc>().state;
+        final onNavigationRequest = state.onNavigationRequest;
+        if (onNavigationRequest == null) return NavigationActionPolicy.ALLOW;
+
+        final url = navigationAction.request.url;
+        if (url == null) return NavigationActionPolicy.ALLOW;
+
+        final decision = onNavigationRequest(url);
+
+        return switch (decision) {
+          NavigationDecision.prevent => NavigationActionPolicy.CANCEL,
+          NavigationDecision.navigate => NavigationActionPolicy.ALLOW,
+        };
+      },
       onLoadStart: (_, _) {
         context.read<WebRedirectBloc>().add(
           const WebRedirectLoadStarted(),

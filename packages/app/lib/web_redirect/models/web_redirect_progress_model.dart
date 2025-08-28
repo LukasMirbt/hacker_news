@@ -3,14 +3,14 @@ import 'package:equatable/equatable.dart';
 
 class WebRedirectProgressModel extends Equatable {
   const WebRedirectProgressModel({
-    PageStatus status = const PageInitial(),
-  }) : _status = status;
+    this.status = const PageInitial(),
+  });
 
-  final PageStatus _status;
+  final PageStatus status;
 
-  double get value => _status.progress / 100;
-  double get opacity => _status is PageLoading ? 1 : 0;
+  double get value => status.progress / 100;
+  double get opacity => status is PageLoading ? 1 : 0;
 
   @override
-  List<Object> get props => [_status];
+  List<Object> get props => [status];
 }

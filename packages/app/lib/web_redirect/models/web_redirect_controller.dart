@@ -13,6 +13,13 @@ class WebRedirectController {
 
   Future<bool> canGoForward() => _controller.canGoForward();
 
+  Future<String?> title() => _controller.getTitle();
+
+  Future<Uri?> url() async {
+    final webUrl = await _controller.getUrl();
+    return webUrl?.uriValue;
+  }
+
   void goBack() {
     _controller.goBack();
   }

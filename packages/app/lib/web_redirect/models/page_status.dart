@@ -5,6 +5,8 @@ sealed class PageStatus extends Equatable {
 
   int get progress;
 
+  bool get isLoading => this is PageLoading;
+
   @override
   List<Object> get props => [];
 }

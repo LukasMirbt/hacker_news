@@ -7,10 +7,14 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     required WebRedirect redirect,
     required WebRedirectController webRedirectController,
     required WebRedirectAuthenticationModel webRedirectAuthenticationModel,
+    OnNavigationRequest? onNavigationRequest,
   }) : _controller = webRedirectController,
        _authenticationModel = webRedirectAuthenticationModel,
        super(
-         WebRedirectState.from(redirect),
+         WebRedirectState.from(
+           redirect: redirect,
+           onNavigationRequest: onNavigationRequest,
+         ),
        ) {
     on<WebRedirectStarted>(_onStarted);
     on<WebRedirectCreated>(_onCreated);
@@ -66,11 +70,15 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   ) async {
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
+    final title = await _controller.title();
+    final url = await _controller.url();
 
     emit(
       state.copyWith(
         canGoBack: canGoBack,
         canGoForward: canGoForward,
+        title: title,
+        url: url,
       ),
     );
   }
@@ -79,6 +87,8 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
     WebRedirectProgressChanged event,
     Emitter<WebRedirectState> emit,
   ) {
+    if (!state.progress.status.isLoading) return;
+
     emit(
       state.copyWith(
         progress: WebRedirectProgressModel(
@@ -102,6 +112,8 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
 
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
+    final title = await _controller.title();
+    final currentUrl = await _controller.url();
 
     emit(
       state.copyWith(
@@ -110,19 +122,30 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
         ),
         canGoBack: canGoBack,
         canGoForward: canGoForward,
+        title: title,
+        url: currentUrl,
       ),
     );
   }
 
-  void _onReceivedError(
+  Future<void> _onReceivedError(
     WebRedirectReceivedError event,
     Emitter<WebRedirectState> emit,
-  ) {
+  ) async {
+    final canGoBack = await _controller.canGoBack();
+    final canGoForward = await _controller.canGoForward();
+    final title = await _controller.title();
+    final url = await _controller.url();
+
     emit(
       state.copyWith(
         progress: const WebRedirectProgressModel(
           status: PageFailure(),
         ),
+        canGoBack: canGoBack,
+        canGoForward: canGoForward,
+        title: title,
+        url: url,
       ),
     );
   }

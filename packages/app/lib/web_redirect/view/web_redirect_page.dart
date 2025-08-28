@@ -8,11 +8,13 @@ class WebRedirectPage extends StatelessWidget {
   const WebRedirectPage({
     required this.url,
     required this.html,
+    this.onNavigationRequest,
     super.key,
   });
 
   final String url;
   final String? html;
+  final OnNavigationRequest? onNavigationRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class WebRedirectPage extends StatelessWidget {
         final cookieManager = CookieManager.instance();
         return WebRedirectBloc(
           redirect: WebRedirect.from(url, html: html),
+          onNavigationRequest: onNavigationRequest,
           webRedirectController: controller,
           webRedirectAuthenticationModel: WebRedirectAuthenticationModel(
             controller: controller,

@@ -11,6 +11,13 @@ enum InitialLoadStatus {
   bool get isLoading => this == loading;
 }
 
+enum NavigationDecision {
+  prevent,
+  navigate,
+}
+
+typedef OnNavigationRequest = NavigationDecision Function(Uri url);
+
 @freezed
 abstract class WebRedirectState with _$WebRedirectState {
   const factory WebRedirectState({
@@ -19,11 +26,18 @@ abstract class WebRedirectState with _$WebRedirectState {
     @Default(WebRedirectProgressModel()) WebRedirectProgressModel progress,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
+    String? title,
+    Uri? url,
+    OnNavigationRequest? onNavigationRequest,
   }) = _WebRedirectState;
 
-  factory WebRedirectState.from(WebRedirect redirect) {
+  factory WebRedirectState.from({
+    required WebRedirect redirect,
+    OnNavigationRequest? onNavigationRequest,
+  }) {
     return WebRedirectState(
       redirect: WebRedirectModel.from(redirect),
+      onNavigationRequest: onNavigationRequest,
     );
   }
 }

@@ -30,6 +30,17 @@ class WebLinks {
     );
   }
 
+  Uri searchUrl() {
+    return Uri(
+      scheme: 'https',
+      host: 'hn.algolia.com',
+      path: '/',
+      queryParameters: {
+        'dateRange': 'last24h',
+      },
+    );
+  }
+
   Uri resolve(String urlString) {
     final url = Uri.parse(urlString);
     if (url.isAbsolute) return url;
