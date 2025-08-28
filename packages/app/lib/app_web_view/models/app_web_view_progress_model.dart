@@ -1,8 +1,8 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:equatable/equatable.dart';
 
-class WebRedirectProgressModel extends Equatable {
-  const WebRedirectProgressModel({
+class AppWebViewProgressModel extends Equatable {
+  const AppWebViewProgressModel({
     this.status = const PageInitial(),
   });
 

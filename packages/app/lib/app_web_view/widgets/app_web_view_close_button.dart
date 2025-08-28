@@ -2,8 +2,8 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class WebRedirectCloseButton extends StatelessWidget {
-  const WebRedirectCloseButton({super.key});
+class AppWebViewCloseButton extends StatelessWidget {
+  const AppWebViewCloseButton({super.key});
 
   @override
   Widget build(BuildContext context) {

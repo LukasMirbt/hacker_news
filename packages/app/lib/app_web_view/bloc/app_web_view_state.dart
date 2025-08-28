@@ -1,8 +1,7 @@
-import 'package:app/web_redirect/web_redirect.dart';
-import 'package:authentication_repository/authentication_repository.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'web_redirect_state.freezed.dart';
+part 'app_web_view_state.freezed.dart';
 
 enum InitialLoadStatus {
   loading,
@@ -19,24 +18,24 @@ enum NavigationDecision {
 typedef OnNavigationRequest = NavigationDecision Function(Uri url);
 
 @freezed
-abstract class WebRedirectState with _$WebRedirectState {
-  const factory WebRedirectState({
-    required WebRedirectModel redirect,
+abstract class AppWebViewState with _$AppWebViewState {
+  const factory AppWebViewState({
+    required AppWebViewConfiguration configuration,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
-    @Default(WebRedirectProgressModel()) WebRedirectProgressModel progress,
+    @Default(AppWebViewProgressModel()) AppWebViewProgressModel progress,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
     String? title,
     Uri? url,
     OnNavigationRequest? onNavigationRequest,
-  }) = _WebRedirectState;
+  }) = _AppWebViewState;
 
-  factory WebRedirectState.from({
-    required WebRedirect redirect,
+  factory AppWebViewState.from({
+    required AppWebViewConfiguration configuration,
     OnNavigationRequest? onNavigationRequest,
   }) {
-    return WebRedirectState(
-      redirect: WebRedirectModel.from(redirect),
+    return AppWebViewState(
+      configuration: configuration,
       onNavigationRequest: onNavigationRequest,
     );
   }

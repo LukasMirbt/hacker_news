@@ -2,8 +2,8 @@ import 'dart:io' as io;
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as web_view;
 
-class WebRedirectCookieAdapter {
-  const WebRedirectCookieAdapter({
+class AppWebViewCookieAdapter {
+  const AppWebViewCookieAdapter({
     required web_view.CookieManager cookieManager,
   }) : _cookieManager = cookieManager;
 

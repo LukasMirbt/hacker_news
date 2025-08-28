@@ -1,26 +1,27 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app_logging/app_logging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
 
-class WebRedirectWebView extends StatefulWidget {
-  const WebRedirectWebView({super.key});
+class AppWebView extends StatefulWidget {
+  const AppWebView({super.key});
 
   @override
-  State<WebRedirectWebView> createState() => _WebRedirectWebViewState();
+  State<AppWebView> createState() => _AppWebViewState();
 }
 
-class _WebRedirectWebViewState extends State<WebRedirectWebView> {
+class _AppWebViewState extends State<AppWebView> {
   late final InAppWebViewInitialData? _initialData;
   late final URLRequest? _initialUrlRequest;
 
   @override
   void initState() {
     super.initState();
-    final state = context.read<WebRedirectBloc>().state;
-    _initialData = state.redirect.initialData;
-    _initialUrlRequest = state.redirect.initialUrlRequest;
+    final state = context.read<AppWebViewBloc>().state;
+    final configuration = state.configuration;
+    _initialData = configuration.initialData;
+    _initialUrlRequest = configuration.initialUrlRequest;
   }
 
   @override
@@ -29,12 +30,12 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
       initialData: _initialData,
       initialUrlRequest: _initialUrlRequest,
       onWebViewCreated: (controller) {
-        context.read<WebRedirectBloc>().add(
-          WebRedirectCreated(controller),
+        context.read<AppWebViewBloc>().add(
+          AppWebViewCreated(controller),
         );
       },
       shouldOverrideUrlLoading: (_, navigationAction) {
-        final state = context.read<WebRedirectBloc>().state;
+        final state = context.read<AppWebViewBloc>().state;
         final onNavigationRequest = state.onNavigationRequest;
         if (onNavigationRequest == null) return NavigationActionPolicy.ALLOW;
 
@@ -49,28 +50,28 @@ class _WebRedirectWebViewState extends State<WebRedirectWebView> {
         };
       },
       onLoadStart: (_, _) {
-        context.read<WebRedirectBloc>().add(
-          const WebRedirectLoadStarted(),
+        context.read<AppWebViewBloc>().add(
+          const AppWebViewLoadStarted(),
         );
       },
       onUpdateVisitedHistory: (_, _, _) {
-        context.read<WebRedirectBloc>().add(
-          const WebRedirectVisitedHistoryUpdated(),
+        context.read<AppWebViewBloc>().add(
+          const AppWebViewVisitedHistoryUpdated(),
         );
       },
       onProgressChanged: (_, progress) {
-        context.read<WebRedirectBloc>().add(
-          WebRedirectProgressChanged(progress),
+        context.read<AppWebViewBloc>().add(
+          AppWebViewProgressChanged(progress),
         );
       },
       onLoadStop: (_, url) {
-        context.read<WebRedirectBloc>().add(
-          WebRedirectLoadStopped(url?.uriValue),
+        context.read<AppWebViewBloc>().add(
+          AppWebViewLoadStopped(url?.uriValue),
         );
       },
       onReceivedError: (_, _, error) {
-        context.read<WebRedirectBloc>().add(
-          const WebRedirectReceivedError(),
+        context.read<AppWebViewBloc>().add(
+          const AppWebViewReceivedError(),
         );
 
         context.read<Logger>().severe(

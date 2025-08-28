@@ -1,39 +1,38 @@
-import 'package:app/web_redirect/web_redirect.dart';
-import 'package:authentication_repository/authentication_repository.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
-  WebRedirectBloc({
-    required WebRedirect redirect,
-    required WebRedirectController webRedirectController,
-    required WebRedirectAuthenticationModel webRedirectAuthenticationModel,
+class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
+  AppWebViewBloc({
+    required AppWebViewConfiguration configuration,
+    required AppWebViewController appWebViewController,
+    required AppWebViewAuthenticationModel appWebViewAuthenticationModel,
     OnNavigationRequest? onNavigationRequest,
-  }) : _controller = webRedirectController,
-       _authenticationModel = webRedirectAuthenticationModel,
+  }) : _controller = appWebViewController,
+       _authenticationModel = appWebViewAuthenticationModel,
        super(
-         WebRedirectState.from(
-           redirect: redirect,
+         AppWebViewState.from(
+           configuration: configuration,
            onNavigationRequest: onNavigationRequest,
          ),
        ) {
-    on<WebRedirectStarted>(_onStarted);
-    on<WebRedirectCreated>(_onCreated);
-    on<WebRedirectLoadStarted>(_onLoadStarted);
-    on<WebRedirectVisitedHistoryUpdated>(_onVisitedHistoryUpdated);
-    on<WebRedirectProgressChanged>(_onProgressChanged);
-    on<WebRedirectLoadStopped>(_onLoadStopped);
-    on<WebRedirectReceivedError>(_onReceivedError);
-    on<WebRedirectBackPressed>(_onBackPressed);
-    on<WebRedirectForwardPressed>(_onForwardPressed);
-    on<WebRedirectReloadPressed>(_onReloadPressed);
+    on<AppWebViewStarted>(_onStarted);
+    on<AppWebViewCreated>(_onCreated);
+    on<AppWebViewLoadStarted>(_onLoadStarted);
+    on<AppWebViewVisitedHistoryUpdated>(_onVisitedHistoryUpdated);
+    on<AppWebViewProgressChanged>(_onProgressChanged);
+    on<AppWebViewLoadStopped>(_onLoadStopped);
+    on<AppWebViewReceivedError>(_onReceivedError);
+    on<AppWebViewBackPressed>(_onBackPressed);
+    on<AppWebViewForwardPressed>(_onForwardPressed);
+    on<AppWebViewReloadPressed>(_onReloadPressed);
   }
 
-  final WebRedirectAuthenticationModel _authenticationModel;
-  final WebRedirectController _controller;
+  final AppWebViewAuthenticationModel _authenticationModel;
+  final AppWebViewController _controller;
 
   Future<void> _onStarted(
-    WebRedirectStarted event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewStarted event,
+    Emitter<AppWebViewState> emit,
   ) async {
     await _authenticationModel.syncCookiesToWebView();
 
@@ -45,19 +44,19 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   void _onCreated(
-    WebRedirectCreated event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewCreated event,
+    Emitter<AppWebViewState> emit,
   ) {
     _controller.initialize(event.controller);
   }
 
   void _onLoadStarted(
-    WebRedirectLoadStarted event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewLoadStarted event,
+    Emitter<AppWebViewState> emit,
   ) {
     emit(
       state.copyWith(
-        progress: const WebRedirectProgressModel(
+        progress: const AppWebViewProgressModel(
           status: PageLoading(),
         ),
       ),
@@ -65,8 +64,8 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   Future<void> _onVisitedHistoryUpdated(
-    WebRedirectVisitedHistoryUpdated event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewVisitedHistoryUpdated event,
+    Emitter<AppWebViewState> emit,
   ) async {
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
@@ -84,14 +83,14 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   void _onProgressChanged(
-    WebRedirectProgressChanged event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewProgressChanged event,
+    Emitter<AppWebViewState> emit,
   ) {
     if (!state.progress.status.isLoading) return;
 
     emit(
       state.copyWith(
-        progress: WebRedirectProgressModel(
+        progress: AppWebViewProgressModel(
           status: PageLoading(event.progress),
         ),
       ),
@@ -99,8 +98,8 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   Future<void> _onLoadStopped(
-    WebRedirectLoadStopped event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewLoadStopped event,
+    Emitter<AppWebViewState> emit,
   ) async {
     final url = event.url;
     final matchesAppHost = _authenticationModel.matchesAppHost(url);
@@ -117,7 +116,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
 
     emit(
       state.copyWith(
-        progress: const WebRedirectProgressModel(
+        progress: const AppWebViewProgressModel(
           status: PageSuccess(),
         ),
         canGoBack: canGoBack,
@@ -129,8 +128,8 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   Future<void> _onReceivedError(
-    WebRedirectReceivedError event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewReceivedError event,
+    Emitter<AppWebViewState> emit,
   ) async {
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
@@ -139,7 +138,7 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
 
     emit(
       state.copyWith(
-        progress: const WebRedirectProgressModel(
+        progress: const AppWebViewProgressModel(
           status: PageFailure(),
         ),
         canGoBack: canGoBack,
@@ -151,22 +150,22 @@ class WebRedirectBloc extends Bloc<WebRedirectEvent, WebRedirectState> {
   }
 
   void _onBackPressed(
-    WebRedirectBackPressed event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewBackPressed event,
+    Emitter<AppWebViewState> emit,
   ) {
     _controller.goBack();
   }
 
   void _onForwardPressed(
-    WebRedirectForwardPressed event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewForwardPressed event,
+    Emitter<AppWebViewState> emit,
   ) {
     _controller.goForward();
   }
 
   void _onReloadPressed(
-    WebRedirectReloadPressed event,
-    Emitter<WebRedirectState> emit,
+    AppWebViewReloadPressed event,
+    Emitter<AppWebViewState> emit,
   ) {
     _controller.reload();
   }

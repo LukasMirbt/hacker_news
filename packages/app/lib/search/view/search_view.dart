@@ -1,4 +1,5 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
+import 'package:app/search/search.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,15 +10,8 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-      child: WebRedirectPopScope(
-        child: Column(
-          children: [
-            Expanded(
-              child: _Body(),
-            ),
-            WebRedirectActionBar(),
-          ],
-        ),
+      child: AppWebViewPopScope(
+        child: _Body(),
       ),
     );
   }
@@ -29,11 +23,11 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.select(
-      (WebRedirectBloc bloc) => bloc.state.initialLoadStatus.isLoading,
+      (AppWebViewBloc bloc) => bloc.state.initialLoadStatus.isLoading,
     );
 
     if (isLoading) return const AppLoadingBody();
 
-    return const WebRedirectBody();
+    return const SearchBody();
   }
 }

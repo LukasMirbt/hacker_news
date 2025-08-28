@@ -1,15 +1,15 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WebRedirectForwardButton extends StatelessWidget {
-  const WebRedirectForwardButton({super.key});
+class AppWebViewForwardButton extends StatelessWidget {
+  const AppWebViewForwardButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     final canGoForward = context.select(
-      (WebRedirectBloc bloc) => bloc.state.canGoForward,
+      (AppWebViewBloc bloc) => bloc.state.canGoForward,
     );
 
     return IconButton(
@@ -17,8 +17,8 @@ class WebRedirectForwardButton extends StatelessWidget {
       onPressed: !canGoForward
           ? null
           : () {
-              context.read<WebRedirectBloc>().add(
-                const WebRedirectForwardPressed(),
+              context.read<AppWebViewBloc>().add(
+                const AppWebViewForwardPressed(),
               );
             },
     );

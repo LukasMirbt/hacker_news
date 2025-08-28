@@ -1,11 +1,11 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 // TODO: Icon theme
 
-class WebRedirectActionBar extends StatelessWidget {
-  const WebRedirectActionBar({super.key});
+class AppWebViewActionBar extends StatelessWidget {
+  const AppWebViewActionBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,10 @@ class WebRedirectActionBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            WebRedirectBackButton(),
-            WebRedirectForwardButton(),
-            WebRedirectReloadButton(),
-            WebRedirectCloseButton(),
+            AppWebViewBackButton(),
+            AppWebViewForwardButton(),
+            AppWebViewReloadButton(),
+            AppWebViewCloseButton(),
           ],
         ),
       ),

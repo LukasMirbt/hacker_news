@@ -1,17 +1,17 @@
 import 'dart:io' as io;
 
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 
-class WebRedirectCookieManager {
-  const WebRedirectCookieManager({
+class AppWebViewCookieManager {
+  const AppWebViewCookieManager({
     required CookieManager cookieManager,
-    required WebRedirectCookieAdapter cookieAdapter,
+    required AppWebViewCookieAdapter cookieAdapter,
   }) : _cookieManager = cookieManager,
        _adapter = cookieAdapter;
 
   final CookieManager _cookieManager;
-  final WebRedirectCookieAdapter _adapter;
+  final AppWebViewCookieAdapter _adapter;
 
   Future<void> setCookies({
     required Uri url,

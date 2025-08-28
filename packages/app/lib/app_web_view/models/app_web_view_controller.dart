@@ -2,7 +2,7 @@
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class WebRedirectController {
+class AppWebViewController {
   late InAppWebViewController _controller;
 
   void initialize(InAppWebViewController controller) {

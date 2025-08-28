@@ -1,17 +1,17 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
-class WebRedirectAuthenticationModel {
-  const WebRedirectAuthenticationModel({
-    required WebRedirectController controller,
-    required WebRedirectCookieManager cookieManager,
+class AppWebViewAuthenticationModel {
+  const AppWebViewAuthenticationModel({
+    required AppWebViewController controller,
+    required AppWebViewCookieManager cookieManager,
     required AuthenticationRepository repository,
   }) : _controller = controller,
        _cookieManager = cookieManager,
        _repository = repository;
 
-  final WebRedirectController _controller;
-  final WebRedirectCookieManager _cookieManager;
+  final AppWebViewController _controller;
+  final AppWebViewCookieManager _cookieManager;
   final AuthenticationRepository _repository;
 
   bool matchesAppHost(Uri? url) {

@@ -1,7 +1,7 @@
 import 'package:app/app_router/app_router.dart';
 import 'package:app/app_shell/app_shell.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/search/search.dart';
-import 'package:app/web_redirect/web_redirect.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,11 +16,11 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        final controller = WebRedirectController();
+        final controller = AppWebViewController();
         final cookieManager = CookieManager.instance();
-        return WebRedirectBloc(
-          redirect: WebRedirect(
-            url: const WebLinks().searchUrl(),
+        return AppWebViewBloc(
+          configuration: AppWebViewConfiguration.from(
+            initialUrl: const WebLinks().searchUrl(),
           ),
           onNavigationRequest: (url) {
             final isPost = url.toString().startsWith(
@@ -40,6 +40,8 @@ class SearchPage extends StatelessWidget {
                 );
                 return NavigationDecision.prevent;
               }
+
+              return NavigationDecision.navigate;
             }
 
             final postId = url.queryParameters['id'];
@@ -51,19 +53,19 @@ class SearchPage extends StatelessWidget {
 
             return NavigationDecision.prevent;
           },
-          webRedirectController: controller,
-          webRedirectAuthenticationModel: WebRedirectAuthenticationModel(
+          appWebViewController: controller,
+          appWebViewAuthenticationModel: AppWebViewAuthenticationModel(
             controller: controller,
-            cookieManager: WebRedirectCookieManager(
+            cookieManager: AppWebViewCookieManager(
               cookieManager: cookieManager,
-              cookieAdapter: WebRedirectCookieAdapter(
+              cookieAdapter: AppWebViewCookieAdapter(
                 cookieManager: cookieManager,
               ),
             ),
             repository: context.read<AuthenticationRepository>(),
           ),
         )..add(
-          const WebRedirectStarted(),
+          const AppWebViewStarted(),
         );
       },
       child: const SearchView(),
