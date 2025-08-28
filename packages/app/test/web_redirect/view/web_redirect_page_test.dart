@@ -6,7 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../app/pump_app.dart';
-import '../mock_in_app_web_view_platform.dart';
+import '../../app_web_view/mock_in_app_web_view_platform.dart';
 
 void main() {
   group(WebRedirectPage, () {

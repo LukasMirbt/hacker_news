@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_web_view/app_web_view.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +22,9 @@ void main() {
       bloc = _MockAppWebViewBloc();
       when(() => bloc.state).thenReturn(
         AppWebViewState.from(
-          AppWebViewPlaceholder(),
+          configuration: AppWebViewConfiguration.from(
+            initialUrl: Uri.parse('https://example.com'),
+          ),
         ),
       );
       when(() => bloc.stream).thenAnswer((_) => Stream.value(bloc.state));

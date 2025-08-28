@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/web_redirect/web_redirect.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,20 +10,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
-import '../mock_in_app_web_view_platform.dart';
+import '../../app_web_view/mock_in_app_web_view_platform.dart';
 
-class _MockWebRedirectBloc extends MockBloc<WebRedirectEvent, WebRedirectState>
-    implements WebRedirectBloc {}
+class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
+    implements AppWebViewBloc {}
 
 void main() {
   group(WebRedirectBody, () {
-    late WebRedirectBloc bloc;
+    late AppWebViewBloc bloc;
 
     setUp(() {
-      bloc = _MockWebRedirectBloc();
+      bloc = _MockAppWebViewBloc();
       when(() => bloc.state).thenReturn(
-        WebRedirectState.from(
-          WebRedirectPlaceholder(),
+        AppWebViewState.from(
+          configuration: AppWebViewConfiguration.from(
+            initialUrl: Uri.parse('http://example.com'),
+          ),
         ),
       );
       when(() => bloc.stream).thenAnswer((_) => Stream.value(bloc.state));
@@ -37,14 +39,14 @@ void main() {
       );
     }
 
-    testWidgets('renders $WebRedirectWebView', (tester) async {
+    testWidgets('renders $AppWebView', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(WebRedirectWebView), findsOneWidget);
+      expect(find.byType(AppWebView), findsOneWidget);
     });
 
-    testWidgets('renders $WebRedirectProgressIndicator', (tester) async {
+    testWidgets('renders $AppWebViewProgressIndicator', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(WebRedirectProgressIndicator), findsOneWidget);
+      expect(find.byType(AppWebViewProgressIndicator), findsOneWidget);
     });
   });
 }

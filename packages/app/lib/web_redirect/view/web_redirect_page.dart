@@ -9,13 +9,11 @@ class WebRedirectPage extends StatelessWidget {
   const WebRedirectPage({
     required this.url,
     required this.html,
-    this.onNavigationRequest,
     super.key,
   });
 
   final String url;
   final String? html;
-  final OnNavigationRequest? onNavigationRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,6 @@ class WebRedirectPage extends StatelessWidget {
             initialUrl: Uri.parse(url),
             initialHtml: html,
           ),
-          onNavigationRequest: onNavigationRequest,
           appWebViewController: controller,
           appWebViewAuthenticationModel: AppWebViewAuthenticationModel(
             controller: controller,
