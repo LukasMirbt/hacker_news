@@ -9,7 +9,7 @@ class AppWebViewProgressModel extends Equatable {
   final PageStatus status;
 
   double get value => status.progress / 100;
-  double get opacity => status is PageLoading ? 1 : 0;
+  double get opacity => status.isLoading ? 1 : 0;
 
   @override
   List<Object> get props => [status];

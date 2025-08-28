@@ -10,8 +10,8 @@ class AppWebViewAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final url = context.select(
-      (AppWebViewBloc bloc) => bloc.state.url,
+    final title = context.select(
+      (AppWebViewBloc bloc) => bloc.state.title,
     );
 
     final textTheme = TextTheme.of(context);
@@ -20,7 +20,7 @@ class AppWebViewAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: preferredSize.height,
       centerTitle: true,
       title: Text(
-        url?.host ?? '',
+        title,
         style: textTheme.titleMedium,
       ),
     );

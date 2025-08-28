@@ -211,8 +211,8 @@ return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadS
 /// @nodoc
 
 
-class _AppWebViewState implements AppWebViewState {
-  const _AppWebViewState({required this.configuration, this.onNavigationRequest, this.initialLoadStatus = InitialLoadStatus.loading, this.progress = const AppWebViewProgressModel(), this.canGoBack = false, this.canGoForward = false, this.url});
+class _AppWebViewState extends AppWebViewState {
+  const _AppWebViewState({required this.configuration, this.onNavigationRequest, this.initialLoadStatus = InitialLoadStatus.loading, this.progress = const AppWebViewProgressModel(), this.canGoBack = false, this.canGoForward = false, this.url}): super._();
   
 
 @override final  AppWebViewConfiguration configuration;

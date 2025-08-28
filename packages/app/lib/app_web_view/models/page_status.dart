@@ -4,7 +4,6 @@ sealed class PageStatus extends Equatable {
   const PageStatus();
 
   int get progress;
-
   bool get isLoading => this is PageLoading;
 
   @override

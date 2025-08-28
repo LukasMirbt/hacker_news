@@ -5,6 +5,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group(AppWebViewState, () {
+    AppWebViewState createSubject({Uri? url}) {
+      return AppWebViewState(
+        configuration: AppWebViewConfiguration.from(
+          initialUrl: Uri.parse('https://www.example.com'),
+        ),
+        url: url,
+      );
+    }
+
     group('from', () {
       test('returns $AppWebViewState', () {
         final configuration = AppWebViewConfiguration.from(
@@ -30,6 +39,20 @@ void main() {
                 onNavigationRequest,
               ),
         );
+      });
+    });
+
+    group('title', () {
+      test('returns correct value when url is null', () {
+        final state = createSubject();
+        expect(state.title, '');
+      });
+
+      test('returns correct value when url is non-null', () {
+        final state = createSubject(
+          url: Uri.parse('https://www.example.com'),
+        );
+        expect(state.title, 'www.example.com');
       });
     });
   });

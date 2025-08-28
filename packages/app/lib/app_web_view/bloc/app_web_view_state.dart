@@ -38,4 +38,12 @@ abstract class AppWebViewState with _$AppWebViewState {
       onNavigationRequest: onNavigationRequest,
     );
   }
+
+  const AppWebViewState._();
+
+  String get title {
+    final url = this.url;
+    if (url == null) return '';
+    return url.host;
+  }
 }
