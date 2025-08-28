@@ -20,9 +20,14 @@ void main() {
     initialUrl: Uri.parse('https://www.example.com'),
   );
 
+  final onNavigationRequest = (_) => NavigationDecision.navigate;
+
   final initialState = AppWebViewState.from(
     configuration: configuration,
+    onNavigationRequest: onNavigationRequest,
   );
+
+  final url = Uri.parse('https://www.example.com/updated');
 
   group(AppWebViewBloc, () {
     late AppWebViewController controller;
@@ -36,12 +41,15 @@ void main() {
     AppWebViewBloc buildBloc() {
       return AppWebViewBloc(
         configuration: configuration,
+        onNavigationRequest: onNavigationRequest,
         appWebViewController: controller,
         appWebViewAuthenticationModel: authenticationModel,
       );
     }
 
     TypeMatcher<AppWebViewState> matchState({
+      AppWebViewConfiguration? configuration,
+      OnNavigationRequest? onNavigationRequest,
       InitialLoadStatus? initialLoadStatus,
       AppWebViewProgressModel? progress,
       bool? canGoBack,
@@ -52,7 +60,12 @@ void main() {
           .having(
             (state) => state.configuration,
             'configuration',
-            isA<AppWebViewConfiguration>(),
+            configuration ?? initialState.configuration,
+          )
+          .having(
+            (state) => state.onNavigationRequest,
+            'onNavigationRequest',
+            onNavigationRequest ?? initialState.onNavigationRequest,
           )
           .having(
             (state) => state.initialLoadStatus,
@@ -140,11 +153,12 @@ void main() {
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            AppWebViewLoadStarted(),
+            AppWebViewLoadStarted(url),
           );
         },
         expect: () => [
           matchState(
+            url: url,
             progress: AppWebViewProgressModel(
               status: PageLoading(),
             ),
@@ -154,25 +168,22 @@ void main() {
     });
 
     group(AppWebViewVisitedHistoryUpdated, () {
-      final url = Uri.parse('https://www.example.com/updated');
       const canGoBack = true;
       const canGoForward = true;
 
-      final getUrlMethod = () => controller.url();
       final canGoBackMethod = () => controller.canGoBack();
       final canGoForwardMethod = () => controller.canGoForward();
 
       blocTest(
-        'emits canGoBack and canGoForward',
+        'emits updated state',
         setUp: () {
-          when(getUrlMethod).thenAnswer((_) async => url);
           when(canGoBackMethod).thenAnswer((_) async => canGoBack);
           when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            AppWebViewVisitedHistoryUpdated(),
+            AppWebViewVisitedHistoryUpdated(url),
           );
         },
         expect: () => [
@@ -183,7 +194,6 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(getUrlMethod).called(1);
           verify(canGoBackMethod).called(1);
           verify(canGoForwardMethod).called(1);
         },
@@ -237,7 +247,11 @@ void main() {
     });
 
     group(AppWebViewLoadStopped, () {
-      final url = Uri.parse('https://www.example.com/url');
+      const canGoBack = true;
+      const canGoForward = true;
+
+      final canGoBackMethod = () => controller.canGoBack();
+      final canGoForwardMethod = () => controller.canGoForward();
 
       final matchesAppHost = () => authenticationModel.matchesAppHost(url);
       final syncCookiesToApp = () => authenticationModel.syncCookiesToApp();
@@ -245,21 +259,15 @@ void main() {
       final updateAuthenticationFromHtml = () =>
           authenticationModel.updateAuthenticationFromHtml();
 
-      const canGoBack = true;
-      const canGoForward = true;
-
-      final canGoBackMethod = () => controller.canGoBack();
-      final canGoForwardMethod = () => controller.canGoForward();
-
       blocTest(
         'calls syncCookiesToApp, updateAuthenticationFromHtml '
         'when url matches app host and emits updated state',
         setUp: () {
+          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
+          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
           when(matchesAppHost).thenReturn(true);
           when(syncCookiesToApp).thenAnswer((_) async {});
           when(updateAuthenticationFromHtml).thenAnswer((_) async {});
-          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
-          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
         },
         build: buildBloc,
         act: (bloc) {
@@ -269,29 +277,29 @@ void main() {
         },
         expect: () => [
           matchState(
-            progress: AppWebViewProgressModel(
-              status: PageSuccess(),
-            ),
             url: url,
             canGoBack: canGoBack,
             canGoForward: canGoForward,
+            progress: AppWebViewProgressModel(
+              status: PageSuccess(),
+            ),
           ),
         ],
         verify: (_) {
+          verify(canGoBackMethod).called(1);
+          verify(canGoForwardMethod).called(1);
           verify(matchesAppHost).called(1);
           verify(syncCookiesToApp).called(1);
           verify(updateAuthenticationFromHtml).called(1);
-          verify(canGoBackMethod).called(1);
-          verify(canGoForwardMethod).called(1);
         },
       );
 
       blocTest(
         'emits updated state when url does not match app host',
         setUp: () {
-          when(matchesAppHost).thenReturn(false);
           when(canGoBackMethod).thenAnswer((_) async => canGoBack);
           when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
+          when(matchesAppHost).thenReturn(false);
         },
         build: buildBloc,
         act: (bloc) {
@@ -301,17 +309,18 @@ void main() {
         },
         expect: () => [
           matchState(
+            url: url,
+            canGoBack: canGoBack,
+            canGoForward: canGoForward,
             progress: AppWebViewProgressModel(
               status: PageSuccess(),
             ),
-            canGoBack: canGoBack,
-            canGoForward: canGoForward,
           ),
         ],
         verify: (_) {
-          verify(matchesAppHost).called(1);
           verify(canGoBackMethod).called(1);
           verify(canGoForwardMethod).called(1);
+          verify(matchesAppHost).called(1);
           verifyNever(syncCookiesToApp);
           verifyNever(updateAuthenticationFromHtml);
         },
@@ -319,21 +328,38 @@ void main() {
     });
 
     group(AppWebViewReceivedError, () {
+      const canGoBack = true;
+      const canGoForward = true;
+
+      final canGoBackMethod = () => controller.canGoBack();
+      final canGoForwardMethod = () => controller.canGoForward();
+
       blocTest(
-        'emits updated progress',
+        'emits updated state',
+        setUp: () {
+          when(canGoBackMethod).thenAnswer((_) async => canGoBack);
+          when(canGoForwardMethod).thenAnswer((_) async => canGoForward);
+        },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            AppWebViewReceivedError(),
+            AppWebViewReceivedError(url),
           );
         },
         expect: () => [
           matchState(
+            url: url,
+            canGoBack: canGoBack,
+            canGoForward: canGoForward,
             progress: AppWebViewProgressModel(
               status: PageFailure(),
             ),
           ),
         ],
+        verify: (bloc) {
+          verify(canGoBackMethod).called(1);
+          verify(canGoForwardMethod).called(1);
+        },
       );
     });
 

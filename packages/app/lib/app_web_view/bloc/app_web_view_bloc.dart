@@ -100,15 +100,15 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     Emitter<AppWebViewState> emit,
   ) async {
     final url = event.url;
+    final canGoBack = await _controller.canGoBack();
+    final canGoForward = await _controller.canGoForward();
+
     final matchesAppHost = _authenticationModel.matchesAppHost(url);
 
     if (matchesAppHost) {
       await _authenticationModel.syncCookiesToApp();
       await _authenticationModel.updateAuthenticationFromHtml();
     }
-
-    final canGoBack = await _controller.canGoBack();
-    final canGoForward = await _controller.canGoForward();
 
     emit(
       state.copyWith(
