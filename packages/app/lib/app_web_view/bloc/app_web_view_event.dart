@@ -31,11 +31,21 @@ final class AppWebViewProgressChanged extends AppWebViewEvent {
 }
 
 final class AppWebViewLoadStarted extends AppWebViewEvent {
-  const AppWebViewLoadStarted();
+  const AppWebViewLoadStarted(this.url);
+
+  final Uri? url;
+
+  @override
+  List<Object?> get props => [url];
 }
 
 final class AppWebViewVisitedHistoryUpdated extends AppWebViewEvent {
-  const AppWebViewVisitedHistoryUpdated();
+  const AppWebViewVisitedHistoryUpdated(this.url);
+
+  final Uri? url;
+
+  @override
+  List<Object?> get props => [url];
 }
 
 final class AppWebViewLoadStopped extends AppWebViewEvent {
@@ -48,7 +58,12 @@ final class AppWebViewLoadStopped extends AppWebViewEvent {
 }
 
 final class AppWebViewReceivedError extends AppWebViewEvent {
-  const AppWebViewReceivedError();
+  const AppWebViewReceivedError(this.url);
+
+  final Uri? url;
+
+  @override
+  List<Object?> get props => [url];
 }
 
 final class AppWebViewBackPressed extends AppWebViewEvent {

@@ -56,6 +56,7 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
   ) {
     emit(
       state.copyWith(
+        url: event.url,
         progress: const AppWebViewProgressModel(
           status: PageLoading(),
         ),
@@ -69,15 +70,12 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
   ) async {
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
-    final title = await _controller.title();
-    final url = await _controller.url();
 
     emit(
       state.copyWith(
+        url: event.url,
         canGoBack: canGoBack,
         canGoForward: canGoForward,
-        title: title,
-        url: url,
       ),
     );
   }
@@ -111,18 +109,15 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
 
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
-    final title = await _controller.title();
-    final currentUrl = await _controller.url();
 
     emit(
       state.copyWith(
+        url: url,
+        canGoBack: canGoBack,
+        canGoForward: canGoForward,
         progress: const AppWebViewProgressModel(
           status: PageSuccess(),
         ),
-        canGoBack: canGoBack,
-        canGoForward: canGoForward,
-        title: title,
-        url: currentUrl,
       ),
     );
   }
@@ -133,18 +128,15 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
   ) async {
     final canGoBack = await _controller.canGoBack();
     final canGoForward = await _controller.canGoForward();
-    final title = await _controller.title();
-    final url = await _controller.url();
 
     emit(
       state.copyWith(
+        url: event.url,
+        canGoBack: canGoBack,
+        canGoForward: canGoForward,
         progress: const AppWebViewProgressModel(
           status: PageFailure(),
         ),
-        canGoBack: canGoBack,
-        canGoForward: canGoForward,
-        title: title,
-        url: url,
       ),
     );
   }

@@ -21,13 +21,12 @@ typedef OnNavigationRequest = NavigationDecision Function(Uri url);
 abstract class AppWebViewState with _$AppWebViewState {
   const factory AppWebViewState({
     required AppWebViewConfiguration configuration,
+    OnNavigationRequest? onNavigationRequest,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
     @Default(AppWebViewProgressModel()) AppWebViewProgressModel progress,
     @Default(false) bool canGoBack,
     @Default(false) bool canGoForward,
-    String? title,
     Uri? url,
-    OnNavigationRequest? onNavigationRequest,
   }) = _AppWebViewState;
 
   factory AppWebViewState.from({

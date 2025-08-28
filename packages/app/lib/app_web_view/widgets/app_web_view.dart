@@ -49,14 +49,14 @@ class _AppWebViewState extends State<AppWebView> {
           NavigationDecision.navigate => NavigationActionPolicy.ALLOW,
         };
       },
-      onLoadStart: (_, _) {
+      onLoadStart: (_, url) {
         context.read<AppWebViewBloc>().add(
-          const AppWebViewLoadStarted(),
+          AppWebViewLoadStarted(url),
         );
       },
-      onUpdateVisitedHistory: (_, _, _) {
+      onUpdateVisitedHistory: (_, url, _) {
         context.read<AppWebViewBloc>().add(
-          const AppWebViewVisitedHistoryUpdated(),
+          AppWebViewVisitedHistoryUpdated(url),
         );
       },
       onProgressChanged: (_, progress) {
@@ -66,12 +66,12 @@ class _AppWebViewState extends State<AppWebView> {
       },
       onLoadStop: (_, url) {
         context.read<AppWebViewBloc>().add(
-          AppWebViewLoadStopped(url?.uriValue),
+          AppWebViewLoadStopped(url),
         );
       },
-      onReceivedError: (_, _, error) {
+      onReceivedError: (_, request, error) {
         context.read<AppWebViewBloc>().add(
-          const AppWebViewReceivedError(),
+          AppWebViewReceivedError(request.url),
         );
 
         context.read<Logger>().severe(
