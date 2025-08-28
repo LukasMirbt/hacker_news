@@ -1,3 +1,4 @@
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,11 @@ class WebRedirectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const WebRedirectPopScope(
+    return const AppWebViewPopScope(
       child: Scaffold(
+        appBar: AppWebViewAppBar(),
         body: _Body(),
-        bottomNavigationBar: WebRedirectActionBar(),
+        bottomNavigationBar: AppWebViewActionBar(),
       ),
     );
   }
@@ -23,7 +25,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.select(
-      (WebRedirectBloc bloc) => bloc.state.initialLoadStatus.isLoading,
+      (AppWebViewBloc bloc) => bloc.state.initialLoadStatus.isLoading,
     );
 
     if (isLoading) return const AppLoadingBody();

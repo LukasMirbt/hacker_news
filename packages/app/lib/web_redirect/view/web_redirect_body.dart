@@ -1,4 +1,4 @@
-import 'package:app/web_redirect/web_redirect.dart';
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:flutter/material.dart';
 
 class WebRedirectBody extends StatelessWidget {
@@ -9,8 +9,8 @@ class WebRedirectBody extends StatelessWidget {
     return const SafeArea(
       child: Stack(
         children: [
-          WebRedirectWebView(),
-          WebRedirectProgressIndicator(),
+          AppWebView(),
+          AppWebViewProgressIndicator(),
         ],
       ),
     );
