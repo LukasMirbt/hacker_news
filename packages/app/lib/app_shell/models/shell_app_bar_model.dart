@@ -9,9 +9,9 @@ class ShellAppBarModel extends Equatable {
 
   bool get hasBorder {
     return switch (_destination) {
-      AppDestination.home => true,
-      AppDestination.search => true,
-      _ => false,
+      AppDestination.home => false,
+      AppDestination.search => false,
+      _ => true,
     };
   }
 

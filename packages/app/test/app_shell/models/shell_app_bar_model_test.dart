@@ -16,23 +16,23 @@ void main() async {
     }
 
     group('hasBorder', () {
-      test('returns true when destination '
+      test('returns false when destination '
           'is ${AppDestination.home}', () {
         final model = createSubject(AppDestination.home);
-        expect(model.hasBorder, true);
-      });
-
-      test('returns true when destination '
-          'is ${AppDestination.search}', () {
-        final model = createSubject(AppDestination.search);
-        expect(model.hasBorder, true);
+        expect(model.hasBorder, false);
       });
 
       test('returns false when destination '
+          'is ${AppDestination.search}', () {
+        final model = createSubject(AppDestination.search);
+        expect(model.hasBorder, false);
+      });
+
+      test('returns true when destination '
           'is not ${AppDestination.home} '
           'or ${AppDestination.search}', () {
         final model = createSubject(AppDestination.threads);
-        expect(model.hasBorder, false);
+        expect(model.hasBorder, true);
       });
     });
 
