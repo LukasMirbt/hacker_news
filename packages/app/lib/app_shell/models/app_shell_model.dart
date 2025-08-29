@@ -28,8 +28,8 @@ class AppShellModel extends Equatable {
 
   bool get resizeToAvoidBottomInset {
     return switch (destination) {
-      AppDestination.search => true,
-      _ => false,
+      AppDestination.search => false,
+      _ => true,
     };
   }
 

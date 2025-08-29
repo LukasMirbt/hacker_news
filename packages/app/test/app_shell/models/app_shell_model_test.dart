@@ -53,25 +53,25 @@ void main() {
     });
 
     group('resizeToAvoidBottomInsets', () {
-      test('returns true when destination '
+      test('returns false when destination '
           'is ${AppDestination.search}', () {
         final model = createSubject(
           destination: AppDestination.search,
         );
         expect(
           model.resizeToAvoidBottomInset,
-          true,
+          false,
         );
       });
 
-      test('returns false when destination '
+      test('returns true when destination '
           'is not ${AppDestination.search}', () {
         final model = createSubject(
           destination: AppDestination.home,
         );
         expect(
           model.resizeToAvoidBottomInset,
-          false,
+          true,
         );
       });
     });
