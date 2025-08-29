@@ -2,7 +2,6 @@
 
 import 'package:app/app_router/app_router.dart';
 import 'package:app/app_shell/app_shell.dart';
-import 'package:app/l10n/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,29 +29,38 @@ class _MockScaffoldState extends ScaffoldState {
   }
 }
 
+class _MockAppShellModel extends Mock implements AppShellModel {}
+
+class _MockShellDrawerModel extends Mock implements ShellDrawerModel {}
+
 class _MockStatefulNavigationShell extends Mock
     with Diagnosticable
     implements StatefulNavigationShell {}
 
-void main() async {
-  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+void main() {
   const selectedIndex = 0;
 
   group(ShellDrawer, () {
     late AppRouter router;
+    late AppShellModel model;
+    late ShellDrawerModel drawer;
     late StatefulNavigationShell shell;
 
     setUp(() {
       router = _MockAppRouter();
+      model = _MockAppShellModel();
+      drawer = _MockShellDrawerModel();
       shell = _MockStatefulNavigationShell();
-      when(() => shell.currentIndex).thenReturn(selectedIndex);
+      when(() => model.shell).thenReturn(shell);
+      when(() => model.drawer).thenReturn(drawer);
+      when(() => drawer.selectedIndex).thenReturn(selectedIndex);
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: router,
         child: Provider.value(
-          value: shell,
+          value: model,
           child: _MockScaffold(
             body: ShellDrawer(),
           ),
@@ -79,11 +87,7 @@ void main() async {
         final widget = tester.widget<ShellDrawerDestination>(
           find.bySubtype<NavigationDrawerDestination>().at(destination.index),
         );
-
-        expect(
-          widget.data,
-          destination.data(l10n),
-        );
+        expect(widget.destination, destination);
       }
     });
 

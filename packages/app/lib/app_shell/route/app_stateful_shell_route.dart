@@ -60,8 +60,10 @@ class AppStatefulShellRoute extends StatefulShellRouteData {
         visitedPostStorage: context.read<VisitedPostStorage>(),
       ),
       child: Provider.value(
-        value: navigationShell,
-        child: const AppShell(),
+        value: AppShellModel.from(navigationShell),
+        child: const ShellBackButtonListener(
+          child: AppShell(),
+        ),
       ),
     );
   }

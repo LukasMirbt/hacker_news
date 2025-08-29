@@ -80,10 +80,15 @@ void main() {
         expect(context.read<FeedRepository>(), isNotNull);
       });
 
-      testWidgets('provides $StatefulNavigationShell', (tester) async {
+      testWidgets('provides $AppShellModel', (tester) async {
         await tester.pumpAppWithRouter(buildSubject());
         final context = tester.element(find.byWidget(child));
-        expect(context.read<StatefulNavigationShell>(), isNotNull);
+        expect(context.read<AppShellModel>(), isNotNull);
+      });
+
+      testWidgets('renders $ShellBackButtonListener', (tester) async {
+        await tester.pumpAppWithRouter(buildSubject());
+        expect(find.byType(ShellBackButtonListener), findsOneWidget);
       });
 
       testWidgets('renders $AppShell', (tester) async {
