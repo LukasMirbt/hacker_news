@@ -12,6 +12,8 @@ import '../../app/pump_app.dart';
 
 class _MockGoRouter extends Mock implements GoRouter {}
 
+class _MockAppShellModel extends Mock implements AppShellModel {}
+
 class _MockStatefulNavigationShell extends Mock
     with Diagnosticable
     implements StatefulNavigationShell {}
@@ -21,11 +23,14 @@ void main() {
 
   group(ShellBackButtonListener, () {
     late GoRouter router;
-    late StatefulNavigationShell navigationShell;
+    late AppShellModel model;
+    late StatefulNavigationShell shell;
 
     setUp(() {
       router = _MockGoRouter();
-      navigationShell = _MockStatefulNavigationShell();
+      model = _MockAppShellModel();
+      shell = _MockStatefulNavigationShell();
+      when(() => model.shell).thenReturn(shell);
     });
 
     GoRouter buildSubject() {
@@ -33,10 +38,10 @@ void main() {
         routes: [
           GoRoute(
             path: '/',
-            builder: (_, __) => InheritedGoRouter(
+            builder: (_, _) => InheritedGoRouter(
               goRouter: router,
               child: Provider.value(
-                value: navigationShell,
+                value: model,
                 child: ShellBackButtonListener(child: child),
               ),
             ),
@@ -65,24 +70,24 @@ void main() {
       testWidgets('goes to branch with index 0 and returns true when !canPop '
           'and currentIndex != 0', (tester) async {
         when(canPop).thenReturn(false);
-        when(() => navigationShell.currentIndex).thenReturn(1);
+        when(() => shell.currentIndex).thenReturn(1);
         await tester.pumpAppWithRouter(buildSubject());
         final widget = findWidget(tester);
         final result = await widget.onBackButtonPressed();
         expect(result, true);
-        verify(() => navigationShell.goBranch(0)).called(1);
+        verify(() => shell.goBranch(0)).called(1);
       });
 
       testWidgets('returns false when !canPop and currentIndex == 0', (
         tester,
       ) async {
         when(canPop).thenReturn(false);
-        when(() => navigationShell.currentIndex).thenReturn(0);
+        when(() => shell.currentIndex).thenReturn(0);
         await tester.pumpAppWithRouter(buildSubject());
         final widget = findWidget(tester);
         final result = await widget.onBackButtonPressed();
         expect(result, false);
-        verifyNever(() => navigationShell.goBranch(any()));
+        verifyNever(() => shell.goBranch(any()));
       });
     });
 
