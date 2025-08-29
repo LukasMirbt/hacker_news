@@ -7,11 +7,9 @@ import 'package:app_ui/app_ui.dart';
 import 'package:authentication_repository/authentication_repository.dart'
     hide AuthenticationState;
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
@@ -23,34 +21,40 @@ class _MockAuthenticationBloc
 
 class _MockAuthenticationState extends Mock implements AuthenticationState {}
 
-class _MockStatefulNavigationShell extends Mock
-    with Diagnosticable
-    implements StatefulNavigationShell {}
+class _MockAppShellModel extends Mock implements AppShellModel {}
 
-void main() async {
-  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+class _MockShellAppBarModel extends Mock implements ShellAppBarModel {}
+
+class _MockAppLocalizations extends Mock implements AppLocalizations {}
+
+void main() {
+  const title = 'title';
 
   group(ShellAppBar, () {
     late AuthenticationBloc authenticationBloc;
     late AuthenticationState authenticationState;
-    late StatefulNavigationShell shell;
+    late AppShellModel model;
+    late ShellAppBarModel appBar;
 
     setUp(() {
       authenticationBloc = _MockAuthenticationBloc();
       authenticationState = _MockAuthenticationState();
-      shell = _MockStatefulNavigationShell();
+      model = _MockAppShellModel();
+      appBar = _MockShellAppBarModel();
+      registerFallbackValue(_MockAppLocalizations());
       when(() => authenticationBloc.state).thenReturn(authenticationState);
       when(() => authenticationState.status).thenReturn(
         AuthenticationStatus.unauthenticated,
       );
-      when(() => shell.currentIndex).thenReturn(0);
+      when(() => model.appBar).thenReturn(appBar);
+      when(() => appBar.hasBorder).thenReturn(false);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: authenticationBloc,
         child: Provider.value(
-          value: shell,
+          value: model,
           child: ShellAppBar(),
         ),
       );
@@ -63,9 +67,8 @@ void main() async {
         );
       }
 
-      testWidgets('shape is correct when !isHome '
-          'and !isSearch', (tester) async {
-        when(() => shell.currentIndex).thenReturn(2);
+      testWidgets('shape is correct when hasBorder', (tester) async {
+        when(() => appBar.hasBorder).thenReturn(true);
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         final context = tester.element(
@@ -82,15 +85,7 @@ void main() async {
         );
       });
 
-      testWidgets('shape is correct when isHome', (tester) async {
-        when(() => shell.currentIndex).thenReturn(0);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.shape, Border());
-      });
-
-      testWidgets('shape is correct when isSearch', (tester) async {
-        when(() => shell.currentIndex).thenReturn(1);
+      testWidgets('shape is correct when !hasBorder', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.shape, Border());
@@ -118,8 +113,8 @@ void main() async {
         expect(widget.centerTitle, true);
       });
 
-      testWidgets('has correct title when currentIndex is 1', (tester) async {
-        when(() => shell.currentIndex).thenReturn(1);
+      testWidgets('has correct title when title is non-null', (tester) async {
+        when(() => appBar.title(any())).thenReturn(title);
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(
@@ -127,55 +122,12 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
-            l10n.appShell_search,
+            title,
           ),
         );
       });
 
-      testWidgets('has correct title when currentIndex is 2', (tester) async {
-        when(() => shell.currentIndex).thenReturn(2);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'text',
-            l10n.appShell_threads,
-          ),
-        );
-      });
-
-      testWidgets('has correct title when currentIndex is 3', (tester) async {
-        when(() => shell.currentIndex).thenReturn(3);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'text',
-            l10n.appShell_drafts,
-          ),
-        );
-      });
-
-      testWidgets('has correct title when currentIndex is 4', (tester) async {
-        when(() => shell.currentIndex).thenReturn(4);
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'text',
-            l10n.appShell_settings,
-          ),
-        );
-      });
-
-      testWidgets('has correct title when currentIndex '
-          'is not 1, 2, 3 or 4', (tester) async {
+      testWidgets('has correct title when title is null', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.title, isA<Logo>());

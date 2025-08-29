@@ -4,44 +4,60 @@ import 'package:app/app_shell/app_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
+class _MockAppShellModel extends Mock implements AppShellModel {}
+
+class _FakeStatefulNavigationShell extends StatefulWidget
+    implements StatefulNavigationShell {
+  const _FakeStatefulNavigationShell();
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    return super.noSuchMethod(invocation);
+  }
+
+  @override
+  State<_FakeStatefulNavigationShell> createState() =>
+      _FakeStatefulNavigationShellState();
+}
+
+class _FakeStatefulNavigationShellState
+    extends State<_FakeStatefulNavigationShell> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 void main() {
   group(AppShell, () {
-    GoRouter buildSubject() {
-      return GoRouter(
-        routes: [
-          StatefulShellRoute.indexedStack(
-            builder: (_, _, shell) {
-              return Provider.value(
-                value: shell,
-                child: AppShell(),
-              );
-            },
-            branches: [
-              StatefulShellBranch(
-                routes: [
-                  GoRoute(
-                    path: '/',
-                    builder: (_, __) => Container(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+    late AppShellModel model;
+    late StatefulNavigationShell shell;
+
+    setUp(() {
+      model = _MockAppShellModel();
+      shell = _FakeStatefulNavigationShell();
+      when(() => model.destination).thenReturn(AppDestination.home);
+      when(() => model.appBar).thenReturn(
+        ShellAppBarModel(AppDestination.home),
+      );
+      when(() => model.drawer).thenReturn(
+        ShellDrawerModel(AppDestination.home),
+      );
+      when(() => model.resizeToAvoidBottomInset).thenReturn(false);
+      when(() => model.shell).thenReturn(shell);
+    });
+
+    Widget buildSubject() {
+      return Provider.value(
+        value: model,
+        child: AppShell(),
       );
     }
-
-    testWidgets('renders $ShellBackButtonListener', (tester) async {
-      await tester.pumpAppWithRouter(buildSubject());
-      expect(
-        find.byType(ShellBackButtonListener),
-        findsOneWidget,
-      );
-    });
 
     group(Scaffold, () {
       Scaffold findWidget(WidgetTester tester) {
@@ -54,21 +70,27 @@ void main() {
       }
 
       testWidgets('drawer is $ShellDrawer', (tester) async {
-        await tester.pumpAppWithRouter(buildSubject());
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.drawer, isA<ShellDrawer>());
       });
 
       testWidgets('appBar is $ShellAppBar', (tester) async {
-        await tester.pumpAppWithRouter(buildSubject());
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(widget.appBar, isA<ShellAppBar>());
       });
 
-      testWidgets('body is $StatefulNavigationShell', (tester) async {
-        await tester.pumpAppWithRouter(buildSubject());
+      testWidgets('body renders shell', (tester) async {
+        await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.body, isA<StatefulNavigationShell>());
+        expect(
+          find.descendant(
+            of: find.byWidget(widget.body!),
+            matching: find.byWidget(shell),
+          ),
+          findsOneWidget,
+        );
       });
     });
   });
