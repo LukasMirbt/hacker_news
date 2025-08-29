@@ -4,11 +4,14 @@ import 'package:app/app_web_view/app_web_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  final initialUrl = Uri.parse('https://www.example.com');
+  final url = Uri.parse('https://www.example.com/url');
+
   group(AppWebViewState, () {
     AppWebViewState createSubject({Uri? url}) {
       return AppWebViewState(
         configuration: AppWebViewConfiguration.from(
-          initialUrl: Uri.parse('https://www.example.com'),
+          initialUrl: initialUrl,
         ),
         url: url,
       );
@@ -17,7 +20,7 @@ void main() {
     group('from', () {
       test('returns $AppWebViewState', () {
         final configuration = AppWebViewConfiguration.from(
-          initialUrl: Uri.parse('https://www.example.com'),
+          initialUrl: initialUrl,
         );
 
         final onNavigationRequest = (_) => NavigationDecision.navigate;
@@ -49,10 +52,20 @@ void main() {
       });
 
       test('returns correct value when url is non-null', () {
-        final state = createSubject(
-          url: Uri.parse('https://www.example.com'),
-        );
+        final state = createSubject(url: url);
         expect(state.title, 'www.example.com');
+      });
+    });
+
+    group('isShareEnabled', () {
+      test('returns true when url is non-null', () {
+        final state = createSubject(url: url);
+        expect(state.isShareEnabled, true);
+      });
+
+      test('returns false when url is null', () {
+        final state = createSubject();
+        expect(state.isShareEnabled, false);
       });
     });
   });
