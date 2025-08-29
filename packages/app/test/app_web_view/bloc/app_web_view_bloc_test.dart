@@ -6,6 +6,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:share_launcher/share_launcher.dart';
 
 class _MockAppWebViewController extends Mock implements AppWebViewController {}
 
@@ -14,6 +15,8 @@ class _MockAppWebViewAuthenticationModel extends Mock
 
 class _MockInAppWebViewController extends Mock
     implements InAppWebViewController {}
+
+class _MockShareLauncher extends Mock implements ShareLauncher {}
 
 void main() {
   final configuration = AppWebViewConfiguration.from(
@@ -32,10 +35,12 @@ void main() {
   group(AppWebViewBloc, () {
     late AppWebViewController controller;
     late AppWebViewAuthenticationModel authenticationModel;
+    late ShareLauncher shareLauncher;
 
     setUp(() {
       controller = _MockAppWebViewController();
       authenticationModel = _MockAppWebViewAuthenticationModel();
+      shareLauncher = _MockShareLauncher();
     });
 
     AppWebViewBloc buildBloc() {
@@ -44,6 +49,7 @@ void main() {
         onNavigationRequest: onNavigationRequest,
         appWebViewController: controller,
         appWebViewAuthenticationModel: authenticationModel,
+        shareLauncher: shareLauncher,
       );
     }
 
@@ -399,6 +405,30 @@ void main() {
         },
         verify: (_) {
           verify(goForward).called(1);
+        },
+      );
+    });
+
+    group(AppWebViewSharePressed, () {
+      final url = Uri.parse('https://example.com');
+
+      final share = () => shareLauncher.share(
+        text: url.toString(),
+      );
+
+      blocTest(
+        'calls share',
+        setUp: () {
+          when(share).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            AppWebViewSharePressed(url),
+          );
+        },
+        verify: (_) {
+          verify(share).called(1);
         },
       );
     });

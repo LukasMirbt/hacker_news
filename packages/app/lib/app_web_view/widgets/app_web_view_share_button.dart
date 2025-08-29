@@ -8,16 +8,26 @@ class AppWebViewShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isShareEnabled = context.select(
+      (AppWebViewBloc bloc) => bloc.state.isShareEnabled,
+    );
+
     return IconButton(
       icon: const AppIcon(
         Symbols.share_rounded,
         size: 20,
       ),
-      onPressed: () {
-        context.read<AppWebViewBloc>().add(
-          const AppWebViewSharePressed(),
-        );
-      },
+      onPressed: isShareEnabled
+          ? () {
+              final bloc = context.read<AppWebViewBloc>();
+              final url = bloc.state.url;
+              if (url != null) {
+                bloc.add(
+                  AppWebViewSharePressed(url),
+                );
+              }
+            }
+          : null,
     );
   }
 }

@@ -75,7 +75,12 @@ final class AppWebViewForwardPressed extends AppWebViewEvent {
 }
 
 final class AppWebViewSharePressed extends AppWebViewEvent {
-  const AppWebViewSharePressed();
+  const AppWebViewSharePressed(this.url);
+
+  final Uri url;
+
+  @override
+  List<Object> get props => [url];
 }
 
 final class AppWebViewReloadPressed extends AppWebViewEvent {

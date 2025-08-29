@@ -46,4 +46,6 @@ abstract class AppWebViewState with _$AppWebViewState {
     if (url == null) return '';
     return url.host;
   }
+
+  bool get isShareEnabled => url != null;
 }

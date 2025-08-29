@@ -165,7 +165,7 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     Emitter<AppWebViewState> emit,
   ) {
     _shareLauncher.share(
-      text: state.url.toString(),
+      text: event.url.toString(),
     );
   }
 
