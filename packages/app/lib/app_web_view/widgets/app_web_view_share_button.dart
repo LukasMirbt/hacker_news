@@ -1,6 +1,7 @@
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppWebViewShareButton extends StatelessWidget {
   const AppWebViewShareButton({super.key});
@@ -8,9 +9,14 @@ class AppWebViewShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const AppIcon(Symbols.share_rounded),
+      icon: const AppIcon(
+        Symbols.share_rounded,
+        size: 20,
+      ),
       onPressed: () {
-        GoRouter.of(context).pop();
+        context.read<AppWebViewBloc>().add(
+          const AppWebViewSharePressed(),
+        );
       },
     );
   }

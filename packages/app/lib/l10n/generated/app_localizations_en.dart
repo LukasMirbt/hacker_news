@@ -1,5 +1,6 @@
 // coverage:ignore-file
 
+
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
@@ -32,8 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get analyticsConsent_title => 'Help improve the app?';
 
   @override
-  String get analyticsConsent_explanationPart1 =>
-      'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.';
+  String get analyticsConsent_explanationPart1 => 'We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.';
 
   @override
   String get analyticsConsent_explanationPart2 => ' Learn more in our ';
@@ -78,8 +78,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comment_disabledExplanationTitle => 'Closed for comments';
 
   @override
-  String get comment_disabledExplanationSubtitle =>
-      'Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.';
+  String get comment_disabledExplanationSubtitle => 'Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.';
 
   @override
   String get comment_submitAction => 'Submit';
@@ -113,26 +112,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contentSettings_inAppBrowserLaunchModeTitle => 'In-app browser';
 
   @override
-  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS =>
-      'Opens links inside the app';
+  String get contentSettings_inAppBrowserLaunchModeSubtitleIOS => 'Opens links inside the app';
 
   @override
-  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid =>
-      'Opens links inside the app. Some links may open their dedicated app.';
+  String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid => 'Opens links inside the app. Some links may open their dedicated app.';
 
   @override
   String get contentSettings_defaultBrowserLaunchModeTitle => 'Default browser';
 
   @override
-  String get contentSettings_defaultBrowserLaunchModeSubtitle =>
-      'Opens links in the default browser or another app';
+  String get contentSettings_defaultBrowserLaunchModeSubtitle => 'Opens links in the default browser or another app';
 
   @override
   String get createAccount_title => 'Create account';
 
   @override
-  String get createAccount_explanation =>
-      'Creates a Hacker News account that can also be used on the Hacker News website';
+  String get createAccount_explanation => 'Creates a Hacker News account that can also be used on the Hacker News website';
 
   @override
   String get createAccount_usernameLabel => 'Username';
@@ -147,8 +142,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createAccount_passwordEmptyError => 'Enter a password';
 
   @override
-  String get createAccount_policyLinksPart1 =>
-      'By creating an account, you agree to the Hacker News ';
+  String get createAccount_policyLinksPart1 => 'By creating an account, you agree to the Hacker News ';
 
   @override
   String get createAccount_termsOfUse => 'terms of use';
@@ -187,8 +181,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get drafts_emptyTitle => 'No drafts saved';
 
   @override
-  String get drafts_emptyBody =>
-      'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
+  String get drafts_emptyBody => 'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
 
   @override
   String feed_shareText({required String title, required String url}) {
@@ -246,8 +239,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_createAccountAction => 'Create a Hacker News account';
 
   @override
-  String get login_policyLinksPart1 =>
-      'By logging in, you agree to the Hacker News ';
+  String get login_policyLinksPart1 => 'By logging in, you agree to the Hacker News ';
 
   @override
   String get login_termsOfUse => 'terms of use';
@@ -285,8 +277,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reply_disabledExplanationTitle => 'Closed for replies';
 
   @override
-  String get reply_disabledExplanationSubtitle =>
-      'Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.';
+  String get reply_disabledExplanationSubtitle => 'Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.';
 
   @override
   String reply_age({required String age}) {
@@ -347,8 +338,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get threadFeed_emptyTitle => 'No threads yet';
 
   @override
-  String get threadFeed_emptyBody =>
-      'Your replies and comment threads will appear here. Join a discussion to get started.';
+  String get threadFeed_emptyBody => 'Your replies and comment threads will appear here. Join a discussion to get started.';
 
   @override
   String threadFeed_age({required String age}) {
@@ -368,6 +358,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get threadCommentOptions_openOnWeb => 'Open on web';
 
   @override
-  String get voteFailure_invalidUrl =>
-      'Something went wrong. Try refreshing the page.';
+  String get voteFailure_invalidUrl => 'Something went wrong. Try refreshing the page.';
 }

@@ -1,5 +1,6 @@
 import 'package:app/app_web_view/app_web_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_launcher/share_launcher.dart';
 
 class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
   AppWebViewBloc({
@@ -7,8 +8,10 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     required AppWebViewController appWebViewController,
     required AppWebViewAuthenticationModel appWebViewAuthenticationModel,
     OnNavigationRequest? onNavigationRequest,
+    ShareLauncher? shareLauncher,
   }) : _controller = appWebViewController,
        _authenticationModel = appWebViewAuthenticationModel,
+       _shareLauncher = shareLauncher ?? ShareLauncher(),
        super(
          AppWebViewState.from(
            configuration: configuration,
@@ -30,6 +33,7 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
 
   final AppWebViewAuthenticationModel _authenticationModel;
   final AppWebViewController _controller;
+  final ShareLauncher _shareLauncher;
 
   Future<void> _onStarted(
     AppWebViewStarted event,
@@ -154,6 +158,15 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     Emitter<AppWebViewState> emit,
   ) {
     _controller.goForward();
+  }
+
+  void _onSharePressed(
+    AppWebViewSharePressed event,
+    Emitter<AppWebViewState> emit,
+  ) {
+    _shareLauncher.share(
+      text: state.url.toString(),
+    );
   }
 
   void _onReloadPressed(

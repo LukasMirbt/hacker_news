@@ -48,14 +48,14 @@ void main() {
       expect(find.byType(AppWebViewForwardButton), findsOneWidget);
     });
 
+    testWidgets('renders $AppWebViewShareButton', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppWebViewShareButton), findsOneWidget);
+    });
+
     testWidgets('renders $AppWebViewReloadButton', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppWebViewReloadButton), findsOneWidget);
-    });
-
-    testWidgets('renders $AppWebViewCloseButton', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(AppWebViewCloseButton), findsOneWidget);
     });
   });
 }
