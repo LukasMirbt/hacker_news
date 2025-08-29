@@ -74,6 +74,10 @@ final class AppWebViewForwardPressed extends AppWebViewEvent {
   const AppWebViewForwardPressed();
 }
 
+final class AppWebViewSharePressed extends AppWebViewEvent {
+  const AppWebViewSharePressed();
+}
+
 final class AppWebViewReloadPressed extends AppWebViewEvent {
   const AppWebViewReloadPressed();
 }

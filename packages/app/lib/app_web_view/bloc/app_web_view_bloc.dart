@@ -24,6 +24,7 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     on<AppWebViewReceivedError>(_onReceivedError);
     on<AppWebViewBackPressed>(_onBackPressed);
     on<AppWebViewForwardPressed>(_onForwardPressed);
+    on<AppWebViewSharePressed>(_onSharePressed);
     on<AppWebViewReloadPressed>(_onReloadPressed);
   }
 

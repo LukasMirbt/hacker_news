@@ -20,7 +20,7 @@ class AppWebViewActionBar extends StatelessWidget {
             AppWebViewBackButton(),
             AppWebViewForwardButton(),
             AppWebViewReloadButton(),
-            AppWebViewCloseButton(),
+            AppWebViewShareButton(),
           ],
         ),
       ),
