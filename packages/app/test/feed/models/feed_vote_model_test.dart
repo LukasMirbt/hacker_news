@@ -8,28 +8,32 @@ import 'package:vote_repository/vote_repository.dart';
 
 class _MockPaginatedFeedModel extends Mock implements PaginatedFeedModel {}
 
-class _MockFeedItemModel extends Mock implements FeedItemModel {}
+class _MockPostFeedItemModel extends Mock implements PostFeedItemModel {}
+
+class _MockJobFeedItemModel extends Mock implements JobFeedItemModel {}
 
 void main() {
   final vote = VotePlaceholder();
 
   group(FeedVoteModel, () {
     late PaginatedFeedModel feed;
-    late FeedItemModel item;
-    late FeedItemModel updatedItem;
+    late PostFeedItemModel item;
+    late PostFeedItemModel updatedItem;
     late PaginatedFeedModel updatedFeed;
 
     setUp(() {
       feed = _MockPaginatedFeedModel();
-      item = _MockFeedItemModel();
-      updatedItem = _MockFeedItemModel();
+      item = _MockPostFeedItemModel();
+      updatedItem = _MockPostFeedItemModel();
       updatedFeed = _MockPaginatedFeedModel();
     });
 
     FeedVoteModel createSubject() => FeedVoteModel();
 
     group('updateFeed', () {
-      test('returns feed when findById returns null', () {
+      final findById = () => feed.findById(vote.id);
+
+      test('returns feed when item is null', () {
         final model = createSubject();
         expect(
           model.updateFeed(vote: vote, feed: feed),
@@ -37,8 +41,8 @@ void main() {
         );
       });
 
-      test('returns updated feed when findById returns item', () {
-        final findById = () => feed.findById(vote.id);
+      test('returns updated feed when item '
+          'is $PostFeedItemModel', () {
         final voteMethod = () => item.vote(vote.type);
         final update = () => feed.update(updatedItem);
         when(findById).thenReturn(item);
@@ -52,6 +56,22 @@ void main() {
         verify(findById).called(1);
         verify(voteMethod).called(1);
         verify(update).called(1);
+      });
+
+      test('throws $JobFeedItemVoteError when item '
+          'is $JobFeedItemModel', () {
+        when(findById).thenReturn(_MockJobFeedItemModel());
+        final model = createSubject();
+        expect(
+          () => model.updateFeed(
+            vote: vote,
+            feed: feed,
+          ),
+          throwsA(
+            JobFeedItemVoteError(),
+          ),
+        );
+        verify(findById).called(1);
       });
     });
   });

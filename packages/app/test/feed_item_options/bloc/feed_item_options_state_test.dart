@@ -6,7 +6,7 @@ void main() {
   group(FeedItemOptionsState, () {
     group('from', () {
       test('returns $FeedItemOptionsState', () {
-        final item = FeedItemPlaceholder();
+        final item = PostFeedItemPlaceholder();
         expect(
           FeedItemOptionsState.from(item),
           FeedItemOptionsState(

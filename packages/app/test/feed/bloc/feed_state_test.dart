@@ -36,8 +36,8 @@ void main() {
     });
 
     group('hasBeenVisited', () {
-      final item = FeedItemModel(
-        FeedItemPlaceholder(id: id),
+      final item = PostFeedItemModel(
+        PostFeedItemPlaceholder(id: id),
       );
 
       test('returns true when visitedPosts '

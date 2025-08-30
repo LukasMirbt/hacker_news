@@ -45,7 +45,8 @@ void main() {
         verify(findById).called(1);
       });
 
-      test('returns updated feed when findById returns item', () {
+      test('returns updated feed when findById '
+          'returns $OtherUserThreadCommentModel', () {
         final voteMethod = () => item.vote(vote.type);
         final update = () => feed.update(updatedItem);
         when(findById).thenReturn(item);

@@ -16,12 +16,12 @@ void main() {
         'is $CurrentUserThreadCommentModel', (tester) async {
       await tester.pumpApp(
         buildSubject(
-          OtherUserThreadCommentModel(
-            comment: OtherUserThreadCommentPlaceholder(),
+          CurrentUserThreadCommentModel(
+            comment: CurrentUserThreadCommentPlaceholder(),
           ),
         ),
       );
-      expect(find.byType(CurrentUserThreadComment), findsNothing);
+      expect(find.byType(CurrentUserThreadComment), findsOneWidget);
     });
 
     testWidgets('renders $OtherUserThreadComment when item '

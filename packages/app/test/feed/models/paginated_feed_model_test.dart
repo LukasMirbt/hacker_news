@@ -10,13 +10,13 @@ class _MockPaginatedFeed extends Mock implements PaginatedFeed {}
 void main() {
   final repositoryItems = List.generate(
     10,
-    (index) => FeedItemPlaceholder(
+    (index) => PostFeedItemPlaceholder(
       id: index.toString(),
     ),
   );
 
   final items = [
-    for (final item in repositoryItems) FeedItemModel(item),
+    for (final item in repositoryItems) PostFeedItemModel(item),
   ];
 
   group(PaginatedFeedModel, () {
@@ -41,7 +41,7 @@ void main() {
           PaginatedFeedModel(
             feed: feed,
             items: [
-              for (final item in repositoryItems) FeedItemModel(item),
+              for (final item in repositoryItems) PostFeedItemModel(item),
             ],
           ),
         );
@@ -98,8 +98,8 @@ void main() {
 
     group('update', () {
       test('returns updated $PaginatedFeedModel', () {
-        final updatedItem = FeedItemModel(
-          FeedItemPlaceholder(),
+        final updatedItem = PostFeedItemModel(
+          PostFeedItemPlaceholder(),
         );
         final updatedRepositoryItem = updatedItem.toRepository();
         final updatedFeed = PaginatedFeedPlaceholder(

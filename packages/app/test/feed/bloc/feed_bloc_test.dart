@@ -135,7 +135,7 @@ void main() {
 
       final feed = PaginatedFeedPlaceholder(
         items: [
-          FeedItemPlaceholder(),
+          PostFeedItemPlaceholder(),
         ],
       );
 
@@ -189,14 +189,14 @@ void main() {
 
       final initialRepositoryFeed = PaginatedFeedPlaceholder(
         items: [
-          FeedItemPlaceholder(),
+          PostFeedItemPlaceholder(),
         ],
       );
 
       final updatedRepositoryFeed = PaginatedFeedPlaceholder(
         items: [
-          FeedItemPlaceholder(),
-          FeedItemPlaceholder(),
+          PostFeedItemPlaceholder(),
+          PostFeedItemPlaceholder(),
         ],
       );
 
@@ -269,7 +269,7 @@ void main() {
 
       final feed = PaginatedFeedPlaceholder(
         items: [
-          FeedItemPlaceholder(),
+          PostFeedItemPlaceholder(),
         ],
       );
 
@@ -332,8 +332,8 @@ void main() {
     });
 
     group(FeedItemPressed, () {
-      final item = FeedItemModel(
-        FeedItemPlaceholder(),
+      final item = PostFeedItemModel(
+        PostFeedItemPlaceholder(),
       );
 
       final addVisitedPost = () => feedRepository.addVisitedPost(item.id);
@@ -403,8 +403,8 @@ void main() {
     });
 
     group(FeedItemVotePressed, () {
-      final item = FeedItemModel(
-        FeedItemPlaceholder(),
+      final item = PostFeedItemModel(
+        PostFeedItemPlaceholder(),
       );
 
       final vote = () => voteRepository.vote(
