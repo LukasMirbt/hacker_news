@@ -115,6 +115,7 @@ abstract class AppTheme {
 
   IconThemeData get _iconTheme {
     return IconThemeData(
+      color: colors.onSurface,
       size: 24,
       opticalSize: 24,
       fill: 0,
