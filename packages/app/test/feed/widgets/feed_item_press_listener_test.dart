@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/feed/feed.dart';
+import 'package:app/post/post.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter/widgets.dart';

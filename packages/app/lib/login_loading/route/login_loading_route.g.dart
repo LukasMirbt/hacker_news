@@ -12,10 +12,10 @@ List<RouteBase> get $appRoutes => [$loginLoadingRoute];
 
 RouteBase get $loginLoadingRoute => GoRouteData.$route(
   path: '/login-loading',
-  factory: _$LoginLoadingRoute._fromState,
+  factory: $LoginLoadingRoute._fromState,
 );
 
-mixin _$LoginLoadingRoute on GoRouteData {
+mixin $LoginLoadingRoute on GoRouteData {
   static LoginLoadingRoute _fromState(GoRouterState state) =>
       LoginLoadingRoute(from: state.uri.queryParameters['from']!);
 

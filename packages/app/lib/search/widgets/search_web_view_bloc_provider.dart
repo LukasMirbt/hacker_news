@@ -1,6 +1,6 @@
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/app_web_view/app_web_view.dart';
+import 'package:app/post/post.dart';
 import 'package:app/search/search.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/widgets.dart';

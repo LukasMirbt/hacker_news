@@ -1,5 +1,5 @@
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/comment/comment.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';

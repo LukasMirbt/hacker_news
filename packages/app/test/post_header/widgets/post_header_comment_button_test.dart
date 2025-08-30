@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/comment/comment.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart' hide PostHeaderCommentButton;
 import 'package:bloc_test/bloc_test.dart';

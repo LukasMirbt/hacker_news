@@ -7,7 +7,7 @@ part 'login_loading_route.g.dart';
 
 @LoginLoadingRoute.config
 class LoginLoadingRoute extends GoRouteData
-    with _$LoginLoadingRoute, EquatableMixin {
+    with $LoginLoadingRoute, EquatableMixin {
   const LoginLoadingRoute({required this.from});
 
   static const config = TypedGoRoute<LoginLoadingRoute>(

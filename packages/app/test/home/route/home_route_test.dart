@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/home/home.dart';
 import 'package:app/post/post.dart';
 import 'package:flutter/material.dart';

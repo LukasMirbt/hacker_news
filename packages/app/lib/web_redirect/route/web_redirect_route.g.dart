@@ -12,10 +12,10 @@ List<RouteBase> get $appRoutes => [$webRedirectRoute];
 
 RouteBase get $webRedirectRoute => GoRouteData.$route(
   path: '/web-redirect',
-  factory: _$WebRedirectRoute._fromState,
+  factory: $WebRedirectRoute._fromState,
 );
 
-mixin _$WebRedirectRoute on GoRouteData {
+mixin $WebRedirectRoute on GoRouteData {
   static WebRedirectRoute _fromState(GoRouterState state) => WebRedirectRoute(
     url: state.uri.queryParameters['url']!,
     from: state.uri.queryParameters['from'],

@@ -1,6 +1,14 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+import 'package:app/comment/comment.dart';
+import 'package:app/post/post.dart';
+import 'package:app/reply/reply.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class PostRoute extends RelativeGoRouteData with _$PostRoute, EquatableMixin {
+part 'post_route.g.dart';
+
+@PostRoute.config
+class PostRoute extends RelativeGoRouteData with $PostRoute, EquatableMixin {
   const PostRoute({
     required this.postId,
   });
