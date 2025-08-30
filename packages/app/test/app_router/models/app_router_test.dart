@@ -4,6 +4,7 @@
 
 import 'package:app/app_router/app_router.dart';
 import 'package:app/app_shell/app_shell.dart';
+import 'package:app/home/home.dart';
 import 'package:app/login/login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

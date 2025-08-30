@@ -1,5 +1,5 @@
+import 'package:app/about/about.dart';
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/l10n/l10n.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';

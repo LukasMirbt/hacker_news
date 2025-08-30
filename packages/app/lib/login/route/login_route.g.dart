@@ -12,16 +12,16 @@ List<RouteBase> get $appRoutes => [$loginRoute];
 
 RouteBase get $loginRoute => GoRouteData.$route(
   path: '/login',
-  factory: _$LoginRoute._fromState,
+  factory: $LoginRoute._fromState,
   routes: [
     GoRouteData.$route(
       path: 'create-account',
-      factory: _$CreateAccountRoute._fromState,
+      factory: $CreateAccountRoute._fromState,
     ),
   ],
 );
 
-mixin _$LoginRoute on GoRouteData {
+mixin $LoginRoute on GoRouteData {
   static LoginRoute _fromState(GoRouterState state) =>
       LoginRoute(from: state.uri.queryParameters['from']!);
 
@@ -45,7 +45,7 @@ mixin _$LoginRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$CreateAccountRoute on GoRouteData {
+mixin $CreateAccountRoute on GoRouteData {
   static CreateAccountRoute _fromState(GoRouterState state) =>
       CreateAccountRoute(from: state.uri.queryParameters['from']!);
 

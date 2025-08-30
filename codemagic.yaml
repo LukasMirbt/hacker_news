@@ -1,0 +1,175 @@
+definitions:
+    flutter-version: &flutter-version 3.35.2
+
+    working-directory: &working-directory
+        working_directory: packages/app
+
+    set-build-version: &set-build-version
+        name: Set build version
+        script: |
+            BUILD_NUMBER=$((PROJECT_BUILD_NUMBER + 125))
+            BUILD_NAME="0.1.${BUILD_NUMBER}"
+
+            echo "BUILD_NAME=$BUILD_NAME" >> $CM_ENV
+            echo "BUILD_NUMBER=$BUILD_NUMBER" >> $CM_ENV
+
+            echo "Build version is $BUILD_NAME+$BUILD_NUMBER"
+
+    log-flutter-version: &log-flutter-version
+        name: Log Flutter Version
+        script: |
+            echo "Flutter version is $FLUTTER_VERSION"
+
+    install-shorebird: &install-shorebird
+        name: Install Shorebird
+        script: |
+            # Install Shorebird
+            curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+
+            # Add Shorebird to PATH
+            echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
+
+    fetch-dependencies: &fetch-dependencies
+        name: Fetch Dependencies
+        script: |
+            flutter pub get
+
+    ios-config: &ios-config
+        integrations:
+            app_store_connect: Hacker Client API Key
+        environment:
+            flutter: *flutter-version
+            ios_signing:
+                distribution_type: app_store
+                bundle_identifier: "com.lukasmirbt.hackerclient"
+            groups:
+                - shorebird
+            vars:
+                APP_STORE_APPLE_ID: 6744292693
+                FLUTTER_VERSION: *flutter-version
+
+    ios-use-profiles: &ios-use-profiles
+        name: Set up code signing settings on Xcode project
+        script: |
+            xcode-project use-profiles
+
+    ios-install-pods: &ios-install-pods
+        name: Install Pods
+        script: |
+            find . -name "Podfile" -execdir pod install \;
+
+    ios-cache: &ios-cache
+        cache:
+            cache_paths:
+                - $FLUTTER_ROOT/.pub-cache
+                - $HOME/Library/Caches/CocoaPods
+
+    android-config: &android-config
+        environment:
+            flutter: *flutter-version
+            android_signing:
+                - Hacker Client Keystore
+            groups:
+                - shorebird
+                - google_play
+            vars:
+                FLUTTER_VERSION: *flutter-version
+
+    android-cache: &android-cache
+        cache:
+            cache_paths:
+                - $FLUTTER_ROOT/.pub-cache
+                - $HOME/.gradle/caches
+
+workflows:
+    release-ios:
+        <<:
+            - *working-directory
+            - *ios-config
+            - *ios-cache
+        scripts:
+            - *log-flutter-version
+            - *set-build-version
+            - *install-shorebird
+            - *fetch-dependencies
+            - *ios-use-profiles
+            - *ios-install-pods
+            - name: Shorebird Release iOS
+              script: |
+                  shorebird release ios \
+                    --flutter-version=$FLUTTER_VERSION \
+                    --build-name=$BUILD_NAME \
+                    --build-number=$BUILD_NUMBER \
+                    --export-options-plist=/Users/builder/export_options.plist
+        artifacts:
+            - build/ios/ipa/*.ipa
+            - /tmp/xcodebuild_logs/*.log
+            - flutter_drive.log
+        publishing:
+            app_store_connect:
+                auth: integration
+                submit_to_testflight: true
+                beta_groups:
+                    - External
+
+    patch-ios:
+        <<:
+            - *working-directory
+            - *ios-config
+            - *ios-cache
+        scripts:
+            - *set-build-version
+            - *install-shorebird
+            - *fetch-dependencies
+            - *ios-use-profiles
+            - *ios-install-pods
+            - name: Shorebird Patch
+              script: |
+                  shorebird patch ios \
+                    --release-version=latest \
+                    --build-name=$BUILD_NAME \
+                    --build-number=$BUILD_NUMBER \
+                    --export-options-plist=/Users/builder/export_options.plist
+
+    release-android:
+        <<:
+            - *working-directory
+            - *android-config
+            - *android-cache
+        scripts:
+            - *log-flutter-version
+            - *set-build-version
+            - *fetch-dependencies
+            - *install-shorebird
+            - name: Shorebird Release Android
+              script: |
+                  shorebird release android \
+                    --flutter-version=$FLUTTER_VERSION \
+                    --build-name=$BUILD_NAME \
+                    --build-number=$BUILD_NUMBER
+        artifacts:
+            - build/**/outputs/**/*.aab
+            - build/**/outputs/**/mapping.txt
+            - flutter_drive.log
+        publishing:
+            google_play:
+                credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+                track: internal
+                release_promotion:
+                    track: alpha
+
+    patch-android:
+        <<:
+            - *working-directory
+            - *android-config
+            - *android-cache
+        scripts:
+            - *set-build-version
+            - *install-shorebird
+            - *fetch-dependencies
+            - name: Shorebird Patch
+              script: |
+                  shorebird patch android \
+                    --release-version=latest \
+                    --build-name=$BUILD_NAME \
+                    --build-number=$BUILD_NUMBER

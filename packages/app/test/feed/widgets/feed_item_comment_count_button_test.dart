@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/feed/feed.dart';
+import 'package:app/post/post.dart';
 import 'package:app_ui/app_ui.dart' hide FeedItemCommentCountButton;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

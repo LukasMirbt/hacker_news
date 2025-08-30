@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/post/post.dart';
 import 'package:app/search/search.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
+import '../../app_web_view/mock_in_app_web_view_platform.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
@@ -44,12 +46,18 @@ void main() {
       test('has correct routes', () {
         expect(
           SearchRoute.config.routes,
-          <TypedRoute<RouteData>>[],
+          [
+            PostShellRoute.config,
+          ],
         );
       });
     });
 
     group('build', () {
+      setUp(() {
+        InAppWebViewPlatform.instance = MockInAppWebViewPlatform();
+      });
+
       Widget buildSubject() {
         final route = createSubject();
         return Builder(

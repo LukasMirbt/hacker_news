@@ -1,4 +1,4 @@
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/settings/settings.dart';
 import 'package:go_router/go_router.dart';
 
 class SettingsBranch extends StatefulShellBranchData {

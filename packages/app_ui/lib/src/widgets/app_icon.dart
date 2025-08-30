@@ -9,7 +9,7 @@ class AppIcon extends StatelessWidget {
     this.opticalSize,
     this.color,
     super.key,
-  }) : fill = 0;
+  }) : filled = false;
 
   const AppIcon.filled(
     this.icon, {
@@ -19,11 +19,11 @@ class AppIcon extends StatelessWidget {
     this.opticalSize,
     this.color,
     super.key,
-  }) : fill = 1;
+  }) : filled = true;
 
+  final bool filled;
   final IconData icon;
   final double? size;
-  final double? fill;
   final double? weight;
   final double? grade;
   final double? opticalSize;
@@ -39,6 +39,8 @@ class AppIcon extends StatelessWidget {
     if (grade != null && brightness == Brightness.dark) {
       grade = grade - 25;
     }
+
+    final fill = filled ? 1.0 : 0.0;
 
     return Icon(
       icon,

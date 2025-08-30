@@ -1,7 +1,14 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+import 'package:app/app_router/app_router.dart';
+import 'package:app/reply/reply.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+part 'reply_route.g.dart';
+
+@ReplyRoute.config
 class ReplyRoute extends RelativeGoRouteData
-    with _$ReplyRoute, AuthenticatedRoute, EquatableMixin {
+    with $ReplyRoute, AuthenticatedRoute, EquatableMixin {
   const ReplyRoute({required this.url});
 
   static final $parentNavigatorKey = AppRouter.navigatorKey;

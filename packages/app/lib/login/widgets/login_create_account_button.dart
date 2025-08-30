@@ -1,4 +1,5 @@
 import 'package:app/app_router/app_router.dart';
+import 'package:app/create_account/create_account.dart';
 import 'package:app/l10n/l10n.dart';
 import 'package:app/login/login.dart';
 import 'package:flutter/material.dart';

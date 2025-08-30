@@ -9,7 +9,7 @@ part 'web_redirect_route.g.dart';
 
 @WebRedirectRoute.config
 class WebRedirectRoute extends GoRouteData
-    with _$WebRedirectRoute, EquatableMixin {
+    with $WebRedirectRoute, EquatableMixin {
   const WebRedirectRoute({
     required this.url,
     this.from,

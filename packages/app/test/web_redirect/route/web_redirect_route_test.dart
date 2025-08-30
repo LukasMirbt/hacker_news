@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
-import '../mock_in_app_web_view_platform.dart';
+import '../../app_web_view/mock_in_app_web_view_platform.dart';
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 

@@ -1,10 +1,18 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+import 'package:app/app_shell/app_shell.dart';
+import 'package:app/post/post.dart';
+import 'package:app/search/search.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class SearchRoute extends GoRouteData with _$SearchRoute, EquatableMixin {
+class SearchRoute extends GoRouteData with $SearchRoute, EquatableMixin {
   const SearchRoute();
 
   static const config = TypedGoRoute<SearchRoute>(
     path: '/search',
+    routes: [
+      PostShellRoute.config,
+    ],
   );
 
   @override

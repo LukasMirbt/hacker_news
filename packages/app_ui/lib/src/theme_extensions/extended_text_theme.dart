@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class ExtendedTextTheme extends ThemeExtension<ExtendedTextTheme> {
+class ExtendedTextTheme extends ThemeExtension<ExtendedTextTheme>
+    with EquatableMixin {
   const ExtendedTextTheme({
     this.labelLargeProminent,
     this.labelMediumProminent,
@@ -78,4 +80,10 @@ class ExtendedTextTheme extends ThemeExtension<ExtendedTextTheme> {
       ),
     );
   }
+
+  @override
+  List<Object?> get props => [
+    labelLargeProminent,
+    labelMediumProminent,
+  ];
 }

@@ -4,11 +4,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-part '../../create_account/route/create_account_route.dart';
 part 'login_route.g.dart';
 
 @LoginRoute.config
-class LoginRoute extends GoRouteData with _$LoginRoute, EquatableMixin {
+class LoginRoute extends GoRouteData with $LoginRoute, EquatableMixin {
   const LoginRoute({required this.from});
 
   static const config = TypedGoRoute<LoginRoute>(

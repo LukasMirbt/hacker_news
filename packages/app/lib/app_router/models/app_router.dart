@@ -1,5 +1,6 @@
 import 'package:app/app_router/app_router.dart';
 import 'package:app/app_shell/app_shell.dart';
+import 'package:app/home/home.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

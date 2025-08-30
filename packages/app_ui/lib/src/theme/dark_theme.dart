@@ -1,12 +1,16 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class DarkTheme extends AppTheme {
   const DarkTheme();
 
   @override
   DarkColors get colors => const DarkColors();
+
+  @override
+  ColorScheme get baseColorScheme => const ColorScheme.dark();
 
   @override
   DarkTextStyles get textStyles => const DarkTextStyles();
@@ -20,6 +24,23 @@ class DarkTheme extends AppTheme {
       systemNavigationBarColor: colors.surface,
       systemNavigationBarDividerColor: colors.surface,
       systemNavigationBarIconBrightness: Brightness.light,
+    );
+  }
+
+  @override
+  IconThemeData get iconTheme {
+    return super.iconTheme.copyWith(
+      grade: -25,
+    );
+  }
+
+  @override
+  SkeletonizerConfigData get skeletonizerConfig {
+    return SkeletonizerConfigData(
+      effect: ShimmerEffect(
+        baseColor: colors.surfaceContainerHigh,
+        highlightColor: colors.surfaceContainerHighest,
+      ),
     );
   }
 }

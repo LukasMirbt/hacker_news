@@ -1,4 +1,4 @@
-import 'package:app/app_shell/app_shell.dart';
+import 'package:app/home/home.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeBranch extends StatefulShellBranchData {

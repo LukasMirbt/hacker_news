@@ -1,7 +1,7 @@
 import 'package:analytics_repository/analytics_repository.dart';
 import 'package:app/app/app.dart';
+import 'package:app_logging/app_logging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logging/logging.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver({

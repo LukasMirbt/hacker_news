@@ -1,3 +1,4 @@
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
@@ -18,23 +19,26 @@ class WebRedirectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        final controller = WebRedirectController();
+        final controller = AppWebViewController();
         final cookieManager = CookieManager.instance();
-        return WebRedirectBloc(
-          redirect: WebRedirect.from(url, html: html),
-          webRedirectController: controller,
-          webRedirectAuthenticationModel: WebRedirectAuthenticationModel(
+        return AppWebViewBloc(
+          configuration: AppWebViewConfiguration.from(
+            initialUrl: Uri.parse(url),
+            initialHtml: html,
+          ),
+          appWebViewController: controller,
+          appWebViewAuthenticationModel: AppWebViewAuthenticationModel(
             controller: controller,
-            cookieManager: WebRedirectCookieManager(
+            cookieManager: AppWebViewCookieManager(
               cookieManager: cookieManager,
-              cookieAdapter: WebRedirectCookieAdapter(
+              cookieAdapter: AppWebViewCookieAdapter(
                 cookieManager: cookieManager,
               ),
             ),
             repository: context.read<AuthenticationRepository>(),
           ),
         )..add(
-          const WebRedirectStarted(),
+          const AppWebViewStarted(),
         );
       },
       child: const WebRedirectView(),
