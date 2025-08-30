@@ -2,9 +2,15 @@ part of 'feed_item_data.dart';
 
 class PostFeedItemData extends FeedItemData {
   const PostFeedItemData({
-    required PostTitleRowData super.titleRowData,
-    required PostSubtitleRowData super.subtitleRowData,
+    required this.titleRowData,
+    required this.subtitleRowData,
   });
+
+  @override
+  final PostTitleRowData titleRowData;
+
+  @override
+  final PostSubtitleRowData subtitleRowData;
 
   @override
   List<Object> get props => [

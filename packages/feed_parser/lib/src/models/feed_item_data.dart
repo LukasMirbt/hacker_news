@@ -5,11 +5,8 @@ part 'job_feed_item_data.dart';
 part 'post_feed_item_data.dart';
 
 sealed class FeedItemData extends Equatable {
-  const FeedItemData({
-    required this.titleRowData,
-    required this.subtitleRowData,
-  });
+  const FeedItemData();
 
-  final TitleRowData titleRowData;
-  final SubtitleRowData subtitleRowData;
+  TitleRowData get titleRowData;
+  SubtitleRowData get subtitleRowData;
 }
