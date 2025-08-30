@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/drafts/drafts.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/widgets.dart';

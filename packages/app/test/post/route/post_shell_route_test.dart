@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_router/app_router.dart';
-import 'package:app/app_shell/app_shell.dart';
 import 'package:app/post/post.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
