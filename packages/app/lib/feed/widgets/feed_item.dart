@@ -25,15 +25,17 @@ class FeedItem extends StatelessWidget {
     final appL10n = AppLocalizations.of(context);
     final formatterL10n = DateFormatterLocalizations.of(context);
 
-    final score = item.score;
-    final commentCount = item.commentCount;
+    final user = switch (item) {
+      final PostFeedItemModel item => item.user,
+      JobFeedItemModel() => null,
+    };
 
     return AppFeedItem(
       data: AppFeedItemData(
         hasBeenVisited: hasBeenVisited,
         rank: item.rank(appL10n),
         urlHost: item.urlHost,
-        user: item.user,
+        user: user,
         age: item.age(formatterL10n),
         title: item.title,
         onPressed: () {
@@ -53,18 +55,20 @@ class FeedItem extends StatelessWidget {
             item: item.toRepository(),
           );
         },
-        voteButton: score == null
-            ? null
-            : FeedItemVoteButton(
-                score: score,
-                item: item,
-              ),
-        commentCountButton: commentCount == null
-            ? null
-            : FeedItemCommentCountButton(
-                commentCount: commentCount,
-                item: item,
-              ),
+        voteButton: switch (item) {
+          final PostFeedItemModel item => FeedItemVoteButton(
+            score: item.score,
+            item: item,
+          ),
+          JobFeedItemModel() => null,
+        },
+        commentCountButton: switch (item) {
+          final PostFeedItemModel item => FeedItemCommentCountButton(
+            commentCount: item.commentCount,
+            item: item,
+          ),
+          JobFeedItemModel() => null,
+        },
       ),
     );
   }

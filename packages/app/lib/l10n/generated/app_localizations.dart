@@ -448,6 +448,12 @@ abstract class AppLocalizations {
   /// **'{title}\n{postUrl}'**
   String feed_postShareText({required String title, required String postUrl});
 
+  /// No description provided for @feed_jobShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'{title}\n{url}'**
+  String feed_jobShareText({required Object title, required Object url});
+
   /// No description provided for @feed_rank.
   ///
   /// In en, this message translates to:

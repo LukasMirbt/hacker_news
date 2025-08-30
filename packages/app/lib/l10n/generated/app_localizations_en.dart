@@ -205,6 +205,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String feed_jobShareText({required Object title, required Object url}) {
+    return '$title\n$url';
+  }
+
+  @override
   String feed_rank({required int rank}) {
     return '$rank.';
   }

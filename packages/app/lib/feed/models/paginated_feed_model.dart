@@ -13,7 +13,7 @@ class PaginatedFeedModel extends Equatable {
     return PaginatedFeedModel(
       feed: feed,
       items: [
-        for (final item in feed.items) FeedItemModel(item),
+        for (final item in feed.items) FeedItemModel.from(item),
       ],
     );
   }

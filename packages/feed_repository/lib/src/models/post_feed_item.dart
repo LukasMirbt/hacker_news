@@ -49,14 +49,14 @@ class PostFeedItem extends FeedItem with _$PostFeedItem {
   final int commentCount;
   final DateTime age;
 
-  FeedItem upvote() {
+  PostFeedItem upvote() {
     return copyWith(
       hasBeenUpvoted: true,
       score: score + 1,
     );
   }
 
-  FeedItem unvote() {
+  PostFeedItem unvote() {
     return copyWith(
       hasBeenUpvoted: false,
       score: score - 1,

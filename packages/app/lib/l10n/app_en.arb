@@ -85,6 +85,7 @@
     }
   },
   "feed_postShareText": "{title}\n{postUrl}",
+  "feed_jobShareText": "{title}\n{url}",
   "@feed_postShareText": {
     "placeholders": {
       "title": {
