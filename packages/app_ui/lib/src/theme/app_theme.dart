@@ -17,7 +17,7 @@ abstract class AppTheme {
       bottomSheetTheme: _bottomSheetTheme,
       colorScheme: _colorScheme,
       filledButtonTheme: _filledButtonTheme,
-      iconTheme: _iconTheme,
+      iconTheme: iconTheme,
       inputDecorationTheme: _inputDecorationTheme,
       listTileTheme: _listTileTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
@@ -28,7 +28,7 @@ abstract class AppTheme {
       textTheme: _textTheme,
       extensions: [
         _extendedTextTheme,
-        _skeletonizerConfig,
+        skeletonizerConfig,
       ],
     );
   }
@@ -113,16 +113,12 @@ abstract class AppTheme {
     );
   }
 
-  IconThemeData get _iconTheme {
+  IconThemeData get iconTheme {
     return IconThemeData(
       color: colors.onSurface,
       size: 24,
       opticalSize: 24,
       fill: 0,
-      grade: switch (colors.brightness) {
-        Brightness.light => 0,
-        Brightness.dark => -25,
-      },
     );
   }
 
@@ -221,18 +217,5 @@ abstract class AppTheme {
     );
   }
 
-  SkeletonizerConfigData get _skeletonizerConfig {
-    return SkeletonizerConfigData(
-      effect: switch (colors.brightness) {
-        Brightness.light => ShimmerEffect(
-          baseColor: colors.outlineVariant,
-          highlightColor: colors.surfaceContainerLow,
-        ),
-        Brightness.dark => ShimmerEffect(
-          baseColor: colors.surfaceContainerHigh,
-          highlightColor: colors.surfaceContainerHighest,
-        ),
-      },
-    );
-  }
+  SkeletonizerConfigData get skeletonizerConfig;
 }
