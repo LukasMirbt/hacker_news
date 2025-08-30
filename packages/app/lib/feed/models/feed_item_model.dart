@@ -35,10 +35,10 @@ class FeedItemModel extends Equatable {
     final postUrl = _webLinks.postUrl(id);
 
     if (_item.isJob) {
-      return l10n.feed_jobShareText(
+      return ''; /* l10n.feed_jobShareText(
         title: title,
         postUrl: postUrl.toString(),
-      );
+      ); */
     }
 
     if (_item.urlHost == null) {

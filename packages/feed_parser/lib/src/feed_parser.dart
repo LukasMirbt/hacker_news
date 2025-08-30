@@ -6,11 +6,11 @@ class FeedParser {
     FeedItemParser? feedItemParser,
     MoreLinkParser? moreLinkParser,
   }) : _htmlParser = htmlParser ?? const HtmlParser(),
-       _listItemParser = feedItemParser ?? const FeedItemParser(),
+       _itemParser = feedItemParser ?? const FeedItemParser(),
        _moreLinkParser = moreLinkParser ?? const MoreLinkParser();
 
   final HtmlParser _htmlParser;
-  final FeedItemParser _listItemParser;
+  final FeedItemParser _itemParser;
   final MoreLinkParser _moreLinkParser;
 
   FeedPageData parse(String html) {
@@ -19,7 +19,7 @@ class FeedParser {
     final elements = document.querySelectorAll('.athing.submission');
 
     final items = [
-      for (final element in elements) _listItemParser.parse(element),
+      for (final element in elements) _itemParser.parse(element),
     ];
 
     final moreLink = _moreLinkParser.parse(document);

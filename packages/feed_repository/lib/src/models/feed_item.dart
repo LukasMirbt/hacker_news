@@ -52,6 +52,8 @@ class FeedItem with _$FeedItem {
   final DateTime age;
   final int? commentCount;
 
+  bool get isJob => score == null && commentCount == null;
+
   FeedItem upvote() {
     return copyWith(
       hasBeenUpvoted: true,

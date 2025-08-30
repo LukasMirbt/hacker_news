@@ -1,15 +1,15 @@
 import 'package:feed_parser/feed_parser.dart';
 
-class SubtitleRowDataPlaceholder extends SubtitleRowData {
-  SubtitleRowDataPlaceholder({
-    DateTime? age,
+class PostSubtitleRowDataPlaceholder extends PostSubtitleRowData {
+  PostSubtitleRowDataPlaceholder({
     int? score,
     Hnuser? hnuser,
     int? commentCount,
+    DateTime? age,
   }) : super(
-         age: age ?? DateTime(1),
          score: score ?? 1,
          hnuser: hnuser ?? const HnuserPlaceholder(),
          commentCount: commentCount ?? 1,
+         age: age ?? DateTime(1),
        );
 }

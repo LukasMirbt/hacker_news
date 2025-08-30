@@ -4,60 +4,50 @@ import 'package:feed_parser/feed_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group(TitleRowData, () {
+  group(BaseTitleRowData, () {
     group('fromParsed', () {
-      test('returns $TitleRowData with correct values '
+      test('returns $BaseTitleRowData with correct values '
           'when data is non-null', () {
         const id = 'id';
         const rank = 1;
         const title = 'title';
         const url = 'url';
         const urlHost = 'urlHost';
-        const upvoteUrl = 'upvoteUrl';
-        const hasBeenUpvoted = true;
 
         expect(
-          TitleRowData.fromParsed(
+          BaseTitleRowData.fromParsed(
             id: id,
             rank: rank,
             title: title,
             url: url,
             urlHost: urlHost,
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
           ),
-          TitleRowData(
+          BaseTitleRowData(
             id: id,
             rank: rank,
             title: title,
             url: url,
             urlHost: urlHost,
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
           ),
         );
       });
 
-      test('returns $TitleRowData with correct values '
+      test('returns $BaseTitleRowData with correct values '
           'when data is null', () {
         expect(
-          TitleRowData.fromParsed(
+          BaseTitleRowData.fromParsed(
             id: null,
             rank: null,
             title: null,
             url: null,
             urlHost: null,
-            upvoteUrl: null,
-            hasBeenUpvoted: null,
           ),
-          TitleRowData(
+          BaseTitleRowData(
             id: '',
             rank: 0,
             title: '',
             url: '',
             urlHost: null,
-            upvoteUrl: null,
-            hasBeenUpvoted: false,
           ),
         );
       });

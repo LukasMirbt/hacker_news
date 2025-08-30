@@ -4,11 +4,11 @@ import 'package:feed_parser/feed_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group(TitleRowDataPlaceholder, () {
-    test('returns $TitleRowData', () {
+  group(BaseTitleRowDataPlaceholder, () {
+    test('returns $BaseTitleRowData', () {
       expect(
-        TitleRowDataPlaceholder(),
-        isA<TitleRowData>(),
+        BaseTitleRowDataPlaceholder(),
+        isA<BaseTitleRowData>(),
       );
     });
   });

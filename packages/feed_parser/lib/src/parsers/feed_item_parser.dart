@@ -2,28 +2,46 @@ import 'package:feed_parser/feed_parser.dart';
 
 class FeedItemParser {
   const FeedItemParser({
-    TitleRowParser? titleRowParser,
+    PostTitleRowParser? postTitleRowParser,
+    JobTitleRowParser? jobTitleRowParser,
     SubtitleRowParser? subtitleRowParser,
-  }) : _titleRowParser = titleRowParser ?? const TitleRowParser(),
+  }) : _postTitleRowParser = postTitleRowParser ?? const PostTitleRowParser(),
+       _jobTitleRowParser = jobTitleRowParser ?? const JobTitleRowParser(),
        _subtitleRowParser = subtitleRowParser ?? const SubtitleRowParser();
 
-  final TitleRowParser _titleRowParser;
+  final PostTitleRowParser _postTitleRowParser;
+  final JobTitleRowParser _jobTitleRowParser;
   final SubtitleRowParser _subtitleRowParser;
 
   FeedItemData parse(Element athing) {
-    final titleRowData = _titleRowParser.parse(athing);
-
     final subtitleRow = athing.nextElementSibling;
 
-    var subtitleRowData = SubtitleRowData.empty;
+    if (subtitleRow == null) {
+      final titleRowData = _postTitleRowParser.parse(athing);
 
-    if (subtitleRow != null) {
-      subtitleRowData = _subtitleRowParser.parse(subtitleRow);
+      return PostFeedItemData(
+        titleRowData: titleRowData,
+        subtitleRowData: PostSubtitleRowData.empty,
+      );
     }
 
-    return FeedItemData(
-      titleRowData: titleRowData,
-      subtitleRowData: subtitleRowData,
-    );
+    final subtitleRowData = _subtitleRowParser.parse(subtitleRow);
+
+    switch (subtitleRowData) {
+      case PostSubtitleRowData():
+        final titleRowData = _postTitleRowParser.parse(athing);
+
+        return PostFeedItemData(
+          titleRowData: titleRowData,
+          subtitleRowData: subtitleRowData,
+        );
+      case JobSubtitleRowData():
+        final titleRowData = _jobTitleRowParser.parse(athing);
+
+        return JobFeedItemData(
+          titleRowData: titleRowData,
+          subtitleRowData: subtitleRowData,
+        );
+    }
   }
 }

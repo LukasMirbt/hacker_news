@@ -14,10 +14,6 @@ class _MockUrlParser extends Mock implements UrlParser {}
 
 class _MockUrlHostParser extends Mock implements UrlHostParser {}
 
-class _MockUpvoteUrlParser extends Mock implements UpvoteUrlParser {}
-
-class _MockHasBeenUpvotedParser extends Mock implements HasBeenUpvotedParser {}
-
 class _MockElement extends Mock implements Element {}
 
 void main() {
@@ -26,17 +22,13 @@ void main() {
   const title = 'title';
   const url = 'url';
   const urlHost = 'urlHost';
-  const upvoteUrl = 'upvoteUrl';
-  const hasBeenUpvoted = true;
 
-  group(TitleRowParser, () {
+  group(BaseTitleRowParser, () {
     late IdParser idParser;
     late RankParser rankParser;
     late TitleParser titleParser;
     late UrlParser urlParser;
     late UrlHostParser urlHostParser;
-    late UpvoteUrlParser upvoteUrlParser;
-    late HasBeenUpvotedParser hasBeenUpvotedParser;
     late Element athing;
 
     setUp(() {
@@ -45,20 +37,16 @@ void main() {
       titleParser = _MockTitleParser();
       urlParser = _MockUrlParser();
       urlHostParser = _MockUrlHostParser();
-      upvoteUrlParser = _MockUpvoteUrlParser();
-      hasBeenUpvotedParser = _MockHasBeenUpvotedParser();
       athing = _MockElement();
     });
 
-    TitleRowParser createSubject() {
-      return TitleRowParser(
+    BaseTitleRowParser createSubject() {
+      return BaseTitleRowParser(
         idParser: idParser,
         rankParser: rankParser,
         titleParser: titleParser,
         urlParser: urlParser,
         urlHostParser: urlHostParser,
-        upvoteUrlParser: upvoteUrlParser,
-        hasBeenUpvotedParser: hasBeenUpvotedParser,
       );
     }
 
@@ -68,8 +56,6 @@ void main() {
       final parseTitle = () => titleParser.parse(athing);
       final parseUrl = () => urlParser.parse(athing);
       final parseUrlHost = () => urlHostParser.parse(athing);
-      final parseUpvoteUrl = () => upvoteUrlParser.parse(athing);
-      final parseHasBeenUpvoted = () => hasBeenUpvotedParser.parse(athing);
 
       test('calls parsers and returns $TitleRowData', () {
         when(parseId).thenReturn(id);
@@ -77,19 +63,15 @@ void main() {
         when(parseTitle).thenReturn(title);
         when(parseUrl).thenReturn(url);
         when(parseUrlHost).thenReturn(urlHost);
-        when(parseUpvoteUrl).thenReturn(upvoteUrl);
-        when(parseHasBeenUpvoted).thenReturn(hasBeenUpvoted);
         final parser = createSubject();
         expect(
           parser.parse(athing),
-          TitleRowData.fromParsed(
+          BaseTitleRowData.fromParsed(
             id: id,
             rank: rank,
             title: title,
             url: url,
             urlHost: urlHost,
-            upvoteUrl: upvoteUrl,
-            hasBeenUpvoted: hasBeenUpvoted,
           ),
         );
         verify(parseId).called(1);
@@ -97,8 +79,6 @@ void main() {
         verify(parseTitle).called(1);
         verify(parseUrl).called(1);
         verify(parseUrlHost).called(1);
-        verify(parseUpvoteUrl).called(1);
-        verify(parseHasBeenUpvoted).called(1);
       });
     });
   });
