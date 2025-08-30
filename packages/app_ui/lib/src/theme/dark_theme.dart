@@ -10,6 +10,9 @@ class DarkTheme extends AppTheme {
   DarkColors get colors => const DarkColors();
 
   @override
+  ColorScheme get baseColorScheme => const ColorScheme.dark();
+
+  @override
   DarkTextStyles get textStyles => const DarkTextStyles();
 
   @override

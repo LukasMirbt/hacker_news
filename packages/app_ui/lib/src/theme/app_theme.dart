@@ -7,6 +7,7 @@ abstract class AppTheme {
   const AppTheme();
 
   AppColors get colors;
+  ColorScheme get baseColorScheme;
   AppTextStyles get textStyles;
   SystemUiOverlayStyle get systemOverlayStyle;
 
@@ -24,7 +25,6 @@ abstract class AppTheme {
       pageTransitionsTheme: _pageTransitionsTheme,
       progressIndicatorTheme: _progressIndicatorTheme,
       tabBarTheme: _tabBarTheme,
-      textButtonTheme: _textButtonTheme,
       textTheme: _textTheme,
       extensions: [
         _extendedTextTheme,
@@ -48,8 +48,8 @@ abstract class AppTheme {
     );
   }
 
-  AppBarTheme get _appBarTheme {
-    return AppBarTheme(
+  AppBarThemeData get _appBarTheme {
+    return AppBarThemeData(
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
       centerTitle: false,
@@ -71,12 +71,7 @@ abstract class AppTheme {
   }
 
   ColorScheme get _colorScheme {
-    final constructor = switch (colors.brightness) {
-      Brightness.light => ColorScheme.light,
-      Brightness.dark => ColorScheme.dark,
-    };
-
-    return constructor(
+    return baseColorScheme.copyWith(
       brightness: colors.brightness,
       primary: colors.primary,
       onPrimary: colors.onPrimary,
@@ -122,8 +117,8 @@ abstract class AppTheme {
     );
   }
 
-  InputDecorationTheme get _inputDecorationTheme {
-    return const InputDecorationTheme(
+  InputDecorationThemeData get _inputDecorationTheme {
+    return const InputDecorationThemeData(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16),
@@ -134,7 +129,9 @@ abstract class AppTheme {
 
   ListTileThemeData get _listTileTheme {
     return const ListTileThemeData(
-      contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.xlg),
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.xlg,
+      ),
     );
   }
 
@@ -178,10 +175,6 @@ abstract class AppTheme {
     );
   }
 
-  TextButtonThemeData get _textButtonTheme {
-    return const TextButtonThemeData();
-  }
-
   TextTheme get _textTheme {
     return TextTheme(
       displayLarge: textStyles.displayLarge,
@@ -203,6 +196,7 @@ abstract class AppTheme {
       bodyColor: colors.onSurface,
       displayColor: colors.onSurface,
       decorationColor: colors.onSurface,
+      decoration: TextDecoration.none,
     );
   }
 
@@ -214,6 +208,7 @@ abstract class AppTheme {
       bodyColor: colors.onSurface,
       displayColor: colors.onSurface,
       decorationColor: colors.onSurface,
+      decoration: TextDecoration.none,
     );
   }
 

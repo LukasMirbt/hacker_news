@@ -10,6 +10,9 @@ class LightTheme extends AppTheme {
   LightColors get colors => const LightColors();
 
   @override
+  ColorScheme get baseColorScheme => const ColorScheme.light();
+
+  @override
   LightTextStyles get textStyles => const LightTextStyles();
 
   @override
