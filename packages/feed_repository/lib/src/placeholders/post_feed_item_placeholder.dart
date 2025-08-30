@@ -1,7 +1,7 @@
 import 'package:feed_repository/feed_repository.dart';
 
-class FeedItemPlaceholder extends FeedItem {
-  FeedItemPlaceholder({
+class PostFeedItemPlaceholder extends PostFeedItem {
+  PostFeedItemPlaceholder({
     String? id,
     int? rank,
     String? title,
@@ -11,8 +11,8 @@ class FeedItemPlaceholder extends FeedItem {
     bool? hasBeenUpvoted,
     int? score,
     Hnuser? hnuser,
-    DateTime? age,
     int? commentCount,
+    DateTime? age,
   }) : super(
          id: id ?? 'id',
          rank: rank ?? 1,
@@ -23,7 +23,7 @@ class FeedItemPlaceholder extends FeedItem {
          hasBeenUpvoted: hasBeenUpvoted ?? false,
          score: score ?? 1,
          hnuser: hnuser ?? const HnuserPlaceholder(),
-         age: age ?? DateTime(1),
          commentCount: commentCount ?? 1,
+         age: age ?? DateTime(1),
        );
 }

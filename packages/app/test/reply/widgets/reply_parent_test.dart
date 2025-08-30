@@ -37,12 +37,12 @@ void main() {
     testWidgets('renders $CurrentUserReplyParent when item '
         'is $CurrentUserReplyParentModel', (tester) async {
       when(() => state.parent).thenReturn(
-        OtherUserReplyParentModel(
-          parent: OtherUserReplyParentPlaceholder(),
+        CurrentUserReplyParentModel(
+          parent: CurrentUserReplyParentPlaceholder(),
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CurrentUserReplyParent), findsNothing);
+      expect(find.byType(CurrentUserReplyParent), findsOneWidget);
     });
 
     testWidgets('renders $OtherUserReplyParent when item '

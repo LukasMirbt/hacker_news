@@ -191,8 +191,22 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your unfinished replies and comments will appear here. Drafts are saved automatically.';
 
   @override
-  String feed_shareText({required String title, required String url}) {
-    return '$title $url';
+  String feed_postWithArticleShareText({
+    required String title,
+    required String articleUrl,
+    required String postUrl,
+  }) {
+    return '$title\n$articleUrl\n\nDiscussion\n$postUrl';
+  }
+
+  @override
+  String feed_postShareText({required String title, required String url}) {
+    return '$title\n$url';
+  }
+
+  @override
+  String feed_jobShareText({required String title, required String url}) {
+    return '$title\n$url';
   }
 
   @override
@@ -275,7 +289,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String postHeader_shareText({required String title, required String url}) {
-    return '$title $url';
+    return '$title\n$url';
   }
 
   @override

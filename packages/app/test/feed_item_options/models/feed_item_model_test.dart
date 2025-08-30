@@ -9,15 +9,15 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
-class _MockFeedItem extends Mock implements FeedItem {}
+class _MockPostFeedItem extends Mock implements PostFeedItem {}
 
 void main() {
   group(FeedItemModel, () {
-    late FeedItem item;
+    late PostFeedItem item;
     late WebLinks webLinks;
 
     setUp(() {
-      item = _MockFeedItem();
+      item = _MockPostFeedItem();
       webLinks = _MockWebLinks();
     });
 

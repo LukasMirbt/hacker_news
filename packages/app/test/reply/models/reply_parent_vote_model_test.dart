@@ -29,7 +29,8 @@ void main() {
         );
       });
 
-      test('returns updated parent when id matches', () {
+      test('returns updated parent when id matches '
+          'and parent is $OtherUserReplyParentModel', () {
         final parent = _MockOtherUserReplyParentModel();
         final updatedHeader = _MockOtherUserReplyParentModel();
         final voteMethod = () => parent.vote(vote.type);
@@ -43,8 +44,8 @@ void main() {
         verify(voteMethod).called(1);
       });
 
-      test('throws $CurrentUserVoteError when parent '
-          'is $CurrentUserReplyParentModel', () {
+      test('throws $CurrentUserVoteError when id matches '
+          'and parent is $CurrentUserReplyParentModel', () {
         final parent = _MockCurrentUserReplyParentModel();
         when(() => parent.id).thenReturn(vote.id);
         final model = createSubject();

@@ -1,52 +1,16 @@
 import 'package:equatable/equatable.dart';
+import 'package:feed_parser/feed_parser.dart';
 
-class TitleRowData extends Equatable {
+part 'job_title_row_data.dart';
+part 'post_title_row_data.dart';
+
+sealed class TitleRowData extends Equatable {
   const TitleRowData({
-    required this.id,
-    required this.rank,
-    required this.title,
-    required this.url,
-    required this.urlHost,
-    required this.upvoteUrl,
-    required this.hasBeenUpvoted,
+    required this.base,
   });
 
-  factory TitleRowData.fromParsed({
-    required String? id,
-    required int? rank,
-    required String? title,
-    required String? url,
-    required String? urlHost,
-    required String? upvoteUrl,
-    required bool? hasBeenUpvoted,
-  }) {
-    return TitleRowData(
-      id: id ?? '',
-      rank: rank ?? 0,
-      title: title ?? '',
-      url: url ?? '',
-      urlHost: urlHost,
-      upvoteUrl: upvoteUrl,
-      hasBeenUpvoted: hasBeenUpvoted ?? false,
-    );
-  }
-
-  final String id;
-  final int rank;
-  final String title;
-  final String url;
-  final String? urlHost;
-  final String? upvoteUrl;
-  final bool hasBeenUpvoted;
+  final BaseTitleRowData base;
 
   @override
-  List<Object?> get props => [
-    id,
-    rank,
-    title,
-    url,
-    urlHost,
-    upvoteUrl,
-    hasBeenUpvoted,
-  ];
+  List<Object?> get props => [base];
 }

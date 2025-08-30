@@ -14,8 +14,6 @@ class _MockDocument extends Mock implements Document {}
 
 class _MockElement extends Mock implements Element {}
 
-class _MockFeedItemData extends Mock implements FeedItemData {}
-
 void main() {
   group(FeedParser, () {
     late HtmlParser htmlParser;
@@ -45,8 +43,8 @@ void main() {
       final element = _MockElement();
       final elements = [element];
 
-      final listItem = _MockFeedItemData();
-      final items = [listItem];
+      final item = PostFeedItemDataPlaceholder();
+      final items = [item];
 
       final parseHtml = () => htmlParser.parse(html);
 
@@ -59,7 +57,7 @@ void main() {
       test('returns $FeedPageData', () {
         when(parseHtml).thenReturn(document);
         when(querySelectorAll).thenReturn(elements);
-        when(parseItem).thenReturn(listItem);
+        when(parseItem).thenReturn(item);
         when(parseMoreLink).thenReturn(moreLink);
         final parser = createSubject();
         expect(

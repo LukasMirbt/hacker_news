@@ -11,7 +11,7 @@ import '../../app/pump_app.dart';
 class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
 
-class _MockFeedItemModel extends Mock implements FeedItemModel {}
+class _MockPostFeedItemModel extends Mock implements PostFeedItemModel {}
 
 void main() {
   const score = 'score';
@@ -19,11 +19,11 @@ void main() {
 
   group(FeedItemVoteButton, () {
     late FeedBloc bloc;
-    late FeedItemModel item;
+    late PostFeedItemModel item;
 
     setUp(() {
       bloc = _MockFeedBloc();
-      item = _MockFeedItemModel();
+      item = _MockPostFeedItemModel();
       when(() => item.score).thenReturn(score);
       when(() => item.hasBeenUpvoted).thenReturn(hasBeenUpvoted);
     });

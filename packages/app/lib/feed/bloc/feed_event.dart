@@ -41,7 +41,7 @@ final class FeedItemLinkLaunched extends FeedEvent {
 final class FeedItemVotePressed extends FeedEvent {
   const FeedItemVotePressed(this.item);
 
-  final FeedItemModel item;
+  final PostFeedItemModel item;
 
   @override
   List<Object> get props => [item];

@@ -3,7 +3,7 @@ import 'package:feed_repository/feed_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final item = FeedItemPlaceholder();
+  final item = PostFeedItemPlaceholder();
 
   group(FeedItemOptionsBloc, () {
     FeedItemOptionsBloc buildBloc() {

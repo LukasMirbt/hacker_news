@@ -11,7 +11,7 @@ class FeedItemVoteButton extends StatelessWidget {
   });
 
   final String score;
-  final FeedItemModel item;
+  final PostFeedItemModel item;
 
   @override
   Widget build(BuildContext context) {

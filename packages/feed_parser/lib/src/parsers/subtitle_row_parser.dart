@@ -17,16 +17,21 @@ class SubtitleRowParser {
   final CommentCountParser _commentCountParser;
 
   SubtitleRowData parse(Element subtitleRow) {
-    final score = _scoreParser.parse(subtitleRow);
-    final hnuser = _hnuserParser.parse(subtitleRow);
     final age = _ageParser.parse(subtitleRow);
-    final commentCount = _commentCountParser.parse(subtitleRow);
+    final hnuser = _hnuserParser.parse(subtitleRow);
 
-    return SubtitleRowData.fromParsed(
-      score: score,
-      hnuser: hnuser,
-      age: age,
-      commentCount: commentCount,
-    );
+    if (hnuser != null) {
+      final score = _scoreParser.parse(subtitleRow);
+      final commentCount = _commentCountParser.parse(subtitleRow);
+
+      return PostSubtitleRowData.fromParsed(
+        age: age,
+        hnuser: hnuser,
+        score: score,
+        commentCount: commentCount,
+      );
+    } else {
+      return JobSubtitleRowData.fromParsed(age: age);
+    }
   }
 }

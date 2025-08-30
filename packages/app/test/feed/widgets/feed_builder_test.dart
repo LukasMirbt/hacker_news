@@ -65,7 +65,7 @@ void main() {
 
     group('itemBuilder', () {
       testWidgets('renders $FeedItem', (tester) async {
-        final item = FeedItemModel(FeedItemPlaceholder());
+        final item = PostFeedItemModel(PostFeedItemPlaceholder());
         when(() => feed.items).thenReturn([item]);
         final builder = createSubject();
 

@@ -15,7 +15,7 @@ class _MockFeedItemOptionsBloc extends MockBloc<void, FeedItemOptionsState>
     implements FeedItemOptionsBloc {}
 
 void main() {
-  final item = FeedItemPlaceholder();
+  final item = PostFeedItemPlaceholder();
 
   group(FeedItemOptionsSheet, () {
     late FeedItemOptionsBloc bloc;

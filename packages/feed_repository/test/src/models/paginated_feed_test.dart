@@ -9,7 +9,7 @@ void main() {
   const type = FeedType.top;
 
   final items = [
-    FeedItemPlaceholder(),
+    PostFeedItemPlaceholder(),
   ];
 
   const isInitial = false;
@@ -144,7 +144,7 @@ void main() {
       final nextPage = FeedPageDataPlaceholder(
         moreLink: 'moreLink',
         items: [
-          FeedItemDataPlaceholder(),
+          PostFeedItemDataPlaceholder(),
         ],
       );
 
@@ -166,8 +166,8 @@ void main() {
     group('update', () {
       const idToUpdate = 'idToUpdate';
 
-      final firstItem = FeedItemPlaceholder();
-      final secondItem = FeedItemPlaceholder(id: idToUpdate);
+      final firstItem = PostFeedItemPlaceholder();
+      final secondItem = PostFeedItemPlaceholder(id: idToUpdate);
 
       final updatedItem = secondItem.copyWith(
         title: 'updatedTitle',

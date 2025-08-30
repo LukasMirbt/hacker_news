@@ -12,7 +12,7 @@ class FeedItemCommentCountButton extends StatelessWidget {
   });
 
   final String commentCount;
-  final FeedItemModel item;
+  final PostFeedItemModel item;
 
   @override
   Widget build(BuildContext context) {

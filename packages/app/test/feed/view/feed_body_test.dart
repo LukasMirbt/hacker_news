@@ -34,8 +34,8 @@ void main() {
   const padding = EdgeInsets.zero;
 
   final items = [
-    FeedItemModel(
-      FeedItemPlaceholder(),
+    PostFeedItemModel(
+      PostFeedItemPlaceholder(),
     ),
   ];
 

@@ -36,7 +36,8 @@ void main() {
     group('updateCommentList', () {
       final findById = () => commentList.findById(vote.id);
 
-      test('returns commentList when findById returns null', () {
+      test('returns commentList when item '
+          'is null', () {
         final model = createSubject();
         expect(
           model.updateCommentList(
@@ -48,7 +49,8 @@ void main() {
         verify(findById).called(1);
       });
 
-      test('returns updated commentList when findById returns item', () {
+      test('returns updated commentList when item '
+          'is $OtherUserCommentModel', () {
         final voteMethod = () => item.vote(vote.type);
         final update = () => commentList.update(updatedItem);
         when(findById).thenReturn(item);
@@ -67,8 +69,8 @@ void main() {
         verify(update).called(1);
       });
 
-      test('throws $CurrentUserVoteError when findById '
-          'returns $CurrentUserCommentModel', () {
+      test('throws $CurrentUserVoteError when item '
+          'is $CurrentUserCommentModel', () {
         when(findById).thenReturn(_MockCurrentUserCommentModel());
         final model = createSubject();
         expect(

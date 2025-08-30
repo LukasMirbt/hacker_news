@@ -13,7 +13,7 @@ import '../../app/pump_app.dart';
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockFeedItemModel extends Mock implements FeedItemModel {}
+class _MockPostFeedItemModel extends Mock implements PostFeedItemModel {}
 
 void main() {
   const commentCount = 'commentCount';
@@ -21,11 +21,11 @@ void main() {
 
   group(FeedItemCommentCountButton, () {
     late AppRouter router;
-    late FeedItemModel item;
+    late PostFeedItemModel item;
 
     setUp(() {
       router = _MockAppRouter();
-      item = _MockFeedItemModel();
+      item = _MockPostFeedItemModel();
       when(() => item.commentCount).thenReturn(commentCount);
       when(() => item.id).thenReturn(id);
     });

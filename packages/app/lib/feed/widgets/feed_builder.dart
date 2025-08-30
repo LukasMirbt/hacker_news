@@ -15,7 +15,7 @@ class FeedBuilder {
   Widget itemBuilder(BuildContext context, int index) {
     final items = context.read<FeedBloc>().state.feed.items;
     final item = items[index];
-    return FeedItem(item: item);
+    return FeedItem(item);
   }
 
   Widget separatorBuilder(BuildContext context, int index) {

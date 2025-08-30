@@ -21,7 +21,7 @@ class ThreadFeedVoteModel {
     switch (item) {
       case null:
         return feed;
-      case final OtherUserThreadCommentModel item:
+      case OtherUserThreadCommentModel():
         final updatedItem = item.vote(vote.type);
         final updatedFeed = feed.update(updatedItem);
         return updatedFeed;
