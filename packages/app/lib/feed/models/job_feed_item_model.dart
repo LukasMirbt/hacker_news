@@ -16,18 +16,11 @@ class JobFeedItemModel extends FeedItemModel {
   @override
   String shareText(AppLocalizations l10n) {
     final title = _item.title;
-
-    String url;
-
-    if (_item.urlHost == null) {
-      url = _webLinks.resolve(_item.url).toString();
-    } else {
-      url = _item.url;
-    }
+    final url = _webLinks.resolve(_item.url);
 
     return l10n.feed_jobShareText(
       title: title,
-      url: url,
+      url: url.toString(),
     );
   }
 

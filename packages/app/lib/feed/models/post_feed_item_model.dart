@@ -22,22 +22,22 @@ class PostFeedItemModel extends FeedItemModel {
   @override
   String shareText(AppLocalizations l10n) {
     final title = _item.title;
-    final postUrl = _webLinks.postUrl(id);
 
     if (_item.urlHost == null) {
+      final url = _webLinks.resolve(_item.url);
       return l10n.feed_postShareText(
         title: title,
+        url: url.toString(),
+      );
+    } else {
+      final articleUrl = _item.url;
+      final postUrl = _webLinks.postUrl(_item.id);
+      return l10n.feed_postWithArticleShareText(
+        title: title,
+        articleUrl: articleUrl,
         postUrl: postUrl.toString(),
       );
     }
-
-    final articleUrl = _webLinks.resolve(_item.url);
-
-    return l10n.feed_articleAndDiscussionShareText(
-      title: title,
-      articleUrl: articleUrl.toString(),
-      discussionUrl: postUrl.toString(),
-    );
   }
 
   PostFeedItemModel vote(VoteType type) {
