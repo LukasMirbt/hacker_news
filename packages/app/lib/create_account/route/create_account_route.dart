@@ -1,7 +1,11 @@
-part of '../../login/route/login_route.dart';
+import 'package:app/create_account/create_account.dart';
+import 'package:app/login/login.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CreateAccountRoute extends GoRouteData
-    with _$CreateAccountRoute, EquatableMixin {
+    with $CreateAccountRoute, EquatableMixin {
   const CreateAccountRoute({required this.from});
 
   static const config = TypedGoRoute<CreateAccountRoute>(

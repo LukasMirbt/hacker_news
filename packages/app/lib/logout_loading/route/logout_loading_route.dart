@@ -7,7 +7,7 @@ part 'logout_loading_route.g.dart';
 
 @LogoutLoadingRoute.config
 class LogoutLoadingRoute extends GoRouteData
-    with _$LogoutLoadingRoute, EquatableMixin {
+    with $LogoutLoadingRoute, EquatableMixin {
   const LogoutLoadingRoute();
 
   static const config = TypedGoRoute<LogoutLoadingRoute>(

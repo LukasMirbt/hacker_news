@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 part 'analytics_consent_route.g.dart';
 
 @AnalyticsConsentRoute.config
-class AnalyticsConsentRoute extends GoRouteData with _$AnalyticsConsentRoute {
+class AnalyticsConsentRoute extends GoRouteData with $AnalyticsConsentRoute {
   const AnalyticsConsentRoute();
 
   static const config = TypedGoRoute<AnalyticsConsentRoute>(

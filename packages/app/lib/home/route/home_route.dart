@@ -1,6 +1,11 @@
-part of '../../app_shell/route/app_stateful_shell_route.dart';
+import 'package:app/app_shell/app_shell.dart';
+import 'package:app/home/home.dart';
+import 'package:app/post/post.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class HomeRoute extends GoRouteData with _$HomeRoute, EquatableMixin {
+class HomeRoute extends GoRouteData with $HomeRoute, EquatableMixin {
   const HomeRoute();
 
   static const config = TypedGoRoute<HomeRoute>(

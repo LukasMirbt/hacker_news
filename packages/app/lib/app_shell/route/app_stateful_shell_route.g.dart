@@ -17,7 +17,7 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/home',
-          factory: _$HomeRoute._fromState,
+          factory: $HomeRoute._fromState,
           routes: [
             ShellRouteData.$route(
               parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
@@ -25,16 +25,16 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'post/:postId',
-                  factory: _$PostRoute._fromState,
+                  factory: $PostRoute._fromState,
                   routes: [
                     RelativeGoRouteData.$route(
                       path: 'comment',
-                      factory: _$CommentRoute._fromState,
+                      factory: $CommentRoute._fromState,
                     ),
                     RelativeGoRouteData.$route(
                       path: 'reply',
                       parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                      factory: _$ReplyRoute._fromState,
+                      factory: $ReplyRoute._fromState,
                     ),
                   ],
                 ),
@@ -48,7 +48,7 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/search',
-          factory: _$SearchRoute._fromState,
+          factory: $SearchRoute._fromState,
           routes: [
             ShellRouteData.$route(
               parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
@@ -56,16 +56,16 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'post/:postId',
-                  factory: _$PostRoute._fromState,
+                  factory: $PostRoute._fromState,
                   routes: [
                     RelativeGoRouteData.$route(
                       path: 'comment',
-                      factory: _$CommentRoute._fromState,
+                      factory: $CommentRoute._fromState,
                     ),
                     RelativeGoRouteData.$route(
                       path: 'reply',
                       parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                      factory: _$ReplyRoute._fromState,
+                      factory: $ReplyRoute._fromState,
                     ),
                   ],
                 ),
@@ -82,12 +82,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/threads',
-              factory: _$ThreadFeedRoute._fromState,
+              factory: $ThreadFeedRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                  factory: _$ReplyRoute._fromState,
+                  factory: $ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
                   parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
@@ -95,16 +95,16 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                   routes: [
                     RelativeGoRouteData.$route(
                       path: 'post/:postId',
-                      factory: _$PostRoute._fromState,
+                      factory: $PostRoute._fromState,
                       routes: [
                         RelativeGoRouteData.$route(
                           path: 'comment',
-                          factory: _$CommentRoute._fromState,
+                          factory: $CommentRoute._fromState,
                         ),
                         RelativeGoRouteData.$route(
                           path: 'reply',
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                          factory: _$ReplyRoute._fromState,
+                          factory: $ReplyRoute._fromState,
                         ),
                       ],
                     ),
@@ -123,12 +123,12 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
           routes: [
             GoRouteData.$route(
               path: '/drafts',
-              factory: _$DraftRoute._fromState,
+              factory: $DraftRoute._fromState,
               routes: [
                 RelativeGoRouteData.$route(
                   path: 'reply',
                   parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                  factory: _$ReplyRoute._fromState,
+                  factory: $ReplyRoute._fromState,
                 ),
                 ShellRouteData.$route(
                   parentNavigatorKey: PostShellRoute.$parentNavigatorKey,
@@ -136,16 +136,16 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
                   routes: [
                     RelativeGoRouteData.$route(
                       path: 'post/:postId',
-                      factory: _$PostRoute._fromState,
+                      factory: $PostRoute._fromState,
                       routes: [
                         RelativeGoRouteData.$route(
                           path: 'comment',
-                          factory: _$CommentRoute._fromState,
+                          factory: $CommentRoute._fromState,
                         ),
                         RelativeGoRouteData.$route(
                           path: 'reply',
                           parentNavigatorKey: ReplyRoute.$parentNavigatorKey,
-                          factory: _$ReplyRoute._fromState,
+                          factory: $ReplyRoute._fromState,
                         ),
                       ],
                     ),
@@ -161,27 +161,27 @@ RouteBase get $appStatefulShellRoute => StatefulShellRouteData.$route(
       routes: [
         GoRouteData.$route(
           path: '/settings',
-          factory: _$SettingsRoute._fromState,
+          factory: $SettingsRoute._fromState,
           routes: [
             GoRouteData.$route(
               path: 'theme',
               parentNavigatorKey: ThemeRoute.$parentNavigatorKey,
-              factory: _$ThemeRoute._fromState,
+              factory: $ThemeRoute._fromState,
             ),
             GoRouteData.$route(
               path: 'content',
               parentNavigatorKey: ContentSettingsRoute.$parentNavigatorKey,
-              factory: _$ContentSettingsRoute._fromState,
+              factory: $ContentSettingsRoute._fromState,
             ),
             GoRouteData.$route(
               path: 'data-collection',
               parentNavigatorKey: DataCollectionRoute.$parentNavigatorKey,
-              factory: _$DataCollectionRoute._fromState,
+              factory: $DataCollectionRoute._fromState,
             ),
             GoRouteData.$route(
               path: 'about',
               parentNavigatorKey: AboutRoute.$parentNavigatorKey,
-              factory: _$AboutRoute._fromState,
+              factory: $AboutRoute._fromState,
             ),
           ],
         ),
@@ -195,7 +195,7 @@ extension $AppStatefulShellRouteExtension on AppStatefulShellRoute {
       const AppStatefulShellRoute();
 }
 
-mixin _$HomeRoute on GoRouteData {
+mixin $HomeRoute on GoRouteData {
   static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
 
   @override
@@ -220,7 +220,7 @@ extension $PostShellRouteExtension on PostShellRoute {
       const PostShellRoute();
 }
 
-mixin _$PostRoute on RelativeGoRouteData {
+mixin $PostRoute on RelativeGoRouteData {
   static PostRoute _fromState(GoRouterState state) =>
       PostRoute(postId: state.pathParameters['postId']!);
 
@@ -250,7 +250,7 @@ mixin _$PostRoute on RelativeGoRouteData {
       context.replace(relativeLocation);
 }
 
-mixin _$CommentRoute on RelativeGoRouteData {
+mixin $CommentRoute on RelativeGoRouteData {
   static CommentRoute _fromState(GoRouterState state) => const CommentRoute();
 
   @override
@@ -275,7 +275,7 @@ mixin _$CommentRoute on RelativeGoRouteData {
       context.replace(relativeLocation);
 }
 
-mixin _$ReplyRoute on RelativeGoRouteData {
+mixin $ReplyRoute on RelativeGoRouteData {
   static ReplyRoute _fromState(GoRouterState state) =>
       ReplyRoute(url: state.uri.queryParameters['url']!);
 
@@ -304,7 +304,7 @@ mixin _$ReplyRoute on RelativeGoRouteData {
       context.replace(relativeLocation);
 }
 
-mixin _$SearchRoute on GoRouteData {
+mixin $SearchRoute on GoRouteData {
   static SearchRoute _fromState(GoRouterState state) => const SearchRoute();
 
   @override
@@ -329,7 +329,7 @@ extension $ThreadFeedShellRouteExtension on ThreadFeedShellRoute {
       const ThreadFeedShellRoute();
 }
 
-mixin _$ThreadFeedRoute on GoRouteData {
+mixin $ThreadFeedRoute on GoRouteData {
   static ThreadFeedRoute _fromState(GoRouterState state) =>
       const ThreadFeedRoute();
 
@@ -355,7 +355,7 @@ extension $DraftShellRouteExtension on DraftShellRoute {
       const DraftShellRoute();
 }
 
-mixin _$DraftRoute on GoRouteData {
+mixin $DraftRoute on GoRouteData {
   static DraftRoute _fromState(GoRouterState state) => const DraftRoute();
 
   @override
@@ -375,7 +375,7 @@ mixin _$DraftRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$SettingsRoute on GoRouteData {
+mixin $SettingsRoute on GoRouteData {
   static SettingsRoute _fromState(GoRouterState state) => const SettingsRoute();
 
   @override
@@ -395,7 +395,7 @@ mixin _$SettingsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$ThemeRoute on GoRouteData {
+mixin $ThemeRoute on GoRouteData {
   static ThemeRoute _fromState(GoRouterState state) => const ThemeRoute();
 
   @override
@@ -415,7 +415,7 @@ mixin _$ThemeRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$ContentSettingsRoute on GoRouteData {
+mixin $ContentSettingsRoute on GoRouteData {
   static ContentSettingsRoute _fromState(GoRouterState state) =>
       const ContentSettingsRoute();
 
@@ -436,7 +436,7 @@ mixin _$ContentSettingsRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$DataCollectionRoute on GoRouteData {
+mixin $DataCollectionRoute on GoRouteData {
   static DataCollectionRoute _fromState(GoRouterState state) =>
       const DataCollectionRoute();
 
@@ -457,7 +457,7 @@ mixin _$DataCollectionRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin _$AboutRoute on GoRouteData {
+mixin $AboutRoute on GoRouteData {
   static AboutRoute _fromState(GoRouterState state) => const AboutRoute();
 
   @override
