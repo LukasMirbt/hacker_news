@@ -20,9 +20,7 @@ class ShareLauncher {
   Future<void> share({required String text}) async {
     try {
       await _instance.share(
-        ShareParams(
-          text: text,
-        ),
+        ShareParams(text: text),
       );
     } catch (error, stackTrace) {
       Error.throwWithStackTrace(
