@@ -18,9 +18,6 @@ class _TestAppTheme extends AppTheme {
 
   @override
   SystemUiOverlayStyle get systemOverlayStyle => SystemUiOverlayStyle.dark;
-
-  @override
-  SkeletonizerConfigData get skeletonizerConfig => SkeletonizerConfigData();
 }
 
 void main() {
@@ -91,17 +88,25 @@ void main() {
 
     group('skeletonizerConfig', () {
       test('returns correct $SkeletonizerConfigData', () {
+        final baseTheme = _TestAppTheme();
+        final baseConfig = baseTheme.skeletonizerConfig;
         final theme = createSubject();
         expect(
           theme.skeletonizerConfig,
-          isA<SkeletonizerConfigData>().having(
-            (config) => config.effect,
-            'effect',
-            ShimmerEffect(
-              baseColor: colors.outlineVariant,
-              highlightColor: colors.surfaceContainerLow,
-            ),
-          ),
+          isA<SkeletonizerConfigData>()
+              .having(
+                (config) => config.justifyMultiLineText,
+                'justifyMultiLineText',
+                baseConfig.justifyMultiLineText,
+              )
+              .having(
+                (config) => config.effect,
+                'effect',
+                ShimmerEffect(
+                  baseColor: colors.outlineVariant,
+                  highlightColor: colors.surfaceContainerLow,
+                ),
+              ),
         );
       });
     });

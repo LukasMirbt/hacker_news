@@ -36,8 +36,7 @@ class DarkTheme extends AppTheme {
 
   @override
   SkeletonizerConfigData get skeletonizerConfig {
-    return SkeletonizerConfigData(
-      justifyMultiLineText: false,
+    return super.skeletonizerConfig.copyWith(
       effect: ShimmerEffect(
         baseColor: colors.surfaceContainerHigh,
         highlightColor: colors.surfaceContainerHighest,

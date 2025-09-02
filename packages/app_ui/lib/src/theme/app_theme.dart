@@ -212,5 +212,9 @@ abstract class AppTheme {
     );
   }
 
-  SkeletonizerConfigData get skeletonizerConfig;
+  SkeletonizerConfigData get skeletonizerConfig {
+    return const SkeletonizerConfigData(
+      justifyMultiLineText: false,
+    );
+  }
 }
