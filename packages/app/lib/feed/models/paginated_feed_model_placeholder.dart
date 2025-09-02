@@ -7,18 +7,7 @@ class PaginatedFeedModelPlaceholder extends PaginatedFeedModel {
         feed: PaginatedFeed.initial(FeedType.jobs),
         items: List.filled(
           10,
-          PostFeedItemModel(
-            PostFeedItemPlaceholder(
-              title: 'Lorem ipsum dolor sit amet',
-              url: 'https://example.com',
-              age: DateTime(1),
-              urlHost: 'example.com',
-              score: 10,
-              hnuser: const HnuserPlaceholder(
-                id: 'Lorem',
-              ),
-            ),
-          ),
+          PostFeedItemModelPlaceholder(),
         ),
       );
 

@@ -8,14 +8,15 @@ class CommentListModelPlaceholder extends CommentListModel {
           10,
           OtherUserCommentModel(
             comment: repository.OtherUserCommentPlaceholder(
-              htmlText:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                  'Praesent vel urna vitae sapien ullamcorper facilisis. '
-                  'Phasellus sit amet sapien non elit tincidunt euismod. '
-                  'Integer ullamcorper, nisl at ultricies commodo, purus '
-                  'justo vestibulum lectus, sit amet feugiat eros nulla ac '
-                  'erat. Vestibulum convallis lacus vitae turpis placerat, '
-                  'at tincidunt nisl odio.',
+              htmlText: '''
+                  Lorem ipsum dolor sit amet, consectetur, sed
+                  do eiusmod tempor incididunt ut labore et dolore
+                  magna aliqua. Ut enim ad minim veniam, quis<p>nostrud
+                  exercitation ullamco laboris nisi ut aliquip(ex ea commodo
+                  consequat. Duis auto irure dolor in reprehenderit in
+                  voluptate velit) esse cillum dolore eu fugiat,
+                  nulla parriatur. Excepteur sint occaecat cupidatat
+                  non proident, sunt in culpa officia deserunt.</p>''',
             ),
           ),
         ),
