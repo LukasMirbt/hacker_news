@@ -3,3 +3,4 @@ export 'feed_vote_model.dart';
 export 'item_press.dart';
 export 'paginated_feed_model.dart';
 export 'paginated_feed_model_placeholder.dart';
+export 'post_feed_item_model_placeholder.dart';

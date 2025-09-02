@@ -16,6 +16,19 @@ void main() {
       });
     });
 
+    group('items', () {
+      test('returns ${PostFeedItemModelPlaceholder}s', () {
+        final model = createSubject();
+        expect(
+          model.items,
+          List.filled(
+            10,
+            PostFeedItemModelPlaceholder(),
+          ),
+        );
+      });
+    });
+
     group('isPlaceholder', () {
       test('returns true', () {
         final model = createSubject();

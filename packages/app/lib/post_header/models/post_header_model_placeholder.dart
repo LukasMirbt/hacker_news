@@ -6,7 +6,7 @@ class PostHeaderModelPlaceholder extends PostHeaderModel {
   PostHeaderModelPlaceholder()
     : super(
         repository.PostHeaderPlaceholder(
-          title: 'Lorem ipsum dolor sit amet',
+          title: 'Lorem ipsum dolor sit amet consectetur',
           url: 'https://example.com',
           urlHost: 'example.com',
           hnuser: const HnuserPlaceholder(
