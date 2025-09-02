@@ -14,7 +14,6 @@ class FeedRepository {
   final VisitedPostStorage _storage;
 
   Future<PaginatedFeed> fetchMore(PaginatedFeed feed) async {
-    /*  await Future.delayed(const Duration(seconds: 500)); */
     final page = await _api.fetchFeedPage(feed.nextUrl);
     final extendedFeed = feed.extendWith(page);
     return extendedFeed;
