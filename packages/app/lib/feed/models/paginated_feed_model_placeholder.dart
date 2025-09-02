@@ -5,10 +5,17 @@ class PaginatedFeedModelPlaceholder extends PaginatedFeedModel {
   PaginatedFeedModelPlaceholder()
     : super(
         feed: PaginatedFeed.initial(FeedType.jobs),
-        items: List.filled(
-          10,
-          PostFeedItemModelPlaceholder(),
-        ),
+        // TODO: Make irregular
+        items: [
+          PostFeedItemModelPlaceholder2(),
+          PostFeedItemModelPlaceholder1(),
+          PostFeedItemModelPlaceholder2(),
+          PostFeedItemModelPlaceholder1(),
+          PostFeedItemModelPlaceholder2(),
+          PostFeedItemModelPlaceholder1(),
+          PostFeedItemModelPlaceholder2(),
+          PostFeedItemModelPlaceholder1(),
+        ],
       );
 
   @override
