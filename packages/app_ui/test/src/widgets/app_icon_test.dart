@@ -19,7 +19,7 @@ void main() {
       return tester.widget<Icon>(find.byType(Icon));
     }
 
-    group('default constructor', () {
+    group('unnamed constructor', () {
       test('returns $AppIcon with correct values', () {
         final widget = AppIcon(
           icon,

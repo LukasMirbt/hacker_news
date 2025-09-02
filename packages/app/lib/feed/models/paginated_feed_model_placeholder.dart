@@ -5,9 +5,9 @@ class PaginatedFeedModelPlaceholder extends PaginatedFeedModel {
   PaginatedFeedModelPlaceholder()
     : super(
         feed: PaginatedFeed.initial(FeedType.jobs),
-        items: List.filled(
+        items: List.generate(
           10,
-          PostFeedItemModelPlaceholder(),
+          PostFeedItemModelPlaceholder.new,
         ),
       );
 

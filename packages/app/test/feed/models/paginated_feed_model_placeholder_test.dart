@@ -8,24 +8,17 @@ void main() {
     }
 
     group('constructor', () {
-      test('returns $PaginatedFeedModel', () {
-        expect(
-          createSubject(),
-          isA<PaginatedFeedModel>(),
-        );
-      });
-    });
-
-    group('items', () {
-      test('returns ${PostFeedItemModelPlaceholder}s', () {
-        final model = createSubject();
-        expect(
-          model.items,
-          List.filled(
-            10,
-            PostFeedItemModelPlaceholder(),
-          ),
-        );
+      group('items', () {
+        test('returns ${PostFeedItemModelPlaceholder}s', () {
+          final model = createSubject();
+          expect(
+            model.items,
+            List.generate(
+              10,
+              PostFeedItemModelPlaceholder.new,
+            ),
+          );
+        });
       });
     });
 

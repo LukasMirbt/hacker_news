@@ -14,7 +14,6 @@ class _TestAppTheme extends AppTheme {
     required this.baseColorScheme,
     required this.textStyles,
     required this.systemOverlayStyle,
-    required this.skeletonizerConfig,
   });
 
   @override
@@ -28,9 +27,6 @@ class _TestAppTheme extends AppTheme {
 
   @override
   final SystemUiOverlayStyle systemOverlayStyle;
-
-  @override
-  final SkeletonizerConfigData skeletonizerConfig;
 }
 
 void main() {
@@ -47,7 +43,6 @@ void main() {
           baseColorScheme: baseColorScheme,
           textStyles: textStyles,
           systemOverlayStyle: systemOverlayStyle,
-          skeletonizerConfig: SkeletonizerConfigData(),
         );
         return theme.themeData;
       }
@@ -378,6 +373,20 @@ void main() {
               displayColor: colors.onSurface,
               decorationColor: colors.onSurface,
               decoration: TextDecoration.none,
+            ),
+          );
+        });
+      });
+
+      group('skeletonizerConfig', () {
+        test('has correct values', () {
+          final data = createSubject();
+          expect(
+            data.extension<SkeletonizerConfigData>(),
+            isA<SkeletonizerConfigData>().having(
+              (config) => config.justifyMultiLineText,
+              'justifyMultiLineText',
+              false,
             ),
           );
         });
