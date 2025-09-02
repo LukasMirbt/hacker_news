@@ -37,6 +37,7 @@ class LightTheme extends AppTheme {
   @override
   SkeletonizerConfigData get skeletonizerConfig {
     return SkeletonizerConfigData(
+      justifyMultiLineText: false,
       effect: ShimmerEffect(
         baseColor: colors.outlineVariant,
         highlightColor: colors.surfaceContainerLow,

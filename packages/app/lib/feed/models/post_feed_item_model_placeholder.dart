@@ -6,7 +6,7 @@ class PostFeedItemModelPlaceholder1 extends PostFeedItemModel {
   PostFeedItemModelPlaceholder1()
     : super(
         PostFeedItemPlaceholder(
-          title: 'Lorem ipsum dolor sit amet ellisis',
+          title: 'Lorem ipsum dolor sit amet amet',
           url: 'https://example.com',
           age: DateTime(1),
           urlHost: 'example.com',
@@ -22,7 +22,7 @@ class PostFeedItemModelPlaceholder2 extends PostFeedItemModel {
   PostFeedItemModelPlaceholder2()
     : super(
         PostFeedItemPlaceholder(
-          title: 'Lorem ipsum dolor sit amet\n adipiscing elit, sed do eiusmod',
+          title: 'Lorem ipsum dolor sit amet amet\n elit, sed do eiusmod',
           url: 'https://example.com',
           age: DateTime(1),
           urlHost: 'example.com',
