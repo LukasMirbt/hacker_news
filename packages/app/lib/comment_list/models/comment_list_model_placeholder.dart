@@ -8,14 +8,15 @@ class CommentListModelPlaceholder extends CommentListModel {
           10,
           OtherUserCommentModel(
             comment: repository.OtherUserCommentPlaceholder(
-              htmlText:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                  'Praesent vel urna vitae sapien ullamcorper facilisis. '
-                  'Phasellus sit amet sapien non elit tincidunt euismod. '
-                  'Integer ullamcorper, nisl at ultricies commodo, purus '
-                  'justo vestibulum lectus, sit amet feugiat eros nulla ac '
-                  'erat. Vestibulum convallis lacus vitae turpis placerat, '
-                  'at tincidunt nisl odio.',
+              htmlText: """
+                  And even if you fall under the first category,
+                  I find it hard to believe that the performance 
+                  bottleneck is solved by using Vercel and SSR.<p>With 
+                  all the other crazy shit people are doing (multi-megabyte 
+                  bundle sizes, slow API calls with dozens of round-trips 
+                  to the DB, etc) doing the basics of profiling, 
+                  optimizing, simplifying seems like it'd get you much 
+                  further than changing to a more complex architecture.</p>""",
             ),
           ),
         ),

@@ -27,6 +27,7 @@ class FeedItemOptionsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return const AppBottomSheet(
       children: [
+        // TODO(LukasMirbt): Remove OpenOnWebOption
         OpenOnWebOption(),
       ],
     );
