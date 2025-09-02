@@ -3,12 +3,22 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group(CommentListModelPlaceholder, () {
+    CommentListModelPlaceholder createSubject() {
+      return CommentListModelPlaceholder();
+    }
+
     group('constructor', () {
-      test('returns $CommentListModel', () {
-        expect(
-          CommentListModelPlaceholder(),
-          isA<CommentListModel>(),
-        );
+      group('items', () {
+        test('returns ${OtherUserCommentModelPlaceholder}s', () {
+          final model = createSubject();
+          expect(
+            model.items,
+            List.generate(
+              10,
+              OtherUserCommentModelPlaceholder.from,
+            ),
+          );
+        });
       });
     });
   });
