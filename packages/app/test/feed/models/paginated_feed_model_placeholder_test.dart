@@ -21,9 +21,9 @@ void main() {
         final model = createSubject();
         expect(
           model.items,
-          List.filled(
+          List.generate(
             10,
-            PostFeedItemModelPlaceholder(),
+            PostFeedItemModelPlaceholder.new,
           ),
         );
       });
