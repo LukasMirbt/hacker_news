@@ -121,10 +121,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Opens links inside the app. Some links may open their dedicated app.';
 
   @override
-  String get contentSettings_defaultBrowserLaunchModeTitle => 'Default browser';
+  String get contentSettings_externalBrowserLaunchModeTitle =>
+      'External browser';
 
   @override
-  String get contentSettings_defaultBrowserLaunchModeSubtitle =>
+  String get contentSettings_externalBrowserLaunchModeSubtitle =>
       'Opens links in the default browser or another app';
 
   @override

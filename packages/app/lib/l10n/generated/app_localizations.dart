@@ -300,17 +300,17 @@ abstract class AppLocalizations {
   /// **'Opens links inside the app. Some links may open their dedicated app.'**
   String get contentSettings_inAppBrowserLaunchModeSubtitleAndroid;
 
-  /// No description provided for @contentSettings_defaultBrowserLaunchModeTitle.
+  /// No description provided for @contentSettings_externalBrowserLaunchModeTitle.
   ///
   /// In en, this message translates to:
-  /// **'Default browser'**
-  String get contentSettings_defaultBrowserLaunchModeTitle;
+  /// **'External browser'**
+  String get contentSettings_externalBrowserLaunchModeTitle;
 
-  /// No description provided for @contentSettings_defaultBrowserLaunchModeSubtitle.
+  /// No description provided for @contentSettings_externalBrowserLaunchModeSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Opens links in the default browser or another app'**
-  String get contentSettings_defaultBrowserLaunchModeSubtitle;
+  String get contentSettings_externalBrowserLaunchModeSubtitle;
 
   /// No description provided for @createAccount_title.
   ///
