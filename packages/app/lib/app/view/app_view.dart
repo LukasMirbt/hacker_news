@@ -11,8 +11,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nested/nested.dart';
 
-class AppView extends StatelessWidget {
+class AppView extends StatefulWidget {
   const AppView({super.key});
+
+  @override
+  State<AppView> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<AppView> {
+  late final ThemeData theme;
+  late final ThemeData darkTheme;
+
+  @override
+  void initState() {
+    super.initState();
+    theme = const LightTheme().themeData;
+    darkTheme = const DarkTheme().themeData;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +43,8 @@ class AppView extends StatelessWidget {
       restorationScopeId: 'app',
       themeMode: themeMode,
       routerConfig: goRouter,
-      theme: const LightTheme().themeData,
-      darkTheme: const DarkTheme().themeData,
+      theme: theme,
+      darkTheme: darkTheme,
       localizationsDelegates: const [
         ...AppLocalizations.localizationsDelegates,
         ...AppUiLocalizations.localizationsDelegates,
