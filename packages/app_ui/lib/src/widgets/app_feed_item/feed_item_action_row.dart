@@ -38,6 +38,7 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('hello');
     return const Padding(
       padding: EdgeInsets.only(
         left: AppSpacing.xxlg,

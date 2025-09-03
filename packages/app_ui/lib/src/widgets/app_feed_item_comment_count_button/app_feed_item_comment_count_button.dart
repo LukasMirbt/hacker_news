@@ -65,6 +65,8 @@ class _Text extends StatelessWidget {
       (AppFeedItemCommentCountButtonData data) => data.commentCount,
     );
 
+    print('hello');
+
     return Text(commentCount);
   }
 }
