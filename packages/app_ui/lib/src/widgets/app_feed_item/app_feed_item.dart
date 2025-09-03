@@ -54,16 +54,6 @@ class _ContentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
-    final theme = Theme.of(context);
-
-    return Theme(
-      data: theme.copyWith(
-        textTheme: theme.textTheme.apply(
-          bodyColor: colorScheme.onSurfaceVariant,
-        ),
-      ),
-      child: const FeedItemContentRow(),
-    );
+    return const FeedItemContentRow();
   }
 }

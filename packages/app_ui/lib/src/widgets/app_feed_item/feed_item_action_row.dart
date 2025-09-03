@@ -6,30 +6,7 @@ class FeedItemActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Theme(
-      data: theme.copyWith(
-        iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-            minimumSize: const Size(44, 44),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            foregroundColor: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            minimumSize: const Size(64, 44),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-            alignment: Alignment.centerLeft,
-            foregroundColor: theme.colorScheme.onSurfaceVariant,
-            textStyle: theme.textTheme.bodySmall,
-          ),
-        ),
-      ),
-      child: const _Row(),
-    );
+    return const _Row();
   }
 }
 
