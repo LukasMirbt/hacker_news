@@ -25,7 +25,7 @@ void main() async {
         const mode = LinkLaunchMode.externalApplication;
         expect(
           mode.title(l10n),
-          l10n.contentSettings_defaultBrowserLaunchModeTitle,
+          l10n.contentSettings_externalBrowserLaunchModeTitle,
         );
       });
     });
@@ -59,7 +59,7 @@ void main() async {
         const platform = TargetPlatform.android;
         expect(
           mode.subtitle(l10n, platform),
-          l10n.contentSettings_defaultBrowserLaunchModeSubtitle,
+          l10n.contentSettings_externalBrowserLaunchModeSubtitle,
         );
       });
     });

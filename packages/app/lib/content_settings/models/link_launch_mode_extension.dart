@@ -8,7 +8,7 @@ extension LinkLaunchModeExtension on LinkLaunchMode {
       LinkLaunchMode.inAppBrowserView =>
         l10n.contentSettings_inAppBrowserLaunchModeTitle,
       LinkLaunchMode.externalApplication =>
-        l10n.contentSettings_defaultBrowserLaunchModeTitle,
+        l10n.contentSettings_externalBrowserLaunchModeTitle,
     };
   }
 
@@ -19,7 +19,7 @@ extension LinkLaunchModeExtension on LinkLaunchMode {
       LinkLaunchMode.inAppBrowserView =>
         l10n.contentSettings_inAppBrowserLaunchModeSubtitleAndroid,
       LinkLaunchMode.externalApplication =>
-        l10n.contentSettings_defaultBrowserLaunchModeSubtitle,
+        l10n.contentSettings_externalBrowserLaunchModeSubtitle,
     };
   }
 }
