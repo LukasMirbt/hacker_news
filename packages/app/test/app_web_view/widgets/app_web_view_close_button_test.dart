@@ -25,14 +25,14 @@ void main() {
       );
     }
 
-    testWidgets('renders $IconButton', (tester) async {
+    testWidgets('renders $CloseButton', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(IconButton), findsOneWidget);
+      expect(find.byType(CloseButton), findsOneWidget);
     });
 
     testWidgets('pops when pressed', (tester) async {
       await tester.pumpApp(buildSubject());
-      await tester.tap(find.byType(IconButton));
+      await tester.tap(find.byType(CloseButton));
       verify(goRouter.pop).called(1);
     });
   });
