@@ -18,8 +18,9 @@ class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
 
 void main() {
   final initialState = AppWebViewState.from(
-    configuration: AppWebViewConfiguration.from(
-      initialUrl: Uri.parse('http://example.com'),
+    WebRedirectWebViewConfiguration(
+      url: 'url',
+      html: 'html',
     ),
   );
 
@@ -42,6 +43,11 @@ void main() {
     testWidgets('renders $AppWebViewPopScope', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppWebViewPopScope), findsOneWidget);
+    });
+
+    testWidgets('renders $AppWebViewAppBar', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppWebViewAppBar), findsOneWidget);
     });
 
     testWidgets('renders $AppWebViewActionBar', (tester) async {

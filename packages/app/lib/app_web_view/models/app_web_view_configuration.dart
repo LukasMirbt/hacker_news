@@ -1,40 +1,46 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+enum NavigationDecision {
+  prevent,
+  navigate,
+}
+
+typedef OnNavigationRequest = NavigationDecision Function(Uri url);
+
 class AppWebViewConfiguration extends Equatable {
   const AppWebViewConfiguration({
-    required this.initialData,
-    required this.initialUrlRequest,
+    required this.initialUrl,
+    this.initialHtml,
+    this.onNavigationRequest,
   });
 
-  factory AppWebViewConfiguration.from({
-    required Uri initialUrl,
-    String? initialHtml,
-  }) {
-    if (initialHtml != null) {
-      return AppWebViewConfiguration(
-        initialUrlRequest: null,
-        initialData: InAppWebViewInitialData(
-          baseUrl: WebUri.uri(initialUrl),
-          data: initialHtml,
-        ),
-      );
-    } else {
-      return AppWebViewConfiguration(
-        initialData: null,
-        initialUrlRequest: URLRequest(
-          url: WebUri.uri(initialUrl),
-        ),
-      );
-    }
+  final Uri initialUrl;
+  final String? initialHtml;
+  final OnNavigationRequest? onNavigationRequest;
+
+  InAppWebViewInitialData? initialData() {
+    final initialHtml = this.initialHtml;
+    if (initialHtml == null) return null;
+
+    return InAppWebViewInitialData(
+      baseUrl: WebUri.uri(initialUrl),
+      data: initialHtml,
+    );
   }
 
-  final InAppWebViewInitialData? initialData;
-  final URLRequest? initialUrlRequest;
+  URLRequest? initialUrlRequest() {
+    if (initialHtml != null) return null;
+
+    return URLRequest(
+      url: WebUri.uri(initialUrl),
+    );
+  }
 
   @override
   List<Object?> get props => [
-    initialUrlRequest,
-    initialData,
+    initialUrl,
+    initialHtml,
+    onNavigationRequest,
   ];
 }

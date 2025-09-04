@@ -56,4 +56,11 @@ class WebLinks {
       queryParameters: {'id': id},
     );
   }
+
+  Uri profileUrl(String id) {
+    return baseUrl.replace(
+      path: 'user',
+      queryParameters: {'id': id},
+    );
+  }
 }

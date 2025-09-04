@@ -21,7 +21,6 @@ class AuthenticationBloc
     on<AuthenticationSubscriptionRequested>(
       _onSubscriptionRequested,
     );
-    on<AuthenticationLogoutPressed>(_onLogoutPressed);
   }
 
   final AuthenticationRepository _repository;
@@ -39,33 +38,5 @@ class AuthenticationBloc
         status: repositoryState.status,
       ),
     );
-  }
-
-  Future<void> _onLogoutPressed(
-    AuthenticationLogoutPressed event,
-    Emitter<AuthenticationState> emit,
-  ) async {
-    emit(
-      state.copyWith(
-        logoutStatus: LogoutStatus.loading,
-      ),
-    );
-
-    try {
-      await _repository.logout();
-
-      emit(
-        state.copyWith(
-          logoutStatus: LogoutStatus.success,
-        ),
-      );
-    } catch (e, s) {
-      addError(e, s);
-      emit(
-        state.copyWith(
-          logoutStatus: LogoutStatus.failure,
-        ),
-      );
-    }
   }
 }

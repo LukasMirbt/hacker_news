@@ -20,8 +20,8 @@ class _AppWebViewState extends State<AppWebView> {
     super.initState();
     final state = context.read<AppWebViewBloc>().state;
     final configuration = state.configuration;
-    _initialData = configuration.initialData;
-    _initialUrlRequest = configuration.initialUrlRequest;
+    _initialData = configuration.initialData();
+    _initialUrlRequest = configuration.initialUrlRequest();
   }
 
   @override
@@ -35,8 +35,9 @@ class _AppWebViewState extends State<AppWebView> {
         );
       },
       shouldOverrideUrlLoading: (_, navigationAction) {
-        final state = context.read<AppWebViewBloc>().state;
-        final onNavigationRequest = state.onNavigationRequest;
+        final bloc = context.read<AppWebViewBloc>();
+        final state = bloc.state;
+        final onNavigationRequest = state.configuration.onNavigationRequest;
         if (onNavigationRequest == null) return NavigationActionPolicy.ALLOW;
 
         final url = navigationAction.request.url;
@@ -44,10 +45,15 @@ class _AppWebViewState extends State<AppWebView> {
 
         final decision = onNavigationRequest(url);
 
-        return switch (decision) {
-          NavigationDecision.prevent => NavigationActionPolicy.CANCEL,
-          NavigationDecision.navigate => NavigationActionPolicy.ALLOW,
-        };
+        switch (decision) {
+          case NavigationDecision.prevent:
+            bloc.add(
+              AppWebViewNavigationPrevented(url),
+            );
+            return NavigationActionPolicy.CANCEL;
+          case NavigationDecision.navigate:
+            return NavigationActionPolicy.ALLOW;
+        }
       },
       onLoadStart: (_, url) {
         context.read<AppWebViewBloc>().add(

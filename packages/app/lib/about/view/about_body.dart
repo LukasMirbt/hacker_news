@@ -17,7 +17,6 @@ class AboutBody extends StatelessWidget {
           PrivacyPolicyListItem(),
           Divider(),
           VersionListItem(),
-          Divider(),
         ],
       ),
     );

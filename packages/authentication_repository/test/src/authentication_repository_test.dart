@@ -116,16 +116,5 @@ void main() {
         verify(createAccount).called(1);
       });
     });
-
-    group('logout', () {
-      final logout = () => api.logout();
-
-      test('calls api.logout', () async {
-        when(logout).thenAnswer((_) async {});
-        final repository = createSubject();
-        await repository.logout();
-        verify(logout).called(1);
-      });
-    });
   });
 }

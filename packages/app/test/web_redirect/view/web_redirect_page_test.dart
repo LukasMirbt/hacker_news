@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,6 +22,23 @@ void main() {
         html: null,
       );
     }
+
+    BuildContext findContext(WidgetTester tester) {
+      return tester.element(
+        find.byType(WebRedirectView),
+      );
+    }
+
+    testWidgets('provides $AppWebViewBloc '
+        'with $WebRedirectWebViewConfiguration', (tester) async {
+      await tester.pumpApp(buildSubject());
+      final context = findContext(tester);
+      final bloc = context.read<AppWebViewBloc>();
+      expect(
+        bloc.state.configuration,
+        isA<WebRedirectWebViewConfiguration>(),
+      );
+    });
 
     testWidgets('renders $WebRedirectView', (tester) async {
       await tester.pumpApp(buildSubject());

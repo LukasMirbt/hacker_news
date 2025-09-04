@@ -126,5 +126,18 @@ void main() {
         );
       });
     });
+
+    group('profileUrl', () {
+      test('returns correct $Uri', () {
+        final links = createSubject();
+        expect(
+          links.profileUrl(id),
+          WebLinks.baseUrl.replace(
+            path: 'user',
+            queryParameters: {'id': id},
+          ),
+        );
+      });
+    });
   });
 }

@@ -21,6 +21,15 @@ final class AppWebViewCreated extends AppWebViewEvent {
   List<Object> get props => [controller];
 }
 
+final class AppWebViewNavigationPrevented extends AppWebViewEvent {
+  const AppWebViewNavigationPrevented(this.url);
+
+  final Uri url;
+
+  @override
+  List<Object> get props => [url];
+}
+
 final class AppWebViewProgressChanged extends AppWebViewEvent {
   const AppWebViewProgressChanged(this.progress);
 

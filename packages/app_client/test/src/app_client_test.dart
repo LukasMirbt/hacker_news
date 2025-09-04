@@ -448,30 +448,5 @@ void main() {
         },
       );
     });
-
-    group('unauthenticate', () {
-      final deleteAll = () => cookieJar.deleteAll();
-      final deleteUserId = () => userIdStorage.delete();
-
-      blocTest<AppClient, AuthenticationState>(
-        'deletes persisted data and emits updated state',
-        setUp: () {
-          when(deleteAll).thenAnswer((_) async {});
-          when(deleteUserId).thenAnswer((_) async {});
-        },
-        build: createSubject,
-        act: (client) => client.unauthenticate(),
-        expect: () => [
-          initialState.copyWith(
-            user: User.empty,
-            status: AuthenticationStatus.unauthenticated,
-          ),
-        ],
-        verify: (_) {
-          verify(deleteAll).called(1);
-          verify(deleteUserId).called(1);
-        },
-      );
-    });
   });
 }

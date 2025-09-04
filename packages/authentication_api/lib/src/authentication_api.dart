@@ -63,10 +63,4 @@ class AuthenticationApi {
 
     await _client.authenticate(userId: username);
   }
-
-  Future<void> logout() async {
-    // TODO(LukasMirbt): Handle network errors
-    await _client.http.get<void>(state.user.logoutUrl);
-    await _client.unauthenticate();
-  }
 }

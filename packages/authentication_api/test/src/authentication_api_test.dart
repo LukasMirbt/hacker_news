@@ -163,27 +163,5 @@ void main() {
         verify(authenticate).called(1);
       });
     });
-
-    group('logout', () {
-      final user = UserPlaceholder();
-      final state = AuthenticationStatePlaceholder(user: user);
-
-      final logoutRequest = () => http.get<void>(user.logoutUrl);
-      final unauthenticate = () => client.unauthenticate();
-
-      test('makes logout request and calls unauthenticate', () async {
-        when(() => client.state).thenReturn(state);
-        when(logoutRequest).thenAnswer(
-          (_) async => Response<void>(
-            requestOptions: RequestOptions(),
-          ),
-        );
-        when(unauthenticate).thenAnswer((_) async {});
-        final api = createSubject();
-        await api.logout();
-        verify(logoutRequest).called(1);
-        verify(unauthenticate).called(1);
-      });
-    });
   });
 }

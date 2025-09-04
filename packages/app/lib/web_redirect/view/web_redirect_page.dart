@@ -22,9 +22,9 @@ class WebRedirectPage extends StatelessWidget {
         final controller = AppWebViewController();
         final cookieManager = CookieManager.instance();
         return AppWebViewBloc(
-          configuration: AppWebViewConfiguration.from(
-            initialUrl: Uri.parse(url),
-            initialHtml: html,
+          configuration: WebRedirectWebViewConfiguration(
+            url: url,
+            html: html,
           ),
           appWebViewController: controller,
           appWebViewAuthenticationModel: AppWebViewAuthenticationModel(

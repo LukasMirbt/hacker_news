@@ -34,10 +34,5 @@ void main() {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AboutListItem), findsOneWidget);
     });
-
-    testWidgets('renders $UserSection', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(UserSection), findsOneWidget);
-    });
   });
 }

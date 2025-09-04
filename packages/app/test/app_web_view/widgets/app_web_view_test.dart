@@ -68,8 +68,8 @@ void main() {
       logger = _MockLogger();
       when(() => bloc.state).thenReturn(state);
       when(() => state.configuration).thenReturn(configuration);
-      when(() => configuration.initialData).thenReturn(initialData);
-      when(() => configuration.initialUrlRequest).thenReturn(initialUrlRequest);
+      when(configuration.initialData).thenReturn(initialData);
+      when(configuration.initialUrlRequest).thenReturn(initialUrlRequest);
       platform = MockInAppWebViewPlatform();
       InAppWebViewPlatform.instance = platform;
     });
@@ -127,8 +127,8 @@ void main() {
 
         testWidgets('returns ${NavigationActionPolicy.ALLOW} '
             'when onNavigationRequest is non-null '
-            'request.url is null', (tester) async {
-          when(() => state.onNavigationRequest).thenReturn(
+            'and request.url is null', (tester) async {
+          when(() => configuration.onNavigationRequest).thenReturn(
             (_) => NavigationDecision.navigate,
           );
           when(() => navigationAction.request).thenReturn(
@@ -145,6 +145,7 @@ void main() {
         });
 
         testWidgets('returns ${NavigationActionPolicy.CANCEL} '
+            'and adds $AppWebViewNavigationPrevented '
             'when onNavigationRequest is non-null '
             'and request.url is non-null and onNavigationRequest '
             'returns ${NavigationDecision.prevent}', (tester) async {
@@ -153,7 +154,7 @@ void main() {
           final url = WebUri.uri(
             Uri.parse('http://example.com'),
           );
-          when(() => state.onNavigationRequest).thenReturn(
+          when(() => configuration.onNavigationRequest).thenReturn(
             (_) => decision,
           );
           when(() => navigationAction.request).thenReturn(request);
@@ -166,6 +167,11 @@ void main() {
             navigationAction,
           );
           expect(result, NavigationActionPolicy.CANCEL);
+          verify(
+            () => bloc.add(
+              AppWebViewNavigationPrevented(url),
+            ),
+          ).called(1);
         });
 
         testWidgets('returns ${NavigationActionPolicy.ALLOW} '
@@ -177,7 +183,7 @@ void main() {
           final url = WebUri.uri(
             Uri.parse('http://example.com'),
           );
-          when(() => state.onNavigationRequest).thenReturn(
+          when(() => configuration.onNavigationRequest).thenReturn(
             (_) => decision,
           );
           when(() => navigationAction.request).thenReturn(request);

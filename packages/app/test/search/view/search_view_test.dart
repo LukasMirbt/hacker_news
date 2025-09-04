@@ -18,9 +18,7 @@ class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
 
 void main() {
   final initialState = AppWebViewState.from(
-    configuration: AppWebViewConfiguration.from(
-      initialUrl: Uri.parse('http://example.com'),
-    ),
+    SearchWebViewConfiguration(),
   );
 
   group(SearchView, () {
@@ -38,6 +36,11 @@ void main() {
         child: SearchView(),
       );
     }
+
+    testWidgets('renders $SearchPreventedNavigationListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(SearchPreventedNavigationListener), findsOneWidget);
+    });
 
     testWidgets('renders $AppWebViewPopScope', (tester) async {
       await tester.pumpApp(buildSubject());

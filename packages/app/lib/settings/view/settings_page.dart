@@ -31,8 +31,6 @@ class _Body extends StatelessWidget {
               ContentSettingsListItem(),
               DataCollectionListItem(),
               AboutListItem(),
-              Divider(),
-              UserSection(),
             ],
           ),
         ),
