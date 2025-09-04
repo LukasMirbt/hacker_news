@@ -2,7 +2,6 @@
 
 import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/profile/profile.dart';
-import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,7 @@ void main() {
     ProfileWebViewConfiguration(id: 'id'),
   );
 
-  group(WebRedirectView, () {
+  group(ProfileView, () {
     late AppWebViewBloc bloc;
 
     setUp(() {
@@ -34,13 +33,18 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: WebRedirectView(),
+        child: ProfileView(),
       );
     }
 
     testWidgets('renders $AppWebViewPopScope', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppWebViewPopScope), findsOneWidget);
+    });
+
+    testWidgets('renders $AppWebViewAppBar', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppWebViewAppBar), findsOneWidget);
     });
 
     testWidgets('renders $AppWebViewActionBar', (tester) async {
@@ -53,14 +57,14 @@ void main() {
       expect(find.byType(AppLoadingBody), findsOneWidget);
     });
 
-    testWidgets('renders $WebRedirectBody when !isLoading', (tester) async {
+    testWidgets('renders $ProfileBody when !isLoading', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           initialLoadStatus: InitialLoadStatus.success,
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(WebRedirectBody), findsOneWidget);
+      expect(find.byType(ProfileBody), findsOneWidget);
     });
   });
 }

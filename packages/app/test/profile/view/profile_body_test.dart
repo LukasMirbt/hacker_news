@@ -2,7 +2,6 @@
 
 import 'package:app/app_web_view/app_web_view.dart';
 import 'package:app/profile/profile.dart';
-import 'package:app/web_redirect/web_redirect.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,7 @@ class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
     implements AppWebViewBloc {}
 
 void main() {
-  group(WebRedirectBody, () {
+  group(ProfileBody, () {
     late AppWebViewBloc bloc;
 
     setUp(() {
@@ -34,7 +33,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: WebRedirectBody(),
+        child: ProfileBody(),
       );
     }
 

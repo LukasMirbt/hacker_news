@@ -21,8 +21,13 @@ void main() {
       return SearchWebViewConfiguration(links: links);
     }
 
+    test('is an $AppWebViewConfiguration', () {
+      final configuration = createSubject();
+      expect(configuration, isA<AppWebViewConfiguration>());
+    });
+
     group('initialUrl', () {
-      test('returns links.searchUrl', () {
+      test('has correct value', () {
         final configuration = createSubject();
         expect(configuration.initialUrl, searchUrl);
       });

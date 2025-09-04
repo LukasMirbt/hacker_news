@@ -4,8 +4,8 @@ import 'package:web_links/web_links.dart';
 class ProfileWebViewConfiguration extends AppWebViewConfiguration {
   ProfileWebViewConfiguration({
     required String id,
-    WebLinks webLinks = const WebLinks(),
+    WebLinks links = const WebLinks(),
   }) : super(
-         initialUrl: webLinks.profileUrl(id),
+         initialUrl: links.profileUrl(id),
        );
 }

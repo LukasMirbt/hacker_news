@@ -45,6 +45,11 @@ void main() {
       expect(find.byType(AppWebViewPopScope), findsOneWidget);
     });
 
+    testWidgets('renders $AppWebViewAppBar', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppWebViewAppBar), findsOneWidget);
+    });
+
     testWidgets('renders $AppWebViewActionBar', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppWebViewActionBar), findsOneWidget);
