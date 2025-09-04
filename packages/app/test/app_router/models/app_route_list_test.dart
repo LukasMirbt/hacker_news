@@ -7,13 +7,13 @@ import 'package:app/app_shell/app_shell.dart' as app_tab;
 import 'package:app/login/login.dart' as login;
 import 'package:app/login_loading/login_loading.dart' as login_loading;
 import 'package:app/logout_loading/logout_loading.dart' as logout_loading;
+import 'package:app/profile/profile.dart' as profile;
 import 'package:app/web_redirect/web_redirect.dart' as web_redirect;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
   group(AppRouteList, () {});
-
   AppRouteList createSubject() => AppRouteList();
 
   group('routes', () {
@@ -77,6 +77,14 @@ void main() {
       expect(
         allPaths,
         containsAll(logoutLoadingPaths),
+      );
+    });
+
+    test('contains profile routes', () {
+      final profilePaths = profile.$appRoutes.expand(paths);
+      expect(
+        allPaths,
+        containsAll(profilePaths),
       );
     });
 
