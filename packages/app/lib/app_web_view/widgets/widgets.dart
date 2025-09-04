@@ -2,6 +2,7 @@ export 'app_web_view.dart';
 export 'app_web_view_action_bar.dart';
 export 'app_web_view_app_bar.dart';
 export 'app_web_view_back_button.dart';
+export 'app_web_view_close_button.dart';
 export 'app_web_view_forward_button.dart';
 export 'app_web_view_pop_scope.dart';
 export 'app_web_view_progress_indicator.dart';

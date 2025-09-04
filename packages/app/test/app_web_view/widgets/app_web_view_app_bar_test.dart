@@ -42,6 +42,12 @@ void main() {
         );
       }
 
+      testWidgets('leading is $AppWebViewCloseButton', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final appBar = findWidget(tester);
+        expect(appBar.leading, isA<AppWebViewCloseButton>());
+      });
+
       testWidgets('has correct toolbarHeight', (tester) async {
         await tester.pumpApp(buildSubject());
         final appBar = findWidget(tester);
