@@ -77,7 +77,7 @@ void main() async {
 
     testWidgets('navigates to $WebRedirectRoute when $ListTile '
         'is tapped', (tester) async {
-      final push = () => router.push<Object?>(
+      final push = () => router.push(
         WebRedirectRoute(
           url: webRedirect.urlString,
         ),

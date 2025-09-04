@@ -22,7 +22,7 @@ void main() {
       bloc = _MockAppWebViewBloc();
       when(() => bloc.state).thenReturn(
         AppWebViewState.from(
-          configuration: AppWebViewConfiguration.from(
+          AppWebViewConfiguration(
             initialUrl: Uri.parse('https://example.com'),
           ),
         ),

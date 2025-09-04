@@ -94,59 +94,5 @@ void main() {
         ],
       );
     });
-
-    group(AuthenticationLogoutPressed, () {
-      final logout = () => authenticationRepository.logout();
-
-      blocTest<AuthenticationBloc, AuthenticationState>(
-        'emits [loading, success] when logout succeeds',
-        setUp: () {
-          when(logout).thenAnswer((_) async {
-            return;
-          });
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            AuthenticationLogoutPressed(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            logoutStatus: LogoutStatus.loading,
-          ),
-          initialState.copyWith(
-            logoutStatus: LogoutStatus.success,
-          ),
-        ],
-        verify: (_) {
-          verify(logout).called(1);
-        },
-      );
-
-      blocTest<AuthenticationBloc, AuthenticationState>(
-        'emits [loading, failure] when logout fails',
-        setUp: () {
-          when(logout).thenThrow(Exception());
-        },
-        build: buildBloc,
-        act: (bloc) {
-          bloc.add(
-            AuthenticationLogoutPressed(),
-          );
-        },
-        expect: () => [
-          initialState.copyWith(
-            logoutStatus: LogoutStatus.loading,
-          ),
-          initialState.copyWith(
-            logoutStatus: LogoutStatus.failure,
-          ),
-        ],
-        verify: (_) {
-          verify(logout).called(1);
-        },
-      );
-    });
   });
 }

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthenticationState {
 
- User get user; LoginRedirect get loginRedirect; WebRedirect get webRedirect; AuthenticationStatus get status; LogoutStatus get logoutStatus;
+ User get user; LoginRedirect get loginRedirect; WebRedirect get webRedirect; AuthenticationStatus get status;
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AuthenticationStateCopyWith<AuthenticationState> get copyWith => _$Authenticati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.loginRedirect, loginRedirect) || other.loginRedirect == loginRedirect)&&(identical(other.webRedirect, webRedirect) || other.webRedirect == webRedirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.loginRedirect, loginRedirect) || other.loginRedirect == loginRedirect)&&(identical(other.webRedirect, webRedirect) || other.webRedirect == webRedirect)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,loginRedirect,webRedirect,status,logoutStatus);
+int get hashCode => Object.hash(runtimeType,user,loginRedirect,webRedirect,status);
 
 @override
 String toString() {
-  return 'AuthenticationState(user: $user, loginRedirect: $loginRedirect, webRedirect: $webRedirect, status: $status, logoutStatus: $logoutStatus)';
+  return 'AuthenticationState(user: $user, loginRedirect: $loginRedirect, webRedirect: $webRedirect, status: $status)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AuthenticationStateCopyWith<$Res>  {
   factory $AuthenticationStateCopyWith(AuthenticationState value, $Res Function(AuthenticationState) _then) = _$AuthenticationStateCopyWithImpl;
 @useResult
 $Res call({
- User user, LoginRedirect loginRedirect, WebRedirect webRedirect, AuthenticationStatus status, LogoutStatus logoutStatus
+ User user, LoginRedirect loginRedirect, WebRedirect webRedirect, AuthenticationStatus status
 });
 
 
@@ -62,14 +62,13 @@ class _$AuthenticationStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? loginRedirect = null,Object? webRedirect = null,Object? status = null,Object? logoutStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? loginRedirect = null,Object? webRedirect = null,Object? status = null,}) {
   return _then(_self.copyWith(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,loginRedirect: null == loginRedirect ? _self.loginRedirect : loginRedirect // ignore: cast_nullable_to_non_nullable
 as LoginRedirect,webRedirect: null == webRedirect ? _self.webRedirect : webRedirect // ignore: cast_nullable_to_non_nullable
 as WebRedirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AuthenticationStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable
-as LogoutStatus,
+as AuthenticationStatus,
   ));
 }
 /// Create a copy of AuthenticationState
@@ -163,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status,  LogoutStatus logoutStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthenticationState() when $default != null:
-return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_that.logoutStatus);case _:
+return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status);case _:
   return orElse();
 
 }
@@ -184,10 +183,10 @@ return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status,  LogoutStatus logoutStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _AuthenticationState():
-return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_that.logoutStatus);case _:
+return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +203,10 @@ return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status,  LogoutStatus logoutStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( User user,  LoginRedirect loginRedirect,  WebRedirect webRedirect,  AuthenticationStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthenticationState() when $default != null:
-return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_that.logoutStatus);case _:
+return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status);case _:
   return null;
 
 }
@@ -219,14 +218,13 @@ return $default(_that.user,_that.loginRedirect,_that.webRedirect,_that.status,_t
 
 
 class _AuthenticationState implements AuthenticationState {
-  const _AuthenticationState({required this.user, required this.loginRedirect, required this.webRedirect, required this.status, this.logoutStatus = LogoutStatus.initial});
+  const _AuthenticationState({required this.user, required this.loginRedirect, required this.webRedirect, required this.status});
   
 
 @override final  User user;
 @override final  LoginRedirect loginRedirect;
 @override final  WebRedirect webRedirect;
 @override final  AuthenticationStatus status;
-@override@JsonKey() final  LogoutStatus logoutStatus;
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
@@ -238,16 +236,16 @@ _$AuthenticationStateCopyWith<_AuthenticationState> get copyWith => __$Authentic
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.loginRedirect, loginRedirect) || other.loginRedirect == loginRedirect)&&(identical(other.webRedirect, webRedirect) || other.webRedirect == webRedirect)&&(identical(other.status, status) || other.status == status)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthenticationState&&(identical(other.user, user) || other.user == user)&&(identical(other.loginRedirect, loginRedirect) || other.loginRedirect == loginRedirect)&&(identical(other.webRedirect, webRedirect) || other.webRedirect == webRedirect)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,loginRedirect,webRedirect,status,logoutStatus);
+int get hashCode => Object.hash(runtimeType,user,loginRedirect,webRedirect,status);
 
 @override
 String toString() {
-  return 'AuthenticationState(user: $user, loginRedirect: $loginRedirect, webRedirect: $webRedirect, status: $status, logoutStatus: $logoutStatus)';
+  return 'AuthenticationState(user: $user, loginRedirect: $loginRedirect, webRedirect: $webRedirect, status: $status)';
 }
 
 
@@ -258,7 +256,7 @@ abstract mixin class _$AuthenticationStateCopyWith<$Res> implements $Authenticat
   factory _$AuthenticationStateCopyWith(_AuthenticationState value, $Res Function(_AuthenticationState) _then) = __$AuthenticationStateCopyWithImpl;
 @override @useResult
 $Res call({
- User user, LoginRedirect loginRedirect, WebRedirect webRedirect, AuthenticationStatus status, LogoutStatus logoutStatus
+ User user, LoginRedirect loginRedirect, WebRedirect webRedirect, AuthenticationStatus status
 });
 
 
@@ -275,14 +273,13 @@ class __$AuthenticationStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthenticationState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? loginRedirect = null,Object? webRedirect = null,Object? status = null,Object? logoutStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? loginRedirect = null,Object? webRedirect = null,Object? status = null,}) {
   return _then(_AuthenticationState(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,loginRedirect: null == loginRedirect ? _self.loginRedirect : loginRedirect // ignore: cast_nullable_to_non_nullable
 as LoginRedirect,webRedirect: null == webRedirect ? _self.webRedirect : webRedirect // ignore: cast_nullable_to_non_nullable
 as WebRedirect,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as AuthenticationStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable
-as LogoutStatus,
+as AuthenticationStatus,
   ));
 }
 

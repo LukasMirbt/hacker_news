@@ -19,16 +19,11 @@ class _MockInAppWebViewController extends Mock
 class _MockShareLauncher extends Mock implements ShareLauncher {}
 
 void main() {
-  final configuration = AppWebViewConfiguration.from(
+  final configuration = AppWebViewConfiguration(
     initialUrl: Uri.parse('https://www.example.com'),
   );
 
-  final onNavigationRequest = (_) => NavigationDecision.navigate;
-
-  final initialState = AppWebViewState.from(
-    configuration: configuration,
-    onNavigationRequest: onNavigationRequest,
-  );
+  final initialState = AppWebViewState.from(configuration);
 
   final url = Uri.parse('https://www.example.com/updated');
 
@@ -46,62 +41,14 @@ void main() {
     AppWebViewBloc buildBloc() {
       return AppWebViewBloc(
         configuration: configuration,
-        onNavigationRequest: onNavigationRequest,
         appWebViewController: controller,
         appWebViewAuthenticationModel: authenticationModel,
         shareLauncher: shareLauncher,
       );
     }
 
-    TypeMatcher<AppWebViewState> matchState({
-      AppWebViewConfiguration? configuration,
-      OnNavigationRequest? onNavigationRequest,
-      InitialLoadStatus? initialLoadStatus,
-      AppWebViewProgressModel? progress,
-      bool? canGoBack,
-      bool? canGoForward,
-      Uri? url,
-    }) {
-      return isA<AppWebViewState>()
-          .having(
-            (state) => state.configuration,
-            'configuration',
-            configuration ?? initialState.configuration,
-          )
-          .having(
-            (state) => state.onNavigationRequest,
-            'onNavigationRequest',
-            onNavigationRequest ?? initialState.onNavigationRequest,
-          )
-          .having(
-            (state) => state.initialLoadStatus,
-            'initialLoadStatus',
-            initialLoadStatus ?? initialState.initialLoadStatus,
-          )
-          .having(
-            (state) => state.progress,
-            'progress',
-            progress ?? initialState.progress,
-          )
-          .having(
-            (state) => state.canGoBack,
-            'canGoBack',
-            canGoBack ?? initialState.canGoBack,
-          )
-          .having(
-            (state) => state.canGoForward,
-            'canGoForward',
-            canGoForward ?? initialState.canGoForward,
-          )
-          .having(
-            (state) => state.url,
-            'url',
-            url ?? initialState.url,
-          );
-    }
-
     test('initial state is $AppWebViewState', () {
-      expect(buildBloc().state, matchState());
+      expect(buildBloc().state, initialState);
     });
 
     group(AppWebViewStarted, () {
@@ -120,7 +67,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             initialLoadStatus: InitialLoadStatus.success,
           ),
         ],
@@ -153,6 +100,29 @@ void main() {
       );
     });
 
+    group(AppWebViewNavigationPrevented, () {
+      blocTest(
+        'emits $PreventedNavigation',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            AppWebViewNavigationPrevented(url),
+          );
+        },
+        expect: () => [
+          isA<AppWebViewState>().having(
+            (state) => state.preventedNavigation,
+            'preventedNavigation',
+            isA<PreventedNavigation>().having(
+              (navigation) => navigation.url,
+              'url',
+              url,
+            ),
+          ),
+        ],
+      );
+    });
+
     group(AppWebViewLoadStarted, () {
       blocTest(
         'updates progress',
@@ -163,7 +133,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             url: url,
             progress: AppWebViewProgressModel(
               status: PageLoading(),
@@ -193,7 +163,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             url: url,
             canGoBack: canGoBack,
             canGoForward: canGoForward,
@@ -243,7 +213,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             progress: AppWebViewProgressModel(
               status: PageLoading(progress),
             ),
@@ -282,7 +252,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             url: url,
             canGoBack: canGoBack,
             canGoForward: canGoForward,
@@ -314,7 +284,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             url: url,
             canGoBack: canGoBack,
             canGoForward: canGoForward,
@@ -353,7 +323,7 @@ void main() {
           );
         },
         expect: () => [
-          matchState(
+          initialState.copyWith(
             url: url,
             canGoBack: canGoBack,
             canGoForward: canGoForward,

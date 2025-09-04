@@ -1,1 +1,1 @@
-export 'search_navigation_model.dart';
+export 'search_web_view_configuration.dart';

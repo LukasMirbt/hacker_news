@@ -91,22 +91,6 @@ void main() {
         expect(widget.shape, Border());
       });
 
-      testWidgets('leading is $UserAvatar '
-          'when isAuthenticated', (tester) async {
-        when(() => authenticationState.status).thenReturn(
-          AuthenticationStatus.authenticated,
-        );
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.leading, isA<UserAvatar>());
-      });
-
-      testWidgets('leading is null when !isAuthenticated', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.leading, null);
-      });
-
       testWidgets('centerTitle is true', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
@@ -133,25 +117,21 @@ void main() {
         expect(widget.title, isA<Logo>());
       });
 
-      testWidgets('actions contains $ShellLoginButton '
-          'when !isAuthenticated', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.actions,
-          contains(
-            isA<ShellLoginButton>(),
-          ),
-        );
-      });
-
-      testWidgets('actions is empty when isAuthenticated', (tester) async {
+      testWidgets('actions contains $UserAvatar '
+          'when isAuthenticated', (tester) async {
         when(() => authenticationState.status).thenReturn(
           AuthenticationStatus.authenticated,
         );
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.actions, <Widget>[]);
+        expect(widget.actions, [isA<UserAvatar>()]);
+      });
+
+      testWidgets('actions contains $ShellLoginButton '
+          'when !isAuthenticated', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.actions, [isA<ShellLoginButton>()]);
       });
     });
   });

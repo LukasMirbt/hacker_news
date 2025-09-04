@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_web_view/app_web_view.dart';
+import 'package:app/profile/profile.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
@@ -23,10 +24,7 @@ void main() {
       bloc = _MockAppWebViewBloc();
       when(() => bloc.state).thenReturn(
         AppWebViewState.from(
-          WebRedirectWebViewConfiguration(
-            url: 'url',
-            html: 'html',
-          ),
+          ProfileWebViewConfiguration(id: 'id'),
         ),
       );
       when(() => bloc.stream).thenAnswer((_) => Stream.value(bloc.state));

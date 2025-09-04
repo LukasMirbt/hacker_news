@@ -10,40 +10,13 @@ void main() {
   group(AppWebViewState, () {
     AppWebViewState createSubject({Uri? url}) {
       return AppWebViewState(
-        configuration: AppWebViewConfiguration.from(
+        url: url,
+        preventedNavigation: PreventedNavigation.empty,
+        configuration: AppWebViewConfiguration(
           initialUrl: initialUrl,
         ),
-        url: url,
       );
     }
-
-    group('from', () {
-      test('returns $AppWebViewState', () {
-        final configuration = AppWebViewConfiguration.from(
-          initialUrl: initialUrl,
-        );
-
-        final onNavigationRequest = (_) => NavigationDecision.navigate;
-
-        expect(
-          AppWebViewState.from(
-            configuration: configuration,
-            onNavigationRequest: onNavigationRequest,
-          ),
-          isA<AppWebViewState>()
-              .having(
-                (state) => state.configuration,
-                'configuration',
-                configuration,
-              )
-              .having(
-                (state) => state.onNavigationRequest,
-                'onNavigationRequest',
-                onNavigationRequest,
-              ),
-        );
-      });
-    });
 
     group('title', () {
       test('returns correct value when url is null', () {

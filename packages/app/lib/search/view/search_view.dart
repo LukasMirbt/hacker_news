@@ -9,9 +9,11 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: AppWebViewPopScope(
-        child: _Body(),
+    return const SearchPreventedNavigationListener(
+      child: SafeArea(
+        child: AppWebViewPopScope(
+          child: _Body(),
+        ),
       ),
     );
   }

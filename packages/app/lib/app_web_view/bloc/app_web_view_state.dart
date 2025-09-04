@@ -10,18 +10,11 @@ enum InitialLoadStatus {
   bool get isLoading => this == loading;
 }
 
-enum NavigationDecision {
-  prevent,
-  navigate,
-}
-
-typedef OnNavigationRequest = NavigationDecision Function(Uri url);
-
 @freezed
 abstract class AppWebViewState with _$AppWebViewState {
   const factory AppWebViewState({
     required AppWebViewConfiguration configuration,
-    OnNavigationRequest? onNavigationRequest,
+    required PreventedNavigation preventedNavigation,
     @Default(InitialLoadStatus.loading) InitialLoadStatus initialLoadStatus,
     @Default(AppWebViewProgressModel()) AppWebViewProgressModel progress,
     @Default(false) bool canGoBack,
@@ -29,13 +22,12 @@ abstract class AppWebViewState with _$AppWebViewState {
     Uri? url,
   }) = _AppWebViewState;
 
-  factory AppWebViewState.from({
-    required AppWebViewConfiguration configuration,
-    OnNavigationRequest? onNavigationRequest,
-  }) {
+  factory AppWebViewState.from(
+    AppWebViewConfiguration configuration,
+  ) {
     return AppWebViewState(
       configuration: configuration,
-      onNavigationRequest: onNavigationRequest,
+      preventedNavigation: PreventedNavigation.empty,
     );
   }
 

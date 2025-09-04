@@ -4,62 +4,69 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final initialUrl = Uri.parse('https://example.com');
-  const initialHtml = 'html';
 
   group(AppWebViewConfiguration, () {
-    group('from', () {
-      test('returns $AppWebViewConfiguration with initialData '
-          'when html is non-null', () {
+    AppWebViewConfiguration createSubject({
+      String? initialHtml,
+    }) {
+      return AppWebViewConfiguration(
+        initialUrl: initialUrl,
+        initialHtml: initialHtml,
+        onNavigationRequest: (_) => NavigationDecision.navigate,
+      );
+    }
+
+    group('initialData', () {
+      test('returns null when initialHtml is null', () {
+        final configuration = createSubject();
+        expect(configuration.initialData(), null);
+      });
+
+      test('returns $InAppWebViewInitialData when initialHtml '
+          'is non-null', () {
+        const initialHtml = 'initialHtml';
+        final configuration = createSubject(
+          initialHtml: initialHtml,
+        );
         expect(
-          AppWebViewConfiguration.from(
-            initialUrl: initialUrl,
-            initialHtml: initialHtml,
-          ),
-          isA<AppWebViewConfiguration>()
+          configuration.initialData(),
+          isA<InAppWebViewInitialData>()
               .having(
-                (model) => model.initialData,
-                'initialData',
-                isA<InAppWebViewInitialData>()
-                    .having(
-                      (data) => data.baseUrl,
-                      'baseUrl',
-                      WebUri.uri(initialUrl),
-                    )
-                    .having(
-                      (data) => data.data,
-                      'data',
-                      initialHtml,
-                    ),
+                (data) => data.baseUrl,
+                'baseUrl',
+                WebUri.uri(initialUrl),
               )
               .having(
-                (model) => model.initialUrlRequest,
-                'initialUrlRequest',
-                null,
+                (data) => data.data,
+                'data',
+                initialHtml,
               ),
         );
       });
+    });
 
-      test('returns $AppWebViewConfiguration with initialUrlRequest '
-          'when html is null', () {
+    group('initialUrlRequest', () {
+      test('returns null when initialHtml '
+          'is non-null', () {
+        final configuration = createSubject(
+          initialHtml: 'initialHtml',
+        );
         expect(
-          AppWebViewConfiguration.from(
-            initialUrl: initialUrl,
+          configuration.initialUrlRequest(),
+          null,
+        );
+      });
+
+      test('returns $URLRequest when initial html '
+          'is null', () {
+        final configuration = createSubject();
+        expect(
+          configuration.initialUrlRequest(),
+          isA<URLRequest>().having(
+            (request) => request.url,
+            'url',
+            WebUri.uri(initialUrl),
           ),
-          isA<AppWebViewConfiguration>()
-              .having(
-                (model) => model.initialUrlRequest,
-                'initialUrlRequest',
-                isA<URLRequest>().having(
-                  (request) => request.url,
-                  'url',
-                  WebUri.uri(initialUrl),
-                ),
-              )
-              .having(
-                (model) => model.initialData,
-                'initialData',
-                null,
-              ),
         );
       });
     });

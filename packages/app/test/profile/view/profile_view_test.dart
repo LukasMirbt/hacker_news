@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/app_web_view/app_web_view.dart';
-import 'package:app/search/search.dart';
+import 'package:app/profile/profile.dart';
+import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +19,10 @@ class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
 
 void main() {
   final initialState = AppWebViewState.from(
-    SearchWebViewConfiguration(),
+    ProfileWebViewConfiguration(id: 'id'),
   );
 
-  group(SearchView, () {
+  group(WebRedirectView, () {
     late AppWebViewBloc bloc;
 
     setUp(() {
@@ -33,18 +34,18 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: SearchView(),
+        child: WebRedirectView(),
       );
     }
-
-    testWidgets('renders $SearchPreventedNavigationListener', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(SearchPreventedNavigationListener), findsOneWidget);
-    });
 
     testWidgets('renders $AppWebViewPopScope', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppWebViewPopScope), findsOneWidget);
+    });
+
+    testWidgets('renders $AppWebViewActionBar', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppWebViewActionBar), findsOneWidget);
     });
 
     testWidgets('renders $AppLoadingBody when isLoading', (tester) async {
@@ -52,14 +53,14 @@ void main() {
       expect(find.byType(AppLoadingBody), findsOneWidget);
     });
 
-    testWidgets('renders $SearchBody when !isLoading', (tester) async {
+    testWidgets('renders $WebRedirectBody when !isLoading', (tester) async {
       when(() => bloc.state).thenReturn(
         initialState.copyWith(
           initialLoadStatus: InitialLoadStatus.success,
         ),
       );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(SearchBody), findsOneWidget);
+      expect(find.byType(WebRedirectBody), findsOneWidget);
     });
   });
 }

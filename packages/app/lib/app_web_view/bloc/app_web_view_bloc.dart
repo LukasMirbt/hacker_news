@@ -7,19 +7,16 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
     required AppWebViewConfiguration configuration,
     required AppWebViewController appWebViewController,
     required AppWebViewAuthenticationModel appWebViewAuthenticationModel,
-    OnNavigationRequest? onNavigationRequest,
     ShareLauncher? shareLauncher,
   }) : _controller = appWebViewController,
        _authenticationModel = appWebViewAuthenticationModel,
        _shareLauncher = shareLauncher ?? ShareLauncher(),
        super(
-         AppWebViewState.from(
-           configuration: configuration,
-           onNavigationRequest: onNavigationRequest,
-         ),
+         AppWebViewState.from(configuration),
        ) {
     on<AppWebViewStarted>(_onStarted);
     on<AppWebViewCreated>(_onCreated);
+    on<AppWebViewNavigationPrevented>(_onNavigationPrevented);
     on<AppWebViewLoadStarted>(_onLoadStarted);
     on<AppWebViewVisitedHistoryUpdated>(_onVisitedHistoryUpdated);
     on<AppWebViewProgressChanged>(_onProgressChanged);
@@ -65,6 +62,17 @@ class AppWebViewBloc extends Bloc<AppWebViewEvent, AppWebViewState> {
         progress: const AppWebViewProgressModel(
           status: PageLoading(),
         ),
+      ),
+    );
+  }
+
+  void _onNavigationPrevented(
+    AppWebViewNavigationPrevented event,
+    Emitter<AppWebViewState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        preventedNavigation: PreventedNavigation(event.url),
       ),
     );
   }

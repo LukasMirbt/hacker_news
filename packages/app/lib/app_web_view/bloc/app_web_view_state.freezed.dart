@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppWebViewState {
 
- AppWebViewConfiguration get configuration; OnNavigationRequest? get onNavigationRequest; InitialLoadStatus get initialLoadStatus; AppWebViewProgressModel get progress; bool get canGoBack; bool get canGoForward; Uri? get url;
+ AppWebViewConfiguration get configuration; PreventedNavigation get preventedNavigation; InitialLoadStatus get initialLoadStatus; AppWebViewProgressModel get progress; bool get canGoBack; bool get canGoForward; Uri? get url;
 /// Create a copy of AppWebViewState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AppWebViewStateCopyWith<AppWebViewState> get copyWith => _$AppWebViewStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppWebViewState&&(identical(other.configuration, configuration) || other.configuration == configuration)&&(identical(other.onNavigationRequest, onNavigationRequest) || other.onNavigationRequest == onNavigationRequest)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppWebViewState&&(identical(other.configuration, configuration) || other.configuration == configuration)&&(identical(other.preventedNavigation, preventedNavigation) || other.preventedNavigation == preventedNavigation)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,configuration,onNavigationRequest,initialLoadStatus,progress,canGoBack,canGoForward,url);
+int get hashCode => Object.hash(runtimeType,configuration,preventedNavigation,initialLoadStatus,progress,canGoBack,canGoForward,url);
 
 @override
 String toString() {
-  return 'AppWebViewState(configuration: $configuration, onNavigationRequest: $onNavigationRequest, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward, url: $url)';
+  return 'AppWebViewState(configuration: $configuration, preventedNavigation: $preventedNavigation, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward, url: $url)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AppWebViewStateCopyWith<$Res>  {
   factory $AppWebViewStateCopyWith(AppWebViewState value, $Res Function(AppWebViewState) _then) = _$AppWebViewStateCopyWithImpl;
 @useResult
 $Res call({
- AppWebViewConfiguration configuration, OnNavigationRequest? onNavigationRequest, InitialLoadStatus initialLoadStatus, AppWebViewProgressModel progress, bool canGoBack, bool canGoForward, Uri? url
+ AppWebViewConfiguration configuration, PreventedNavigation preventedNavigation, InitialLoadStatus initialLoadStatus, AppWebViewProgressModel progress, bool canGoBack, bool canGoForward, Uri? url
 });
 
 
@@ -62,11 +62,11 @@ class _$AppWebViewStateCopyWithImpl<$Res>
 
 /// Create a copy of AppWebViewState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? configuration = null,Object? onNavigationRequest = freezed,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,Object? url = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? configuration = null,Object? preventedNavigation = null,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,Object? url = freezed,}) {
   return _then(_self.copyWith(
 configuration: null == configuration ? _self.configuration : configuration // ignore: cast_nullable_to_non_nullable
-as AppWebViewConfiguration,onNavigationRequest: freezed == onNavigationRequest ? _self.onNavigationRequest : onNavigationRequest // ignore: cast_nullable_to_non_nullable
-as OnNavigationRequest?,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
+as AppWebViewConfiguration,preventedNavigation: null == preventedNavigation ? _self.preventedNavigation : preventedNavigation // ignore: cast_nullable_to_non_nullable
+as PreventedNavigation,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
 as InitialLoadStatus,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as AppWebViewProgressModel,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
 as bool,canGoForward: null == canGoForward ? _self.canGoForward : canGoForward // ignore: cast_nullable_to_non_nullable
@@ -156,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppWebViewConfiguration configuration,  OnNavigationRequest? onNavigationRequest,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppWebViewConfiguration configuration,  PreventedNavigation preventedNavigation,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppWebViewState() when $default != null:
-return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
+return $default(_that.configuration,_that.preventedNavigation,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
   return orElse();
 
 }
@@ -177,10 +177,10 @@ return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadS
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppWebViewConfiguration configuration,  OnNavigationRequest? onNavigationRequest,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppWebViewConfiguration configuration,  PreventedNavigation preventedNavigation,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)  $default,) {final _that = this;
 switch (_that) {
 case _AppWebViewState():
-return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
+return $default(_that.configuration,_that.preventedNavigation,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +197,10 @@ return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadS
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppWebViewConfiguration configuration,  OnNavigationRequest? onNavigationRequest,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppWebViewConfiguration configuration,  PreventedNavigation preventedNavigation,  InitialLoadStatus initialLoadStatus,  AppWebViewProgressModel progress,  bool canGoBack,  bool canGoForward,  Uri? url)?  $default,) {final _that = this;
 switch (_that) {
 case _AppWebViewState() when $default != null:
-return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
+return $default(_that.configuration,_that.preventedNavigation,_that.initialLoadStatus,_that.progress,_that.canGoBack,_that.canGoForward,_that.url);case _:
   return null;
 
 }
@@ -212,11 +212,11 @@ return $default(_that.configuration,_that.onNavigationRequest,_that.initialLoadS
 
 
 class _AppWebViewState extends AppWebViewState {
-  const _AppWebViewState({required this.configuration, this.onNavigationRequest, this.initialLoadStatus = InitialLoadStatus.loading, this.progress = const AppWebViewProgressModel(), this.canGoBack = false, this.canGoForward = false, this.url}): super._();
+  const _AppWebViewState({required this.configuration, required this.preventedNavigation, this.initialLoadStatus = InitialLoadStatus.loading, this.progress = const AppWebViewProgressModel(), this.canGoBack = false, this.canGoForward = false, this.url}): super._();
   
 
 @override final  AppWebViewConfiguration configuration;
-@override final  OnNavigationRequest? onNavigationRequest;
+@override final  PreventedNavigation preventedNavigation;
 @override@JsonKey() final  InitialLoadStatus initialLoadStatus;
 @override@JsonKey() final  AppWebViewProgressModel progress;
 @override@JsonKey() final  bool canGoBack;
@@ -233,16 +233,16 @@ _$AppWebViewStateCopyWith<_AppWebViewState> get copyWith => __$AppWebViewStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppWebViewState&&(identical(other.configuration, configuration) || other.configuration == configuration)&&(identical(other.onNavigationRequest, onNavigationRequest) || other.onNavigationRequest == onNavigationRequest)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppWebViewState&&(identical(other.configuration, configuration) || other.configuration == configuration)&&(identical(other.preventedNavigation, preventedNavigation) || other.preventedNavigation == preventedNavigation)&&(identical(other.initialLoadStatus, initialLoadStatus) || other.initialLoadStatus == initialLoadStatus)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.canGoBack, canGoBack) || other.canGoBack == canGoBack)&&(identical(other.canGoForward, canGoForward) || other.canGoForward == canGoForward)&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,configuration,onNavigationRequest,initialLoadStatus,progress,canGoBack,canGoForward,url);
+int get hashCode => Object.hash(runtimeType,configuration,preventedNavigation,initialLoadStatus,progress,canGoBack,canGoForward,url);
 
 @override
 String toString() {
-  return 'AppWebViewState(configuration: $configuration, onNavigationRequest: $onNavigationRequest, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward, url: $url)';
+  return 'AppWebViewState(configuration: $configuration, preventedNavigation: $preventedNavigation, initialLoadStatus: $initialLoadStatus, progress: $progress, canGoBack: $canGoBack, canGoForward: $canGoForward, url: $url)';
 }
 
 
@@ -253,7 +253,7 @@ abstract mixin class _$AppWebViewStateCopyWith<$Res> implements $AppWebViewState
   factory _$AppWebViewStateCopyWith(_AppWebViewState value, $Res Function(_AppWebViewState) _then) = __$AppWebViewStateCopyWithImpl;
 @override @useResult
 $Res call({
- AppWebViewConfiguration configuration, OnNavigationRequest? onNavigationRequest, InitialLoadStatus initialLoadStatus, AppWebViewProgressModel progress, bool canGoBack, bool canGoForward, Uri? url
+ AppWebViewConfiguration configuration, PreventedNavigation preventedNavigation, InitialLoadStatus initialLoadStatus, AppWebViewProgressModel progress, bool canGoBack, bool canGoForward, Uri? url
 });
 
 
@@ -270,11 +270,11 @@ class __$AppWebViewStateCopyWithImpl<$Res>
 
 /// Create a copy of AppWebViewState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? configuration = null,Object? onNavigationRequest = freezed,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,Object? url = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? configuration = null,Object? preventedNavigation = null,Object? initialLoadStatus = null,Object? progress = null,Object? canGoBack = null,Object? canGoForward = null,Object? url = freezed,}) {
   return _then(_AppWebViewState(
 configuration: null == configuration ? _self.configuration : configuration // ignore: cast_nullable_to_non_nullable
-as AppWebViewConfiguration,onNavigationRequest: freezed == onNavigationRequest ? _self.onNavigationRequest : onNavigationRequest // ignore: cast_nullable_to_non_nullable
-as OnNavigationRequest?,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
+as AppWebViewConfiguration,preventedNavigation: null == preventedNavigation ? _self.preventedNavigation : preventedNavigation // ignore: cast_nullable_to_non_nullable
+as PreventedNavigation,initialLoadStatus: null == initialLoadStatus ? _self.initialLoadStatus : initialLoadStatus // ignore: cast_nullable_to_non_nullable
 as InitialLoadStatus,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as AppWebViewProgressModel,canGoBack: null == canGoBack ? _self.canGoBack : canGoBack // ignore: cast_nullable_to_non_nullable
 as bool,canGoForward: null == canGoForward ? _self.canGoForward : canGoForward // ignore: cast_nullable_to_non_nullable

@@ -42,8 +42,4 @@ class AuthenticationRepository {
       password: password,
     );
   }
-
-  Future<void> logout() async {
-    await _api.logout();
-  }
 }
