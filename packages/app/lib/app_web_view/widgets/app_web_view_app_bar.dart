@@ -17,6 +17,7 @@ class AppWebViewAppBar extends StatelessWidget implements PreferredSizeWidget {
     final textTheme = TextTheme.of(context);
 
     return AppBar(
+      leading: const AppWebViewCloseButton(),
       toolbarHeight: preferredSize.height,
       centerTitle: true,
       title: Text(
