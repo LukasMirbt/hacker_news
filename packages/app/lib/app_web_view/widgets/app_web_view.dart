@@ -29,6 +29,7 @@ class _AppWebViewState extends State<AppWebView> {
     return InAppWebView(
       initialData: _initialData,
       initialUrlRequest: _initialUrlRequest,
+      initialSettings: InAppWebViewSettings(),
       onWebViewCreated: (controller) {
         context.read<AppWebViewBloc>().add(
           AppWebViewCreated(controller),
@@ -70,10 +71,29 @@ class _AppWebViewState extends State<AppWebView> {
           AppWebViewProgressChanged(progress),
         );
       },
-      onLoadStop: (_, url) {
+      onLoadStop: (controller, url) {
         context.read<AppWebViewBloc>().add(
           AppWebViewLoadStopped(url),
         );
+
+        final brightness = Theme.brightnessOf(context);
+        if (brightness == Brightness.light) return;
+        /* 
+        if (url?.host != 'news.ycombinator.com') return;
+
+        const css = '''
+        #hnmain {
+            background-color: #121212 !important;
+        }
+        body {
+            color: #E0E0E0;
+        }
+        .titleline > a {
+            color: #E0E0E0 !important;
+        }
+        ''';
+
+        controller.injectCSSCode(source: css); */
       },
       onReceivedError: (_, request, error) {
         context.read<AppWebViewBloc>().add(
