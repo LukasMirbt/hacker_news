@@ -29,7 +29,11 @@ class _AppWebViewState extends State<AppWebView> {
     return InAppWebView(
       initialData: _initialData,
       initialUrlRequest: _initialUrlRequest,
-      initialSettings: InAppWebViewSettings(),
+      initialSettings: InAppWebViewSettings(
+        // TODO: This causes issues when website background needs to be white
+        // but app background is dark
+        transparentBackground: true,
+      ),
       onWebViewCreated: (controller) {
         context.read<AppWebViewBloc>().add(
           AppWebViewCreated(controller),
