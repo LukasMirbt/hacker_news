@@ -1,5 +1,5 @@
 definitions:
-    flutter-version: &flutter-version 3.35.2
+    flutter-version: &flutter-version 3.35.3
 
     working-directory: &working-directory
         working_directory: packages/app
