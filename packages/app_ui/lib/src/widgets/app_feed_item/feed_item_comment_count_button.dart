@@ -13,6 +13,6 @@ class FeedItemCommentCountButton extends StatelessWidget {
 
     if (commentCountButton != null) return commentCountButton;
 
-    return const FeedItemButtonPlaceholder();
+    return const FeedItemCommentCountButtonPlaceholder();
   }
 }

@@ -13,6 +13,6 @@ class FeedItemVoteButton extends StatelessWidget {
 
     if (voteButton != null) return voteButton;
 
-    return const FeedItemButtonPlaceholder();
+    return const FeedItemVoteButtonPlaceholder();
   }
 }
