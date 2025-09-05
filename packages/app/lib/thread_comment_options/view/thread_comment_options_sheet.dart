@@ -12,7 +12,6 @@ class ThreadCommentOptionsSheet extends StatelessWidget {
   }) {
     showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
       useRootNavigator: true,
       showDragHandle: true,
       builder: (_) => BlocProvider(
