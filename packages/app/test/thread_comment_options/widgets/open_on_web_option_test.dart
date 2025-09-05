@@ -22,7 +22,8 @@ class _MockThreadCommentOptionsBloc
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockThreadCommentModel extends Mock implements ThreadCommentModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 class _MockThreadCommentOptionsState extends Mock
     implements ThreadCommentOptionsState {}
@@ -34,14 +35,14 @@ void main() async {
   group(OpenOnWebOption, () {
     late ThreadCommentOptionsBloc bloc;
     late ThreadCommentOptionsState state;
-    late ThreadCommentModel comment;
+    late OtherUserThreadCommentModel comment;
     late MockNavigator navigator;
     late AppRouter router;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
       state = _MockThreadCommentOptionsState();
-      comment = _MockThreadCommentModel();
+      comment = _MockOtherUserThreadCommentModel();
       router = _MockAppRouter();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
@@ -87,7 +88,7 @@ void main() async {
         'is tapped', (tester) async {
       final push = () => router.push(
         WebRedirectRoute(
-          url: webRedirect.urlString,
+          url: webRedirect.url,
         ),
       );
       when(push).thenAnswer((_) async => null);

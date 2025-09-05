@@ -23,7 +23,8 @@ class _MockThreadCommentOptionsBloc
 class _MockThreadCommentOptionsState extends Mock
     implements ThreadCommentOptionsState {}
 
-class _MockThreadCommentModel extends Mock implements ThreadCommentModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
@@ -33,14 +34,14 @@ void main() async {
   group(ViewPostOptionBody, () {
     late ThreadCommentOptionsBloc bloc;
     late ThreadCommentOptionsState state;
-    late ThreadCommentModel comment;
+    late OtherUserThreadCommentModel comment;
     late AppRouter router;
     late MockNavigator navigator;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
       state = _MockThreadCommentOptionsState();
-      comment = _MockThreadCommentModel();
+      comment = _MockOtherUserThreadCommentModel();
       router = _MockAppRouter();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);

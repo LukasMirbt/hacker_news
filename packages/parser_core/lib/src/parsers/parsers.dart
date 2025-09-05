@@ -1,6 +1,8 @@
 export 'age_parser.dart';
 export 'comment_count_parser.dart';
 export 'comment_html_text_parser.dart';
+export 'delete_url_parser.dart';
+export 'edit_url_parser.dart';
 export 'goto_parser.dart';
 export 'has_been_upvoted_parser.dart';
 export 'hmac_parser.dart';

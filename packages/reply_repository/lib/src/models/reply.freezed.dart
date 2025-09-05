@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Reply {
 
- String get id; String get parentId; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; int get score;
+ String get id; String get parentId; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; int get score; String? get editUrl; String? get deleteUrl;
 /// Create a copy of Reply
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ReplyCopyWith<Reply> get copyWith => _$ReplyCopyWithImpl<Reply>(this as Reply, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reply&&(identical(other.id, id) || other.id == id)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.score, score) || other.score == score));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Reply&&(identical(other.id, id) || other.id == id)&&(identical(other.parentId, parentId) || other.parentId == parentId)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.score, score) || other.score == score)&&(identical(other.editUrl, editUrl) || other.editUrl == editUrl)&&(identical(other.deleteUrl, deleteUrl) || other.deleteUrl == deleteUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,parentId,indent,hnuser,age,htmlText,replyUrl,score);
+int get hashCode => Object.hash(runtimeType,id,parentId,indent,hnuser,age,htmlText,replyUrl,score,editUrl,deleteUrl);
 
 @override
 String toString() {
-  return 'Reply(id: $id, parentId: $parentId, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, score: $score)';
+  return 'Reply(id: $id, parentId: $parentId, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, score: $score, editUrl: $editUrl, deleteUrl: $deleteUrl)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ReplyCopyWith<$Res>  {
   factory $ReplyCopyWith(Reply value, $Res Function(Reply) _then) = _$ReplyCopyWithImpl;
 @useResult
 $Res call({
- String id, String parentId, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, int score
+ String id, String parentId, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, int score, String? editUrl, String? deleteUrl
 });
 
 
@@ -62,7 +62,7 @@ class _$ReplyCopyWithImpl<$Res>
 
 /// Create a copy of Reply
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? parentId = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? score = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? parentId = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? score = null,Object? editUrl = freezed,Object? deleteUrl = freezed,}) {
   return _then(Reply(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,parentId: null == parentId ? _self.parentId : parentId // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,9 @@ as Hnuser,age: null == age ? _self.age : age // ignore: cast_nullable_to_non_nul
 as DateTime,htmlText: null == htmlText ? _self.htmlText : htmlText // ignore: cast_nullable_to_non_nullable
 as String,replyUrl: freezed == replyUrl ? _self.replyUrl : replyUrl // ignore: cast_nullable_to_non_nullable
 as String?,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
-as int,
+as int,editUrl: freezed == editUrl ? _self.editUrl : editUrl // ignore: cast_nullable_to_non_nullable
+as String?,deleteUrl: freezed == deleteUrl ? _self.deleteUrl : deleteUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

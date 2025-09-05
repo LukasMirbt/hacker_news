@@ -11,6 +11,8 @@ extension ReplyExtension on Reply {
       htmlText: htmlText,
       replyUrl: replyUrl,
       score: score,
+      editUrl: editUrl,
+      deleteUrl: deleteUrl,
     );
   }
 }

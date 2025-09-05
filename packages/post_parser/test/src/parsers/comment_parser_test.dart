@@ -8,6 +8,10 @@ class _MockBaseCommentParser extends Mock implements BaseCommentParser {}
 
 class _MockScoreParser extends Mock implements ScoreParser {}
 
+class _MockEditUrlParser extends Mock implements EditUrlParser {}
+
+class _MockDeleteUrlParser extends Mock implements DeleteUrlParser {}
+
 class _MockUpvoteUrlParser extends Mock implements UpvoteUrlParser {}
 
 class _MockHasBeenUpvotedParser extends Mock implements HasBeenUpvotedParser {}
@@ -17,12 +21,16 @@ class _MockElement extends Mock implements Element {}
 void main() {
   final base = BaseCommentDataPlaceholder();
   const score = 1;
+  const editUrl = 'editUrl';
+  const deleteUrl = 'deleteUrl';
   const upvoteUrl = 'upvoteUrl';
   const hasBeenUpvoted = true;
 
   group(CommentParser, () {
     late BaseCommentParser baseParser;
     late ScoreParser scoreParser;
+    late EditUrlParser editUrlParser;
+    late DeleteUrlParser deleteUrlParser;
     late UpvoteUrlParser upvoteUrlParser;
     late HasBeenUpvotedParser hasBeenUpvotedParser;
     late Element element;
@@ -30,6 +38,8 @@ void main() {
     setUp(() {
       baseParser = _MockBaseCommentParser();
       scoreParser = _MockScoreParser();
+      editUrlParser = _MockEditUrlParser();
+      deleteUrlParser = _MockDeleteUrlParser();
       upvoteUrlParser = _MockUpvoteUrlParser();
       hasBeenUpvotedParser = _MockHasBeenUpvotedParser();
       element = _MockElement();
@@ -39,15 +49,19 @@ void main() {
     CommentParser createSubject() {
       return CommentParser(
         baseCommentParser: baseParser,
+        scoreParser: scoreParser,
+        editUrlParser: editUrlParser,
+        deleteUrlParser: deleteUrlParser,
         upvoteUrlParser: upvoteUrlParser,
         hasBeenUpvotedParser: hasBeenUpvotedParser,
-        scoreParser: scoreParser,
       );
     }
 
     group('parse', () {
       final parseBase = () => baseParser.parse(element);
       final parseScore = () => scoreParser.parse(element);
+      final parseEditUrl = () => editUrlParser.parse(element);
+      final parseDeleteUrl = () => deleteUrlParser.parse(element);
       final parseUpvoteUrl = () => upvoteUrlParser.parse(element);
       final parseHasBeenUpvoted = () => hasBeenUpvotedParser.parse(element);
 
@@ -55,16 +69,22 @@ void main() {
           'when score is non-null', () {
         when(parseBase).thenReturn(base);
         when(parseScore).thenReturn(score);
+        when(parseEditUrl).thenReturn(editUrl);
+        when(parseDeleteUrl).thenReturn(deleteUrl);
         final parser = createSubject();
         expect(
           parser.parse(element),
           CurrentUserCommentData.fromParsed(
             base: base,
             score: score,
+            editUrl: editUrl,
+            deleteUrl: deleteUrl,
           ),
         );
         verify(parseBase).called(1);
         verify(parseScore).called(1);
+        verify(parseEditUrl).called(1);
+        verify(parseDeleteUrl).called(1);
       });
 
       test('calls parsers and returns $OtherUserCommentData '

@@ -2,9 +2,9 @@ part of 'comment_data.dart';
 
 class OtherUserCommentData extends CommentData {
   const OtherUserCommentData({
-    required super.base,
     required this.upvoteUrl,
     required this.hasBeenUpvoted,
+    required super.base,
   });
 
   factory OtherUserCommentData.fromParsed({
@@ -24,8 +24,8 @@ class OtherUserCommentData extends CommentData {
 
   @override
   List<Object?> get props => [
-    ...super.props,
     upvoteUrl,
     hasBeenUpvoted,
+    ...super.props,
   ];
 }

@@ -19,7 +19,7 @@ class WebRedirectRoute extends GoRouteData
     path: '/web-redirect',
   );
 
-  final String url;
+  final Uri url;
   final String? from;
 
   @override

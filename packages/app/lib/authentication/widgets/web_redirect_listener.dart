@@ -18,7 +18,7 @@ class WebRedirectListener
 
           router.push(
             WebRedirectRoute(
-              url: redirect.urlString,
+              url: redirect.url,
               from: router.from,
             ),
           );

@@ -17,6 +17,8 @@ class CurrentUserThreadComment extends ThreadComment
     required this.onUrl,
     required this.onTitle,
     required this.score,
+    required this.editUrl,
+    required this.deleteUrl,
   });
 
   factory CurrentUserThreadComment.from(CurrentUserThreadCommentData data) {
@@ -34,6 +36,8 @@ class CurrentUserThreadComment extends ThreadComment
       onUrl: base.onUrl,
       onTitle: base.onTitle,
       score: data.score,
+      editUrl: data.editUrl,
+      deleteUrl: data.deleteUrl,
     );
   }
 
@@ -48,4 +52,6 @@ class CurrentUserThreadComment extends ThreadComment
   final String? onUrl;
   final String? onTitle;
   final int score;
+  final String? editUrl;
+  final String? deleteUrl;
 }

@@ -87,7 +87,7 @@ void main() {
         '$WebRedirectRoute path', (tester) async {
       final pushWebRedirectRoute = () => router.push(
         WebRedirectRoute(
-          url: redirect.urlString,
+          url: redirect.url,
           from: from,
         ),
       );

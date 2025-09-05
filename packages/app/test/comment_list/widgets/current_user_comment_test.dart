@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app/comment_options/comment_options.dart';
+import 'package:app/comment_options/comment_options.dart'
+    hide CurrentUserCommentModel;
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart';

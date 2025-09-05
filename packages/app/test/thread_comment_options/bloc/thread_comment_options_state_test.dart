@@ -10,7 +10,7 @@ void main() {
         expect(
           ThreadCommentOptionsState.from(comment),
           ThreadCommentOptionsState(
-            comment: ThreadCommentModel(comment),
+            comment: ThreadCommentModel.from(comment),
           ),
         );
       });

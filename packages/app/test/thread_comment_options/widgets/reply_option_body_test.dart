@@ -38,34 +38,49 @@ void main() async {
       );
     }
 
-    testWidgets('renders $ListTile', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(ListTile), findsOneWidget);
-    });
+    group(ListTile, () {
+      ListTile findWidget(WidgetTester tester) {
+        return tester.widget<ListTile>(
+          find.byType(ListTile),
+        );
+      }
 
-    testWidgets('renders correct icon', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byIcon(Symbols.reply_rounded), findsOneWidget);
-    });
+      testWidgets('has correct leading', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.leading,
+          isA<AppIcon>().having(
+            (icon) => icon.icon,
+            'icon',
+            Symbols.reply_rounded,
+          ),
+        );
+      });
 
-    testWidgets('renders correct title', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(
-        find.text(l10n.threadCommentOptions_reply),
-        findsOneWidget,
-      );
-    });
+      testWidgets('has correct title', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.title,
+          isA<Text>().having(
+            (text) => text.data,
+            'text',
+            l10n.threadCommentOptions_reply,
+          ),
+        );
+      });
 
-    testWidgets('pops and navigates to $ReplyRoute when $ListTile '
-        'is tapped', (tester) async {
-      await tester.pumpApp(buildSubject());
-      await tester.tap(find.byType(ListTile));
-      verify(navigator.pop).called(1);
-      verify(
-        () => router.goRelative(
-          ReplyRoute(url: url),
-        ),
-      ).called(1);
+      testWidgets('pops and navigates to $ReplyRoute onTap', (tester) async {
+        await tester.pumpApp(buildSubject());
+        await tester.tap(find.byType(ListTile));
+        verify(navigator.pop).called(1);
+        verify(
+          () => router.goRelative(
+            ReplyRoute(url: url),
+          ),
+        ).called(1);
+      });
     });
   });
 }

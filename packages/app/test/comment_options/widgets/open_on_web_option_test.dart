@@ -22,7 +22,8 @@ class _MockCommentOptionsBloc
 
 class _MockAppRouter extends Mock implements AppRouter {}
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockOtherUserCommentModel extends Mock
+    implements OtherUserCommentModel {}
 
 class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
 
@@ -33,14 +34,14 @@ void main() async {
   group(OpenOnWebOption, () {
     late CommentOptionsBloc bloc;
     late CommentOptionsState state;
-    late CommentModel comment;
+    late OtherUserCommentModel comment;
     late MockNavigator navigator;
     late AppRouter router;
 
     setUp(() {
       bloc = _MockCommentOptionsBloc();
       state = _MockCommentOptionsState();
-      comment = _MockCommentModel();
+      comment = _MockOtherUserCommentModel();
       router = _MockAppRouter();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
@@ -85,7 +86,7 @@ void main() async {
     testWidgets('pops and pushes $WebRedirectRoute when $ListTile '
         'is tapped', (tester) async {
       final push = () => router.push(
-        WebRedirectRoute(url: webRedirect.urlString),
+        WebRedirectRoute(url: webRedirect.url),
       );
       when(push).thenAnswer((_) async => null);
       when(() => comment.webRedirect).thenReturn(webRedirect);

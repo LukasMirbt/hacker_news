@@ -15,7 +15,7 @@ class _MockCommentOptionsBloc
 
 class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
 
-class _MockCommentModel extends Mock implements CommentModel {}
+class _MockCommentModel extends Mock implements OtherUserCommentModel {}
 
 void main() {
   const replyUrl = 'replyUrl';
@@ -23,7 +23,7 @@ void main() {
   group(ReplyOption, () {
     late CommentOptionsBloc bloc;
     late CommentOptionsState state;
-    late CommentModel comment;
+    late OtherUserCommentModel comment;
 
     setUp(() {
       bloc = _MockCommentOptionsBloc();

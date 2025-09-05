@@ -3,15 +3,24 @@ import 'package:equatable/equatable.dart';
 import 'package:post_repository/post_repository.dart';
 import 'package:web_links/web_links.dart';
 
-class CommentModel extends Equatable {
-  const CommentModel(
-    Comment comment, {
-    WebLinks? webLinks,
-  }) : _comment = comment,
-       _links = webLinks ?? const WebLinks();
+part 'current_user_comment_model.dart';
+part 'other_user_comment_model.dart';
 
-  final Comment _comment;
+sealed class CommentModel extends Equatable {
+  const CommentModel({
+    WebLinks? webLinks,
+  }) : _links = webLinks ?? const WebLinks();
+
+  factory CommentModel.from(Comment comment) {
+    return switch (comment) {
+      OtherUserComment() => OtherUserCommentModel(comment),
+      CurrentUserComment() => CurrentUserCommentModel(comment),
+    };
+  }
+
   final WebLinks _links;
+
+  Comment get _comment;
 
   String? get replyUrl => _comment.replyUrl;
 
@@ -26,8 +35,5 @@ class CommentModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    _comment,
-    _links,
-  ];
+  List<Object> get props => [_links];
 }

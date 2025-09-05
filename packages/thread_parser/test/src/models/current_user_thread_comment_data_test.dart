@@ -9,15 +9,21 @@ void main() {
       test('returns $CurrentUserThreadCommentData with correct values '
           'when data is non-null', () {
         const score = 1;
+        const editUrl = 'editUrl';
+        const deleteUrl = 'deleteUrl';
 
         expect(
           CurrentUserThreadCommentData.fromParsed(
             base: base,
             score: score,
+            editUrl: editUrl,
+            deleteUrl: deleteUrl,
           ),
           CurrentUserThreadCommentData(
             base: base,
             score: score,
+            editUrl: editUrl,
+            deleteUrl: deleteUrl,
           ),
         );
       });
@@ -28,10 +34,14 @@ void main() {
           CurrentUserThreadCommentData.fromParsed(
             base: base,
             score: null,
+            editUrl: null,
+            deleteUrl: null,
           ),
           CurrentUserThreadCommentData(
             base: base,
             score: 0,
+            editUrl: null,
+            deleteUrl: null,
           ),
         );
       });

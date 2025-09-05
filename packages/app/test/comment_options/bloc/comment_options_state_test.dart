@@ -10,7 +10,7 @@ void main() {
         expect(
           CommentOptionsState.from(comment),
           CommentOptionsState(
-            comment: CommentModel(comment),
+            comment: CommentModel.from(comment),
           ),
         );
       });

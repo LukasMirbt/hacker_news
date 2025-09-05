@@ -15,7 +15,8 @@ class _MockThreadCommentOptionsBloc
     extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
     implements ThreadCommentOptionsBloc {}
 
-class _MockThreadCommentModel extends Mock implements ThreadCommentModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 class _MockThreadCommentOptionsState extends Mock
     implements ThreadCommentOptionsState {}
@@ -26,13 +27,13 @@ void main() async {
   group(ShareOption, () {
     late ThreadCommentOptionsBloc bloc;
     late ThreadCommentOptionsState state;
-    late ThreadCommentModel comment;
+    late OtherUserThreadCommentModel comment;
     late MockNavigator navigator;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
       state = _MockThreadCommentOptionsState();
-      comment = _MockThreadCommentModel();
+      comment = _MockOtherUserThreadCommentModel();
       navigator = MockNavigator();
       when(navigator.canPop).thenReturn(true);
       when(() => bloc.state).thenReturn(state);

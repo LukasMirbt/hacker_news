@@ -9,6 +9,8 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
+class _MockCurrentUserComment extends Mock implements CurrentUserComment {}
+
 class _MockOtherUserComment extends Mock implements OtherUserComment {}
 
 void main() {
@@ -16,7 +18,7 @@ void main() {
   const id = 'id';
 
   group(CommentModel, () {
-    late Comment comment;
+    late OtherUserComment comment;
     late WebLinks webLinks;
 
     setUp(() {
@@ -26,11 +28,45 @@ void main() {
     });
 
     CommentModel createSubject() {
-      return CommentModel(
+      return OtherUserCommentModel(
         comment,
         webLinks: webLinks,
       );
     }
+
+    group('from', () {
+      test('returns $OtherUserCommentModel when comment '
+          'is $OtherUserComment', () {
+        final comment = _MockOtherUserComment();
+        expect(
+          CommentModel.from(comment),
+          OtherUserCommentModel(comment),
+        );
+      });
+
+      test('returns $CurrentUserCommentModel when comment '
+          'is $CurrentUserComment', () {
+        final comment = _MockCurrentUserComment();
+        expect(
+          CommentModel.from(comment),
+          CurrentUserCommentModel(comment),
+        );
+      });
+    });
+
+    group('replyUrl', () {
+      test('returns comment.replyUrl when non-null', () {
+        const replyUrl = 'replyUrl';
+        when(() => comment.replyUrl).thenReturn(replyUrl);
+        final model = createSubject();
+        expect(model.replyUrl, replyUrl);
+      });
+
+      test('returns null when comment.replyUrl is null', () {
+        final model = createSubject();
+        expect(model.replyUrl, null);
+      });
+    });
 
     group('webRedirect', () {
       final getCommentUrl = () => webLinks.commentUrl(id);

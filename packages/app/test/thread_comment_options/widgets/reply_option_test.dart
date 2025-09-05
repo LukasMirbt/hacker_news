@@ -16,7 +16,8 @@ class _MockThreadCommentOptionsBloc
 class _MockThreadCommentOptionsState extends Mock
     implements ThreadCommentOptionsState {}
 
-class _MockThreadCommentModel extends Mock implements ThreadCommentModel {}
+class _MockOtherUserThreadCommentModel extends Mock
+    implements OtherUserThreadCommentModel {}
 
 void main() {
   const replyUrl = 'replyUrl';
@@ -24,12 +25,12 @@ void main() {
   group(ReplyOption, () {
     late ThreadCommentOptionsBloc bloc;
     late ThreadCommentOptionsState state;
-    late ThreadCommentModel comment;
+    late OtherUserThreadCommentModel comment;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
       state = _MockThreadCommentOptionsState();
-      comment = _MockThreadCommentModel();
+      comment = _MockOtherUserThreadCommentModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.comment).thenReturn(comment);
     });

@@ -252,6 +252,12 @@ abstract class AppLocalizations {
   /// **'{score}p'**
   String commentList_score({required int score});
 
+  /// No description provided for @commentOptions_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get commentOptions_edit;
+
   /// No description provided for @commentOptions_reply.
   ///
   /// In en, this message translates to:
@@ -269,6 +275,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open on web'**
   String get commentOptions_openOnWeb;
+
+  /// No description provided for @commentOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commentOptions_delete;
 
   /// No description provided for @contentSettings_title.
   ///
@@ -748,6 +760,12 @@ abstract class AppLocalizations {
   /// **'{age} ago'**
   String threadFeed_age({required String age});
 
+  /// No description provided for @threadCommentOptions_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get threadCommentOptions_edit;
+
   /// No description provided for @threadCommentOptions_reply.
   ///
   /// In en, this message translates to:
@@ -771,6 +789,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open on web'**
   String get threadCommentOptions_openOnWeb;
+
+  /// No description provided for @threadCommentOptions_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get threadCommentOptions_delete;
 
   /// No description provided for @voteFailure_invalidUrl.
   ///

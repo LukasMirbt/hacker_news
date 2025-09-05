@@ -10,6 +10,8 @@ class ReplyPlaceholder extends Reply {
     String? htmlText,
     String? replyUrl,
     int? score,
+    String? editUrl,
+    String? deleteUrl,
   }) : super(
          id: id ?? 'id',
          parentId: parentId ?? 'parentId',
@@ -19,5 +21,7 @@ class ReplyPlaceholder extends Reply {
          htmlText: htmlText ?? 'htmlText',
          replyUrl: replyUrl ?? 'replyUrl',
          score: score ?? 1,
+         editUrl: editUrl ?? 'editUrl',
+         deleteUrl: deleteUrl ?? 'deleteUrl',
        );
 }

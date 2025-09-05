@@ -18,6 +18,8 @@ void main() {
             htmlText: reply.htmlText,
             replyUrl: reply.replyUrl,
             score: reply.score,
+            editUrl: reply.editUrl,
+            deleteUrl: reply.deleteUrl,
           ),
         );
       });

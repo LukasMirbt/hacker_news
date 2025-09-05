@@ -3,10 +3,14 @@ import 'package:thread_parser/thread_parser.dart';
 class CurrentUserThreadCommentDataPlaceholder
     extends CurrentUserThreadCommentData {
   CurrentUserThreadCommentDataPlaceholder({
-    BaseThreadCommentData? base,
     int? score,
+    String? editUrl,
+    String? deleteUrl,
+    BaseThreadCommentData? base,
   }) : super(
-         base: base ?? BaseThreadCommentDataPlaceholder(),
          score: score ?? 1,
+         editUrl: editUrl ?? 'editUrl',
+         deleteUrl: deleteUrl ?? 'deleteUrl',
+         base: base ?? BaseThreadCommentDataPlaceholder(),
        );
 }

@@ -12,7 +12,7 @@ class WebRedirectPage extends StatelessWidget {
     super.key,
   });
 
-  final String url;
+  final Uri url;
   final String? html;
 
   @override

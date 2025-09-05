@@ -79,7 +79,7 @@ void main() async {
         'is tapped', (tester) async {
       final push = () => router.push(
         WebRedirectRoute(
-          url: webRedirect.urlString,
+          url: webRedirect.url,
         ),
       );
       when(push).thenAnswer((_) async => null);
