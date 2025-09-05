@@ -5,3 +5,5 @@ output-localization-file: app_ui_localizations.dart
 nullable-getter: false
 use-named-parameters: true
 format: true
+header: |
+  // coverage:ignore-file

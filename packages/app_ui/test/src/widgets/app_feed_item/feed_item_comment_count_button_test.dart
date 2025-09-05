@@ -25,11 +25,11 @@ void main() {
       );
     }
 
-    testWidgets('renders $FeedItemButtonPlaceholder '
+    testWidgets('renders $FeedItemCommentCountButtonPlaceholder '
         'when data is null', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.byType(FeedItemButtonPlaceholder),
+        find.byType(FeedItemCommentCountButtonPlaceholder),
         findsOneWidget,
       );
     });
