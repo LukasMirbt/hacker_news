@@ -1,5 +1,4 @@
 import 'package:app/comment_options/comment_options.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:post_repository/post_repository.dart';
@@ -23,12 +22,13 @@ class CommentOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppBottomSheet(
-      children: [
-        ReplyOption(),
-        ShareOption(),
-        OpenOnWebOption(),
-      ],
+    final comment = context.select(
+      (CommentOptionsBloc bloc) => bloc.state.comment,
     );
+
+    return switch (comment) {
+      CurrentUserCommentModel() => CurrentUserCommentOptionsBody(comment),
+      OtherUserCommentModel() => OtherUserCommentOptionsSheet(comment),
+    };
   }
 }

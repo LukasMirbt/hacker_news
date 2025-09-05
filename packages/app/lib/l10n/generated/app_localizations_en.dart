@@ -95,6 +95,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get commentOptions_edit => 'Edit';
+
+  @override
   String get commentOptions_reply => 'Reply';
 
   @override
@@ -102,6 +105,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commentOptions_openOnWeb => 'Open on web';
+
+  @override
+  String get commentOptions_delete => 'Delete';
 
   @override
   String get contentSettings_title => 'Content';

@@ -40,9 +40,11 @@
       }
     }
   },
+  "commentOptions_edit": "Edit",
   "commentOptions_reply": "Reply",
   "commentOptions_share": "Share",
   "commentOptions_openOnWeb": "Open on web",
+  "commentOptions_delete": "Delete",
   "contentSettings_title": "Content",
   "contentSettings_linkSectionTitle": "Links",
   "contentSettings_inAppBrowserLaunchModeTitle": "In-app browser",

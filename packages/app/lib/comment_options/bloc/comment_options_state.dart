@@ -12,7 +12,7 @@ abstract class CommentOptionsState with _$CommentOptionsState {
 
   factory CommentOptionsState.from(Comment comment) {
     return CommentOptionsState(
-      comment: CommentModel(comment),
+      comment: CommentModel.from(comment),
     );
   }
 }
