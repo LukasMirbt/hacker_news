@@ -2,8 +2,8 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/app_router/app_router.dart';
+import 'package:app/comment_options/comment_options.dart';
 import 'package:app/l10n/l10n.dart';
-import 'package:app/thread_comment_options/thread_comment_options.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
@@ -19,32 +19,47 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
   final url = Uri.parse('url');
 
-  group(EditOptionBody, () {
+  group(DeleteOptionBody, () {
     late AppRouter router;
-    late MockNavigator navigator;
 
     setUp(() {
       router = _MockAppRouter();
-      navigator = MockNavigator();
-      when(navigator.canPop).thenReturn(true);
     });
 
     Widget buildSubject() {
       return Provider.value(
         value: router,
-        child: MockNavigatorProvider(
-          navigator: navigator,
-          child: EditOptionBody(url: url),
-        ),
+        child: DeleteOptionBody(url: url),
       );
     }
 
+    ListTile findWidget(WidgetTester tester) {
+      return tester.widget<ListTile>(
+        find.byType(ListTile),
+      );
+    }
+
+    ColorScheme findColorScheme(WidgetTester tester) {
+      final context = tester.element(
+        find.byType(DeleteOptionBody),
+      );
+      return ColorScheme.of(context);
+    }
+
     group(ListTile, () {
-      ListTile findWidget(WidgetTester tester) {
-        return tester.widget<ListTile>(
-          find.byType(ListTile),
-        );
-      }
+      testWidgets('has correct textColor', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        final colorScheme = findColorScheme(tester);
+        expect(widget.textColor, colorScheme.error);
+      });
+
+      testWidgets('has correct iconColor', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        final colorScheme = findColorScheme(tester);
+        expect(widget.iconColor, colorScheme.error);
+      });
 
       testWidgets('has correct leading', (tester) async {
         await tester.pumpApp(buildSubject());
@@ -54,7 +69,7 @@ void main() async {
           isA<AppIcon>().having(
             (icon) => icon.icon,
             'icon',
-            Symbols.edit_rounded,
+            Symbols.delete_rounded,
           ),
         );
       });
@@ -66,8 +81,8 @@ void main() async {
           widget.title,
           isA<Text>().having(
             (text) => text.data,
-            'text',
-            l10n.threadCommentOptions_edit,
+            'data',
+            l10n.commentOptions_delete,
           ),
         );
       });
@@ -81,7 +96,6 @@ void main() async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         widget.onTap?.call();
-        verify(navigator.pop).called(1);
         verify(pushWebRedirect).called(1);
       });
     });

@@ -1,37 +1,36 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
-import 'package:app/thread_comment_options/thread_comment_options.dart';
+import 'package:app/comment_options/comment_options.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:thread_repository/thread_repository.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:web_links/web_links.dart';
 
-class _MockCurrentUserThreadComment extends Mock
-    implements CurrentUserThreadComment {}
+class _MockCurrentUserComment extends Mock implements CurrentUserComment {}
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
 void main() {
-  group(CurrentUserThreadCommentModel, () {
-    late CurrentUserThreadComment comment;
+  group(CurrentUserCommentModel, () {
+    late CurrentUserComment comment;
     late WebLinks links;
 
     setUp(() {
-      comment = _MockCurrentUserThreadComment();
+      comment = _MockCurrentUserComment();
       links = _MockWebLinks();
     });
 
-    CurrentUserThreadCommentModel createSubject() {
-      return CurrentUserThreadCommentModel(
+    CurrentUserCommentModel createSubject() {
+      return CurrentUserCommentModel(
         comment,
         webLinks: links,
       );
     }
 
-    test('is a $ThreadCommentModel', () {
+    test('is a $CommentModel', () {
       expect(
         createSubject(),
-        isA<ThreadCommentModel>(),
+        isA<CommentModel>(),
       );
     });
 

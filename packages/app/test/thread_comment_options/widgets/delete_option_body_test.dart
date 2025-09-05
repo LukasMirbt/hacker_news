@@ -19,7 +19,7 @@ void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
   final url = Uri.parse('url');
 
-  group(DeleteOption, () {
+  group(DeleteOptionBody, () {
     late AppRouter router;
 
     setUp(() {

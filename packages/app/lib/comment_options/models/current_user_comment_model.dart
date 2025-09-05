@@ -1,7 +1,10 @@
 part of 'comment_model.dart';
 
 class CurrentUserCommentModel extends CommentModel {
-  const CurrentUserCommentModel(this._comment);
+  const CurrentUserCommentModel(
+    this._comment, {
+    super.webLinks,
+  });
 
   @override
   final CurrentUserComment _comment;

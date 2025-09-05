@@ -16,7 +16,7 @@ void main() {
   const id = 'id';
 
   group(CommentModel, () {
-    late Comment comment;
+    late OtherUserComment comment;
     late WebLinks webLinks;
 
     setUp(() {
@@ -26,11 +26,25 @@ void main() {
     });
 
     CommentModel createSubject() {
-      return CommentModel(
+      return OtherUserCommentModel(
         comment,
         webLinks: webLinks,
       );
     }
+
+    group('replyUrl', () {
+      test('returns comment.replyUrl when non-null', () {
+        const replyUrl = 'replyUrl';
+        when(() => comment.replyUrl).thenReturn(replyUrl);
+        final model = createSubject();
+        expect(model.replyUrl, replyUrl);
+      });
+
+      test('returns null when comment.replyUrl is null', () {
+        final model = createSubject();
+        expect(model.replyUrl, null);
+      });
+    });
 
     group('webRedirect', () {
       final getCommentUrl = () => webLinks.commentUrl(id);

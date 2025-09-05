@@ -1,7 +1,10 @@
 part of 'comment_model.dart';
 
 class OtherUserCommentModel extends CommentModel {
-  const OtherUserCommentModel(this._comment);
+  const OtherUserCommentModel(
+    this._comment, {
+    super.webLinks,
+  });
 
   @override
   final OtherUserComment _comment;

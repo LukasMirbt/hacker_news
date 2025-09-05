@@ -2,8 +2,8 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/app_router/app_router.dart';
+import 'package:app/comment_options/comment_options.dart';
 import 'package:app/l10n/l10n.dart';
-import 'package:app/thread_comment_options/thread_comment_options.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +67,7 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
-            l10n.threadCommentOptions_edit,
+            l10n.commentOptions_edit,
           ),
         );
       });

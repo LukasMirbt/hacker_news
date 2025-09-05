@@ -3,9 +3,9 @@
 import 'package:app/comment_options/comment_options.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
@@ -15,42 +15,43 @@ class _MockCommentOptionsBloc
 
 class _MockCommentOptionsState extends Mock implements CommentOptionsState {}
 
-class _MockCommentModel extends Mock implements OtherUserCommentModel {}
+class _MockOtherUserCommentModel extends Mock
+    implements CurrentUserCommentModel {}
 
 void main() {
-  const replyUrl = 'replyUrl';
+  final editUrl = Uri.parse('editUrl');
 
-  group(ReplyOption, () {
+  group(EditOption, () {
     late CommentOptionsBloc bloc;
     late CommentOptionsState state;
-    late OtherUserCommentModel comment;
+    late CurrentUserCommentModel comment;
 
     setUp(() {
       bloc = _MockCommentOptionsBloc();
       state = _MockCommentOptionsState();
-      comment = _MockCommentModel();
+      comment = _MockOtherUserCommentModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.comment).thenReturn(comment);
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: ReplyOption(),
+      return Provider.value(
+        value: comment,
+        child: EditOption(),
       );
     }
 
-    testWidgets('renders $ReplyOptionBody when replyUrl '
+    testWidgets('renders $EditOptionBody when editUrl '
         'is non-null', (tester) async {
-      when(() => comment.replyUrl).thenReturn(replyUrl);
+      when(() => comment.editUrl).thenReturn(editUrl);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyOptionBody), findsOneWidget);
+      expect(find.byType(EditOptionBody), findsOneWidget);
     });
 
-    testWidgets('does not render $ReplyOptionBody when replyUrl '
+    testWidgets('does not render $EditOptionBody when editUrl '
         'is null', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyOptionBody), findsNothing);
+      expect(find.byType(EditOptionBody), findsNothing);
     });
   });
 }
