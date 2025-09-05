@@ -34,8 +34,8 @@ class _Body extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        minimumSize: const Size(80, 44),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        minimumSize: const Size(96, 44),
+        padding: const EdgeInsets.symmetric(horizontal: 28),
       ),
       child: const Row(
         spacing: AppSpacing.xs,
