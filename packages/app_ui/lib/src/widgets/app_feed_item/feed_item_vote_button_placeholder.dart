@@ -7,9 +7,13 @@ class FeedItemVoteButtonPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InvisiblePlaceholder(
-      visible: true,
-      child: SizedBox.fromSize(
-        size: const Size(70, 44),
+      visible: false,
+      child: AppFeedItemVoteButton(
+        data: AppFeedItemVoteButtonData(
+          hasBeenUpvoted: false,
+          score: '',
+          onPressed: () {},
+        ),
       ),
     );
   }

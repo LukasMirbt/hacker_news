@@ -7,9 +7,12 @@ class FeedItemCommentCountButtonPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InvisiblePlaceholder(
-      visible: true,
-      child: SizedBox.fromSize(
-        size: const Size(88, 44),
+      visible: false,
+      child: AppFeedItemCommentCountButton(
+        data: AppFeedItemCommentCountButtonData(
+          commentCount: '',
+          onPressed: () {},
+        ),
       ),
     );
   }
