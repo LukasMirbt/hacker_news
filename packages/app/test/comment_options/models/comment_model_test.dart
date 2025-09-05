@@ -9,6 +9,8 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
+class _MockCurrentUserComment extends Mock implements CurrentUserComment {}
+
 class _MockOtherUserComment extends Mock implements OtherUserComment {}
 
 void main() {
@@ -31,6 +33,26 @@ void main() {
         webLinks: webLinks,
       );
     }
+
+    group('from', () {
+      test('returns $OtherUserCommentModel when comment '
+          'is $OtherUserComment', () {
+        final comment = _MockOtherUserComment();
+        expect(
+          CommentModel.from(comment),
+          OtherUserCommentModel(comment),
+        );
+      });
+
+      test('returns $CurrentUserCommentModel when comment '
+          'is $CurrentUserComment', () {
+        final comment = _MockCurrentUserComment();
+        expect(
+          CommentModel.from(comment),
+          CurrentUserCommentModel(comment),
+        );
+      });
+    });
 
     group('replyUrl', () {
       test('returns comment.replyUrl when non-null', () {
