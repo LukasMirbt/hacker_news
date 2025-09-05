@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/thread_comment_options/thread_comment_options.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,17 +14,18 @@ class _MockThreadCommentOptionsBloc
     extends MockBloc<ThreadCommentOptionsEvent, ThreadCommentOptionsState>
     implements ThreadCommentOptionsBloc {}
 
-void main() {
-  final comment = OtherUserThreadCommentPlaceholder();
+class _MockThreadCommentOptionsState extends Mock
+    implements ThreadCommentOptionsState {}
 
+void main() {
   group(ThreadCommentOptionsSheet, () {
     late ThreadCommentOptionsBloc bloc;
+    late ThreadCommentOptionsState state;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
-      when(() => bloc.state).thenReturn(
-        ThreadCommentOptionsState.from(comment),
-      );
+      state = _MockThreadCommentOptionsState();
+      when(() => bloc.state).thenReturn(state);
     });
 
     Widget buildSubject() {
@@ -40,7 +40,7 @@ void main() {
         await tester.pumpAppWithContext(
           (context) => ThreadCommentOptionsSheet.show(
             context: context,
-            comment: comment,
+            comment: OtherUserThreadCommentPlaceholder(),
           ),
         );
         expect(
@@ -50,29 +50,32 @@ void main() {
       });
     });
 
-    testWidgets('renders $AppBottomSheet', (tester) async {
+    testWidgets('renders $CurrentUserThreadCommentOptionsBody '
+        'when comment is $CurrentUserThreadCommentModel', (tester) async {
+      when(() => state.comment).thenReturn(
+        CurrentUserThreadCommentModel(
+          CurrentUserThreadCommentPlaceholder(),
+        ),
+      );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(AppBottomSheet), findsOneWidget);
+      expect(
+        find.byType(CurrentUserThreadCommentOptionsBody),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('renders $ReplyOption', (tester) async {
+    testWidgets('renders $OtherUserThreadCommentOptionsBody '
+        'when comment is $OtherUserThreadCommentModel', (tester) async {
+      when(() => state.comment).thenReturn(
+        OtherUserThreadCommentModel(
+          OtherUserThreadCommentPlaceholder(),
+        ),
+      );
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ReplyOption), findsOneWidget);
-    });
-
-    testWidgets('renders $ViewPostOption', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(ViewPostOption), findsOneWidget);
-    });
-
-    testWidgets('renders $ShareOption', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(ShareOption), findsOneWidget);
-    });
-
-    testWidgets('renders $OpenOnWebOption', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(OpenOnWebOption), findsOneWidget);
+      expect(
+        find.byType(OtherUserThreadCommentOptionsBody),
+        findsOneWidget,
+      );
     });
   });
 }

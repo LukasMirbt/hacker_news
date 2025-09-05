@@ -9,6 +9,9 @@ import 'package:web_links/web_links.dart';
 
 class _MockWebLinks extends Mock implements WebLinks {}
 
+class _MockCurrentUserThreadComment extends Mock
+    implements CurrentUserThreadComment {}
+
 class _MockOtherUserThreadComment extends Mock
     implements OtherUserThreadComment {}
 
@@ -32,6 +35,26 @@ void main() {
         webLinks: webLinks,
       );
     }
+
+    group('from', () {
+      test('returns $OtherUserThreadCommentModel when comment '
+          'is $OtherUserThreadComment', () {
+        final comment = _MockOtherUserThreadComment();
+        expect(
+          ThreadCommentModel.from(comment),
+          OtherUserThreadCommentModel(comment),
+        );
+      });
+
+      test('returns $CurrentUserThreadCommentModel when comment '
+          'is $CurrentUserThreadComment', () {
+        final comment = _MockCurrentUserThreadComment();
+        expect(
+          ThreadCommentModel.from(comment),
+          CurrentUserThreadCommentModel(comment),
+        );
+      });
+    });
 
     group('id', () {
       test('returns comment.id', () {
