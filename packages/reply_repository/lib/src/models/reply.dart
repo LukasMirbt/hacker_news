@@ -16,6 +16,8 @@ class Reply with _$Reply {
     required this.htmlText,
     required this.replyUrl,
     required this.score,
+    required this.editUrl,
+    required this.deleteUrl,
   });
 
   factory Reply.from({
@@ -33,6 +35,8 @@ class Reply with _$Reply {
       htmlText: base.htmlText,
       replyUrl: base.replyUrl,
       score: comment.score,
+      editUrl: comment.editUrl,
+      deleteUrl: comment.deleteUrl,
     );
   }
 
@@ -44,4 +48,6 @@ class Reply with _$Reply {
   final String htmlText;
   final String? replyUrl;
   final int score;
+  final String? editUrl;
+  final String? deleteUrl;
 }

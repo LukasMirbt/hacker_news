@@ -1,5 +1,6 @@
 import 'package:app/l10n/l10n.dart';
-import 'package:app/thread_comment_options/thread_comment_options.dart';
+import 'package:app/thread_comment_options/thread_comment_options.dart'
+    hide CurrentUserThreadCommentModel;
 import 'package:app/thread_feed/thread_feed.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:date_formatter/date_formatter.dart';

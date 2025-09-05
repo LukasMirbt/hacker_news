@@ -12,6 +12,8 @@ class CurrentUserComment extends Comment with _$CurrentUserComment {
     required this.htmlText,
     required this.replyUrl,
     required this.score,
+    required this.editUrl,
+    required this.deleteUrl,
   });
 
   factory CurrentUserComment.from(CurrentUserCommentData data) {
@@ -25,6 +27,8 @@ class CurrentUserComment extends Comment with _$CurrentUserComment {
       htmlText: base.htmlText,
       replyUrl: base.replyUrl,
       score: data.score,
+      editUrl: data.editUrl,
+      deleteUrl: data.deleteUrl,
     );
   }
 
@@ -35,4 +39,6 @@ class CurrentUserComment extends Comment with _$CurrentUserComment {
   final String htmlText;
   final String? replyUrl;
   final int score;
+  final String? editUrl;
+  final String? deleteUrl;
 }

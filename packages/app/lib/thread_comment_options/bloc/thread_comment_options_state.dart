@@ -12,7 +12,7 @@ abstract class ThreadCommentOptionsState with _$ThreadCommentOptionsState {
 
   factory ThreadCommentOptionsState.from(ThreadComment comment) {
     return ThreadCommentOptionsState(
-      comment: ThreadCommentModel(comment),
+      comment: ThreadCommentModel.from(comment),
     );
   }
 }

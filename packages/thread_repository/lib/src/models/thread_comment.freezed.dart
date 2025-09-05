@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CurrentUserThreadComment {
 
- String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; String? get parentUrl; String? get contextUrl; String? get onUrl; String? get onTitle; int get score;
+ String get id; int get indent; Hnuser get hnuser; DateTime get age; String get htmlText; String? get replyUrl; String? get parentUrl; String? get contextUrl; String? get onUrl; String? get onTitle; int get score; String? get editUrl; String? get deleteUrl;
 /// Create a copy of CurrentUserThreadComment
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CurrentUserThreadCommentCopyWith<CurrentUserThreadComment> get copyWith => _$Cu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrentUserThreadComment&&(identical(other.id, id) || other.id == id)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.parentUrl, parentUrl) || other.parentUrl == parentUrl)&&(identical(other.contextUrl, contextUrl) || other.contextUrl == contextUrl)&&(identical(other.onUrl, onUrl) || other.onUrl == onUrl)&&(identical(other.onTitle, onTitle) || other.onTitle == onTitle)&&(identical(other.score, score) || other.score == score));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurrentUserThreadComment&&(identical(other.id, id) || other.id == id)&&(identical(other.indent, indent) || other.indent == indent)&&(identical(other.hnuser, hnuser) || other.hnuser == hnuser)&&(identical(other.age, age) || other.age == age)&&(identical(other.htmlText, htmlText) || other.htmlText == htmlText)&&(identical(other.replyUrl, replyUrl) || other.replyUrl == replyUrl)&&(identical(other.parentUrl, parentUrl) || other.parentUrl == parentUrl)&&(identical(other.contextUrl, contextUrl) || other.contextUrl == contextUrl)&&(identical(other.onUrl, onUrl) || other.onUrl == onUrl)&&(identical(other.onTitle, onTitle) || other.onTitle == onTitle)&&(identical(other.score, score) || other.score == score)&&(identical(other.editUrl, editUrl) || other.editUrl == editUrl)&&(identical(other.deleteUrl, deleteUrl) || other.deleteUrl == deleteUrl));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,indent,hnuser,age,htmlText,replyUrl,parentUrl,contextUrl,onUrl,onTitle,score);
+int get hashCode => Object.hash(runtimeType,id,indent,hnuser,age,htmlText,replyUrl,parentUrl,contextUrl,onUrl,onTitle,score,editUrl,deleteUrl);
 
 @override
 String toString() {
-  return 'CurrentUserThreadComment(id: $id, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, parentUrl: $parentUrl, contextUrl: $contextUrl, onUrl: $onUrl, onTitle: $onTitle, score: $score)';
+  return 'CurrentUserThreadComment(id: $id, indent: $indent, hnuser: $hnuser, age: $age, htmlText: $htmlText, replyUrl: $replyUrl, parentUrl: $parentUrl, contextUrl: $contextUrl, onUrl: $onUrl, onTitle: $onTitle, score: $score, editUrl: $editUrl, deleteUrl: $deleteUrl)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CurrentUserThreadCommentCopyWith<$Res>  {
   factory $CurrentUserThreadCommentCopyWith(CurrentUserThreadComment value, $Res Function(CurrentUserThreadComment) _then) = _$CurrentUserThreadCommentCopyWithImpl;
 @useResult
 $Res call({
- String id, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, String? parentUrl, String? contextUrl, String? onUrl, String? onTitle, int score
+ String id, int indent, Hnuser hnuser, DateTime age, String htmlText, String? replyUrl, String? parentUrl, String? contextUrl, String? onUrl, String? onTitle, int score, String? editUrl, String? deleteUrl
 });
 
 
@@ -62,7 +62,7 @@ class _$CurrentUserThreadCommentCopyWithImpl<$Res>
 
 /// Create a copy of CurrentUserThreadComment
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? parentUrl = freezed,Object? contextUrl = freezed,Object? onUrl = freezed,Object? onTitle = freezed,Object? score = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indent = null,Object? hnuser = null,Object? age = null,Object? htmlText = null,Object? replyUrl = freezed,Object? parentUrl = freezed,Object? contextUrl = freezed,Object? onUrl = freezed,Object? onTitle = freezed,Object? score = null,Object? editUrl = freezed,Object? deleteUrl = freezed,}) {
   return _then(CurrentUserThreadComment(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,indent: null == indent ? _self.indent : indent // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,9 @@ as String?,contextUrl: freezed == contextUrl ? _self.contextUrl : contextUrl // 
 as String?,onUrl: freezed == onUrl ? _self.onUrl : onUrl // ignore: cast_nullable_to_non_nullable
 as String?,onTitle: freezed == onTitle ? _self.onTitle : onTitle // ignore: cast_nullable_to_non_nullable
 as String?,score: null == score ? _self.score : score // ignore: cast_nullable_to_non_nullable
-as int,
+as int,editUrl: freezed == editUrl ? _self.editUrl : editUrl // ignore: cast_nullable_to_non_nullable
+as String?,deleteUrl: freezed == deleteUrl ? _self.deleteUrl : deleteUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

@@ -1,5 +1,4 @@
 import 'package:app/thread_comment_options/thread_comment_options.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:thread_repository/thread_repository.dart';
@@ -24,13 +23,17 @@ class ThreadCommentOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppBottomSheet(
-      children: [
-        ReplyOption(),
-        ViewPostOption(),
-        ShareOption(),
-        OpenOnWebOption(),
-      ],
+    final comment = context.select(
+      (ThreadCommentOptionsBloc bloc) => bloc.state.comment,
     );
+
+    return switch (comment) {
+      CurrentUserThreadCommentModel() => CurrentUserThreadCommentOptionsBody(
+        comment,
+      ),
+      OtherUserThreadCommentModel() => OtherUserThreadCommentOptionsBody(
+        comment,
+      ),
+    };
   }
 }
