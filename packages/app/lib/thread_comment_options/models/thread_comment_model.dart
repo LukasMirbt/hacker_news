@@ -38,8 +38,5 @@ sealed class ThreadCommentModel extends Equatable {
   }
 
   @override
-  List<Object> get props => [
-    _comment,
-    _links,
-  ];
+  List<Object> get props => [_links];
 }

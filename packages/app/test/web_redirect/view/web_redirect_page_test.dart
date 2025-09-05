@@ -18,7 +18,7 @@ void main() {
 
     Widget buildSubject() {
       return WebRedirectPage(
-        url: 'http://example.com',
+        url: Uri(),
         html: null,
       );
     }

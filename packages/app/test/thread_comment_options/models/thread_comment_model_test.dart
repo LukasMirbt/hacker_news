@@ -17,7 +17,7 @@ void main() {
   const id = 'id';
 
   group(ThreadCommentModel, () {
-    late ThreadComment comment;
+    late OtherUserThreadComment comment;
     late WebLinks webLinks;
 
     setUp(() {
@@ -27,7 +27,7 @@ void main() {
     });
 
     ThreadCommentModel createSubject() {
-      return ThreadCommentModel(
+      return OtherUserThreadCommentModel(
         comment,
         webLinks: webLinks,
       );

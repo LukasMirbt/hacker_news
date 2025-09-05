@@ -24,8 +24,8 @@ void main() {
       when(() => bloc.state).thenReturn(
         AppWebViewState.from(
           WebRedirectWebViewConfiguration(
-            url: 'url',
-            html: 'html',
+            url: Uri(),
+            html: null,
           ),
         ),
       );

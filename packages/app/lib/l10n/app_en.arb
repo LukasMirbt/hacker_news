@@ -193,9 +193,11 @@
       }
     }
   },
+  "threadCommentOptions_edit": "Edit",
   "threadCommentOptions_reply": "Reply",
   "threadCommentOptions_viewPost": "View post",
   "threadCommentOptions_share": "Share",
   "threadCommentOptions_openOnWeb": "Open on web",
+  "threadCommentOptions_delete": "Delete",
   "voteFailure_invalidUrl": "Something went wrong. Try refreshing the page."
 }

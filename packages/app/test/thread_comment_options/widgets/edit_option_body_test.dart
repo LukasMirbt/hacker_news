@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/app_router/app_router.dart';
 import 'package:app/l10n/l10n.dart';
-import 'package:app/reply/reply.dart';
 import 'package:app/thread_comment_options/thread_comment_options.dart';
+import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -16,9 +17,9 @@ class _MockAppRouter extends Mock implements AppRouter {}
 
 void main() async {
   final l10n = await AppLocalizations.delegate.load(Locale('en'));
-  const url = 'url';
+  final url = Uri.parse('url');
 
-  group(ReplyOptionBody, () {
+  group(EditOptionBody, () {
     late AppRouter router;
     late MockNavigator navigator;
 
@@ -33,7 +34,7 @@ void main() async {
         value: router,
         child: MockNavigatorProvider(
           navigator: navigator,
-          child: ReplyOptionBody(url: url),
+          child: EditOptionBody(url: url),
         ),
       );
     }
@@ -53,7 +54,7 @@ void main() async {
           isA<AppIcon>().having(
             (icon) => icon.icon,
             'icon',
-            Symbols.reply_rounded,
+            Symbols.edit_rounded,
           ),
         );
       });
@@ -66,20 +67,21 @@ void main() async {
           isA<Text>().having(
             (text) => text.data,
             'text',
-            l10n.threadCommentOptions_reply,
+            l10n.threadCommentOptions_edit,
           ),
         );
       });
 
-      testWidgets('pops and navigates to $ReplyRoute onTap', (tester) async {
+      testWidgets('pops and navigates to $WebRedirectRoute '
+          'onTap', (tester) async {
+        final pushWebRedirect = () => router.push(
+          WebRedirectRoute(url: url),
+        );
+        when(pushWebRedirect).thenAnswer((_) async => null);
         await tester.pumpApp(buildSubject());
         await tester.tap(find.byType(ListTile));
         verify(navigator.pop).called(1);
-        verify(
-          () => router.goRelative(
-            ReplyRoute(url: url),
-          ),
-        ).called(1);
+        verify(pushWebRedirect).called(1);
       });
     });
   });

@@ -3,7 +3,7 @@ import 'package:app/web_redirect/web_redirect.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const url = 'url';
+  final url = Uri.parse('url');
   const html = 'html';
 
   group(WebRedirectWebViewConfiguration, () {
@@ -22,20 +22,14 @@ void main() {
     group('initialUrl', () {
       test('has correct value', () {
         final configuration = createSubject();
-        expect(
-          configuration.initialUrl,
-          Uri.parse(url),
-        );
+        expect(configuration.initialUrl, url);
       });
     });
 
     group('initialHtml', () {
       test('has correct value', () {
         final configuration = createSubject();
-        expect(
-          configuration.initialHtml,
-          html,
-        );
+        expect(configuration.initialHtml, html);
       });
     });
   });

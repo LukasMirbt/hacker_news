@@ -9,8 +9,17 @@ class CurrentUserThreadCommentModel extends ThreadCommentModel {
   @override
   final CurrentUserThreadComment _comment;
 
-  String? get editUrl => _comment.editUrl;
-  String? get deleteUrl => _comment.deleteUrl;
+  Uri? get editUrl {
+    final url = _comment.editUrl;
+    if (url == null) return null;
+    return _links.resolve(url);
+  }
+
+  Uri? get deleteUrl {
+    final url = _comment.deleteUrl;
+    if (url == null) return null;
+    return _links.resolve(url);
+  }
 
   @override
   List<Object> get props => [

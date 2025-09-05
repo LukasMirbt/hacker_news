@@ -3,7 +3,6 @@ import 'package:app/l10n/l10n.dart';
 import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:web_links/web_links.dart';
 
 class DeleteOptionBody extends StatelessWidget {
   const DeleteOptionBody({
@@ -11,7 +10,7 @@ class DeleteOptionBody extends StatelessWidget {
     super.key,
   });
 
-  final String url;
+  final Uri url;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +21,11 @@ class DeleteOptionBody extends StatelessWidget {
       textColor: colorScheme.error,
       iconColor: colorScheme.error,
       leading: const AppIcon(Symbols.delete_rounded),
-      title: const Text('Delete'),
+      title: Text(l10n.threadCommentOptions_delete),
       onTap: () {
         Navigator.of(context).pop();
         AppRouter.of(context).push(
-          WebRedirectRoute(
-            url: const WebLinks().resolve(url).toString(),
-          ),
+          WebRedirectRoute(url: url),
         );
       },
     );

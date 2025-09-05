@@ -3,9 +3,9 @@
 import 'package:app/thread_comment_options/thread_comment_options.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
@@ -17,15 +17,15 @@ class _MockThreadCommentOptionsState extends Mock
     implements ThreadCommentOptionsState {}
 
 class _MockOtherUserThreadCommentModel extends Mock
-    implements OtherUserThreadCommentModel {}
+    implements CurrentUserThreadCommentModel {}
 
 void main() {
-  const postId = 'postId';
+  final editUrl = Uri.parse('editUrl');
 
-  group(ViewPostOption, () {
+  group(EditOption, () {
     late ThreadCommentOptionsBloc bloc;
     late ThreadCommentOptionsState state;
-    late OtherUserThreadCommentModel comment;
+    late CurrentUserThreadCommentModel comment;
 
     setUp(() {
       bloc = _MockThreadCommentOptionsBloc();
@@ -36,23 +36,23 @@ void main() {
     });
 
     Widget buildSubject() {
-      return BlocProvider.value(
-        value: bloc,
-        child: ViewPostOption(),
+      return Provider.value(
+        value: comment,
+        child: EditOption(),
       );
     }
 
-    testWidgets('renders $ViewPostOptionBody when postId '
+    testWidgets('renders $EditOptionBody when editUrl '
         'is non-null', (tester) async {
-      when(() => comment.postId).thenReturn(postId);
+      when(() => comment.editUrl).thenReturn(editUrl);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ViewPostOptionBody), findsOneWidget);
+      expect(find.byType(EditOptionBody), findsOneWidget);
     });
 
-    testWidgets('does not render $ViewPostOptionBody when postId '
+    testWidgets('does not render $EditOptionBody when editUrl '
         'is null', (tester) async {
       await tester.pumpApp(buildSubject());
-      expect(find.byType(ViewPostOptionBody), findsNothing);
+      expect(find.byType(EditOptionBody), findsNothing);
     });
   });
 }

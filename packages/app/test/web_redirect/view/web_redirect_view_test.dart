@@ -19,8 +19,8 @@ class _MockAppWebViewBloc extends MockBloc<AppWebViewEvent, AppWebViewState>
 void main() {
   final initialState = AppWebViewState.from(
     WebRedirectWebViewConfiguration(
-      url: 'url',
-      html: 'html',
+      url: Uri(),
+      html: null,
     ),
   );
 

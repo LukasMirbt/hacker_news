@@ -23,6 +23,4 @@ class WebRedirect {
 
   final Uri url;
   final String? html;
-
-  String get urlString => url.toString();
 }

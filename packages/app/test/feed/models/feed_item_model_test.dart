@@ -31,7 +31,7 @@ void main() async {
       webLinks = _MockWebLinks();
     });
 
-    PostFeedItemModel createSubject() {
+    FeedItemModel createSubject() {
       return PostFeedItemModel(
         item,
         formatter: formatter,

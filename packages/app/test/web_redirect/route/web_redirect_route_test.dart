@@ -19,7 +19,7 @@ class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {}
 
 void main() {
-  const url = 'https://www.example.com/redirect';
+  final url = Uri.parse('https://www.example.com/redirect');
 
   group(WebRedirectRoute, () {
     late GoRouterState state;
@@ -29,9 +29,7 @@ void main() {
     });
 
     WebRedirectRoute createSubject() {
-      return WebRedirectRoute(
-        url: url,
-      );
+      return WebRedirectRoute(url: url);
     }
 
     test('is a $GoRouteData', () {

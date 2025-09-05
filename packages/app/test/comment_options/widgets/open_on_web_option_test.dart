@@ -85,7 +85,7 @@ void main() async {
     testWidgets('pops and pushes $WebRedirectRoute when $ListTile '
         'is tapped', (tester) async {
       final push = () => router.push(
-        WebRedirectRoute(url: webRedirect.urlString),
+        WebRedirectRoute(url: webRedirect.url),
       );
       when(push).thenAnswer((_) async => null);
       when(() => comment.webRedirect).thenReturn(webRedirect);

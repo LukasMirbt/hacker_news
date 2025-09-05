@@ -1,11 +1,11 @@
 import 'package:app/app_web_view/app_web_view.dart';
 
 class WebRedirectWebViewConfiguration extends AppWebViewConfiguration {
-  WebRedirectWebViewConfiguration({
-    required String url,
+  const WebRedirectWebViewConfiguration({
+    required Uri url,
     required String? html,
   }) : super(
-         initialUrl: Uri.parse(url),
+         initialUrl: url,
          initialHtml: html,
        );
 }

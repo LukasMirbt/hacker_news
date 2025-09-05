@@ -17,7 +17,7 @@ RouteBase get $webRedirectRoute => GoRouteData.$route(
 
 mixin $WebRedirectRoute on GoRouteData {
   static WebRedirectRoute _fromState(GoRouterState state) => WebRedirectRoute(
-    url: state.uri.queryParameters['url']!,
+    url: Uri.parse(state.uri.queryParameters['url']!),
     from: state.uri.queryParameters['from'],
   );
 
@@ -26,7 +26,10 @@ mixin $WebRedirectRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/web-redirect',
-    queryParams: {'url': _self.url, if (_self.from != null) 'from': _self.from},
+    queryParams: {
+      'url': _self.url.toString(),
+      if (_self.from != null) 'from': _self.from,
+    },
   );
 
   @override

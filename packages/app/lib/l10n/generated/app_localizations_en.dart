@@ -371,6 +371,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get threadCommentOptions_edit => 'Edit';
+
+  @override
   String get threadCommentOptions_reply => 'Reply';
 
   @override
@@ -381,6 +384,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get threadCommentOptions_openOnWeb => 'Open on web';
+
+  @override
+  String get threadCommentOptions_delete => 'Delete';
 
   @override
   String get voteFailure_invalidUrl =>
