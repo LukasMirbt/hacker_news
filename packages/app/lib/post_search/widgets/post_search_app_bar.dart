@@ -9,42 +9,9 @@ class PostSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
+    return const Hero(
       tag: 'post_app_bar',
-      flightShuttleBuilder:
-          (
-            flightContext,
-            animation,
-            direction,
-            fromHeroContext,
-            toHeroContext,
-          ) {
-            final fromHero = toHeroContext.widget as Hero;
-            final toHero = toHeroContext.widget as Hero;
-
-            final fade = CurvedAnimation(
-              parent: animation,
-              curve: const Interval(
-                0,
-                1,
-                curve: Curves.easeInOutCubicEmphasized,
-              ),
-            );
-
-            return Stack(
-              children: [
-                FadeTransition(
-                  opacity: ReverseAnimation(fade),
-                  child: fromHero.child,
-                ),
-                FadeTransition(
-                  opacity: fade,
-                  child: toHero.child,
-                ),
-              ],
-            );
-          },
-      child: const _AppBar(),
+      child: _AppBar(),
     );
   }
 }

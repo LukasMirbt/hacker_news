@@ -11,11 +11,9 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      placeholderBuilder: (context, size, child) =>
-          SizedBox(width: size.width, height: size.height),
+    return const Hero(
       tag: 'post_app_bar',
-      child: const _AppBar(),
+      child: _AppBar(),
     );
   }
 }

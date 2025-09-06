@@ -23,8 +23,7 @@ class PostSearchBar extends StatelessWidget {
           color: colorScheme.onSurfaceVariant,
         ),
       ),
-      hintText: 'Search comments',
-
+      hintText: 'Search',
       onChanged: (value) {
         context.read<PostSearchBloc>().add(
           PostSearchQueryChanged(value),
