@@ -1,0 +1,20 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!--
+Axiom App Icon - Light Theme
+Background: #F1F3F5
+Gradient Start: #0056B3
+Gradient End: #007BFF
+-->
+    <defs>
+        <linearGradient id="axiomGradientLight" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#0056B3; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#007BFF; stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Stylized 'A' Logo -->
+    <g transform="translate(0, 5)">
+        <path d="M50 15 L20 75 H35 L50 48 L65 75 H80 Z" fill="url(#axiomGradientLight)" />
+    </g>
+
+</svg>

@@ -17,6 +17,6 @@ class AboutBloc extends Bloc<AboutEvent, void> {
     AboutPrivacyPolicyPressed event,
     Emitter<void> emit,
   ) {
-    _launcher.launch(yapPrivacyPolicyLink);
+    _launcher.launch(axiomPrivacyPolicyLink);
   }
 }

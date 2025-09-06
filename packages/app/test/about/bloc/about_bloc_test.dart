@@ -23,7 +23,7 @@ void main() {
     }
 
     group(AboutPrivacyPolicyPressed, () {
-      final launch = () => launcher.launch(yapPrivacyPolicyLink);
+      final launch = () => launcher.launch(axiomPrivacyPolicyLink);
 
       blocTest(
         'calls launch',
