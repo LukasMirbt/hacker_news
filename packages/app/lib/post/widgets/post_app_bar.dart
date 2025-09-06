@@ -18,6 +18,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(l10n.post_title),
       actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
       actions: const [
+        PostSearchButton(),
         PostOptionsButton(),
       ],
     );

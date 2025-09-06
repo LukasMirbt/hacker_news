@@ -6,6 +6,7 @@ import 'package:app/data_collection/data_collection.dart';
 import 'package:app/drafts/drafts.dart';
 import 'package:app/home/home.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_search/post_search.dart';
 import 'package:app/reply/reply.dart' hide ReplyParent;
 import 'package:app/search/search.dart';
 import 'package:app/settings/settings.dart';

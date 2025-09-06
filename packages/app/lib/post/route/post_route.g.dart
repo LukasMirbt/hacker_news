@@ -15,6 +15,10 @@ RouteBase get $postRoute => RelativeGoRouteData.$route(
   factory: $PostRoute._fromState,
   routes: [
     RelativeGoRouteData.$route(
+      path: 'search',
+      factory: $PostSearchRoute._fromState,
+    ),
+    RelativeGoRouteData.$route(
       path: 'comment',
       factory: $CommentRoute._fromState,
     ),
@@ -36,6 +40,32 @@ mixin $PostRoute on RelativeGoRouteData {
   String get subLocation => RelativeGoRouteData.$location(
     'post/${Uri.encodeComponent(_self.postId)}',
   );
+
+  @override
+  String get relativeLocation => './$subLocation';
+
+  @override
+  void goRelative(BuildContext context) => context.go(relativeLocation);
+
+  @override
+  Future<T?> pushRelative<T>(BuildContext context) =>
+      context.push<T>(relativeLocation);
+
+  @override
+  void pushReplacementRelative(BuildContext context) =>
+      context.pushReplacement(relativeLocation);
+
+  @override
+  void replaceRelative(BuildContext context) =>
+      context.replace(relativeLocation);
+}
+
+mixin $PostSearchRoute on RelativeGoRouteData {
+  static PostSearchRoute _fromState(GoRouterState state) =>
+      const PostSearchRoute();
+
+  @override
+  String get subLocation => RelativeGoRouteData.$location('search');
 
   @override
   String get relativeLocation => './$subLocation';

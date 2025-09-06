@@ -1,5 +1,6 @@
 import 'package:app/comment/comment.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_search/post_search.dart';
 import 'package:app/reply/reply.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class PostRoute extends RelativeGoRouteData with $PostRoute, EquatableMixin {
   static const config = TypedRelativeGoRoute<PostRoute>(
     path: 'post/:postId',
     routes: [
+      PostSearchRoute.config,
       CommentRoute.config,
       ReplyRoute.config,
     ],
