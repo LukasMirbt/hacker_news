@@ -32,7 +32,7 @@ class PostShellRoute extends ShellRouteData {
         draftStorage: context.read<DraftStorage>(),
         visitedPostStorage: context.read<VisitedPostStorage>(),
       ),
-      child: navigator,
+      child: ShellRouteWrapper(child: navigator),
     );
   }
 }
