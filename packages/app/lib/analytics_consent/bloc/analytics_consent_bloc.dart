@@ -24,7 +24,7 @@ class AnalyticsConsentBloc
     AnalyticsConsentPrivacyPolicyPressed event,
     Emitter<AnalyticsConsentState> emit,
   ) {
-    _launcher.launch(yapPrivacyPolicyLink);
+    _launcher.launch(axiomPrivacyPolicyLink);
   }
 
   void _onAgreePressed(
