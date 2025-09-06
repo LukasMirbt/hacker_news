@@ -9,8 +9,11 @@ class PostSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: const PostSearchBar(),
+    return Hero(
+      tag: 'post_app_bar',
+      child: AppBar(
+        title: const PostSearchBar(),
+      ),
     );
   }
 }

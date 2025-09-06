@@ -13,14 +13,17 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return AppBar(
-      leading: const PostBackButton(),
-      title: Text(l10n.post_title),
-      actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
-      actions: const [
-        PostSearchButton(),
-        PostOptionsButton(),
-      ],
+    return Hero(
+      tag: 'post_app_bar',
+      child: AppBar(
+        leading: const PostBackButton(),
+        title: Text(l10n.post_title),
+        actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
+        actions: const [
+          PostSearchButton(),
+          PostOptionsButton(),
+        ],
+      ),
     );
   }
 }
