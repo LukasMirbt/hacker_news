@@ -4,6 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
+      - ".github/workflows/deploy_pages.yaml"
       - "README.md"
       - "architecture.md"
       - "privacy_policy.html"
