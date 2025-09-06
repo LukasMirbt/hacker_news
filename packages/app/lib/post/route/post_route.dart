@@ -17,7 +17,6 @@ class PostRoute extends RelativeGoRouteData with $PostRoute, EquatableMixin {
   static const config = TypedRelativeGoRoute<PostRoute>(
     path: 'post/:postId',
     routes: [
-      PostSearchRoute.config,
       CommentRoute.config,
       ReplyRoute.config,
     ],

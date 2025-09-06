@@ -1,5 +1,6 @@
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_search/widgets/post_search_anchor.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(l10n.post_title),
       actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
       actions: const [
-        PostSearchButton(),
+        PostSearchAnchor(),
         PostOptionsButton(),
       ],
     );
