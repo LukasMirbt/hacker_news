@@ -1,4 +1,4 @@
-const yapPrivacyPolicyLink =
+const axiomPrivacyPolicyLink =
     'https://lukasmirbt.github.io/hacker_news/privacy_policy.html';
 
 const hackerNewsPrivacyPolicyLink =
