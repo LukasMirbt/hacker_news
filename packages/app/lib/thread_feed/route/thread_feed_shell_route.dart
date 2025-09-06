@@ -1,3 +1,4 @@
+import 'package:app/app_router/app_router.dart';
 import 'package:app/thread_feed/thread_feed.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class ThreadFeedShellRoute extends ShellRouteData {
       create: (context) => ThreadRepository(
         threadApi: context.read<ThreadApi>(),
       ),
-      child: navigator,
+      child: ShellRouteWrapper(child: navigator),
     );
   }
 }

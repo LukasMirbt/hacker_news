@@ -1,3 +1,4 @@
+import 'package:app/app_router/app_router.dart';
 import 'package:app/drafts/drafts.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:draft_storage/draft_storage.dart';
@@ -24,7 +25,7 @@ class DraftShellRoute extends ShellRouteData {
       create: (context) => DraftRepository(
         draftStorage: context.read<DraftStorage>(),
       ),
-      child: navigator,
+      child: ShellRouteWrapper(child: navigator),
     );
   }
 }
