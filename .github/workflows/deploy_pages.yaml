@@ -35,7 +35,7 @@ jobs:
       - name: Stage Files for Jekyll
         run: |
           mkdir -p ./staging
-          cp README.md ./staging/index.md
+          cp README.md ./staging/
           cp privacy_policy.html ./staging/
           cp architecture.md ./staging/
 
