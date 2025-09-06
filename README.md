@@ -1,42 +1,39 @@
+# Axiom - Hacker News 
 
-## Architecture
+<img src="./packages/app_ui/assets/icons/axiom_icon_light_inverted.svg" alt="My Logo" width="100">
+<img src="./packages/app_ui/assets/icons/axiom_icon_dark.svg" alt="My Logo" width="100">
 
-Layered architecture which consists of:
+## Why Axiom?
 
-* API/data provider layer
-* Repository layer
-* Bloc layer
-* Presentation layer
+The ethos of Axiom is "uncompromising and intuitive".
 
-A general rule is that the layers should avoid having sibling dependencies. That is, a Bloc should avoid having direct knowledge of any other Bloc.
+Axiom doesn't force you to make trade-offs that you don't want to make but instead offers:
 
-Layers can depend on more than one package in the layer above. For example, a Bloc can be injected with multiple repositories.
+- Enhanced features AND blazing-fast performance
 
-Inspired by [Bloc](https://bloclibrary.dev/architecture/)/[Very good](https://verygood.ventures/blog/very-good-flutter-architecture) layered architecture.
+- Mobile-friendly core UI AND seamless in-app access to Hacker News web
 
-![architecture diagram](https://bloclibrary.dev/_astro/architecture.DXhmDgKF_Z1jU9hW.webp)
+Axiom aims to make all parts of the app as intuitive as possible, especially coming from Hacker News web. Axiom offers <i> some </i> customization but customization for the sake of it is considered an anti-goal:
 
-### Folder structure
+- Thoughtful design OVER extreme customization
 
-Presentation and Bloc layer
-* Feature folders
 
-Repository, API layer and other modules
-* Packages
+## What can I do with Axiom?
 
-### app_ui package
-Flutter mapping to Figma components and other UI-related details.
+- Discover articles
+- Read posts and discussions 
+- Search comments
+- Comment and reply
+- Save drafts automatically
+- Login to Hacker News
+- Search posts (hn.algolia.com)
+- Dark mode
 
-### Presentation layer
-Contains the structure of a feature.
-Adds user events to the Bloc and renders itself based on the states emitted by the Bloc.
+## How do I get it?
 
-### Bloc layer 
-Emits states in response to user events based on simple branching.
-Contains models with feature-related logic and transformations.
+Join the open beta on iOS: https://testflight.apple.com/join/44cHjDBb
 
-### Repository layer
-Transforms data from the API layer into domain-specific models that may be used by one or many Blocs.
+Join the beta on Android:
 
-### API layer
-Dart mapping to an internal or external data source, with minimal transformations.
+1. Join the testing group (required): https://groups.google.com/g/axiom-hacker-news
+2. Install the app: https://play.google.com/store/apps/details?id=com.lukasmirbt.hackerclient

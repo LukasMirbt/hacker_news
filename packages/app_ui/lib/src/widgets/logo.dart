@@ -9,7 +9,7 @@ class Logo extends StatelessWidget {
     final textTheme = TextTheme.of(context);
 
     return Text(
-      'Yap',
+      'Axiom',
       style: textTheme.titleLarge?.copyWith(
         color: colorScheme.primary,
         fontWeight: FontWeight.w600,

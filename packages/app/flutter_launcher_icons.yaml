@@ -1,9 +1,9 @@
 flutter_launcher_icons:
   ios: true
   android: true
-  image_path: packages/app_ui/assets/images/app_icon.png
-  image_path_ios_dark_transparent: packages/app_ui/assets/images/image_ios_dark_transparent.png
+  image_path: ../app_ui/assets/images/app_icon.png
+  image_path_ios_dark_transparent: ../app_ui/assets/images/image_ios_dark_transparent.png
   min_sdk_android: 21
   adaptive_icon_background: "#0056B3"
-  adaptive_icon_foreground: packages/app_ui/assets/images/adaptive_icon_foreground.png
-  adaptive_icon_monochrome: packages/app_ui/assets/images/adaptive_icon_foreground.png
+  adaptive_icon_foreground: ../app_ui/assets/images/adaptive_icon_foreground.png
+  adaptive_icon_monochrome: ../app_ui/assets/images/adaptive_icon_foreground.png

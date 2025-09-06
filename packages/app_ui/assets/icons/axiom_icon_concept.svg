@@ -1,0 +1,21 @@
+<svg viewBox="0 0 100 100" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <!-- Defs for the gradient -->
+    <defs>
+        <linearGradient id="axiomGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4F46E5; stop-opacity:1"></stop> <!-- Indigo-600 -->
+            <stop offset="100%" style="stop-color:#A855F7; stop-opacity:1"></stop> <!-- Purple-500 -->
+        </linearGradient>
+    </defs>
+
+    <!-- Background Shape (Squircle) -->
+    <rect width="100" height="100" rx="22" ry="22" fill="#1F2937"></rect> <!-- Gray-800 -->
+
+    <!-- Stylized 'A' Logo -->
+    <g transform="translate(0, 5)">
+        <!-- Main triangle shape -->
+        <path d="M50 15 L80 75 H20 Z" fill="url(#axiomGradient)"></path>
+        <!-- Inner cutout to form the 'A' crossbar -->
+        <path d="M50 48 L65 75 H35 Z" fill="#1F2937"></path> <!-- Same as background to create a
+        cutout effect -->
+    </g>
+</svg>

@@ -1,0 +1,5 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(0, 5)">
+        <path d="M50 15 L20 75 H35 L50 48 L65 75 H80 Z" fill="#F1F3F5" />
+    </g>
+</svg>

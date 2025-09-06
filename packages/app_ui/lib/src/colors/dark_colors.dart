@@ -59,7 +59,7 @@ class DarkColors extends AppColors {
   Color get outlineVariant => const Color(0xFF2A2A2A);
 
   @override
-  Color get surfaceContainerLow => const Color.fromRGBO(30, 30, 30, 1);
+  Color get surfaceContainerLow => const Color(0xFF1E1E1E);
 
   @override
   Color get surfaceContainerHigh => const Color(0xFF2A2A2A);
