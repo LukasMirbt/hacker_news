@@ -38,9 +38,6 @@ jobs:
           source: ./
           destination: ./_site
 
-      - name: Rename README to index
-        run: mv ./_site/README.html ./_site/index.html
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
