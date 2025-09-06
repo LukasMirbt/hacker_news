@@ -145,16 +145,4 @@ class AppClient extends Cubit<AuthenticationState> {
       ),
     );
   }
-
-  Future<void> unauthenticate() async {
-    await _cookieJar.deleteAll();
-    await _userIdStorage.delete();
-
-    emit(
-      state.copyWith(
-        user: User.empty,
-        status: AuthenticationStatus.unauthenticated,
-      ),
-    );
-  }
 }

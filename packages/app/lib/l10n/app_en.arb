@@ -1,0 +1,205 @@
+{
+  "@@locale": "en",
+  "cancel": "Cancel",
+  "generalServerError": "Something went wrong",
+  "about_title": "About",
+  "about_licenses": "Licenses",
+  "about_privacyPolicy": "Privacy policy",
+  "about_version": "Version",
+  "analyticsConsent_title": "Help improve the app?",
+  "analyticsConsent_explanationPart1": "We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.",
+  "analyticsConsent_explanationPart2": " Learn more in our ",
+  "analyticsConsent_privacyPolicy": "privacy policy",
+  "analyticsConsent_explanationPart4": ".",
+  "analyticsConsent_agreeAction": "Help improve",
+  "analyticsConsent_declineAction": "No, thanks",
+  "appShell_home": "Home",
+  "appShell_search": "Search",
+  "appShell_threads": "Threads",
+  "appShell_drafts": "Drafts",
+  "appShell_settings": "Settings",
+  "appShell_login": "Login",
+  "comment_title": "Comment",
+  "comment_textFieldHintText": "Your comment",
+  "comment_disabledExplanationTitle": "Closed for comments",
+  "comment_disabledExplanationSubtitle": "Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.",
+  "comment_submitAction": "Submit",
+  "commentList_age": "{age} ago",
+  "@commentList_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "commentList_score": "{score}p",
+  "@commentList_score": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "commentOptions_edit": "Edit",
+  "commentOptions_reply": "Reply",
+  "commentOptions_share": "Share",
+  "commentOptions_openOnWeb": "Open on web",
+  "commentOptions_delete": "Delete",
+  "contentSettings_title": "Content",
+  "contentSettings_linkSectionTitle": "Links",
+  "contentSettings_inAppBrowserLaunchModeTitle": "In-app browser",
+  "contentSettings_inAppBrowserLaunchModeSubtitleIOS": "Opens links inside the app",
+  "contentSettings_inAppBrowserLaunchModeSubtitleAndroid": "Opens links inside the app. Some links may open their dedicated app.",
+  "contentSettings_externalBrowserLaunchModeTitle": "External browser",
+  "contentSettings_externalBrowserLaunchModeSubtitle": "Opens links in the default browser or another app",
+  "createAccount_title": "Create account",
+  "createAccount_explanation": "Creates a Hacker News account that can also be used on the Hacker News website",
+  "createAccount_usernameLabel": "Username",
+  "createAccount_usernameEmptyError": "Enter a username",
+  "createAccount_passwordLabel": "Password",
+  "createAccount_passwordEmptyError": "Enter a password",
+  "createAccount_policyLinksPart1": "By creating an account, you agree to the Hacker News ",
+  "createAccount_termsOfUse": "terms of use",
+  "createAccount_policyLinksPart3": " and ",
+  "createAccount_privacyPolicy": "privacy policy",
+  "createAccount_submitAction": "Create account",
+  "commentDraftOptions_viewPost": "View post",
+  "commentDraftOptions_delete": "Delete draft",
+  "dataCollection_title": "Data collection",
+  "dataCollection_analytics": "Analytics",
+  "deleteDraft_title": "Delete draft?",
+  "deleteDraft_content": "The draft will be permanently deleted",
+  "deleteDraft_confirmAction": "Delete",
+  "drafts_emptyTitle": "No drafts saved",
+  "drafts_emptyBody": "Your unfinished replies and comments will appear here. Drafts are saved automatically.",
+  "feed_postWithArticleShareText": "{title}\n{articleUrl}\n\nDiscussion\n{postUrl}",
+  "@feed_postWithArticleShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "articleUrl": {
+        "type": "String"
+      },
+      "postUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "feed_postShareText": "{title}\n{url}",
+  "@feed_postShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "feed_jobShareText": "{title}\n{url}",
+  "@feed_jobShareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "feed_rank": "{rank}.",
+  "@feed_rank": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      }
+    }
+  },
+  "feedItemOptions_openOnWeb": "Open on web",
+  "home_topTab": "Top",
+  "home_newTab": "New",
+  "home_pastTab": "Past",
+  "home_askTab": "Ask",
+  "home_showTab": "Show",
+  "home_jobsTab": "Jobs",
+  "home_whoIsHiringTab": "Who Is Hiring",
+  "login_title": "Login",
+  "login_instructions": "Use your Hacker News credentials to log in",
+  "login_usernameLabel": "Username",
+  "login_usernameEmptyError": "Enter a username",
+  "login_passwordLabel": "Password",
+  "login_passwordEmptyError": "Enter a password",
+  "login_createAccountAction": "Create a Hacker News account",
+  "login_policyLinksPart1": "By logging in, you agree to the Hacker News ",
+  "login_termsOfUse": "terms of use",
+  "login_policyLinksPart3": " and ",
+  "login_privacyPolicy": "privacy policy",
+  "login_submitAction": "Login",
+  "loginLoading_text": "Logging in...",
+  "logoutLoading_text": "Logging out...",
+  "post_title": "Post",
+  "postOptions_openOnWeb": "Open on web",
+  "postHeader_shareText": "{title}\n{url}",
+  "@postHeader_shareText": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "reply_title": "Reply",
+  "reply_disabledExplanationTitle": "Closed for replies",
+  "reply_disabledExplanationSubtitle": "Threads are closed to new replies after two weeks, or if the submission has been killed by software, moderators, or user flags.",
+  "reply_age": "{age} ago",
+  "@reply_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "reply_score": "{score}p",
+  "@reply_score": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "reply_textFieldHintText": "Your reply",
+  "reply_submitAction": "Submit",
+  "replyDraftOptions_delete": "Delete draft",
+  "replyOptions_share": "Share",
+  "replyOptions_openOnWeb": "Open on web",
+  "settings_logout": "Logout",
+  "settings_theme": "Theme",
+  "settings_content": "Content",
+  "settings_dataCollection": "Data collection",
+  "settings_about": "About",
+  "settings_userSectionTitle": "User",
+  "theme_title": "Theme",
+  "theme_systemMode": "Use device settings",
+  "theme_lightMode": "Light",
+  "theme_darkMode": "Dark",
+  "threadFeed_emptyTitle": "No threads yet",
+  "threadFeed_emptyBody": "Your replies and comment threads will appear here. Join a discussion to get started.",
+  "threadFeed_age": "{age} ago",
+  "@threadFeed_age": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      }
+    }
+  },
+  "threadCommentOptions_edit": "Edit",
+  "threadCommentOptions_reply": "Reply",
+  "threadCommentOptions_viewPost": "View post",
+  "threadCommentOptions_share": "Share",
+  "threadCommentOptions_openOnWeb": "Open on web",
+  "threadCommentOptions_delete": "Delete",
+  "voteFailure_invalidUrl": "Something went wrong. Try refreshing the page."
+}

@@ -21,6 +21,8 @@ void main() {
             onUrl: base.onUrl,
             onTitle: base.onTitle,
             score: data.score,
+            editUrl: data.editUrl,
+            deleteUrl: data.deleteUrl,
           ),
         );
       });

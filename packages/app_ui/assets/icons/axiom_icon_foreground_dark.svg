@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="axiomGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FF6600; stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#FF9800; stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <g transform="translate(0, 5)">
+        <path d="M50 15 L20 75 H35 L50 48 L65 75 H80 Z" fill="url(#axiomGradientDark)" />
+    </g>
+
+</svg>

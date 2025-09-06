@@ -20,6 +20,12 @@ class LightColors extends AppColors {
   Color get onPrimaryContainer => const Color(0xFF004085);
 
   @override
+  Color get secondary => const Color(0xFF007BFF);
+
+  @override
+  Color get onSecondary => Colors.black;
+
+  @override
   Color get secondaryContainer => const Color(0xFFE4EAF2);
 
   @override
@@ -47,13 +53,16 @@ class LightColors extends AppColors {
   Color get onSurfaceVariant => const Color(0xFF5A656E);
 
   @override
-  Color get outline => const Color(0xFFADB5BD);
+  Color get outline => const Color(0xFF757575);
 
   @override
   Color get outlineVariant => const Color(0xFFDEE2E6);
 
   @override
   Color get surfaceContainerLow => const Color(0xFFF1F3F5);
+
+  @override
+  Color get surfaceContainerHigh => const Color(0xFFEDEFF2);
 
   @override
   Color get surfaceContainerHighest => const Color(0xFFE9ECEF);

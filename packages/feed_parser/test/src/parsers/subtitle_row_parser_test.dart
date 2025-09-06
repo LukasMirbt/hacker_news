@@ -50,15 +50,16 @@ void main() {
       final parseHnuser = () => hnuserParser.parse(subtitleRow);
       final parseCommentCount = () => commentCountParser.parse(subtitleRow);
 
-      test('calls parsers and returns $SubtitleRowData', () {
+      test('calls parsers and returns $PostSubtitleRowData '
+          'when hnuser is non-null', () {
         when(parseAge).thenReturn(age);
-        when(parseScore).thenReturn(score);
         when(parseHnuser).thenReturn(hnuser);
+        when(parseScore).thenReturn(score);
         when(parseCommentCount).thenReturn(commentCount);
         final parser = createSubject();
         expect(
           parser.parse(subtitleRow),
-          SubtitleRowData.fromParsed(
+          PostSubtitleRowData.fromParsed(
             age: age,
             score: score,
             hnuser: hnuser,
@@ -69,6 +70,18 @@ void main() {
         verify(parseScore).called(1);
         verify(parseHnuser).called(1);
         verify(parseCommentCount).called(1);
+      });
+
+      test('calls parsers and returns $JobSubtitleRowData '
+          'when hnuser is null', () {
+        when(parseAge).thenReturn(age);
+        final parser = createSubject();
+        expect(
+          parser.parse(subtitleRow),
+          JobSubtitleRowData.fromParsed(age: age),
+        );
+        verify(parseAge).called(1);
+        verify(parseHnuser).called(1);
       });
     });
   });

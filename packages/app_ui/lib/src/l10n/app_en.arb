@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
-  "error": "Something went wrong.",
+  "errorTitle": "Oops, something went wrong",
+  "errorBody": "An unexpected issue occurred. Please try again.",
   "middleDot": "·"
 }

@@ -5,3 +5,5 @@ output-localization-file: date_formatter_localizations.dart
 nullable-getter: false
 use-named-parameters: true
 format: true
+header: |
+  // coverage:ignore-file

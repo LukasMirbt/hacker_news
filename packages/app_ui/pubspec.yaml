@@ -16,7 +16,7 @@ dependencies:
     sdk: flutter
   # Pinned to avoid duplicate semantics when PR is merged
   # https://github.com/daohoangson/flutter_widget_from_html/pull/1429
-  flutter_widget_from_html_core: 0.16.0
+  flutter_widget_from_html_core: 0.17.0
   html: ^0.15.6
   intl: ^0.20.2
   material_symbols_icons: ^4.2858.1

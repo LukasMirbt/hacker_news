@@ -7,6 +7,7 @@ abstract class AppTheme {
   const AppTheme();
 
   AppColors get colors;
+  ColorScheme get baseColorScheme;
   AppTextStyles get textStyles;
   SystemUiOverlayStyle get systemOverlayStyle;
 
@@ -17,17 +18,17 @@ abstract class AppTheme {
       bottomSheetTheme: _bottomSheetTheme,
       colorScheme: _colorScheme,
       filledButtonTheme: _filledButtonTheme,
-      iconTheme: _iconTheme,
+      iconTheme: iconTheme,
       inputDecorationTheme: _inputDecorationTheme,
       listTileTheme: _listTileTheme,
       outlinedButtonTheme: _outlinedButtonTheme,
       pageTransitionsTheme: _pageTransitionsTheme,
+      progressIndicatorTheme: _progressIndicatorTheme,
       tabBarTheme: _tabBarTheme,
-      textButtonTheme: _textButtonTheme,
       textTheme: _textTheme,
       extensions: [
         _extendedTextTheme,
-        _skeletonizerConfig,
+        skeletonizerConfig,
       ],
     );
   }
@@ -47,8 +48,8 @@ abstract class AppTheme {
     );
   }
 
-  AppBarTheme get _appBarTheme {
-    return AppBarTheme(
+  AppBarThemeData get _appBarTheme {
+    return AppBarThemeData(
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
       centerTitle: false,
@@ -70,17 +71,14 @@ abstract class AppTheme {
   }
 
   ColorScheme get _colorScheme {
-    final constructor = switch (colors.brightness) {
-      Brightness.light => ColorScheme.light,
-      Brightness.dark => ColorScheme.dark,
-    };
-
-    return constructor(
+    return baseColorScheme.copyWith(
       brightness: colors.brightness,
       primary: colors.primary,
       onPrimary: colors.onPrimary,
       primaryContainer: colors.primaryContainer,
       onPrimaryContainer: colors.onPrimaryContainer,
+      secondary: colors.secondary,
+      onSecondary: colors.onSecondary,
       secondaryContainer: colors.secondaryContainer,
       onSecondaryContainer: colors.onSecondaryContainer,
       tertiary: colors.tertiary,
@@ -93,6 +91,7 @@ abstract class AppTheme {
       outline: colors.outline,
       outlineVariant: colors.outlineVariant,
       surfaceContainerLow: colors.surfaceContainerLow,
+      surfaceContainerHigh: colors.surfaceContainerHigh,
       surfaceContainerHighest: colors.surfaceContainerHighest,
       surfaceTint: colors.surfaceTint,
     );
@@ -109,20 +108,17 @@ abstract class AppTheme {
     );
   }
 
-  IconThemeData get _iconTheme {
+  IconThemeData get iconTheme {
     return IconThemeData(
+      color: colors.onSurface,
       size: 24,
       opticalSize: 24,
       fill: 0,
-      grade: switch (colors.brightness) {
-        Brightness.light => 0,
-        Brightness.dark => -25,
-      },
     );
   }
 
-  InputDecorationTheme get _inputDecorationTheme {
-    return const InputDecorationTheme(
+  InputDecorationThemeData get _inputDecorationTheme {
+    return const InputDecorationThemeData(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16),
@@ -133,7 +129,9 @@ abstract class AppTheme {
 
   ListTileThemeData get _listTileTheme {
     return const ListTileThemeData(
-      contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.xlg),
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: AppSpacing.xlg,
+      ),
     );
   }
 
@@ -163,16 +161,18 @@ abstract class AppTheme {
     );
   }
 
+  ProgressIndicatorThemeData get _progressIndicatorTheme {
+    return ProgressIndicatorThemeData(
+      refreshBackgroundColor: colors.surfaceContainerHigh,
+    );
+  }
+
   TabBarThemeData get _tabBarTheme {
     return TabBarThemeData(
       indicatorSize: TabBarIndicatorSize.tab,
       tabAlignment: TabAlignment.start,
       labelColor: colors.onSurface,
     );
-  }
-
-  TextButtonThemeData get _textButtonTheme {
-    return const TextButtonThemeData();
   }
 
   TextTheme get _textTheme {
@@ -196,6 +196,7 @@ abstract class AppTheme {
       bodyColor: colors.onSurface,
       displayColor: colors.onSurface,
       decorationColor: colors.onSurface,
+      decoration: TextDecoration.none,
     );
   }
 
@@ -207,15 +208,13 @@ abstract class AppTheme {
       bodyColor: colors.onSurface,
       displayColor: colors.onSurface,
       decorationColor: colors.onSurface,
+      decoration: TextDecoration.none,
     );
   }
 
-  SkeletonizerConfigData get _skeletonizerConfig {
-    return SkeletonizerConfigData(
-      effect: ShimmerEffect(
-        baseColor: colors.surfaceContainerHighest,
-        highlightColor: colors.surface,
-      ),
+  SkeletonizerConfigData get skeletonizerConfig {
+    return const SkeletonizerConfigData(
+      justifyMultiLineText: false,
     );
   }
 }

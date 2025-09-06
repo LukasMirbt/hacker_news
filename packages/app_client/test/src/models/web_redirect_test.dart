@@ -60,15 +60,5 @@ void main() {
         );
       });
     });
-
-    group('urlString', () {
-      test('returns correct string', () {
-        final redirect = createSubject();
-        expect(
-          redirect.urlString,
-          url.toString(),
-        );
-      });
-    });
   });
 }

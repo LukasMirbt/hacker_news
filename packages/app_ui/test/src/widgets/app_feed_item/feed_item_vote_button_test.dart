@@ -25,11 +25,11 @@ void main() {
       );
     }
 
-    testWidgets('renders $FeedItemButtonPlaceholder '
+    testWidgets('renders $FeedItemVoteButtonPlaceholder '
         'when data is null', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
-        find.byType(FeedItemButtonPlaceholder),
+        find.byType(FeedItemVoteButtonPlaceholder),
         findsOneWidget,
       );
     });

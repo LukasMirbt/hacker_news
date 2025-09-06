@@ -19,7 +19,7 @@ void main() {
       return tester.widget<Icon>(find.byType(Icon));
     }
 
-    group('default constructor', () {
+    group('unnamed constructor', () {
       test('returns $AppIcon with correct values', () {
         final widget = AppIcon(
           icon,
@@ -30,9 +30,9 @@ void main() {
           color: color,
         );
 
+        expect(widget.filled, false);
         expect(widget.icon, icon);
         expect(widget.size, size);
-        expect(widget.fill, 0.0);
         expect(widget.weight, weight);
         expect(widget.grade, grade);
         expect(widget.opticalSize, opticalSize);
@@ -51,14 +51,50 @@ void main() {
           color: color,
         );
 
+        expect(widget.filled, true);
         expect(widget.icon, icon);
         expect(widget.size, size);
-        expect(widget.fill, 1.0);
         expect(widget.weight, weight);
         expect(widget.grade, grade);
         expect(widget.opticalSize, opticalSize);
         expect(widget.color, color);
       });
+    });
+
+    testWidgets('renders $Icon with correct fill '
+        'when filled', (tester) async {
+      await tester.pumpApp(
+        AppIcon.filled(
+          icon,
+          size: size,
+          weight: weight,
+          grade: grade,
+          opticalSize: opticalSize,
+          color: color,
+        ),
+      );
+
+      final widget = findWidget(tester);
+
+      expect(widget.fill, 1.0);
+    });
+
+    testWidgets('renders $Icon with correct fill '
+        'when !filled', (tester) async {
+      await tester.pumpApp(
+        AppIcon(
+          icon,
+          size: size,
+          weight: weight,
+          grade: grade,
+          opticalSize: opticalSize,
+          color: color,
+        ),
+      );
+
+      final widget = findWidget(tester);
+
+      expect(widget.fill, 0.0);
     });
 
     testWidgets('renders $Icon with correct values '

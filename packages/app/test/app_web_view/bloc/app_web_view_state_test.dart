@@ -1,0 +1,45 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
+import 'package:app/app_web_view/app_web_view.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  final initialUrl = Uri.parse('https://www.example.com');
+  final url = Uri.parse('https://www.example.com/url');
+
+  group(AppWebViewState, () {
+    AppWebViewState createSubject({Uri? url}) {
+      return AppWebViewState(
+        url: url,
+        preventedNavigation: PreventedNavigation.empty,
+        configuration: AppWebViewConfiguration(
+          initialUrl: initialUrl,
+        ),
+      );
+    }
+
+    group('title', () {
+      test('returns correct value when url is null', () {
+        final state = createSubject();
+        expect(state.title, '');
+      });
+
+      test('returns correct value when url is non-null', () {
+        final state = createSubject(url: url);
+        expect(state.title, 'www.example.com');
+      });
+    });
+
+    group('isShareEnabled', () {
+      test('returns true when url is non-null', () {
+        final state = createSubject(url: url);
+        expect(state.isShareEnabled, true);
+      });
+
+      test('returns false when url is null', () {
+        final state = createSubject();
+        expect(state.isShareEnabled, false);
+      });
+    });
+  });
+}

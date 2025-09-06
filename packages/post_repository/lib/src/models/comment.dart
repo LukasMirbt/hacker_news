@@ -10,8 +10,8 @@ sealed class Comment {
 
   factory Comment.from(CommentData data) {
     return switch (data) {
-      final CurrentUserCommentData data => CurrentUserComment.from(data),
-      final OtherUserCommentData data => OtherUserComment.from(data),
+      CurrentUserCommentData() => CurrentUserComment.from(data),
+      OtherUserCommentData() => OtherUserComment.from(data),
     };
   }
 

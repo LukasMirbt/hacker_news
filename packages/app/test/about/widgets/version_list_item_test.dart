@@ -1,0 +1,87 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app/about/about.dart';
+import 'package:app/l10n/l10n.dart';
+import 'package:app/version/version.dart';
+import 'package:app_ui/app_ui.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../../app/pump_app.dart';
+
+class _MockVersionBloc extends MockBloc<VersionEvent, VersionState>
+    implements VersionBloc {}
+
+class _MockVersionState extends Mock implements VersionState {}
+
+class _MockVersionModel extends Mock implements VersionModel {}
+
+void main() async {
+  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+  const label = 'label';
+
+  group(VersionListItem, () {
+    late VersionBloc versionBloc;
+    late VersionState versionState;
+    late VersionModel version;
+
+    setUp(() {
+      versionBloc = _MockVersionBloc();
+      versionState = _MockVersionState();
+      version = _MockVersionModel();
+      when(() => versionBloc.state).thenReturn(versionState);
+      when(() => versionState.version).thenReturn(version);
+      when(() => version.label).thenReturn(label);
+    });
+
+    Widget buildSubject() {
+      return BlocProvider.value(
+        value: versionBloc,
+        child: VersionListItem(),
+      );
+    }
+
+    group(ListTile, () {
+      ListTile findWidget(WidgetTester tester) {
+        return tester.widget<ListTile>(
+          find.byType(ListTile),
+        );
+      }
+
+      testWidgets('has correct leading', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.leading,
+          isA<AppIcon>().having(
+            (icon) => icon.icon,
+            'icon',
+            Symbols.build_rounded,
+          ),
+        );
+      });
+
+      testWidgets('renders title', (tester) async {
+        await tester.pumpApp(buildSubject());
+        expect(
+          find.text(l10n.about_version),
+          findsOneWidget,
+        );
+      });
+
+      testWidgets('renders label', (tester) async {
+        await tester.pumpApp(buildSubject());
+        expect(
+          find.descendant(
+            of: find.byType(SelectableText),
+            matching: find.text(label),
+          ),
+          findsOneWidget,
+        );
+      });
+    });
+  });
+}

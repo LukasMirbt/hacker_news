@@ -1,18 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:feed_parser/feed_parser.dart';
 
-class FeedItemData extends Equatable {
-  const FeedItemData({
-    required this.titleRowData,
-    required this.subtitleRowData,
-  });
+part 'job_feed_item_data.dart';
+part 'post_feed_item_data.dart';
 
-  final TitleRowData titleRowData;
-  final SubtitleRowData subtitleRowData;
+sealed class FeedItemData extends Equatable {
+  const FeedItemData();
 
-  @override
-  List<Object> get props => [
-    titleRowData,
-    subtitleRowData,
-  ];
+  TitleRowData get titleRowData;
+  SubtitleRowData get subtitleRowData;
 }

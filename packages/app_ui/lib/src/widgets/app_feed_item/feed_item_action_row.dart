@@ -19,7 +19,7 @@ class FeedItemActionRow extends StatelessWidget {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            minimumSize: const Size(64, 44),
+            minimumSize: const Size(70, 44),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             alignment: Alignment.centerLeft,
@@ -40,8 +40,8 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.only(
-        left: AppSpacing.xxlg,
-        right: AppSpacing.lg,
+        left: 37,
+        right: AppSpacing.xlg,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

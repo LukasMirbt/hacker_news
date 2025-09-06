@@ -19,6 +19,8 @@ void main() {
             htmlText: base.htmlText,
             replyUrl: base.replyUrl,
             score: comment.score,
+            editUrl: comment.editUrl,
+            deleteUrl: comment.deleteUrl,
           ),
         );
       });

@@ -1,0 +1,114 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app/web_redirect/web_redirect.dart';
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart'
+    show InAppWebViewPlatform;
+import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../../app/pump_app.dart';
+import '../../app_web_view/mock_in_app_web_view_platform.dart';
+
+class _MockGoRouterState extends Mock implements GoRouterState {}
+
+class _MockAuthenticationRepository extends Mock
+    implements AuthenticationRepository {}
+
+void main() {
+  final url = Uri.parse('https://www.example.com/redirect');
+
+  group(WebRedirectRoute, () {
+    late GoRouterState state;
+
+    setUp(() {
+      state = _MockGoRouterState();
+    });
+
+    WebRedirectRoute createSubject() {
+      return WebRedirectRoute(url: url);
+    }
+
+    test('is a $GoRouteData', () {
+      final route = createSubject();
+      expect(route, isA<GoRouteData>());
+    });
+
+    group('config', () {
+      test('has correct type', () {
+        expect(
+          WebRedirectRoute.config,
+          isA<TypedGoRoute<WebRedirectRoute>>(),
+        );
+      });
+
+      test('has correct path', () {
+        expect(
+          WebRedirectRoute.config.path,
+          '/web-redirect',
+        );
+      });
+    });
+
+    group('buildPage', () {
+      const html = 'html';
+
+      late Page<void> page;
+      late AuthenticationRepository authenticationRepository;
+
+      setUp(() {
+        authenticationRepository = _MockAuthenticationRepository();
+        when(authenticationRepository.cookies).thenAnswer(
+          (_) async => [],
+        );
+        when(() => authenticationRepository.state).thenReturn(
+          AuthenticationState(
+            baseUrl: Uri.parse('https://www.example.com'),
+            webRedirect: WebRedirectPlaceholder(html: html),
+          ),
+        );
+        InAppWebViewPlatform.instance = MockInAppWebViewPlatform();
+      });
+
+      Widget buildSubject() {
+        final route = createSubject();
+        return RepositoryProvider.value(
+          value: authenticationRepository,
+          child: Builder(
+            builder: (context) {
+              page = route.buildPage(context, state);
+              return Navigator(
+                onDidRemovePage: (_) {},
+                pages: [page],
+              );
+            },
+          ),
+        );
+      }
+
+      testWidgets('returns correct page', (tester) async {
+        await tester.pumpApp(buildSubject());
+        expect(
+          page,
+          isA<MaterialPage<void>>().having(
+            (page) => page.fullscreenDialog,
+            'fullscreenDialog',
+            true,
+          ),
+        );
+      });
+
+      testWidgets('renders $WebRedirectPage with correct data', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = tester.widget<WebRedirectPage>(
+          find.byType(WebRedirectPage),
+        );
+        expect(widget.url, url);
+        expect(widget.html, html);
+      });
+    });
+  });
+}

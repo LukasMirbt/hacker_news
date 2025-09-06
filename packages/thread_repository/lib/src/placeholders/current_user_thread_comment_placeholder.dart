@@ -13,6 +13,8 @@ class CurrentUserThreadCommentPlaceholder extends CurrentUserThreadComment {
     String? onUrl,
     String? onTitle,
     int? score,
+    String? editUrl,
+    String? deleteUrl,
   }) : super(
          id: id ?? 'id',
          indent: indent ?? 1,
@@ -25,5 +27,7 @@ class CurrentUserThreadCommentPlaceholder extends CurrentUserThreadComment {
          contextUrl: contextUrl ?? 'contextUrl',
          onUrl: onUrl ?? 'onUrl',
          onTitle: onTitle ?? 'onTitle',
+         editUrl: editUrl ?? 'editUrl',
+         deleteUrl: deleteUrl ?? 'deleteUrl',
        );
 }
