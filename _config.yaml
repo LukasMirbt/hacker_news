@@ -1,0 +1,4 @@
+exclude:
+  - /packages
+  - pubspec.lock
+  - "*.yaml"

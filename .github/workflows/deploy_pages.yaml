@@ -1,13 +1,6 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - ".github/workflows/deploy_pages.yaml"
-      - "README.md"
-      - "architecture.md"
-      - "privacy_policy.html"
   workflow_dispatch:
 
 permissions:
@@ -20,36 +13,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Stage Files for Jekyll
-        run: |
-          mkdir -p ./staging
-          cp README.md ./staging/
-          cp privacy_policy.html ./staging/
-          cp architecture.md ./staging/
-
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./staging
-          destination: ./_site
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./_site"
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
