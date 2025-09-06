@@ -4,10 +4,10 @@ on:
   push:
     branches: ["main"]
     paths:
+      - ".github/workflows/deploy_pages.yaml"
       - "README.md"
       - "architecture.md"
       - "privacy_policy.html"
-
   workflow_dispatch:
 
 permissions:
@@ -32,12 +32,14 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Copy files to deployment directory
-        run: |
-          mkdir _site
-          cp README.md _site/index.md
-          cp architecture.md _site/
-          cp privacy_policy.html _site/
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Rename README to index
+        run: mv ./_site/README.html ./_site/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
