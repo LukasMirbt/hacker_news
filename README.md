@@ -1,7 +1,7 @@
 # Axiom - Hacker News
 
-<img src="./packages/app_ui/assets/icons/axiom_icon_light_inverted.svg" alt="My Logo" width="100">
-<img src="./packages/app_ui/assets/icons/axiom_icon_dark.svg" alt="My Logo" width="100">
+<img src="./packages/app_ui/assets/icons/axiom_icon_light_inverted.svg" alt="Light app icon" width="100">
+<img src="./packages/app_ui/assets/icons/axiom_icon_dark.svg" alt="Dark app icon" width="100">
 
 ## Why Axiom?
 
