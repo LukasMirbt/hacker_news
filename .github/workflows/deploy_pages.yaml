@@ -3,6 +3,7 @@ name: Deploy GitHub Pages
 on:
   workflow_dispatch:
   push:
+    branches: ["main"]
     paths:
       - ".github/workflows/deploy_pages.yaml"
       - "README.md"
