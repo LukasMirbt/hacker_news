@@ -7,6 +7,9 @@ class PostSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.of(context);
+    final textTheme = TextTheme.of(context);
+
     return SearchBar(
       autoFocus: true,
       backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
@@ -14,6 +17,11 @@ class PostSearchBar extends StatelessWidget {
       overlayColor: const WidgetStatePropertyAll(Colors.transparent),
       shape: const WidgetStatePropertyAll(
         RoundedRectangleBorder(),
+      ),
+      hintStyle: WidgetStatePropertyAll(
+        textTheme.titleLarge?.copyWith(
+          color: colorScheme.onSurfaceVariant,
+        ),
       ),
       hintText: 'Search comments',
 

@@ -11,19 +11,30 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Hero(
+      placeholderBuilder: (context, size, child) =>
+          SizedBox(width: size.width, height: size.height),
+      tag: 'post_app_bar',
+      child: const _AppBar(),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget {
+  const _AppBar();
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return Hero(
-      tag: 'post_app_bar',
-      child: AppBar(
-        leading: const PostBackButton(),
-        title: Text(l10n.post_title),
-        actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
-        actions: const [
-          PostSearchButton(),
-          PostOptionsButton(),
-        ],
-      ),
+    return AppBar(
+      leading: const PostBackButton(),
+      title: Text(l10n.post_title),
+      actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
+      actions: const [
+        PostSearchButton(),
+        PostOptionsButton(),
+      ],
     );
   }
 }
