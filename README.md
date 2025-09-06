@@ -1,4 +1,4 @@
-# Axiom - Hacker News 
+# Axiom - Hacker News
 
 <img src="./packages/app_ui/assets/icons/axiom_icon_light_inverted.svg" alt="My Logo" width="100">
 <img src="./packages/app_ui/assets/icons/axiom_icon_dark.svg" alt="My Logo" width="100">
@@ -7,16 +7,18 @@
 
 The ethos of Axiom is "uncompromising and intuitive".
 
+### Uncompromising
+
 Axiom doesn't force you to make trade-offs that you don't want to make but instead offers:
 
 - Enhanced features AND blazing-fast performance
-
 - Mobile-friendly core UI AND seamless in-app access to Hacker News web
+
+### Intuitive
 
 Axiom aims to make all parts of the app as intuitive as possible, especially coming from Hacker News web. Axiom offers <i> some </i> customization but customization for the sake of it is considered an anti-goal:
 
 - Thoughtful design OVER extreme customization
-
 
 ## What can I do with Axiom?
 

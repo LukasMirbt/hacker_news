@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
@@ -5,15 +6,14 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
-    final textTheme = TextTheme.of(context);
+    final brightness = ColorScheme.of(context).brightness;
 
-    return Text(
-      'Axiom',
-      style: textTheme.titleLarge?.copyWith(
-        color: colorScheme.primary,
-        fontWeight: FontWeight.w600,
-      ),
+    return switch (brightness) {
+      Brightness.light => Assets.images.appIconSmall,
+      Brightness.dark => Assets.images.appIconDarkSmall,
+    }.image(
+      height: 32,
+      width: 32,
     );
   }
 }
