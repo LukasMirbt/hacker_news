@@ -365,10 +365,10 @@ packages:
     dependency: transitive
     description:
       name: drift_flutter
-      sha256: ccfb42bc942e59f81500b16228df59cf8eb40d2fbd96637ff677df923350af7b
+      sha256: b52bd710f809db11e25259d429d799d034ba1c5224ce6a73fe8419feb980d44c
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.6"
   equatable:
     dependency: transitive
     description:
@@ -690,18 +690,17 @@ packages:
     description:
       path: "packages/go_router"
       ref: "go-router/shell-route-ios-back-gesture"
-      resolved-ref: "17ce56c62d3db4e0cb2de64b4664879219b39224"
+      resolved-ref: "357db324375368a70ecb8f815419a8166a147adc"
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "16.2.2"
   go_router_builder:
     dependency: transitive
     description:
-      path: "packages/go_router_builder"
-      ref: "go-router-builder/relative-route-generation-newlines"
-      resolved-ref: ca6d1dd1ccfdeddcda800d1da177d4b25e18fe48
-      url: "https://github.com/LukasMirbt/packages.git"
-    source: git
+      name: go_router_builder
+      sha256: ecdf8d54af3b8576c81600d9ba247e3a3e90b38236080fe39e06db9f907b1fbb
+      url: "https://pub.dev"
+    source: hosted
     version: "4.0.1"
   graphs:
     dependency: transitive
