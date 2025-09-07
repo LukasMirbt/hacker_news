@@ -93,10 +93,10 @@ packages:
     dependency: transitive
     description:
       name: build
-      sha256: "6439a9c71a4e6eca8d9490c1b380a25b02675aa688137dfbe66d2062884a23ac"
+      sha256: ce76b1d48875e3233fde17717c23d1f60a91cc631597e49a400c89b475395b1d
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.0"
   build_config:
     dependency: transitive
     description:
@@ -117,26 +117,26 @@ packages:
     dependency: transitive
     description:
       name: build_resolvers
-      sha256: "2b21a125d66a86b9511cc3fb6c668c42e9a1185083922bf60e46d483a81a9712"
+      sha256: d1d57f7807debd7349b4726a19fd32ec8bc177c71ad0febf91a20f84cd2d4b46
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   build_runner:
     dependency: transitive
     description:
       name: build_runner
-      sha256: fd3c09f4bbff7fa6e8d8ef688a0b2e8a6384e6483a25af0dac75fef362bcfe6f
+      sha256: b24597fceb695969d47025c958f3837f9f0122e237c6a22cb082a5ac66c3ca30
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.0"
+    version: "2.7.1"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
-      sha256: ab27e46c8aa233e610cf6084ee6d8a22c6f873a0a9929241d8855b7a72978ae7
+      sha256: "066dda7f73d8eb48ba630a55acb50c4a84a2e6b453b1cb4567f581729e794f7b"
       url: "https://pub.dev"
     source: hosted
-    version: "9.3.0"
+    version: "9.3.1"
   built_collection:
     dependency: transitive
     description:
@@ -149,10 +149,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: ba95c961bafcd8686d1cf63be864eb59447e795e124d98d6a27d91fcd13602fb
+      sha256: a30f0a0e38671e89a492c44d005b5545b830a961575bbd8336d42869ff71066d
       url: "https://pub.dev"
     source: hosted
-    version: "8.11.1"
+    version: "8.12.0"
   chalkdart:
     dependency: transitive
     description:
@@ -357,10 +357,10 @@ packages:
     dependency: transitive
     description:
       name: drift_dev
-      sha256: "2fc05ad458a7c562755bf0cae11178dfc58387a416829b78d4da5155a61465fd"
+      sha256: d6646ee608b9f359b023ac329321bc9c63b098217291de079b8b2334a48abf39
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.1"
+    version: "2.28.2"
   drift_flutter:
     dependency: transitive
     description:
@@ -688,17 +688,18 @@ packages:
   go_router:
     dependency: transitive
     description:
-      name: go_router
-      sha256: eb059dfe59f08546e9787f895bd01652076f996bcbf485a8609ef990419ad227
-      url: "https://pub.dev"
-    source: hosted
-    version: "16.2.1"
+      path: "packages/go_router"
+      ref: "go-router/shell-route-ios-back-gesture"
+      resolved-ref: "17ce56c62d3db4e0cb2de64b4664879219b39224"
+      url: "https://github.com/LukasMirbt/packages.git"
+    source: git
+    version: "16.2.2"
   go_router_builder:
     dependency: transitive
     description:
       path: "packages/go_router_builder"
       ref: "go-router-builder/relative-route-generation-newlines"
-      resolved-ref: "82edbad73b14955f66185eed831fd1d01b989878"
+      resolved-ref: ca6d1dd1ccfdeddcda800d1da177d4b25e18fe48
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "4.0.1"
@@ -866,10 +867,10 @@ packages:
     dependency: transitive
     description:
       name: material_symbols_icons
-      sha256: b1342194e859b2774f920b484c46f54a37a845488e23d570385fbe3ede92ee9f
+      sha256: "2cfd19bf1c3016b0de7298eb3d3444fcb6ef093d934deb870ceb946af89cfa58"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2867.0"
+    version: "4.2872.0"
   meta:
     dependency: transitive
     description:
@@ -1239,10 +1240,10 @@ packages:
     dependency: transitive
     description:
       name: source_helper
-      sha256: a447acb083d3a5ef17f983dd36201aeea33fedadb3228fa831f2f0c92f0f3aca
+      sha256: "6a3c6cc82073a8797f8c4dc4572146114a39652851c157db37e964d9c7038723"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.7"
+    version: "1.3.8"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -1295,10 +1296,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "7c859c803cf7e9a84d6db918bac824545045692bbe94a6386bd3a45132235d09"
+      sha256: "57090342af1ce32bb499aa641f4ecdd2d6231b9403cea537ac059e803cc20d67"
       url: "https://pub.dev"
     source: hosted
-    version: "0.41.1"
+    version: "0.41.2"
   stack_trace:
     dependency: transitive
     description:

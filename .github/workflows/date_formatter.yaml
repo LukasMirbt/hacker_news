@@ -1,4 +1,4 @@
-name: app_date_time_formatter
+name: date_formatter
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "packages/app_date_time_formatter/**"
-      - ".github/workflows/app_date_time_formatter.yaml"
+      - "packages/date_formatter/**"
+      - ".github/workflows/date_formatter.yaml"
     branches:
       - main
 
@@ -17,5 +17,5 @@ jobs:
   build:
     uses: ./.github/workflows/flutter_package.yaml
     with:
-      working_directory: packages/app_date_time_formatter
+      working_directory: packages/date_formatter
       coverage_excludes: "lib/src/l10n/generated/**"
