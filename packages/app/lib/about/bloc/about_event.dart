@@ -10,3 +10,7 @@ sealed class AboutEvent extends Equatable {
 final class AboutPrivacyPolicyPressed extends AboutEvent {
   const AboutPrivacyPolicyPressed();
 }
+
+final class AboutSourceCodePressed extends AboutEvent {
+  const AboutSourceCodePressed();
+}

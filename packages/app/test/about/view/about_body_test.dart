@@ -35,6 +35,11 @@ void main() {
       expect(find.byType(PrivacyPolicyListItem), findsOneWidget);
     });
 
+    testWidgets('renders $SourceCodeListItem', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(SourceCodeListItem), findsOneWidget);
+    });
+
     testWidgets('renders $VersionListItem', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(VersionListItem), findsOneWidget);

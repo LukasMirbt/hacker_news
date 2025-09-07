@@ -15,6 +15,7 @@ class AboutBody extends StatelessWidget {
         children: [
           LicenseListItem(),
           PrivacyPolicyListItem(),
+          SourceCodeListItem(),
           Divider(),
           VersionListItem(),
         ],
