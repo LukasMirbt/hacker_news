@@ -126,6 +126,12 @@ abstract class AppLocalizations {
   /// **'Privacy policy'**
   String get about_privacyPolicy;
 
+  /// No description provided for @about_sourceCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Source code'**
+  String get about_sourceCode;
+
   /// No description provided for @about_version.
   ///
   /// In en, this message translates to:
