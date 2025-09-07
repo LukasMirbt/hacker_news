@@ -688,11 +688,12 @@ packages:
   go_router:
     dependency: transitive
     description:
-      name: go_router
-      sha256: eb059dfe59f08546e9787f895bd01652076f996bcbf485a8609ef990419ad227
-      url: "https://pub.dev"
-    source: hosted
-    version: "16.2.1"
+      path: "packages/go_router"
+      ref: "go-router/shell-route-ios-back-gesture"
+      resolved-ref: b57abd18a4e97fb3767ebe62bc210c30f4a6aa71
+      url: "https://github.com/LukasMirbt/packages.git"
+    source: git
+    version: "16.2.2"
   go_router_builder:
     dependency: transitive
     description:

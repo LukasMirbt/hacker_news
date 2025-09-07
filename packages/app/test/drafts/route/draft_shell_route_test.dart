@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/app_router/app_router.dart';
 import 'package:app/drafts/drafts.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -10,8 +9,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
-
-class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockGoRouterState extends Mock implements GoRouterState {}
 
@@ -45,22 +42,16 @@ void main() {
     group('builder', () {
       late GoRouterState state;
       late Widget navigator;
-      late AppRouter router;
 
       setUp(() {
         state = _MockGoRouterState();
         navigator = Container();
-        router = _MockAppRouter();
-        when(() => router.shellRouteCanPop).thenReturn(true);
       });
 
       Widget buildSubject() {
         final route = createSubject();
-        return Provider.value(
-          value: router,
-          child: Builder(
-            builder: (context) => route.builder(context, state, navigator),
-          ),
+        return Builder(
+          builder: (context) => route.builder(context, state, navigator),
         );
       }
 
@@ -73,11 +64,6 @@ void main() {
           context.read<DraftRepository>(),
           isNotNull,
         );
-      });
-
-      testWidgets('renders $ShellRouteWrapper', (tester) async {
-        await tester.pumpApp(buildSubject());
-        expect(find.byType(ShellRouteWrapper), findsOneWidget);
       });
 
       testWidgets('renders navigator', (tester) async {
