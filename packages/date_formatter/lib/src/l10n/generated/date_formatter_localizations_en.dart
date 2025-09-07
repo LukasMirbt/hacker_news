@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'date_formatter_localizations.dart';

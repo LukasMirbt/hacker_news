@@ -12,16 +12,22 @@ class CommentListBuilder {
     final comment = items[index];
     final isLast = index == items.length - 1;
 
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: comment.indent * AppSpacing.md,
+    return ColoredBox(
+      // TODO: Use context.select so color updates correctly
+      color: state.selectedComment?.id == comment.id
+          ? Colors.yellow
+          : Colors.transparent,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              left: comment.indent * AppSpacing.md,
+            ),
+            child: Comment(comment),
           ),
-          child: Comment(comment),
-        ),
-        if (isLast) CommentListFooter(comment),
-      ],
+          if (isLast) CommentListFooter(comment),
+        ],
+      ),
     );
   }
 

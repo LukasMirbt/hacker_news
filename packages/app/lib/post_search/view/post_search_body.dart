@@ -2,6 +2,7 @@ import 'package:app/post_search/post_search.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:post_repository/post_repository.dart';
 
 class PostSearchBody extends StatelessWidget {
@@ -56,19 +57,24 @@ class _Result extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = TextTheme.of(context);
 
-    return Column(
-      spacing: AppSpacing.sm,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          item.hnuser.id,
-          style: textTheme.titleMedium,
-        ),
-        AppHtmlWidget(
-          html: item.htmlText,
-          onLinkPressed: (_) {},
-        ),
-      ],
+    return InkWell(
+      onTap: () {
+        context.read<PostSearchBloc>().add(
+          PostSearchItemPressed(item),
+        );
+        GoRouter.of(context).pop();
+      },
+      child: Column(
+        spacing: AppSpacing.sm,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            item.hnuser.id,
+            style: textTheme.titleMedium,
+          ),
+          Text(item.htmlText),
+        ],
+      ),
     );
   }
 }

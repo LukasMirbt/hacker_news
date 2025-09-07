@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentListState {
 
- String get id; CommentListModel get commentList;
+ String get id; CommentListModel get commentList; Comment? get selectedComment;
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CommentListStateCopyWith<CommentListState> get copyWith => _$CommentListStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentListState&&(identical(other.id, id) || other.id == id)&&(identical(other.commentList, commentList) || other.commentList == commentList));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentListState&&(identical(other.id, id) || other.id == id)&&(identical(other.commentList, commentList) || other.commentList == commentList)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,commentList);
+int get hashCode => Object.hash(runtimeType,id,commentList,selectedComment);
 
 @override
 String toString() {
-  return 'CommentListState(id: $id, commentList: $commentList)';
+  return 'CommentListState(id: $id, commentList: $commentList, selectedComment: $selectedComment)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CommentListStateCopyWith<$Res>  {
   factory $CommentListStateCopyWith(CommentListState value, $Res Function(CommentListState) _then) = _$CommentListStateCopyWithImpl;
 @useResult
 $Res call({
- String id, CommentListModel commentList
+ String id, CommentListModel commentList, Comment? selectedComment
 });
 
 
@@ -62,11 +62,12 @@ class _$CommentListStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? commentList = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? commentList = null,Object? selectedComment = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,commentList: null == commentList ? _self.commentList : commentList // ignore: cast_nullable_to_non_nullable
-as CommentListModel,
+as CommentListModel,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
+as Comment?,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  Comment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommentListState() when $default != null:
-return $default(_that.id,_that.commentList);case _:
+return $default(_that.id,_that.commentList,_that.selectedComment);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.id,_that.commentList);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  Comment? selectedComment)  $default,) {final _that = this;
 switch (_that) {
 case _CommentListState():
-return $default(_that.id,_that.commentList);case _:
+return $default(_that.id,_that.commentList,_that.selectedComment);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.id,_that.commentList);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  CommentListModel commentList)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  CommentListModel commentList,  Comment? selectedComment)?  $default,) {final _that = this;
 switch (_that) {
 case _CommentListState() when $default != null:
-return $default(_that.id,_that.commentList);case _:
+return $default(_that.id,_that.commentList,_that.selectedComment);case _:
   return null;
 
 }
@@ -207,11 +208,12 @@ return $default(_that.id,_that.commentList);case _:
 
 
 class _CommentListState implements CommentListState {
-  const _CommentListState({required this.id, required this.commentList});
+  const _CommentListState({required this.id, required this.commentList, this.selectedComment});
   
 
 @override final  String id;
 @override final  CommentListModel commentList;
+@override final  Comment? selectedComment;
 
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +225,16 @@ _$CommentListStateCopyWith<_CommentListState> get copyWith => __$CommentListStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentListState&&(identical(other.id, id) || other.id == id)&&(identical(other.commentList, commentList) || other.commentList == commentList));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentListState&&(identical(other.id, id) || other.id == id)&&(identical(other.commentList, commentList) || other.commentList == commentList)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,commentList);
+int get hashCode => Object.hash(runtimeType,id,commentList,selectedComment);
 
 @override
 String toString() {
-  return 'CommentListState(id: $id, commentList: $commentList)';
+  return 'CommentListState(id: $id, commentList: $commentList, selectedComment: $selectedComment)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$CommentListStateCopyWith<$Res> implements $CommentListSta
   factory _$CommentListStateCopyWith(_CommentListState value, $Res Function(_CommentListState) _then) = __$CommentListStateCopyWithImpl;
 @override @useResult
 $Res call({
- String id, CommentListModel commentList
+ String id, CommentListModel commentList, Comment? selectedComment
 });
 
 
@@ -260,11 +262,12 @@ class __$CommentListStateCopyWithImpl<$Res>
 
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? commentList = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? commentList = null,Object? selectedComment = freezed,}) {
   return _then(_CommentListState(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,commentList: null == commentList ? _self.commentList : commentList // ignore: cast_nullable_to_non_nullable
-as CommentListModel,
+as CommentListModel,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
+as Comment?,
   ));
 }
 

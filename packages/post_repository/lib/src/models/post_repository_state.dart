@@ -28,6 +28,7 @@ abstract class PostRepositoryState with _$PostRepositoryState {
     required Post post,
     @Default(FetchStatus.loading) FetchStatus fetchStatus,
     @Default(RefreshStatus.initial) RefreshStatus refreshStatus,
+    Comment? selectedComment,
   }) = _PostRepositoryState;
 
   factory PostRepositoryState.initial() {

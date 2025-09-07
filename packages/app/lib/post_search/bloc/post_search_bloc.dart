@@ -15,6 +15,7 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
       _onCommentListSubscriptionRequested,
     );
     on<PostSearchQueryChanged>(_onQueryChanged);
+    on<PostSearchItemPressed>(_onItemPressed);
   }
 
   final PostRepository _postRepository;
@@ -40,5 +41,12 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
         query: event.query,
       ),
     );
+  }
+
+  void _onItemPressed(
+    PostSearchItemPressed event,
+    Emitter<PostSearchState> emit,
+  ) {
+    _postRepository.selectComment(event.comment);
   }
 }

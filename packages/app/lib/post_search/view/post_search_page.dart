@@ -15,7 +15,7 @@ class PostSearchPage extends StatelessWidget {
           )..add(
             const PostSearchCommentListSubscriptionRequested(),
           ),
-      child: PostSearchView(),
+      child: const PostSearchView(),
     );
   }
 }
