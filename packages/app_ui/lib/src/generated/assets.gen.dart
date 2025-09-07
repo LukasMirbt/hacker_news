@@ -22,6 +22,18 @@ class $AssetsImagesGen {
   AssetGenImage get appIcon =>
       const AssetGenImage('assets/images/app_icon.png');
 
+  /// File path: assets/images/app_icon_dark_small.png
+  AssetGenImage get appIconDarkSmall =>
+      const AssetGenImage('assets/images/app_icon_dark_small.png');
+
+  /// File path: assets/images/app_icon_small.png
+  AssetGenImage get appIconSmall =>
+      const AssetGenImage('assets/images/app_icon_small.png');
+
+  /// File path: assets/images/axiom_icon_foreground_light.png
+  AssetGenImage get axiomIconForegroundLight =>
+      const AssetGenImage('assets/images/axiom_icon_foreground_light.png');
+
   /// File path: assets/images/image_ios_dark_transparent.png
   AssetGenImage get imageIosDarkTransparent =>
       const AssetGenImage('assets/images/image_ios_dark_transparent.png');
@@ -45,6 +57,9 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     adaptiveIconForeground,
     appIcon,
+    appIconDarkSmall,
+    appIconSmall,
+    axiomIconForegroundLight,
     imageIosDarkTransparent,
     splash,
     splashAndroid12,

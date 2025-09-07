@@ -2,10 +2,10 @@
 
 import 'package:app/thread_feed/thread_feed.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 import 'package:thread_repository/thread_repository.dart';
 
 import '../../app/pump_app.dart';

@@ -36,7 +36,7 @@ void main() {
     });
 
     group(AnalyticsConsentPrivacyPolicyPressed, () {
-      final launch = () => launcher.launch(yapPrivacyPolicyLink);
+      final launch = () => launcher.launch(axiomPrivacyPolicyLink);
 
       blocTest(
         'calls launch',

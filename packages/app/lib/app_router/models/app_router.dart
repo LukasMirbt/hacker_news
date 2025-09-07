@@ -40,6 +40,16 @@ class AppRouter {
   String get from =>
       goRouter.state.uri.queryParameters['from'] ?? AppRouter.initialLocation;
 
+  // Workaround for ShellRoute breaking iOS back gesture
+  // https://github.com/flutter/flutter/issues/120353
+  bool get shellRouteCanPop {
+    final routerDelegate = goRouter.routerDelegate;
+    final currentConfiguration = routerDelegate.currentConfiguration;
+    final lastMatch = currentConfiguration.matches.lastOrNull;
+    if (lastMatch is! ShellRouteMatch) return true;
+    return lastMatch.matches.length == 1;
+  }
+
   void go(GoRouteData route) {
     final redirect = _redirectModel.redirect(
       goRouter: goRouter,
