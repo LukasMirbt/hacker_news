@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentListState {
 
- String get id; CommentListModel get commentList; Comment? get selectedComment;
+ String get id; CommentListModel get commentList; SelectedComment? get selectedComment;
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $CommentListStateCopyWith<$Res>  {
   factory $CommentListStateCopyWith(CommentListState value, $Res Function(CommentListState) _then) = _$CommentListStateCopyWithImpl;
 @useResult
 $Res call({
- String id, CommentListModel commentList, Comment? selectedComment
+ String id, CommentListModel commentList, SelectedComment? selectedComment
 });
 
 
@@ -67,7 +67,7 @@ class _$CommentListStateCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,commentList: null == commentList ? _self.commentList : commentList // ignore: cast_nullable_to_non_nullable
 as CommentListModel,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as Comment?,
+as SelectedComment?,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  Comment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  SelectedComment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommentListState() when $default != null:
 return $default(_that.id,_that.commentList,_that.selectedComment);case _:
@@ -173,7 +173,7 @@ return $default(_that.id,_that.commentList,_that.selectedComment);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  Comment? selectedComment)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  CommentListModel commentList,  SelectedComment? selectedComment)  $default,) {final _that = this;
 switch (_that) {
 case _CommentListState():
 return $default(_that.id,_that.commentList,_that.selectedComment);case _:
@@ -193,7 +193,7 @@ return $default(_that.id,_that.commentList,_that.selectedComment);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  CommentListModel commentList,  Comment? selectedComment)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  CommentListModel commentList,  SelectedComment? selectedComment)?  $default,) {final _that = this;
 switch (_that) {
 case _CommentListState() when $default != null:
 return $default(_that.id,_that.commentList,_that.selectedComment);case _:
@@ -213,7 +213,7 @@ class _CommentListState implements CommentListState {
 
 @override final  String id;
 @override final  CommentListModel commentList;
-@override final  Comment? selectedComment;
+@override final  SelectedComment? selectedComment;
 
 /// Create a copy of CommentListState
 /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +245,7 @@ abstract mixin class _$CommentListStateCopyWith<$Res> implements $CommentListSta
   factory _$CommentListStateCopyWith(_CommentListState value, $Res Function(_CommentListState) _then) = __$CommentListStateCopyWithImpl;
 @override @useResult
 $Res call({
- String id, CommentListModel commentList, Comment? selectedComment
+ String id, CommentListModel commentList, SelectedComment? selectedComment
 });
 
 
@@ -267,7 +267,7 @@ class __$CommentListStateCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,commentList: null == commentList ? _self.commentList : commentList // ignore: cast_nullable_to_non_nullable
 as CommentListModel,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as Comment?,
+as SelectedComment?,
   ));
 }
 

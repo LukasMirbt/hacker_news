@@ -1,5 +1,6 @@
 import 'package:app/app_router/app_router.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_search/post_search.dart';
 import 'package:authentication_api/authentication_api.dart';
 import 'package:draft_storage/draft_storage.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,15 @@ class PostShellRoute extends ShellRouteData {
         draftStorage: context.read<DraftStorage>(),
         visitedPostStorage: context.read<VisitedPostStorage>(),
       ),
-      child: navigator,
+      child: BlocProvider(
+        create: (context) =>
+            PostSearchBloc(
+              postRepository: context.read<PostRepository>(),
+            )..add(
+              const PostSearchCommentListSubscriptionRequested(),
+            ),
+        child: navigator,
+      ),
     );
   }
 }

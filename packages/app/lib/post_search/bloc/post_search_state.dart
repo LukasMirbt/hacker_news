@@ -10,6 +10,7 @@ abstract class PostSearchState with _$PostSearchState {
   const factory PostSearchState({
     required List<Comment> comments,
     @Default('') String query,
+    SelectedComment? selectedComment,
   }) = _PostSearchState;
 
   const PostSearchState._();
@@ -17,19 +18,27 @@ abstract class PostSearchState with _$PostSearchState {
   static String _text(String htmlText) {
     final document = parse(htmlText);
     final buffer = StringBuffer();
+    final nodes = document.body?.nodes;
 
-    final textNodes = document.body?.nodes;
+    if (nodes == null) return '';
 
-    if (textNodes != null) {
-      for (final node in textNodes) {
-        if (buffer.isNotEmpty) {
-          buffer.write(' ');
-        }
-        buffer.write(node.text?.trim());
+    for (final node in nodes) {
+      final nodeText = node.text;
+
+      if (nodeText == null || nodeText.trim().isEmpty) {
+        continue;
       }
+
+      final cleanedText = nodeText.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+      if (buffer.isNotEmpty) {
+        buffer.write(' ');
+      }
+
+      buffer.write(cleanedText);
     }
 
-    return buffer.toString().trim();
+    return buffer.toString();
   }
 
   static String _matchedSentence({
@@ -37,8 +46,7 @@ abstract class PostSearchState with _$PostSearchState {
     required String query,
   }) {
     final lowerText = text.toLowerCase();
-    final lowerQuery = query.toLowerCase();
-    final matchIndex = lowerText.indexOf(lowerQuery);
+    final matchIndex = lowerText.indexOf(query);
 
     if (matchIndex == -1) {
       return '';
@@ -82,28 +90,31 @@ abstract class PostSearchState with _$PostSearchState {
     return '$startEllipsis$snippet$endEllipsis';
   }
 
-  List<SearchResult> get results {
+  List<SearchResultModel> get results {
     if (query.isEmpty) return [];
 
     final allTexts = [
       for (final comment in comments) _text(comment.htmlText),
     ];
 
-    final matchedResults = <SearchResult>[];
+    final matchedResults = <SearchResultModel>[];
 
-    for (final (index, item) in allTexts.indexed) {
+    for (final (index, originalText) in allTexts.indexed) {
       final comment = comments[index];
-      final text = item.toLowerCase();
-      final query = this.query.toLowerCase();
+      final lowerText = originalText.toLowerCase();
+      final lowerQuery = query.toLowerCase();
 
-      if (text.contains(query)) {
+      if (lowerText.contains(lowerQuery)) {
         final matchedSentence = _matchedSentence(
-          text: text,
-          query: query,
+          text: originalText,
+          query: lowerQuery,
         );
 
-        final start = matchedSentence.indexOf(query);
-        final end = start + query.length;
+        final start = matchedSentence.toLowerCase().indexOf(lowerQuery);
+
+        final end = start + lowerQuery.length;
+
+        if (start == -1) continue;
 
         final match = SearchMatch(
           start: start,
@@ -111,7 +122,7 @@ abstract class PostSearchState with _$PostSearchState {
         );
 
         matchedResults.add(
-          SearchResult(
+          SearchResultModel(
             comment: comment,
             text: matchedSentence,
             match: match,
@@ -121,5 +132,11 @@ abstract class PostSearchState with _$PostSearchState {
     }
 
     return matchedResults;
+  }
+
+  bool isSelected(Comment comment) {
+    final selected = selectedComment;
+    if (selected == null) return false;
+    return selected.comment.id == comment.id;
   }
 }

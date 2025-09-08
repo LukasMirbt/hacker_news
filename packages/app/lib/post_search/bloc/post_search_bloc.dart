@@ -9,6 +9,8 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
        super(
          PostSearchState(
            comments: postRepository.state.post.comments,
+           query: postRepository.state.searchQuery,
+           selectedComment: postRepository.state.selectedComment,
          ),
        ) {
     on<PostSearchCommentListSubscriptionRequested>(
@@ -41,14 +43,24 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
         query: event.query,
       ),
     );
+
+    _postRepository.search(event.query);
   }
 
   void _onItemPressed(
     PostSearchItemPressed event,
     Emitter<PostSearchState> emit,
   ) {
-    _postRepository.selectComment(
+    final comment = SelectedComment(
       event.result.toRepository(),
     );
+
+    emit(
+      state.copyWith(
+        selectedComment: comment,
+      ),
+    );
+
+    _postRepository.selectComment(comment);
   }
 }

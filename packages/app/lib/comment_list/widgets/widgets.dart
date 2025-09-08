@@ -1,4 +1,5 @@
 export 'comment.dart';
+export 'comment_background.dart';
 export 'comment_list_builder.dart';
 export 'comment_list_footer.dart';
 export 'comment_sliver_list.dart';

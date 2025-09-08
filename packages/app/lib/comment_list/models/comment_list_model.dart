@@ -68,10 +68,30 @@ class CommentListModel extends Equatable {
   CommentListModel toggleExpansion({
     required CommentModel comment,
   }) {
+    final index = items.indexOf(comment);
+    if (index == -1) return this;
+
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
-      itemToToggle: comment,
+      index: index,
     );
+
+    return CommentListModel(items: updatedItems);
+  }
+
+  CommentListModel ensureVisible({
+    required Comment comment,
+  }) {
+    final index = items.indexWhere(
+      (item) => item.id == comment.id,
+    );
+    if (index == -1) return this;
+
+    final updatedItems = _collapseHandler.ensureVisible(
+      items: items,
+      index: index,
+    );
+
     return CommentListModel(items: updatedItems);
   }
 

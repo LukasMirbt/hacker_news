@@ -1,22 +1,10 @@
+import 'package:app/post_search/post_search.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:post_repository/post_repository.dart';
 
-class SearchMatch extends Equatable {
-  const SearchMatch({
-    required this.start,
-    required this.end,
-  });
-
-  final int start;
-  final int end;
-
-  @override
-  List<Object> get props => [start, end];
-}
-
-class SearchResult extends Equatable {
-  const SearchResult({
+class SearchResultModel extends Equatable {
+  const SearchResultModel({
     required Comment comment,
     required String text,
     required SearchMatch match,
@@ -33,12 +21,18 @@ class SearchResult extends Equatable {
 
   Iterable<String> get characters => _text.characters;
 
+  int get matchLength => _match.end - _match.start;
+
   bool isMatchedCharacter(int index) {
-    return index >= _match.start && index <= _match.end;
+    return index >= _match.start && index < _match.end;
   }
 
   Comment toRepository() => _comment;
 
   @override
-  List<Object> get props => [_comment];
+  List<Object> get props => [
+    _comment,
+    _text,
+    _match,
+  ];
 }

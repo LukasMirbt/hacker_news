@@ -22,15 +22,11 @@ class SelectedCommentListener extends StatelessWidget {
         final selectedComment = state.selectedComment;
         if (selectedComment == null) return;
 
-        final comments = state.commentList.visibleItems;
+        final visibleItems = state.commentList.visibleItems;
 
-        final index = comments.indexWhere(
-          (comment) => comment.id == selectedComment.id,
+        final index = visibleItems.indexWhere(
+          (comment) => comment.id == selectedComment.comment.id,
         );
-
-        print(index);
-
-        print(listController.numberOfItems);
 
         listController.animateToItem(
           index: index * 2,

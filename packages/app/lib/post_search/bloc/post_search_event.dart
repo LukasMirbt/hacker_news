@@ -21,7 +21,7 @@ final class PostSearchQueryChanged extends PostSearchEvent with EquatableMixin {
 final class PostSearchItemPressed extends PostSearchEvent with EquatableMixin {
   const PostSearchItemPressed(this.result);
 
-  final SearchResult result;
+  final SearchResultModel result;
 
   @override
   List<Object> get props => [result];

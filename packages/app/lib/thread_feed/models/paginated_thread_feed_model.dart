@@ -92,10 +92,14 @@ class PaginatedThreadFeedModel extends Equatable {
   PaginatedThreadFeedModel toggleExpansion({
     required ThreadCommentModel comment,
   }) {
+    final index = items.indexOf(comment);
+    if (index == -1) return this;
+
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
-      itemToToggle: comment,
+      index: index,
     );
+
     return PaginatedThreadFeedModel(
       feed: feed,
       items: updatedItems,

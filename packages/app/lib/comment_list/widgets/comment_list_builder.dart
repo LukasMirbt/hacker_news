@@ -12,11 +12,8 @@ class CommentListBuilder {
     final comment = items[index];
     final isLast = index == items.length - 1;
 
-    return ColoredBox(
-      // TODO: Use context.select so color updates correctly
-      color: state.selectedComment?.id == comment.id
-          ? Colors.yellow
-          : Colors.transparent,
+    return CommentBackground(
+      comment: comment,
       child: Column(
         children: [
           Padding(

@@ -50,12 +50,24 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   ) async {
     return emit.forEach(
       _postRepository.stream,
-      onData: (repositoryState) => state.copyWith(
-        selectedComment: repositoryState.selectedComment,
-        commentList: state.commentList.rebuildWith(
+      onData: (repositoryState) {
+        var commentList = state.commentList.rebuildWith(
           repositoryState.post.comments,
-        ),
-      ),
+        );
+
+        final selectedComment = repositoryState.selectedComment;
+
+        if (selectedComment != null) {
+          commentList = commentList.ensureVisible(
+            comment: selectedComment.comment,
+          );
+        }
+
+        return state.copyWith(
+          commentList: commentList,
+          selectedComment: selectedComment,
+        );
+      },
     );
   }
 

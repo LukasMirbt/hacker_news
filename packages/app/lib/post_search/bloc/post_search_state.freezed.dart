@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostSearchState {
 
- List<Comment> get comments; String get query;
+ List<Comment> get comments; String get query; SelectedComment? get selectedComment;
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostSearchStateCopyWith<PostSearchState> get copyWith => _$PostSearchStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.query, query) || other.query == query));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(comments),query);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(comments),query,selectedComment);
 
 @override
 String toString() {
-  return 'PostSearchState(comments: $comments, query: $query)';
+  return 'PostSearchState(comments: $comments, query: $query, selectedComment: $selectedComment)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostSearchStateCopyWith<$Res>  {
   factory $PostSearchStateCopyWith(PostSearchState value, $Res Function(PostSearchState) _then) = _$PostSearchStateCopyWithImpl;
 @useResult
 $Res call({
- List<Comment> comments, String query
+ List<Comment> comments, String query, SelectedComment? selectedComment
 });
 
 
@@ -62,11 +62,12 @@ class _$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? comments = null,Object? query = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? comments = null,Object? query = null,Object? selectedComment = freezed,}) {
   return _then(_self.copyWith(
 comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,
+as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
+as SelectedComment?,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Comment> comments,  String query)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.comments,_that.query);case _:
+return $default(_that.comments,_that.query,_that.selectedComment);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.comments,_that.query);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Comment> comments,  String query)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState():
-return $default(_that.comments,_that.query);case _:
+return $default(_that.comments,_that.query,_that.selectedComment);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.comments,_that.query);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Comment> comments,  String query)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)?  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.comments,_that.query);case _:
+return $default(_that.comments,_that.query,_that.selectedComment);case _:
   return null;
 
 }
@@ -207,7 +208,7 @@ return $default(_that.comments,_that.query);case _:
 
 
 class _PostSearchState extends PostSearchState {
-  const _PostSearchState({required final  List<Comment> comments, this.query = ''}): _comments = comments,super._();
+  const _PostSearchState({required final  List<Comment> comments, this.query = '', this.selectedComment}): _comments = comments,super._();
   
 
  final  List<Comment> _comments;
@@ -218,6 +219,7 @@ class _PostSearchState extends PostSearchState {
 }
 
 @override@JsonKey() final  String query;
+@override final  SelectedComment? selectedComment;
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +231,16 @@ _$PostSearchStateCopyWith<_PostSearchState> get copyWith => __$PostSearchStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.query, query) || other.query == query));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_comments),query);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_comments),query,selectedComment);
 
 @override
 String toString() {
-  return 'PostSearchState(comments: $comments, query: $query)';
+  return 'PostSearchState(comments: $comments, query: $query, selectedComment: $selectedComment)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$PostSearchStateCopyWith<$Res> implements $PostSearchState
   factory _$PostSearchStateCopyWith(_PostSearchState value, $Res Function(_PostSearchState) _then) = __$PostSearchStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Comment> comments, String query
+ List<Comment> comments, String query, SelectedComment? selectedComment
 });
 
 
@@ -266,11 +268,12 @@ class __$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? comments = null,Object? query = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? comments = null,Object? query = null,Object? selectedComment = freezed,}) {
   return _then(_PostSearchState(
 comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,
+as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
+as SelectedComment?,
   ));
 }
 

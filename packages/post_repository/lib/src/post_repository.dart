@@ -194,10 +194,18 @@ class PostRepository extends Cubit<PostRepositoryState> {
     _visitedPostStorage.add(postId);
   }
 
-  void selectComment(Comment comment) {
+  void selectComment(SelectedComment comment) {
     emit(
       state.copyWith(
         selectedComment: comment,
+      ),
+    );
+  }
+
+  void search(String query) {
+    emit(
+      state.copyWith(
+        searchQuery: query,
       ),
     );
   }

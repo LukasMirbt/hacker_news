@@ -9,7 +9,7 @@ abstract class CommentListState with _$CommentListState {
   const factory CommentListState({
     required String id,
     required CommentListModel commentList,
-    Comment? selectedComment,
+    SelectedComment? selectedComment,
   }) = _CommentListState;
 
   factory CommentListState.initial({
