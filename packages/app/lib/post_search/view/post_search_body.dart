@@ -54,10 +54,6 @@ class _Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final query = context.select(
-      (PostSearchBloc bloc) => bloc.state.query,
-    );
-
     final textTheme = TextTheme.of(context);
 
     return InkWell(
@@ -75,7 +71,32 @@ class _Result extends StatelessWidget {
             item.user,
             style: textTheme.titleMedium,
           ),
-          Text(item.matchedSentence(query)),
+          _ResultText(item),
+        ],
+      ),
+    );
+  }
+}
+
+class _ResultText extends StatelessWidget {
+  const _ResultText(this.item);
+
+  final SearchResult item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          for (final (index, character) in item.characters.indexed)
+            TextSpan(
+              text: character,
+              style: TextStyle(
+                fontWeight: item.isMatchedCharacter(index)
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
+            ),
         ],
       ),
     );
