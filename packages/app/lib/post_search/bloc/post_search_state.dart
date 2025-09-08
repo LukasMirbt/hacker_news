@@ -1,3 +1,4 @@
+import 'package:app/post_search/post_search.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
 
@@ -12,13 +13,18 @@ abstract class PostSearchState with _$PostSearchState {
 
   const PostSearchState._();
 
-  List<Comment> get results {
-    return [
-      for (final comment in comments)
-        if (query.isEmpty)
-          comment
-        else if (comment.htmlText.toLowerCase().contains(query.toLowerCase()))
-          comment,
+  List<SearchResult> get results {
+    if (query.isEmpty) return [];
+
+    final allResults = [
+      for (final comment in comments) SearchResult(comment),
     ];
+
+    final matchedResults = [
+      for (final result in allResults)
+        if (result.text.toLowerCase().contains(query.toLowerCase())) result,
+    ];
+
+    return matchedResults;
   }
 }

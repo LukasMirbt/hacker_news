@@ -1,5 +1,5 @@
+import 'package:app/post_search/post_search.dart';
 import 'package:equatable/equatable.dart';
-import 'package:post_repository/post_repository.dart';
 
 sealed class PostSearchEvent {
   const PostSearchEvent();
@@ -19,10 +19,10 @@ final class PostSearchQueryChanged extends PostSearchEvent with EquatableMixin {
 }
 
 final class PostSearchItemPressed extends PostSearchEvent with EquatableMixin {
-  const PostSearchItemPressed(this.comment);
+  const PostSearchItemPressed(this.result);
 
-  final Comment comment;
+  final SearchResult result;
 
   @override
-  List<Object> get props => [comment];
+  List<Object> get props => [result];
 }

@@ -3,7 +3,6 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:post_repository/post_repository.dart';
 
 class PostSearchBody extends StatelessWidget {
   const PostSearchBody({super.key});
@@ -51,10 +50,14 @@ class _Results extends StatelessWidget {
 class _Result extends StatelessWidget {
   const _Result(this.item);
 
-  final Comment item;
+  final SearchResult item;
 
   @override
   Widget build(BuildContext context) {
+    final query = context.select(
+      (PostSearchBloc bloc) => bloc.state.query,
+    );
+
     final textTheme = TextTheme.of(context);
 
     return InkWell(
@@ -69,10 +72,10 @@ class _Result extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            item.hnuser.id,
+            item.user,
             style: textTheme.titleMedium,
           ),
-          Text(item.htmlText),
+          Text(item.matchedSentence(query)),
         ],
       ),
     );

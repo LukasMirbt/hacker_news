@@ -47,6 +47,8 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     PostSearchItemPressed event,
     Emitter<PostSearchState> emit,
   ) {
-    _postRepository.selectComment(event.comment);
+    _postRepository.selectComment(
+      event.result.toRepository(),
+    );
   }
 }
