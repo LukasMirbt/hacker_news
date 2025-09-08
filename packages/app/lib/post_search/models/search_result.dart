@@ -16,11 +16,13 @@ class SearchMatch extends Equatable {
 }
 
 class SearchResult extends Equatable {
-  const SearchResult(this._comment);
+  const SearchResult({
+    required Comment comment,
+    required this.match,
+  }) : _comment = comment;
 
   final Comment _comment;
-
-  final String start
+  final SearchMatch match;
 
   String get id => _comment.id;
   String get user => _comment.hnuser.id;
@@ -42,67 +44,6 @@ class SearchResult extends Equatable {
 
     return buffer.toString().trim();
   }
-
-  /*   String matchedSentence(String query) {
-    final lowerText = text.toLowerCase();
-    final lowerQuery = query.toLowerCase();
-    final matchIndex = lowerText.indexOf(lowerQuery);
-
-    if (matchIndex == -1) {
-      return '';
-    }
-
-    final start = (matchIndex - 40).clamp(0, text.length);
-    final end = (matchIndex + query.length + 40).clamp(0, text.length);
-
-    var snippet = text.substring(start, end).trim();
-
-    if (start > 0) {
-      snippet = '...$snippet';
-    }
-    if (end < text.length) {
-      snippet = '$snippet...';
-    }
-
-    return snippet;
-  } */
-
-  /*   String matchedSentence(String query) {
-    final lowerText = text.toLowerCase();
-    final lowerQuery = query.toLowerCase();
-    final matchIndex = lowerText.indexOf(lowerQuery);
-
-    if (matchIndex == -1) {
-      return '';
-    }
-
-    var start = matchIndex - 30;
-    var end = matchIndex + query.length + 30;
-
-    start = start.clamp(0, text.length);
-    end = end.clamp(0, text.length);
-
-    if (start > 0) {
-      final lastSpaceBeforeStart = text.lastIndexOf(' ', start);
-      start = (lastSpaceBeforeStart == -1) ? 0 : lastSpaceBeforeStart + 1;
-    }
-
-    if (end < text.length) {
-      final nextSpaceAfterEnd = text.indexOf(' ', end);
-      end = (nextSpaceAfterEnd == -1) ? text.length : nextSpaceAfterEnd;
-    }
-
-    var snippet = text.substring(start, end).trim();
-
-    if (start > 0) {
-      snippet = '...$snippet';
-    }
-    if (end < text.length) {
-      snippet = '$snippet...';
-    }
-
-    return snippet;
-  } */
 
   String matchedSentence(String query) {
     final lowerText = text.toLowerCase();

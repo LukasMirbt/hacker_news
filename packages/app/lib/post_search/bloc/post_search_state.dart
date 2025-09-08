@@ -17,7 +17,10 @@ abstract class PostSearchState with _$PostSearchState {
     if (query.isEmpty) return [];
 
     final allResults = [
-      for (final comment in comments) SearchResult(comment),
+      for (final comment in comments)
+        SearchResult(
+          comment: comment,
+        ),
     ];
 
     final matchedResults = [
