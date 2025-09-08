@@ -20,13 +20,7 @@ class CommentListBuilder {
           comment: comment,
           child: Column(
             children: [
-              if (index == 0)
-                const Column(
-                  children: [
-                    Divider(height: 1),
-                    SizedBox(height: AppSpacing.xs),
-                  ],
-                ),
+              if (index == 0) const SizedBox(height: AppSpacing.xs),
               Padding(
                 padding: EdgeInsets.only(
                   left: comment.indent * AppSpacing.md,
