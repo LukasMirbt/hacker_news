@@ -1,10 +1,11 @@
 export 'comment.dart';
 export 'comment_background.dart';
+export 'comment_indent.dart';
 export 'comment_list_builder.dart';
 export 'comment_list_footer.dart';
 export 'comment_sliver_list.dart';
-export 'comment_spacer.dart';
-export 'comment_top_level_divider.dart';
 export 'current_user_comment.dart';
+export 'indented_comment_divider.dart';
 export 'other_user_comment.dart';
 export 'selected_comment_listener.dart';
+export 'thread_footer.dart';

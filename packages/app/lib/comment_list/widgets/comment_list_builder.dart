@@ -1,7 +1,7 @@
 import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CommentListBuilder {
   const CommentListBuilder();
@@ -9,26 +9,22 @@ class CommentListBuilder {
   Widget itemBuilder(BuildContext context, int index) {
     return Builder(
       builder: (context) {
-        final items = context.select(
-          (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
+        final comment = context.select(
+          (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index],
         );
 
-        final comment = items[index];
-        final isLast = index == items.length - 1;
-
-        return CommentBackground(
-          comment: comment,
-          child: Column(
-            children: [
-              if (index == 0) const SizedBox(height: AppSpacing.xs),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: comment.indent * AppSpacing.md,
-                ),
-                child: Comment(comment),
+        // TODO: Keep refactoring
+        return Provider.value(
+          value: comment,
+          child: CommentIndent(
+            child: CommentBackground(
+              child: Column(
+                children: [
+                  if (comment.isTopLevel) const SizedBox(height: AppSpacing.xs),
+                  const Comment(),
+                ],
               ),
-              if (isLast) CommentListFooter(comment),
-            ],
+            ),
           ),
         );
       },
@@ -36,20 +32,45 @@ class CommentListBuilder {
   }
 
   Widget separatorBuilder(BuildContext context, int index) {
-    final state = context.read<CommentListBloc>().state;
-    final items = state.commentList.visibleItems;
-    final comment = items[index];
-    final nextComment = items[index + 1];
+    return Builder(
+      builder: (context) {
+        final comment = context.select(
+          (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index],
+        );
+
+        return Provider.value(
+          value: comment,
+          child: _CommentSeparator(index),
+        );
+      },
+    );
+  }
+}
+
+class _CommentSeparator extends StatelessWidget {
+  const _CommentSeparator(this.index);
+
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final comment = context.watch<CommentModel>();
+
+    final nextComment = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index + 1],
+    );
 
     if (nextComment.isTopLevel) {
-      return CommentTopLevelDivider(
-        comment: comment,
-        nextComment: nextComment,
+      return const Column(
+        children: [
+          ThreadFooter(),
+          Divider(height: 1),
+        ],
       );
     }
 
     if (!comment.isExpanded) return const SizedBox.shrink();
 
-    return CommentSpacer(comment: comment);
+    return const IndentedCommentDivider();
   }
 }

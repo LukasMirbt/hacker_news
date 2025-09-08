@@ -5,16 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommentBackground extends StatelessWidget {
   const CommentBackground({
-    required this.comment,
     required this.child,
     super.key,
   });
 
-  final CommentModel comment;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final comment = context.watch<CommentModel>();
+
     final isSelected = context.select(
       (PostSearchBloc bloc) => bloc.state.isSelected(
         comment.toRepository(),
