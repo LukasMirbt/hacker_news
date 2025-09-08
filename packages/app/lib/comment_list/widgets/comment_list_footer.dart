@@ -6,6 +6,7 @@ class CommentListFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Fix footer padding
     return const Padding(
       padding: EdgeInsets.only(
         bottom: AppSpacing.spaceUnit * 2,

@@ -14,6 +14,7 @@ class CommentListBuilder {
         );
 
         // TODO: Keep refactoring
+        // TODO: Fix index error for posts with 1,2, 3 comments
         return Provider.value(
           value: comment,
           child: CommentIndent(
