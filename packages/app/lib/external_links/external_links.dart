@@ -1,6 +1,8 @@
 const axiomPrivacyPolicyLink =
     'https://lukasmirbt.github.io/hacker_news/privacy_policy.html';
 
+const axiomSourceCodeLink = 'https://github.com/LukasMirbt/hacker_news';
+
 const hackerNewsPrivacyPolicyLink =
     'https://www.ycombinator.com/legal/#privacy';
 

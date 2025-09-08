@@ -5,6 +5,7 @@
   "about_title": "About",
   "about_licenses": "Licenses",
   "about_privacyPolicy": "Privacy policy",
+  "about_sourceCode": "Source code",
   "about_version": "Version",
   "analyticsConsent_title": "Help improve the app?",
   "analyticsConsent_explanationPart1": "We use Firebase Analytics to collect anonymous usage data to help us understand user behavior and pain points.",

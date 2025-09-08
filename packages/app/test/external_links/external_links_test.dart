@@ -11,6 +11,15 @@ void main() {
     });
   });
 
+  group('axiomSourceCodeLink', () {
+    test('has correct value', () {
+      expect(
+        axiomSourceCodeLink,
+        'https://github.com/LukasMirbt/hacker_news',
+      );
+    });
+  });
+
   group('hackerNewsPrivacyPolicyLink', () {
     test('has correct value', () {
       expect(

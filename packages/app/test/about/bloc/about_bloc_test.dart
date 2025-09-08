@@ -28,14 +28,32 @@ void main() {
       blocTest(
         'calls launch',
         setUp: () {
-          when(launch).thenAnswer((_) async {
-            return;
-          });
+          when(launch).thenAnswer((_) async {});
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
             AboutPrivacyPolicyPressed(),
+          );
+        },
+        verify: (_) {
+          verify(launch).called(1);
+        },
+      );
+    });
+
+    group(AboutSourceCodePressed, () {
+      final launch = () => launcher.launch(axiomSourceCodeLink);
+
+      blocTest(
+        'calls launch',
+        setUp: () {
+          when(launch).thenAnswer((_) async {});
+        },
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            AboutSourceCodePressed(),
           );
         },
         verify: (_) {

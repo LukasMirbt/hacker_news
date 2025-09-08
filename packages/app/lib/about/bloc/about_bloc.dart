@@ -9,6 +9,7 @@ class AboutBloc extends Bloc<AboutEvent, void> {
   }) : _launcher = linkLauncher,
        super(null) {
     on<AboutPrivacyPolicyPressed>(_onPrivacyPolicyPressed);
+    on<AboutSourceCodePressed>(_onSourceCodePressed);
   }
 
   final LinkLauncher _launcher;
@@ -18,5 +19,12 @@ class AboutBloc extends Bloc<AboutEvent, void> {
     Emitter<void> emit,
   ) {
     _launcher.launch(axiomPrivacyPolicyLink);
+  }
+
+  void _onSourceCodePressed(
+    AboutSourceCodePressed event,
+    Emitter<void> emit,
+  ) {
+    _launcher.launch(axiomSourceCodeLink);
   }
 }
