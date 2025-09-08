@@ -1,6 +1,5 @@
 import 'package:app/comment_list/comment_list.dart';
 import 'package:app/post_header/post_header.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,12 +35,6 @@ class _PostBodyState extends State<PostBody> {
         slivers: const [
           SliverToBoxAdapter(
             child: PostHeader(),
-          ),
-          SliverToBoxAdapter(
-            child: Divider(height: 1),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.only(bottom: AppSpacing.xs),
           ),
           CommentSliverList(),
         ],

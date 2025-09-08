@@ -1,17 +1,16 @@
 import 'package:app/comment_list/comment_list.dart';
 import 'package:app/post_search/post_search.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CommentBackground extends StatelessWidget {
-  const CommentBackground({
+class CommentSpacer extends StatelessWidget {
+  const CommentSpacer({
     required this.comment,
-    required this.child,
     super.key,
   });
 
   final CommentModel comment;
-  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +20,9 @@ class CommentBackground extends StatelessWidget {
       ),
     );
 
-    return Material(
+    return ColoredBox(
       color: isSelected ? Colors.yellow : Colors.transparent,
-      child: child,
+      child: const SizedBox(height: AppSpacing.sm),
     );
   }
 }

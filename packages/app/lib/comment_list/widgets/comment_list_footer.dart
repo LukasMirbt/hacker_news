@@ -12,11 +12,17 @@ class CommentListFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
+    return const Padding(
+      padding: EdgeInsets.only(
         bottom: AppSpacing.spaceUnit * 2,
       ),
-      child: CommentTopLevelDivider(comment),
+      child: Column(
+        children: [
+          SizedBox(height: AppSpacing.lg),
+          Divider(),
+          SizedBox(height: AppSpacing.xs),
+        ],
+      ),
     );
   }
 }

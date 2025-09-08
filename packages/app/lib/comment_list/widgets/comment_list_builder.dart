@@ -7,24 +7,37 @@ class CommentListBuilder {
   const CommentListBuilder();
 
   Widget itemBuilder(BuildContext context, int index) {
-    final state = context.read<CommentListBloc>().state;
-    final items = state.commentList.visibleItems;
-    final comment = items[index];
-    final isLast = index == items.length - 1;
+    return Builder(
+      builder: (context) {
+        final items = context.select(
+          (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
+        );
 
-    return CommentBackground(
-      comment: comment,
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: comment.indent * AppSpacing.md,
-            ),
-            child: Comment(comment),
+        final comment = items[index];
+        final isLast = index == items.length - 1;
+
+        return CommentBackground(
+          comment: comment,
+          child: Column(
+            children: [
+              if (index == 0)
+                const Column(
+                  children: [
+                    Divider(height: 1),
+                    SizedBox(height: AppSpacing.xs),
+                  ],
+                ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: comment.indent * AppSpacing.md,
+                ),
+                child: Comment(comment),
+              ),
+              if (isLast) CommentListFooter(comment),
+            ],
           ),
-          if (isLast) CommentListFooter(comment),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -34,9 +47,15 @@ class CommentListBuilder {
     final comment = items[index];
     final nextComment = items[index + 1];
 
-    if (nextComment.isTopLevel) return CommentTopLevelDivider(comment);
+    if (nextComment.isTopLevel) {
+      return CommentTopLevelDivider(
+        comment: comment,
+        nextComment: nextComment,
+      );
+    }
+
     if (!comment.isExpanded) return const SizedBox.shrink();
 
-    return const SizedBox(height: AppSpacing.sm);
+    return CommentSpacer(comment: comment);
   }
 }
