@@ -20,4 +20,12 @@ abstract class CommentListState with _$CommentListState {
       commentList: CommentListModelPlaceholder(),
     );
   }
+
+  const CommentListState._();
+
+  bool isSelected(CommentModel comment) {
+    final selected = selectedComment;
+    if (selected == null) return false;
+    return selected.comment.id == comment.id;
+  }
 }

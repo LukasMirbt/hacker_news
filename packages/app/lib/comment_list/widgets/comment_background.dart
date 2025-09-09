@@ -1,5 +1,4 @@
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app/post_search/post_search.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,12 +13,10 @@ class CommentBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final comment = context.select(
-      (CommentModel comment) => comment.toRepository(),
-    );
+    final comment = context.watch<CommentModel>();
 
     final isSelected = context.select(
-      (PostSearchBloc bloc) => bloc.state.isSelected(comment),
+      (CommentListBloc bloc) => bloc.state.isSelected(comment),
     );
 
     final colorScheme = ExtendedColorScheme.of(context);

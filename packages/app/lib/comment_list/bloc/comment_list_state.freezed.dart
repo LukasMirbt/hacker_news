@@ -207,8 +207,8 @@ return $default(_that.id,_that.commentList,_that.selectedComment);case _:
 /// @nodoc
 
 
-class _CommentListState implements CommentListState {
-  const _CommentListState({required this.id, required this.commentList, this.selectedComment});
+class _CommentListState extends CommentListState {
+  const _CommentListState({required this.id, required this.commentList, this.selectedComment}): super._();
   
 
 @override final  String id;
