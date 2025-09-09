@@ -2,8 +2,8 @@ import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class CommentPadding extends StatelessWidget {
-  const CommentPadding({super.key});
+class ThreadTopPadding extends StatelessWidget {
+  const ThreadTopPadding({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class CommentPadding extends StatelessWidget {
       child: CommentBackground(
         child: SizedBox(
           width: double.infinity,
-          height: AppSpacing.sm,
+          height: AppSpacing.xs,
         ),
       ),
     );
