@@ -12,13 +12,9 @@ class ThreadBottomPadding extends StatelessWidget {
       (CommentModel comment) => comment.isExpanded,
     );
 
-    return CommentIndent(
-      child: CommentBackground(
-        child: SizedBox(
-          width: double.infinity,
-          height: isExpanded ? AppSpacing.sm : AppSpacing.xs,
-        ),
-      ),
+    return SizedBox(
+      width: double.infinity,
+      height: isExpanded ? AppSpacing.sm : AppSpacing.xs,
     );
   }
 }

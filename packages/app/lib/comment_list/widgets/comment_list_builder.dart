@@ -19,18 +19,26 @@ class CommentListBuilder {
     final isEndOfList = nextComment == null;
     final isEndOfThread = isEndOfList || nextComment.isTopLevel;
 
-    return Provider.value(
-      value: comment,
-      child: Column(
-        children: [
-          if (isStartOfThread) const ThreadTopPadding(),
-          const Comment(),
-          if (comment.isExpanded) const CommentPadding(),
-          if (isEndOfThread) const ThreadBottomPadding(),
-          if (isEndOfThread) const Divider(height: 1),
-          if (isEndOfList) const CommentListFooter(),
-        ],
-      ),
+    return Column(
+      children: [
+        Provider.value(
+          value: comment,
+          child: CommentIndent(
+            child: CommentBackground(
+              child: Column(
+                children: [
+                  if (isStartOfThread) const ThreadTopPadding(),
+                  const Comment(),
+                  if (comment.isExpanded) const CommentPadding(),
+                  if (isEndOfThread) const ThreadBottomPadding(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (isEndOfThread) const Divider(height: 1),
+        if (isEndOfList) const CommentListFooter(),
+      ],
     );
   }
 }

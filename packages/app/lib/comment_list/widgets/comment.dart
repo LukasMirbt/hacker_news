@@ -7,19 +7,6 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CommentIndent(
-      child: CommentBackground(
-        child: _Comment(),
-      ),
-    );
-  }
-}
-
-class _Comment extends StatelessWidget {
-  const _Comment();
-
-  @override
-  Widget build(BuildContext context) {
     final item = context.watch<CommentModel>();
 
     return switch (item) {

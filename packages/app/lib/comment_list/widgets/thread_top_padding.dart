@@ -1,4 +1,3 @@
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -7,13 +6,9 @@ class ThreadTopPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CommentIndent(
-      child: CommentBackground(
-        child: SizedBox(
-          width: double.infinity,
-          height: AppSpacing.xs,
-        ),
-      ),
+    return const SizedBox(
+      width: double.infinity,
+      height: AppSpacing.xs,
     );
   }
 }
