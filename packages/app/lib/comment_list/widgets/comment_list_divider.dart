@@ -1,10 +1,9 @@
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ThreadBottomPadding extends StatelessWidget {
-  const ThreadBottomPadding({super.key});
+class CommentListDivider extends StatelessWidget {
+  const CommentListDivider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +15,6 @@ class ThreadBottomPadding extends StatelessWidget {
 
     if (!isEndOfThread) return const SizedBox.shrink();
 
-    final height = context.select(
-      (CommentModel comment) =>
-          comment.isExpanded ? AppSpacing.sm : AppSpacing.xs,
-    );
-
-    return SizedBox(
-      width: double.infinity,
-      height: height,
-    );
+    return const Divider(height: 1);
   }
 }

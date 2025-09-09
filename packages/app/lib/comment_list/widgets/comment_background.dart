@@ -14,12 +14,12 @@ class CommentBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final comment = context.watch<CommentModel>();
+    final comment = context.select(
+      (CommentModel comment) => comment.toRepository(),
+    );
 
     final isSelected = context.select(
-      (PostSearchBloc bloc) => bloc.state.isSelected(
-        comment.toRepository(),
-      ),
+      (PostSearchBloc bloc) => bloc.state.isSelected(comment),
     );
 
     final colorScheme = ExtendedColorScheme.of(context);

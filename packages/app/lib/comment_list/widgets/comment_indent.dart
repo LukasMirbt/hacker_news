@@ -13,12 +13,12 @@ class CommentIndent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final comment = context.select(
+    final padding = context.select(
       (CommentModel comment) => comment.indent * AppSpacing.md,
     );
 
     return Padding(
-      padding: EdgeInsets.only(left: comment),
+      padding: EdgeInsets.only(left: padding),
       child: child,
     );
   }

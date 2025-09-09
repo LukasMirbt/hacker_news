@@ -6,38 +6,44 @@ class CommentListBuilder {
   const CommentListBuilder();
 
   Widget itemBuilder(BuildContext context, int index) {
-    final items = context
-        .read<CommentListBloc>()
-        .state
-        .commentList
-        .visibleItems;
+    return Provider.value(
+      value: index,
+      child: const _CommentListItem(),
+    );
+  }
+}
 
-    final comment = items[index];
-    final nextComment = index + 1 < items.length ? items[index + 1] : null;
+class _CommentListItem extends StatelessWidget {
+  const _CommentListItem();
 
-    final isStartOfThread = comment.isTopLevel;
-    final isEndOfList = nextComment == null;
-    final isEndOfThread = isEndOfList || nextComment.isTopLevel;
+  @override
+  Widget build(BuildContext context) {
+    final index = context.watch<int>();
 
-    return Column(
+    final comment = context.select(
+      (CommentListBloc bloc) =>
+          bloc.state.commentList.visibleItems.elementAtOrNull(index),
+    );
+
+    if (comment == null) return const SizedBox.shrink();
+
+    return Provider.value(
+      value: comment,
+      child: const _Item(),
+    );
+  }
+}
+
+class _Item extends StatelessWidget {
+  const _Item();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
       children: [
-        Provider.value(
-          value: comment,
-          child: CommentIndent(
-            child: CommentBackground(
-              child: Column(
-                children: [
-                  if (isStartOfThread) const ThreadTopPadding(),
-                  const Comment(),
-                  if (comment.isExpanded) const CommentPadding(),
-                  if (isEndOfThread) const ThreadBottomPadding(),
-                ],
-              ),
-            ),
-          ),
-        ),
-        if (isEndOfThread) const Divider(height: 1),
-        if (isEndOfList) const CommentListFooter(),
+        CommentListItem(),
+        CommentListDivider(),
+        CommentListFooter(),
       ],
     );
   }

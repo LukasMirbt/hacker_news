@@ -32,15 +32,15 @@ class _CommentSliverListState extends State<CommentSliverList> {
 
   @override
   Widget build(BuildContext context) {
-    final visibleItems = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
+    final itemCount = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.visibleItems.length,
     );
 
     return SelectedCommentListener(
       listController: _listController,
       child: SuperSliverList.builder(
         listController: _listController,
-        itemCount: visibleItems.length,
+        itemCount: itemCount,
         itemBuilder: widget.builder.itemBuilder,
       ),
     );
