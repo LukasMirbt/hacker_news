@@ -7,71 +7,40 @@ class CommentListBuilder {
   const CommentListBuilder();
 
   Widget itemBuilder(BuildContext context, int index) {
-    return Builder(
-      builder: (context) {
-        final comment = context.select(
-          (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index],
-        );
+    final items = context
+        .read<CommentListBloc>()
+        .state
+        .commentList
+        .visibleItems;
+    final comment = items[index];
 
-        // TODO: Keep refactoring
-        // TODO: Fix index error for posts with 1,2, 3 comments
-        return Provider.value(
-          value: comment,
-          child: CommentIndent(
-            child: CommentBackground(
-              child: Column(
-                children: [
-                  if (comment.isTopLevel) const SizedBox(height: AppSpacing.xs),
-                  const Comment(),
-                ],
-              ),
-            ),
+    return Provider.value(
+      value: comment,
+      child: CommentIndent(
+        child: CommentBackground(
+          child: Column(
+            children: [
+              if (comment.isTopLevel) const SizedBox(height: AppSpacing.xs),
+              const Comment(),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
   Widget separatorBuilder(BuildContext context, int index) {
-    return Builder(
-      builder: (context) {
-        final comment = context.select(
-          (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index],
-        );
+    final items = context
+        .read<CommentListBloc>()
+        .state
+        .commentList
+        .visibleItems;
 
-        return Provider.value(
-          value: comment,
-          child: _CommentSeparator(index),
-        );
-      },
+    final comment = items[index];
+
+    return Provider.value(
+      value: comment,
+      child: CommentSeparator(index),
     );
-  }
-}
-
-class _CommentSeparator extends StatelessWidget {
-  const _CommentSeparator(this.index);
-
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    final comment = context.watch<CommentModel>();
-
-    final nextComment = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index + 1],
-    );
-
-    if (nextComment.isTopLevel) {
-      return const Column(
-        children: [
-          ThreadFooter(),
-          Divider(height: 1),
-        ],
-      );
-    }
-
-    if (!comment.isExpanded) return const SizedBox.shrink();
-
-    return const IndentedCommentDivider();
   }
 }

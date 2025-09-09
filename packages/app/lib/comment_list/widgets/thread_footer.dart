@@ -12,10 +12,24 @@ class ThreadFooter extends StatelessWidget {
       (CommentModel comment) => comment.isExpanded,
     );
 
+    final isTopLevel = context.select(
+      (CommentModel comment) => comment.isTopLevel,
+    );
+
+    double height;
+
+    if (isExpanded) {
+      height = AppSpacing.lg;
+    } else if (isTopLevel) {
+      height = AppSpacing.xs;
+    } else {
+      height = AppSpacing.sm;
+    }
+
     return CommentIndent(
       child: CommentBackground(
         child: Container(
-          height: isExpanded ? AppSpacing.lg : AppSpacing.xs,
+          height: height,
         ),
       ),
     );
