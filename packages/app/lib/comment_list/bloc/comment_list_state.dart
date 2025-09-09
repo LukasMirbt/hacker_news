@@ -1,4 +1,4 @@
-import 'package:app/comment_list/comment_list.dart' hide Comment;
+import 'package:app/comment_list/comment_list.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
 

@@ -38,11 +38,10 @@ class _CommentSliverListState extends State<CommentSliverList> {
 
     return SelectedCommentListener(
       listController: _listController,
-      child: SuperSliverList.separated(
+      child: SuperSliverList.builder(
         listController: _listController,
         itemCount: visibleItems.length,
         itemBuilder: widget.builder.itemBuilder,
-        separatorBuilder: widget.builder.separatorBuilder,
       ),
     );
   }

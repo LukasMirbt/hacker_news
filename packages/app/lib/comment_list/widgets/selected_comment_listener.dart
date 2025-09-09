@@ -29,7 +29,7 @@ class SelectedCommentListener extends StatelessWidget {
         );
 
         listController.animateToItem(
-          index: index * 2,
+          index: index,
           scrollController: context.read<ScrollController>(),
           alignment: 0,
           duration: (estimatedDistance) => const Duration(milliseconds: 800),

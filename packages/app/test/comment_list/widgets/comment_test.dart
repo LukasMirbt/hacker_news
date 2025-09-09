@@ -9,8 +9,8 @@ import 'package:post_repository/post_repository.dart'
 import '../../app/pump_app.dart';
 
 void main() {
-  group(Comment, () {
-    Widget buildSubject(CommentModel item) => Comment(item);
+  group(_Comment, () {
+    Widget buildSubject(CommentModel item) => _Comment(item);
 
     testWidgets('renders $CurrentUserComment when item '
         'is $CurrentUserCommentModel', (tester) async {

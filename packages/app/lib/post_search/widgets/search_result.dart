@@ -43,6 +43,7 @@ class _ResultText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(
+      textAlign: TextAlign.start,
       TextSpan(
         children: [
           for (final (index, character) in item.characters.indexed)

@@ -27,19 +27,24 @@ class _Results extends StatelessWidget {
       (PostSearchBloc bloc) => bloc.state.results,
     );
 
-    return ListView.separated(
+    return ListView.builder(
       itemCount: results.length,
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.lg,
-      ),
-      separatorBuilder: (_, _) => const Divider(),
       itemBuilder: (context, index) {
         final item = results[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.xlg,
-          ),
-          child: SearchResult(item),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: AppSpacing.sm,
+                horizontal: AppSpacing.xlg,
+              ),
+              child: SearchResult(item),
+            ),
+            const Divider(height: 1),
+            if (index == results.length - 1)
+              const SafeArea(child: SizedBox.shrink()),
+          ],
         );
       },
     );

@@ -48,7 +48,7 @@ void main() {
     }
 
     group('itemBuilder', () {
-      testWidgets('renders $Comment', (tester) async {
+      testWidgets('renders $_Comment', (tester) async {
         final visibleItems = [comment];
         when(() => commentList.visibleItems).thenReturn(visibleItems);
         final builder = createSubject();
@@ -59,7 +59,7 @@ void main() {
           ),
         );
 
-        expect(find.byType(Comment), findsOneWidget);
+        expect(find.byType(_Comment), findsOneWidget);
       });
 
       testWidgets('does not render $CommentListFooter '

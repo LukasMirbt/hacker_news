@@ -99,5 +99,6 @@ class CommentListModel extends Equatable {
   List<Object> get props => [
     items,
     visibleItems,
+    _collapseHandler,
   ];
 }
