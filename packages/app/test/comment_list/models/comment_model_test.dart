@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/comment_list/comment_list.dart'
-    hide _Comment, CurrentUserComment, OtherUserComment;
+    hide Comment, CurrentUserComment, OtherUserComment;
 import 'package:app/l10n/l10n.dart';
 import 'package:collapse_handler/collapse_handler.dart';
 import 'package:date_formatter/date_formatter.dart';
