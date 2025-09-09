@@ -27,6 +27,7 @@ abstract class AppTheme {
       tabBarTheme: _tabBarTheme,
       textTheme: _textTheme,
       extensions: [
+        _extendedColorScheme,
         _extendedTextTheme,
         skeletonizerConfig,
       ],
@@ -197,6 +198,12 @@ abstract class AppTheme {
       displayColor: colors.onSurface,
       decorationColor: colors.onSurface,
       decoration: TextDecoration.none,
+    );
+  }
+
+  ExtendedColorScheme get _extendedColorScheme {
+    return ExtendedColorScheme(
+      highlight: colors.highlight,
     );
   }
 

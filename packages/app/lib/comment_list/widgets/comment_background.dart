@@ -1,5 +1,6 @@
 import 'package:app/comment_list/comment_list.dart';
 import 'package:app/post_search/post_search.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,8 +22,10 @@ class CommentBackground extends StatelessWidget {
       ),
     );
 
+    final colorScheme = ExtendedColorScheme.of(context);
+
     return Material(
-      color: isSelected ? Colors.yellow : Colors.transparent,
+      color: isSelected ? colorScheme.highlight : Colors.transparent,
       child: child,
     );
   }

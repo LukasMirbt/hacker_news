@@ -38,4 +38,7 @@ abstract class AppColors {
   Color get surfaceContainerHighest;
 
   Color get surfaceTint;
+
+  // Custom
+  Color get highlight;
 }
