@@ -28,7 +28,7 @@ class AuthenticationBloc
   Future<void> _onSubscriptionRequested(
     AuthenticationSubscriptionRequested event,
     Emitter<AuthenticationState> emit,
-  ) async {
+  ) {
     return emit.forEach(
       _repository.stream,
       onData: (repositoryState) => state.copyWith(

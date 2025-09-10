@@ -295,6 +295,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get post_title => 'Post';
 
   @override
+  String get postSearch_hintText => 'Search';
+
+  @override
   String get postOptions_openOnWeb => 'Open on web';
 
   @override

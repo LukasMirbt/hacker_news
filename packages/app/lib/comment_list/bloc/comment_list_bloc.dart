@@ -47,7 +47,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   Future<void> _onSubscriptionRequested(
     CommentListSubscriptionRequested event,
     Emitter<CommentListState> emit,
-  ) async {
+  ) {
     return emit.forEach(
       _postRepository.stream,
       onData: (repositoryState) {

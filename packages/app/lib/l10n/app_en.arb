@@ -140,6 +140,7 @@
   "loginLoading_text": "Logging in...",
   "logoutLoading_text": "Logging out...",
   "post_title": "Post",
+  "postSearch_hintText": "Search",
   "postOptions_openOnWeb": "Open on web",
   "postHeader_shareText": "{title}\n{url}",
   "@postHeader_shareText": {

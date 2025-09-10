@@ -46,15 +46,17 @@ class _ResultText extends StatelessWidget {
       textAlign: TextAlign.start,
       TextSpan(
         children: [
-          for (final (index, character) in item.characters.indexed)
+          if (!item.snippet.match.isStartOfText) const TextSpan(text: '...'),
+          for (final (index, character) in item.snippet.characters.indexed)
             TextSpan(
               text: character,
               style: TextStyle(
-                fontWeight: item.isMatchedCharacter(index)
+                fontWeight: item.snippet.match.contains(index)
                     ? FontWeight.bold
                     : FontWeight.normal,
               ),
             ),
+          if (!item.snippet.match.isEndOfText) const TextSpan(text: '...'),
         ],
       ),
     );

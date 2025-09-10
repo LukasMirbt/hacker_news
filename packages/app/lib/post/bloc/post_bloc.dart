@@ -25,7 +25,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   Future<void> _onSubscriptionRequested(
     PostSubscriptionRequested event,
     Emitter<PostState> emit,
-  ) async {
+  )  {
     return emit.forEach(
       _repository.stream,
       onData: (repositoryState) => state.copyWith(

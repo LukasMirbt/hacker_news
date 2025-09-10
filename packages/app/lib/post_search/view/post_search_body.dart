@@ -24,7 +24,7 @@ class _Results extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final results = context.select(
-      (PostSearchBloc bloc) => bloc.state.results,
+      (PostSearchBloc bloc) => bloc.state.resultList.items,
     );
 
     return ListView.builder(

@@ -5,12 +5,11 @@ import 'package:post_repository/post_repository.dart';
 class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
   PostSearchBloc({
     required PostRepository postRepository,
-  }) : _postRepository = postRepository,
+  }) : _repository = postRepository,
        super(
-         PostSearchState(
+         PostSearchState.initial(
            comments: postRepository.state.post.comments,
            query: postRepository.state.searchQuery,
-           selectedComment: postRepository.state.selectedComment,
          ),
        ) {
     on<PostSearchCommentListSubscriptionRequested>(
@@ -20,17 +19,19 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     on<PostSearchItemPressed>(_onItemPressed);
   }
 
-  final PostRepository _postRepository;
+  final PostRepository _repository;
 
   Future<void> _onCommentListSubscriptionRequested(
     PostSearchCommentListSubscriptionRequested event,
     Emitter<PostSearchState> emit,
-  ) async {
+  ) {
     return emit.forEach(
-      _postRepository.stream,
-      onData: (repositoryState) => state.copyWith(
-        comments: repositoryState.post.comments,
-      ),
+      _repository.stream,
+      onData: (repositoryState) {
+        return state.copyWith.resultList(
+          comments: repositoryState.post.comments,
+        );
+      },
     );
   }
 
@@ -39,28 +40,20 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     Emitter<PostSearchState> emit,
   ) {
     emit(
-      state.copyWith(
+      state.copyWith.resultList(
         query: event.query,
       ),
     );
 
-    _postRepository.search(event.query);
+    _repository.search(event.query);
   }
 
   void _onItemPressed(
     PostSearchItemPressed event,
     Emitter<PostSearchState> emit,
   ) {
-    final comment = SelectedComment(
+    _repository.selectComment(
       event.result.toRepository(),
     );
-
-    emit(
-      state.copyWith(
-        selectedComment: comment,
-      ),
-    );
-
-    _postRepository.selectComment(comment);
   }
 }

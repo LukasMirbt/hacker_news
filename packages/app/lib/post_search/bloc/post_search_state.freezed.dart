@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostSearchState {
 
- List<Comment> get comments; String get query; SelectedComment? get selectedComment;
+ SearchResultListModel get resultList;
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostSearchStateCopyWith<PostSearchState> get copyWith => _$PostSearchStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&(identical(other.resultList, resultList) || other.resultList == resultList));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(comments),query,selectedComment);
+int get hashCode => Object.hash(runtimeType,resultList);
 
 @override
 String toString() {
-  return 'PostSearchState(comments: $comments, query: $query, selectedComment: $selectedComment)';
+  return 'PostSearchState(resultList: $resultList)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $PostSearchStateCopyWith<$Res>  {
   factory $PostSearchStateCopyWith(PostSearchState value, $Res Function(PostSearchState) _then) = _$PostSearchStateCopyWithImpl;
 @useResult
 $Res call({
- List<Comment> comments, String query, SelectedComment? selectedComment
+ SearchResultListModel resultList
 });
 
 
-
+$SearchResultListModelCopyWith<$Res> get resultList;
 
 }
 /// @nodoc
@@ -62,15 +62,22 @@ class _$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? comments = null,Object? query = null,Object? selectedComment = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? resultList = null,}) {
   return _then(_self.copyWith(
-comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
-as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as SelectedComment?,
+resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
+as SearchResultListModel,
   ));
 }
-
+/// Create a copy of PostSearchState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SearchResultListModelCopyWith<$Res> get resultList {
+  
+  return $SearchResultListModelCopyWith<$Res>(_self.resultList, (value) {
+    return _then(_self.copyWith(resultList: value));
+  });
+}
 }
 
 
@@ -152,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SearchResultListModel resultList)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.comments,_that.query,_that.selectedComment);case _:
+return $default(_that.resultList);case _:
   return orElse();
 
 }
@@ -173,10 +180,10 @@ return $default(_that.comments,_that.query,_that.selectedComment);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SearchResultListModel resultList)  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState():
-return $default(_that.comments,_that.query,_that.selectedComment);case _:
+return $default(_that.resultList);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +200,10 @@ return $default(_that.comments,_that.query,_that.selectedComment);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Comment> comments,  String query,  SelectedComment? selectedComment)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SearchResultListModel resultList)?  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.comments,_that.query,_that.selectedComment);case _:
+return $default(_that.resultList);case _:
   return null;
 
 }
@@ -207,19 +214,11 @@ return $default(_that.comments,_that.query,_that.selectedComment);case _:
 /// @nodoc
 
 
-class _PostSearchState extends PostSearchState {
-  const _PostSearchState({required final  List<Comment> comments, this.query = '', this.selectedComment}): _comments = comments,super._();
+class _PostSearchState implements PostSearchState {
+  const _PostSearchState({required this.resultList});
   
 
- final  List<Comment> _comments;
-@override List<Comment> get comments {
-  if (_comments is EqualUnmodifiableListView) return _comments;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_comments);
-}
-
-@override@JsonKey() final  String query;
-@override final  SelectedComment? selectedComment;
+@override final  SearchResultListModel resultList;
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +230,16 @@ _$PostSearchStateCopyWith<_PostSearchState> get copyWith => __$PostSearchStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&(identical(other.resultList, resultList) || other.resultList == resultList));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_comments),query,selectedComment);
+int get hashCode => Object.hash(runtimeType,resultList);
 
 @override
 String toString() {
-  return 'PostSearchState(comments: $comments, query: $query, selectedComment: $selectedComment)';
+  return 'PostSearchState(resultList: $resultList)';
 }
 
 
@@ -251,11 +250,11 @@ abstract mixin class _$PostSearchStateCopyWith<$Res> implements $PostSearchState
   factory _$PostSearchStateCopyWith(_PostSearchState value, $Res Function(_PostSearchState) _then) = __$PostSearchStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Comment> comments, String query, SelectedComment? selectedComment
+ SearchResultListModel resultList
 });
 
 
-
+@override $SearchResultListModelCopyWith<$Res> get resultList;
 
 }
 /// @nodoc
@@ -268,16 +267,23 @@ class __$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? comments = null,Object? query = null,Object? selectedComment = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? resultList = null,}) {
   return _then(_PostSearchState(
-comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
-as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as SelectedComment?,
+resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
+as SearchResultListModel,
   ));
 }
 
-
+/// Create a copy of PostSearchState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$SearchResultListModelCopyWith<$Res> get resultList {
+  
+  return $SearchResultListModelCopyWith<$Res>(_self.resultList, (value) {
+    return _then(_self.copyWith(resultList: value));
+  });
+}
 }
 
 // dart format on
