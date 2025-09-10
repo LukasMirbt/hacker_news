@@ -33,7 +33,7 @@ class _CommentSliverListState extends State<CommentSliverList> {
     );
 
     final selectedIndex = context.select(
-      (CommentListBloc bloc) => bloc.state.selectedIndex,
+      (CommentListBloc bloc) => bloc.state.commentList.selectedIndex,
     );
 
     return SelectedCommentListener(

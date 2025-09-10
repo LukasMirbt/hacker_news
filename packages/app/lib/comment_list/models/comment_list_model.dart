@@ -8,12 +8,28 @@ import 'package:post_repository/post_repository.dart';
 class CommentListModel extends Equatable {
   CommentListModel({
     required this.items,
+    this.selectedComment,
     CollapseHandler<CommentModel>? collapseHandler,
-  }) : _collapseHandler = collapseHandler ?? const CollapseHandler(),
-       visibleItems = [
-         for (final item in items)
-           if (item.isParentExpanded) item,
-       ];
+  }) : _collapseHandler = collapseHandler ?? const CollapseHandler() {
+    final visibleItems = <CommentModel>[];
+
+    final selectedComment = this.selectedComment;
+
+    int? selectedIndex;
+
+    for (final item in items) {
+      if (item.isParentExpanded) {
+        if (selectedComment != null && item.id == selectedComment.comment.id) {
+          selectedIndex = visibleItems.length;
+        }
+
+        visibleItems.add(item);
+      }
+    }
+
+    this.visibleItems = visibleItems;
+    this.selectedIndex = selectedIndex;
+  }
 
   factory CommentListModel.from(List<Comment> items) {
     return CommentListModel(
@@ -28,7 +44,10 @@ class CommentListModel extends Equatable {
   @visibleForTesting
   final List<CommentModel> items;
 
-  final List<CommentModel> visibleItems;
+  late final List<CommentModel> visibleItems;
+
+  final SelectedComment? selectedComment;
+  late final int? selectedIndex;
 
   CommentModel? findById(String id) {
     return items.firstWhereOrNull(
@@ -54,15 +73,32 @@ class CommentListModel extends Equatable {
     return CommentListModel(items: updatedItems);
   }
 
-  CommentListModel rebuildWith(List<Comment> comments) {
-    final updatedItems = _collapseHandler.rebuildWith(
+  CommentListModel updateWith({
+    required List<Comment> comments,
+    required SelectedComment? selectedComment,
+  }) {
+    var updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,
       newItems: [
         for (final comment in comments) CommentModel.from(comment),
       ],
     );
 
-    return CommentListModel(items: updatedItems);
+    if (selectedComment != null) {
+      final selectedIndex = updatedItems.indexWhere(
+        (item) => item.id == selectedComment.comment.id,
+      );
+
+      updatedItems = _collapseHandler.ensureVisible(
+        items: updatedItems,
+        index: selectedIndex,
+      );
+    }
+
+    return CommentListModel(
+      items: updatedItems,
+      selectedComment: selectedComment,
+    );
   }
 
   CommentListModel toggleExpansion({
@@ -79,25 +115,10 @@ class CommentListModel extends Equatable {
     return CommentListModel(items: updatedItems);
   }
 
-  CommentListModel ensureVisible({
-    required Comment comment,
-  }) {
-    final index = items.indexWhere(
-      (item) => item.id == comment.id,
-    );
-    if (index == -1) return this;
-
-    final updatedItems = _collapseHandler.ensureVisible(
-      items: items,
-      index: index,
-    );
-
-    return CommentListModel(items: updatedItems);
-  }
-
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     items,
+    selectedComment,
     visibleItems,
     _collapseHandler,
   ];

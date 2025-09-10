@@ -14,7 +14,6 @@ class OtherUserCommentModel extends CommentModel {
   String get upvoteUrl => _comment.upvoteUrl;
   bool get hasBeenUpvoted => _comment.hasBeenUpvoted;
 
-  @override
   OtherUserComment toRepository() => _comment;
 
   OtherUserCommentModel vote(VoteType type) {

@@ -7,33 +7,30 @@ class SelectedCommentListener extends StatelessWidget {
   const SelectedCommentListener({
     required this.listController,
     required this.child,
+    this.selectedCommentModel = const SelectedCommentModel(),
     super.key,
   });
 
   final ListController listController;
   final Widget child;
+  final SelectedCommentModel selectedCommentModel;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<CommentListBloc, CommentListState>(
       listenWhen: (previous, current) =>
-          previous.selectedComment != current.selectedComment,
+          previous.commentList.selectedComment !=
+          current.commentList.selectedComment,
       listener: (context, state) {
-        final selectedComment = state.selectedComment;
-        if (selectedComment == null) return;
-
-        final visibleItems = state.commentList.visibleItems;
-
-        final index = visibleItems.indexWhere(
-          (comment) => comment.id == selectedComment.comment.id,
-        );
+        final selectedIndex = state.commentList.selectedIndex;
+        if (selectedIndex == null) return;
 
         listController.animateToItem(
-          index: index,
+          index: selectedIndex,
           scrollController: context.read<ScrollController>(),
-          alignment: 0,
-          duration: (estimatedDistance) => const Duration(milliseconds: 800),
-          curve: (estimatedDistance) => Curves.easeInOut,
+          alignment: selectedCommentModel.alignment,
+          curve: selectedCommentModel.curve,
+          duration: selectedCommentModel.duration,
         );
       },
       child: child,

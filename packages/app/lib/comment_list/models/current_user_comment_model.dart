@@ -11,7 +11,6 @@ class CurrentUserCommentModel extends CommentModel {
   @override
   final CurrentUserComment _comment;
 
-  @override
   CurrentUserComment toRepository() => _comment;
 
   String score(AppLocalizations l10n) {

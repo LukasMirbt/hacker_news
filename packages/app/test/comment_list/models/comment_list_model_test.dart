@@ -31,15 +31,18 @@ void main() {
       collapseHandler = _MockCollapseHandler();
     });
 
-    CommentListModel createSubject() {
+    CommentListModel createSubject({
+      SelectedComment? selectedComment,
+    }) {
       return CommentListModel(
         items: items,
+        selectedComment: selectedComment,
         collapseHandler: collapseHandler,
       );
     }
 
     group('constructor', () {
-      test('returns $CommentListModel with correct visibleItems', () {
+      test('has correct visibleItems', () {
         final items = [
           OtherUserCommentModel(
             comment: OtherUserCommentPlaceholder(),
@@ -58,6 +61,23 @@ void main() {
             items[0],
           ],
         );
+      });
+
+      test('has correct selectedIndex '
+          'when selectedComment is null', () {
+        final model = createSubject();
+        expect(model.selectedIndex, null);
+      });
+
+      test('has correct selectedIndex '
+          'when selectedComment is non-null', () {
+        const index = 1;
+        final comment = repositoryItems[index];
+        final selectedComment = SelectedComment(comment);
+        final model = createSubject(
+          selectedComment: selectedComment,
+        );
+        expect(model.selectedIndex, index);
       });
     });
 
@@ -135,16 +155,10 @@ void main() {
       });
     });
 
-    group('rebuildWith', () {
+    group('updateWith', () {
       final comments = [
         OtherUserCommentPlaceholder(id: '0'),
         OtherUserCommentPlaceholder(id: '1'),
-      ];
-
-      final updatedItems = [
-        OtherUserCommentModel(
-          comment: OtherUserCommentPlaceholder(),
-        ),
       ];
 
       final rebuildWith = () => collapseHandler.rebuildWith(
@@ -154,14 +168,63 @@ void main() {
         ],
       );
 
-      test('returns updated $CommentListModel', () {
+      test('returns correct $CommentListModel '
+          'when selectedComment is null', () {
+        final updatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
+          ),
+        ];
         when(rebuildWith).thenReturn(updatedItems);
         final model = createSubject();
         expect(
-          model.rebuildWith(comments),
-          CommentListModel(items: updatedItems),
+          model.updateWith(
+            comments: comments,
+            selectedComment: null,
+          ),
+          CommentListModel(
+            items: updatedItems,
+          ),
         );
         verify(rebuildWith).called(1);
+      });
+
+      test('returns correct $CommentListModel '
+          'when selectedComment is non-null', () {
+        const index = 1;
+        final selectedComment = SelectedComment(comments[index]);
+        final firstUpdatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(id: '0'),
+          ),
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(id: '1'),
+          ),
+        ];
+        final ensureVisible = () => collapseHandler.ensureVisible(
+          items: firstUpdatedItems,
+          index: index,
+        );
+        final secondUpdatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
+          ),
+        ];
+        when(rebuildWith).thenReturn(firstUpdatedItems);
+        when(ensureVisible).thenReturn(secondUpdatedItems);
+        final model = createSubject();
+        expect(
+          model.updateWith(
+            comments: comments,
+            selectedComment: selectedComment,
+          ),
+          CommentListModel(
+            items: secondUpdatedItems,
+            selectedComment: selectedComment,
+          ),
+        );
+        verify(rebuildWith).called(1);
+        verify(ensureVisible).called(1);
       });
     });
 
@@ -199,39 +262,6 @@ void main() {
           CommentListModel(items: updatedItems),
         );
         verify(toggleExpansion).called(1);
-      });
-    });
-
-    group('ensureVisible', () {
-      test('returns same $CommentListModel when index '
-          'is not found', () {
-        final comment = OtherUserCommentPlaceholder(id: '');
-        final model = createSubject();
-        expect(
-          model.ensureVisible(comment: comment),
-          model,
-        );
-      });
-
-      test('returns updated $CommentListModel when index '
-          'is found', () {
-        final comment = repositoryItems.first;
-        final updatedItems = [
-          OtherUserCommentModel(
-            comment: OtherUserCommentPlaceholder(),
-          ),
-        ];
-        final ensureVisible = () => collapseHandler.ensureVisible(
-          items: items,
-          index: 0,
-        );
-        when(ensureVisible).thenReturn(updatedItems);
-        final model = createSubject();
-        expect(
-          model.ensureVisible(comment: comment),
-          CommentListModel(items: updatedItems),
-        );
-        verify(ensureVisible).called(1);
       });
     });
   });
