@@ -1,6 +1,7 @@
 import 'package:app/post_search/post_search.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:text_parser/text_parser.dart';
 
 part 'search_result_list_model.freezed.dart';
 
