@@ -1,7 +1,6 @@
-import 'package:app/comment_list/comment_list.dart';
-import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_comment_list/app_comment_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CommentIndent extends StatelessWidget {
   const CommentIndent({
@@ -13,12 +12,12 @@ class CommentIndent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final padding = context.select(
-      (CommentModel comment) => comment.indent * AppSpacing.md,
+    final indentPadding = context.select(
+      (AppCommentModel comment) => comment.indentPadding,
     );
 
     return Padding(
-      padding: EdgeInsets.only(left: padding),
+      padding: EdgeInsets.only(left: indentPadding),
       child: child,
     );
   }

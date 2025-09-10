@@ -1,7 +1,6 @@
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CommentBackground extends StatelessWidget {
   const CommentBackground({
@@ -13,16 +12,23 @@ class CommentBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final comment = context.watch<CommentModel>();
+    final index = context.watch<int>();
 
     final isSelected = context.select(
-      (CommentListBloc bloc) => bloc.state.isSelected(comment),
+      (AppCommentListData data) => data.isSelected(index),
     );
 
     final colorScheme = ExtendedColorScheme.of(context);
 
+    final backgroundColor = context.select(
+      (AppCommentModel comment) => comment.backgroundColor(
+        colorScheme: colorScheme,
+        isSelected: isSelected,
+      ),
+    );
+
     return Material(
-      color: isSelected ? colorScheme.highlight : Colors.transparent,
+      color: backgroundColor,
       child: child,
     );
   }

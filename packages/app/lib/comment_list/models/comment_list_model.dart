@@ -30,22 +30,6 @@ class CommentListModel extends Equatable {
 
   final List<CommentModel> visibleItems;
 
-  bool isStartOfThread(int index) {
-    final comment = visibleItems.elementAtOrNull(index);
-    if (comment == null) return false;
-    return comment.isTopLevel;
-  }
-
-  bool isEndOfThread(int index) {
-    final nextComment = visibleItems.elementAtOrNull(index + 1);
-    if (nextComment == null) return true;
-    return nextComment.isTopLevel;
-  }
-
-  bool isEndOfList(int index) {
-    return index == visibleItems.length - 1;
-  }
-
   CommentModel? findById(String id) {
     return items.firstWhereOrNull(
       (item) => item.id == id,

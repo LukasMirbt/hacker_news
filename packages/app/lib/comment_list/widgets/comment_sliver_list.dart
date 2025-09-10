@@ -1,15 +1,11 @@
 import 'package:app/comment_list/comment_list.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 class CommentSliverList extends StatefulWidget {
-  const CommentSliverList({
-    this.builder = const CommentListBuilder(),
-    super.key,
-  });
-
-  final CommentListBuilder builder;
+  const CommentSliverList({super.key});
 
   @override
   State<CommentSliverList> createState() => _CommentSliverListState();
@@ -32,16 +28,26 @@ class _CommentSliverListState extends State<CommentSliverList> {
 
   @override
   Widget build(BuildContext context) {
-    final itemCount = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.visibleItems.length,
+    final visibleItems = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
+    );
+
+    final selectedIndex = context.select(
+      (CommentListBloc bloc) => bloc.state.selectedIndex,
     );
 
     return SelectedCommentListener(
       listController: _listController,
-      child: SuperSliverList.builder(
-        listController: _listController,
-        itemCount: itemCount,
-        itemBuilder: widget.builder.itemBuilder,
+      child: AppCommentList(
+        data: AppCommentListData(
+          listController: _listController,
+          selectedIndex: selectedIndex,
+          items: visibleItems,
+          commentBuilder: (_, index) {
+            final comment = visibleItems[index];
+            return Comment(comment);
+          },
+        ),
       ),
     );
   }

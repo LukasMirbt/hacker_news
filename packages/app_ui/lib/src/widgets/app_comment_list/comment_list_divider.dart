@@ -1,6 +1,6 @@
-import 'package:app/comment_list/comment_list.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CommentListDivider extends StatelessWidget {
   const CommentListDivider({super.key});
@@ -10,11 +10,20 @@ class CommentListDivider extends StatelessWidget {
     final index = context.watch<int>();
 
     final isEndOfThread = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.isEndOfThread(index),
+      (AppCommentListData data) => data.isEndOfThread(index),
     );
 
     if (!isEndOfThread) return const SizedBox.shrink();
 
+    return const CommentListDividerBody();
+  }
+}
+
+class CommentListDividerBody extends StatelessWidget {
+  const CommentListDividerBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return const Divider(height: 1);
   }
 }

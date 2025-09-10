@@ -1,7 +1,6 @@
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class ThreadTopPadding extends StatelessWidget {
   const ThreadTopPadding({super.key});
@@ -11,11 +10,20 @@ class ThreadTopPadding extends StatelessWidget {
     final index = context.watch<int>();
 
     final isStartOfThread = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.isStartOfThread(index),
+      (AppCommentListData data) => data.isStartOfThread(index),
     );
 
     if (!isStartOfThread) return const SizedBox.shrink();
 
+    return const ThreadTopPaddingBody();
+  }
+}
+
+class ThreadTopPaddingBody extends StatelessWidget {
+  const ThreadTopPaddingBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return const SizedBox(
       width: double.infinity,
       height: AppSpacing.xs,

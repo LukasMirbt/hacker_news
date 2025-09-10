@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -21,7 +20,7 @@ class _MockCommentListModel extends Mock implements CommentListModel {}
 void main() {
   const index = 1;
 
-  group(CommentListFooter, () {
+  group(CommentListDivider, () {
     late CommentListBloc bloc;
     late CommentListState state;
     late CommentListModel commentList;
@@ -39,42 +38,37 @@ void main() {
         value: bloc,
         child: Provider.value(
           value: index,
-          child: CommentListFooter(),
+          child: CommentListDivider(),
         ),
       );
     }
 
-    testWidgets('renders $CommentListFooterBody '
-        'when isEndOfList', (tester) async {
-      when(() => commentList.isEndOfList(index)).thenReturn(true);
+    testWidgets('renders $CommentListDividerBody '
+        'when isEndOfThread', (tester) async {
+      when(() => commentList.isEndOfThread(index)).thenReturn(true);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentListFooterBody), findsOneWidget);
+      expect(find.byType(CommentListDividerBody), findsOneWidget);
     });
 
-    testWidgets('does not render $CommentListFooterBody '
-        'when !isEndOfList', (tester) async {
-      when(() => commentList.isEndOfList(index)).thenReturn(false);
+    testWidgets('does not render $CommentListDividerBody '
+        'when !isEndOfThread', (tester) async {
+      when(() => commentList.isEndOfThread(index)).thenReturn(false);
       await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentListFooterBody), findsNothing);
+      expect(find.byType(CommentListDividerBody), findsNothing);
     });
   });
 
-  group(CommentListFooterBody, () {
-    Widget buildSubject() => CommentListFooterBody();
+  group(CommentListDividerBody, () {
+    Widget buildSubject() => CommentListDividerBody();
 
-    testWidgets('renders $SizedBox', (tester) async {
+    testWidgets('renders $Divider', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(
         find.byWidgetPredicate(
-          (widget) => widget is SizedBox && widget.height == AppSpacing.lg,
+          (widget) => widget is Divider && widget.height == 1,
         ),
         findsOneWidget,
       );
-    });
-
-    testWidgets('renders $SafeArea', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(SafeArea), findsOneWidget);
     });
   });
 }

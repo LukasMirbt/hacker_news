@@ -23,9 +23,11 @@ abstract class CommentListState with _$CommentListState {
 
   const CommentListState._();
 
-  bool isSelected(CommentModel comment) {
+  int? get selectedIndex {
     final selected = selectedComment;
-    if (selected == null) return false;
-    return selected.comment.id == comment.id;
+    if (selected == null) return null;
+    return commentList.visibleItems.indexWhere(
+      (item) => item.id == selected.comment.id,
+    );
   }
 }

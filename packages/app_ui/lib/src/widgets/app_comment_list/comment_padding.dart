@@ -1,7 +1,7 @@
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/widgets/app_comment_list/app_comment_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CommentPadding extends StatelessWidget {
   const CommentPadding({super.key});
@@ -9,11 +9,20 @@ class CommentPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isExpanded = context.select(
-      (CommentModel comment) => comment.isExpanded,
+      (AppCommentModel comment) => comment.isExpanded,
     );
 
     if (!isExpanded) return const SizedBox.shrink();
 
+    return const CommentPaddingBody();
+  }
+}
+
+class CommentPaddingBody extends StatelessWidget {
+  const CommentPaddingBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return const SizedBox(
       width: double.infinity,
       height: AppSpacing.sm,
