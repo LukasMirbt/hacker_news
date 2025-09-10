@@ -1,4 +1,3 @@
-import 'package:app/post_search/models/snippet_extractor.dart';
 import 'package:app/post_search/post_search.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';

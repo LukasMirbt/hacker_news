@@ -13,11 +13,13 @@ class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
 
 class _MockPost extends Mock implements Post {}
 
+class _MockSearchResultSnippet extends Mock implements SearchResultSnippet {}
+
 void main() {
   final comments = [OtherUserCommentPlaceholder()];
   const searchQuery = 'searchQuery';
 
-  final initialState = PostSearchState(
+  final initialState = PostSearchState.initial(
     comments: comments,
     query: searchQuery,
   );
@@ -73,7 +75,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          initialState.copyWith.resultList(
             comments: updatedComments,
           ),
         ],
@@ -93,7 +95,7 @@ void main() {
           );
         },
         expect: () => [
-          initialState.copyWith(
+          initialState.copyWith.resultList(
             query: query,
           ),
         ],
@@ -108,8 +110,7 @@ void main() {
 
       final result = SearchResultModel(
         comment: comment,
-        snippet: 'text',
-        match: SearchMatch(start: 0, end: 1),
+        snippet: _MockSearchResultSnippet(),
       );
 
       final selectComment = () => repository.selectComment(comment);

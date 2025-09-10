@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 
 class SearchResultSnippet extends Equatable {
   const SearchResultSnippet({
-    required this.text,
+    required String text,
     required this.match,
-  });
+  }) : _text = text;
 
-  final String text;
+  final String _text;
   final SearchMatch match;
 
-  Iterable<String> get characters => text.characters;
+  Iterable<String> get characters => _text.characters;
 
   @override
   List<Object> get props => [
-    text,
+    _text,
     match,
   ];
 }
