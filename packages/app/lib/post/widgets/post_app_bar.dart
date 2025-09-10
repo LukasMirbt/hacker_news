@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PostAppBar({super.key});
 
+  static const heroTag = 'postAppBar';
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
     return const Hero(
-      tag: 'post_app_bar',
+      tag: heroTag,
       child: _AppBar(),
     );
   }

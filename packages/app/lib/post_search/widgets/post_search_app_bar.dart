@@ -1,3 +1,4 @@
+import 'package:app/post/post.dart';
 import 'package:app/post_search/post_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ class PostSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'post_app_bar',
+      tag: PostAppBar.heroTag,
       // Reprovide the Bloc for the Hero animation
       // since Hero context does not have access otherwise.
       child: BlocProvider.value(
