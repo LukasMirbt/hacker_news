@@ -37,6 +37,7 @@ workspace:
   - packages/secure_user_id_storage
   - packages/settings_storage
   - packages/share_launcher
+  - packages/text_parser
   - packages/thread_api
   - packages/thread_parser
   - packages/thread_repository
