@@ -1,9 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:collapse_handler/collapse_handler.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class AppCommentModel extends Equatable {
+class AppCommentModel {
   const AppCommentModel(this._comment);
 
   final Collapsible<dynamic> _comment;
@@ -24,7 +23,4 @@ class AppCommentModel extends Equatable {
     if (isSelected) return colorScheme.highlight;
     return null;
   }
-
-  @override
-  List<Object> get props => [_comment];
 }

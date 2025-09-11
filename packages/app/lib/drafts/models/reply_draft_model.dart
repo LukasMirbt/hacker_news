@@ -10,7 +10,7 @@ class ReplyDraftModel extends DraftModel {
   String get url => _draft.url;
   String get title => _draft.content;
 
-  // TODO: Refactor to use TextParser
+  // TODO(LukasMirbt): Refactor to use TextParser
   String get subtitle {
     final document = parse(_draft.parentHtmlText);
     final buffer = StringBuffer();

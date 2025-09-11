@@ -57,50 +57,45 @@ void main() {
     }
 
     group(ListView, () {
-      Future<Widget? Function(BuildContext, int)> findBuilder(
-        WidgetTester tester,
-      ) async {
-        await tester.pumpApp(buildSubject());
-        final widget = tester.widget<ListView>(find.byType(ListView));
-        final delegate = widget.childrenDelegate as SliverChildBuilderDelegate;
-        return delegate.builder;
-      }
+      group('itemBuilder', () {
+        Future<Widget> buildItem(
+          WidgetTester tester, [
+          int index = 1,
+        ]) async {
+          await tester.pumpApp(buildSubject());
+          final widget = tester.widget<ListView>(
+            find.byType(ListView),
+          );
+          final delegate =
+              widget.childrenDelegate as SliverChildBuilderDelegate;
+          return Builder(
+            builder: (context) => delegate.builder(context, index)!,
+          );
+        }
 
-      testWidgets('itemBuilder renders $SearchResult', (tester) async {
-        final builder = await findBuilder(tester);
-        await tester.pumpApp(
-          Builder(
-            builder: (context) => builder(context, 1)!,
-          ),
-        );
-        expect(find.byType(SearchResult), findsOneWidget);
-      });
+        testWidgets('renders $SearchResult', (tester) async {
+          final item = await buildItem(tester);
+          await tester.pumpApp(item);
+          expect(find.byType(SearchResult), findsOneWidget);
+        });
 
-      testWidgets('itemBuilder renders $Divider', (tester) async {
-        final builder = await findBuilder(tester);
-        await tester.pumpApp(
-          Builder(
-            builder: (context) => builder(context, 1)!,
-          ),
-        );
-        expect(
-          find.byWidgetPredicate(
-            (widget) => widget is Divider && widget.height == 1,
-          ),
-          findsOneWidget,
-        );
-      });
+        testWidgets('renders $Divider', (tester) async {
+          final item = await buildItem(tester);
+          await tester.pumpApp(item);
+          expect(
+            find.byWidgetPredicate(
+              (widget) => widget is Divider && widget.height == 1,
+            ),
+            findsOneWidget,
+          );
+        });
 
-      testWidgets('itemBuilder renders $SafeArea '
-          'when isLast', (tester) async {
-        final index = items.length - 1;
-        final builder = await findBuilder(tester);
-        await tester.pumpApp(
-          Builder(
-            builder: (context) => builder(context, index)!,
-          ),
-        );
-        expect(find.byType(SafeArea), findsOneWidget);
+        testWidgets('renders $SafeArea when isLast', (tester) async {
+          final index = items.length - 1;
+          final item = await buildItem(tester, index);
+          await tester.pumpApp(item);
+          expect(find.byType(SafeArea), findsOneWidget);
+        });
       });
     });
   });
