@@ -80,7 +80,6 @@ dependencies:
     path: ../reply_api
   reply_repository:
     path: ../reply_repository
-  scrollable_positioned_list: ^0.3.8
   secure_cookie_storage:
     path: ../secure_cookie_storage
   secure_user_id_storage:

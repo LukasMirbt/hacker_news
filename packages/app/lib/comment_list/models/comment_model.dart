@@ -52,8 +52,6 @@ sealed class CommentModel extends Equatable
     return ageString;
   }
 
-  /*   Comment toRepository() => _comment; */
-
   @override
   List<Object> get props => [
     _formatter,
