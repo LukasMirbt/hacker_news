@@ -24,6 +24,8 @@ class AppView extends StatelessWidget {
       (AppRouter router) => router.goRouter,
     );
 
+    print('A change');
+
     return MaterialApp.router(
       restorationScopeId: 'app',
       themeMode: themeMode,
