@@ -47,14 +47,17 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   Future<void> _onSubscriptionRequested(
     CommentListSubscriptionRequested event,
     Emitter<CommentListState> emit,
-  ) async {
+  ) {
     return emit.forEach(
       _postRepository.stream,
-      onData: (repositoryState) => state.copyWith(
-        commentList: state.commentList.rebuildWith(
-          repositoryState.post.comments,
-        ),
-      ),
+      onData: (repositoryState) {
+        return state.copyWith(
+          commentList: state.commentList.updateWith(
+            comments: repositoryState.post.comments,
+            selectedComment: repositoryState.selectedComment,
+          ),
+        );
+      },
     );
   }
 

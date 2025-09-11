@@ -25,6 +25,7 @@ class ThreadFeedBody extends StatelessWidget {
       (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems,
     );
 
+    // TODO(LukasMirbt): Refactor to use AppCommentList
     return InfiniteList(
       padding: builder.padding(
         hasReachedMax: hasReachedMax,

@@ -2,6 +2,7 @@
 
 import 'package:app/comment/comment.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_search/post_search.dart';
 import 'package:app/reply/reply.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,6 +51,7 @@ void main() {
         expect(
           PostRoute.config.routes,
           [
+            PostSearchRoute.config,
             CommentRoute.config,
             ReplyRoute.config,
           ],

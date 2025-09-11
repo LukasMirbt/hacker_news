@@ -69,4 +69,7 @@ class DarkColors extends AppColors {
 
   @override
   Color get surfaceTint => const Color.fromRGBO(255, 102, 0, 1);
+
+  @override
+  Color get highlight => const Color(0xFF242424);
 }

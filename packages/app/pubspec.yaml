@@ -92,6 +92,8 @@ dependencies:
   skeletonizer: ^2.0.1
   stream_transform: ^2.1.1
   super_sliver_list: ^0.4.1
+  text_parser:
+    path: ../text_parser
   thread_api:
     path: ../thread_api
   thread_repository:

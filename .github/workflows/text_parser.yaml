@@ -1,0 +1,20 @@
+name: text_parser
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "packages/text_parser/**"
+      - ".github/workflows/text_parser.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter_package.yaml
+    with:
+      working_directory: packages/text_parser

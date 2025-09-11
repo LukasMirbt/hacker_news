@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  equatable: ^2.0.7
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4

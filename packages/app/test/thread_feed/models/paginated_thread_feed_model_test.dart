@@ -124,6 +124,19 @@ void main() {
         comment: OtherUserThreadCommentPlaceholder(),
       );
 
+      test('returns same $PaginatedThreadFeedModel '
+          'when afterItem index is not found', () {
+        final feed = createSubject();
+        final afterItem = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(id: 'non-existent'),
+        );
+        final updatedFeed = feed.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(updatedFeed, feed);
+      });
+
       test('returns updated $PaginatedThreadFeedModel '
           'when afterItem index is found', () {
         final feed = createSubject();
@@ -140,19 +153,6 @@ void main() {
             ...feed.items.skip(1),
           ],
         );
-      });
-
-      test('returns same $PaginatedThreadFeedModel '
-          'when afterItem index is not found', () {
-        final feed = createSubject();
-        final afterItem = OtherUserThreadCommentModel(
-          comment: OtherUserThreadCommentPlaceholder(id: 'non-existent'),
-        );
-        final updatedFeed = feed.insertAfter(
-          afterItem: afterItem,
-          newItem: newItem,
-        );
-        expect(updatedFeed, feed);
       });
     });
 
@@ -192,20 +192,32 @@ void main() {
     });
 
     group('toggleExpansion', () {
-      final comment = items.first;
+      test('returns same $PaginatedThreadFeedModel when index '
+          'is not found', () {
+        final comment = OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(
+            id: '',
+          ),
+        );
+        final model = createSubject();
+        expect(
+          model.toggleExpansion(comment: comment),
+          model,
+        );
+      });
 
-      final updatedItems = [
-        OtherUserThreadCommentModel(
-          comment: OtherUserThreadCommentPlaceholder(),
-        ),
-      ];
-
-      final toggleExpansion = () => collapseHandler.toggleExpansion(
-        items: items,
-        itemToToggle: comment,
-      );
-
-      test('returns updated $PaginatedThreadFeedModel', () {
+      test('returns updated $PaginatedThreadFeedModel when index '
+          'is found', () {
+        final comment = items.first;
+        final updatedItems = [
+          OtherUserThreadCommentModel(
+            comment: OtherUserThreadCommentPlaceholder(),
+          ),
+        ];
+        final toggleExpansion = () => collapseHandler.toggleExpansion(
+          items: items,
+          index: 0,
+        );
         when(toggleExpansion).thenReturn(updatedItems);
         final model = createSubject();
         expect(

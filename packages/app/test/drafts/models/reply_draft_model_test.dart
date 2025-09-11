@@ -44,7 +44,7 @@ void main() {
         expect(model.subtitle, 'Lorem ipsum. Dolor sit amet.');
       });
 
-      test('returns empty string when parentHtmlText '
+      test('returns correct value when parentHtmlText '
           'does not contain html elements', () {
         const parentHtmlText = 'Lorem ipsum. Dolor sit amet.';
         when(() => draft.parentHtmlText).thenReturn(parentHtmlText);

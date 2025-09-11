@@ -1,5 +1,4 @@
-import 'package:app/comment_list/comment_list.dart'
-    hide Comment, CurrentUserComment;
+import 'package:app/comment_list/comment_list.dart' hide CurrentUserComment;
 import 'package:equatable/equatable.dart';
 import 'package:reply_repository/reply_repository.dart';
 

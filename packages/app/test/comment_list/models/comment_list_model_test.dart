@@ -31,15 +31,18 @@ void main() {
       collapseHandler = _MockCollapseHandler();
     });
 
-    CommentListModel createSubject() {
+    CommentListModel createSubject({
+      SelectedComment? selectedComment,
+    }) {
       return CommentListModel(
         items: items,
+        selectedComment: selectedComment,
         collapseHandler: collapseHandler,
       );
     }
 
     group('constructor', () {
-      test('returns $CommentListModel with correct visibleItems', () {
+      test('has correct visibleItems', () {
         final items = [
           OtherUserCommentModel(
             comment: OtherUserCommentPlaceholder(),
@@ -58,6 +61,23 @@ void main() {
             items[0],
           ],
         );
+      });
+
+      test('has correct selectedIndex '
+          'when selectedComment is null', () {
+        final model = createSubject();
+        expect(model.selectedIndex, null);
+      });
+
+      test('has correct selectedIndex '
+          'when selectedComment is non-null', () {
+        const index = 1;
+        final comment = repositoryItems[index];
+        final selectedComment = SelectedComment(comment);
+        final model = createSubject(
+          selectedComment: selectedComment,
+        );
+        expect(model.selectedIndex, index);
       });
     });
 
@@ -103,6 +123,19 @@ void main() {
         comment: OtherUserCommentPlaceholder(),
       );
 
+      test('returns same $CommentListModel when afterItem index '
+          'is not found', () {
+        final model = createSubject();
+        final afterItem = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(id: 'non-existent'),
+        );
+        final updatedModel = model.insertAfter(
+          afterItem: afterItem,
+          newItem: newItem,
+        );
+        expect(updatedModel, model);
+      });
+
       test('returns updated $CommentListModel when afterItem index '
           'is found', () {
         final model = createSubject();
@@ -120,31 +153,12 @@ void main() {
           ],
         );
       });
-
-      test('returns same $CommentListModel when afterItem index '
-          'is not found', () {
-        final model = createSubject();
-        final afterItem = OtherUserCommentModel(
-          comment: OtherUserCommentPlaceholder(id: 'non-existent'),
-        );
-        final updatedModel = model.insertAfter(
-          afterItem: afterItem,
-          newItem: newItem,
-        );
-        expect(updatedModel, model);
-      });
     });
 
-    group('rebuildWith', () {
+    group('updateWith', () {
       final comments = [
         OtherUserCommentPlaceholder(id: '0'),
         OtherUserCommentPlaceholder(id: '1'),
-      ];
-
-      final updatedItems = [
-        OtherUserCommentModel(
-          comment: OtherUserCommentPlaceholder(),
-        ),
       ];
 
       final rebuildWith = () => collapseHandler.rebuildWith(
@@ -154,32 +168,93 @@ void main() {
         ],
       );
 
-      test('returns updated $CommentListModel', () {
+      test('returns correct $CommentListModel '
+          'when selectedComment is null', () {
+        final updatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
+          ),
+        ];
         when(rebuildWith).thenReturn(updatedItems);
         final model = createSubject();
         expect(
-          model.rebuildWith(comments),
-          CommentListModel(items: updatedItems),
+          model.updateWith(
+            comments: comments,
+            selectedComment: null,
+          ),
+          CommentListModel(
+            items: updatedItems,
+          ),
         );
         verify(rebuildWith).called(1);
+      });
+
+      test('returns correct $CommentListModel '
+          'when selectedComment is non-null', () {
+        const index = 1;
+        final selectedComment = SelectedComment(comments[index]);
+        final firstUpdatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(id: '0'),
+          ),
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(id: '1'),
+          ),
+        ];
+        final ensureVisible = () => collapseHandler.ensureVisible(
+          items: firstUpdatedItems,
+          index: index,
+        );
+        final secondUpdatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
+          ),
+        ];
+        when(rebuildWith).thenReturn(firstUpdatedItems);
+        when(ensureVisible).thenReturn(secondUpdatedItems);
+        final model = createSubject();
+        expect(
+          model.updateWith(
+            comments: comments,
+            selectedComment: selectedComment,
+          ),
+          CommentListModel(
+            items: secondUpdatedItems,
+            selectedComment: selectedComment,
+          ),
+        );
+        verify(rebuildWith).called(1);
+        verify(ensureVisible).called(1);
       });
     });
 
     group('toggleExpansion', () {
-      final comment = items.first;
+      test('returns same $CommentListModel when index '
+          'is not found', () {
+        final comment = OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(
+            id: '',
+          ),
+        );
+        final model = createSubject();
+        expect(
+          model.toggleExpansion(comment: comment),
+          model,
+        );
+      });
 
-      final updatedItems = [
-        OtherUserCommentModel(
-          comment: OtherUserCommentPlaceholder(),
-        ),
-      ];
-
-      final toggleExpansion = () => collapseHandler.toggleExpansion(
-        items: items,
-        itemToToggle: comment,
-      );
-
-      test('returns updated $CommentListModel', () {
+      test('returns updated $CommentListModel when index '
+          'is found', () {
+        final comment = items.first;
+        final updatedItems = [
+          OtherUserCommentModel(
+            comment: OtherUserCommentPlaceholder(),
+          ),
+        ];
+        final toggleExpansion = () => collapseHandler.toggleExpansion(
+          items: items,
+          index: 0,
+        );
         when(toggleExpansion).thenReturn(updatedItems);
         final model = createSubject();
         expect(

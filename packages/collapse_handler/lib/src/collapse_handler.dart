@@ -5,15 +5,9 @@ class CollapseHandler<T extends Collapsible<T>> {
 
   List<T> toggleExpansion({
     required List<T> items,
-    required T itemToToggle,
+    required int index,
   }) {
     final updatedItems = [...items];
-
-    final index = updatedItems.indexWhere(
-      (item) => item.id == itemToToggle.id,
-    );
-
-    if (index == -1) return items;
 
     final tappedItem = updatedItems[index];
     final newIsExpanded = !tappedItem.isExpanded;
@@ -54,6 +48,37 @@ class CollapseHandler<T extends Collapsible<T>> {
     return updatedItems;
   }
 
+  List<T> ensureVisible({
+    required List<T> items,
+    required int index,
+  }) {
+    final item = items[index];
+
+    final idsToExpand = {item.id};
+    var parentIndentToFind = item.indent - 1;
+
+    if (parentIndentToFind >= 0) {
+      for (var i = index - 1; i >= 0; i--) {
+        final currentItem = items[i];
+        if (currentItem.indent == parentIndentToFind) {
+          idsToExpand.add(currentItem.id);
+          parentIndentToFind--;
+          if (parentIndentToFind < 0) break;
+        }
+      }
+    }
+
+    final itemsWithAncestorsExpanded = [
+      for (final item in items)
+        if (idsToExpand.contains(item.id))
+          item.copyWith(isExpanded: true)
+        else
+          item,
+    ];
+
+    return _recalculateParentExpansion(itemsWithAncestorsExpanded);
+  }
+
   List<T> rebuildWith({
     required List<T> oldItems,
     required List<T> newItems,
@@ -69,10 +94,14 @@ class CollapseHandler<T extends Collapsible<T>> {
         ),
     ];
 
+    return _recalculateParentExpansion(itemsWithPreservedExpansion);
+  }
+
+  List<T> _recalculateParentExpansion(List<T> items) {
     final parentStatus = <int, bool>{-1: true};
     final fullyCorrectedItems = <T>[];
 
-    for (final item in itemsWithPreservedExpansion) {
+    for (final item in items) {
       final isParentExpanded = parentStatus[item.indent - 1] ?? false;
       fullyCorrectedItems.add(
         item.copyWith(isParentExpanded: isParentExpanded),

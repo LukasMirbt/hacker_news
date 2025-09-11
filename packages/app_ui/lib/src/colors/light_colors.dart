@@ -69,4 +69,7 @@ class LightColors extends AppColors {
 
   @override
   Color get surfaceTint => const Color(0xFF0069D9);
+
+  @override
+  Color get highlight => const Color(0xFFFEF283);
 }

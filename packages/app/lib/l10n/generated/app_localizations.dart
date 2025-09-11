@@ -616,6 +616,24 @@ abstract class AppLocalizations {
   /// **'Post'**
   String get post_title;
 
+  /// No description provided for @postSearch_hintText.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get postSearch_hintText;
+
+  /// No description provided for @postSearch_startEllipsis.
+  ///
+  /// In en, this message translates to:
+  /// **'...'**
+  String get postSearch_startEllipsis;
+
+  /// No description provided for @postSearch_endEllipsis.
+  ///
+  /// In en, this message translates to:
+  /// **'...'**
+  String get postSearch_endEllipsis;
+
   /// No description provided for @postOptions_openOnWeb.
   ///
   /// In en, this message translates to:

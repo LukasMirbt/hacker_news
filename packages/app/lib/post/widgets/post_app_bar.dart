@@ -6,8 +6,22 @@ import 'package:flutter/material.dart';
 class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PostAppBar({super.key});
 
+  static const heroTag = 'postAppBar';
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Hero(
+      tag: heroTag,
+      child: _AppBar(),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget {
+  const _AppBar();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +32,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(l10n.post_title),
       actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
       actions: const [
+        PostSearchButton(),
         PostOptionsButton(),
       ],
     );

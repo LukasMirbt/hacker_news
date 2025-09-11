@@ -360,6 +360,18 @@ void main() {
         });
       });
 
+      group('extendedColorScheme', () {
+        test('has correct values', () {
+          final data = createSubject();
+          expect(
+            data.extension<ExtendedColorScheme>(),
+            ExtendedColorScheme(
+              highlight: colors.highlight,
+            ),
+          );
+        });
+      });
+
       group('extendedTextTheme', () {
         test('has correct values', () {
           final data = createSubject();

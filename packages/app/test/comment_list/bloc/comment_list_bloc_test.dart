@@ -80,9 +80,16 @@ void main() {
         ],
       );
 
+      final updatedSelectedComment = SelectedComment(
+        OtherUserCommentPlaceholder(),
+      );
+
       final updatedCommentList = _MockCommentListModel();
 
-      final rebuildWith = () => commentList.rebuildWith(updatedPost.comments);
+      final updateWith = () => commentList.updateWith(
+        comments: updatedPost.comments,
+        selectedComment: updatedSelectedComment,
+      );
 
       blocTest<CommentListBloc, CommentListState>(
         'emits $CommentListModel when stream emits new value',
@@ -90,8 +97,11 @@ void main() {
           when(() => postRepository.stream).thenAnswer(
             (_) => Stream.value(updatedRepositoryState),
           );
-          when(rebuildWith).thenReturn(updatedCommentList);
           when(() => updatedRepositoryState.post).thenReturn(updatedPost);
+          when(() => updatedRepositoryState.selectedComment).thenReturn(
+            updatedSelectedComment,
+          );
+          when(updateWith).thenReturn(updatedCommentList);
         },
         seed: () => state,
         build: buildBloc,
@@ -106,7 +116,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(rebuildWith).called(1);
+          verify(updateWith).called(1);
         },
       );
     });
