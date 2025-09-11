@@ -21,6 +21,12 @@ class SearchResultText extends StatelessWidget {
     final textTheme = TextTheme.of(context);
     final l10n = AppLocalizations.of(context);
 
+    final regularStyle = textTheme.bodyMedium;
+
+    final highlightedStyle = regularStyle?.copyWithWeight(
+      (weight) => weight * 1.75,
+    );
+
     return Text.rich(
       textAlign: TextAlign.start,
       TextSpan(
@@ -32,9 +38,7 @@ class SearchResultText extends StatelessWidget {
           for (final (index, character) in characters.indexed)
             TextSpan(
               text: character,
-              style: textTheme.bodyMedium?.copyWithWeight(
-                (weight) => match.contains(index) ? weight * 1.75 : weight,
-              ),
+              style: match.contains(index) ? highlightedStyle : regularStyle,
             ),
           if (!isEndOfText)
             TextSpan(

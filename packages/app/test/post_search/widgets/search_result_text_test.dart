@@ -2,6 +2,7 @@
 
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post_search/post_search.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -50,6 +51,13 @@ void main() async {
         );
       }
 
+      TextTheme findTextTheme(WidgetTester tester) {
+        final context = tester.element(
+          find.byType(Text),
+        );
+        return TextTheme.of(context);
+      }
+
       testWidgets('renders start ellipsis '
           'when !isStartOfText', (tester) async {
         when(() => match.isStartOfText).thenReturn(false);
@@ -71,6 +79,11 @@ void main() async {
         when(() => match.contains(1)).thenReturn(true);
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
+        final textTheme = findTextTheme(tester);
+        final regularStyle = textTheme.bodyMedium;
+        final highlightedStyle = regularStyle?.copyWithWeight(
+          (weight) => weight * 1.75,
+        );
         final rootSpan = widget.textSpan! as TextSpan;
         expect(
           rootSpan.children,
@@ -82,9 +95,9 @@ void main() async {
                   characters[0],
                 )
                 .having(
-                  (span) => span.style?.fontWeight,
+                  (span) => span.style,
                   'fontWeight',
-                  FontWeight.normal,
+                  regularStyle,
                 ),
             isA<TextSpan>()
                 .having(
@@ -93,9 +106,9 @@ void main() async {
                   characters[1],
                 )
                 .having(
-                  (span) => span.style?.fontWeight,
+                  (span) => span.style,
                   'fontWeight',
-                  FontWeight.bold,
+                  highlightedStyle,
                 ),
             isA<TextSpan>()
                 .having(
@@ -104,9 +117,9 @@ void main() async {
                   characters[2],
                 )
                 .having(
-                  (span) => span.style?.fontWeight,
+                  (span) => span.style,
                   'fontWeight',
-                  FontWeight.normal,
+                  regularStyle,
                 ),
           ],
         );

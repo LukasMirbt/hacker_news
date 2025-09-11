@@ -1,7 +1,6 @@
 import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
@@ -46,10 +45,6 @@ class _CommentSliverListState extends State<CommentSliverList> {
           items: visibleItems,
           commentBuilder: (_, index) {
             final comment = visibleItems[index];
-            if (comment.htmlText.contains('Nice.')) {
-              Clipboard.setData(ClipboardData(text: comment.htmlText));
-              print(comment.htmlText);
-            }
             return Comment(comment);
           },
         ),
