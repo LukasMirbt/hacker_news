@@ -141,6 +141,8 @@
   "logoutLoading_text": "Logging out...",
   "post_title": "Post",
   "postSearch_hintText": "Search",
+  "postSearch_startEllipsis": "...",
+  "postSearch_endEllipsis": "...",
   "postOptions_openOnWeb": "Open on web",
   "postHeader_shareText": "{title}\n{url}",
   "@postHeader_shareText": {

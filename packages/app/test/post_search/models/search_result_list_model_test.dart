@@ -4,6 +4,7 @@ import 'package:app/post_search/post_search.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:text_parser/text_parser.dart';
 
 class _MockTextParser extends Mock implements TextParser {}
 

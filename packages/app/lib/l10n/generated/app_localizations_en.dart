@@ -298,6 +298,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postSearch_hintText => 'Search';
 
   @override
+  String get postSearch_startEllipsis => '...';
+
+  @override
+  String get postSearch_endEllipsis => '...';
+
+  @override
   String get postOptions_openOnWeb => 'Open on web';
 
   @override

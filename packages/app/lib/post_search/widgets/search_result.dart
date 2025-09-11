@@ -5,60 +5,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchResult extends StatelessWidget {
-  const SearchResult(this.item, {super.key});
-
-  final SearchResultModel item;
+  const SearchResult({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
-
     return InkWell(
       onTap: () {
+        final item = context.read<SearchResultModel>();
         context.read<PostSearchBloc>().add(
           PostSearchItemPressed(item),
         );
         GoRouter.of(context).pop();
       },
-      child: Column(
-        spacing: AppSpacing.sm,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            item.user,
-            style: textTheme.titleMedium,
-          ),
-          _ResultText(item),
-        ],
+      child: const Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: AppSpacing.md,
+          horizontal: AppSpacing.xlg,
+        ),
+        child: Column(
+          spacing: AppSpacing.xs,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _User(),
+            SearchResultText(),
+          ],
+        ),
       ),
     );
   }
 }
 
-class _ResultText extends StatelessWidget {
-  const _ResultText(this.item);
-
-  final SearchResultModel item;
+class _User extends StatelessWidget {
+  const _User();
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
-      textAlign: TextAlign.start,
-      TextSpan(
-        children: [
-          if (!item.snippet.match.isStartOfText) const TextSpan(text: '...'),
-          for (final (index, character) in item.snippet.characters.indexed)
-            TextSpan(
-              text: character,
-              style: TextStyle(
-                fontWeight: item.snippet.match.contains(index)
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
-            ),
-          if (!item.snippet.match.isEndOfText) const TextSpan(text: '...'),
-        ],
-      ),
+    final user = context.select(
+      (SearchResultModel item) => item.user,
+    );
+
+    final textTheme = TextTheme.of(context);
+
+    return Text(
+      user,
+      style: textTheme.titleSmall,
     );
   }
 }

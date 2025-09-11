@@ -13,6 +13,7 @@ class PostSearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: PostAppBar.heroTag,
+      // TODO(LukasMirbt): Figure out how to test this
       // Reprovide the Bloc for the Hero animation
       // since Hero context does not have access otherwise.
       child: BlocProvider.value(

@@ -34,17 +34,14 @@ class _PostSearchBarState extends State<PostSearchBar> {
     final textTheme = TextTheme.of(context);
     final l10n = AppLocalizations.of(context);
 
-    // TODO: Add clear button
+    // TODO(LukasMirbt): Add clear button
     return SearchBar(
       controller: _controller,
       autoFocus: true,
       hintText: l10n.postSearch_hintText,
-      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
       elevation: const WidgetStatePropertyAll(0),
+      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
       overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-      shape: const WidgetStatePropertyAll(
-        RoundedRectangleBorder(),
-      ),
       hintStyle: WidgetStatePropertyAll(
         textTheme.titleLarge?.copyWith(
           color: colorScheme.onSurfaceVariant,
