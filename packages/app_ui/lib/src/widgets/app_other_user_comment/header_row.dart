@@ -36,7 +36,7 @@ class _Row extends StatelessWidget {
     return InkWell(
       onTap: onHeaderPressed,
       child: const Padding(
-        padding: EdgeInsets.only(left: 6, right: 4),
+        padding: EdgeInsets.only(left: 7, right: 4),
         child: Row(
           children: [
             VoteButton(),
