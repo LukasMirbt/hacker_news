@@ -128,5 +128,27 @@ void main() {
         },
       );
     });
+
+    group(PostSearchCleared, () {
+      final search = () => repository.search('');
+
+      blocTest(
+        'emits updated state and calls search',
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            PostSearchCleared(),
+          );
+        },
+        expect: () => [
+          initialState.copyWith.resultList(
+            query: '',
+          ),
+        ],
+        verify: (_) {
+          verify(search).called(1);
+        },
+      );
+    });
   });
 }
