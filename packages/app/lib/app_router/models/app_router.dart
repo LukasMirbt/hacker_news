@@ -124,4 +124,8 @@ class AppRouter {
 
     shell.goBranch(index);
   }
+
+  void dispose() {
+    goRouter.dispose();
+  }
 }

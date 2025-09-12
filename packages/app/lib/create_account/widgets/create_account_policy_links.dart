@@ -4,8 +4,41 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateAccountPolicyLinks extends StatelessWidget {
+class CreateAccountPolicyLinks extends StatefulWidget {
   const CreateAccountPolicyLinks({super.key});
+
+  @override
+  State<CreateAccountPolicyLinks> createState() =>
+      _CreateAccountPolicyLinksState();
+}
+
+class _CreateAccountPolicyLinksState extends State<CreateAccountPolicyLinks> {
+  late final TapGestureRecognizer _termsTapRecognizer;
+  late final TapGestureRecognizer _privacyPolicyTapRecognizer;
+
+  @override
+  void initState() {
+    super.initState();
+    _termsTapRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        context.read<CreateAccountBloc>().add(
+          const CreateAccountTermsPressed(),
+        );
+      };
+    _privacyPolicyTapRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        context.read<CreateAccountBloc>().add(
+          const CreateAccountPrivacyPolicyPressed(),
+        );
+      };
+  }
+
+  @override
+  void dispose() {
+    _termsTapRecognizer.dispose();
+    _privacyPolicyTapRecognizer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +65,7 @@ class CreateAccountPolicyLinks extends StatelessWidget {
           TextSpan(
             text: l10n.createAccount_termsOfUse,
             style: underlinedStyle,
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.read<CreateAccountBloc>().add(
-                  const CreateAccountTermsPressed(),
-                );
-              },
+            recognizer: _termsTapRecognizer,
           ),
           TextSpan(
             text: l10n.createAccount_policyLinksPart3,
@@ -46,12 +74,7 @@ class CreateAccountPolicyLinks extends StatelessWidget {
           TextSpan(
             text: l10n.createAccount_privacyPolicy,
             style: underlinedStyle,
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.read<CreateAccountBloc>().add(
-                  const CreateAccountPrivacyPolicyPressed(),
-                );
-              },
+            recognizer: _privacyPolicyTapRecognizer,
           ),
         ],
       ),

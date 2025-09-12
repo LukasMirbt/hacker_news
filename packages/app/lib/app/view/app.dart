@@ -131,6 +131,7 @@ class App extends StatelessWidget {
                     .read<AuthenticationRepository>(),
               ),
             ),
+            dispose: (_, router) => router.dispose(),
             child: const AppView(),
           ),
         ),
