@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/comment_list/comment_list.dart';
@@ -71,6 +72,25 @@ void main() {
           CommentListModel.from(repositoryItems),
           CommentListModel(items: items),
         );
+      });
+    });
+
+    group('selectedIndex', () {
+      test('returns correct value when selectedComment '
+          'is non-null', () {
+        const index = 1;
+        final model = createSubject(
+          selectedComment: SelectedCommentModel(
+            id: '',
+            index: index,
+          ),
+        );
+        expect(model.selectedIndex, index);
+      });
+
+      test('returns null when selectedComment is null', () {
+        final model = createSubject();
+        expect(model.selectedIndex, null);
       });
     });
 
