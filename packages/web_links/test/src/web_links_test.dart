@@ -15,7 +15,7 @@ void main() {
         final links = createSubject();
         expect(
           links.searchUrl.toString(),
-          'https://hn.algolia.com/?dateRange=last24h',
+          'https://hn.algolia.com/?dateRange=pastMonth',
         );
       });
     });
