@@ -1,7 +1,7 @@
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post_search/post_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class PostSearchBar extends StatefulWidget {
   const PostSearchBar({super.key});
@@ -34,24 +34,29 @@ class _PostSearchBarState extends State<PostSearchBar> {
     final textTheme = TextTheme.of(context);
     final l10n = AppLocalizations.of(context);
 
-    // TODO(LukasMirbt): Add clear button
-    return SearchBar(
-      controller: _controller,
-      autoFocus: true,
-      hintText: l10n.postSearch_hintText,
-      elevation: const WidgetStatePropertyAll(0),
-      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
-      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-      hintStyle: WidgetStatePropertyAll(
-        textTheme.titleLarge?.copyWith(
-          color: colorScheme.onSurfaceVariant,
+    return ListenableProvider.value(
+      value: _controller,
+      child: SearchBar(
+        controller: _controller,
+        autoFocus: true,
+        hintText: l10n.postSearch_hintText,
+        elevation: const WidgetStatePropertyAll(0),
+        backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+        hintStyle: WidgetStatePropertyAll(
+          textTheme.titleLarge?.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
         ),
+        onChanged: (value) {
+          context.read<PostSearchBloc>().add(
+            PostSearchQueryChanged(value),
+          );
+        },
+        trailing: const [
+          PostSearchBarClearButton(),
+        ],
       ),
-      onChanged: (value) {
-        context.read<PostSearchBloc>().add(
-          PostSearchQueryChanged(value),
-        );
-      },
     );
   }
 }

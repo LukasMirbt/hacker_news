@@ -17,6 +17,7 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     );
     on<PostSearchQueryChanged>(_onQueryChanged);
     on<PostSearchItemPressed>(_onItemPressed);
+    on<PostSearchCleared>(_onCleared);
   }
 
   final PostRepository _repository;
@@ -55,5 +56,18 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     _repository.selectComment(
       event.result.toRepository(),
     );
+  }
+
+  void _onCleared(
+    PostSearchCleared event,
+    Emitter<PostSearchState> emit,
+  ) {
+    emit(
+      state.copyWith.resultList(
+        query: '',
+      ),
+    );
+
+    _repository.search('');
   }
 }

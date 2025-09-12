@@ -79,6 +79,17 @@ void main() async {
           ),
         ).called(1);
       });
+
+      testWidgets('has correct trailing', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.trailing,
+          [
+            isA<PostSearchBarClearButton>(),
+          ],
+        );
+      });
     });
   });
 }
