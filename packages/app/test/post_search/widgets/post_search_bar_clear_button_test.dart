@@ -60,6 +60,21 @@ void main() {
         final widget = findWidget(tester);
         expect(widget.opacity, 1);
       });
+
+      testWidgets('has correct duration', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.duration,
+          Duration(milliseconds: 100),
+        );
+      });
+
+      testWidgets('has correct curve', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.curve, Curves.easeOut);
+      });
     });
 
     group(IconButton, () {
