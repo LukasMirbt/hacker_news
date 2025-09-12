@@ -15,7 +15,7 @@ class WebLinks {
       host: 'hn.algolia.com',
       path: '/',
       queryParameters: {
-        'dateRange': 'last24h',
+        'dateRange': 'pastMonth',
       },
     );
   }
