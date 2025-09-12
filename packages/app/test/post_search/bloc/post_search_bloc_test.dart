@@ -6,10 +6,13 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 
 class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
+
+class _MockPostSearchRepository extends Mock implements PostSearchRepository {}
 
 class _MockPost extends Mock implements Post {}
 
@@ -17,31 +20,34 @@ class _MockSearchResultSnippet extends Mock implements SearchResultSnippet {}
 
 void main() {
   final comments = [OtherUserCommentPlaceholder()];
-  const searchQuery = 'searchQuery';
+  const query = 'searchQuery';
 
   final initialState = PostSearchState.initial(
     comments: comments,
-    query: searchQuery,
+    query: query,
   );
 
   group(PostSearchBloc, () {
-    late PostRepository repository;
-    late PostRepositoryState repositoryState;
+    late PostRepository postRepository;
+    late PostSearchRepository postSearchRepository;
+    late PostRepositoryState postRepositoryState;
     late Post post;
 
     setUp(() {
-      repository = _MockPostRepository();
-      repositoryState = _MockPostRepositoryState();
+      postRepository = _MockPostRepository();
+      postSearchRepository = _MockPostSearchRepository();
+      postRepositoryState = _MockPostRepositoryState();
       post = _MockPost();
-      when(() => repository.state).thenReturn(repositoryState);
-      when(() => repositoryState.post).thenReturn(post);
+      when(() => postRepository.state).thenReturn(postRepositoryState);
+      when(() => postRepositoryState.post).thenReturn(post);
       when(() => post.comments).thenReturn(comments);
-      when(() => repositoryState.searchQuery).thenReturn(searchQuery);
+      when(() => postSearchRepository.query).thenReturn(query);
     });
 
     PostSearchBloc buildBloc() {
       return PostSearchBloc(
-        postRepository: repository,
+        postRepository: postRepository,
+        postSearchRepository: postSearchRepository,
       );
     }
 
@@ -62,7 +68,7 @@ void main() {
       blocTest(
         'emits comments when stream emits new value',
         setUp: () {
-          when(() => repository.stream).thenAnswer(
+          when(() => postRepository.stream).thenAnswer(
             (_) => Stream.value(updatedRepositoryState),
           );
           when(() => updatedRepositoryState.post).thenReturn(updatedPost);
@@ -83,24 +89,27 @@ void main() {
     });
 
     group(PostSearchQueryChanged, () {
-      const query = 'query';
-      final search = () => repository.search(query);
+      const updatedQuery = 'updatedQuery';
+
+      final update = () => postSearchRepository.update(
+        query: updatedQuery,
+      );
 
       blocTest(
         'emits query and calls search',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            PostSearchQueryChanged(query),
+            PostSearchQueryChanged(updatedQuery),
           );
         },
         expect: () => [
           initialState.copyWith.resultList(
-            query: query,
+            query: updatedQuery,
           ),
         ],
         verify: (_) {
-          verify(search).called(1);
+          verify(update).called(1);
         },
       );
     });
@@ -113,7 +122,9 @@ void main() {
         snippet: _MockSearchResultSnippet(),
       );
 
-      final selectComment = () => repository.selectComment(comment);
+      final selectComment = () => postSearchRepository.select(
+        id: comment.id,
+      );
 
       blocTest(
         'calls selectComment',
@@ -130,10 +141,10 @@ void main() {
     });
 
     group(PostSearchCleared, () {
-      final search = () => repository.search('');
+      final clear = () => postSearchRepository.clear();
 
       blocTest(
-        'emits updated state and calls search',
+        'emits updated state and calls clear',
         build: buildBloc,
         act: (bloc) {
           bloc.add(
@@ -146,7 +157,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(search).called(1);
+          verify(clear).called(1);
         },
       );
     });

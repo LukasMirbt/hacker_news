@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
@@ -26,6 +25,9 @@ class _MockScrollController extends Mock implements ScrollController {}
 
 class _MockSelectedCommentModel extends Mock implements SelectedCommentModel {
   @override
+  int get index => 1;
+
+  @override
   double get alignment => 0.5;
 
   @override
@@ -42,13 +44,13 @@ void main() {
     late CommentListBloc bloc;
     late ScrollController scrollController;
     late ListController listController;
-    late SelectedCommentModel selectedCommentModel;
+    late SelectedCommentModel selectedComment;
 
     setUp(() {
       bloc = _MockCommentListBloc();
       scrollController = _MockScrollController();
       listController = _MockListController();
-      selectedCommentModel = _MockSelectedCommentModel();
+      selectedComment = _MockSelectedCommentModel();
     });
 
     Widget buildSubject() {
@@ -58,7 +60,6 @@ void main() {
           value: scrollController,
           child: SelectedCommentListener(
             listController: listController,
-            selectedCommentModel: selectedCommentModel,
             child: child,
           ),
         ),
@@ -74,15 +75,7 @@ void main() {
       final secondState = _MockCommentListState();
       final secondCommentList = _MockCommentListModel();
       when(() => secondState.commentList).thenReturn(secondCommentList);
-
-      when(() => secondCommentList.selectedComment).thenReturn(
-        SelectedComment(
-          OtherUserCommentPlaceholder(),
-        ),
-      );
-
-      const selectedIndex = 1;
-      when(() => secondCommentList.selectedIndex).thenReturn(selectedIndex);
+      when(() => secondCommentList.selectedComment).thenReturn(selectedComment);
 
       whenListen(
         bloc,
@@ -94,11 +87,11 @@ void main() {
 
       verify(
         () => listController.animateToItem(
-          index: selectedIndex,
+          index: selectedComment.index,
           scrollController: scrollController,
-          alignment: selectedCommentModel.alignment,
-          duration: selectedCommentModel.duration,
-          curve: selectedCommentModel.curve,
+          alignment: selectedComment.alignment,
+          duration: selectedComment.duration,
+          curve: selectedComment.curve,
         ),
       ).called(1);
     });

@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
@@ -72,6 +73,17 @@ void main() {
         );
         expect(
           context.read<PostRepository>(),
+          isNotNull,
+        );
+      });
+
+      testWidgets('provides $PostSearchRepository', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final context = tester.element(
+          find.byWidget(navigator),
+        );
+        expect(
+          context.read<PostSearchRepository>(),
           isNotNull,
         );
       });

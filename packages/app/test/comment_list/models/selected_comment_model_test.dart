@@ -6,7 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group(SelectedCommentModel, () {
-    SelectedCommentModel createSubject() => SelectedCommentModel();
+    SelectedCommentModel createSubject() {
+      return SelectedCommentModel(
+        id: 'id',
+        index: 1,
+      );
+    }
 
     group('alignment', () {
       test('returns correct value', () {
@@ -49,6 +54,12 @@ void main() {
         final model = createSubject();
         expect(model.duration(500), Duration(milliseconds: 400));
       });
+    });
+
+    test('is not equatable', () {
+      final first = createSubject();
+      final second = createSubject();
+      expect(first == second, false);
     });
   });
 }

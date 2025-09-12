@@ -58,7 +58,6 @@ class CommentListModel with _$CommentListModel {
     required CommentModel newItem,
   }) {
     final index = items.indexOf(afterItem);
-    if (index == -1) return this;
     final updatedItems = [...items]..insert(index + 1, newItem);
     return copyWith(items: updatedItems);
   }
@@ -80,13 +79,10 @@ class CommentListModel with _$CommentListModel {
     required CommentModel comment,
   }) {
     final index = items.indexOf(comment);
-    if (index == -1) return this;
-
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
       index: index,
     );
-
     return copyWith(items: updatedItems);
   }
 
