@@ -239,9 +239,9 @@ void main() {
       expect(context.read<VoteFailureBloc>(), isNotNull);
     });
 
-    /*     testWidgets('renders $AppView', (tester) async {
+    testWidgets('renders $AppView', (tester) async {
       await tester.pumpWidget(buildSubject());
       expect(find.byType(AppView), findsOneWidget);
-    }); */
+    });
   });
 }
