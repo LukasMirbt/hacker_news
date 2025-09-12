@@ -410,41 +410,5 @@ void main() {
         verify(add).called(1);
       });
     });
-
-    group('selectComment', () {
-      final comment = OtherUserCommentPlaceholder();
-
-      blocTest(
-        'emits $SelectedComment',
-        build: buildCubit,
-        act: (cubit) => cubit.selectComment(comment),
-        expect: () => [
-          isA<PostRepositoryState>().having(
-            (state) => state.selectedComment,
-            'selectedComment',
-            isA<SelectedComment>().having(
-              (selectedComment) => selectedComment.comment,
-              'comment',
-              comment,
-            ),
-          ),
-        ],
-      );
-    });
-
-    group('search', () {
-      const query = 'query';
-
-      blocTest(
-        'emits searchQuery',
-        build: buildCubit,
-        act: (cubit) => cubit.search(query),
-        expect: () => [
-          initialState.copyWith(
-            searchQuery: query,
-          ),
-        ],
-      );
-    });
   });
 }

@@ -49,7 +49,7 @@ $Res call({
 });
 
 
-
+$CommentListModelCopyWith<$Res> get commentList;
 
 }
 /// @nodoc
@@ -69,7 +69,16 @@ as String,commentList: null == commentList ? _self.commentList : commentList // 
 as CommentListModel,
   ));
 }
-
+/// Create a copy of CommentListState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CommentListModelCopyWith<$Res> get commentList {
+  
+  return $CommentListModelCopyWith<$Res>(_self.commentList, (value) {
+    return _then(_self.copyWith(commentList: value));
+  });
+}
 }
 
 
@@ -247,7 +256,7 @@ $Res call({
 });
 
 
-
+@override $CommentListModelCopyWith<$Res> get commentList;
 
 }
 /// @nodoc
@@ -268,7 +277,16 @@ as CommentListModel,
   ));
 }
 
-
+/// Create a copy of CommentListState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$CommentListModelCopyWith<$Res> get commentList {
+  
+  return $CommentListModelCopyWith<$Res>(_self.commentList, (value) {
+    return _then(_self.copyWith(commentList: value));
+  });
+}
 }
 
 // dart format on

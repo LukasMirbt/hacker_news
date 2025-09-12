@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -58,6 +59,7 @@ class PostPage extends StatelessWidget {
                   postRepository: context.read<PostRepository>(),
                   voteRepository: context.read<VoteRepository>(),
                   replyRepository: context.read<ReplyRepository>(),
+                  postSearchRepository: context.read<PostSearchRepository>(),
                   linkLauncher: context.read<LinkLauncher>(),
                 )
                 ..add(
@@ -68,6 +70,9 @@ class PostPage extends StatelessWidget {
                 )
                 ..add(
                   const CommentListReplySubscriptionRequested(),
+                )
+                ..add(
+                  const CommentListSelectedCommentSubscriptionRequested(),
                 ),
         ),
       ],

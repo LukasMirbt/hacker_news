@@ -73,6 +73,8 @@ dependencies:
     path: ../post_parser
   post_repository:
     path: ../post_repository
+  post_search_repository:
+    path: ../post_search_repository
   provider: ^6.1.2
   redirect_validator:
     path: ../redirect_validator

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostRepositoryState {
 
- Post get post; FetchStatus get fetchStatus; RefreshStatus get refreshStatus; String get searchQuery; SelectedComment? get selectedComment;
+ Post get post; FetchStatus get fetchStatus; RefreshStatus get refreshStatus;
 /// Create a copy of PostRepositoryState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostRepositoryStateCopyWith<PostRepositoryState> get copyWith => _$PostReposito
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostRepositoryState&&(identical(other.post, post) || other.post == post)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostRepositoryState&&(identical(other.post, post) || other.post == post)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,post,fetchStatus,refreshStatus,searchQuery,selectedComment);
+int get hashCode => Object.hash(runtimeType,post,fetchStatus,refreshStatus);
 
 @override
 String toString() {
-  return 'PostRepositoryState(post: $post, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, searchQuery: $searchQuery, selectedComment: $selectedComment)';
+  return 'PostRepositoryState(post: $post, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostRepositoryStateCopyWith<$Res>  {
   factory $PostRepositoryStateCopyWith(PostRepositoryState value, $Res Function(PostRepositoryState) _then) = _$PostRepositoryStateCopyWithImpl;
 @useResult
 $Res call({
- Post post, FetchStatus fetchStatus, RefreshStatus refreshStatus, String searchQuery, SelectedComment? selectedComment
+ Post post, FetchStatus fetchStatus, RefreshStatus refreshStatus
 });
 
 
@@ -62,14 +62,12 @@ class _$PostRepositoryStateCopyWithImpl<$Res>
 
 /// Create a copy of PostRepositoryState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? post = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? searchQuery = null,Object? selectedComment = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? post = null,Object? fetchStatus = null,Object? refreshStatus = null,}) {
   return _then(_self.copyWith(
 post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
 as Post,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
-as RefreshStatus,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as SelectedComment?,
+as RefreshStatus,
   ));
 }
 /// Create a copy of PostRepositoryState
@@ -163,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  String searchQuery,  SelectedComment? selectedComment)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostRepositoryState() when $default != null:
-return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQuery,_that.selectedComment);case _:
+return $default(_that.post,_that.fetchStatus,_that.refreshStatus);case _:
   return orElse();
 
 }
@@ -184,10 +182,10 @@ return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQue
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  String searchQuery,  SelectedComment? selectedComment)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)  $default,) {final _that = this;
 switch (_that) {
 case _PostRepositoryState():
-return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQuery,_that.selectedComment);case _:
+return $default(_that.post,_that.fetchStatus,_that.refreshStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +202,10 @@ return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQue
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  String searchQuery,  SelectedComment? selectedComment)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Post post,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _PostRepositoryState() when $default != null:
-return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQuery,_that.selectedComment);case _:
+return $default(_that.post,_that.fetchStatus,_that.refreshStatus);case _:
   return null;
 
 }
@@ -219,14 +217,12 @@ return $default(_that.post,_that.fetchStatus,_that.refreshStatus,_that.searchQue
 
 
 class _PostRepositoryState implements PostRepositoryState {
-  const _PostRepositoryState({required this.post, this.fetchStatus = FetchStatus.loading, this.refreshStatus = RefreshStatus.initial, this.searchQuery = '', this.selectedComment});
+  const _PostRepositoryState({required this.post, this.fetchStatus = FetchStatus.loading, this.refreshStatus = RefreshStatus.initial});
   
 
 @override final  Post post;
 @override@JsonKey() final  FetchStatus fetchStatus;
 @override@JsonKey() final  RefreshStatus refreshStatus;
-@override@JsonKey() final  String searchQuery;
-@override final  SelectedComment? selectedComment;
 
 /// Create a copy of PostRepositoryState
 /// with the given fields replaced by the non-null parameter values.
@@ -238,16 +234,16 @@ _$PostRepositoryStateCopyWith<_PostRepositoryState> get copyWith => __$PostRepos
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostRepositoryState&&(identical(other.post, post) || other.post == post)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.searchQuery, searchQuery) || other.searchQuery == searchQuery)&&(identical(other.selectedComment, selectedComment) || other.selectedComment == selectedComment));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostRepositoryState&&(identical(other.post, post) || other.post == post)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,post,fetchStatus,refreshStatus,searchQuery,selectedComment);
+int get hashCode => Object.hash(runtimeType,post,fetchStatus,refreshStatus);
 
 @override
 String toString() {
-  return 'PostRepositoryState(post: $post, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, searchQuery: $searchQuery, selectedComment: $selectedComment)';
+  return 'PostRepositoryState(post: $post, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus)';
 }
 
 
@@ -258,7 +254,7 @@ abstract mixin class _$PostRepositoryStateCopyWith<$Res> implements $PostReposit
   factory _$PostRepositoryStateCopyWith(_PostRepositoryState value, $Res Function(_PostRepositoryState) _then) = __$PostRepositoryStateCopyWithImpl;
 @override @useResult
 $Res call({
- Post post, FetchStatus fetchStatus, RefreshStatus refreshStatus, String searchQuery, SelectedComment? selectedComment
+ Post post, FetchStatus fetchStatus, RefreshStatus refreshStatus
 });
 
 
@@ -275,14 +271,12 @@ class __$PostRepositoryStateCopyWithImpl<$Res>
 
 /// Create a copy of PostRepositoryState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? post = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? searchQuery = null,Object? selectedComment = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? post = null,Object? fetchStatus = null,Object? refreshStatus = null,}) {
   return _then(_PostRepositoryState(
 post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
 as Post,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
-as RefreshStatus,searchQuery: null == searchQuery ? _self.searchQuery : searchQuery // ignore: cast_nullable_to_non_nullable
-as String,selectedComment: freezed == selectedComment ? _self.selectedComment : selectedComment // ignore: cast_nullable_to_non_nullable
-as SelectedComment?,
+as RefreshStatus,
   ));
 }
 
