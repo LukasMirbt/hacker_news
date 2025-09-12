@@ -1,7 +1,13 @@
 import 'package:flutter/widgets.dart';
 
 class SelectedCommentModel {
-  const SelectedCommentModel();
+  const SelectedCommentModel({
+    required this.id,
+    required this.index,
+  });
+
+  final String id;
+  final int index;
 
   double get alignment => 0;
 

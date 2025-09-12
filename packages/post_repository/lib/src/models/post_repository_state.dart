@@ -28,8 +28,6 @@ abstract class PostRepositoryState with _$PostRepositoryState {
     required Post post,
     @Default(FetchStatus.loading) FetchStatus fetchStatus,
     @Default(RefreshStatus.initial) RefreshStatus refreshStatus,
-    @Default('') String searchQuery,
-    SelectedComment? selectedComment,
   }) = _PostRepositoryState;
 
   factory PostRepositoryState.initial() {

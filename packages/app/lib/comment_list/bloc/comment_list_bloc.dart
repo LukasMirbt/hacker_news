@@ -2,6 +2,7 @@ import 'package:app/comment_list/comment_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -11,12 +12,14 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     required PostRepository postRepository,
     required VoteRepository voteRepository,
     required ReplyRepository replyRepository,
+    required PostSearchRepository postSearchRepository,
     required LinkLauncher linkLauncher,
     CommentListVoteModel? voteModel,
     CommentListReplyModel? replyModel,
   }) : _postRepository = postRepository,
        _voteRepository = voteRepository,
        _replyRepository = replyRepository,
+       _postSearchRepository = postSearchRepository,
        _linkLauncher = linkLauncher,
        _voteModel = voteModel ?? const CommentListVoteModel(),
        _replyModel = replyModel ?? const CommentListReplyModel(),
@@ -32,6 +35,9 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
     on<CommentListReplySubscriptionRequested>(
       _onReplySubscriptionRequested,
     );
+    on<CommentListSelectedCommentSubscriptionRequested>(
+      _onSelectedCommentSubscriptionRequested,
+    );
     on<CommentListExpansionToggled>(_onExpansionToggled);
     on<CommentListLinkPressed>(_onLinkPressed);
     on<CommentListVotePressed>(_onVotePressed);
@@ -40,6 +46,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   final PostRepository _postRepository;
   final VoteRepository _voteRepository;
   final ReplyRepository _replyRepository;
+  final PostSearchRepository _postSearchRepository;
   final CommentListVoteModel _voteModel;
   final CommentListReplyModel _replyModel;
   final LinkLauncher _linkLauncher;
@@ -52,9 +59,8 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
       _postRepository.stream,
       onData: (repositoryState) {
         return state.copyWith(
-          commentList: state.commentList.updateWith(
+          commentList: state.commentList.rebuildWith(
             comments: repositoryState.post.comments,
-            selectedComment: repositoryState.selectedComment,
           ),
         );
       },
@@ -64,7 +70,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   Future<void> _onVoteSubscriptionRequested(
     CommentListVoteSubscriptionRequested event,
     Emitter<CommentListState> emit,
-  ) async {
+  ) {
     return emit.onEach(
       _voteRepository.stream,
       onData: (repositoryState) {
@@ -85,7 +91,7 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
   Future<void> _onReplySubscriptionRequested(
     CommentListReplySubscriptionRequested event,
     Emitter<CommentListState> emit,
-  ) async {
+  ) {
     return emit.onEach(
       _replyRepository.stream,
       onData: (reply) {
@@ -95,6 +101,22 @@ class CommentListBloc extends Bloc<CommentListEvent, CommentListState> {
               reply: reply,
               commentList: state.commentList,
             ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onSelectedCommentSubscriptionRequested(
+    CommentListSelectedCommentSubscriptionRequested event,
+    Emitter<CommentListState> emit,
+  ) {
+    return emit.forEach(
+      _postSearchRepository.selectedComment,
+      onData: (comment) {
+        return state.copyWith(
+          commentList: state.commentList.updateSelection(
+            comment: comment,
           ),
         );
       },

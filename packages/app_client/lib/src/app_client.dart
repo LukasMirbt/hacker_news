@@ -92,6 +92,11 @@ class AppClient extends Cubit<AuthenticationState> {
     });
   }
 
+  final CookieJar _cookieJar;
+  final SecureUserIdStorage _userIdStorage;
+  final AuthenticationStatusService _authenticationStatusService;
+  final Dio http;
+
   Future<void> start() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);
 
@@ -116,11 +121,6 @@ class AppClient extends Cubit<AuthenticationState> {
       );
     }
   }
-
-  final CookieJar _cookieJar;
-  final SecureUserIdStorage _userIdStorage;
-  final AuthenticationStatusService _authenticationStatusService;
-  final Dio http;
 
   Future<List<Cookie>> cookies() async {
     final cookies = await _cookieJar.loadForRequest(state.baseUrl);

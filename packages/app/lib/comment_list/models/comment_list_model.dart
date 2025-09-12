@@ -1,35 +1,25 @@
+// ignore_for_file: annotate_overrides
+
 import 'package:app/comment_list/comment_list.dart' hide Comment;
 import 'package:collapse_handler/collapse_handler.dart';
 import 'package:collection/collection.dart';
-import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 
-class CommentListModel extends Equatable {
+part 'comment_list_model.freezed.dart';
+
+@freezed
+class CommentListModel with _$CommentListModel {
   CommentListModel({
     required this.items,
     this.selectedComment,
     CollapseHandler<CommentModel>? collapseHandler,
-  }) : _collapseHandler = collapseHandler ?? const CollapseHandler() {
-    final visibleItems = <CommentModel>[];
-
-    final selectedComment = this.selectedComment;
-
-    int? selectedIndex;
-
-    for (final item in items) {
-      if (item.isParentExpanded) {
-        if (selectedComment != null && item.id == selectedComment.comment.id) {
-          selectedIndex = visibleItems.length;
-        }
-
-        visibleItems.add(item);
-      }
-    }
-
-    this.visibleItems = visibleItems;
-    this.selectedIndex = selectedIndex;
-  }
+  }) : _collapseHandler = collapseHandler ?? const CollapseHandler(),
+       visibleItems = [
+         for (final item in items)
+           if (item.isParentExpanded) item,
+       ];
 
   factory CommentListModel.from(List<Comment> items) {
     return CommentListModel(
@@ -44,10 +34,10 @@ class CommentListModel extends Equatable {
   @visibleForTesting
   final List<CommentModel> items;
 
-  late final List<CommentModel> visibleItems;
+  final List<CommentModel> visibleItems;
+  final SelectedCommentModel? selectedComment;
 
-  final SelectedComment? selectedComment;
-  late final int? selectedIndex;
+  int? get selectedIndex => selectedComment?.index;
 
   CommentModel? findById(String id) {
     return items.firstWhereOrNull(
@@ -60,7 +50,7 @@ class CommentListModel extends Equatable {
       for (final item in items)
         if (item.id == updatedItem.id) updatedItem else item,
     ];
-    return CommentListModel(items: updatedList);
+    return copyWith(items: updatedList);
   }
 
   CommentListModel insertAfter({
@@ -68,58 +58,59 @@ class CommentListModel extends Equatable {
     required CommentModel newItem,
   }) {
     final index = items.indexOf(afterItem);
-    if (index == -1) return this;
     final updatedItems = [...items]..insert(index + 1, newItem);
-    return CommentListModel(items: updatedItems);
+    return copyWith(items: updatedItems);
   }
 
-  CommentListModel updateWith({
+  CommentListModel rebuildWith({
     required List<Comment> comments,
-    required SelectedComment? selectedComment,
   }) {
-    var updatedItems = _collapseHandler.rebuildWith(
+    final updatedItems = _collapseHandler.rebuildWith(
       oldItems: items,
       newItems: [
         for (final comment in comments) CommentModel.from(comment),
       ],
     );
 
-    if (selectedComment != null) {
-      final selectedIndex = updatedItems.indexWhere(
-        (item) => item.id == selectedComment.comment.id,
-      );
-
-      updatedItems = _collapseHandler.ensureVisible(
-        items: updatedItems,
-        index: selectedIndex,
-      );
-    }
-
-    return CommentListModel(
-      items: updatedItems,
-      selectedComment: selectedComment,
-    );
+    return copyWith(items: updatedItems);
   }
 
   CommentListModel toggleExpansion({
     required CommentModel comment,
   }) {
     final index = items.indexOf(comment);
-    if (index == -1) return this;
-
     final updatedItems = _collapseHandler.toggleExpansion(
       items: items,
       index: index,
     );
-
-    return CommentListModel(items: updatedItems);
+    return copyWith(items: updatedItems);
   }
 
-  @override
-  List<Object?> get props => [
-    items,
-    selectedComment,
-    visibleItems,
-    _collapseHandler,
-  ];
+  CommentListModel updateSelection({
+    required SelectedComment? comment,
+  }) {
+    SelectedCommentModel? selectedComment;
+    var updatedItems = items;
+
+    if (comment != null) {
+      final index = items.indexWhere(
+        (item) => item.id == comment.id,
+      );
+
+      updatedItems = _collapseHandler.ensureVisible(
+        items: items,
+        index: index,
+      );
+
+      selectedComment = SelectedCommentModel(
+        id: comment.id,
+        index: index,
+      );
+    }
+
+    return copyWith(
+      selectedComment: selectedComment,
+      items: updatedItems,
+    );
+  }
 }

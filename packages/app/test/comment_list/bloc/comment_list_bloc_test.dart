@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 import 'package:reply_repository/reply_repository.dart';
 import 'package:vote_repository/vote_repository.dart';
 
@@ -18,6 +19,8 @@ class _MockVoteRepository extends Mock implements VoteRepository {}
 
 class _MockReplyRepository extends Mock implements ReplyRepository {}
 
+class _MockPostSearchRepository extends Mock implements PostSearchRepository {}
+
 class _MockCommentListVoteModel extends Mock implements CommentListVoteModel {}
 
 class _MockCommentListReplyModel extends Mock
@@ -26,6 +29,8 @@ class _MockCommentListReplyModel extends Mock
 class _MockLinkLauncher extends Mock implements LinkLauncher {}
 
 class _MockCommentListModel extends Mock implements CommentListModel {}
+
+class _MockSelectedComment extends Mock implements SelectedComment {}
 
 void main() {
   const id = 'id';
@@ -39,6 +44,7 @@ void main() {
     late PostRepository postRepository;
     late VoteRepository voteRepository;
     late ReplyRepository replyRepository;
+    late PostSearchRepository postSearchRepository;
     late CommentListVoteModel voteModel;
     late CommentListReplyModel replyModel;
     late LinkLauncher linkLauncher;
@@ -47,6 +53,7 @@ void main() {
       postRepository = _MockPostRepository();
       voteRepository = _MockVoteRepository();
       replyRepository = _MockReplyRepository();
+      postSearchRepository = _MockPostSearchRepository();
       voteModel = _MockCommentListVoteModel();
       replyModel = _MockCommentListReplyModel();
       linkLauncher = _MockLinkLauncher();
@@ -58,6 +65,7 @@ void main() {
         postRepository: postRepository,
         voteRepository: voteRepository,
         replyRepository: replyRepository,
+        postSearchRepository: postSearchRepository,
         voteModel: voteModel,
         replyModel: replyModel,
         linkLauncher: linkLauncher,
@@ -80,28 +88,20 @@ void main() {
         ],
       );
 
-      final updatedSelectedComment = SelectedComment(
-        OtherUserCommentPlaceholder(),
-      );
-
       final updatedCommentList = _MockCommentListModel();
 
-      final updateWith = () => commentList.updateWith(
+      final rebuildWith = () => commentList.rebuildWith(
         comments: updatedPost.comments,
-        selectedComment: updatedSelectedComment,
       );
 
       blocTest<CommentListBloc, CommentListState>(
-        'emits $CommentListModel when stream emits new value',
+        'emits updated commentList when stream emits new value',
         setUp: () {
           when(() => postRepository.stream).thenAnswer(
             (_) => Stream.value(updatedRepositoryState),
           );
           when(() => updatedRepositoryState.post).thenReturn(updatedPost);
-          when(() => updatedRepositoryState.selectedComment).thenReturn(
-            updatedSelectedComment,
-          );
-          when(updateWith).thenReturn(updatedCommentList);
+          when(rebuildWith).thenReturn(updatedCommentList);
         },
         seed: () => state,
         build: buildBloc,
@@ -116,7 +116,7 @@ void main() {
           ),
         ],
         verify: (_) {
-          verify(updateWith).called(1);
+          verify(rebuildWith).called(1);
         },
       );
     });
@@ -199,6 +199,45 @@ void main() {
         ],
         verify: (_) {
           verify(updateCommentList).called(1);
+        },
+      );
+    });
+
+    group(CommentListSelectedCommentSubscriptionRequested, () {
+      final commentList = _MockCommentListModel();
+      final state = initialState.copyWith(commentList: commentList);
+
+      final updatedSelectedComment = _MockSelectedComment();
+
+      final updatedCommentList = _MockCommentListModel();
+
+      final updateSelection = () => commentList.updateSelection(
+        comment: updatedSelectedComment,
+      );
+
+      blocTest(
+        'emits updated commentList when repository '
+        'emits new $SelectedComment',
+        setUp: () {
+          when(() => postSearchRepository.selectedComment).thenAnswer(
+            (_) => Stream.value(updatedSelectedComment),
+          );
+          when(updateSelection).thenReturn(updatedCommentList);
+        },
+        seed: () => state,
+        build: buildBloc,
+        act: (bloc) {
+          bloc.add(
+            CommentListSelectedCommentSubscriptionRequested(),
+          );
+        },
+        expect: () => [
+          state.copyWith(
+            commentList: updatedCommentList,
+          ),
+        ],
+        verify: (_) {
+          verify(updateSelection).called(1);
         },
       );
     });

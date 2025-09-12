@@ -29,6 +29,7 @@ workspace:
   - packages/post_api
   - packages/post_parser
   - packages/post_repository
+  - packages/post_search_repository
   - packages/redirect_validator
   - packages/reply_api
   - packages/reply_parser

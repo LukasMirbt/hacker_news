@@ -7,13 +7,11 @@ class SelectedCommentListener extends StatelessWidget {
   const SelectedCommentListener({
     required this.listController,
     required this.child,
-    this.selectedCommentModel = const SelectedCommentModel(),
     super.key,
   });
 
   final ListController listController;
   final Widget child;
-  final SelectedCommentModel selectedCommentModel;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +20,15 @@ class SelectedCommentListener extends StatelessWidget {
           previous.commentList.selectedComment !=
           current.commentList.selectedComment,
       listener: (context, state) {
-        final selectedIndex = state.commentList.selectedIndex;
-        if (selectedIndex == null) return;
+        final selectedComment = state.commentList.selectedComment;
+        if (selectedComment == null) return;
 
         listController.animateToItem(
-          index: selectedIndex,
+          index: selectedComment.index,
           scrollController: context.read<ScrollController>(),
-          alignment: selectedCommentModel.alignment,
-          curve: selectedCommentModel.curve,
-          duration: selectedCommentModel.duration,
+          alignment: selectedComment.alignment,
+          curve: selectedComment.curve,
+          duration: selectedComment.duration,
         );
       },
       child: child,

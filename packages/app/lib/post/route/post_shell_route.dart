@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 import 'package:visited_post_storage/visited_post_storage.dart';
 
 class PostShellRoute extends ShellRouteData {
@@ -25,13 +26,22 @@ class PostShellRoute extends ShellRouteData {
     GoRouterState state,
     Widget navigator,
   ) {
-    return RepositoryProvider(
-      create: (context) => PostRepository(
-        postApi: context.read<PostApi>(),
-        authenticationApi: context.read<AuthenticationApi>(),
-        draftStorage: context.read<DraftStorage>(),
-        visitedPostStorage: context.read<VisitedPostStorage>(),
-      ),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => PostRepository(
+            postApi: context.read<PostApi>(),
+            authenticationApi: context.read<AuthenticationApi>(),
+            draftStorage: context.read<DraftStorage>(),
+            visitedPostStorage: context.read<VisitedPostStorage>(),
+          ),
+          dispose: (repository) => repository.close(),
+        ),
+        RepositoryProvider(
+          create: (_) => PostSearchRepository(),
+          dispose: (repository) => repository.dispose(),
+        ),
+      ],
       child: navigator,
     );
   }

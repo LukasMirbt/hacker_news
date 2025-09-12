@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 
 import '../app_shell/pump_app_shell.dart';
 
@@ -25,6 +26,14 @@ class _MockPostRepository extends Mock implements PostRepository {
   Set<String> readVisitedPosts() => {};
 }
 
+class _MockPostSearchRepository extends Mock implements PostSearchRepository {
+  @override
+  Stream<SelectedComment> get selectedComment => Stream.empty();
+
+  @override
+  String get query => '';
+}
+
 extension PumpPostExtension on WidgetTester {
   Future<void> pumpPost(Widget widgetUnderTest) async {
     return pumpAppShell(
@@ -32,6 +41,9 @@ extension PumpPostExtension on WidgetTester {
         providers: [
           RepositoryProvider<PostRepository>(
             create: (_) => _MockPostRepository(),
+          ),
+          RepositoryProvider<PostSearchRepository>(
+            create: (_) => _MockPostSearchRepository(),
           ),
         ],
         child: widgetUnderTest,

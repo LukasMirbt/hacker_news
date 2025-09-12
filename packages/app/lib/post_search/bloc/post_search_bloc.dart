@@ -1,15 +1,18 @@
 import 'package:app/post_search/post_search.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:post_repository/post_repository.dart';
+import 'package:post_search_repository/post_search_repository.dart';
 
 class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
   PostSearchBloc({
     required PostRepository postRepository,
-  }) : _repository = postRepository,
+    required PostSearchRepository postSearchRepository,
+  }) : _postRepository = postRepository,
+       _postSearchRepository = postSearchRepository,
        super(
          PostSearchState.initial(
            comments: postRepository.state.post.comments,
-           query: postRepository.state.searchQuery,
+           query: postSearchRepository.query,
          ),
        ) {
     on<PostSearchCommentListSubscriptionRequested>(
@@ -20,14 +23,15 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     on<PostSearchCleared>(_onCleared);
   }
 
-  final PostRepository _repository;
+  final PostRepository _postRepository;
+  final PostSearchRepository _postSearchRepository;
 
   Future<void> _onCommentListSubscriptionRequested(
     PostSearchCommentListSubscriptionRequested event,
     Emitter<PostSearchState> emit,
   ) {
     return emit.forEach(
-      _repository.stream,
+      _postRepository.stream,
       onData: (repositoryState) {
         return state.copyWith.resultList(
           comments: repositoryState.post.comments,
@@ -40,22 +44,25 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
     PostSearchQueryChanged event,
     Emitter<PostSearchState> emit,
   ) {
+    final query = event.query;
+
     emit(
       state.copyWith.resultList(
-        query: event.query,
+        query: query,
       ),
     );
 
-    _repository.search(event.query);
+    _postSearchRepository.update(
+      query: query,
+    );
   }
 
   void _onItemPressed(
     PostSearchItemPressed event,
     Emitter<PostSearchState> emit,
   ) {
-    _repository.selectComment(
-      event.result.toRepository(),
-    );
+    final id = event.result.id;
+    _postSearchRepository.select(id: id);
   }
 
   void _onCleared(
@@ -68,6 +75,6 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
       ),
     );
 
-    _repository.search('');
+    _postSearchRepository.clear();
   }
 }
