@@ -1,55 +1,62 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:post_search_repository/post_search_repository.dart';
 
 void main() {
-  final initialState = PostSearchRepositoryState();
-
   group(PostSearchRepository, () {
-    PostSearchRepository buildCubit() {
+    PostSearchRepository createSubject() {
       return PostSearchRepository();
     }
 
-    test('initial state is $PostSearchRepositoryState', () {
-      expect(buildCubit().state, initialState);
-    });
-
-    group('selectComment', () {
+    group('select', () {
       const id = 'id';
 
-      blocTest(
-        'emits $SelectedComment',
-        build: buildCubit,
-        act: (cubit) => cubit.selectComment(id: id),
-        expect: () => [
-          isA<PostSearchRepositoryState>().having(
-            (state) => state.selectedComment,
-            'selectedComment',
+      test('emits $SelectedComment', () {
+        final repository = createSubject();
+        expectLater(
+          repository.selectedComment,
+          emits(
             isA<SelectedComment>().having(
-              (selectedComment) => selectedComment.id,
+              (comment) => comment.id,
               'id',
               id,
             ),
           ),
-        ],
-      );
+        );
+        repository.select(id: id);
+      });
     });
 
-    group('search', () {
+    group('update', () {
       const query = 'query';
 
-      blocTest(
-        'emits query',
-        build: buildCubit,
-        act: (cubit) => cubit.search(query),
-        expect: () => [
-          initialState.copyWith(
-            query: query,
-          ),
-        ],
-      );
+      test('updates query', () {
+        final repository = createSubject();
+        expect(repository.query, '');
+        repository.update(query: query);
+        expect(repository.query, query);
+      });
+    });
+
+    group('clear', () {
+      test('resets query to empty string', () {
+        final repository = createSubject();
+        expect(repository.query, '');
+        repository.update(query: 'query');
+        expect(repository.query, 'query');
+        repository.clear();
+        expect(repository.query, '');
+      });
+    });
+
+    group('dispose', () {
+      test('closes controller', () {
+        final repository = createSubject();
+        expectLater(
+          repository.selectedComment,
+          emitsDone,
+        );
+        repository.dispose();
+      });
     });
   });
 }
