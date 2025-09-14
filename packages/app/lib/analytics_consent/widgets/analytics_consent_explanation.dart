@@ -4,8 +4,34 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AnalyticsConsentExplanation extends StatelessWidget {
+class AnalyticsConsentExplanation extends StatefulWidget {
   const AnalyticsConsentExplanation({super.key});
+
+  @override
+  State<AnalyticsConsentExplanation> createState() =>
+      _AnalyticsConsentExplanationState();
+}
+
+class _AnalyticsConsentExplanationState
+    extends State<AnalyticsConsentExplanation> {
+  late final TapGestureRecognizer _privacyPolicyTapRecognizer;
+
+  @override
+  void initState() {
+    super.initState();
+    _privacyPolicyTapRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        context.read<AnalyticsConsentBloc>().add(
+          const AnalyticsConsentPrivacyPolicyPressed(),
+        );
+      };
+  }
+
+  @override
+  void dispose() {
+    _privacyPolicyTapRecognizer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +61,7 @@ class AnalyticsConsentExplanation extends StatelessWidget {
           TextSpan(
             text: l10n.analyticsConsent_privacyPolicy,
             style: underlinedStyle,
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.read<AnalyticsConsentBloc>().add(
-                  const AnalyticsConsentPrivacyPolicyPressed(),
-                );
-              },
+            recognizer: _privacyPolicyTapRecognizer,
           ),
           TextSpan(
             text: l10n.analyticsConsent_explanationPart4,
