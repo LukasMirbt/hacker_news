@@ -22,7 +22,7 @@ class PostHeaderBody extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: AppSpacing.xlg,
+              horizontal: AppSpacing.lg,
             ),
             child: PostHeaderContentRow(),
           ),

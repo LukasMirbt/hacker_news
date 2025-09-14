@@ -50,8 +50,8 @@ class _Icon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const AppIcon(
-      Symbols.chat_add_on_rounded,
-      size: 18,
+      Symbols.mode_comment_rounded,
+      size: 16,
     );
   }
 }

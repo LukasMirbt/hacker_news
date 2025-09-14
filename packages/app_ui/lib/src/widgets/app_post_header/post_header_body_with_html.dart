@@ -26,7 +26,7 @@ class PostHeaderBodyWithHtml extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.xlg,
+              horizontal: AppSpacing.lg,
             ),
             child: _Content(htmlText: htmlText),
           ),

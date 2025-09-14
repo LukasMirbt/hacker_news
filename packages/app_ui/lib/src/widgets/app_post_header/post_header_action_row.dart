@@ -39,8 +39,8 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.only(
-        left: AppSpacing.md,
-        right: AppSpacing.lg,
+        left: AppSpacing.xs,
+        right: AppSpacing.xs,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
