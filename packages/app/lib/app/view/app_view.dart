@@ -25,6 +25,7 @@ class AppView extends StatelessWidget {
     );
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       restorationScopeId: 'app',
       themeMode: themeMode,
       routerConfig: goRouter,

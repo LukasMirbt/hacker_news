@@ -12,8 +12,8 @@ class Logo extends StatelessWidget {
       Brightness.light => Assets.images.appIconSmall,
       Brightness.dark => Assets.images.appIconDarkSmall,
     }.image(
-      height: 32,
-      width: 32,
+      height: 28,
+      width: 28,
     );
   }
 }

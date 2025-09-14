@@ -185,7 +185,6 @@ extension PumpAppExtension on WidgetTester {
               BlocProvider<AppBloc>(
                 create: (_) => _MockAppBloc(),
               ),
-
               BlocProvider<AuthenticationBloc>(
                 create: (_) => _MockAuthenticationBloc(),
               ),
