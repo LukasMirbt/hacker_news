@@ -1,24 +1,23 @@
 # Axiom - Hacker News
 
-<img src="./packages/app_ui/assets/icons/axiom_icon_light_inverted.svg" alt="Light app icon" width="100">
-<img src="./packages/app_ui/assets/icons/axiom_icon_dark.svg" alt="Dark app icon" width="100">
+<img src="./packages/app_ui/assets/screenshots/android/01.png" alt="Light app icon" width="200">
+<img src="./packages/app_ui/assets/screenshots/android/02.png" alt="Light app icon" width="200">
+<img src="./packages/app_ui/assets/screenshots/android/03.png" alt="Light app icon" width="200">
 
-## Why Axiom?
+## Get the app (beta)
 
-The ethos of Axiom is "uncompromising and intuitive".
+Join the open beta on iOS: https://testflight.apple.com/join/44cHjDBb
 
-### Uncompromising
+Join the beta on Android:
 
-Axiom doesn't force you to make trade-offs that you don't want to make but instead offers:
+1. Join the testing group (required): https://groups.google.com/g/axiom-hacker-news
+2. Install the app: https://play.google.com/store/apps/details?id=com.lukasmirbt.hackerclient
 
-- Enhanced features AND blazing-fast performance
-- Mobile-friendly core UI AND seamless in-app access to Hacker News web
+## Design philosophy
 
-### Intuitive
-
-Axiom aims to make all parts of the app as intuitive as possible, especially coming from Hacker News web. Axiom offers <i> some </i> customization but customization for the sake of it is considered an anti-goal:
-
-- Thoughtful design OVER extreme customization
+- Thoughtful design over customization
+- Perform as good, or better than, HN Web
+- Be an extension, not a replacement of, HN Web
 
 ## What can I do with Axiom?
 
@@ -30,12 +29,3 @@ Axiom aims to make all parts of the app as intuitive as possible, especially com
 - Login to Hacker News
 - Search posts (hn.algolia.com)
 - Dark mode
-
-## How do I get it?
-
-Join the open beta on iOS: https://testflight.apple.com/join/44cHjDBb
-
-Join the beta on Android:
-
-1. Join the testing group (required): https://groups.google.com/g/axiom-hacker-news
-2. Install the app: https://play.google.com/store/apps/details?id=com.lukasmirbt.hackerclient

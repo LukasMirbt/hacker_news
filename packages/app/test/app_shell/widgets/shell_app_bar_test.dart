@@ -117,7 +117,7 @@ void main() {
         expect(widget.title, isA<Logo>());
       });
 
-      testWidgets('actions contains $UserAvatar '
+      testWidgets('has correct actions '
           'when isAuthenticated', (tester) async {
         when(() => authenticationState.status).thenReturn(
           AuthenticationStatus.authenticated,
@@ -127,7 +127,7 @@ void main() {
         expect(widget.actions, [isA<UserAvatar>()]);
       });
 
-      testWidgets('actions contains $ShellLoginButton '
+      testWidgets('has correct actions '
           'when !isAuthenticated', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);

@@ -121,7 +121,6 @@ dev_dependencies:
     sdk: flutter
   freezed: ^3.2.0
   go_router_builder: ^4.0.1
-  leak_tracker_flutter_testing: ^3.0.10
   mockingjay: ^2.0.0
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
