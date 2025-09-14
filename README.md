@@ -1,8 +1,12 @@
 # Axiom - Hacker News
 
-<img src="./packages/app_ui/assets/screenshots/android/01.png" alt="Light app icon" width="200">
-<img src="./packages/app_ui/assets/screenshots/android/02.png" alt="Light app icon" width="200">
-<img src="./packages/app_ui/assets/screenshots/android/03.png" alt="Light app icon" width="200">
+<table>
+  <tr>
+    <td><img src="./packages/app_ui/assets/screenshots/ios/01.png" alt="Home feed" width="200"></td>
+    <td><img src="./packages/app_ui/assets/screenshots/ios/02.png" alt="Post page with comments" width="200"></td>
+    <td><img src="./packages/app_ui/assets/screenshots/ios/03.png" alt="Dark mode" width="200"></td>
+  </tr>
+</table>
 
 ## Get the app (beta)
 
