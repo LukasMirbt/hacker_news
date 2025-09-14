@@ -45,5 +45,4 @@ Designed from the ground up for a beautiful dark mode experience
 ## Feedback & contributions
 The project is being actively developed and your input is greatly appreciated!
 
-### Bug reports & Feature requests
 See something wrong or have a great idea? [Please open an issue](https://github.com/LukasMirbt/hacker_news/issues).
