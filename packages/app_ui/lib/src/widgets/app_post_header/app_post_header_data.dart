@@ -9,6 +9,8 @@ class AppPostHeaderData {
     required this.user,
     required this.htmlText,
     required this.onPressed,
+    required this.onUrlHostPressed,
+    required this.onUserPressed,
     required this.onTextLinkPressed,
     required this.onSharePressed,
     required this.voteButton,
@@ -22,6 +24,8 @@ class AppPostHeaderData {
   final String? user;
   final String? htmlText;
   final void Function() onPressed;
+  final void Function() onUrlHostPressed;
+  final void Function() onUserPressed;
   final void Function(String) onTextLinkPressed;
   final void Function() onSharePressed;
   final Widget? voteButton;

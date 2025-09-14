@@ -7,8 +7,10 @@ class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
     String? age,
     String? urlHost,
     String? user,
-    void Function(String)? onTextLinkPressed,
     void Function()? onPressed,
+    void Function(String)? onTextLinkPressed,
+    void Function()? onUrlHostPressed,
+    void Function()? onUserPressed,
     void Function()? onSharePressed,
     super.htmlText,
     super.voteButton,
@@ -19,8 +21,10 @@ class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
          age: age ?? 'age',
          urlHost: urlHost ?? 'urlHost',
          user: user ?? 'user',
-         onTextLinkPressed: onTextLinkPressed ?? (_) {},
          onPressed: onPressed ?? () {},
+         onUrlHostPressed: onUrlHostPressed ?? () {},
+         onUserPressed: onUserPressed ?? () {},
+         onTextLinkPressed: onTextLinkPressed ?? (_) {},
          onSharePressed: onSharePressed ?? () {},
        );
 }

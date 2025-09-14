@@ -1,5 +1,7 @@
+import 'package:app/app_router/app_router.dart';
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post_header/post_header.dart';
+import 'package:app/web_redirect/web_redirect.dart';
 import 'package:app_ui/app_ui.dart'
     hide PostHeaderCommentButton, PostHeaderVoteButton;
 import 'package:date_formatter/date_formatter.dart';
@@ -56,6 +58,34 @@ class PostHeader extends StatelessWidget {
         onPressed: () {
           context.read<PostHeaderBloc>().add(
             const PostHeaderPressed(),
+          );
+        },
+        onUrlHostPressed: () {
+          AppRouter.of(context).push(
+            WebRedirectRoute(
+              url:
+                  Uri.parse(
+                    'https://news.ycombinator.com/from',
+                  ).replace(
+                    queryParameters: {
+                      'site': urlHost ?? '',
+                    },
+                  ),
+            ),
+          );
+        },
+        onUserPressed: () {
+          AppRouter.of(context).push(
+            WebRedirectRoute(
+              url:
+                  Uri.parse(
+                    'https://news.ycombinator.com/user',
+                  ).replace(
+                    queryParameters: {
+                      'id': user,
+                    },
+                  ),
+            ),
           );
         },
         onTextLinkPressed: (url) {

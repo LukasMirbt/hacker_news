@@ -11,40 +11,78 @@ class PostHeaderContentRow extends StatelessWidget {
       (AppPostHeaderData data) => data.onPressed,
     );
 
-    return InkWell(
-      onTap: onPressed,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const PostHeaderTitle(),
-          const SizedBox(height: AppSpacing.md),
+    final user = context.select(
+      (AppPostHeaderData data) => data.user,
+    );
 
-          const PostHeaderSubtitle(),
-          const SizedBox(height: AppSpacing.md),
-          Row(
+    final onUrlHostPressed = context.select(
+      (AppPostHeaderData data) => data.onUrlHostPressed,
+    );
+
+    final onUserPressed = context.select(
+      (AppPostHeaderData data) => data.onUserPressed,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InkWell(
+          onTap: onPressed,
+          child: const PostHeaderTitle(),
+        ),
+
+        const SizedBox(height: AppSpacing.sm),
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            alignment: Alignment.centerLeft,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: onUserPressed,
+          child: Row(
             children: [
-              Text(
-                'kafked',
-                style: TextTheme.of(context).labelMedium?.copyWith(
-                  color: ColorScheme.of(context).onSurfaceVariant,
-                ),
+              AppIcon(
+                Symbols.person_rounded,
+                size: 20,
+                color: ColorScheme.of(context).onSurfaceVariant,
               ),
-              Text(
-                ' · 5 hours ago',
-                style: TextTheme.of(context).labelMedium?.copyWith(
-                  color: ColorScheme.of(context).onSurfaceVariant,
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(
+                  '${user ?? ''} · 5 hours ago',
+                  style: TextTheme.of(context).labelMedium?.copyWith(
+                    color: ColorScheme.of(context).onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
           ),
-          /*         Text(
-            '5 hours ago',
-            style: TextTheme.of(context).labelMedium?.copyWith(
-              color: ColorScheme.of(context).onSurfaceVariant,
-            ),
-          ), */
-        ],
-      ),
+        ),
+
+        TextButton(
+          onPressed: onUrlHostPressed,
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            alignment: Alignment.centerLeft,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Row(
+            children: [
+              AppIcon(
+                Symbols.folder_rounded,
+                size: 20,
+                color: ColorScheme.of(context).onSurfaceVariant,
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              const Expanded(
+                child: PostHeaderSubtitle(),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
