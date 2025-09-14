@@ -18,14 +18,15 @@ class PostHeaderBody extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(top: AppSpacing.lg),
       child: Column(
-        spacing: AppSpacing.xs,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
+              horizontal: AppSpacing.xlg,
             ),
             child: PostHeaderContentRow(),
           ),
+          SizedBox(height: AppSpacing.lg),
+          Divider(height: 1),
           PostHeaderActionRow(),
         ],
       ),

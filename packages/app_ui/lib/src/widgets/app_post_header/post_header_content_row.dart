@@ -13,12 +13,36 @@ class PostHeaderContentRow extends StatelessWidget {
 
     return InkWell(
       onTap: onPressed,
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: AppSpacing.sm,
         children: [
-          PostHeaderTitle(),
-          PostHeaderSubtitle(),
+          const PostHeaderTitle(),
+          const SizedBox(height: AppSpacing.md),
+
+          const PostHeaderSubtitle(),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Text(
+                'kafked',
+                style: TextTheme.of(context).labelMedium?.copyWith(
+                  color: ColorScheme.of(context).onSurfaceVariant,
+                ),
+              ),
+              Text(
+                ' · 5 hours ago',
+                style: TextTheme.of(context).labelMedium?.copyWith(
+                  color: ColorScheme.of(context).onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+          /*         Text(
+            '5 hours ago',
+            style: TextTheme.of(context).labelMedium?.copyWith(
+              color: ColorScheme.of(context).onSurfaceVariant,
+            ),
+          ), */
         ],
       ),
     );

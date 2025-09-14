@@ -21,12 +21,12 @@ class PostHeaderBodyWithHtml extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.lg),
+      padding: const EdgeInsets.only(top: AppSpacing.md),
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg,
+              horizontal: AppSpacing.xlg,
             ),
             child: _Content(htmlText: htmlText),
           ),
@@ -47,7 +47,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: AppSpacing.lg,
+      spacing: AppSpacing.sm,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const PostHeaderContentRow(),

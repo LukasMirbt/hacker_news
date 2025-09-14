@@ -23,21 +23,25 @@ class PostHeaderSubtitle extends StatelessWidget {
     final textTheme = TextTheme.of(context);
     final l10n = AppUiLocalizations.of(context);
 
+    if (urlHost == null) return const SizedBox.shrink();
+
     return Text.rich(
       style: textTheme.labelMedium?.copyWith(
         color: colorScheme.onSurfaceVariant,
       ),
       TextSpan(
         children: [
-          if (urlHost != null) ...[
-            TextSpan(text: urlHost),
-            MiddleDotSpan(l10n: l10n),
-          ],
           if (user != null) ...[
-            TextSpan(text: user),
-            MiddleDotSpan(l10n: l10n),
+            TextSpan(
+              text: urlHost,
+            ),
+            /*         MiddleDotSpan(l10n: l10n), */
           ],
-          TextSpan(text: age),
+          ...[
+            /*           TextSpan(text: user), */
+            /*      MiddleDotSpan(l10n: l10n), */
+          ],
+          /*          TextSpan(text: age), */
         ],
       ),
     );
