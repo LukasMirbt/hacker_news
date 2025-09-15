@@ -8,7 +8,7 @@ import 'package:app_ui/app_ui.dart'
     hide FeedItemCommentCountButton, FeedItemVoteButton;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:date_formatter/date_formatter.dart';
-import 'package:feed_repository/feed_repository.dart' hide FeedItem;
+import 'package:feed_repository/feed_repository.dart' hide JobFeedItem;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,7 +35,7 @@ void main() {
   const age = 'age';
   const title = 'title';
 
-  group(FeedItem, () {
+  group(JobFeedItem, () {
     late FeedBloc bloc;
     late FeedState state;
     late JobFeedItemModel item;
@@ -57,7 +57,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: FeedItem(item),
+        child: JobFeedItem(item),
       );
     }
 

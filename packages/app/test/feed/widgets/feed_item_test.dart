@@ -12,48 +12,63 @@ import '../../app/pump_app.dart';
 class _MockFeedBloc extends MockBloc<FeedEvent, FeedState>
     implements FeedBloc {}
 
+class _MockFeedState extends Mock implements FeedState {}
+
+class _MockPaginatedFeedModel extends Mock implements PaginatedFeedModel {}
+
+class _MockItems extends Mock implements List<FeedItemModel> {}
+
 void main() {
+  const index = 1;
+
   group(FeedItem, () {
     late FeedBloc bloc;
+    late FeedState state;
+    late PaginatedFeedModel feed;
+    late List<FeedItemModel> items;
 
     setUp(() {
       bloc = _MockFeedBloc();
-      when(() => bloc.state).thenReturn(
-        FeedState.initial(
-          type: FeedType.top,
-          visitedPosts: {},
+      state = _MockFeedState();
+      feed = _MockPaginatedFeedModel();
+      items = _MockItems();
+      registerFallbackValue(
+        PostFeedItemModel(
+          PostFeedItemPlaceholder(),
         ),
       );
+      when(() => bloc.state).thenReturn(state);
+      when(() => state.feed).thenReturn(feed);
+      when(() => feed.items).thenReturn(items);
+      when(() => state.hasBeenVisited(any())).thenReturn(false);
     });
 
-    Widget buildSubject(FeedItemModel item) {
+    Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: FeedItem(item),
+        child: const FeedItem(index),
       );
     }
 
     testWidgets('renders $PostFeedItem when item '
         'is $PostFeedItemModel', (tester) async {
-      await tester.pumpApp(
-        buildSubject(
-          PostFeedItemModel(
-            PostFeedItemPlaceholder(),
-          ),
+      when(() => items[index]).thenReturn(
+        PostFeedItemModel(
+          PostFeedItemPlaceholder(),
         ),
       );
+      await tester.pumpApp(buildSubject());
       expect(find.byType(PostFeedItem), findsOneWidget);
     });
 
     testWidgets('renders $JobFeedItem when item '
         'is $JobFeedItemModel', (tester) async {
-      await tester.pumpApp(
-        buildSubject(
-          JobFeedItemModel(
-            JobFeedItemPlaceholder(),
-          ),
+      when(() => items[index]).thenReturn(
+        JobFeedItemModel(
+          JobFeedItemPlaceholder(),
         ),
       );
+      await tester.pumpApp(buildSubject());
       expect(find.byType(JobFeedItem), findsOneWidget);
     });
   });

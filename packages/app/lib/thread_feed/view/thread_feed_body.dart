@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 class ThreadFeedBody extends StatelessWidget {
   const ThreadFeedBody({super.key});
 
-  static Widget listBuilder(_, ItemBuilder itemBuilder) {
+  Widget containerBuilder(_, ItemBuilder itemBuilder) {
     return ThreadCommentList(itemBuilder);
   }
 
-  static Widget commentBuilder(_, int index) {
+  Widget commentBuilder(_, int index) {
     return ThreadComment(index);
   }
 
@@ -23,7 +23,7 @@ class ThreadFeedBody extends StatelessWidget {
     return AppCommentList(
       data: AppCommentListData(
         items: visibleItems,
-        listBuilder: listBuilder,
+        containerBuilder: containerBuilder,
         commentBuilder: commentBuilder,
       ),
     );

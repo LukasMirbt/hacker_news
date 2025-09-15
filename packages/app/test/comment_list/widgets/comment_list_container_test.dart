@@ -1,15 +1,13 @@
-// ignore_for_file: prefer_const_constructors
 // ignore_for_file: prefer_function_declarations_over_variables
-// ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart' hide Comment;
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../app/pump_app.dart';
 
@@ -20,9 +18,9 @@ class _MockCommentListState extends Mock implements CommentListState {}
 
 class _MockCommentListModel extends Mock implements CommentListModel {}
 
-class _MockBuildContext extends Mock implements BuildContext {}
-
 void main() {
+  final itemBuilder = (_, _) => Container(height: 100);
+
   final visibleItems = List.generate(
     10,
     (index) => OtherUserCommentModel(
@@ -32,7 +30,7 @@ void main() {
     ),
   );
 
-  group(CommentSliverList, () {
+  group(CommentListContainer, () {
     late CommentListBloc bloc;
     late CommentListState state;
     late CommentListModel commentList;
@@ -51,63 +49,48 @@ void main() {
         value: bloc,
         child: CustomScrollView(
           slivers: [
-            CommentSliverList(),
+            CommentListContainer(itemBuilder),
           ],
         ),
       );
     }
 
-    group(AppCommentList, () {
-      AppCommentList findWidget(WidgetTester tester) {
+    testWidgets('renders $SelectedCommentListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(
+        find.byType(SelectedCommentListener),
+        findsOneWidget,
+      );
+    });
+
+    group(SuperSliverList, () {
+      SuperSliverList findWidget(WidgetTester tester) {
         return tester.widget(
-          find.byType(AppCommentList),
+          find.byType(SuperSliverList),
         );
       }
 
-      testWidgets('has correct selectedIndex', (tester) async {
-        const selectedIndex = 1;
-        when(() => commentList.selectedIndex).thenReturn(selectedIndex);
+      SliverChildBuilderDelegate findDelegate(WidgetTester tester) {
+        final widget = findWidget(tester);
+        return widget.delegate as SliverChildBuilderDelegate;
+      }
+
+      testWidgets('listController is non-null', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.data.selectedIndex, selectedIndex);
+        expect(widget.listController, isNotNull);
       });
 
-      testWidgets('has correct items', (tester) async {
+      testWidgets('has correct itemCount', (tester) async {
         await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(widget.data.items, visibleItems);
+        final delegate = findDelegate(tester);
+        expect(delegate.childCount, visibleItems.length);
       });
 
-      testWidgets('has correct containerBuilder', (tester) async {
+      testWidgets('has correct itemBuilder', (tester) async {
         await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        final context = _MockBuildContext();
-        final itemBuilder = (_, _) => Container();
-        final comment = widget.data.containerBuilder(context, itemBuilder);
-        expect(
-          comment,
-          isA<CommentListContainer>().having(
-            (widget) => widget.itemBuilder,
-            'itemBuilder',
-            itemBuilder,
-          ),
-        );
-      });
-
-      testWidgets('has correct commentBuilder', (tester) async {
-        const index = 1;
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        final context = _MockBuildContext();
-        final comment = widget.data.commentBuilder(context, index);
-        expect(
-          comment,
-          isA<Comment>().having(
-            (widget) => widget.index,
-            'item',
-            index,
-          ),
-        );
+        final delegate = findDelegate(tester);
+        expect(delegate.builder, itemBuilder);
       });
     });
   });

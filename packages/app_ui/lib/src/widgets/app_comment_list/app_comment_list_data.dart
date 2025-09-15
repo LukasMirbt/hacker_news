@@ -12,13 +12,13 @@ typedef ListBuilder =
 class AppCommentListData {
   const AppCommentListData({
     required this.items,
-    required this.listBuilder,
+    required this.containerBuilder,
     required this.commentBuilder,
     this.selectedIndex,
   });
 
   final List<Collapsible<dynamic>> items;
-  final ListBuilder listBuilder;
+  final ListBuilder containerBuilder;
   final ItemBuilder commentBuilder;
   final int? selectedIndex;
 

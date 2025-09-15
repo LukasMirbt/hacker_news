@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/thread_feed/thread_feed.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:thread_repository/thread_repository.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
+import 'package:thread_repository/thread_repository.dart' hide ThreadComment;
 
 import '../../app/pump_app.dart';
 
@@ -17,19 +18,10 @@ class _MockThreadFeedBloc extends MockBloc<ThreadFeedEvent, ThreadFeedState>
 class _MockPaginatedThreadFeedModel extends Mock
     implements PaginatedThreadFeedModel {}
 
-class _MockThreadFeedBuilder extends Mock implements ThreadFeedBuilder {}
-
 class _MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
   final initialState = ThreadFeedState.initial();
-
-  const index = 0;
-  final item = Container();
-  final separator = Container();
-  final loadingWidget = Container();
-  const hasReachedMax = false;
-  const padding = EdgeInsets.zero;
 
   final visibleItems = [
     OtherUserThreadCommentModel(
@@ -40,86 +32,67 @@ void main() {
   group(ThreadFeedBody, () {
     late ThreadFeedBloc bloc;
     late PaginatedThreadFeedModel feed;
-    late ThreadFeedBuilder builder;
     late BuildContext context;
 
     setUp(() {
       bloc = _MockThreadFeedBloc();
       feed = _MockPaginatedThreadFeedModel();
-      builder = _MockThreadFeedBuilder();
       context = _MockBuildContext();
       when(() => bloc.state).thenReturn(
         initialState.copyWith(feed: feed),
       );
-      when(() => feed.isPlaceholder).thenReturn(false);
       when(() => feed.hasReachedMax).thenReturn(false);
       when(() => feed.visibleItems).thenReturn(visibleItems);
-      registerFallbackValue(context);
-      registerFallbackValue(index);
-      when(() => builder.itemBuilder(any(), any())).thenReturn(item);
-      when(() => builder.separatorBuilder(any(), any())).thenReturn(separator);
-      when(() => builder.loadingBuilder(any())).thenReturn(loadingWidget);
-      when(
-        () => builder.padding(hasReachedMax: hasReachedMax),
-      ).thenReturn(padding);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ThreadFeedBody(
-          builder: builder,
-        ),
+        child: ThreadFeedBody(),
       );
     }
 
-    group(InfiniteList, () {
-      InfiniteList findWidget(
+    group(AppCommentList, () {
+      AppCommentList findWidget(
         WidgetTester tester,
       ) {
-        return tester.widget<InfiniteList>(
-          find.byType(InfiniteList),
+        return tester.widget<AppCommentList>(
+          find.byType(AppCommentList),
         );
       }
 
-      testWidgets('has correct padding', (tester) async {
+      testWidgets('has correct items', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
-        expect(widget.padding, padding);
+        expect(widget.data.items, visibleItems);
       });
 
-      testWidgets('has correct separatorBuilder', (tester) async {
+      testWidgets('has correct containerBuilder', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
+        final itemBuilder = (_, _) => Container();
         expect(
-          widget.separatorBuilder?.call(context, index),
-          separator,
+          widget.data.containerBuilder(context, itemBuilder),
+          isA<ThreadCommentList>().having(
+            (widget) => widget.itemBuilder,
+            'itemBuilder',
+            itemBuilder,
+          ),
         );
       });
 
-      testWidgets('has correct itemBuilder', (tester) async {
+      testWidgets('has correct commentBuilder', (tester) async {
+        const index = 1;
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(
-          widget.itemBuilder(context, index),
-          item,
+          widget.data.commentBuilder(context, index),
+          isA<ThreadComment>().having(
+            (widget) => widget.index,
+            'index',
+            index,
+          ),
         );
-      });
-
-      testWidgets('has correct loadingBuilder', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.loadingBuilder?.call(context),
-          loadingWidget,
-        );
-      });
-
-      testWidgets('adds $ThreadFeedDataFetched onFetchData', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        widget.onFetchData();
-        verify(() => bloc.add(ThreadFeedDataFetched())).called(1);
       });
     });
   });

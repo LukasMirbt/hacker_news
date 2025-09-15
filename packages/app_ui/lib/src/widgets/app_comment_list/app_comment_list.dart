@@ -33,23 +33,20 @@ class AppCommentList extends StatelessWidget {
 class _Body extends StatelessWidget {
   const _Body();
 
+  Widget commentBuilder(BuildContext context, int index) {
+    return Provider.value(
+      value: index,
+      child: const _CommentListItem(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final listBuilder = context.select(
-      (AppCommentListData data) => data.listBuilder,
+    final containerBuilder = context.select(
+      (AppCommentListData data) => data.containerBuilder,
     );
 
-    print('listBuilder: $listBuilder');
-
-    return listBuilder(
-      context,
-      (_, index) {
-        return Provider.value(
-          value: index,
-          child: const _CommentListItem(),
-        );
-      },
-    );
+    return containerBuilder(context, commentBuilder);
   }
 }
 

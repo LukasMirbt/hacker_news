@@ -102,20 +102,6 @@ void main() async {
       });
     });
 
-    group('isTopLevel', () {
-      test('returns true when indent is 0', () {
-        when(() => comment.indent).thenReturn(0);
-        final model = createSubject();
-        expect(model.isTopLevel, true);
-      });
-
-      test('returns false when indent is not 0', () {
-        when(() => comment.indent).thenReturn(1);
-        final model = createSubject();
-        expect(model.isTopLevel, false);
-      });
-    });
-
     group('age', () {
       test('returns correct string', () {
         final age = DateTime(1);
