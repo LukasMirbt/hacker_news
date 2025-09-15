@@ -35,13 +35,13 @@ class PostHeaderSubtitle extends StatelessWidget {
             TextSpan(
               text: urlHost,
             ),
-            /*         MiddleDotSpan(l10n: l10n), */
+            MiddleDotSpan(l10n: l10n),
           ],
           ...[
-            /*           TextSpan(text: user), */
-            /*      MiddleDotSpan(l10n: l10n), */
+            TextSpan(text: user),
+            MiddleDotSpan(l10n: l10n),
           ],
-          /*          TextSpan(text: age), */
+          TextSpan(text: age),
         ],
       ),
     );

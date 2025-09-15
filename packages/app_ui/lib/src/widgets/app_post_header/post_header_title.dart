@@ -21,7 +21,8 @@ class PostHeaderTitle extends StatelessWidget {
 
     return Text(
       title,
-      style: textTheme.titleLarge?.copyWith(
+      style: textTheme.titleMedium?.copyWith(
+        fontSize: 18,
         color: color,
       ),
     );

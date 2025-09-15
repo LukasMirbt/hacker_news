@@ -27,6 +27,8 @@ class PostOptionsSheet extends StatelessWidget {
     return const AppBottomSheet(
       children: [
         OpenOnWebOption(),
+        UserOption(),
+        MoreFromUrlOption(),
       ],
     );
   }

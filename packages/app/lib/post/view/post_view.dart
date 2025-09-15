@@ -9,9 +9,39 @@ class PostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: PostAppBar(),
-      body: PostRefreshIndicator(
+    return Scaffold(
+      /*    appBar: PostAppBar(), */
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const AppIcon(Symbols.chevron_backward),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const AppIcon(Symbols.chevron_forward),
+            ),
+            FloatingActionButton(
+              elevation: 0,
+              onPressed: () {},
+              tooltip: 'Add New Item',
+              child: const AppIcon(Symbols.add_rounded),
+            ),
+
+            IconButton(
+              onPressed: () {},
+              icon: const AppIcon(Symbols.arrow_upward),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const AppIcon(Symbols.more_vert_rounded),
+            ),
+          ],
+        ),
+      ),
+      body: const PostRefreshIndicator(
         child: _Body(),
       ),
     );
