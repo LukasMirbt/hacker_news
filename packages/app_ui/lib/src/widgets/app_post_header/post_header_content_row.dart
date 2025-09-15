@@ -7,12 +7,11 @@ class PostHeaderContentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppPostHeaderData data) => data.onPressed,
-    );
-
     return InkWell(
-      onTap: onPressed,
+      onTap: () {
+        final data = context.read<AppPostHeaderData>();
+        data.onPressed();
+      },
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,

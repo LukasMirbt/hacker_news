@@ -1,19 +1,26 @@
 import 'package:collapse_handler/collapse_handler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
+
+typedef ItemBuilder = Widget Function(BuildContext, int);
+
+typedef ListBuilder =
+    Widget Function(
+      BuildContext context,
+      ItemBuilder itemBuilder,
+    );
 
 class AppCommentListData {
   const AppCommentListData({
-    required this.listController,
-    required this.selectedIndex,
     required this.items,
+    required this.listBuilder,
     required this.commentBuilder,
+    this.selectedIndex,
   });
 
-  final ListController listController;
-  final int? selectedIndex;
   final List<Collapsible<dynamic>> items;
-  final Widget Function(BuildContext, int) commentBuilder;
+  final ListBuilder listBuilder;
+  final ItemBuilder commentBuilder;
+  final int? selectedIndex;
 
   bool isSelected(int index) => selectedIndex == index;
 

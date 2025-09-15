@@ -7,12 +7,11 @@ class MoreButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onMorePressed = context.select(
-      (AppCurrentUserCommentData data) => data.onMorePressed,
-    );
-
     return IconButton(
-      onPressed: onMorePressed,
+      onPressed: () {
+        final data = context.read<AppCurrentUserCommentData>();
+        data.onMorePressed();
+      },
       icon: const AppIcon(
         Symbols.more_vert_rounded,
         size: 18,

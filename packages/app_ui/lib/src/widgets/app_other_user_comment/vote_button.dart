@@ -7,10 +7,6 @@ class VoteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onVotePressed = context.select(
-      (AppOtherUserCommentData data) => data.onVotePressed,
-    );
-
     final grade = context.select(
       (AppOtherUserCommentData data) => data.voteIconGrade,
     );
@@ -22,7 +18,10 @@ class VoteButton extends StatelessWidget {
     );
 
     return IconButton(
-      onPressed: onVotePressed,
+      onPressed: () {
+        final data = context.read<AppOtherUserCommentData>();
+        data.onVotePressed();
+      },
       icon: AppIcon(
         Symbols.arrow_upward_rounded,
         size: 20,

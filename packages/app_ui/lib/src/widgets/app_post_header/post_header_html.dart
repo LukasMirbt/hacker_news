@@ -12,13 +12,12 @@ class PostHeaderHtml extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onTextLinkPressed = context.select(
-      (AppPostHeaderData data) => data.onTextLinkPressed,
-    );
-
     return AppHtmlWidget(
       html: htmlText,
-      onLinkPressed: onTextLinkPressed,
+      onLinkPressed: (url) {
+        final data = context.read<AppPostHeaderData>();
+        data.onTextLinkPressed(url);
+      },
     );
   }
 }

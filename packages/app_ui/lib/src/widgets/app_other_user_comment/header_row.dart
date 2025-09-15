@@ -29,12 +29,11 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onHeaderPressed = context.select(
-      (AppOtherUserCommentData data) => data.onHeaderPressed,
-    );
-
     return InkWell(
-      onTap: onHeaderPressed,
+      onTap: () {
+        final data = context.read<AppOtherUserCommentData>();
+        data.onHeaderPressed();
+      },
       child: const Padding(
         padding: EdgeInsets.only(left: 7, right: 4),
         child: Row(

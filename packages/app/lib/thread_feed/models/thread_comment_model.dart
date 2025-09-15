@@ -45,7 +45,6 @@ sealed class ThreadCommentModel extends Equatable
 
   String get user => _comment.hnuser.id;
   String get htmlText => _comment.htmlText;
-  bool get isTopLevel => _comment.indent == 0;
 
   String age(
     AppLocalizations appL10n,

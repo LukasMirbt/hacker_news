@@ -1,46 +1,31 @@
 import 'package:app/thread_feed/thread_feed.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class ThreadFeedBody extends StatelessWidget {
-  const ThreadFeedBody({
-    this.builder = const ThreadFeedBuilder(),
-    super.key,
-  });
+  const ThreadFeedBody({super.key});
 
-  final ThreadFeedBuilder builder;
+  static Widget listBuilder(_, ItemBuilder itemBuilder) {
+    return ThreadCommentList(itemBuilder);
+  }
+
+  static Widget commentBuilder(_, int index) {
+    return ThreadComment(index);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final hasReachedMax = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.feed.hasReachedMax,
-    );
-
-    final isLoading = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.fetchStatus.isLoading,
-    );
-
     final visibleItems = context.select(
       (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems,
     );
 
-    // TODO(LukasMirbt): Refactor to use AppCommentList
-    return InfiniteList(
-      padding: builder.padding(
-        hasReachedMax: hasReachedMax,
+    return AppCommentList(
+      data: AppCommentListData(
+        items: visibleItems,
+        listBuilder: listBuilder,
+        commentBuilder: commentBuilder,
       ),
-      hasReachedMax: hasReachedMax,
-      isLoading: isLoading,
-      itemCount: visibleItems.length,
-      itemBuilder: builder.itemBuilder,
-      separatorBuilder: builder.separatorBuilder,
-      loadingBuilder: builder.loadingBuilder,
-      onFetchData: () {
-        context.read<ThreadFeedBloc>().add(
-          const ThreadFeedDataFetched(),
-        );
-      },
     );
   }
 }

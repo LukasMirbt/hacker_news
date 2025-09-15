@@ -4,14 +4,48 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-class CommentSliverList extends StatefulWidget {
+class CommentSliverList extends StatelessWidget {
   const CommentSliverList({super.key});
 
+  Widget listBuilder(BuildContext context, ItemBuilder itemBuilder) {
+    return CommentList(itemBuilder);
+  }
+
+  Widget commentBuilder(BuildContext context, int index) {
+    return Comment(index);
+  }
+
   @override
-  State<CommentSliverList> createState() => _CommentSliverListState();
+  Widget build(BuildContext context) {
+    final visibleItems = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
+    );
+
+    final selectedIndex = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.selectedIndex,
+    );
+
+    return AppCommentList(
+      data: AppCommentListData(
+        selectedIndex: selectedIndex,
+        items: visibleItems,
+        listBuilder: listBuilder,
+        commentBuilder: commentBuilder,
+      ),
+    );
+  }
 }
 
-class _CommentSliverListState extends State<CommentSliverList> {
+class CommentList extends StatefulWidget {
+  const CommentList(this.itemBuilder, {super.key});
+
+  final Widget Function(BuildContext, int) itemBuilder;
+
+  @override
+  State<CommentList> createState() => _CommentListState();
+}
+
+class _CommentListState extends State<CommentList> {
   late final ListController _listController;
 
   @override
@@ -28,26 +62,16 @@ class _CommentSliverListState extends State<CommentSliverList> {
 
   @override
   Widget build(BuildContext context) {
-    final visibleItems = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.visibleItems,
-    );
-
-    final selectedIndex = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.selectedIndex,
+    final itemCount = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.visibleItems.length,
     );
 
     return SelectedCommentListener(
       listController: _listController,
-      child: AppCommentList(
-        data: AppCommentListData(
-          listController: _listController,
-          selectedIndex: selectedIndex,
-          items: visibleItems,
-          commentBuilder: (_, index) {
-            final comment = visibleItems[index];
-            return Comment(comment);
-          },
-        ),
+      child: SuperSliverList.builder(
+        listController: _listController,
+        itemCount: itemCount,
+        itemBuilder: widget.itemBuilder,
       ),
     );
   }
