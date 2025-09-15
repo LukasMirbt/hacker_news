@@ -27,12 +27,17 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppPostHeaderCommentButtonData data) => data.onPressed,
+    final isDisabled = context.select(
+      (AppPostHeaderCommentButtonData data) => data.onPressed == null,
     );
 
     return TextButton(
-      onPressed: onPressed,
+      onPressed: isDisabled
+          ? null
+          : () {
+              final data = context.read<AppPostHeaderCommentButtonData>();
+              data.onPressed?.call();
+            },
       child: const Row(
         spacing: AppSpacing.xs,
         children: [

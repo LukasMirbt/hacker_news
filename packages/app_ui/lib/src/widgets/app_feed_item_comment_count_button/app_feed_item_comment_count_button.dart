@@ -27,12 +27,11 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppFeedItemCommentCountButtonData data) => data.onPressed,
-    );
-
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        final data = context.read<AppFeedItemCommentCountButtonData>();
+        data.onPressed();
+      },
       style: TextButton.styleFrom(
         minimumSize: const Size(88, 44),
         padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -7,12 +7,11 @@ class FeedItemMoreButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onMorePressed = context.select(
-      (AppFeedItemData data) => data.onMorePressed,
-    );
-
     return IconButton(
-      onPressed: onMorePressed,
+      onPressed: () {
+        final data = context.read<AppFeedItemData>();
+        data.onMorePressed();
+      },
       icon: const AppIcon(
         Symbols.more_vert_rounded,
         size: 18,

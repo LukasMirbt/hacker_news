@@ -7,12 +7,11 @@ class FeedItemShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onSharePressed = context.select(
-      (AppFeedItemData data) => data.onSharePressed,
-    );
-
     return IconButton(
-      onPressed: onSharePressed,
+      onPressed: () {
+        final data = context.read<AppFeedItemData>();
+        data.onSharePressed();
+      },
       icon: const AppIcon(
         Symbols.share_rounded,
         size: 16,

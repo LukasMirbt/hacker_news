@@ -2,10 +2,6 @@ import 'package:app_ui/src/widgets/app_comment_list/app_comment_list.dart';
 import 'package:collapse_handler/collapse_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
-
-class _MockListController extends Mock implements ListController {}
 
 class _TestComment extends Fake implements Collapsible<dynamic> {
   _TestComment({
@@ -18,21 +14,15 @@ class _TestComment extends Fake implements Collapsible<dynamic> {
 
 void main() {
   group(AppCommentListData, () {
-    late ListController listController;
-
-    setUp(() {
-      listController = _MockListController();
-    });
-
     AppCommentListData createSubject({
       int? selectedIndex,
       List<Collapsible<dynamic>>? items,
     }) {
       return AppCommentListData(
-        listController: listController,
         selectedIndex: selectedIndex,
         items: items ?? [],
-        commentBuilder: (_, __) => Container(),
+        containerBuilder: (_, _) => Container(),
+        commentBuilder: (_, _) => Container(),
       );
     }
 

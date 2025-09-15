@@ -7,30 +7,20 @@ class PostHeaderContentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppPostHeaderData data) => data.onPressed,
-    );
-
     final user = context.select(
       (AppPostHeaderData data) => data.user,
-    );
-
-    final onUrlHostPressed = context.select(
-      (AppPostHeaderData data) => data.onUrlHostPressed,
-    );
-
-    final onUserPressed = context.select(
-      (AppPostHeaderData data) => data.onUserPressed,
     );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         InkWell(
-          onTap: onPressed,
+          onTap: () {
+            final data = context.read<AppPostHeaderData>();
+            data.onPressed();
+          },
           child: const PostHeaderTitle(),
         ),
-
         const SizedBox(height: AppSpacing.sm),
         TextButton(
           style: TextButton.styleFrom(
@@ -39,7 +29,10 @@ class PostHeaderContentRow extends StatelessWidget {
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
-          onPressed: onUserPressed,
+          onPressed: () {
+            final data = context.read<AppPostHeaderData>();
+            data.onUserPressed();
+          },
           child: Row(
             children: [
               AppIcon(
@@ -61,7 +54,10 @@ class PostHeaderContentRow extends StatelessWidget {
         ),
 
         TextButton(
-          onPressed: onUrlHostPressed,
+          onPressed: () {
+            final data = context.read<AppPostHeaderData>();
+            data.onUrlHostPressed();
+          },
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
             alignment: Alignment.centerLeft,

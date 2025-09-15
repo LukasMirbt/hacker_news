@@ -11,13 +11,12 @@ class Html extends StatelessWidget {
       (AppCurrentUserCommentData data) => data.htmlText,
     );
 
-    final onLinkPressed = context.select(
-      (AppCurrentUserCommentData data) => data.onLinkPressed,
-    );
-
     return AppHtmlWidget(
       html: htmlText,
-      onLinkPressed: onLinkPressed,
+      onLinkPressed: (url) {
+        final data = context.read<AppCurrentUserCommentData>();
+        data.onLinkPressed(url);
+      },
     );
   }
 }

@@ -27,12 +27,11 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppPostHeaderVoteButtonData data) => data.onPressed,
-    );
-
     return TextButton(
-      onPressed: onPressed,
+      onPressed: () {
+        final data = context.read<AppPostHeaderVoteButtonData>();
+        data.onPressed();
+      },
       child: const Row(
         spacing: AppSpacing.xs,
         children: [

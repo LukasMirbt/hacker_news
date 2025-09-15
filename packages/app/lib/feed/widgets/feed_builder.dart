@@ -1,7 +1,6 @@
 import 'package:app/feed/feed.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeedBuilder {
   const FeedBuilder();
@@ -13,9 +12,7 @@ class FeedBuilder {
   }
 
   Widget itemBuilder(BuildContext context, int index) {
-    final items = context.read<FeedBloc>().state.feed.items;
-    final item = items[index];
-    return FeedItem(item);
+    return FeedItem(index);
   }
 
   Widget separatorBuilder(BuildContext context, int index) {

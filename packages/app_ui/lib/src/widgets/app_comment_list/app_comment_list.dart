@@ -1,7 +1,6 @@
 import 'package:app_ui/src/widgets/app_comment_list/app_comment_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 export 'app_comment_list_data.dart';
 export 'app_comment_model.dart';
@@ -34,26 +33,20 @@ class AppCommentList extends StatelessWidget {
 class _Body extends StatelessWidget {
   const _Body();
 
+  Widget commentBuilder(BuildContext context, int index) {
+    return Provider.value(
+      value: index,
+      child: const _CommentListItem(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final listController = context.select(
-      (AppCommentListData data) => data.listController,
+    final containerBuilder = context.select(
+      (AppCommentListData data) => data.containerBuilder,
     );
 
-    final itemCount = context.select(
-      (AppCommentListData data) => data.items.length,
-    );
-
-    return SuperSliverList.builder(
-      listController: listController,
-      itemCount: itemCount,
-      itemBuilder: (_, index) {
-        return Provider.value(
-          value: index,
-          child: const _CommentListItem(),
-        );
-      },
-    );
+    return containerBuilder(context, commentBuilder);
   }
 }
 
