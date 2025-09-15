@@ -66,7 +66,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: FeedItem(item),
+        child: PostFeedItem(item),
       );
     }
 

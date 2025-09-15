@@ -30,12 +30,11 @@ class _TitleColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onPressed = context.select(
-      (AppFeedItemData data) => data.onPressed,
-    );
-
     return InkWell(
-      onTap: onPressed,
+      onTap: () {
+        final data = context.read<AppFeedItemData>();
+        data.onPressed();
+      },
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,

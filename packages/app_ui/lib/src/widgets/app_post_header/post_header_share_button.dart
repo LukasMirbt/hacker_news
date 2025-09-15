@@ -7,12 +7,11 @@ class PostHeaderShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onSharePressed = context.select(
-      (AppPostHeaderData data) => data.onSharePressed,
-    );
-
     return IconButton(
-      onPressed: onSharePressed,
+      onPressed: () {
+        final data = context.read<AppPostHeaderData>();
+        data.onSharePressed();
+      },
       icon: const AppIcon(
         Symbols.share_rounded,
         size: 16,
