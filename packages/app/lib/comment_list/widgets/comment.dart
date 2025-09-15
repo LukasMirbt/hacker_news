@@ -10,12 +10,14 @@ class Comment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.visibleItems[index],
+      (CommentListBloc bloc) =>
+          bloc.state.commentList.visibleItems.elementAtOrNull(index),
     );
 
     return switch (item) {
       final CurrentUserCommentModel item => CurrentUserComment(item),
       final OtherUserCommentModel item => OtherUserComment(item),
+      null => const SizedBox.shrink(),
     };
   }
 }
