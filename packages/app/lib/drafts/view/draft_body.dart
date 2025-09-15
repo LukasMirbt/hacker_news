@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DraftBody extends StatelessWidget {
-  const DraftBody({
-    super.key,
-    this.builder = const DraftBuilder(),
-  });
-
-  final DraftBuilder builder;
+  const DraftBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +13,7 @@ class DraftBody extends StatelessWidget {
 
     return ListView.builder(
       itemCount: drafts.length,
-      itemBuilder: builder.itemBuilder,
+      itemBuilder: (_, index) => DraftItem(index),
     );
   }
 }

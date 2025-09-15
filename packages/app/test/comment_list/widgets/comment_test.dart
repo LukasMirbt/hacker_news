@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:app/comment_list/comment_list.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
@@ -18,28 +16,29 @@ class _MockCommentListState extends Mock implements CommentListState {}
 
 class _MockCommentListModel extends Mock implements CommentListModel {}
 
-class _MockVisibleItems extends Mock implements List<CommentModel> {}
-
 void main() {
-  const index = 1;
-
   group(Comment, () {
     late CommentListBloc bloc;
     late CommentListState state;
     late CommentListModel commentList;
-    late List<CommentModel> visibleItems;
 
     setUp(() {
       bloc = _MockCommentListBloc();
       state = _MockCommentListState();
       commentList = _MockCommentListModel();
-      visibleItems = _MockVisibleItems();
       when(() => bloc.state).thenReturn(state);
       when(() => state.commentList).thenReturn(commentList);
-      when(() => commentList.visibleItems).thenReturn(visibleItems);
+      when(() => commentList.visibleItems).thenReturn([
+        CurrentUserCommentModel(
+          comment: CurrentUserCommentPlaceholder(),
+        ),
+        OtherUserCommentModel(
+          comment: OtherUserCommentPlaceholder(),
+        ),
+      ]);
     });
 
-    Widget buildSubject() {
+    Widget buildSubject(int index) {
       return BlocProvider.value(
         value: bloc,
         child: Comment(index),
@@ -48,24 +47,21 @@ void main() {
 
     testWidgets('renders $CurrentUserComment when item '
         'is $CurrentUserCommentModel', (tester) async {
-      when(() => visibleItems[index]).thenReturn(
-        CurrentUserCommentModel(
-          comment: CurrentUserCommentPlaceholder(),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
+      await tester.pumpApp(buildSubject(0));
       expect(find.byType(CurrentUserComment), findsOneWidget);
     });
 
     testWidgets('renders $OtherUserComment when item '
         'is $OtherUserCommentModel', (tester) async {
-      when(() => visibleItems[index]).thenReturn(
-        OtherUserCommentModel(
-          comment: OtherUserCommentPlaceholder(),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
+      await tester.pumpApp(buildSubject(1));
       expect(find.byType(OtherUserComment), findsOneWidget);
+    });
+
+    testWidgets('does not render $CurrentUserComment '
+        'or $OtherUserComment when item is null', (tester) async {
+      await tester.pumpApp(buildSubject(2));
+      expect(find.byType(CurrentUserComment), findsNothing);
+      expect(find.byType(OtherUserComment), findsNothing);
     });
   });
 }

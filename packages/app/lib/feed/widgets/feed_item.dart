@@ -10,12 +10,13 @@ class FeedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = context.select(
-      (FeedBloc bloc) => bloc.state.feed.items[index],
+      (FeedBloc bloc) => bloc.state.feed.items.elementAtOrNull(index),
     );
 
     return switch (item) {
       final PostFeedItemModel item => PostFeedItem(item),
       final JobFeedItemModel item => JobFeedItem(item),
+      null => const SizedBox.shrink(),
     };
   }
 }

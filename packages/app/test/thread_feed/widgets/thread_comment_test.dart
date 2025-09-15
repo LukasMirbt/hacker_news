@@ -19,28 +19,29 @@ class _MockThreadFeedState extends Mock implements ThreadFeedState {}
 class _MockPaginatedThreadFeedModel extends Mock
     implements PaginatedThreadFeedModel {}
 
-class _MockVisibleItem extends Mock implements List<ThreadCommentModel> {}
-
 void main() {
-  const index = 1;
-
   group(ThreadComment, () {
     late ThreadFeedBloc bloc;
     late ThreadFeedState state;
     late PaginatedThreadFeedModel feed;
-    late List<ThreadCommentModel> visibleItems;
 
     setUp(() {
       bloc = _MockThreadFeedBloc();
       state = _MockThreadFeedState();
       feed = _MockPaginatedThreadFeedModel();
-      visibleItems = _MockVisibleItem();
       when(() => bloc.state).thenReturn(state);
       when(() => state.feed).thenReturn(feed);
-      when(() => feed.visibleItems).thenReturn(visibleItems);
+      when(() => feed.visibleItems).thenReturn([
+        CurrentUserThreadCommentModel(
+          comment: CurrentUserThreadCommentPlaceholder(),
+        ),
+        OtherUserThreadCommentModel(
+          comment: OtherUserThreadCommentPlaceholder(),
+        ),
+      ]);
     });
 
-    Widget buildSubject() {
+    Widget buildSubject(int index) {
       return BlocProvider.value(
         value: bloc,
         child: ThreadComment(index),
@@ -49,24 +50,21 @@ void main() {
 
     testWidgets('renders $CurrentUserThreadComment when item '
         'is $CurrentUserThreadCommentModel', (tester) async {
-      when(() => visibleItems[index]).thenReturn(
-        CurrentUserThreadCommentModel(
-          comment: CurrentUserThreadCommentPlaceholder(),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
+      await tester.pumpApp(buildSubject(0));
       expect(find.byType(CurrentUserThreadComment), findsOneWidget);
     });
 
     testWidgets('renders $OtherUserThreadComment when item '
         'is $OtherUserThreadCommentModel', (tester) async {
-      when(() => visibleItems[index]).thenReturn(
-        OtherUserThreadCommentModel(
-          comment: OtherUserThreadCommentPlaceholder(),
-        ),
-      );
-      await tester.pumpApp(buildSubject());
+      await tester.pumpApp(buildSubject(1));
       expect(find.byType(OtherUserThreadComment), findsOneWidget);
+    });
+
+    testWidgets('does not render $CurrentUserThreadComment '
+        'or $OtherUserThreadComment when item is null', (tester) async {
+      await tester.pumpApp(buildSubject(2));
+      expect(find.byType(CurrentUserThreadComment), findsNothing);
+      expect(find.byType(OtherUserThreadComment), findsNothing);
     });
   });
 }
