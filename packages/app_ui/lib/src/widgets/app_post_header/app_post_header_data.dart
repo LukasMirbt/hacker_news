@@ -13,6 +13,7 @@ class AppPostHeaderData {
     required this.onSharePressed,
     required this.voteButton,
     required this.commentButton,
+    required this.optionsButton,
   });
 
   final bool hasBeenVisited;
@@ -26,6 +27,7 @@ class AppPostHeaderData {
   final void Function() onSharePressed;
   final Widget? voteButton;
   final Widget? commentButton;
+  final Widget? optionsButton;
 
   Color titleColor(ColorScheme colorScheme) {
     if (hasBeenVisited) return colorScheme.onSurfaceVariant;

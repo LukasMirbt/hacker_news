@@ -86,7 +86,7 @@ class _Text extends StatelessWidget {
 
     return Text(
       score,
-      style: style,
+      style: style ?? textTheme.bodyMedium,
     );
   }
 }

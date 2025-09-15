@@ -1,4 +1,5 @@
 import 'package:app/l10n/l10n.dart';
+import 'package:app/post/widgets/post_options_button.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart'
     hide PostHeaderCommentButton, PostHeaderVoteButton;
@@ -81,6 +82,7 @@ class PostHeader extends StatelessWidget {
             : PostHeaderCommentButton(
                 commentCount: commentCount,
               ),
+        optionsButton: const PostOptionsButton(),
       ),
     );
   }

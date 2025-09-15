@@ -14,7 +14,7 @@ class PostHeaderShareButton extends StatelessWidget {
       },
       icon: const AppIcon(
         Symbols.share_rounded,
-        size: 16,
+        size: 20,
       ),
     );
   }

@@ -48,6 +48,7 @@ class _Row extends StatelessWidget {
           PostHeaderVoteButton(),
           PostHeaderCommentButton(),
           PostHeaderShareButton(),
+          PostHeaderOptionsButton(),
         ],
       ),
     );

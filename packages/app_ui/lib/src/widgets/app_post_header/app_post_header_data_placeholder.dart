@@ -13,6 +13,7 @@ class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
     super.htmlText,
     super.voteButton,
     super.commentButton,
+    super.optionsButton,
   }) : super(
          hasBeenVisited: hasBeenVisited ?? false,
          title: title ?? 'title',

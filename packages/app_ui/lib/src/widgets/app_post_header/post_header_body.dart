@@ -16,9 +16,9 @@ class PostHeaderBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.only(top: AppSpacing.lg),
+      padding: EdgeInsets.only(top: AppSpacing.sm),
       child: Column(
-        spacing: AppSpacing.xs,
+        spacing: AppSpacing.md,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(

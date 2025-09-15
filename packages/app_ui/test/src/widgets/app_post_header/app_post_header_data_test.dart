@@ -29,6 +29,7 @@ void main() {
         onSharePressed: () {},
         voteButton: null,
         commentButton: null,
+        optionsButton: null,
       );
     }
 

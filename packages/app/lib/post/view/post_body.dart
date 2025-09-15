@@ -37,7 +37,10 @@ class _PostBodyState extends State<PostBody> {
             child: PostHeader(),
           ),
           SliverToBoxAdapter(
-            child: Divider(height: 1),
+            child: Divider(
+              height: 1,
+              thickness: 2,
+            ),
           ),
           CommentSliverList(),
         ],

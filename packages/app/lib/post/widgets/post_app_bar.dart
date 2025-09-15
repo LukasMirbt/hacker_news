@@ -1,4 +1,3 @@
-import 'package:app/l10n/l10n.dart';
 import 'package:app/post/post.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
@@ -25,15 +24,14 @@ class _AppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-
     return AppBar(
+      scrolledUnderElevation: 1,
+      surfaceTintColor: Colors.transparent,
+      shadowColor: Colors.black,
       leading: const PostBackButton(),
-      title: Text(l10n.post_title),
       actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
       actions: const [
         PostSearchButton(),
-        PostOptionsButton(),
       ],
     );
   }
