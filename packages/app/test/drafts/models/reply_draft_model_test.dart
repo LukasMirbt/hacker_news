@@ -1,20 +1,30 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'package:app/drafts/drafts.dart';
 import 'package:draft_repository/draft_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:text_parser/text_parser.dart';
 
 class _MockReplyDraft extends Mock implements ReplyDraft {}
+
+class _MockTextParser extends Mock implements TextParser {}
 
 void main() {
   group(ReplyDraftModel, () {
     late ReplyDraft draft;
+    late TextParser textParser;
 
     setUp(() {
       draft = _MockReplyDraft();
+      textParser = _MockTextParser();
     });
 
     ReplyDraftModel createSubject() {
-      return ReplyDraftModel(draft: draft);
+      return ReplyDraftModel(
+        draft: draft,
+        textParser: textParser,
+      );
     }
 
     group('url', () {
@@ -36,20 +46,15 @@ void main() {
     });
 
     group('subtitle', () {
-      test('returns correct value when parentHtmlText '
-          'contains html elements', () {
-        const parentHtmlText = 'Lorem ipsum.<p>Dolor sit amet.</p>';
+      test('returns correct value', () {
+        const parentHtmlText = 'parentHtmlText';
+        const subtitle = 'subtitle';
+        final parseText = () => textParser.parse(parentHtmlText);
         when(() => draft.parentHtmlText).thenReturn(parentHtmlText);
+        when(parseText).thenReturn(subtitle);
         final model = createSubject();
-        expect(model.subtitle, 'Lorem ipsum. Dolor sit amet.');
-      });
-
-      test('returns correct value when parentHtmlText '
-          'does not contain html elements', () {
-        const parentHtmlText = 'Lorem ipsum. Dolor sit amet.';
-        when(() => draft.parentHtmlText).thenReturn(parentHtmlText);
-        final model = createSubject();
-        expect(model.subtitle, parentHtmlText);
+        expect(model.subtitle, subtitle);
+        verify(parseText).called(1);
       });
     });
 
