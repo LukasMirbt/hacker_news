@@ -14,7 +14,7 @@ class PostHeaderContentRow extends StatelessWidget {
       },
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: AppSpacing.sm,
+        spacing: AppSpacing.md,
         children: [
           PostHeaderTitle(),
           PostHeaderSubtitle(),

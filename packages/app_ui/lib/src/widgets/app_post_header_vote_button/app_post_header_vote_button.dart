@@ -60,7 +60,6 @@ class _Icon extends StatelessWidget {
 
     return AppIcon(
       Symbols.arrow_upward_rounded,
-      size: 20,
       grade: grade,
       color: color,
     );
