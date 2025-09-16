@@ -9,7 +9,6 @@ class PostSearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      iconSize: 24,
       icon: const AppIcon(Symbols.search_rounded),
       onPressed: () {
         AppRouter.of(context).goRelative(

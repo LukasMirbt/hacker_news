@@ -31,10 +31,7 @@ class PostRepository extends Cubit<PostRepositoryState> {
   Future<void> fetchPostStream({required String id}) async {
     final cancelToken = _cancelTokenService.generate();
 
-    await Future.delayed(const Duration(seconds: 3));
-
     try {
-      throw Exception('oops');
       final stream = _postApi.fetchPostStream(
         id: id,
         cancelToken: cancelToken,
