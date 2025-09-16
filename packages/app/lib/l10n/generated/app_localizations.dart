@@ -610,12 +610,6 @@ abstract class AppLocalizations {
   /// **'Logging out...'**
   String get logoutLoading_text;
 
-  /// No description provided for @post_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Post'**
-  String get post_title;
-
   /// No description provided for @postSearch_hintText.
   ///
   /// In en, this message translates to:

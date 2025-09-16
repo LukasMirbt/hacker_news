@@ -30,8 +30,6 @@ class _PostSearchBarState extends State<PostSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = ColorScheme.of(context);
-    final textTheme = TextTheme.of(context);
     final l10n = AppLocalizations.of(context);
 
     return ListenableProvider.value(
@@ -43,11 +41,6 @@ class _PostSearchBarState extends State<PostSearchBar> {
         elevation: const WidgetStatePropertyAll(0),
         backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-        hintStyle: WidgetStatePropertyAll(
-          textTheme.titleLarge?.copyWith(
-            color: colorScheme.onSurfaceVariant,
-          ),
-        ),
         onChanged: (value) {
           context.read<PostSearchBloc>().add(
             PostSearchQueryChanged(value),
