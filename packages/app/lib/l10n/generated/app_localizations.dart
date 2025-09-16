@@ -610,6 +610,18 @@ abstract class AppLocalizations {
   /// **'Logging out...'**
   String get logoutLoading_text;
 
+  /// No description provided for @post_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet'**
+  String get post_emptyTitle;
+
+  /// No description provided for @post_emptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to comment'**
+  String get post_emptyBody;
+
   /// No description provided for @postSearch_hintText.
   ///
   /// In en, this message translates to:

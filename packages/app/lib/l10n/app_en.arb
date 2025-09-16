@@ -139,6 +139,8 @@
   "login_submitAction": "Login",
   "loginLoading_text": "Logging in...",
   "logoutLoading_text": "Logging out...",
+  "post_emptyTitle": "No comments yet",
+  "post_emptyBody": "Be the first to comment",
   "postSearch_hintText": "Search",
   "postSearch_startEllipsis": "...",
   "postSearch_endEllipsis": "...",

@@ -292,6 +292,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutLoading_text => 'Logging out...';
 
   @override
+  String get post_emptyTitle => 'No comments yet';
+
+  @override
+  String get post_emptyBody => 'Be the first to comment';
+
+  @override
   String get postSearch_hintText => 'Search';
 
   @override
