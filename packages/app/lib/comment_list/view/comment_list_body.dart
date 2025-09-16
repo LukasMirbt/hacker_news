@@ -24,6 +24,8 @@ class CommentListBody extends StatelessWidget {
       (CommentListBloc bloc) => bloc.state.commentList.selectedIndex,
     );
 
+    print('rebuild commentListBody');
+
     return AppCommentList(
       data: AppCommentListData(
         selectedIndex: selectedIndex,

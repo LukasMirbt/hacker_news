@@ -1,11 +1,11 @@
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app/post/post.dart';
+import 'package:app/post_header/post_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class CommentListView extends StatelessWidget {
-  const CommentListView({super.key});
+class PostHeaderView extends StatelessWidget {
+  const PostHeaderView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +13,9 @@ class CommentListView extends StatelessWidget {
       (PostBloc bloc) => bloc.state.fetchStatus.isLoading,
     );
 
-    final isEmpty = context.select(
-      (CommentListBloc bloc) => bloc.state.commentList.isEmpty,
-    );
-
-    if (isEmpty) return const CommentListEmptyBody();
-
-    return SliverSkeletonizer(
+    return Skeletonizer(
       enabled: isLoading,
-      child: const CommentListBody(),
+      child: const PostHeaderBody(),
     );
   }
 }

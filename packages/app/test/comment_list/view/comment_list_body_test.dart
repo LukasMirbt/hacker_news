@@ -32,7 +32,7 @@ void main() {
     ),
   );
 
-  group(CommentSliverList, () {
+  group(CommentListBody, () {
     late CommentListBloc bloc;
     late CommentListState state;
     late CommentListModel commentList;
@@ -51,7 +51,7 @@ void main() {
         value: bloc,
         child: CustomScrollView(
           slivers: [
-            CommentSliverList(),
+            CommentListBody(),
           ],
         ),
       );
