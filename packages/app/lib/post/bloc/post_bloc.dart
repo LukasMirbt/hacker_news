@@ -31,6 +31,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       onData: (repositoryState) => state.copyWith(
         fetchStatus: repositoryState.fetchStatus,
         refreshStatus: repositoryState.refreshStatus,
+        post: repositoryState.post,
       ),
     );
   }

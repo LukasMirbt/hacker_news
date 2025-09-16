@@ -11,15 +11,19 @@ class _MockPostRepository extends Mock implements PostRepository {}
 
 class _MockPostRepositoryState extends Mock implements PostRepositoryState {}
 
+class _MockPost extends Mock implements Post {}
+
 void main() {
   const id = 'id';
   const fetchStatus = FetchStatus.loading;
   const refreshStatus = RefreshStatus.initial;
+  final post = _MockPost();
 
   final initialState = PostState(
     id: id,
     fetchStatus: fetchStatus,
     refreshStatus: refreshStatus,
+    post: post,
   );
 
   group(PostBloc, () {
@@ -32,6 +36,7 @@ void main() {
       when(() => repository.state).thenReturn(repositoryState);
       when(() => repositoryState.fetchStatus).thenReturn(fetchStatus);
       when(() => repositoryState.refreshStatus).thenReturn(refreshStatus);
+      when(() => repositoryState.post).thenReturn(post);
     });
 
     PostBloc buildBloc() {
@@ -49,6 +54,7 @@ void main() {
       final updatedRepositoryState = _MockPostRepositoryState();
       const updatedFetchStatus = FetchStatus.success;
       const updatedRefreshStatus = RefreshStatus.success;
+      final updatedPost = _MockPost();
 
       blocTest<PostBloc, PostState>(
         'emits updated state when stream emits new value',
@@ -62,6 +68,9 @@ void main() {
           when(
             () => updatedRepositoryState.refreshStatus,
           ).thenReturn(updatedRefreshStatus);
+          when(
+            () => updatedRepositoryState.post,
+          ).thenReturn(updatedPost);
         },
         build: buildBloc,
         act: (bloc) {
@@ -73,6 +82,7 @@ void main() {
           initialState.copyWith(
             fetchStatus: updatedFetchStatus,
             refreshStatus: updatedRefreshStatus,
+            post: updatedPost,
           ),
         ],
       );

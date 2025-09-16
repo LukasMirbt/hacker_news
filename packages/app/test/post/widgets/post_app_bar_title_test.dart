@@ -2,23 +2,25 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/post/post.dart';
-import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
-    implements PostHeaderBloc {}
+class _MockPostBloc extends MockBloc<PostEvent, PostState>
+    implements PostBloc {}
 
-class _MockPostHeaderState extends Mock implements PostHeaderState {}
+class _MockPostState extends Mock implements PostState {}
 
-class _MockPostHeaderModel extends Mock implements PostHeaderModel {}
+class _MockPost extends Mock implements Post {}
+
+class _MockPostHeader extends Mock implements PostHeader {}
 
 class _MockScrollController extends Mock implements ScrollController {}
 
@@ -31,20 +33,23 @@ void main() {
   const greaterThanMinOffset = minOffset + 1;
 
   group(PostAppBarTitle, () {
-    late PostHeaderBloc bloc;
-    late PostHeaderState state;
-    late PostHeaderModel header;
+    late PostBloc bloc;
+    late PostState state;
+    late Post post;
+    late PostHeader header;
     late ScrollController controller;
     late ScrollAnimator scrollAnimator;
 
     setUp(() {
-      bloc = _MockPostHeaderBloc();
-      state = _MockPostHeaderState();
-      header = _MockPostHeaderModel();
+      bloc = _MockPostBloc();
+      state = _MockPostState();
+      post = _MockPost();
+      header = _MockPostHeader();
       controller = _MockScrollController();
       scrollAnimator = _MockScrollAnimator();
       when(() => bloc.state).thenReturn(state);
-      when(() => state.header).thenReturn(header);
+      when(() => state.post).thenReturn(post);
+      when(() => post.header).thenReturn(header);
       when(() => header.title).thenReturn(title);
       when(() => controller.offset).thenReturn(offset);
     });

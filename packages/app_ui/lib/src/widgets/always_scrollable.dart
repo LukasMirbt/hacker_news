@@ -1,7 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 class AlwaysScrollable extends StatelessWidget {
-  const AlwaysScrollable({required this.child, super.key});
+  const AlwaysScrollable({
+    required this.child,
+    super.key,
+  });
 
   final Widget child;
 
