@@ -11,40 +11,25 @@ class PostBody extends StatefulWidget {
 }
 
 class _PostBodyState extends State<PostBody> {
-  late final ScrollController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ListenableProvider.value(
-      value: _controller,
-      child: CustomScrollView(
-        controller: _controller,
-        physics: const AlwaysScrollableScrollPhysics(),
-        slivers: const [
-          SliverToBoxAdapter(
-            child: PostHeader(),
+    final controller = context.watch<ScrollController>();
+
+    return CustomScrollView(
+      controller: controller,
+      physics: const AlwaysScrollableScrollPhysics(),
+      slivers: const [
+        SliverToBoxAdapter(
+          child: PostHeader(),
+        ),
+        SliverToBoxAdapter(
+          child: Divider(
+            height: 1,
+            thickness: 1,
           ),
-          SliverToBoxAdapter(
-            child: Divider(
-              height: 1,
-              thickness: 1,
-            ),
-          ),
-          CommentSliverList(),
-        ],
-      ),
+        ),
+        CommentSliverList(),
+      ],
     );
   }
 }

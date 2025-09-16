@@ -70,9 +70,6 @@ class _Text extends StatelessWidget {
       (AppPostHeaderCommentButtonData data) => data.commentCount,
     );
 
-    return Text(
-      commentCount,
-      style: TextTheme.of(context).bodyMedium,
-    );
+    return Text(commentCount);
   }
 }

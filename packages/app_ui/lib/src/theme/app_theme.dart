@@ -54,11 +54,11 @@ abstract class AppTheme {
       scrolledUnderElevation: 0,
       systemOverlayStyle: systemOverlayStyle,
       centerTitle: false,
-      /* shape: Border(
+      shape: Border(
         bottom: BorderSide(
           color: colors.outlineVariant,
         ),
-      ), */
+      ),
       actionsPadding: const EdgeInsets.only(
         right: AppSpacing.sm,
       ),

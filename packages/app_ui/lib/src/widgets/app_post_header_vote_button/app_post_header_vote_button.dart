@@ -60,6 +60,7 @@ class _Icon extends StatelessWidget {
 
     return AppIcon(
       Symbols.arrow_upward_rounded,
+      size: 22,
       grade: grade,
       color: color,
     );
@@ -85,7 +86,7 @@ class _Text extends StatelessWidget {
 
     return Text(
       score,
-      style: style ?? textTheme.bodyMedium,
+      style: style,
     );
   }
 }

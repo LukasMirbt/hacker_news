@@ -11,7 +11,7 @@ export 'post_header_button_placeholder.dart';
 export 'post_header_comment_button.dart';
 export 'post_header_content_row.dart';
 export 'post_header_html.dart';
-export 'post_header_options_button.dart';
+export 'post_header_more_button.dart';
 export 'post_header_share_button.dart';
 export 'post_header_subtitle.dart';
 export 'post_header_title.dart';

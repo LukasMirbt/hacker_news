@@ -1,6 +1,6 @@
 import 'package:app/l10n/l10n.dart';
-import 'package:app/post/widgets/post_options_button.dart';
 import 'package:app/post_header/post_header.dart';
+import 'package:app/post_options/post_options.dart';
 import 'package:app_ui/app_ui.dart'
     hide PostHeaderCommentButton, PostHeaderVoteButton;
 import 'package:date_formatter/date_formatter.dart';
@@ -72,6 +72,9 @@ class PostHeader extends StatelessWidget {
             PostHeaderSharePressed(text: text),
           );
         },
+        onMorePressed: () {
+          PostOptionsSheet.show(context);
+        },
         voteButton: score == null
             ? null
             : PostHeaderVoteButton(
@@ -82,7 +85,6 @@ class PostHeader extends StatelessWidget {
             : PostHeaderCommentButton(
                 commentCount: commentCount,
               ),
-        optionsButton: const PostOptionsButton(),
       ),
     );
   }

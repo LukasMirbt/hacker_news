@@ -28,7 +28,7 @@ class AppPostHeaderVoteButtonData {
   ) {
     if (!hasBeenUpvoted) return null;
 
-    return textTheme.bodySmall!
+    return textTheme.bodyMedium!
         .copyWithWeight(
           (weight) => weight * 1.75,
         )

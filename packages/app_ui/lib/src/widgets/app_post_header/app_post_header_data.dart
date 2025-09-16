@@ -11,9 +11,9 @@ class AppPostHeaderData {
     required this.onPressed,
     required this.onTextLinkPressed,
     required this.onSharePressed,
+    required this.onMorePressed,
     required this.voteButton,
     required this.commentButton,
-    required this.optionsButton,
   });
 
   final bool hasBeenVisited;
@@ -25,9 +25,9 @@ class AppPostHeaderData {
   final void Function() onPressed;
   final void Function(String) onTextLinkPressed;
   final void Function() onSharePressed;
+  final void Function() onMorePressed;
   final Widget? voteButton;
   final Widget? commentButton;
-  final Widget? optionsButton;
 
   Color titleColor(ColorScheme colorScheme) {
     if (hasBeenVisited) return colorScheme.onSurfaceVariant;

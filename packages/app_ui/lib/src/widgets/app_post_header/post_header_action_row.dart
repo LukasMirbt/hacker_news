@@ -23,7 +23,7 @@ class PostHeaderActionRow extends StatelessWidget {
             minimumSize: const Size(64, 44),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             foregroundColor: theme.colorScheme.onSurfaceVariant,
-            textStyle: theme.textTheme.bodySmall,
+            textStyle: theme.textTheme.bodyMedium,
           ),
         ),
       ),
@@ -48,7 +48,7 @@ class _Row extends StatelessWidget {
           PostHeaderVoteButton(),
           PostHeaderCommentButton(),
           PostHeaderShareButton(),
-          PostHeaderOptionsButton(),
+          PostHeaderMoreButton(),
         ],
       ),
     );

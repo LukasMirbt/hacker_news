@@ -10,10 +10,10 @@ class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
     void Function(String)? onTextLinkPressed,
     void Function()? onPressed,
     void Function()? onSharePressed,
+    void Function()? onMorePressed,
     super.htmlText,
     super.voteButton,
     super.commentButton,
-    super.optionsButton,
   }) : super(
          hasBeenVisited: hasBeenVisited ?? false,
          title: title ?? 'title',
@@ -23,5 +23,6 @@ class AppPostHeaderDataPlaceholder extends AppPostHeaderData {
          onTextLinkPressed: onTextLinkPressed ?? (_) {},
          onPressed: onPressed ?? () {},
          onSharePressed: onSharePressed ?? () {},
+         onMorePressed: onMorePressed ?? () {},
        );
 }
