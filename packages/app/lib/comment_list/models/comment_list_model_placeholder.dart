@@ -10,5 +10,8 @@ class CommentListModelPlaceholder extends CommentListModel {
       );
 
   @override
+  bool get isPlaceholder => true;
+
+  @override
   bool get isEmpty => false;
 }

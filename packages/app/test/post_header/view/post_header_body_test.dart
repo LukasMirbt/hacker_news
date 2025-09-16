@@ -4,7 +4,7 @@ import 'package:app/l10n/l10n.dart';
 import 'package:app/post_header/post_header.dart';
 import 'package:app/post_options/post_options.dart';
 import 'package:app_ui/app_ui.dart'
-    hide PostHeaderCommentButton, PostHeaderVoteButton;
+    hide PostHeaderBody, PostHeaderCommentButton, PostHeaderVoteButton;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:date_formatter/date_formatter.dart';
 import 'package:flutter/widgets.dart';
@@ -37,7 +37,7 @@ void main() {
   const htmlText = 'htmlText';
   const shareText = 'shareText';
 
-  group(PostHeader, () {
+  group(PostHeaderBody, () {
     late PostHeaderBloc bloc;
     late PostHeaderState state;
     late PostHeaderModel header;
@@ -63,7 +63,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: PostHeader(),
+        child: PostHeaderBody(),
       );
     }
 

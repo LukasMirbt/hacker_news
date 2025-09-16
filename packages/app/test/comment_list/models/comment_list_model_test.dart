@@ -94,6 +94,25 @@ void main() {
       });
     });
 
+    group('isPlaceholder', () {
+      test('returns correct value', () {
+        final model = createSubject();
+        expect(model.isPlaceholder, false);
+      });
+    });
+
+    group('isEmpty', () {
+      test('returns correct value when items.isEmpty', () {
+        final model = CommentListModel(items: []);
+        expect(model.isEmpty, true);
+      });
+
+      test('returns correct value when !items.isEmpty', () {
+        final model = createSubject();
+        expect(model.isEmpty, false);
+      });
+    });
+
     group('findById', () {
       test('returns $CommentModel when items contains id', () {
         final item = items.first;

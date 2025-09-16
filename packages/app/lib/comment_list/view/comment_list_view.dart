@@ -1,5 +1,4 @@
 import 'package:app/comment_list/comment_list.dart';
-import 'package:app/post/post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -9,8 +8,8 @@ class CommentListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.select(
-      (PostBloc bloc) => bloc.state.fetchStatus.isLoading,
+    final isPlaceholder = context.select(
+      (CommentListBloc bloc) => bloc.state.commentList.isPlaceholder,
     );
 
     final isEmpty = context.select(
@@ -20,7 +19,7 @@ class CommentListView extends StatelessWidget {
     if (isEmpty) return const CommentListEmptyBody();
 
     return SliverSkeletonizer(
-      enabled: isLoading,
+      enabled: isPlaceholder,
       child: const CommentListBody(),
     );
   }
