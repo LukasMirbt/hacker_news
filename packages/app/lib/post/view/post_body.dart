@@ -15,6 +15,8 @@ class _PostBodyState extends State<PostBody> {
   Widget build(BuildContext context) {
     final controller = context.watch<ScrollController>();
 
+    print('PostBody rebuild');
+
     return CustomScrollView(
       controller: controller,
       physics: const AlwaysScrollableScrollPhysics(),

@@ -36,7 +36,7 @@ void main() {
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: ListenableProvider.value(
+        child: InheritedProvider.value(
           value: controller,
           child: PostAppBar(),
         ),

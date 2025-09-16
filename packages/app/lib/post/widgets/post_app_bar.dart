@@ -16,7 +16,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: heroTag,
-      child: ListenableProvider.value(
+      child: InheritedProvider.value(
         value: context.read<ScrollController>(),
         child: BlocProvider.value(
           value: context.read<PostHeaderBloc>(),

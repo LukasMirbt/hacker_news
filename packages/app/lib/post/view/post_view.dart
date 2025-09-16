@@ -28,7 +28,7 @@ class _PostViewState extends State<PostView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableProvider.value(
+    return InheritedProvider.value(
       value: _controller,
       child: const Scaffold(
         appBar: PostAppBar(),
