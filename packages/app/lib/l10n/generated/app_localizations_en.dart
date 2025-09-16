@@ -88,6 +88,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comment_submitAction => 'Submit';
 
   @override
+  String get commentList_emptyTitle => 'No comments yet';
+
+  @override
+  String get commentList_emptyBody => 'Be the first to comment';
+
+  @override
   String commentList_age({required String age}) {
     return '$age ago';
   }
@@ -290,12 +296,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutLoading_text => 'Logging out...';
-
-  @override
-  String get post_emptyTitle => 'No comments yet';
-
-  @override
-  String get post_emptyBody => 'Be the first to comment';
 
   @override
   String get postSearch_hintText => 'Search';

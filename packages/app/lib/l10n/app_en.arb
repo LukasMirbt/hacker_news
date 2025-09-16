@@ -25,6 +25,8 @@
   "comment_disabledExplanationTitle": "Closed for comments",
   "comment_disabledExplanationSubtitle": "Threads are closed to new comments after two weeks, or if the submission has been killed by software, moderators, or user flags.",
   "comment_submitAction": "Submit",
+  "commentList_emptyTitle": "No comments yet",
+  "commentList_emptyBody": "Be the first to comment",
   "commentList_age": "{age} ago",
   "@commentList_age": {
     "placeholders": {
@@ -139,8 +141,6 @@
   "login_submitAction": "Login",
   "loginLoading_text": "Logging in...",
   "logoutLoading_text": "Logging out...",
-  "post_emptyTitle": "No comments yet",
-  "post_emptyBody": "Be the first to comment",
   "postSearch_hintText": "Search",
   "postSearch_startEllipsis": "...",
   "postSearch_endEllipsis": "...",

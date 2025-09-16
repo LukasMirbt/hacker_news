@@ -13,8 +13,8 @@ class CommentListEmptyBody extends StatelessWidget {
       hasScrollBody: false,
       child: AppEmptyBody(
         icon: Symbols.mode_comment_rounded,
-        title: l10n.post_emptyTitle,
-        body: l10n.post_emptyBody,
+        title: l10n.commentList_emptyTitle,
+        body: l10n.commentList_emptyBody,
       ),
     );
   }

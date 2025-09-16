@@ -246,6 +246,18 @@ abstract class AppLocalizations {
   /// **'Submit'**
   String get comment_submitAction;
 
+  /// No description provided for @commentList_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet'**
+  String get commentList_emptyTitle;
+
+  /// No description provided for @commentList_emptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to comment'**
+  String get commentList_emptyBody;
+
   /// No description provided for @commentList_age.
   ///
   /// In en, this message translates to:
@@ -609,18 +621,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logging out...'**
   String get logoutLoading_text;
-
-  /// No description provided for @post_emptyTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'No comments yet'**
-  String get post_emptyTitle;
-
-  /// No description provided for @post_emptyBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Be the first to comment'**
-  String get post_emptyBody;
 
   /// No description provided for @postSearch_hintText.
   ///
