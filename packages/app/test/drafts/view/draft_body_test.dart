@@ -15,8 +15,6 @@ class _MockDraftBloc extends MockBloc<DraftEvent, DraftState>
 
 class _MockDraftState extends Mock implements DraftState {}
 
-class _MockDraftBuilder extends Mock implements DraftBuilder {}
-
 class _MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
@@ -27,36 +25,57 @@ void main() {
     ),
   );
 
-  final item = Container();
-
   group(DraftBody, () {
     late DraftBloc bloc;
     late DraftState state;
-    late DraftBuilder builder;
 
     setUp(() {
       bloc = _MockDraftBloc();
       state = _MockDraftState();
-      builder = _MockDraftBuilder();
       registerFallbackValue(_MockBuildContext());
       when(() => bloc.state).thenReturn(state);
       when(() => state.drafts).thenReturn(drafts);
-      when(() => builder.itemBuilder(any(), any())).thenAnswer((_) => item);
     });
 
     Widget buildSubject() {
       return BlocProvider.value(
         value: bloc,
-        child: DraftBody(builder: builder),
+        child: DraftBody(),
       );
     }
 
-    testWidgets('has correct itemBuilder', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(
-        find.byWidget(item, skipOffstage: false),
-        findsNWidgets(drafts.length),
-      );
+    group(ListView, () {
+      ListView findWidget(WidgetTester tester) {
+        return tester.widget<ListView>(
+          find.byType(ListView),
+        );
+      }
+
+      SliverChildBuilderDelegate findDelegate(WidgetTester tester) {
+        final widget = findWidget(tester);
+        return widget.childrenDelegate as SliverChildBuilderDelegate;
+      }
+
+      testWidgets('has correct itemCount', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final delegate = findDelegate(tester);
+        expect(delegate.childCount, drafts.length);
+      });
+
+      testWidgets('has correct itemBuilder', (tester) async {
+        const index = 1;
+        await tester.pumpApp(buildSubject());
+        final delegate = findDelegate(tester);
+        final context = _MockBuildContext();
+        expect(
+          delegate.builder(context, index),
+          isA<DraftItem>().having(
+            (item) => item.index,
+            'index',
+            index,
+          ),
+        );
+      });
     });
   });
 }

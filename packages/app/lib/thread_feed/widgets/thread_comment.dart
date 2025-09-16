@@ -10,10 +10,12 @@ class ThreadComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems[index],
+      (ThreadFeedBloc bloc) =>
+          bloc.state.feed.visibleItems.elementAtOrNull(index),
     );
 
     return switch (item) {
+      null => const SizedBox.shrink(),
       final CurrentUserThreadCommentModel item => CurrentUserThreadComment(
         item,
       ),
