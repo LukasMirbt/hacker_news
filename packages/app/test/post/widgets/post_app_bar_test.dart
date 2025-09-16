@@ -1,35 +1,37 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/post/post.dart';
-import 'package:app/post_header/post_header.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
-    implements PostHeaderBloc {}
+class _MockPostBloc extends MockBloc<PostEvent, PostState>
+    implements PostBloc {}
 
 class _MockScrollController extends Mock implements ScrollController {}
 
 void main() {
+  final initialState = PostState(
+    id: 'id',
+    fetchStatus: FetchStatus.loading,
+    refreshStatus: RefreshStatus.initial,
+    post: PostPlaceholder(),
+  );
+
   group(PostAppBar, () {
-    late PostHeaderBloc bloc;
+    late PostBloc bloc;
     late ScrollController controller;
 
     setUp(() {
-      bloc = _MockPostHeaderBloc();
+      bloc = _MockPostBloc();
       controller = _MockScrollController();
-      when(() => bloc.state).thenReturn(
-        PostHeaderState.initial(
-          id: '',
-          visitedPosts: {},
-        ),
-      );
+      when(() => bloc.state).thenReturn(initialState);
       when(() => controller.offset).thenReturn(0);
     });
 
@@ -64,7 +66,20 @@ void main() {
         expect(appBar.leading, isA<PostBackButton>());
       });
 
-      testWidgets('has correct title', (tester) async {
+      testWidgets('has correct title '
+          'when isFailure', (tester) async {
+        when(() => bloc.state).thenReturn(
+          initialState.copyWith(
+            fetchStatus: FetchStatus.failure,
+          ),
+        );
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.title, null);
+      });
+
+      testWidgets('has correct title '
+          'when !isFailure', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(

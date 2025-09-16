@@ -15,8 +15,6 @@ class _PostBodyState extends State<PostBody> {
   Widget build(BuildContext context) {
     final controller = context.watch<ScrollController>();
 
-    print('PostBody rebuild');
-
     return CustomScrollView(
       controller: controller,
       physics: const AlwaysScrollableScrollPhysics(),
@@ -25,10 +23,7 @@ class _PostBodyState extends State<PostBody> {
           child: PostHeader(),
         ),
         SliverToBoxAdapter(
-          child: Divider(
-            height: 1,
-            thickness: 1,
-          ),
+          child: Divider(height: 1),
         ),
         CommentSliverList(),
       ],
