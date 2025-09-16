@@ -1,18 +1,40 @@
 import 'package:app/post/post.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class PostView extends StatelessWidget {
+class PostView extends StatefulWidget {
   const PostView({super.key});
 
   @override
+  State<PostView> createState() => _PostViewState();
+}
+
+class _PostViewState extends State<PostView> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: PostAppBar(),
-      body: PostRefreshIndicator(
-        child: _Body(),
+    return InheritedProvider.value(
+      value: _controller,
+      child: const Scaffold(
+        appBar: PostAppBar(),
+        body: PostRefreshIndicator(
+          child: _Body(),
+        ),
       ),
     );
   }

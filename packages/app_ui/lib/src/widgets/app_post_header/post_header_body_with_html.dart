@@ -51,6 +51,7 @@ class _Content extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const PostHeaderContentRow(),
+        const Divider(height: 1),
         PostHeaderHtml(htmlText: htmlText),
       ],
     );

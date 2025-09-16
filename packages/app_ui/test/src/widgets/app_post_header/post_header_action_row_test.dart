@@ -30,5 +30,10 @@ void main() {
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostHeaderShareButton), findsOneWidget);
     });
+
+    testWidgets('renders $PostHeaderMoreButton', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(PostHeaderMoreButton), findsOneWidget);
+    });
   });
 }

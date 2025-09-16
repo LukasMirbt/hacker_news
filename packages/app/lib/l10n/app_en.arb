@@ -139,7 +139,6 @@
   "login_submitAction": "Login",
   "loginLoading_text": "Logging in...",
   "logoutLoading_text": "Logging out...",
-  "post_title": "Post",
   "postSearch_hintText": "Search",
   "postSearch_startEllipsis": "...",
   "postSearch_endEllipsis": "...",

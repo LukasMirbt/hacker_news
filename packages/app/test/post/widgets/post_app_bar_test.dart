@@ -1,18 +1,49 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/l10n/l10n.dart';
 import 'package:app/post/post.dart';
-import 'package:app_ui/app_ui.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-void main() async {
-  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+class _MockPostBloc extends MockBloc<PostEvent, PostState>
+    implements PostBloc {}
+
+class _MockScrollController extends Mock implements ScrollController {}
+
+void main() {
+  final initialState = PostState(
+    id: 'id',
+    fetchStatus: FetchStatus.loading,
+    refreshStatus: RefreshStatus.initial,
+    post: PostPlaceholder(),
+  );
 
   group(PostAppBar, () {
-    Widget buildSubject() => PostAppBar();
+    late PostBloc bloc;
+    late ScrollController controller;
+
+    setUp(() {
+      bloc = _MockPostBloc();
+      controller = _MockScrollController();
+      when(() => bloc.state).thenReturn(initialState);
+      when(() => controller.offset).thenReturn(0);
+    });
+
+    Widget buildSubject() {
+      return BlocProvider.value(
+        value: bloc,
+        child: InheritedProvider.value(
+          value: controller,
+          child: PostAppBar(),
+        ),
+      );
+    }
 
     testWidgets('renders $Hero with correct tag', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -35,25 +66,25 @@ void main() async {
         expect(appBar.leading, isA<PostBackButton>());
       });
 
-      testWidgets('has correct title', (tester) async {
+      testWidgets('has correct title '
+          'when isFailure', (tester) async {
+        when(() => bloc.state).thenReturn(
+          initialState.copyWith(
+            fetchStatus: FetchStatus.failure,
+          ),
+        );
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(widget.title, null);
+      });
+
+      testWidgets('has correct title '
+          'when !isFailure', (tester) async {
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(
           widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'text',
-            l10n.post_title,
-          ),
-        );
-      });
-
-      testWidgets('has correct actionsPadding', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.actionsPadding,
-          EdgeInsets.only(right: AppSpacing.xs),
+          isA<PostAppBarTitle>(),
         );
       });
 
@@ -64,7 +95,6 @@ void main() async {
           widget.actions,
           [
             isA<PostSearchButton>(),
-            isA<PostOptionsButton>(),
           ],
         );
       });

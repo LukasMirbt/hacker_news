@@ -292,9 +292,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutLoading_text => 'Logging out...';
 
   @override
-  String get post_title => 'Post';
-
-  @override
   String get postSearch_hintText => 'Search';
 
   @override

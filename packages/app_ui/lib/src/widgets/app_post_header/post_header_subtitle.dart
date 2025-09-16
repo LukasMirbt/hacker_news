@@ -24,7 +24,7 @@ class PostHeaderSubtitle extends StatelessWidget {
     final l10n = AppUiLocalizations.of(context);
 
     return Text.rich(
-      style: textTheme.labelMedium?.copyWith(
+      style: textTheme.labelLarge?.copyWith(
         color: colorScheme.onSurfaceVariant,
       ),
       TextSpan(

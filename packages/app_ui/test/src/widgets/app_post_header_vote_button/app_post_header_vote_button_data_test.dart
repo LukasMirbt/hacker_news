@@ -68,7 +68,7 @@ void main() {
       );
 
       setUp(() {
-        when(() => textTheme.bodySmall).thenReturn(style);
+        when(() => textTheme.bodyMedium).thenReturn(style);
       });
 
       const onSurface = Colors.blue;

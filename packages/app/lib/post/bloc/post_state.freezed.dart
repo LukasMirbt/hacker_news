@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostState {
 
- String get id; FetchStatus get fetchStatus; RefreshStatus get refreshStatus;
+ String get id; FetchStatus get fetchStatus; RefreshStatus get refreshStatus; Post get post;
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostStateCopyWith<PostState> get copyWith => _$PostStateCopyWithImpl<PostState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostState&&(identical(other.id, id) || other.id == id)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostState&&(identical(other.id, id) || other.id == id)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.post, post) || other.post == post));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,fetchStatus,refreshStatus);
+int get hashCode => Object.hash(runtimeType,id,fetchStatus,refreshStatus,post);
 
 @override
 String toString() {
-  return 'PostState(id: $id, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus)';
+  return 'PostState(id: $id, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, post: $post)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $PostStateCopyWith<$Res>  {
   factory $PostStateCopyWith(PostState value, $Res Function(PostState) _then) = _$PostStateCopyWithImpl;
 @useResult
 $Res call({
- String id, FetchStatus fetchStatus, RefreshStatus refreshStatus
+ String id, FetchStatus fetchStatus, RefreshStatus refreshStatus, Post post
 });
 
 
-
+$PostCopyWith<$Res> get post;
 
 }
 /// @nodoc
@@ -62,15 +62,25 @@ class _$PostStateCopyWithImpl<$Res>
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fetchStatus = null,Object? refreshStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? post = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
-as RefreshStatus,
+as RefreshStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as Post,
   ));
 }
-
+/// Create a copy of PostState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostCopyWith<$Res> get post {
+  
+  return $PostCopyWith<$Res>(_self.post, (value) {
+    return _then(_self.copyWith(post: value));
+  });
+}
 }
 
 
@@ -152,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  Post post)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostState() when $default != null:
-return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
+return $default(_that.id,_that.fetchStatus,_that.refreshStatus,_that.post);case _:
   return orElse();
 
 }
@@ -173,10 +183,10 @@ return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  Post post)  $default,) {final _that = this;
 switch (_that) {
 case _PostState():
-return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
+return $default(_that.id,_that.fetchStatus,_that.refreshStatus,_that.post);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +203,10 @@ return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  FetchStatus fetchStatus,  RefreshStatus refreshStatus,  Post post)?  $default,) {final _that = this;
 switch (_that) {
 case _PostState() when $default != null:
-return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
+return $default(_that.id,_that.fetchStatus,_that.refreshStatus,_that.post);case _:
   return null;
 
 }
@@ -208,12 +218,13 @@ return $default(_that.id,_that.fetchStatus,_that.refreshStatus);case _:
 
 
 class _PostState implements PostState {
-  const _PostState({required this.id, required this.fetchStatus, required this.refreshStatus});
+  const _PostState({required this.id, required this.fetchStatus, required this.refreshStatus, required this.post});
   
 
 @override final  String id;
 @override final  FetchStatus fetchStatus;
 @override final  RefreshStatus refreshStatus;
+@override final  Post post;
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +236,16 @@ _$PostStateCopyWith<_PostState> get copyWith => __$PostStateCopyWithImpl<_PostSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostState&&(identical(other.id, id) || other.id == id)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostState&&(identical(other.id, id) || other.id == id)&&(identical(other.fetchStatus, fetchStatus) || other.fetchStatus == fetchStatus)&&(identical(other.refreshStatus, refreshStatus) || other.refreshStatus == refreshStatus)&&(identical(other.post, post) || other.post == post));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,fetchStatus,refreshStatus);
+int get hashCode => Object.hash(runtimeType,id,fetchStatus,refreshStatus,post);
 
 @override
 String toString() {
-  return 'PostState(id: $id, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus)';
+  return 'PostState(id: $id, fetchStatus: $fetchStatus, refreshStatus: $refreshStatus, post: $post)';
 }
 
 
@@ -245,11 +256,11 @@ abstract mixin class _$PostStateCopyWith<$Res> implements $PostStateCopyWith<$Re
   factory _$PostStateCopyWith(_PostState value, $Res Function(_PostState) _then) = __$PostStateCopyWithImpl;
 @override @useResult
 $Res call({
- String id, FetchStatus fetchStatus, RefreshStatus refreshStatus
+ String id, FetchStatus fetchStatus, RefreshStatus refreshStatus, Post post
 });
 
 
-
+@override $PostCopyWith<$Res> get post;
 
 }
 /// @nodoc
@@ -262,16 +273,26 @@ class __$PostStateCopyWithImpl<$Res>
 
 /// Create a copy of PostState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fetchStatus = null,Object? refreshStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fetchStatus = null,Object? refreshStatus = null,Object? post = null,}) {
   return _then(_PostState(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fetchStatus: null == fetchStatus ? _self.fetchStatus : fetchStatus // ignore: cast_nullable_to_non_nullable
 as FetchStatus,refreshStatus: null == refreshStatus ? _self.refreshStatus : refreshStatus // ignore: cast_nullable_to_non_nullable
-as RefreshStatus,
+as RefreshStatus,post: null == post ? _self.post : post // ignore: cast_nullable_to_non_nullable
+as Post,
   ));
 }
 
-
+/// Create a copy of PostState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PostCopyWith<$Res> get post {
+  
+  return $PostCopyWith<$Res>(_self.post, (value) {
+    return _then(_self.copyWith(post: value));
+  });
+}
 }
 
 // dart format on

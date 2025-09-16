@@ -37,5 +37,12 @@ void main() {
         expect(data.onSharePressed, returnsNormally);
       });
     });
+
+    group('onMorePressed', () {
+      test('returns normally', () {
+        final data = createSubject();
+        expect(data.onMorePressed, returnsNormally);
+      });
+    });
   });
 }

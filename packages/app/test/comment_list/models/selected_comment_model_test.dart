@@ -1,15 +1,26 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/comment_list/comment_list.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+class _MockScrollAnimator extends Mock implements ScrollAnimator {}
 
 void main() {
   group(SelectedCommentModel, () {
+    late ScrollAnimator animator;
+
+    setUp(() {
+      animator = _MockScrollAnimator();
+    });
+
     SelectedCommentModel createSubject() {
       return SelectedCommentModel(
         id: 'id',
         index: 1,
+        animator: animator,
       );
     }
 
@@ -28,38 +39,18 @@ void main() {
     });
 
     group('duration', () {
-      test('returns correct value '
-          'when estimatedDistance > 2000', () {
+      test('returns animator.duration', () {
+        const estimatedDistance = 1.0;
+        final duration = Duration(milliseconds: 300);
+        when(
+          () => animator.duration(estimatedDistance),
+        ).thenReturn(duration);
         final model = createSubject();
-        expect(model.duration(2001), Duration.zero);
+        expect(
+          model.duration(estimatedDistance),
+          duration,
+        );
       });
-
-      test('returns correct value '
-          'when calculatedValue < min', () {
-        final model = createSubject();
-        expect(model.duration(100), Duration(milliseconds: 250));
-      });
-
-      test(
-        'returns correct value '
-        'when calculatedValue > max',
-        () {
-          final model = createSubject();
-          expect(model.duration(1000), Duration(milliseconds: 600));
-        },
-      );
-
-      test('returns correct value '
-          'when calculatedValue is within clamp range', () {
-        final model = createSubject();
-        expect(model.duration(500), Duration(milliseconds: 400));
-      });
-    });
-
-    test('is not equatable', () {
-      final first = createSubject();
-      final second = createSubject();
-      expect(first == second, false);
     });
   });
 }

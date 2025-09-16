@@ -9,6 +9,7 @@ abstract class PostState with _$PostState {
     required String id,
     required FetchStatus fetchStatus,
     required RefreshStatus refreshStatus,
+    required Post post,
   }) = _PostState;
 
   factory PostState.from({
@@ -20,6 +21,7 @@ abstract class PostState with _$PostState {
       id: id,
       fetchStatus: repositoryState.fetchStatus,
       refreshStatus: repositoryState.refreshStatus,
+      post: repositoryState.post,
     );
   }
 }

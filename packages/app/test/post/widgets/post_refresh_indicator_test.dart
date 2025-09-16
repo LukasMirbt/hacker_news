@@ -24,6 +24,7 @@ void main() {
     id: 'id',
     fetchStatus: FetchStatus.loading,
     refreshStatus: RefreshStatus.initial,
+    post: PostPlaceholder(),
   );
 
   group(PostRefreshIndicator, () {

@@ -1,7 +1,7 @@
-import 'package:app/l10n/l10n.dart';
 import 'package:app/post/post.dart';
-import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PostAppBar({super.key});
@@ -13,9 +13,18 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Hero(
+    return Hero(
       tag: heroTag,
-      child: _AppBar(),
+      // TODO(LukasMirbt): Figure out how to test this
+      // Reprovide dependencies for the Hero animation
+      // since Hero context does not have access otherwise.
+      child: InheritedProvider.value(
+        value: context.read<ScrollController>(),
+        child: BlocProvider.value(
+          value: context.read<PostBloc>(),
+          child: const _AppBar(),
+        ),
+      ),
     );
   }
 }
@@ -25,15 +34,15 @@ class _AppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final isFailure = context.select(
+      (PostBloc bloc) => bloc.state.fetchStatus.isFailure,
+    );
 
     return AppBar(
       leading: const PostBackButton(),
-      title: Text(l10n.post_title),
-      actionsPadding: const EdgeInsets.only(right: AppSpacing.xs),
+      title: isFailure ? null : const PostAppBarTitle(),
       actions: const [
         PostSearchButton(),
-        PostOptionsButton(),
       ],
     );
   }

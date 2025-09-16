@@ -2,6 +2,7 @@
 
 import 'package:app/l10n/l10n.dart';
 import 'package:app/post_header/post_header.dart';
+import 'package:app/post_options/post_options.dart';
 import 'package:app_ui/app_ui.dart'
     hide PostHeaderCommentButton, PostHeaderVoteButton;
 import 'package:bloc_test/bloc_test.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../app/pump_app.dart';
+import '../../post/pump_post.dart';
 
 class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
     implements PostHeaderBloc {}
@@ -147,6 +149,17 @@ void main() {
         ).called(1);
       },
     );
+
+    testWidgets('shows $PostOptionsSheet onMorePressed', (tester) async {
+      await tester.pumpPost(buildSubject());
+      final widget = findWidget(tester);
+      widget.data.onMorePressed();
+      await tester.pump();
+      expect(
+        find.byType(PostOptionsSheet),
+        findsOneWidget,
+      );
+    });
 
     testWidgets('voteButton is null when score is null', (tester) async {
       await tester.pumpApp(buildSubject());
