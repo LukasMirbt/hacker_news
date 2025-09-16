@@ -1,20 +1,35 @@
 import 'package:app/post_header/post_header.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class PostAppBarTitle extends StatelessWidget {
-  const PostAppBarTitle({super.key});
+  const PostAppBarTitle({
+    super.key,
+    this.scrollAnimator = const ScrollAnimator(),
+  });
+
+  final ScrollAnimator scrollAnimator;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<ScrollController>().animateTo(
-          0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+        final controller = context.read<ScrollController>();
+        final distance = controller.offset;
+        final duration = scrollAnimator.duration(distance);
+
+        if (duration == Duration.zero) {
+          controller.jumpTo(0);
+          return;
+        } else {
+          controller.animateTo(
+            0,
+            duration: duration,
+            curve: Curves.easeOut,
+          );
+        }
       },
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -70,8 +85,8 @@ class _TitleState extends State<_Title> {
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       opacity: _isTitleVisible ? 1 : 0,
-      duration: const Duration(milliseconds: 150),
       curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 150),
       child: const _TitleText(),
     );
   }

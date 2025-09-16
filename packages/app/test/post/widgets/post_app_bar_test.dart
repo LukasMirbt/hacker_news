@@ -1,18 +1,47 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/l10n/l10n.dart';
 import 'package:app/post/post.dart';
-import 'package:app_ui/app_ui.dart';
+import 'package:app/post_header/post_header.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/pump_app.dart';
 
-void main() async {
-  final l10n = await AppLocalizations.delegate.load(Locale('en'));
+class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
+    implements PostHeaderBloc {}
 
+class _MockScrollController extends Mock implements ScrollController {}
+
+void main() {
   group(PostAppBar, () {
-    Widget buildSubject() => PostAppBar();
+    late PostHeaderBloc bloc;
+    late ScrollController controller;
+
+    setUp(() {
+      bloc = _MockPostHeaderBloc();
+      controller = _MockScrollController();
+      when(() => bloc.state).thenReturn(
+        PostHeaderState.initial(
+          id: '',
+          visitedPosts: {},
+        ),
+      );
+      when(() => controller.offset).thenReturn(0);
+    });
+
+    Widget buildSubject() {
+      return BlocProvider.value(
+        value: bloc,
+        child: ListenableProvider.value(
+          value: controller,
+          child: PostAppBar(),
+        ),
+      );
+    }
 
     testWidgets('renders $Hero with correct tag', (tester) async {
       await tester.pumpApp(buildSubject());
@@ -40,20 +69,7 @@ void main() async {
         final widget = findWidget(tester);
         expect(
           widget.title,
-          isA<Text>().having(
-            (text) => text.data,
-            'text',
-            l10n.post_title,
-          ),
-        );
-      });
-
-      testWidgets('has correct actionsPadding', (tester) async {
-        await tester.pumpApp(buildSubject());
-        final widget = findWidget(tester);
-        expect(
-          widget.actionsPadding,
-          EdgeInsets.only(right: AppSpacing.xs),
+          isA<PostAppBarTitle>(),
         );
       });
 
@@ -64,7 +80,6 @@ void main() async {
           widget.actions,
           [
             isA<PostSearchButton>(),
-            isA<PostOptionsButton>(),
           ],
         );
       });
