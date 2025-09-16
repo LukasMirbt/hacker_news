@@ -53,19 +53,9 @@ class _Body extends StatelessWidget {
       (PostBloc bloc) => bloc.state.fetchStatus.isFailure,
     );
 
-    final isEmpty = context.select(
-      (PostBloc bloc) => bloc.state.post.comments.isEmpty,
-    );
-
     if (isFailure) {
       return const AlwaysScrollable(
         child: AppErrorBody(),
-      );
-    }
-
-    if (isEmpty) {
-      return const AlwaysScrollable(
-        child: PostEmptyBody(),
       );
     }
 

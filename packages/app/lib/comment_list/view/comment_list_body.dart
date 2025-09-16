@@ -3,8 +3,8 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CommentSliverList extends StatelessWidget {
-  const CommentSliverList({super.key});
+class CommentListBody extends StatelessWidget {
+  const CommentListBody({super.key});
 
   Widget containerBuilder(BuildContext context, ItemBuilder itemBuilder) {
     return CommentListContainer(itemBuilder);

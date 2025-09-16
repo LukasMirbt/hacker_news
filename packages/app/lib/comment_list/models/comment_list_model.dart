@@ -38,6 +38,7 @@ class CommentListModel with _$CommentListModel {
   final SelectedCommentModel? selectedComment;
 
   int? get selectedIndex => selectedComment?.index;
+  bool get isEmpty => items.isEmpty;
 
   CommentModel? findById(String id) {
     return items.firstWhereOrNull(
