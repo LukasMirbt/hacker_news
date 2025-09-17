@@ -18,4 +18,7 @@ class PostHeaderModelPlaceholder extends PostHeaderModel {
           htmlText: null,
         ),
       );
+
+  @override
+  bool get isPlaceholder => true;
 }

@@ -21,5 +21,19 @@ void main() {
         });
       });
     });
+
+    group('isPlaceholder', () {
+      test('returns correct value', () {
+        final model = createSubject();
+        expect(model.isPlaceholder, true);
+      });
+    });
+
+    group('isEmpty', () {
+      test('returns correct value', () {
+        final model = createSubject();
+        expect(model.isEmpty, false);
+      });
+    });
   });
 }

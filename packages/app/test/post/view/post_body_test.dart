@@ -10,27 +10,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart' hide PostHeader;
 
-import '../../app/pump_app.dart';
+import '../pump_post.dart';
 
 class _MockPostBloc extends MockBloc<PostEvent, PostState>
     implements PostBloc {}
 
-class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
-    implements PostHeaderBloc {}
-
-class _MockCommentListBloc extends MockBloc<CommentListEvent, CommentListState>
-    implements CommentListBloc {}
-
 void main() {
   group(PostView, () {
     late PostBloc postBloc;
-    late PostHeaderBloc postHeaderBloc;
-    late CommentListBloc commentListBloc;
 
     setUp(() {
       postBloc = _MockPostBloc();
-      postHeaderBloc = _MockPostHeaderBloc();
-      commentListBloc = _MockCommentListBloc();
       when(() => postBloc.state).thenReturn(
         PostState(
           id: 'id',
@@ -39,31 +29,18 @@ void main() {
           post: PostPlaceholder(),
         ),
       );
-      when(() => postHeaderBloc.state).thenReturn(
-        PostHeaderState.initial(
-          id: 'id',
-          visitedPosts: {},
-        ),
-      );
-      when(() => commentListBloc.state).thenReturn(
-        CommentListState.initial(id: 'id'),
-      );
     });
 
     Widget buildSubject() {
-      return MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: postBloc),
-          BlocProvider.value(value: postHeaderBloc),
-          BlocProvider.value(value: commentListBloc),
-        ],
+      return BlocProvider.value(
+        value: postBloc,
         child: PostView(),
       );
     }
 
     testWidgets('renders $CustomScrollView '
         'with $AlwaysScrollableScrollPhysics', (tester) async {
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       final widget = tester.widget<CustomScrollView>(
         find.byType(CustomScrollView),
       );
@@ -74,13 +51,13 @@ void main() {
     });
 
     testWidgets('renders $PostHeader', (tester) async {
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       expect(find.byType(PostHeader), findsOneWidget);
     });
 
-    testWidgets('renders $CommentSliverList', (tester) async {
-      await tester.pumpApp(buildSubject());
-      expect(find.byType(CommentSliverList), findsOneWidget);
+    testWidgets('renders $CommentList', (tester) async {
+      await tester.pumpPost(buildSubject());
+      expect(find.byType(CommentList), findsOneWidget);
     });
   });
 }

@@ -18,6 +18,8 @@ class PostHeaderModel extends Equatable {
   final DateFormatter _formatter;
   final WebLinks _webLinks;
 
+  bool get isPlaceholder => false;
+
   String get id => _header.id;
   String get title => _header.title;
   String get url => _header.url;

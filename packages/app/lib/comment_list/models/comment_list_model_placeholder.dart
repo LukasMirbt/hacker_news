@@ -8,4 +8,10 @@ class CommentListModelPlaceholder extends CommentListModel {
           OtherUserCommentModelPlaceholder.from,
         ),
       );
+
+  @override
+  bool get isPlaceholder => true;
+
+  @override
+  bool get isEmpty => false;
 }

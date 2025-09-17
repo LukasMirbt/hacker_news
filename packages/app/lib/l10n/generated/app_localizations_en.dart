@@ -88,6 +88,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get comment_submitAction => 'Submit';
 
   @override
+  String get commentList_emptyTitle => 'No comments yet';
+
+  @override
+  String get commentList_emptyBody => 'Be the first to comment';
+
+  @override
   String commentList_age({required String age}) {
     return '$age ago';
   }

@@ -2,7 +2,6 @@ import 'package:app/post/post.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PostView extends StatefulWidget {
   const PostView({super.key});
@@ -45,10 +44,6 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.select(
-      (PostBloc bloc) => bloc.state.fetchStatus.isLoading,
-    );
-
     final isFailure = context.select(
       (PostBloc bloc) => bloc.state.fetchStatus.isFailure,
     );
@@ -59,9 +54,6 @@ class _Body extends StatelessWidget {
       );
     }
 
-    return Skeletonizer(
-      enabled: isLoading,
-      child: const PostBody(),
-    );
+    return const PostBody();
   }
 }

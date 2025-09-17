@@ -41,6 +41,13 @@ void main() async {
       );
     }
 
+    group('isPlaceholder', () {
+      test('returns correct value', () {
+        final model = createSubject();
+        expect(model.isPlaceholder, false);
+      });
+    });
+
     group('id', () {
       test('returns header.id', () {
         const id = 'id';

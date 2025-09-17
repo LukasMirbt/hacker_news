@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:app/comment_list/comment_list.dart';
 import 'package:app/post/post.dart';
-import 'package:app/post_header/post_header.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
@@ -10,18 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:post_repository/post_repository.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../app/pump_app.dart';
+import '../pump_post.dart';
 
 class _MockPostBloc extends MockBloc<PostEvent, PostState>
     implements PostBloc {}
-
-class _MockPostHeaderBloc extends MockBloc<PostHeaderEvent, PostHeaderState>
-    implements PostHeaderBloc {}
-
-class _MockCommentListBloc extends MockBloc<CommentListEvent, CommentListState>
-    implements CommentListBloc {}
 
 void main() {
   final initialState = PostState(
@@ -33,43 +24,26 @@ void main() {
 
   group(PostView, () {
     late PostBloc postBloc;
-    late PostHeaderBloc postHeaderBloc;
-    late CommentListBloc commentListBloc;
 
     setUp(() {
       postBloc = _MockPostBloc();
-      postHeaderBloc = _MockPostHeaderBloc();
-      commentListBloc = _MockCommentListBloc();
       when(() => postBloc.state).thenReturn(initialState);
-      when(() => postHeaderBloc.state).thenReturn(
-        PostHeaderState.initial(
-          id: 'id',
-          visitedPosts: {},
-        ),
-      );
-      when(() => commentListBloc.state).thenReturn(
-        CommentListState.initial(id: 'id'),
-      );
     });
 
     Widget buildSubject() {
-      return MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: postBloc),
-          BlocProvider.value(value: postHeaderBloc),
-          BlocProvider.value(value: commentListBloc),
-        ],
+      return BlocProvider.value(
+        value: postBloc,
         child: PostView(),
       );
     }
 
     testWidgets('renders $PostAppBar', (tester) async {
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       expect(find.byType(PostAppBar), findsOneWidget);
     });
 
     testWidgets('renders $PostRefreshIndicator', (tester) async {
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       expect(find.byType(PostRefreshIndicator), findsOneWidget);
     });
 
@@ -80,7 +54,7 @@ void main() {
           fetchStatus: FetchStatus.failure,
         ),
       );
-      await tester.pumpApp(buildSubject());
+      await tester.pumpPost(buildSubject());
       expect(
         find.descendant(
           of: find.byType(AlwaysScrollable),
@@ -90,33 +64,9 @@ void main() {
       );
     });
 
-    testWidgets('renders skeletonized $PostBody when !isFailure '
-        'and isLoading ', (tester) async {
-      await tester.pumpApp(buildSubject());
-      final skeletonizerScope = tester.widget<SkeletonizerScope>(
-        find.ancestor(
-          of: find.byType(PostBody),
-          matching: find.byType(SkeletonizerScope),
-        ),
-      );
-      expect(skeletonizerScope.enabled, true);
-    });
-
-    testWidgets('renders non-skeletonized $PostBody when !isFailure '
-        'and !isLoading', (tester) async {
-      when(() => postBloc.state).thenReturn(
-        initialState.copyWith(
-          fetchStatus: FetchStatus.success,
-        ),
-      );
-      await tester.pumpApp(buildSubject());
-      final skeletonizerScope = tester.widget<SkeletonizerScope>(
-        find.ancestor(
-          of: find.byType(PostBody),
-          matching: find.byType(SkeletonizerScope),
-        ),
-      );
-      expect(skeletonizerScope.enabled, false);
+    testWidgets('renders $PostBody when !isFailure', (tester) async {
+      await tester.pumpPost(buildSubject());
+      expect(find.byType(PostBody), findsOneWidget);
     });
   });
 }
