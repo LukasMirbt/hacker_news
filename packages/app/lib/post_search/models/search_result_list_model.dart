@@ -22,8 +22,6 @@ class SearchResultListModel with _$SearchResultListModel {
   final List<Comment> comments;
   final String query;
 
-  bool get isEmpty => query.isNotEmpty && items.isEmpty;
-
   late final List<SearchResultModel> items = () {
     if (query.isEmpty) return <SearchResultModel>[];
 

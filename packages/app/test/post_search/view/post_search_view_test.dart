@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:post_repository/post_repository.dart';
 
 import '../../app/pump_app.dart';
 
@@ -29,9 +30,8 @@ void main() {
       resultList = _MockSearchResultListModel();
       when(() => bloc.state).thenReturn(state);
       when(() => state.resultList).thenReturn(resultList);
-      when(() => resultList.query).thenReturn('');
+      when(() => resultList.query).thenReturn('query');
       when(() => resultList.items).thenReturn([]);
-      when(() => resultList.isEmpty).thenReturn(false);
     });
 
     Widget buildSubject() {
@@ -46,15 +46,36 @@ void main() {
       expect(find.byType(PostSearchAppBar), findsOneWidget);
     });
 
+    testWidgets('does not render $PostSearchBody '
+        'or $PostSearchEmptyBody when query.isEmpty', (tester) async {
+      when(() => resultList.query).thenReturn('');
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(PostSearchBody), findsNothing);
+      expect(find.byType(PostSearchEmptyBody), findsNothing);
+    });
+
     testWidgets('renders $PostSearchEmptyBody '
-        'when isEmpty', (tester) async {
-      when(() => resultList.isEmpty).thenReturn(true);
+        'when items.isEmpty', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostSearchEmptyBody), findsOneWidget);
     });
 
     testWidgets('renders $PostSearchBody '
-        'when !isEmpty', (tester) async {
+        'when !items.isEmpty', (tester) async {
+      when(() => resultList.items).thenReturn([
+        SearchResultModel(
+          snippet: SearchResultSnippet(
+            text: '',
+            match: SearchMatch(
+              start: 0,
+              end: 0,
+              isStartOfText: false,
+              isEndOfText: false,
+            ),
+          ),
+          comment: OtherUserCommentPlaceholder(),
+        ),
+      ]);
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostSearchBody), findsOneWidget);
     });

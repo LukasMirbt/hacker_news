@@ -19,12 +19,16 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEmpty = context.select(
-      (PostSearchBloc bloc) => bloc.state.resultList.isEmpty,
+    final isQueryEmpty = context.select(
+      (PostSearchBloc bloc) => bloc.state.resultList.query.isEmpty,
     );
 
-    if (isEmpty) return const PostSearchEmptyBody();
+    final isResultListEmpty = context.select(
+      (PostSearchBloc bloc) => bloc.state.resultList.items.isEmpty,
+    );
 
+    if (isQueryEmpty) return const SizedBox.shrink();
+    if (isResultListEmpty) return const PostSearchEmptyBody();
     return const PostSearchBody();
   }
 }
