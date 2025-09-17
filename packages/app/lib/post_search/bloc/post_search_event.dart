@@ -8,8 +8,8 @@ sealed class PostSearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class PostSearchCommentListSubscriptionRequested extends PostSearchEvent {
-  const PostSearchCommentListSubscriptionRequested();
+final class PostSearchSubscriptionRequested extends PostSearchEvent {
+  const PostSearchSubscriptionRequested();
 }
 
 final class PostSearchQueryChanged extends PostSearchEvent {

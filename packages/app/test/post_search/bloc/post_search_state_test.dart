@@ -6,15 +6,18 @@ void main() {
   group(PostSearchState, () {
     group('initial', () {
       test('returns $PostSearchState', () {
+        const status = FetchStatus.success;
         final comments = [OtherUserCommentPlaceholder()];
         const query = 'query';
 
         expect(
           PostSearchState.initial(
+            status: status,
             comments: comments,
             query: query,
           ),
           PostSearchState(
+            status: status,
             resultList: SearchResultListModel(
               comments: comments,
               query: query,
