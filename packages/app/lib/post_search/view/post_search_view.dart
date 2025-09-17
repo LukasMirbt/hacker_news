@@ -1,4 +1,5 @@
 import 'package:app/post_search/post_search.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,14 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = context.select(
+      (PostSearchBloc bloc) => bloc.state.status.isLoading,
+    );
+
+    final isFailure = context.select(
+      (PostSearchBloc bloc) => bloc.state.status.isFailure,
+    );
+
     final isQueryEmpty = context.select(
       (PostSearchBloc bloc) => bloc.state.resultList.query.isEmpty,
     );
@@ -27,6 +36,8 @@ class _Body extends StatelessWidget {
       (PostSearchBloc bloc) => bloc.state.resultList.items.isEmpty,
     );
 
+    if (isLoading) return const AppLoadingBody();
+    if (isFailure) return const AppErrorBody();
     if (isQueryEmpty) return const SizedBox.shrink();
     if (isResultListEmpty) return const PostSearchEmptyBody();
     return const PostSearchBody();

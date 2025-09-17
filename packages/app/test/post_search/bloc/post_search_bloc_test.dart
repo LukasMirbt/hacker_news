@@ -19,10 +19,12 @@ class _MockPost extends Mock implements Post {}
 class _MockSearchResultSnippet extends Mock implements SearchResultSnippet {}
 
 void main() {
+  const status = FetchStatus.loading;
   final comments = [OtherUserCommentPlaceholder()];
   const query = 'searchQuery';
 
   final initialState = PostSearchState.initial(
+    status: status,
     comments: comments,
     query: query,
   );
@@ -39,6 +41,7 @@ void main() {
       postRepositoryState = _MockPostRepositoryState();
       post = _MockPost();
       when(() => postRepository.state).thenReturn(postRepositoryState);
+      when(() => postRepositoryState.fetchStatus).thenReturn(status);
       when(() => postRepositoryState.post).thenReturn(post);
       when(() => post.comments).thenReturn(comments);
       when(() => postSearchRepository.query).thenReturn(query);
@@ -55,9 +58,9 @@ void main() {
       expect(buildBloc().state, initialState);
     });
 
-    group(PostSearchCommentListSubscriptionRequested, () {
+    group(PostSearchSubscriptionRequested, () {
       final updatedRepositoryState = _MockPostRepositoryState();
-
+      const updatedStatus = FetchStatus.success;
       final updatedPost = _MockPost();
 
       final updatedComments = [
@@ -71,18 +74,24 @@ void main() {
           when(() => postRepository.stream).thenAnswer(
             (_) => Stream.value(updatedRepositoryState),
           );
+          when(
+            () => updatedRepositoryState.fetchStatus,
+          ).thenReturn(updatedStatus);
           when(() => updatedRepositoryState.post).thenReturn(updatedPost);
           when(() => updatedPost.comments).thenReturn(updatedComments);
         },
         build: buildBloc,
         act: (bloc) {
           bloc.add(
-            PostSearchCommentListSubscriptionRequested(),
+            PostSearchSubscriptionRequested(),
           );
         },
         expect: () => [
-          initialState.copyWith.resultList(
-            comments: updatedComments,
+          initialState.copyWith(
+            status: updatedStatus,
+            resultList: initialState.resultList.copyWith(
+              comments: updatedComments,
+            ),
           ),
         ],
       );

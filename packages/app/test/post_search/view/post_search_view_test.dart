@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/post_search/post_search.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,7 @@ void main() {
       state = _MockPostSearchState();
       resultList = _MockSearchResultListModel();
       when(() => bloc.state).thenReturn(state);
+      when(() => state.status).thenReturn(FetchStatus.success);
       when(() => state.resultList).thenReturn(resultList);
       when(() => resultList.query).thenReturn('query');
       when(() => resultList.items).thenReturn([]);
@@ -46,8 +48,23 @@ void main() {
       expect(find.byType(PostSearchAppBar), findsOneWidget);
     });
 
+    testWidgets('renders $AppLoadingBody '
+        'when isLoading', (tester) async {
+      when(() => state.status).thenReturn(FetchStatus.loading);
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppLoadingBody), findsOneWidget);
+    });
+
+    testWidgets('renders $AppErrorBody '
+        'when isFailure', (tester) async {
+      when(() => state.status).thenReturn(FetchStatus.failure);
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(AppErrorBody), findsOneWidget);
+    });
+
     testWidgets('does not render $PostSearchBody '
-        'or $PostSearchEmptyBody when query.isEmpty', (tester) async {
+        'or $PostSearchEmptyBody when !isLoading and !isFailure '
+        'and query.isEmpty', (tester) async {
       when(() => resultList.query).thenReturn('');
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostSearchBody), findsNothing);
@@ -55,13 +72,15 @@ void main() {
     });
 
     testWidgets('renders $PostSearchEmptyBody '
-        'when items.isEmpty', (tester) async {
+        'when !isLoading and !isFailure '
+        'and items.isEmpty', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostSearchEmptyBody), findsOneWidget);
     });
 
     testWidgets('renders $PostSearchBody '
-        'when !items.isEmpty', (tester) async {
+        'when !isLoading and !isFailure '
+        'and !items.isEmpty', (tester) async {
       when(() => resultList.items).thenReturn([
         SearchResultModel(
           snippet: SearchResultSnippet(

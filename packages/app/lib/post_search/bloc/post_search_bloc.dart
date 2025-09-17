@@ -11,11 +11,12 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
        _postSearchRepository = postSearchRepository,
        super(
          PostSearchState.initial(
+           status: postRepository.state.fetchStatus,
            comments: postRepository.state.post.comments,
            query: postSearchRepository.query,
          ),
        ) {
-    on<PostSearchCommentListSubscriptionRequested>(
+    on<PostSearchSubscriptionRequested>(
       _onCommentListSubscriptionRequested,
     );
     on<PostSearchQueryChanged>(_onQueryChanged);
@@ -27,14 +28,17 @@ class PostSearchBloc extends Bloc<PostSearchEvent, PostSearchState> {
   final PostSearchRepository _postSearchRepository;
 
   Future<void> _onCommentListSubscriptionRequested(
-    PostSearchCommentListSubscriptionRequested event,
+    PostSearchSubscriptionRequested event,
     Emitter<PostSearchState> emit,
   ) {
     return emit.forEach(
       _postRepository.stream,
       onData: (repositoryState) {
-        return state.copyWith.resultList(
-          comments: repositoryState.post.comments,
+        return state.copyWith(
+          status: repositoryState.fetchStatus,
+          resultList: state.resultList.copyWith(
+            comments: repositoryState.post.comments,
+          ),
         );
       },
     );
