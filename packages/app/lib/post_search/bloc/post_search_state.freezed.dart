@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostSearchState {
 
- SearchResultListModel get resultList;
+ FetchStatus get status; SearchResultListModel get resultList;
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PostSearchStateCopyWith<PostSearchState> get copyWith => _$PostSearchStateCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&(identical(other.resultList, resultList) || other.resultList == resultList));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PostSearchState&&(identical(other.status, status) || other.status == status)&&(identical(other.resultList, resultList) || other.resultList == resultList));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,resultList);
+int get hashCode => Object.hash(runtimeType,status,resultList);
 
 @override
 String toString() {
-  return 'PostSearchState(resultList: $resultList)';
+  return 'PostSearchState(status: $status, resultList: $resultList)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PostSearchStateCopyWith<$Res>  {
   factory $PostSearchStateCopyWith(PostSearchState value, $Res Function(PostSearchState) _then) = _$PostSearchStateCopyWithImpl;
 @useResult
 $Res call({
- SearchResultListModel resultList
+ FetchStatus status, SearchResultListModel resultList
 });
 
 
@@ -62,9 +62,10 @@ class _$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? resultList = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? resultList = null,}) {
   return _then(_self.copyWith(
-resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as FetchStatus,resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
 as SearchResultListModel,
   ));
 }
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( SearchResultListModel resultList)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( FetchStatus status,  SearchResultListModel resultList)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.resultList);case _:
+return $default(_that.status,_that.resultList);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.resultList);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( SearchResultListModel resultList)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( FetchStatus status,  SearchResultListModel resultList)  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState():
-return $default(_that.resultList);case _:
+return $default(_that.status,_that.resultList);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.resultList);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( SearchResultListModel resultList)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( FetchStatus status,  SearchResultListModel resultList)?  $default,) {final _that = this;
 switch (_that) {
 case _PostSearchState() when $default != null:
-return $default(_that.resultList);case _:
+return $default(_that.status,_that.resultList);case _:
   return null;
 
 }
@@ -215,9 +216,10 @@ return $default(_that.resultList);case _:
 
 
 class _PostSearchState implements PostSearchState {
-  const _PostSearchState({required this.resultList});
+  const _PostSearchState({required this.status, required this.resultList});
   
 
+@override final  FetchStatus status;
 @override final  SearchResultListModel resultList;
 
 /// Create a copy of PostSearchState
@@ -230,16 +232,16 @@ _$PostSearchStateCopyWith<_PostSearchState> get copyWith => __$PostSearchStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&(identical(other.resultList, resultList) || other.resultList == resultList));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PostSearchState&&(identical(other.status, status) || other.status == status)&&(identical(other.resultList, resultList) || other.resultList == resultList));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,resultList);
+int get hashCode => Object.hash(runtimeType,status,resultList);
 
 @override
 String toString() {
-  return 'PostSearchState(resultList: $resultList)';
+  return 'PostSearchState(status: $status, resultList: $resultList)';
 }
 
 
@@ -250,7 +252,7 @@ abstract mixin class _$PostSearchStateCopyWith<$Res> implements $PostSearchState
   factory _$PostSearchStateCopyWith(_PostSearchState value, $Res Function(_PostSearchState) _then) = __$PostSearchStateCopyWithImpl;
 @override @useResult
 $Res call({
- SearchResultListModel resultList
+ FetchStatus status, SearchResultListModel resultList
 });
 
 
@@ -267,9 +269,10 @@ class __$PostSearchStateCopyWithImpl<$Res>
 
 /// Create a copy of PostSearchState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? resultList = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? resultList = null,}) {
   return _then(_PostSearchState(
-resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as FetchStatus,resultList: null == resultList ? _self.resultList : resultList // ignore: cast_nullable_to_non_nullable
 as SearchResultListModel,
   ));
 }

@@ -15,7 +15,7 @@ class PostSearchPage extends StatelessWidget {
             postRepository: context.read<PostRepository>(),
             postSearchRepository: context.read<PostSearchRepository>(),
           )..add(
-            const PostSearchCommentListSubscriptionRequested(),
+            const PostSearchSubscriptionRequested(),
           ),
       child: const PostSearchView(),
     );
