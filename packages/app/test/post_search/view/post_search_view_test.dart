@@ -12,18 +12,26 @@ import '../../app/pump_app.dart';
 class _MockPostSearchBloc extends MockBloc<PostSearchEvent, PostSearchState>
     implements PostSearchBloc {}
 
+class _MockPostSearchState extends Mock implements PostSearchState {}
+
+class _MockSearchResultListModel extends Mock
+    implements SearchResultListModel {}
+
 void main() {
   group(PostSearchView, () {
     late PostSearchBloc bloc;
+    late PostSearchState state;
+    late SearchResultListModel resultList;
 
     setUp(() {
       bloc = _MockPostSearchBloc();
-      when(() => bloc.state).thenReturn(
-        PostSearchState.initial(
-          query: '',
-          comments: [],
-        ),
-      );
+      state = _MockPostSearchState();
+      resultList = _MockSearchResultListModel();
+      when(() => bloc.state).thenReturn(state);
+      when(() => state.resultList).thenReturn(resultList);
+      when(() => resultList.query).thenReturn('');
+      when(() => resultList.items).thenReturn([]);
+      when(() => resultList.isEmpty).thenReturn(false);
     });
 
     Widget buildSubject() {
@@ -38,7 +46,15 @@ void main() {
       expect(find.byType(PostSearchAppBar), findsOneWidget);
     });
 
-    testWidgets('renders $PostSearchBody', (tester) async {
+    testWidgets('renders $PostSearchEmptyBody '
+        'when isEmpty', (tester) async {
+      when(() => resultList.isEmpty).thenReturn(true);
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(PostSearchEmptyBody), findsOneWidget);
+    });
+
+    testWidgets('renders $PostSearchBody '
+        'when !isEmpty', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(PostSearchBody), findsOneWidget);
     });

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SearchResultListModel {
 
- List<Comment> get comments; String get query; TextParser get textParser; SnippetExtractor get snippetExtractor;
+ TextParser get _textParser; SnippetExtractor get _snippetExtractor; List<Comment> get comments; String get query; List<SearchResultModel> get items;
 /// Create a copy of SearchResultListModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SearchResultListModelCopyWith<SearchResultListModel> get copyWith => _$SearchRe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchResultListModel&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.textParser, textParser) || other.textParser == textParser)&&(identical(other.snippetExtractor, snippetExtractor) || other.snippetExtractor == snippetExtractor));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchResultListModel&&(identical(other._textParser, _textParser) || other._textParser == _textParser)&&(identical(other._snippetExtractor, _snippetExtractor) || other._snippetExtractor == _snippetExtractor)&&const DeepCollectionEquality().equals(other.comments, comments)&&(identical(other.query, query) || other.query == query)&&const DeepCollectionEquality().equals(other.items, items));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(comments),query,textParser,snippetExtractor);
+int get hashCode => Object.hash(runtimeType,_textParser,_snippetExtractor,const DeepCollectionEquality().hash(comments),query,const DeepCollectionEquality().hash(items));
 
 @override
 String toString() {
-  return 'SearchResultListModel(comments: $comments, query: $query, textParser: $textParser, snippetExtractor: $snippetExtractor)';
+  return 'SearchResultListModel(_textParser: $_textParser, _snippetExtractor: $_snippetExtractor, comments: $comments, query: $query, items: $items)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SearchResultListModelCopyWith<$Res>  {
   factory $SearchResultListModelCopyWith(SearchResultListModel value, $Res Function(SearchResultListModel) _then) = _$SearchResultListModelCopyWithImpl;
 @useResult
 $Res call({
- List<Comment> comments, String query, TextParser textParser, SnippetExtractor snippetExtractor
+ List<Comment> comments, String query
 });
 
 
@@ -62,13 +62,11 @@ class _$SearchResultListModelCopyWithImpl<$Res>
 
 /// Create a copy of SearchResultListModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? comments = null,Object? query = null,Object? textParser = null,Object? snippetExtractor = null,}) {
-  return _then(_self.copyWith(
+@pragma('vm:prefer-inline') @override $Res call({Object? comments = null,Object? query = null,}) {
+  return _then(SearchResultListModel(
 comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
 as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,textParser: null == textParser ? _self.textParser : textParser // ignore: cast_nullable_to_non_nullable
-as TextParser,snippetExtractor: null == snippetExtractor ? _self.snippetExtractor : snippetExtractor // ignore: cast_nullable_to_non_nullable
-as SnippetExtractor,
+as String,
   ));
 }
 
@@ -89,11 +87,10 @@ extension SearchResultListModelPatterns on SearchResultListModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SearchResultListModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _SearchResultListModel() when $default != null:
-return $default(_that);case _:
+case _:
   return orElse();
 
 }
@@ -111,11 +108,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SearchResultListModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _SearchResultListModel():
-return $default(_that);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -132,11 +128,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SearchResultListModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
 final _that = this;
 switch (_that) {
-case _SearchResultListModel() when $default != null:
-return $default(_that);case _:
+case _:
   return null;
 
 }
@@ -153,10 +148,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  TextParser textParser,  SnippetExtractor snippetExtractor)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _SearchResultListModel() when $default != null:
-return $default(_that.comments,_that.query,_that.textParser,_that.snippetExtractor);case _:
+case _:
   return orElse();
 
 }
@@ -174,10 +168,9 @@ return $default(_that.comments,_that.query,_that.textParser,_that.snippetExtract
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Comment> comments,  String query,  TextParser textParser,  SnippetExtractor snippetExtractor)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _SearchResultListModel():
-return $default(_that.comments,_that.query,_that.textParser,_that.snippetExtractor);case _:
+case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,92 +187,13 @@ return $default(_that.comments,_that.query,_that.textParser,_that.snippetExtract
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Comment> comments,  String query,  TextParser textParser,  SnippetExtractor snippetExtractor)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
 switch (_that) {
-case _SearchResultListModel() when $default != null:
-return $default(_that.comments,_that.query,_that.textParser,_that.snippetExtractor);case _:
+case _:
   return null;
 
 }
 }
-
-}
-
-/// @nodoc
-
-
-class _SearchResultListModel extends SearchResultListModel {
-  const _SearchResultListModel({required final  List<Comment> comments, required this.query, this.textParser = const TextParser(), this.snippetExtractor = const SnippetExtractor()}): _comments = comments,super._();
-  
-
- final  List<Comment> _comments;
-@override List<Comment> get comments {
-  if (_comments is EqualUnmodifiableListView) return _comments;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_comments);
-}
-
-@override final  String query;
-@override@JsonKey() final  TextParser textParser;
-@override@JsonKey() final  SnippetExtractor snippetExtractor;
-
-/// Create a copy of SearchResultListModel
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$SearchResultListModelCopyWith<_SearchResultListModel> get copyWith => __$SearchResultListModelCopyWithImpl<_SearchResultListModel>(this, _$identity);
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchResultListModel&&const DeepCollectionEquality().equals(other._comments, _comments)&&(identical(other.query, query) || other.query == query)&&(identical(other.textParser, textParser) || other.textParser == textParser)&&(identical(other.snippetExtractor, snippetExtractor) || other.snippetExtractor == snippetExtractor));
-}
-
-
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_comments),query,textParser,snippetExtractor);
-
-@override
-String toString() {
-  return 'SearchResultListModel(comments: $comments, query: $query, textParser: $textParser, snippetExtractor: $snippetExtractor)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$SearchResultListModelCopyWith<$Res> implements $SearchResultListModelCopyWith<$Res> {
-  factory _$SearchResultListModelCopyWith(_SearchResultListModel value, $Res Function(_SearchResultListModel) _then) = __$SearchResultListModelCopyWithImpl;
-@override @useResult
-$Res call({
- List<Comment> comments, String query, TextParser textParser, SnippetExtractor snippetExtractor
-});
-
-
-
-
-}
-/// @nodoc
-class __$SearchResultListModelCopyWithImpl<$Res>
-    implements _$SearchResultListModelCopyWith<$Res> {
-  __$SearchResultListModelCopyWithImpl(this._self, this._then);
-
-  final _SearchResultListModel _self;
-  final $Res Function(_SearchResultListModel) _then;
-
-/// Create a copy of SearchResultListModel
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? comments = null,Object? query = null,Object? textParser = null,Object? snippetExtractor = null,}) {
-  return _then(_SearchResultListModel(
-comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
-as List<Comment>,query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
-as String,textParser: null == textParser ? _self.textParser : textParser // ignore: cast_nullable_to_non_nullable
-as TextParser,snippetExtractor: null == snippetExtractor ? _self.snippetExtractor : snippetExtractor // ignore: cast_nullable_to_non_nullable
-as SnippetExtractor,
-  ));
-}
-
 
 }
 

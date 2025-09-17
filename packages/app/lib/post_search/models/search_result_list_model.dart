@@ -1,3 +1,5 @@
+// ignore_for_file: annotate_overrides
+
 import 'package:app/post_search/post_search.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:post_repository/post_repository.dart';
@@ -6,31 +8,37 @@ import 'package:text_parser/text_parser.dart';
 part 'search_result_list_model.freezed.dart';
 
 @freezed
-abstract class SearchResultListModel with _$SearchResultListModel {
-  const factory SearchResultListModel({
-    required List<Comment> comments,
-    required String query,
-    @Default(TextParser()) TextParser textParser,
-    @Default(SnippetExtractor()) SnippetExtractor snippetExtractor,
-  }) = _SearchResultListModel;
+class SearchResultListModel with _$SearchResultListModel {
+  SearchResultListModel({
+    required this.comments,
+    required this.query,
+    TextParser? textParser,
+    SnippetExtractor? snippetExtractor,
+  }) : _textParser = textParser ?? const TextParser(),
+       _snippetExtractor = snippetExtractor ?? const SnippetExtractor();
 
-  const SearchResultListModel._();
+  final TextParser _textParser;
+  final SnippetExtractor _snippetExtractor;
+  final List<Comment> comments;
+  final String query;
 
-  List<SearchResultModel> get items {
-    if (query.isEmpty) return [];
+  bool get isEmpty => query.isNotEmpty && items.isEmpty;
+
+  late final List<SearchResultModel> items = () {
+    if (query.isEmpty) return <SearchResultModel>[];
 
     final matchedResults = <SearchResultModel>[];
 
     for (final comment in comments) {
       if (matchedResults.length >= 100) break;
 
-      final text = textParser.parse(comment.htmlText);
+      final text = _textParser.parse(comment.htmlText);
 
       final lowerCaseText = text.toLowerCase();
       final lowerCaseQuery = query.toLowerCase();
 
       if (lowerCaseText.contains(lowerCaseQuery)) {
-        final snippet = snippetExtractor.extract(
+        final snippet = _snippetExtractor.extract(
           text: text,
           query: query,
         );
@@ -45,5 +53,5 @@ abstract class SearchResultListModel with _$SearchResultListModel {
     }
 
     return matchedResults;
-  }
+  }();
 }
