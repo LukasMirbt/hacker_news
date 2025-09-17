@@ -31,7 +31,7 @@ class PostFeedItemModel extends FeedItemModel {
       );
     } else {
       final articleUrl = _item.url;
-      final postUrl = _webLinks.postUrl(_item.id);
+      final postUrl = _webLinks.itemUrl(id: _item.id);
       return l10n.feed_postWithArticleShareText(
         title: title,
         articleUrl: articleUrl,

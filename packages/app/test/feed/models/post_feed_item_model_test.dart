@@ -119,13 +119,13 @@ void main() async {
           'is non-null', () {
         const articleUrl = 'articleUrl';
         const id = 'id';
-        final postUrl = Uri.parse('https://www.example.com/post');
-        final postUrlMethod = () => webLinks.postUrl(id);
+        final postUrl = Uri.parse('https://www.example.com/item');
+        final itemUrlMethod = () => webLinks.itemUrl(id: id);
         when(() => item.title).thenReturn(title);
         when(() => item.urlHost).thenReturn('urlHost');
         when(() => item.url).thenReturn(articleUrl);
         when(() => item.id).thenReturn(id);
-        when(postUrlMethod).thenReturn(postUrl);
+        when(itemUrlMethod).thenReturn(postUrl);
         final model = createSubject();
         expect(
           model.shareText(l10n),
@@ -135,7 +135,7 @@ void main() async {
             postUrl: postUrl.toString(),
           ),
         );
-        verify(postUrlMethod).called(1);
+        verify(itemUrlMethod).called(1);
       });
     });
 

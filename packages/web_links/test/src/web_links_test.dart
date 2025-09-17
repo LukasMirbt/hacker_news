@@ -88,11 +88,11 @@ void main() {
       });
     });
 
-    group('commentUrl', () {
+    group('itemUrl', () {
       test('returns correct $Uri', () {
         final links = createSubject();
         expect(
-          links.commentUrl(id),
+          links.itemUrl(id: id),
           WebLinks.baseUrl.replace(
             path: 'item',
             queryParameters: {'id': id},
@@ -101,40 +101,28 @@ void main() {
       });
     });
 
-    group('feedItemUrl', () {
+    group('userUrl', () {
       test('returns correct $Uri', () {
         final links = createSubject();
         expect(
-          links.feedItemUrl(id),
-          WebLinks.baseUrl.replace(
-            path: 'item',
-            queryParameters: {'id': id},
-          ),
-        );
-      });
-    });
-
-    group('postUrl', () {
-      test('returns correct $Uri', () {
-        final links = createSubject();
-        expect(
-          links.postUrl(id),
-          WebLinks.baseUrl.replace(
-            path: 'item',
-            queryParameters: {'id': id},
-          ),
-        );
-      });
-    });
-
-    group('profileUrl', () {
-      test('returns correct $Uri', () {
-        final links = createSubject();
-        expect(
-          links.profileUrl(id),
+          links.userUrl(id: id),
           WebLinks.baseUrl.replace(
             path: 'user',
             queryParameters: {'id': id},
+          ),
+        );
+      });
+    });
+
+    group('fromUrl', () {
+      test('returns correct $Uri', () {
+        final links = createSubject();
+        const site = 'example.com';
+        expect(
+          links.fromUrl(site: site),
+          WebLinks.baseUrl.replace(
+            path: 'from',
+            queryParameters: {'site': site},
           ),
         );
       });

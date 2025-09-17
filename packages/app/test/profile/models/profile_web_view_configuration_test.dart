@@ -8,14 +8,14 @@ class _MockWebLinks extends Mock implements WebLinks {}
 
 void main() {
   const id = 'id';
-  final profileUrl = Uri.parse('https://www.example.com/profile?id=$id');
+  final userUrl = Uri.parse('https://www.example.com/profile?id=$id');
 
   group(ProfileWebViewConfiguration, () {
     late WebLinks links;
 
     setUp(() {
       links = _MockWebLinks();
-      when(() => links.profileUrl(id)).thenReturn(profileUrl);
+      when(() => links.userUrl(id: id)).thenReturn(userUrl);
     });
 
     ProfileWebViewConfiguration createSubject() {
@@ -33,7 +33,7 @@ void main() {
     group('initialUrl', () {
       test('has correct value', () {
         final configuration = createSubject();
-        expect(configuration.initialUrl, profileUrl);
+        expect(configuration.initialUrl, userUrl);
       });
     });
   });

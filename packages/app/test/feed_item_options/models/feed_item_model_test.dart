@@ -30,12 +30,12 @@ void main() {
 
     group('webRedirect', () {
       const id = 'id';
-      final feedItemUrl = Uri.parse('https://example.com');
-      final getFeedItemUrl = () => webLinks.feedItemUrl(id);
+      final itemUrl = Uri.parse('https://example.com');
+      final getItemUrl = () => webLinks.itemUrl(id: id);
 
       test('returns $WebRedirect', () {
         when(() => item.id).thenReturn(id);
-        when(getFeedItemUrl).thenReturn(feedItemUrl);
+        when(getItemUrl).thenReturn(itemUrl);
         final model = createSubject();
         final redirect = model.webRedirect;
         expect(
@@ -43,10 +43,10 @@ void main() {
           isA<WebRedirect>().having(
             (redirect) => redirect.url,
             'url',
-            feedItemUrl,
+            itemUrl,
           ),
         );
-        verify(getFeedItemUrl).called(1);
+        verify(getItemUrl).called(1);
       });
     });
   });

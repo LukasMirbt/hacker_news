@@ -15,8 +15,6 @@ class SearchResultModel extends Equatable {
   String get user => _comment.hnuser.id;
   SearchMatch get match => snippet.match;
 
-  Comment toRepository() => _comment;
-
   @override
   List<Object> get props => [
     _comment,

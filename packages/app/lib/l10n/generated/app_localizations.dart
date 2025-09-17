@@ -652,6 +652,12 @@ abstract class AppLocalizations {
   /// **'Try a different query'**
   String get postSearch_emptyBody;
 
+  /// No description provided for @postOptions_moreFromSite.
+  ///
+  /// In en, this message translates to:
+  /// **'More from site'**
+  String get postOptions_moreFromSite;
+
   /// No description provided for @postOptions_openOnWeb.
   ///
   /// In en, this message translates to:

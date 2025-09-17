@@ -28,12 +28,12 @@ sealed class ThreadCommentModel extends Equatable {
   String? get onTitle => _comment.onTitle;
 
   WebRedirect get webRedirect {
-    final url = _links.commentUrl(_comment.id);
+    final url = _links.itemUrl(id: _comment.id);
     return WebRedirect(url: url);
   }
 
   String get shareText {
-    final url = _links.commentUrl(_comment.id);
+    final url = _links.itemUrl(id: _comment.id);
     return url.toString();
   }
 

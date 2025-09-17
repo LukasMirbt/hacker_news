@@ -53,15 +53,5 @@ void main() {
         expect(model.match, match);
       });
     });
-
-    group('toRepository', () {
-      test('returns comment', () {
-        final model = createSubject();
-        expect(
-          model.toRepository(),
-          comment,
-        );
-      });
-    });
   });
 }

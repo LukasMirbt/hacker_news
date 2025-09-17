@@ -313,6 +313,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postSearch_emptyBody => 'Try a different query';
 
   @override
+  String get postOptions_moreFromSite => 'More from site';
+
+  @override
   String get postOptions_openOnWeb => 'Open on web';
 
   @override
