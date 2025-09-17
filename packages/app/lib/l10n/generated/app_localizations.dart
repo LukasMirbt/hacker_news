@@ -640,6 +640,18 @@ abstract class AppLocalizations {
   /// **'...'**
   String get postSearch_endEllipsis;
 
+  /// No description provided for @postSearch_emptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get postSearch_emptyTitle;
+
+  /// No description provided for @postSearch_emptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different query'**
+  String get postSearch_emptyBody;
+
   /// No description provided for @postOptions_openOnWeb.
   ///
   /// In en, this message translates to:

@@ -307,6 +307,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postSearch_endEllipsis => '...';
 
   @override
+  String get postSearch_emptyTitle => 'No results found';
+
+  @override
+  String get postSearch_emptyBody => 'Try a different query';
+
+  @override
   String get postOptions_openOnWeb => 'Open on web';
 
   @override
