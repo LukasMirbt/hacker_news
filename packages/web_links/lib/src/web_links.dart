@@ -9,16 +9,14 @@ class WebLinks {
     host: 'news.ycombinator.com',
   );
 
-  Uri get searchUrl {
-    return Uri(
-      scheme: 'https',
-      host: 'hn.algolia.com',
-      path: '/',
-      queryParameters: {
-        'dateRange': 'pastMonth',
-      },
-    );
-  }
+  Uri get searchUrl => Uri(
+    scheme: 'https',
+    host: 'hn.algolia.com',
+    path: '/',
+    queryParameters: {
+      'dateRange': 'pastMonth',
+    },
+  );
 
   bool isPost(Uri url) {
     return url.host == 'news.ycombinator.com' &&
@@ -36,31 +34,24 @@ class WebLinks {
     return baseUrl.resolveUri(url);
   }
 
-  Uri commentUrl(String id) {
+  Uri itemUrl({required String id}) {
     return baseUrl.replace(
       path: 'item',
       queryParameters: {'id': id},
     );
   }
 
-  Uri feedItemUrl(String id) {
-    return baseUrl.replace(
-      path: 'item',
-      queryParameters: {'id': id},
-    );
-  }
-
-  Uri postUrl(String id) {
-    return baseUrl.replace(
-      path: 'item',
-      queryParameters: {'id': id},
-    );
-  }
-
-  Uri profileUrl(String id) {
+  Uri userUrl({required String id}) {
     return baseUrl.replace(
       path: 'user',
       queryParameters: {'id': id},
+    );
+  }
+
+  Uri fromUrl({required String site}) {
+    return baseUrl.replace(
+      path: 'from',
+      queryParameters: {'site': site},
     );
   }
 }

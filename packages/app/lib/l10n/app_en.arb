@@ -146,6 +146,7 @@
   "postSearch_endEllipsis": "...",
   "postSearch_emptyTitle": "No results found",
   "postSearch_emptyBody": "Try a different query",
+  "postOptions_moreFromSite": "More from site",
   "postOptions_openOnWeb": "Open on web",
   "postHeader_shareText": "{title}\n{url}",
   "@postHeader_shareText": {

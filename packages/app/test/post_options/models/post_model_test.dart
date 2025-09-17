@@ -38,10 +38,10 @@ void main() {
 
     group('webRedirect', () {
       final url = Uri.parse('https://example.com');
-      final getPostUrl = () => webLinks.postUrl(id);
+      final getItemUrl = () => webLinks.itemUrl(id: id);
 
       test('returns $WebRedirect with correct url', () {
-        when(getPostUrl).thenReturn(url);
+        when(getItemUrl).thenReturn(url);
         final model = createSubject();
         final redirect = model.webRedirect;
         expect(
@@ -52,7 +52,7 @@ void main() {
             url,
           ),
         );
-        verify(getPostUrl).called(1);
+        verify(getItemUrl).called(1);
       });
     });
   });

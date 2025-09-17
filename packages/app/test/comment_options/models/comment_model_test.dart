@@ -69,10 +69,10 @@ void main() {
     });
 
     group('webRedirect', () {
-      final getCommentUrl = () => webLinks.commentUrl(id);
+      final getItemUrl = () => webLinks.itemUrl(id: id);
 
       test('returns $WebRedirect with correct url', () {
-        when(getCommentUrl).thenReturn(url);
+        when(getItemUrl).thenReturn(url);
         final model = createSubject();
         final redirect = model.webRedirect;
         expect(
@@ -83,12 +83,12 @@ void main() {
             url,
           ),
         );
-        verify(getCommentUrl).called(1);
+        verify(getItemUrl).called(1);
       });
     });
 
     group('shareText', () {
-      final getCommentUrl = () => webLinks.commentUrl(id);
+      final getCommentUrl = () => webLinks.itemUrl(id: id);
 
       test('returns correct value', () {
         when(getCommentUrl).thenReturn(url);

@@ -6,6 +6,6 @@ class ProfileWebViewConfiguration extends AppWebViewConfiguration {
     required String id,
     WebLinks links = const WebLinks(),
   }) : super(
-         initialUrl: links.profileUrl(id),
+         initialUrl: links.userUrl(id: id),
        );
 }
