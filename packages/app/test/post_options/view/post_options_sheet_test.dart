@@ -50,6 +50,16 @@ void main() {
       expect(find.byType(AppBottomSheet), findsOneWidget);
     });
 
+    testWidgets('renders $UserOption', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(UserOption), findsOneWidget);
+    });
+
+    testWidgets('renders $MoreFromSiteOption', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(MoreFromSiteOption), findsOneWidget);
+    });
+
     testWidgets('renders $OpenOnWebOption', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(OpenOnWebOption), findsOneWidget);
