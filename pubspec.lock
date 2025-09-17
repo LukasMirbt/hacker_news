@@ -322,12 +322,13 @@ packages:
     source: hosted
     version: "0.4.1"
   dio:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: dio
-      sha256: d90ee57923d1828ac14e492ca49440f65477f4bb1263575900be731a3dac66a9
-      url: "https://pub.dev"
-    source: hosted
+      path: dio
+      ref: cronet-fallback
+      resolved-ref: b8c0190e9bd00c8146a2ff2c3a5508acbba8e6a6
+      url: "https://github.com/LukasMirbt/dio"
+    source: git
     version: "5.9.0"
   dio_cookie_manager:
     dependency: transitive
@@ -340,10 +341,11 @@ packages:
   dio_web_adapter:
     dependency: transitive
     description:
-      name: dio_web_adapter
-      sha256: "7586e476d70caecaf1686d21eee7247ea43ef5c345eab9e0cc3583ff13378d78"
-      url: "https://pub.dev"
-    source: hosted
+      path: "plugins/web_adapter"
+      ref: b8c0190e9bd00c8146a2ff2c3a5508acbba8e6a6
+      resolved-ref: b8c0190e9bd00c8146a2ff2c3a5508acbba8e6a6
+      url: "https://github.com/LukasMirbt/dio"
+    source: git
     version: "2.1.1"
   drift:
     dependency: transitive
@@ -911,12 +913,13 @@ packages:
     source: hosted
     version: "3.1.0"
   native_dio_adapter:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: native_dio_adapter
-      sha256: "1c51bd42027861d27ccad462ba0903f5e3197461cc6d59a0bb8658cb5ad7bd01"
-      url: "https://pub.dev"
-    source: hosted
+      path: "plugins/native_dio_adapter"
+      ref: cronet-fallback
+      resolved-ref: b8c0190e9bd00c8146a2ff2c3a5508acbba8e6a6
+      url: "https://github.com/LukasMirbt/dio"
+    source: git
     version: "1.5.0"
   nested:
     dependency: transitive
