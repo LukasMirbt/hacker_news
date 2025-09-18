@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:analytics_repository/analytics_repository.dart';
+import 'package:analytics_repository/analytics_repository.dart'
+    hide AnalyticsEvent;
+import 'package:app/analytics/analytics.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app_router/app_router.dart';
 import 'package:app/authentication/authentication.dart'
@@ -84,12 +86,13 @@ class _MockVoteRepository extends Mock implements VoteRepository {
   Stream<VoteState> get stream => Stream.empty();
 }
 
+class _MockAnalyticsBloc extends MockBloc<AnalyticsEvent, void>
+    implements AnalyticsBloc {}
+
 class _MockAppBloc extends MockBloc<AppEvent, AppState> implements AppBloc {
   @override
   AppState get state => AppState(isAnalyticsConsentCompleted: false);
 }
-
-class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockAuthenticationBloc
     extends MockBloc<AuthenticationEvent, authentication.AuthenticationState>
@@ -121,6 +124,8 @@ class _MockVoteFailureBloc extends MockBloc<VoteFailureEvent, VoteState>
   @override
   VoteState get state => VoteInitial();
 }
+
+class _MockAppRouter extends Mock implements AppRouter {}
 
 class _MockGoRouter extends Mock implements GoRouter {}
 
@@ -182,6 +187,9 @@ extension PumpAppExtension on WidgetTester {
           ],
           child: MultiBlocProvider(
             providers: [
+              BlocProvider<AnalyticsBloc>(
+                create: (_) => _MockAnalyticsBloc(),
+              ),
               BlocProvider<AppBloc>(
                 create: (_) => _MockAppBloc(),
               ),
