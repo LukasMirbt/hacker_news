@@ -35,18 +35,6 @@ class _MockStatefulNavigationShell extends Mock
     with Diagnosticable
     implements StatefulNavigationShell {}
 
-class _MockGoRouterDelegate extends Mock implements GoRouterDelegate {}
-
-class _MockRouteMatchList extends Mock
-    with Diagnosticable
-    implements RouteMatchList {}
-
-class _MockRouteMatch extends Mock with Diagnosticable implements RouteMatch {}
-
-class _MockShellRouteMatch extends Mock
-    with Diagnosticable
-    implements ShellRouteMatch {}
-
 void main() {
   const redirect = 'redirect';
   const location = 'location';
@@ -164,57 +152,6 @@ void main() {
         when(() => state.uri).thenReturn(Uri());
         final appRouter = createSubject();
         expect(appRouter.from, AppRouter.initialLocation);
-      });
-    });
-
-    group('shellRouteCanPop', () {
-      late GoRouterDelegate routerDelegate;
-      late RouteMatchList currentConfiguration;
-      late ShellRouteMatch shellRouteMatch;
-
-      setUp(() {
-        routerDelegate = _MockGoRouterDelegate();
-        currentConfiguration = _MockRouteMatchList();
-        shellRouteMatch = _MockShellRouteMatch();
-        when(() => goRouter.routerDelegate).thenReturn(routerDelegate);
-        when(() => routerDelegate.currentConfiguration).thenReturn(
-          currentConfiguration,
-        );
-      });
-
-      test('returns true when lastMatch '
-          'is not $ShellRouteMatch', () {
-        when(
-          () => currentConfiguration.matches,
-        ).thenReturn(
-          [_MockRouteMatch()],
-        );
-        final appRouter = createSubject();
-        expect(appRouter.shellRouteCanPop, true);
-      });
-
-      test('returns false when lastMatch is $ShellRouteMatch '
-          'and has more than one match', () {
-        when(() => currentConfiguration.matches).thenReturn(
-          [_MockRouteMatch(), _MockRouteMatch(), shellRouteMatch],
-        );
-        when(() => shellRouteMatch.matches).thenReturn(
-          [_MockRouteMatch(), _MockRouteMatch()],
-        );
-        final appRouter = createSubject();
-        expect(appRouter.shellRouteCanPop, false);
-      });
-
-      test('returns true when lastMatch is $ShellRouteMatch '
-          'and has exactly one match', () {
-        when(() => currentConfiguration.matches).thenReturn(
-          [_MockRouteMatch(), shellRouteMatch],
-        );
-        when(() => shellRouteMatch.matches).thenReturn(
-          [_MockRouteMatch()],
-        );
-        final appRouter = createSubject();
-        expect(appRouter.shellRouteCanPop, true);
       });
     });
 

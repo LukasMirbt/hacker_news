@@ -1,4 +1,5 @@
 import 'package:analytics_repository/analytics_repository.dart';
+import 'package:app/analytics/analytics.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app_router/app_router.dart';
 import 'package:app/authentication/authentication.dart';
@@ -86,6 +87,11 @@ class App extends StatelessWidget {
         ],
         child: MultiBlocProvider(
           providers: [
+            BlocProvider(
+              create: (context) => AnalyticsBloc(
+                analyticsRepository: context.read<AnalyticsRepository>(),
+              ),
+            ),
             BlocProvider(
               create: (context) => AppBloc(
                 settingsStorage: context.read<SettingsStorage>(),

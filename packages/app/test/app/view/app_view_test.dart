@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/analytics/analytics.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app_router/app_router.dart';
 import 'package:app/authentication/authentication.dart';
@@ -138,6 +139,11 @@ void main() {
     testWidgets('renders $AppStatusListener', (tester) async {
       await tester.pumpApp(buildSubject());
       expect(find.byType(AppStatusListener), findsOneWidget);
+    });
+
+    testWidgets('renders $RouterDelegateListener', (tester) async {
+      await tester.pumpApp(buildSubject());
+      expect(find.byType(RouterDelegateListener), findsOneWidget);
     });
   });
 }

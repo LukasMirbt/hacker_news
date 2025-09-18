@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:analytics_repository/analytics_repository.dart';
+import 'package:app/analytics/analytics.dart' hide AnalyticsEvent;
 import 'package:app/app/app.dart';
 import 'package:app/app_router/app_router.dart';
 import 'package:app/authentication/authentication.dart'
@@ -43,7 +44,10 @@ class _MockThreadApi extends Mock implements ThreadApi {}
 
 class _MockVisitedPostStorage extends Mock implements VisitedPostStorage {}
 
-class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {}
+class _MockAnalyticsRepository extends Mock implements AnalyticsRepository {
+  @override
+  Future<void> send(AnalyticsEvent event) async {}
+}
 
 class _MockAuthenticationRepository extends Mock
     implements AuthenticationRepository {
@@ -201,6 +205,12 @@ void main() {
       await tester.pumpWidget(buildSubject());
       final context = childContext(tester);
       expect(context.read<VoteRepository>(), isNotNull);
+    });
+
+    testWidgets('provides $AnalyticsBloc', (tester) async {
+      await tester.pumpWidget(buildSubject());
+      final context = childContext(tester);
+      expect(context.read<AnalyticsBloc>(), isNotNull);
     });
 
     testWidgets('provides $AppBloc', (tester) async {

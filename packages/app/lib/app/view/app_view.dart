@@ -1,3 +1,4 @@
+import 'package:app/analytics/analytics.dart';
 import 'package:app/app/app.dart';
 import 'package:app/app_router/app_router.dart';
 import 'package:app/authentication/authentication.dart';
@@ -51,6 +52,7 @@ class AppView extends StatelessWidget {
               LogoutListener(),
               VoteFailureListener(),
               AppStatusListener(),
+              const RouterDelegateListener(),
             ],
             child: child,
           ),
