@@ -16,12 +16,10 @@ class _RouterDelegateListenerState
   late final GoRouterDelegate _routerDelegate;
 
   void _listener() {
-    final fullPath = _routerDelegate.state.fullPath;
-    if (fullPath != null) {
-      context.read<AnalyticsBloc>().add(
-        AnalyticsFullPathChanged(fullPath),
-      );
-    }
+    final fullPath = _routerDelegate.currentConfiguration.fullPath;
+    context.read<AnalyticsBloc>().add(
+      AnalyticsFullPathChanged(fullPath),
+    );
   }
 
   @override
