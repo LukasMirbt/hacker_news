@@ -16,6 +16,7 @@ export 'app_loading_body.dart';
 export 'app_other_user_comment/app_other_user_comment.dart'
     show AppOtherUserComment, AppOtherUserCommentData;
 export 'app_outlined_button.dart';
+export 'app_paginated_list.dart';
 export 'app_post_header/app_post_header.dart';
 export 'app_post_header_comment_button/app_post_header_comment_button.dart';
 export 'app_post_header_vote_button/app_post_header_vote_button.dart';

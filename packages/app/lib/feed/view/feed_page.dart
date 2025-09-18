@@ -17,15 +17,9 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return BlocProvider(
       create: (context) =>
           FeedBloc(

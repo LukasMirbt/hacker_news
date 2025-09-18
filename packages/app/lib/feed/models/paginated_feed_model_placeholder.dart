@@ -4,7 +4,7 @@ import 'package:feed_repository/feed_repository.dart';
 class PaginatedFeedModelPlaceholder extends PaginatedFeedModel {
   PaginatedFeedModelPlaceholder()
     : super(
-        feed: PaginatedFeed.initial(FeedType.jobs),
+        feed: PaginatedFeed.initial(FeedType.top),
         items: List.generate(
           10,
           PostFeedItemModelPlaceholder.new,

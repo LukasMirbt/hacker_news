@@ -2,7 +2,6 @@ import 'package:app/feed/feed.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class FeedView extends StatelessWidget {
   const FeedView({super.key});
@@ -36,9 +35,6 @@ class _Body extends StatelessWidget {
       );
     }
 
-    return Skeletonizer(
-      enabled: isPlaceholder,
-      child: const FeedBody(),
-    );
+    return const FeedBody();
   }
 }
