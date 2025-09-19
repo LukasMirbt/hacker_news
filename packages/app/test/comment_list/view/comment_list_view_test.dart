@@ -2,12 +2,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:app/comment_list/comment_list.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../app/pump_app.dart';
 
