@@ -46,6 +46,8 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
         : itemCount + 100;
 
     return ListView.builder(
+      addAutomaticKeepAlives: false,
+      addRepaintBoundaries: false,
       itemCount: effectiveItemCount,
       itemBuilder: (context, index) {
         final triggerIndex = itemCount - _fetchTriggerOffset;
