@@ -2,6 +2,8 @@
 library;
 
 export 'package:material_symbols_icons/symbols.dart';
+export 'package:skeletonizer/skeletonizer.dart'
+    show Skeletonizer, SkeletonizerScope, SliverSkeletonizer;
 
 export 'src/colors/colors.dart';
 export 'src/generated/generated.dart';

@@ -91,7 +91,6 @@ dependencies:
   share_launcher:
     path: ../share_launcher
   shared_preferences: ^2.5.3
-  skeletonizer: ^2.0.1
   stream_transform: ^2.1.1
   super_sliver_list: ^0.4.1
   text_parser:
