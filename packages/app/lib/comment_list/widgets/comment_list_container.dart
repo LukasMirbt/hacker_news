@@ -2,7 +2,6 @@ import 'package:app/comment_list/comment_list.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 class CommentListContainer extends StatefulWidget {
   const CommentListContainer(this.itemBuilder, {super.key});
@@ -37,6 +36,8 @@ class _CommentListContainerState extends State<CommentListContainer> {
     return SelectedCommentListener(
       listController: _listController,
       child: SuperSliverList.builder(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
         listController: _listController,
         itemCount: itemCount,
         itemBuilder: widget.itemBuilder,

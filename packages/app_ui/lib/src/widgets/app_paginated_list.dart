@@ -45,7 +45,7 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
         ? itemCount
         : itemCount + 100;
 
-    return ListView.builder(
+    return SuperListView.builder(
       addAutomaticKeepAlives: false,
       addRepaintBoundaries: false,
       itemCount: effectiveItemCount,
