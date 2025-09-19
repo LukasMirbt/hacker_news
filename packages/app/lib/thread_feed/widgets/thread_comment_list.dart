@@ -2,8 +2,6 @@ import 'package:app/thread_feed/thread_feed.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart'
-    hide ItemBuilder;
 
 class ThreadCommentList extends StatelessWidget {
   const ThreadCommentList(
@@ -27,13 +25,19 @@ class ThreadCommentList extends StatelessWidget {
       (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems.length,
     );
 
-    return InfiniteList(
+    return AppPaginatedList(
       itemCount: itemCount,
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemBuilder: itemBuilder,
-      loadingBuilder: (_) => const ThreadCommentListSpinner(),
-      onFetchData: () {
+      skeletonBuilder: (context, index) {
+        return Skeletonizer(
+          child: OtherUserThreadComment(
+            PaginatedThreadFeedModelPlaceholder.placeholder(index),
+          ),
+        );
+      },
+      onBottomReached: () {
         context.read<ThreadFeedBloc>().add(
           const ThreadFeedDataFetched(),
         );

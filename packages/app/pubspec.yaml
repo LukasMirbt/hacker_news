@@ -92,7 +92,6 @@ dependencies:
     path: ../share_launcher
   shared_preferences: ^2.5.3
   stream_transform: ^2.1.1
-  super_sliver_list: ^0.4.1
   text_parser:
     path: ../text_parser
   thread_api:
@@ -102,7 +101,6 @@ dependencies:
   url_launcher: ^6.3.1
   version_repository:
     path: ../version_repository
-  very_good_infinite_list: ^0.9.0
   visited_post_storage:
     path: ../visited_post_storage
   vote_api:

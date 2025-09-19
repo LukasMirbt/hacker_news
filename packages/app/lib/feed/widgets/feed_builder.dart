@@ -5,18 +5,13 @@ import 'package:flutter/material.dart';
 class FeedBuilder {
   const FeedBuilder();
 
-  EdgeInsets padding({required bool hasReachedMax}) {
-    return EdgeInsets.only(
-      bottom: hasReachedMax ? 24 : 0,
-    );
-  }
-
   Widget itemBuilder(BuildContext context, int index) {
-    return FeedItem(index);
-  }
-
-  Widget separatorBuilder(BuildContext context, int index) {
-    return const Divider(height: 0);
+    return Column(
+      children: [
+        FeedItem(index),
+        const Divider(height: 0),
+      ],
+    );
   }
 
   Widget loadingBuilder(BuildContext context) {
