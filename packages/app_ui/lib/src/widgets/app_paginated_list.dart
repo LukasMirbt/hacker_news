@@ -64,6 +64,7 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
         !_fetchHasBeenTriggered &&
         !widget.hasReachedMax) {
       _fetchHasBeenTriggered = true;
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.onBottomReached();
       });
