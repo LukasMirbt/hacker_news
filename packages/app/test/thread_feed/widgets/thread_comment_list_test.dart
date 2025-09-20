@@ -2,13 +2,13 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/thread_feed/thread_feed.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:thread_repository/thread_repository.dart' hide ThreadComment;
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 import '../../app/pump_app.dart';
 
@@ -23,10 +23,10 @@ class _MockPaginatedThreadFeedModel extends Mock
 class _MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
-  final itemBuilder = (_, __) => Container(height: 100);
+  final itemBuilder = (_, __) => Container(height: 200);
 
   final visibleItems = List.filled(
-    10,
+    30,
     OtherUserThreadCommentModel(
       comment: OtherUserThreadCommentPlaceholder(),
     ),
@@ -57,12 +57,12 @@ void main() {
       );
     }
 
-    group(InfiniteList, () {
-      InfiniteList findWidget(
+    group(AppPaginatedList, () {
+      AppPaginatedList findWidget(
         WidgetTester tester,
       ) {
-        return tester.widget<InfiniteList>(
-          find.byType(InfiniteList),
+        return tester.widget<AppPaginatedList>(
+          find.byType(AppPaginatedList),
         );
       }
 
@@ -94,12 +94,26 @@ void main() {
         expect(widget.itemBuilder, itemBuilder);
       });
 
-      testWidgets('has correct loadingBuilder', (tester) async {
+      testWidgets('has correct placeholderBuilder', (tester) async {
+        const index = 1;
         await tester.pumpApp(buildSubject());
         final widget = findWidget(tester);
         expect(
-          widget.loadingBuilder?.call(context),
-          isA<ThreadCommentListSpinner>(),
+          widget.placeholderBuilder(context, index),
+          isA<ThreadPlaceholderComment>().having(
+            (item) => item.index,
+            'index',
+            index,
+          ),
+        );
+      });
+
+      testWidgets('has correct footerBuilder', (tester) async {
+        await tester.pumpApp(buildSubject());
+        final widget = findWidget(tester);
+        expect(
+          widget.footerBuilder(context),
+          isA<ThreadFeedFooter>(),
         );
       });
 

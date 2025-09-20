@@ -213,10 +213,10 @@ packages:
     dependency: transitive
     description:
       name: code_builder
-      sha256: "0ec10bf4a89e4c613960bf1e8b42c64127021740fb21640c29c909826a5eea3e"
+      sha256: "11654819532ba94c34de52ff5feb52bd81cba1de00ef2ed622fd50295f9d4243"
       url: "https://pub.dev"
     source: hosted
-    version: "4.10.1"
+    version: "4.11.0"
   collection:
     dependency: transitive
     description:
@@ -657,10 +657,10 @@ packages:
     dependency: transitive
     description:
       name: freezed
-      sha256: da32f8ba8cfcd4ec71d9decc8cbf28bd2c31b5283d9887eb51eb4a0659d8110c
+      sha256: "13065f10e135263a4f5a4391b79a8efc5fb8106f8dd555a9e49b750b45393d77"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.3"
   freezed_annotation:
     dependency: transitive
     description:
@@ -690,7 +690,7 @@ packages:
     description:
       path: "packages/go_router"
       ref: "go-router/shell-route-ios-back-gesture"
-      resolved-ref: "1a2594d10a89c80470ee0626ff13ed30ab5e174b"
+      resolved-ref: c149dca83e8a914ade471ef39edf4dcde41a7cd4
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
     version: "16.2.2"
@@ -818,10 +818,10 @@ packages:
     dependency: transitive
     description:
       name: leak_tracker
-      sha256: "8dcda04c3fc16c14f48a7bb586d4be1f0d1572731b6d81d51772ef47c02081e0"
+      sha256: "33e2e26bdd85a0112ec15400c8cbffea70d0f9c3407491f672a2fad47915e2de"
       url: "https://pub.dev"
     source: hosted
-    version: "11.0.1"
+    version: "11.0.2"
   leak_tracker_flutter_testing:
     dependency: transitive
     description:
@@ -866,10 +866,10 @@ packages:
     dependency: transitive
     description:
       name: material_symbols_icons
-      sha256: "2cfd19bf1c3016b0de7298eb3d3444fcb6ef093d934deb870ceb946af89cfa58"
+      sha256: "9e2042673fda5dda0b77e262220b3c34cac5806a3833da85522e41bb27fbf6c0"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2872.0"
+    version: "4.2873.0"
   meta:
     dependency: transitive
     description:
@@ -1058,10 +1058,10 @@ packages:
     dependency: transitive
     description:
       name: pool
-      sha256: "20fe868b6314b322ea036ba325e6fc0711a22948856475e2c2b6306e8ab39c2a"
+      sha256: "978783255c543aa3586a1b3c21f6e9d720eb315376a915872c61ef8b5c20177d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.2"
   posix:
     dependency: transitive
     description:
@@ -1217,10 +1217,11 @@ packages:
   skeletonizer:
     dependency: transitive
     description:
-      name: skeletonizer
-      sha256: eebc03dc86b298e2d7f61e0ebce5713e9dbbc3e786f825909b4591756f196eb6
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: preserve-state
+      resolved-ref: aad9c26b65c3a378fb4565a1bd5d63bf4c6e3aed
+      url: "https://github.com/LukasMirbt/skeletonizer"
+    source: git
     version: "2.1.0+1"
   sky_engine:
     dependency: transitive
@@ -1423,10 +1424,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "69ee86740f2847b9a4ba6cffa74ed12ce500bbe2b07f3dc1e643439da60637b7"
+      sha256: "199bc33e746088546a39cc5f36bac5a278c5e53b40cb3196f99e7345fdcfae6b"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.18"
+    version: "6.3.22"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -1523,14 +1524,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  very_good_infinite_list:
-    dependency: transitive
-    description:
-      name: very_good_infinite_list
-      sha256: "2f72172c28849b29c65dda0e598d486a59d669cfff1d60db7896719ec8211501"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0"
   vm_service:
     dependency: transitive
     description:
@@ -1613,4 +1606,4 @@ packages:
     version: "3.1.3"
 sdks:
   dart: ">=3.9.0 <4.0.0"
-  flutter: ">=3.32.0"
+  flutter: ">=3.35.0"
