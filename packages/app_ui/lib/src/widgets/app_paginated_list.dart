@@ -9,7 +9,7 @@ class AppPaginatedList extends StatefulWidget {
     required this.itemBuilder,
     required this.placeholderBuilder,
     required this.footerBuilder,
-    required this.onBottomReached,
+    required this.onFetchData,
     super.key,
   }) : separatorBuilder = null;
 
@@ -21,14 +21,14 @@ class AppPaginatedList extends StatefulWidget {
     required this.separatorBuilder,
     required this.placeholderBuilder,
     required this.footerBuilder,
-    required this.onBottomReached,
+    required this.onFetchData,
     super.key,
   });
 
   final bool hasReachedMax;
   final bool isLoading;
   final int itemCount;
-  final void Function() onBottomReached;
+  final void Function() onFetchData;
   final Widget Function(BuildContext, int) placeholderBuilder;
   final Widget? Function(BuildContext, int) itemBuilder;
   final Widget Function(BuildContext) footerBuilder;
@@ -55,7 +55,6 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
   Widget? buildItem({
     required int index,
     required int itemCount,
-    required int effectiveItemCount,
   }) {
     final triggerIndex = itemCount - _fetchTriggerOffset;
 
@@ -66,7 +65,7 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
       _fetchHasBeenTriggered = true;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.onBottomReached();
+        widget.onFetchData();
       });
     }
 
@@ -104,7 +103,6 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
           return buildItem(
             index: index,
             itemCount: itemCount,
-            effectiveItemCount: effectiveItemCount,
           );
         },
       );
@@ -117,7 +115,6 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
           return buildItem(
             index: index,
             itemCount: itemCount,
-            effectiveItemCount: effectiveItemCount,
           );
         },
       );

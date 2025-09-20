@@ -1,5 +1,4 @@
 import 'package:app/thread_feed/thread_feed.dart';
-import 'package:app/thread_feed/widgets/thread_placeholder_comment.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,9 +30,9 @@ class ThreadCommentList extends StatelessWidget {
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemBuilder: itemBuilder,
-      footerBuilder: (_) => const ThreadFeedFooter(),
       placeholderBuilder: (_, index) => ThreadPlaceholderComment(index),
-      onBottomReached: () {
+      footerBuilder: (_) => const ThreadFeedFooter(),
+      onFetchData: () {
         context.read<ThreadFeedBloc>().add(
           const ThreadFeedDataFetched(),
         );

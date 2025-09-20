@@ -28,7 +28,7 @@ class FeedBody extends StatelessWidget {
       separatorBuilder: (_, _) => const FeedSeparator(),
       placeholderBuilder: (_, index) => FeedPlaceholderItem(index),
       footerBuilder: (_) => const FeedFooter(),
-      onBottomReached: () {
+      onFetchData: () {
         context.read<FeedBloc>().add(
           const FeedDataFetched(),
         );

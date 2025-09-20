@@ -1,4 +1,3 @@
-export 'feed_builder.dart';
 export 'feed_footer.dart';
 export 'feed_item.dart';
 export 'feed_item_comment_count_button.dart';
