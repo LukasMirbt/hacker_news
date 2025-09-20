@@ -2,7 +2,6 @@
 // ignore_for_file: prefer_function_declarations_over_variables
 
 import 'package:app/thread_feed/thread_feed.dart';
-import 'package:app/thread_feed/widgets/thread_placeholder_comment.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
