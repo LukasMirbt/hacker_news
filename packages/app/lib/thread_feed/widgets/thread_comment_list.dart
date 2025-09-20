@@ -25,7 +25,7 @@ class ThreadCommentList extends StatelessWidget {
       (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems.length,
     );
 
-    return AppPaginatedList.builder(
+    return AppPaginatedList(
       itemCount: itemCount,
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,

@@ -20,7 +20,7 @@ class FeedBody extends StatelessWidget {
       (FeedBloc bloc) => bloc.state.feed.items,
     );
 
-    return AppPaginatedList.separated(
+    return AppPaginatedList(
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemCount: items.length,
