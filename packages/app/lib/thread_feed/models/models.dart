@@ -1,3 +1,4 @@
+export 'other_user_thread_comment_model_placeholder.dart';
 export 'paginated_thread_feed_model.dart';
 export 'paginated_thread_feed_model_placeholder.dart';
 export 'reply_extension.dart';

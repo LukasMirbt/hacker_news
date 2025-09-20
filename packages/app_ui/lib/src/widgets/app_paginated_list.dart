@@ -2,13 +2,26 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/widgets.dart';
 
 class AppPaginatedList extends StatefulWidget {
-  const AppPaginatedList({
-    required this.hasReachedMax,
-    required this.isLoading,
+  const AppPaginatedList.builder({
     required this.itemCount,
-    required this.onBottomReached,
+    required this.isLoading,
+    required this.hasReachedMax,
     required this.itemBuilder,
-    required this.skeletonBuilder,
+    required this.placeholderBuilder,
+    required this.footerBuilder,
+    required this.onBottomReached,
+    super.key,
+  }) : separatorBuilder = null;
+
+  const AppPaginatedList.separated({
+    required this.itemCount,
+    required this.isLoading,
+    required this.hasReachedMax,
+    required this.itemBuilder,
+    required this.separatorBuilder,
+    required this.placeholderBuilder,
+    required this.footerBuilder,
+    required this.onBottomReached,
     super.key,
   });
 
@@ -16,8 +29,10 @@ class AppPaginatedList extends StatefulWidget {
   final bool isLoading;
   final int itemCount;
   final void Function() onBottomReached;
-  final Widget Function(BuildContext, int) skeletonBuilder;
+  final Widget Function(BuildContext, int) placeholderBuilder;
   final Widget? Function(BuildContext, int) itemBuilder;
+  final Widget Function(BuildContext) footerBuilder;
+  final Widget Function(BuildContext, int)? separatorBuilder;
 
   @override
   State<AppPaginatedList> createState() => _AppPaginatedListState();
@@ -37,53 +52,74 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
     }
   }
 
+  Widget? buildItem({
+    required int index,
+    required int itemCount,
+    required int effectiveItemCount,
+  }) {
+    final triggerIndex = itemCount - _fetchTriggerOffset;
+
+    if (index >= triggerIndex &&
+        !widget.isLoading &&
+        !_fetchHasBeenTriggered &&
+        !widget.hasReachedMax) {
+      _fetchHasBeenTriggered = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onBottomReached();
+      });
+    }
+
+    if (index < itemCount) {
+      return widget.itemBuilder(context, index);
+    }
+
+    if (widget.hasReachedMax) {
+      return widget.footerBuilder(context);
+    }
+
+    final skeletonIndex = index - itemCount;
+
+    return Skeletonizer(
+      child: widget.placeholderBuilder(context, skeletonIndex),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final itemCount = widget.itemCount;
+    final separatorBuilder = widget.separatorBuilder;
 
     final effectiveItemCount = widget.hasReachedMax
-        ? itemCount
+        ? itemCount + 1
         : itemCount + 100;
 
-    return SuperListView.builder(
-      addAutomaticKeepAlives: false,
-      addRepaintBoundaries: false,
-      itemCount: effectiveItemCount,
-      itemBuilder: (context, index) {
-        final triggerIndex = itemCount - _fetchTriggerOffset;
-
-        if (index == triggerIndex &&
-            !widget.isLoading &&
-            !_fetchHasBeenTriggered &&
-            !widget.hasReachedMax) {
-          _fetchHasBeenTriggered = true;
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            widget.onBottomReached();
-          });
-        }
-
-        if (index >= itemCount) {
-          final skeletonIndex = index - itemCount;
-          return widget.skeletonBuilder(context, skeletonIndex);
-        }
-
-        var item = widget.itemBuilder(context, index);
-
-        if (item != null && index == effectiveItemCount - 1) {
-          item = SafeArea(
-            top: false,
-            left: false,
-            right: false,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-              child: item,
-            ),
+    if (separatorBuilder != null) {
+      return SuperListView.separated(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
+        itemCount: effectiveItemCount,
+        separatorBuilder: separatorBuilder,
+        itemBuilder: (context, index) {
+          return buildItem(
+            index: index,
+            itemCount: itemCount,
+            effectiveItemCount: effectiveItemCount,
           );
-        }
-
-        return item;
-      },
-    );
+        },
+      );
+    } else {
+      return SuperListView.builder(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
+        itemCount: effectiveItemCount,
+        itemBuilder: (context, index) {
+          return buildItem(
+            index: index,
+            itemCount: itemCount,
+            effectiveItemCount: effectiveItemCount,
+          );
+        },
+      );
+    }
   }
 }

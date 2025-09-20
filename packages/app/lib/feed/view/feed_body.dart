@@ -4,12 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FeedBody extends StatelessWidget {
-  const FeedBody({
-    this.builder = const FeedBuilder(),
-    super.key,
-  });
-
-  final FeedBuilder builder;
+  const FeedBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +20,14 @@ class FeedBody extends StatelessWidget {
       (FeedBloc bloc) => bloc.state.feed.items,
     );
 
-    return AppPaginatedList(
+    return AppPaginatedList.separated(
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemCount: items.length,
-      itemBuilder: builder.itemBuilder,
-      skeletonBuilder: (context, index) {
-        return Skeletonizer(
-          child: Column(
-            children: [
-              PostFeedItem(
-                PostFeedItemModelPlaceholder(index),
-              ),
-              const Divider(height: 0),
-            ],
-          ),
-        );
-      },
+      itemBuilder: (_, index) => FeedItem(index),
+      separatorBuilder: (_, _) => const FeedSeparator(),
+      placeholderBuilder: (_, index) => FeedPlaceholderItem(index),
+      footerBuilder: (_) => const FeedFooter(),
       onBottomReached: () {
         context.read<FeedBloc>().add(
           const FeedDataFetched(),

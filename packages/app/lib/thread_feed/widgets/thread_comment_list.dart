@@ -1,4 +1,5 @@
 import 'package:app/thread_feed/thread_feed.dart';
+import 'package:app/thread_feed/widgets/thread_placeholder_comment.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,18 +26,13 @@ class ThreadCommentList extends StatelessWidget {
       (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems.length,
     );
 
-    return AppPaginatedList(
+    return AppPaginatedList.builder(
       itemCount: itemCount,
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemBuilder: itemBuilder,
-      skeletonBuilder: (context, index) {
-        return Skeletonizer(
-          child: OtherUserThreadComment(
-            PaginatedThreadFeedModelPlaceholder.placeholder(index),
-          ),
-        );
-      },
+      footerBuilder: (_) => const ThreadFeedFooter(),
+      placeholderBuilder: (_, index) => ThreadPlaceholderComment(index),
       onBottomReached: () {
         context.read<ThreadFeedBloc>().add(
           const ThreadFeedDataFetched(),
