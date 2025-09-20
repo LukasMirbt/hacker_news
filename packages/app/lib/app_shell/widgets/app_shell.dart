@@ -14,7 +14,6 @@ class AppShell extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       drawer: const ShellDrawer(),
-      appBar: const ShellAppBar(),
       body: const _Shell(),
     );
   }

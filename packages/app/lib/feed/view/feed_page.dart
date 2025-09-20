@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:link_launcher/link_launcher.dart';
 import 'package:vote_repository/vote_repository.dart';
 
-class FeedPage extends StatefulWidget {
+class FeedPage extends StatelessWidget {
   const FeedPage({
     required this.type,
     super.key,
@@ -14,22 +14,11 @@ class FeedPage extends StatefulWidget {
   final FeedType type;
 
   @override
-  State<FeedPage> createState() => _FeedPageState();
-}
-
-class _FeedPageState extends State<FeedPage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return BlocProvider(
       create: (context) =>
           FeedBloc(
-              type: widget.type,
+              type: type,
               feedRepository: context.read<FeedRepository>(),
               voteRepository: context.read<VoteRepository>(),
               linkLauncher: context.read<LinkLauncher>(),
@@ -43,7 +32,7 @@ class _FeedPageState extends State<FeedPage>
             ..add(
               const FeedStarted(),
             ),
-      child: const FeedView(),
+      child: const FeedBody(),
     );
   }
 }

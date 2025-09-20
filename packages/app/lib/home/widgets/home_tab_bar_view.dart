@@ -7,10 +7,6 @@ class HomeTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      children: [
-        for (final feed in FeedType.values) FeedPage(type: feed),
-      ],
-    );
+    return const FeedPage(type: FeedType.top);
   }
 }

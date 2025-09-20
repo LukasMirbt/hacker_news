@@ -13,35 +13,6 @@ class ThreadCommentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasReachedMax = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.feed.hasReachedMax,
-    );
-
-    final isLoading = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.fetchStatus.isLoading,
-    );
-
-    final itemCount = context.select(
-      (ThreadFeedBloc bloc) => bloc.state.feed.visibleItems.length,
-    );
-
-    return AppPaginatedList(
-      itemCount: itemCount,
-      hasReachedMax: hasReachedMax,
-      isLoading: isLoading,
-      itemBuilder: itemBuilder,
-      skeletonBuilder: (context, index) {
-        return Skeletonizer(
-          child: OtherUserThreadComment(
-            PaginatedThreadFeedModelPlaceholder.placeholder(index),
-          ),
-        );
-      },
-      onBottomReached: () {
-        context.read<ThreadFeedBloc>().add(
-          const ThreadFeedDataFetched(),
-        );
-      },
-    );
+    return AppPaginatedList();
   }
 }

@@ -15,7 +15,6 @@ class AppRouter {
        goRouter =
            goRouter ??
            GoRouter(
-             restorationScopeId: 'router',
              navigatorKey: navigatorKey,
              initialLocation: initialLocation,
              routes: appRouteList.routes,
