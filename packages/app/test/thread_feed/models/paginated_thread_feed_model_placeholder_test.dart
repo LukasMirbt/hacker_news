@@ -8,11 +8,17 @@ void main() {
     }
 
     group('constructor', () {
-      test('returns $PaginatedThreadFeedModel', () {
-        expect(
-          createSubject(),
-          isA<PaginatedThreadFeedModel>(),
-        );
+      group('items', () {
+        test('returns ${OtherUserThreadCommentModelPlaceholder}s', () {
+          final model = createSubject();
+          expect(
+            model.items,
+            List.generate(
+              10,
+              OtherUserThreadCommentModelPlaceholder.new,
+            ),
+          );
+        });
       });
     });
 
