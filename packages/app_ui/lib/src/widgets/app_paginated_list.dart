@@ -2,7 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:flutter/widgets.dart';
 
 class AppPaginatedList extends StatefulWidget {
-  const AppPaginatedList.builder({
+  const AppPaginatedList({
     required this.itemCount,
     required this.isLoading,
     required this.hasReachedMax,
@@ -10,18 +10,7 @@ class AppPaginatedList extends StatefulWidget {
     required this.placeholderBuilder,
     required this.footerBuilder,
     required this.onFetchData,
-    super.key,
-  }) : separatorBuilder = null;
-
-  const AppPaginatedList.separated({
-    required this.itemCount,
-    required this.isLoading,
-    required this.hasReachedMax,
-    required this.itemBuilder,
-    required this.separatorBuilder,
-    required this.placeholderBuilder,
-    required this.footerBuilder,
-    required this.onFetchData,
+    this.separatorBuilder,
     super.key,
   });
 
@@ -39,7 +28,8 @@ class AppPaginatedList extends StatefulWidget {
 }
 
 class _AppPaginatedListState extends State<AppPaginatedList> {
-  static const int _fetchTriggerOffset = 5;
+  static const _fetchTriggerOffset = 5;
+  static const _skeletonItemCount = 100;
 
   bool _fetchHasBeenTriggered = false;
 
@@ -58,10 +48,13 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
   }) {
     final triggerIndex = itemCount - _fetchTriggerOffset;
 
-    if (index >= triggerIndex &&
+    final shouldFetchData =
+        index >= triggerIndex &&
         !widget.isLoading &&
-        !_fetchHasBeenTriggered &&
-        !widget.hasReachedMax) {
+        !widget.hasReachedMax &&
+        !_fetchHasBeenTriggered;
+
+    if (shouldFetchData) {
       _fetchHasBeenTriggered = true;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -91,12 +84,10 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
 
     final effectiveItemCount = widget.hasReachedMax
         ? itemCount + 1
-        : itemCount + 100;
+        : itemCount + _skeletonItemCount;
 
     if (separatorBuilder != null) {
       return SuperListView.separated(
-        addAutomaticKeepAlives: false,
-        addRepaintBoundaries: false,
         itemCount: effectiveItemCount,
         separatorBuilder: separatorBuilder,
         itemBuilder: (context, index) {
@@ -108,8 +99,6 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
       );
     } else {
       return SuperListView.builder(
-        addAutomaticKeepAlives: false,
-        addRepaintBoundaries: false,
         itemCount: effectiveItemCount,
         itemBuilder: (context, index) {
           return buildItem(
