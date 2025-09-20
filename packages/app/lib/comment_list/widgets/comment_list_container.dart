@@ -36,8 +36,6 @@ class _CommentListContainerState extends State<CommentListContainer> {
     return SelectedCommentListener(
       listController: _listController,
       child: SuperSliverList.builder(
-        addAutomaticKeepAlives: false,
-        addRepaintBoundaries: false,
         listController: _listController,
         itemCount: itemCount,
         itemBuilder: widget.itemBuilder,
