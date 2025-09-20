@@ -1,7 +1,28 @@
-import 'package:app_ui/app_ui.dart';
-import 'package:flutter/widgets.dart';
+import 'dart:math';
 
-class AppPaginatedList extends StatefulWidget {
+import 'package:app_ui/app_ui.dart';
+import 'package:flutter/material.dart';
+
+class AppPaginatedList extends StatelessWidget {
+  const AppPaginatedList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SuperListView.separated(
+      addAutomaticKeepAlives: false,
+      itemCount: 1000,
+      separatorBuilder: (context, index) => const Divider(),
+      itemBuilder: (context, index) => Text(
+        'Text' * Random().nextInt(100),
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+    );
+  }
+}
+
+/* class AppPaginatedList extends StatefulWidget {
   const AppPaginatedList({
     required this.hasReachedMax,
     required this.isLoading,
@@ -87,3 +108,4 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
     );
   }
 }
+ */

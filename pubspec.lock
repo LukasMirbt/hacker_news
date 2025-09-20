@@ -690,10 +690,10 @@ packages:
     description:
       path: "packages/go_router"
       ref: "go-router/shell-route-ios-back-gesture"
-      resolved-ref: c149dca83e8a914ade471ef39edf4dcde41a7cd4
+      resolved-ref: feecfee180fd4582e653e29c3424778c87550b39
       url: "https://github.com/LukasMirbt/packages.git"
     source: git
-    version: "16.2.2"
+    version: "16.2.3"
   go_router_builder:
     dependency: transitive
     description:
