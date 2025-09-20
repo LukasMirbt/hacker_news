@@ -32,7 +32,9 @@ class FeedPage extends StatelessWidget {
             ..add(
               const FeedStarted(),
             ),
-      child: const FeedBody(),
+      child: const Scaffold(
+        body: FeedBody(),
+      ),
     );
   }
 }

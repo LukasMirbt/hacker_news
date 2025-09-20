@@ -12,8 +12,8 @@ dependencies:
   analytics_consent_storage:
     path: ../analytics_consent_storage
   equatable: ^2.0.7
-  firebase_analytics: ^11.4.0
-  firebase_core: ^3.10.0
+  firebase_analytics: ^12.0.1
+  firebase_core: ^4.1.0
   flutter:
     sdk: flutter
   mocktail: ^1.0.4

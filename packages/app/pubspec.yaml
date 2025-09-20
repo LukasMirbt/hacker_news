@@ -45,8 +45,8 @@ dependencies:
     path: ../feed_parser
   feed_repository:
     path: ../feed_repository
-  firebase_core: ^3.12.1
-  firebase_crashlytics: ^4.3.4
+  firebase_core: ^4.1.0
+  firebase_crashlytics: ^5.0.1
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0
