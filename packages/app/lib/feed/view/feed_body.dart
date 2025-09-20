@@ -1,15 +1,10 @@
 import 'package:app/feed/feed.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class FeedBody extends StatelessWidget {
-  const FeedBody({
-    this.builder = const FeedBuilder(),
-    super.key,
-  });
-
-  final FeedBuilder builder;
+  const FeedBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +20,14 @@ class FeedBody extends StatelessWidget {
       (FeedBloc bloc) => bloc.state.feed.items,
     );
 
-    return InfiniteList(
-      padding: builder.padding(
-        hasReachedMax: hasReachedMax,
-      ),
+    return AppPaginatedList(
       hasReachedMax: hasReachedMax,
       isLoading: isLoading,
       itemCount: items.length,
-      itemBuilder: builder.itemBuilder,
-      separatorBuilder: builder.separatorBuilder,
-      loadingBuilder: builder.loadingBuilder,
+      itemBuilder: (_, index) => FeedItem(index),
+      separatorBuilder: (_, _) => const FeedSeparator(),
+      placeholderBuilder: (_, index) => FeedPlaceholderItem(index),
+      footerBuilder: (_) => const FeedFooter(),
       onFetchData: () {
         context.read<FeedBloc>().add(
           const FeedDataFetched(),

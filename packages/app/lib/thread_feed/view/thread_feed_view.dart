@@ -2,7 +2,6 @@ import 'package:app/thread_feed/thread_feed.dart';
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class ThreadFeedView extends StatelessWidget {
   const ThreadFeedView({super.key});
