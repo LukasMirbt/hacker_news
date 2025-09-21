@@ -87,7 +87,7 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
         : itemCount + _skeletonItemCount;
 
     if (separatorBuilder != null) {
-      return SuperListView.separated(
+      return ListView.separated(
         itemCount: effectiveItemCount,
         separatorBuilder: separatorBuilder,
         itemBuilder: (context, index) {
@@ -98,7 +98,7 @@ class _AppPaginatedListState extends State<AppPaginatedList> {
         },
       );
     } else {
-      return SuperListView.builder(
+      return ListView.builder(
         itemCount: effectiveItemCount,
         itemBuilder: (context, index) {
           return buildItem(

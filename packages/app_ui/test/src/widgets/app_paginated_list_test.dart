@@ -47,10 +47,10 @@ void main() {
       );
     }
 
-    group(SuperListView, () {
-      SuperListView findWidget(WidgetTester tester) {
-        return tester.widget<SuperListView>(
-          find.byType(SuperListView),
+    group(ListView, () {
+      ListView findWidget(WidgetTester tester) {
+        return tester.widget<ListView>(
+          find.byType(ListView),
         );
       }
 
