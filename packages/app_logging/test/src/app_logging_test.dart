@@ -26,8 +26,7 @@ void main() {
       });
 
       tearDown(() {
-        Logger.root.level = defaultLevel;
-        Logger.root.clearListeners();
+        hierarchicalLoggingEnabled = false;
       });
 
       test('logger.level is ${Level.INFO} when debug', () {

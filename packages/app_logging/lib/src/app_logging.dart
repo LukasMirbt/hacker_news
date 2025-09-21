@@ -5,7 +5,11 @@ abstract class AppLogging {
     required bool debug,
     required List<LoggingIntegration> integrations,
   }) {
-    final logger = Logger.root;
+    hierarchicalLoggingEnabled = true;
+
+    // Use detached logger to prevent other packages
+    // from adding noise or logging more often than expected.
+    final logger = Logger.detached('app_logging');
 
     if (debug) {
       logger.level = Level.INFO;
